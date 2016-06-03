@@ -1,11 +1,11 @@
 # Treasure Data
 
-The __td__ output plugin, allows to flush your records to the [Treasure Data](http://treasuredata.com) cloud service.
+The __td__ output plugin, allows to flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
 
 
-## Configuration File
+## Configuration Parameters
 
-[Fluent Bit](http://fluentbit.io) sources distribute an example configuration file for the [Treasure Data](http://www.treasuredata.com) plugin and it's located under conf/td.conf. The plugin recognize the following setup under a TD section:
+The plugin supports the following configuration parameters:
 
 | Key      | Description       |
 | ---------|-------------------|
@@ -13,34 +13,31 @@ The __td__ output plugin, allows to flush your records to the [Treasure Data](ht
 | Database | Specify the name of your target database. |
 | Table    | Specify the name of your target table where the records will be stored.|
 
-Here is an example:
+## Getting Started
 
-```python
-[TD]
-    API      5713/e75be23caee19f8041dfa635ddfbd0dcd8c8d981
-    Database fluentbit
-    Table    samples
-```
+In order to start inserting records into [Treasure Data](https://www.treasuredata.com), you can run the plugin from the command line or through the configuration file:
 
-## Running
-
-One the configuration file, just let [Fluent Bit](http://fluentbit.io) know the input/output plugins plus the configuration file location, e.g:
+### Command Line:
 
 ```bash
-$ bin/fluent-bit -i cpu -o td -c ../conf/td.conf -V
-Fluent-Bit v0.3.0
-Copyright (C) Treasure Data
-
-[2015/10/20 12:48:12] [ info] Configuration
-flush time     : 5 seconds
-input plugins  : cpu
-collectors     :
-[2015/10/20 12:48:12] [ info] starting engine
-[2015/10/20 12:48:12] [debug] TreasureData / database='fluentbit' table='samples'
-[2015/10/20 12:48:12] [debug] [upstream] connecting to api.treasuredata.com:443
-...
+$ fluent-bit -i cpu -o td -p API="abc" -p Database="fluentbit" -p Table="cpu_samples"
 ```
 
-> the -V argument is optional just to print out verbose messages.
+Ideally you don't want to expose your API key from the command line, using a configuration file is higly desired.
 
-Once the service is running, you can check how data imported into the [Treasure Data Console](https://console.treasuredata.com) selecting your target database and table. Note that the records can take a few seconds to show up into the interface.
+### Configuration File
+
+In your main configuration file append the following _Input_ & _Output_ sections:
+
+```Python
+[INPUT]
+    Name cpu
+    Tag  my_cpu
+
+[OUTPUT]
+    Name     td
+    Match    *
+    API      5713/e75be23caee19f8041dfa635ddfbd0dcd8c8d981
+    Database fluentbit
+    Table    cpu_samples
+```
