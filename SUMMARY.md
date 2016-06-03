@@ -17,6 +17,7 @@
     * [Configuration File](getting_started/configuration_file.md)
 * [Input Plugins](input/README.md)
     * [CPU Usage](input/cpu.md)
+    * [Forward](input/forward.md)
     * [Head](input/head.md)
     * [Kernel Log Buffer](input/kmsg.md)
     * [Memory Usage](input/mem.md)
