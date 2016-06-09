@@ -28,6 +28,7 @@
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
     * [Forward](output/forward.md)
+    * [HTTP](output/http.md)
     * [NATS](output/nats.md)
     * [Standard Output](output/stdout.md)
     * [Treasure Data](output/td.md)
