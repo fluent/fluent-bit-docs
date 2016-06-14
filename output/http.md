@@ -10,6 +10,7 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 |-------------|----------------------|-------------------|
 | Host        | IP address or hostname of the target HTTP Server | 127.0.0.1 |
 | Port        | TCP port of the target HTTP Server | 80 |
+| Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
 | Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_, optionally it can be set to _json_. | msgpack |
 
