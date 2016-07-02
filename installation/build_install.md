@@ -81,6 +81,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB_WITHOUT_SHARED_LIB | Do not build shared library        | No       |
 | FLB_VALGRIND    | Enable Valgrind support              | No       |
 | FLB_TRACE       | Enable trace mode"                   | No       |
+| FLB_MTRACE      | Enable mtrace support                | No       |
 
 
 ### Input Plugins
@@ -99,6 +100,7 @@ available:
 | [FLB_IN_STDIN](../input/stdin.md)  | Enable Standard input plugin         | On |
 | [FLB_IN_MQTT](../input/mqtt.md)    | Enable MQTT input plugin             | No |
 | [FLB_IN_XBEE](../input/xbee.md)    | Enable Xbee input plugin             | No |
+| [FLB_IN_FORWARD](../input/forward.md) | Enable Forward input plugin       | On |
 
 ### Output Plugins
 
@@ -107,7 +109,8 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | option           |  description                         | default  |
 |------------------|--------------------------------------|----------|
 | [FLB_OUT_ES](../output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
-| [FLB_OUT_FLUENTD](../output/fluentd.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
+| [FLB_OUT_FORWARD](../output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
 | [FLB_OUT_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | On |
 | [FLB_OUT_STDOUT](../output/stdout.md) | Enable STDOUT output plugin          | On       |
+| [FLB_OUT_HTTP](../output/http.md) | Enable HTTP output plugin          | On       |
 | [FLB_OUT_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
