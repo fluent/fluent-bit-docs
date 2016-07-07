@@ -1,19 +1,50 @@
 # Install on Redhat / CentOS
 
-We distribute binary versions of [Fluent Bit](http://fluentbit.io) for Redhat and CentOS systems. Note that binary versions are built with all options enabled, for a more custom version consider recompile from sources.
+Fluent Bit is distributed as __td-agent-bit__ package and is available for the latest stable CentOS system. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
-## Download
+# Configure Yum
 
-The lastest RPM package is always available in the downloads section, please get it from:
+We provide __td-agent-bit__ through a Yum repository. In order to add the repository reference to your system, please add a new file called _td-agent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
 
-[http://fluentbit.io/download](http://fluentbit.io/download)
-
-## Install Fluent Bit
-
-Log in your system as root (or use sudo if available) and run the following command:
-
-```shell
-$ rpm -i fluentbit-0.7.0-1.x86_64.rpm
+```
+[td-agent-bit]
+name = TD Agent Bit
+baseurl = http://packages.fluentbit.io/centos/7
+gpgcheck=1
+gpgkey=http://packages.fluentbit.io/fluentbit.key
+enabled=1
 ```
 
-> Note: we only provide RPM packages for x86_64 architectures.
+note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed.
+
+## Install
+
+Once your repository is configured, run the following command to install it:
+
+```bash
+$ yum install td-agent-bit
+```
+
+Now the following step is to instruct _systemd_ to enable the service:
+
+```bash
+$ service td-agent-bit start
+```
+
+
+
+If you do a status check, you should see a similar output like this:
+
+```bash
+$ service td-agent-bit status
+Redirecting to /bin/systemctl status  td-agent-bit.service
+● td-agent-bit.service - TD Agent Bit
+   Loaded: loaded (/usr/lib/systemd/system/td-agent-bit.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago
+ Main PID: 3820 (td-agent-bit)
+   CGroup: /system.slice/td-agent-bit.service
+           └─3820 /opt/td-agent-bit/bin/td-agent-bit -c etc/td-agent-bit/td-agent-bit.conf
+...
+```
+
+The default configuration of __td-agent-bit__ is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/messages_ file.

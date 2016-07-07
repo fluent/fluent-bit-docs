@@ -1,6 +1,6 @@
-# Install on Raspberry Pi (Raspbian)
+# Install on Debian
 
-Fluent Bit is distributed as __td-agent-bit__ package and is available for the Raspberry, specifically for [Raspbian 8](http://raspbian.org). This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as __td-agent-bit__ package and is available for the latest stable Debian system: Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
 ## Server GPG key
 
@@ -12,10 +12,12 @@ $ wget -qO - http://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 
 ## Update your sources lists
 
-On Debian and derivated systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your __/etc/apt/sources.list__ file:
+On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your __/etc/apt/sources.list__ file:
+
+#### Debian 8 (Jessie)
 
 ```
-deb http://packages.fluentbit.io/raspbian jessie main
+deb http://packages.fluentbit.io/debian jessie main
 ```
 
 ### Update your repositories database
