@@ -4,7 +4,7 @@ The __xbee__ plugin allows to listen for data through an [XBee Radio](http://www
 
 ## Configuration File
 
-[Fluent Bit](http://fluentbit.io) sources distribute an example configuration file for the serial interface and it's located under _conf/serial_input.conf_. The plugin recognize the following setup under a __XBEE__ section:
+[Fluent Bit](http://fluentbit.io) sources distribute an example configuration file for the serial interface and it's located under _conf/serial_input.conf_. The plugin recognizes the following setup under a __XBEE__ section:
 
 | Key             | Description       |
 | ----------------|-------------------|

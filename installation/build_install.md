@@ -1,6 +1,6 @@
 # Build and Install
 
-[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consist on the following steps:
+[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists on the following steps:
 
 ## Prepare environment
 
@@ -80,7 +80,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB_WITHOUT_EXAMPLES | Do not build examples                | No       |
 | FLB_WITHOUT_SHARED_LIB | Do not build shared library        | No       |
 | FLB_VALGRIND    | Enable Valgrind support              | No       |
-| FLB_TRACE       | Enable trace mode"                   | No       |
+| FLB_TRACE       | Enable trace mode                    | No       |
 | FLB_MTRACE      | Enable mtrace support                | No       |
 
 
@@ -110,7 +110,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 |------------------|--------------------------------------|----------|
 | [FLB_OUT_ES](../output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
 | [FLB_OUT_FORWARD](../output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
-| [FLB_OUT_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | On |
+| [FLB_OUT_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | No |
 | [FLB_OUT_STDOUT](../output/stdout.md) | Enable STDOUT output plugin          | On       |
 | [FLB_OUT_HTTP](../output/http.md) | Enable HTTP output plugin          | On       |
 | [FLB_OUT_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |

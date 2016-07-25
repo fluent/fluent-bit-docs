@@ -78,7 +78,7 @@ The following is an example of an _INPUT_ section:
 
 ## Example: collecting CPU metrics
 
-The following configuration file example demonstrate how to collect CPU metrics and flush the results every five seconds to the standard output:
+The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
 ```Python
 [SERVICE]

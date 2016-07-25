@@ -59,7 +59,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ## About Elasticsearch field names
 
-Some input plugins may generate messages where the field names contains dots, since Elasticsearch 2.0 this is not longer allowed, so the current __es__ plugin replace them with an underscore, e.g:
+Some input plugins may generate messages where the field names contains dots, since Elasticsearch 2.0 this is not longer allowed, so the current __es__ plugin replaces them with an underscore, e.g:
 
 ```
 {"cpu0.p_cpu"=>17.000000}
