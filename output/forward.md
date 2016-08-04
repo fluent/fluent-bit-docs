@@ -29,7 +29,7 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specify that will listen for _TCP_ connections on the port _12225_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG, will print it out to the standard output.
+That configuration file specifies that will listen for _TCP_ connections on the port _12225_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG, will print it out to the standard output.
 
 In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created (in_fluent-bit.conf):
 

@@ -82,7 +82,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ## Emulating Serial Interface on Linux
 
-The following content is some extra information that will allow you to emulate a serial interface on your Linux system, so you can test this _Serial_ input plugin locally in case you don't have such interface in your computer. The following procedure have been tested on Ubuntu 15.04 running a Linux Kernel 4.0.
+The following content is some extra information that will allow you to emulate a serial interface on your Linux system, so you can test this _Serial_ input plugin locally in case you don't have such interface in your computer. The following procedure has been tested on Ubuntu 15.04 running a Linux Kernel 4.0.
 
 ## Build and install the tty0tty module
 

@@ -13,7 +13,7 @@ As input data the _stdin_ plugin recognize the following JSON data formats:
 2. [ time, { map => val, map => val, map => val } ]
 ```
 
-A better example to demonstrate how it works will be through a _Bash_ script that generate messages and write them to [Fluent Bit](http://fluentbit.io). Write the following content in a file named _test.sh_:
+A better example to demonstrate how it works will be through a _Bash_ script that generates messages and writes them to [Fluent Bit](http://fluentbit.io). Write the following content in a file named _test.sh_:
 
 ```bash
 #!/bin/sh
@@ -33,24 +33,15 @@ $ chmod 755 test.sh
 Now lets start the script and [Fluent Bit](http://fluentbit.io) in the following way:
 
 ```bash
-$ ./test.sh | bin/fluent-bit -i stdin -o stdout -V
-Fluent Bit v0.3.0
+$ ./test.sh | bin/fluent-bit -i stdin -o stdout -v
+Fluent-Bit v0.8.3
 Copyright (C) Treasure Data
 
-[2015/09/03 17:34:27] [ info] Configuration
- flush time     : 5 seconds
- input plugins  : stdin
- collectors     :
-[2015/09/03 17:34:27] [ info] starting engine
-[2015/09/03 17:34:27] [debug] in_stdin read() = 21
-[2015/09/03 17:34:28] [debug] in_stdin read() = 21
-[2015/09/03 17:34:29] [debug] in_stdin read() = 21
-[2015/09/03 17:34:30] [debug] in_stdin read() = 21
-[2015/09/03 17:34:31] [debug] in_stdin read() = 21
-[0] [1441269267, {"key"=>"some value"}]
-[1] [1441269268, {"key"=>"some value"}]
-[2] [1441269269, {"key"=>"some value"}]
-[3] [1441269270, {"key"=>"some value"}]
-[4] [1441269271, {"key"=>"some value"}]
-
+[2016/07/24 20:57:28] [ info] starting engine
+[2016/07/24 20:57:28] [debug] [router] default match rule stdin.0:stdout.0
+[0] (null): [1469361448, {"key"=>"some value"}]
+[1] (null): [1469361449, {"key"=>"some value"}]
+[2] (null): [1469361450, {"key"=>"some value"}]
+[3] (null): [1469361451, {"key"=>"some value"}]
+[4] (null): [1469361452, {"key"=>"some value"}]
 ```

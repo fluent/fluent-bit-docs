@@ -25,7 +25,7 @@ By default [Fluent Bit](http://fluentbit.io) have the tests disabled, you need t
 
 ```bash
 $ cd build/
-$ cmake -DENABLE_TESTS=ON ../
+$ cmake -DFLB_TESTS=ON ../
 ```
 
 ## Running Tests
