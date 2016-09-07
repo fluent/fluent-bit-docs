@@ -14,6 +14,10 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
 | Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_, optionally it can be set to _json_. | msgpack |
 
+### TLS / SSL
+
+HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../getting_started/tls_ssl.md) section.
+
 ## Getting Started
 
 In order to insert records into a HTTP server, you can run the plugin from the command line or through the configuration file:
