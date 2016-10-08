@@ -25,6 +25,7 @@
     * [Kernel Log Buffer](input/kmsg.md)
     * [Memory Usage](input/mem.md)
     * [MQTT](input/mqtt.md)
+    * [Random](input/random.md)
     * [Serial Interface](input/serial.md)
     * [Standard Input](input/stdin.md)
     * [XBee Radio](input/xbee.md)
