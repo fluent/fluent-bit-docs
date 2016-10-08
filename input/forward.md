@@ -62,10 +62,10 @@ In [Fluent Bit](http://fluentbit.io) we should see the following output:
 
 ```bash
 $ bin/fluent-bit -i forward -o stdout
-Fluent-Bit v0.8.0
+Fluent-Bit v0.9.0
 Copyright (C) Treasure Data
 
-[2016/06/03 10:18:10] [ info] starting engine
-[2016/06/03 10:18:10] [ info] [in_fw] binding 0.0.0.0:24224
-[0] my_tag: [1464970691, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
+[2016/10/07 21:49:40] [ info] [engine] started
+[2016/10/07 21:49:40] [ info] [in_fw] binding 0.0.0.0:24224
+[0] my_tag: [1475898594, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
 ```
