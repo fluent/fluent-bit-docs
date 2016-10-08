@@ -42,10 +42,10 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ## Testing
 
-Once Fluent Bit is running, you will see some random values in the output interface similar to this:
+Once Fluent Bit is running, you will see the reports in the output interface similar to this:
 
 ```bash
-$ bin/fluent-bit -i random -o stdout
+$ fluent-bit -i random -o stdout
 Fluent-Bit v0.9.0
 Copyright (C) Treasure Data
 

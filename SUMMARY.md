@@ -22,6 +22,7 @@
     * [CPU Usage](input/cpu.md)
     * [Forward](input/forward.md)
     * [Head](input/head.md)
+    * [Health](input/health.md)
     * [Kernel Log Buffer](input/kmsg.md)
     * [Memory Usage](input/mem.md)
     * [MQTT](input/mqtt.md)

@@ -7,6 +7,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [cpu](cpu.md)         | CPU Usage  | measure total CPU usage of the system.|
 | [forward](forward.md) | Forward | Fluentd forward protocol. |
 | [head](head.md)       | Head | read first part of files. |
+| [health](health.md)   | Health | Check health of TCP services. |
 | [kmsg](kmsg.md)       | Kernel Log Buffer | read the Linux Kernel log buffer messages.|
 | [mem](mem.md)         | Memory Usage | measure the total amount of memory used on the system.|
 | [mqtt](mqtt.md)       | MQTT | start a MQTT server and receive publish messages. |
