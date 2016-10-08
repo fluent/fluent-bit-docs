@@ -1,4 +1,4 @@
-![](imgs/logo_documentation.png)
+![](imgs/logo_documentation_0.9.png)
 
 [Fluent Bit](http://fluentbit.io) is a lightweight and optimized events data collector for Linux, Embedded Linux, OSX and BSD family operating systems. It has been made with a strong focus on IoT to allow the collection of events from different sources like network protocols, hardware radios and IoT frameworks.
 
