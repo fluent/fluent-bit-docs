@@ -69,7 +69,7 @@ The third argument __data__ can be used to pass a custom reference to the plugin
 
 __Return Value__
 
-On success, __flb_input()__ returns an integer value >= zero (similar to a file descriptor); on error, it returns NULL.
+On success, __flb_input()__ returns an integer value >= zero (similar to a file descriptor); on error, it returns a negative number.
 
 __Usage__
 
@@ -128,7 +128,7 @@ The third argument __data__ can be used to pass a custom reference to the plugin
 
 __Return Value__
 
-On success, __flb_output()__ returns the output plugin instance; on error, it returns NULL.
+On success, __flb_output()__ returns the output plugin instance; on error, it returns a negative number.
 
 __Usage__
 
