@@ -13,6 +13,10 @@ The __es__ output plugin, allows to flush your records into a [Elastic Search](h
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts.
 
+### TLS / SSL
+
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../getting_started/tls_ssl.md) section.
+
 ## Getting Started
 
 In order to insert records into a Elasticsearch service, you can run the plugin from the command line or through the configuration file:

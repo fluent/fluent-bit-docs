@@ -7,8 +7,8 @@
 [Fluent Bit](http://fluentbit.io) runs as a service, meaning that the API exposed for developers provide interfaces to create and manage a context, specify inputs/outputs, set configuration parameters and set routing paths for the event/records. A typical usage of the library involves:
 
 - Create library instance/context and set properties.
-- Enable _input_ plugin(s) instances and set properties.
-- Enable _output_ plugin(s) instances and set properties.
+- Enable _input_ plugin(s) and set properties.
+- Enable _output_ plugin(s) and set properties.
 - Start the library runtime.
 - Optionally ingest records manually.
 - Stop the library runtime.
@@ -16,14 +16,12 @@
 
 ## Data Types
 
-There are three main data types exposed by the library. All of them including further functions are prefixed with __flb\___. The following table describes them:
+Starting from Fluent Bit v0.9, there is only one data type exposed by the library, by convention prefixed with __flb\___.
 
 
 | Type    | Description          |
 |--------------|----------------------|
 | flb_ctx_t    | Main library context. It aims to reference the context returned by _flb\_create();_|
-| flb_input_t  | Reference an enabled _input_ plugin instance. Used to store the output of _flb\_input(...);_ function. |
-| flb_output_t | Reference an enabled _output_ plugin instance. Used to store the output of _flb\_output(...);_ function. |
 
 ## API Reference
 
@@ -90,7 +88,7 @@ When built, [Fluent Bit](http://fluentbit.io) library contains a certain number 
 __Prototype__
 
 ```C
-flb_input_t *flb_input(flb_ctx_t *ctx, char *name, void *data);
+int flb_input(flb_ctx_t *ctx, char *name, void *data);
 ```
 
 The argument __ctx__ represents the library context created by __flb_create()__, then __name__ is the name of the input plugin that is required to enable.
@@ -99,14 +97,14 @@ The third argument __data__ can be used to pass a custom reference to the plugin
 
 __Return Value__
 
-On success, __flb_input()__ returns the input plugin instance; on error, it returns NULL.
+On success, __flb_input()__ returns an integer value >= zero (similar to a file descriptor); on error, it returns a negative number.
 
 __Usage__
 
 ```C
-flb_input_t *in;
+int in_ffd;
 
-in = flb_input(ctx, "cpu", NULL);
+in_ffd = flb_input(ctx, "cpu", NULL);
 ```
 
 ### Set Input Plugin Properties
@@ -116,7 +114,7 @@ A plugin instance created through __flb_input()__, may provide some configuratio
 __Prototype__
 
 ```C
-int flb_input_set(flb_input_t *in, ...);
+int flb_input_set(flb_ctx_t *ctx, int in_ffd, ...);
 ```
 
 __Return Value__
@@ -130,13 +128,13 @@ The __flb_input_set()__ allows to set one or more properties in a key/value stri
 ```C
 int ret;
 
-ret = flb_input_set(in,
+ret = flb_input_set(ctx, in_ffd,
                     "tag", "my_records",
                     "ssl", "false",
                     NULL);
 ```
 
-The above example specified the values for the properties __tag__ and __ssl__, note that the value is always a string (char *) and once there is no more parameters a NULL argument must be added at the end of the list.
+The argument __ctx__ represents the library context created by __flb_create()__. The above example specified the values for the properties __tag__ and __ssl__, note that the value is always a string (char *) and once there is no more parameters a NULL argument must be added at the end of the list.
 
 The properties allowed per input plugin are specified on each specific plugin documentation.
 
@@ -149,7 +147,7 @@ When built, [Fluent Bit](http://fluentbit.io) library contains a certain number 
 __Prototype__
 
 ```C
-flb_output_t *flb_output(flb_ctx_t *ctx, char *name, void *data);
+int flb_output(flb_ctx_t *ctx, char *name, void *data);
 ```
 
 The argument __ctx__ represents the library context created by __flb_create()__, then __name__ is the name of the output plugin that is required to enable.
@@ -158,14 +156,14 @@ The third argument __data__ can be used to pass a custom reference to the plugin
 
 __Return Value__
 
-On success, __flb_output()__ returns the output plugin instance; on error, it returns NULL.
+On success, __flb_output()__ returns the output plugin instance; on error, it returns a negative number.
 
 __Usage__
 
 ```C
-flb_output_t *out;
+int out_ffd;
 
-out = flb_output(ctx, "stdout", NULL);
+out_ffd = flb_output(ctx, "stdout", NULL);
 ```
 
 ### Set Output Plugin Properties
@@ -175,12 +173,12 @@ A plugin instance created through __flb_output()__, may provide some configurati
 __Prototype__
 
 ```C
-int flb_output_set(flb_output_t *in, ...);
+int flb_output_set(flb_ctx_t *ctx, int out_ffd, ...);
 ```
 
 __Return Value__
 
-On success it returns 0; on error it returns a negative number.
+On success it returns an integer value >= zero (similar to a file descriptor); on error it returns a negative number.
 
 __Usage__
 
@@ -189,13 +187,13 @@ The __flb_output_set()__ allows to set one or more properties in a key/value str
 ```C
 int ret;
 
-ret = flb_output_set(in,
-                    "tag", "my_records",
-                    "ssl", "false",
-                    NULL);
+ret = flb_output_set(ctx, out_ffd,
+                     "tag", "my_records",
+                     "ssl", "false",
+                     NULL);
 ```
 
-The above example specified the values for the properties __tag__ and __ssl__, note that the value is always a string (char *) and once there is no more parameters a NULL argument must be added at the end of the list.
+The argument __ctx__ represents the library context created by __flb_create()__. The above example specified the values for the properties __tag__ and __ssl__, note that the value is always a string (char *) and once there is no more parameters a NULL argument must be added at the end of the list.
 
 The properties allowed per output plugin are specified on each specific plugin documentation.
 
@@ -278,10 +276,10 @@ There are some cases where the caller application may want to ingest data into F
 __Prototype__
 
 ```C
-int flb_lib_push(flb_input_t *input, void *data, size_t len);
+int flb_lib_push(flb_ctx_t *ctx, int in_ffd, void *data, size_t len);
 ```
 
-The first argument __input__ is a reference to an input instance of the __lib__ plugin, __data__ is a reference to the message to be ingested and __len__ the number of bytes to take from it.
+The first argument is the context created previously through __flb_create()__. __in_ffd__ is the numeric reference of the input plugin (for this case it should be an input of plugin __lib__ type), __data__ is a reference to the message to be ingested and __len__ the number of bytes to take from it.
 
 __Return Value__
 

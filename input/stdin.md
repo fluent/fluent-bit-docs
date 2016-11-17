@@ -3,7 +3,7 @@
 The __stdin__ plugin allows to retrieve valid JSON text messages over the standard input interface (stdin). In order to use it, specify the plugin name as the input, e.g:
 
 ```bash
-$ ./bin/fluent-bit -i stdin -o stdout
+$ fluent-bit -i stdin -o stdout
 ```
 
 As input data the _stdin_ plugin recognize the following JSON data formats:
@@ -33,15 +33,14 @@ $ chmod 755 test.sh
 Now lets start the script and [Fluent Bit](http://fluentbit.io) in the following way:
 
 ```bash
-$ ./test.sh | bin/fluent-bit -i stdin -o stdout -v
-Fluent-Bit v0.8.3
+$ ./test.sh | fluent-bit -i stdin -o stdout
+Fluent-Bit v0.9.0
 Copyright (C) Treasure Data
 
-[2016/07/24 20:57:28] [ info] starting engine
-[2016/07/24 20:57:28] [debug] [router] default match rule stdin.0:stdout.0
-[0] (null): [1469361448, {"key"=>"some value"}]
-[1] (null): [1469361449, {"key"=>"some value"}]
-[2] (null): [1469361450, {"key"=>"some value"}]
-[3] (null): [1469361451, {"key"=>"some value"}]
-[4] (null): [1469361452, {"key"=>"some value"}]
+[2016/10/07 21:44:46] [ info] [engine] started
+[0] stdin.0: [1475898286, {"key"=>"some value"}]
+[1] stdin.0: [1475898287, {"key"=>"some value"}]
+[2] stdin.0: [1475898288, {"key"=>"some value"}]
+[3] stdin.0: [1475898289, {"key"=>"some value"}]
+[4] stdin.0: [1475898290, {"key"=>"some value"}]
 ```

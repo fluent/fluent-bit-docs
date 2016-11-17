@@ -31,9 +31,9 @@ The following C code snippet shows how to insert a few JSON records into a runni
 int main()
 {
     int ret;
+    int in_ffd;
+    int out_ffd;
     flb_ctx_t *ctx;
-    flb_input_t *in;
-    flb_output_t *out;
 
     /* Create library context */
     ctx = flb_create();
@@ -42,15 +42,15 @@ int main()
     }
 
     /* Enable the input plugin for manual data ingestion */
-    in = flb_input(ctx, "lib", NULL);
-    if (!in) {
+    in_ffd = flb_input(ctx, "lib", NULL);
+    if (in_ffd == -1) {
         flb_destroy(ctx);
         return -1;
     }
 
     /* Enable output plugin 'stdout' (print records to the standard output) */
-    out = flb_output(ctx, "stdout", NULL);
-    if (!out) {
+    out_ffd = flb_output(ctx, "stdout", NULL);
+    if (out_ffd == -1) {
         flb_destroy(ctx);
         return -1;
     }
@@ -63,8 +63,8 @@ int main()
     }
 
     /* Ingest data manually */
-    flb_lib_push(in, JSON_1, sizeof(JSON_1) - 1);
-    flb_lib_push(in, JSON_2, sizeof(JSON_2) - 1);
+    flb_lib_push(ctx, in_ffd, JSON_1, sizeof(JSON_1) - 1);
+    flb_lib_push(ctx, in_ffd, JSON_2, sizeof(JSON_2) - 1);
 
     /* Stop the engine (5 seconds to flush remaining data) */
     flb_stop(ctx);
