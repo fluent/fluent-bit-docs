@@ -6,7 +6,7 @@
 
 [Fluent Bit](http://fluentbit.io) runs as a service, meaning that the API exposed for developers provide interfaces to create and manage a context, specify inputs/outputs, set configuration parameters and set routing paths for the event/records. A typical usage of the library involves:
 
-- Create library instance/context.
+- Create library instance/context and set properties.
 - Enable _input_ plugin(s) and set properties.
 - Enable _output_ plugin(s) and set properties.
 - Start the library runtime.
@@ -50,6 +50,34 @@ if (!ctx) {
     return NULL;
 }
 ```
+
+### Set Service Properties
+
+Using the __flb_service_set()__ function is possible to set context properties.
+
+__Prototype__
+
+```C
+int flb_service_set(flb_ctx_t *ctx, ...);
+```
+
+__Return Value__
+
+On success it returns 0; on error it returns a negative number.
+
+__Usage__
+
+The __flb_service_set()__ allows to set one or more properties in a key/value string mode, e.g:
+
+```C
+int ret;
+
+ret = flb_service_set(ctx, "Flush", "1", NULL);
+
+```
+
+The above example specified the values for the properties __Flush__ , note that the value is always a string (char *) and once there is no more parameters a NULL argument must be added at the end of the list.
+
 
 ### Enable Input Plugin Instance
 
@@ -95,7 +123,7 @@ On success it returns 0; on error it returns a negative number.
 
 __Usage__
 
-The __flb_input_set()__ allow to set one or more properties in a key/value string mode, e.g:
+The __flb_input_set()__ allows to set one or more properties in a key/value string mode, e.g:
 
 ```C
 int ret;
@@ -154,7 +182,7 @@ On success it returns an integer value >= zero (similar to a file descriptor); o
 
 __Usage__
 
-The __flb_output_set()__ allow to set one or more properties in a key/value string mode, e.g:
+The __flb_output_set()__ allows to set one or more properties in a key/value string mode, e.g:
 
 ```C
 int ret;
