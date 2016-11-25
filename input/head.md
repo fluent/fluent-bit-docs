@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Buf_Size      | Buffer size to read the file. |
 | Interval_Sec  | Polling interval (seconds). |
 | Interval_NSec | Polling interval (nanosecond). |
+| Add_Path      | If enabled, filepath is appended to each records. Default value is _false_. |
 
 ## Getting Started
 
