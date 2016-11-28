@@ -29,6 +29,7 @@
     * [Random](input/random.md)
     * [Serial Interface](input/serial.md)
     * [Standard Input](input/stdin.md)
+    * [Tail](input/tail.md)
     * [XBee Radio](input/xbee.md)
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
