@@ -1,4 +1,4 @@
-# TLS \/ SSL
+# TLS / SSL
 
 Fluent Bit provides integrated support for _Transport Layer Security_ \(TLS\) and it predecessor _Secure Sockets Layer_ \(SSL\) respectively. In this section we will refer as TLS only for both implementations.
 
@@ -48,4 +48,3 @@ The same behavior can be accomplished using a configuration file:
     tls        On
     tls.verify Off
 ```
-
