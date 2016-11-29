@@ -8,10 +8,11 @@ The plugin reads every matched file in the _Path_ pattern and for every new line
 
 The plugin supports the following configuration parameters:
 
-| Key         | Description       |
-| ------------|-------------------|
-| Path        | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
-| DB          | Specify the database file to keep track of monitored files and offsets.                       |
+| Key          | Description       |
+| -------------|-------------------|
+| Path         | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
+| Exclude\_Path| Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip |
+| DB           | Specify the database file to keep track of monitored files and offsets.                       |
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.
 
