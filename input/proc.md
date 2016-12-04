@@ -1,6 +1,6 @@
 # Process
 
-_Process_ input plugin allows you to check how _health_ a process is. It does the check by issuing a process every a certain interval of time.
+_Process_ input plugin allows you to check how health a process is. It does the check by issuing a process every a certain interval of time.
 
 ## Configuration Parameters
 
@@ -11,7 +11,7 @@ The plugin supports the following configuration parameters:
 | Proc_Name    | Name of the target Process to check. |
 | Interval\_Sec| Interval in seconds between the service checks. Default value is _1_. |
 | Internal\_Nsec| Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_.|
-| Alert        | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled.|
+| Alert        | If enabled, it will only generate messages if the target process is down. By default this option is disabled.|
 
 ## Getting Started
 
