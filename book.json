@@ -1,0 +1,11 @@
+{
+    "plugins": [
+        "addcssjs"
+    ],
+
+    "pluginsConfig": {
+        "addcssjs": {
+            "js": ["js/heapanalytics.js", "js/googleanalytics.js"]
+        }
+    }
+}
