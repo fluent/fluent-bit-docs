@@ -13,6 +13,7 @@ The plugin supports the following configuration parameters:
 | Path         | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
 | Exclude\_Path| Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip |
 | Refresh\_Interval|The interval of refreshing the list of watched files. Default is 60 seconds. |
+| Rotate\_Wait | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.|
 | DB           | Specify the database file to keep track of monitored files and offsets.                       |
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.
