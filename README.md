@@ -1,4 +1,4 @@
-![](imgs/logo_documentation_0.10.png)
+![](imgs/logo_documentation_0.11.png)
 
 [Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Data Forwarder for Linux, OSX and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
 
