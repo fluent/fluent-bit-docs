@@ -35,6 +35,7 @@
     * [XBee Radio](input/xbee.md)
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
+    * [FlowCounter](output/flowcounter.md)
     * [Forward](output/forward.md)
     * [HTTP](output/http.md)
     * [InfluxDB](output/influxdb.md)

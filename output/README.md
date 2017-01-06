@@ -4,6 +4,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 
 | name                      |  title             | description     |
 |---------------------------|--------------------|-----------------|
+| [flowcounter](flowcounter.md)| FlowCounter     | Count records   |
 | [forward](forward.md)     | Forward  | Fluentd forward protocol. |
 | [http](http.md)           | HTTP     | Flush records to an HTTP end point. |
 | [influxdb](influxdb.md)   | InfluxDB | Flush records to InfluxDB time series database. |
