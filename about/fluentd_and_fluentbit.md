@@ -15,10 +15,10 @@ The following table describe a comparisson on different areas of the projects:
 |-----------------------|-----------------------|-----------------------|
 | Scope                 | Containers / Servers  | Containers / Servers  |
 | Language              | C & Ruby              | C                     |
-| Memory                | ~40MB                 | ~250KB                |
+| Memory                | ~40MB                 | ~450KB                |
 | Performance           | High Performance      | High Performance      |
 | Dependencies          | Built as a Ruby Gem, it requires a certain number of gems. | Zero dependencies, unless some special plugin requires them. |
-| Plugins               | More than 650 plugins available | Around 20 plugins available|
+| Plugins               | More than 650 plugins available | Around 30 plugins available|
 | License               | [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) | [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0)|
 
 Considering Fluentd as a main Aggregator and Fluent Bit as a Data Forwarder, we can see both projects complement each other providing a full reliable solution.
