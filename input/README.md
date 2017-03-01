@@ -5,6 +5,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | name                        |  title             | description     |
 |-----------------------------|--------------------|-----------------|
 | [cpu](cpu.md)         | CPU Usage  | measure total CPU usage of the system.|
+| [disk](disk.md)       | Disk Usage | measure Disk I/Os. |
 | [forward](forward.md) | Forward | Fluentd forward protocol. |
 | [head](head.md)       | Head | read first part of files. |
 | [health](health.md)   | Health | Check health of TCP services. |

@@ -27,6 +27,7 @@
     * [TLS / SSL](configuration/tls_ssl.md)
 * [Input Plugins](input/README.md)
     * [CPU Usage](input/cpu.md)
+    * [Disk Usage](input/disk.md)
     * [Forward](input/forward.md)
     * [Head](input/head.md)
     * [Health](input/health.md)
