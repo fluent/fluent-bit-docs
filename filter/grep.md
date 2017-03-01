@@ -1,4 +1,4 @@
-# Grep
+# Grep Filter
 
 The _Grep Filter_ plugin allows to match or exclude specific records based in regular expression patterns.
 
