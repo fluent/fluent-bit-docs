@@ -44,6 +44,7 @@
 * [Filter Plugins](filter/README.md)
     * [Grep](filter/grep.md)
     * [Kubernetes](filter/kubernetes.md)
+    * [Standard Output](filter/stdout.md)
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
     * [FlowCounter](output/flowcounter.md)
