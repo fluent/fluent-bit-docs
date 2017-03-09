@@ -4,11 +4,13 @@ There are some cases where using the command line to start Fluent Bit is not ide
 
 Fluent Bit allows to use one configuration file which works at a global scope and uses the [schema](configuration_schema.md) defined previously.
 
-The configuration file support three types of sections:
+The configuration file supports four types of sections:
 
 - Service
 - Input
+- Filter
 - Output
+
 
 ## Service
 
@@ -59,6 +61,28 @@ The following is an example of an _INPUT_ section:
     Tag  my_cpu
 ```
 
+## Filter
+
+A _FILTER_ section defines a filter (related to an filter plugin), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
+
+| Key    | Description               |
+|--------|---------------------------|
+| Name   | Name of the filter plugin. |
+| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the start (*) character as a wildcard. | |
+
+
+The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ is mandatory for all plugins.
+
+### Example
+
+The following is an example of an _FILTER_ section:
+
+```Python
+[FILTER]
+    Name  stdout
+    Match *
+```
+
 ## Output
 
 The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
@@ -66,11 +90,11 @@ The _OUTPUT_ section specify a destination that certain records should follow af
 | Key    | Description                |
 |--------|----------------------------|
 | Name   | Name of the output plugin. |
-| Match  | It set a pattern to match certain records Tag. It's case sensitive and support the start (*) character as a wildcard. |
+| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the start (*) character as a wildcard. |
 
 ### Example
 
-The following is an example of an _INPUT_ section:
+The following is an example of an _OUTPUT_ section:
 
 ```Python
 [OUTPUT]
