@@ -38,6 +38,7 @@
     * [Random](input/random.md)
     * [Serial Interface](input/serial.md)
     * [Standard Input](input/stdin.md)
+    * [Syslog](input/syslog.md)
     * [Tail](input/tail.md)
     * [TCP](input/tcp.md)
     * [XBee Radio](input/xbee.md)
