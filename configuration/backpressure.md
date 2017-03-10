@@ -1,8 +1,8 @@
-# Back Pressure
+# Backpressure
 
 In certain environments is common to see that logs or data being ingested is faster than the ability to flush it to some destinations. The common case is reading from big log files and dispatching the logs to a backend over the network which takes some time to respond, this generate backpressure leading to a high memory consumption in the service.
 
-In order to avoid back pressure, Fluent Bit implements a mechanism in the engine that restrict the amount of data than an input plugin can ingest, this is done through the configuration parameter __Mem_Buf_Limit__.
+In order to avoid backpressure, Fluent Bit implements a mechanism in the engine that restrict the amount of data than an input plugin can ingest, this is done through the configuration parameter __Mem_Buf_Limit__.
 
 ## Mem_Buf_Limit
 

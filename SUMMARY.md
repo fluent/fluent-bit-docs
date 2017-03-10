@@ -25,7 +25,7 @@
     * [Configuration Schema](configuration/schema.md)
     * [Configuration File](configuration/file.md)
     * [TLS / SSL](configuration/tls_ssl.md)
-    * [Back Pressure](configuration/back_pressure.md)
+    * [Backpressure](configuration/backpressure.md)
     * [Memory Usage](configuration/memory_usage.md)
 * [Input Plugins](input/README.md)
     * [CPU Usage](input/cpu.md)
