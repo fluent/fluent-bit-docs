@@ -11,6 +11,7 @@ The plugin supports the following configuration parameters:
 | Key          | Description       |
 | -------------|-------------------|
 | Path         | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
+| Path\_Key    | If enable, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |
 | Exclude\_Path| Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip |
 | Refresh\_Interval|The interval of refreshing the list of watched files. Default is 60 seconds. |
 | Rotate\_Wait | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.|
