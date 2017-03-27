@@ -49,6 +49,7 @@
     * [Kubernetes](filter/kubernetes.md)
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
+    * [File](output/file.md)
     * [FlowCounter](output/flowcounter.md)
     * [Forward](output/forward.md)
     * [HTTP](output/http.md)
