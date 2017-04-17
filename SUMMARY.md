@@ -49,6 +49,7 @@
     * [Grep](filter/grep.md)
     * [Kubernetes](filter/kubernetes.md)
     * [Record Modifier](filter/record_modifier.md)
+    * [Standard Output](filter/stdout.md)
 * [Output Plugins](output/README.md)
     * [Elasticsearch](output/elasticsearch.md)
     * [File](output/file.md)
