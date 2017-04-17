@@ -16,6 +16,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [random](random.md)   | Random |Generate Random samples. |
 | [serial](serial.md)   | Serial Interface | read data information from the serial interface.|
 | [stdin](stdin.md)     | Standard Input | read data from the standard input. |
+| [syslog](syslog.md)   | Syslog | read syslog messages from a Unix socket. |
 | [tail](tail.md)       | Tail | Tail log files |
 | [tcp](tcp.md)         | TCP | Listen for JSON messages over TCP. |
 | [xbee](xbee.md)       | XBee Radio | read data through an XBee Radio device. |

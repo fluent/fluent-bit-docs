@@ -1,15 +1,42 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The __forward__ output plugin allows to integrate [Fluent Bit](http://fluentbit.io) with [Fluentd](http://fluentd.org) easily. There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be on the local host or a in a remote machine.
+_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The __forward__ output plugin allows to provide interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org). There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be in the local host or a in a remote machine.
 
-## Configuration Parameters
+This plugin offers two different transports and modes:
 
-The plugin supports the following configuration parameters:
+- Forward (TCP): It uses a plain TCP connection.
+- Secure Forward (TLS): when TLS is enabled, the plugin switch to Secure Forward mode.
+
+Content:
+
+- [Configuration Parameters](#config_tcp)
+- [Secure Forward Configuration Parameters](#config_tls)
+- [Forward Setup](#forward_setup)
+- [Secure Forward Setup](#secure_forward_setup)
+
+## Configuration Parameters {#config_tcp}
+
+The following parameters are mandatory for eiter Forward for Secure Forward modes:
 
 | Key      | Description       |
 | ---------|-------------------|
 | Host     | Target host where Fluent-Bit or Fluentd are listening for Forward messages. |
 | Port     | TCP Port of the target service. |
+
+## Secure Forward Mode Configuration Parameters {#config_tls}
+
+When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
+
+| Key            | Description       | Default |
+|----------------|-------------------|---------|
+| Shared\_Key    | A key string known by the remote Fluentd used for authorization. ||
+| Self\_Hostname | Default value of the auto-generated certificate common name (CN).||
+| tls | Enable or disable TLS support | Off |
+| tls.verify | Force certificate validation | On |
+| tls.ca\_file | Absolute path to CA certificate file ||
+| tls.crt\_file | Absolute path to Certificate file. ||
+| tls.key\_file | Absolute path to private Key file. ||
+| tls.key\_passwd | Optional password for tls.key\_file file. ||
 
 ## Forward Setup
 
@@ -21,7 +48,7 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 <source>
   type forward
   bind 0.0.0.0
-  port 12225
+  port 24224
 </source>
 
 <match fluent_bit>
@@ -29,41 +56,49 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specifies that will listen for _TCP_ connections on the port _12225_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG, will print it out to the standard output.
+That configuration file specifies that will listen for _TCP_ connections on the port _24224_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG__, will print the message to the standard output.
 
 In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created (in_fluent-bit.conf):
 
 ```bash
-$ fluentd -c in_fluent-bit.conf
-2015-07-29 14:50:47 -0600 [info]: reading config file path="in_fluent-bit.conf"
-2015-07-29 14:50:47 -0600 [info]: starting fluentd-0.12.14
-2015-07-29 14:50:47 -0600 [info]: gem 'fluent-plugin-mongo' version '0.7.9'
-2015-07-29 14:50:47 -0600 [info]: gem 'fluent-plugin-multi-format-parser' version '0.0.2'
-2015-07-29 14:50:47 -0600 [info]: gem 'fluent-plugin-rewrite-tag-filter' version '1.5.1'
-2015-07-29 14:50:47 -0600 [info]: gem 'fluentd' version '0.12.8'
-2015-07-29 14:50:47 -0600 [info]: gem 'fluentd' version '0.12.5'
-2015-07-29 14:50:47 -0600 [info]: gem 'fluentd' version '0.10.61'
-2015-07-29 14:50:47 -0600 [info]: adding match pattern="fluent_bit" type="stdout"
-2015-07-29 14:50:47 -0600 [info]: adding source type="forward"
-2015-07-29 14:50:47 -0600 [info]: using configuration file: <ROOT>
-<source>
-  type forward
-  bind 0.0.0.0
-  port 12225
-</source>
-<match fluent_bit>
-  type stdout
+$ fluentd -c test.conf
+2017-03-23 11:50:43 -0600 [info]: reading config file path="test.conf"
+2017-03-23 11:50:43 -0600 [info]: starting fluentd-0.12.33
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-mixin-config-placeholders' version '0.3.1'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-docker' version '0.1.0'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-elasticsearch' version '1.4.0'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-flatten-hash' version '0.2.0'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-flowcounter-simple' version '0.0.4'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-influxdb' version '0.2.8'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-json-in-json' version '0.1.4'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-mongo' version '0.7.10'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-out-http' version '0.1.3'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-parser' version '0.6.0'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-record-reformer' version '0.7.0'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-rewrite-tag-filter' version '1.5.1'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-stdin' version '0.1.1'
+2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-td' version '0.10.27'
+2017-03-23 11:50:43 -0600 [info]: adding match pattern="fluent_bit" type="stdout"
+2017-03-23 11:50:43 -0600 [info]: adding source type="forward"
+2017-03-23 11:50:43 -0600 [info]: using configuration file: <ROOT>
+  <source>
+    type forward
+    bind 0.0.0.0
+    port 24224
+  </source>
+  <match fluent_bit>
+    type stdout
   </match>
 </ROOT>
-2015-07-29 14:50:47 -0600 [info]: listening fluent socket on 0.0.0.0:12225
+2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
 ```
 
-## Fluent Bit Setup
+## Fluent Bit + Forward Setup {#forward_setup}
 
 Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the __forward__ output plugin will flush the information using the following format:
 
 ```
-bin/fluent-bit -i INPUT -o forward://HOST:PORT/TAG
+bin/fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
 If the __TAG__ parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that __TAG__ is important for routing rules inside [Fluentd](http://fluentd.org).
@@ -71,35 +106,97 @@ If the __TAG__ parameter is not set, the plugin will set the tag as _fluent\_bit
 Using the [CPU](../input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
 
 ```bash
-$ bin/fluent-bit -i cpu -o forward://127.0.0.1:12225
+$ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
 ```
-
-In [Fluent Bit](http://fluentbit.io) we should see the following output:
-
-```
-Fluent Bit v0.3.0
-Copyright (C) Treasure Data
-
-[2015/07/29 14:58:02] [ info] Configuration
- flush time     : 5 seconds
- input plugins  : cpu
- collectors     :
-[2015/07/29 14:58:02] [ info] starting engine
-[2015/07/29 14:58:02] [debug] [in_cpu] CPU 4.25% (buffer=0)
-[2015/07/29 14:58:03] [debug] [in_cpu] CPU 13.00% (buffer=1)
-[2015/07/29 14:58:04] [debug] [in_cpu] CPU 8.50% (buffer=2)
-[2015/07/29 14:58:05] [debug] [in_cpu] CPU 2.50% (buffer=3)
-[2015/07/29 14:58:06] [ info] Flush buf 98 bytes
-```
-
-Now on the [Fluentd](http://fluentd.org) side the following:
+Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gathered in the last seconds:
 
 ```bash
-2015-07-29 14:50:47 -0600 [info]: listening fluent socket on 0.0.0.0:12225
-2015-07-29 14:58:02 -0600 fluent_bit: {"cpu":4.25}
-2015-07-29 14:58:03 -0600 fluent_bit: {"cpu":13.0}
-2015-07-29 14:58:04 -0600 fluent_bit: {"cpu":8.5}
-2015-07-29 14:58:05 -0600 fluent_bit: {"cpu":2.5}
+2017-03-23 11:53:06 -0600 fluent_bit: {"cpu_p":0.0,"user_p":0.0,"system_p":0.0,"cpu0.p_cpu":0.0,"cpu0.p_user":0.0,"cpu0.p_system":0.0,"cpu1.p_cpu":0.0,"cpu1.p_user":0.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
+2017-03-23 11:53:07 -0600 fluent_bit: {"cpu_p":2.25,"user_p":2.0,"system_p":0.25,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":1.0,"cpu1.p_user":1.0,"cpu1.p_system":0.0,"cpu2.p_cpu":1.0,"cpu2.p_user":1.0,"cpu2.p_system":0.0,"cpu3.p_cpu":3.0,"cpu3.p_user":2.0,"cpu3.p_system":1.0}
+2017-03-23 11:53:08 -0600 fluent_bit: {"cpu_p":1.75,"user_p":1.0,"system_p":0.75,"cpu0.p_cpu":2.0,"cpu0.p_user":1.0,"cpu0.p_system":1.0,"cpu1.p_cpu":3.0,"cpu1.p_user":1.0,"cpu1.p_system":2.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":2.0,"cpu3.p_user":1.0,"cpu3.p_system":1.0}
+2017-03-23 11:53:09 -0600 fluent_bit: {"cpu_p":4.75,"user_p":3.5,"system_p":1.25,"cpu0.p_cpu":4.0,"cpu0.p_user":3.0,"cpu0.p_system":1.0,"cpu1.p_cpu":5.0,"cpu1.p_user":4.0,"cpu1.p_system":1.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":5.0,"cpu3.p_user":4.0,"cpu3.p_system":1.0}
 ```
 
 So we gathered [CPU](../input/cpu.md) metrics and flush them out to [Fluentd](http://fluentd.org) properly.
+
+## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
+
+> DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
+
+Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](../configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
+
+#### Fluent Bit
+
+Paste this content in a file called _flb.conf_:
+
+```
+[SERVICE]
+    Flush      5
+    Daemon     off
+    Log_Level  info
+
+[INPUT]
+    Name       cpu
+    Tag        cpu_usage
+
+[OUTPUT]
+    Name          forward
+    Match         *
+    Host          127.0.0.1
+    Port          24284
+    Shared_Key    secret
+    Self_Hostname flb.local
+    tls           on
+    tls.verify    off
+```
+
+#### Fluentd
+
+Paste this content in a file called _fld.conf_:
+
+```
+<source>
+  @type         secure_forward
+  self_hostname myserver.local
+  shared_key    secret
+  secure no
+</source>
+
+<match **>
+ @type stdout
+</match>
+```
+
+#### Test Communication
+
+Start Fluentd:
+
+```
+$ fluentd -c fld.conf
+```
+
+Start Fluent Bit:
+
+```
+$ fluent-bit -c flb.conf
+```
+
+After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd output you will see a message like this:
+
+```
+2017-03-23 13:34:40 -0600 [info]: using configuration file: <ROOT>
+  <source>
+    @type secure_forward
+    self_hostname myserver.local
+    shared_key xxxxxx
+    secure no
+  </source>
+  <match **>
+    @type stdout
+  </match>
+</ROOT>
+2017-03-23 13:34:41 -0600 cpu_usage: {"cpu_p":1.0,"user_p":0.75,"system_p":0.25,"cpu0.p_cpu":1.0,"cpu0.p_user":1.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":1.0,"cpu1.p_system":1.0,"cpu2.p_cpu":1.0,"cpu2.p_user":1.0,"cpu2.p_system":0.0,"cpu3.p_cpu":2.0,"cpu3.p_user":1.0,"cpu3.p_system":1.0}
+2017-03-23 13:34:42 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.75,"system_p":0.0,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
+2017-03-23 13:34:43 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.25,"system_p":0.5,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":0.0,"cpu3.p_system":1.0}
+2017-03-23 13:34:44 -0600 cpu_usage: {"cpu_p":5.0,"user_p":3.25,"system_p":1.75,"cpu0.p_cpu":4.0,"cpu0.p_user":2.0,"cpu0.p_system":2.0,"cpu1.p_cpu":8.0,"cpu1.p_user":5.0,"cpu1.p_system":3.0,"cpu2.p_cpu":4.0,"cpu2.p_user":3.0,"cpu2.p_system":1.0,"cpu3.p_cpu":4.0,"cpu3.p_user":2.0,"cpu3.p_system":2.0}
+```
