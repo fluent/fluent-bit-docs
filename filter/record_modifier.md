@@ -8,7 +8,7 @@ The plugin supports the following configuration parameters:
 _Remove_key_ and _Whitelist_key_ are exclusive.
 
 | Key           | Description       |
-| --------------|-----------------------|-------------------|
+| --------------|-------------------|
 | Record        | Append fields. This parameter needs key and value pair.|
 | Remove_key    | If the key is matched, that field is removed. |
 | Whitelist_key | If the key is __not__ matched, that field is removed. |
