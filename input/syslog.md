@@ -9,7 +9,7 @@ The plugin supports the following configuration parameters:
 | Key         | Description       |
 | ------------|-------------------|
 | Path        | Absolute path to the Unix socket file. |
-| Parser      | Specify an alternative parser for the message. |
+| Parser      | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |
 | Buffer\_Size| Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |
 | Chunk_Size  | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). |
 
