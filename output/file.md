@@ -9,6 +9,30 @@ The plugin supports the following configuration parameters:
 | Key  | Description |
 |------|-------------|
 | Path | File path to output. If not set, the filename will be tag name.|
+| Format | The format of the file content. See also Format section. Default: out_file.|
+
+## Format
+
+### out_file format
+
+Output time, tag and json records. There is no configuration parameters for out_file.
+
+```json
+tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
+```
+
+### csv format
+
+Output the records as csv. Csv supports an additional configuration parameter.
+
+| Key  | Description |
+|------|-------------|
+| Delimiter | The character to separate each data. Default: ','|
+
+
+```python
+time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
+```
 
 ## Getting Started
 
