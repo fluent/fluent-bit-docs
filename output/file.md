@@ -34,6 +34,19 @@ Output the records as csv. Csv supports an additional configuration parameter.
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 ```
 
+### ltsv format
+
+Output the records as LTSV. LTSV supports an additional configuration parameter.
+
+| Key  | Description |
+|------|-------------|
+| Delimiter       | The character to separate each pair. Default: '\t'(TAB)|
+| Label_Delimiter | The character to separate label and the value. Default: ':'|
+
+```python
+field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
+```
+
 ## Getting Started
 
 You can run the plugin from the command line or through the configuration file:
