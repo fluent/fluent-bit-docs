@@ -25,4 +25,4 @@ The above log line is a raw string without format, ideally we would like to give
  }
  ```
 
-Parsers are fully configurable, for more details please refer to the [Parsers](../parser/README.md) section.
+Parsers are fully configurable and are independently and optionally handled by each input plugin, for more details please refer to the [Parsers](../parser/README.md) section.
