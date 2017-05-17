@@ -54,3 +54,9 @@ The parsers file expose all parsers available that can be used by the Input plug
 For more information about the parsers available, please refer to the default parsers file distributed with Fluent Bit source code:
 
 https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf
+
+## About Fractional Seconds
+
+Some timestamps might have fractional seconds like _2017-05-17T15:44:31__.187512963__Z_. Since Fluent Bit v0.11 don't support nanoseconds resolution, the __%L__ format option for Time\_Format is provided as a way to indicate that content must be parsed since a further content after that might exists like a timezone (.eg: +0500).
+
+Full support of Nanoseconds resolution is current available in Fluent Bit v0.12 (not yet released).
