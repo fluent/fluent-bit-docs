@@ -15,6 +15,8 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 | Logstash\_DateFormat | Time format (based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)) to generate the second part of the Index name. | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field. | @timestamp |
 | Time\_Key\_Format | When Logstash\_Format is enabled, this property defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S|
+| Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
+| Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | _flb-key |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts.
 
