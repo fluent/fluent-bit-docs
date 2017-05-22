@@ -4,12 +4,14 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 
 ## Configuration Parameters
 
-| Key         | Description          | default           |
-|-------------|----------------------|-------------------|
-| Host        | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
-| Port        | TCP port of the target Elasticsearch instance | 9200 |
-| Index       | Index name | fluentbit |
-| Type        | Type name  | flb_type |
+| Key          | Description          | default           |
+|--------------|----------------------|-------------------|
+| Host         | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
+| Port         | TCP port of the target Elasticsearch instance | 9200 |
+| HTTP\_User   | Optional username credential for Elastic X-Pack access | |
+| HTTP\_Passwd | Password for user defined in HTTP\_User | |
+| Index        | Index name | fluentbit |
+| Type         | Type name  | flb_type |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off | Off |
 | Logstash\_Prefix | When enabling Logstash\_Format, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
 | Logstash\_DateFormat | Time format (based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)) to generate the second part of the Index name. | %Y.%m.%d |
