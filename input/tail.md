@@ -11,14 +11,24 @@ The plugin supports the following configuration parameters:
 | Key          | Description       |
 | -------------|-------------------|
 | Path         | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
-| Path\_Key    | If enable, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |
+| Path\_Key    | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |
 | Exclude\_Path| Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip |
 | Refresh\_Interval|The interval of refreshing the list of watched files. Default is 60 seconds. |
 | Rotate\_Wait | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.|
 | DB           | Specify the database file to keep track of monitored files and offsets.                       |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |
+| Parser       | Specify the name of a parser to interpret the entry as a structured message. |
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.
+
+Additionally the following options exists to configure the handling of multi-lines files:
+
+| Key          | Description       | Default |
+|--------------|-------------------|---------|
+| Multiline    | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. Note that when this option is enabled the Parser option is not used. | Off |
+| Multiline\_Flush | Wait period time in seconds to process queued multiline messages  | 4 |
+| Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. | |
+| Parser_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. | |
 
 ## Getting Started
 
