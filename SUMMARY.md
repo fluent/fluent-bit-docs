@@ -42,6 +42,7 @@
     * [Serial Interface](input/serial.md)
     * [Standard Input](input/stdin.md)
     * [Syslog](input/syslog.md)
+    * [Systemd](input/systemd.md)
     * [Tail](input/tail.md)
     * [TCP](input/tcp.md)
     * [XBee Radio](input/xbee.md)
