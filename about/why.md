@@ -1,6 +1,6 @@
 # Why Fluent Bit ?
 
-Data collection is hard.
+Data collection and log forwarding is hard.
 
 Nowadays the number of sources of information that we get in our environments often increase. Handling data collection at scale is complex, the ways to collect data from and it formats requires a specialized tool that can deal with:
 
