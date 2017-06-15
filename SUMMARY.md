@@ -62,6 +62,7 @@
     * [HTTP](output/http.md)
     * [InfluxDB](output/influxdb.md)
     * [NATS](output/nats.md)
+    * [NULL](output/null.md)
     * [Standard Output](output/stdout.md)
     * [Treasure Data](output/td.md)
 * [Kubernetes](kubernetes/README.md)
