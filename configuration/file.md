@@ -23,8 +23,6 @@ The _Service_ section defines global properties of the service, the keys availab
 | Log_File        | Absolute path for an optional log file.| |
 | Log_Level       | Set the logging verbosity level. Allowed values are: error, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, info and debug. Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled.| info |
 | Parsers_File    | Path for a _parsers_ configuration file. | |
-| HTTP_Monitor    | Enable web service monitoring interface. | Off |
-| HTTP_Port       | TCP port for web service monitoring interface. | 2020 |
 
 ### Example
 
@@ -35,8 +33,6 @@ The following is an example of a _SERVICE_ section:
     Flush           5
     Daemon          off
     Log_Level       debug
-    HTTP_Monitoring On
-    HTTP_Port       2020
 ```
 
 ## Input
