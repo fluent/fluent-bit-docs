@@ -8,15 +8,17 @@ The plugin reads every matched file in the _Path_ pattern and for every new line
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description       |
-| -------------|-------------------|
-| Path         | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |
-| Path\_Key    | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |
-| Exclude\_Path| Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip |
-| Refresh\_Interval|The interval of refreshing the list of watched files. Default is 60 seconds. |
-| Rotate\_Wait | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.|
-| DB           | Specify the database file to keep track of monitored files and offsets.                       |
-| Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |
+| Key                  | Description       | Default     |
+| ---------------------|-------------------|-------------|
+| Buffer\_Chunk\_Size  | Set the initial buffer size to read files data. This value is used too to increase buffer size. | 32K |
+| Buffer\_Max\_Size    | Set the limit of the buffer size per monitored file. When a buffer needs to be increased (e.g: very long lines), this value is used to restrict how much the memory buffer can grow. If reading a file exceed this limit, the file is removed from the monitored file list. | Buffer\_Chunk\_Size |
+| Path                 | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |     |
+| Path\_Key            | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. | |
+| Exclude\_Path        | Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip | |
+| Refresh\_Interval    | The interval of refreshing the list of watched files. Default is 60 seconds. | |
+| Rotate\_Wait         | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.| |
+| DB                   | Specify the database file to keep track of monitored files and offsets. | |
+| Mem\_Buf\_Limit      | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | Parser       | Specify the name of a parser to interpret the entry as a structured message. |
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.

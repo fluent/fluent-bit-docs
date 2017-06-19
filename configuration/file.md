@@ -33,8 +33,6 @@ The following is an example of a _SERVICE_ section:
     Flush           5
     Daemon          off
     Log_Level       debug
-    HTTP_Monitoring On
-    HTTP_Port       2020
 ```
 
 ## Input
