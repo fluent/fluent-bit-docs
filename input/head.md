@@ -13,6 +13,7 @@ The plugin supports the following configuration parameters:
 | Interval_Sec  | Polling interval (seconds). |
 | Interval_NSec | Polling interval (nanosecond). |
 | Add_Path      | If enabled, filepath is appended to each records. Default value is _false_. |
+| Key           | Rename a key. Default: head. |
 
 ## Getting Started
 
