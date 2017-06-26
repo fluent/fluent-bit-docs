@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 | ------------|-------------------|
 | Listen      | Listener network interface, default: 0.0.0.0. |
 | Port        | TCP port where listening for connections, default: 24224. |
-| Buffer\_Size| Specify the maximum buffer size in KB to receive a Forward message. If not set, the default size will be the value of _Chunk\_Size_. |
-| Chunk_Size  | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). |
+| Buffer\_Size| Specify the maximum buffer size in KB to receive a Forward message. If not set, the default size will be the value of _Chunk\_Size_. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. |
+| Chunk_Size  | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in Kilobytes. If not set, _Chunk\_Size_ is equal to 32k. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. |
 
 ## Getting Started
 
