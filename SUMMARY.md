@@ -25,6 +25,7 @@
     * [Configuration Schema](configuration/schema.md)
     * [Configuration File](configuration/file.md)
     * [Configuration Variables](configuration/variables.md)
+    * [Unit Sizes](configuration/unit_sizes.md)
     * [TLS / SSL](configuration/tls_ssl.md)
     * [Backpressure](configuration/backpressure.md)
     * [Memory Usage](configuration/memory_usage.md)
