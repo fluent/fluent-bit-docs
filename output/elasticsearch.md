@@ -8,6 +8,7 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 |--------------|----------------------|-------------------|
 | Host         | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port         | TCP port of the target Elasticsearch instance | 9200 |
+| Pipeline     | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | |
 | HTTP\_User   | Optional username credential for Elastic X-Pack access | |
 | HTTP\_Passwd | Password for user defined in HTTP\_User | |
 | Index        | Index name | fluentbit |
