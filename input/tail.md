@@ -19,7 +19,8 @@ The plugin supports the following configuration parameters:
 | Rotate\_Wait         | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.| |
 | DB                   | Specify the database file to keep track of monitored files and offsets. | |
 | Mem\_Buf\_Limit      | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
-| Parser       | Specify the name of a parser to interpret the entry as a structured message. |
+| Parser               | Specify the name of a parser to interpret the entry as a structured message. |
+| Key                  | When a message is unstructured (no parser applied), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.
 
