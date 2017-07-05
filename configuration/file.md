@@ -6,13 +6,16 @@ Fluent Bit allows to use one configuration file which works at a global scope an
 
 The configuration file supports four types of sections:
 
-- Service
-- Input
-- Filter
-- Output
+- [Service](#config_section)
+- [Input](#config_input)
+- [Filter](#config_filter)
+- [Output](#config_output)
 
+In addition there is an additional feature to include external files:
 
-## Service
+- [Include File](#config_include_file)
+
+## Service {#config_section}
 
 The _Service_ section defines global properties of the service, the keys available as of this version are described in the following table:
 
@@ -35,7 +38,7 @@ The following is an example of a _SERVICE_ section:
     Log_Level       debug
 ```
 
-## Input
+## Input {#config_input}
 
 An _INPUT_ section defines a source (related to an input plugin), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
 
@@ -57,7 +60,7 @@ The following is an example of an _INPUT_ section:
     Tag  my_cpu
 ```
 
-## Filter
+## Filter {#config_filter}
 
 A _FILTER_ section defines a filter (related to an filter plugin), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
 
@@ -79,7 +82,7 @@ The following is an example of an _FILTER_ section:
     Match *
 ```
 
-## Output
+## Output {#config_output}
 
 The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
 
@@ -98,7 +101,7 @@ The following is an example of an _OUTPUT_ section:
     Match my*cpu
 ```
 
-## Example: collecting CPU metrics
+### Example: collecting CPU metrics
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
@@ -116,3 +119,21 @@ The following configuration file example demonstrates how to collect CPU metrics
     Name  stdout
     Match my*cpu
 ```
+
+## Include File {#config_include_file}
+
+To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file.
+
+Starting from Fluent Bit 0.12 the new configuration command _@INCLUDE_ have been added and can be used in the following way:
+
+```
+@INCLUDE somefile.conf
+```
+
+The configuration reader will try to open the path _somefile.conf_, if not found, it will assume it's a relative path based on the path of the base configuration file, e.g:
+
+- Main configuration file path: /tmp/main.conf
+- Included file: somefile.conf
+- Fluent Bit will try to open somefile.conf, if it fails it will try /tmp/somefile.conf.
+
+The _@INCLUDE_ command only works at top-left level of the configuration line, it cannot be used inside sections.
