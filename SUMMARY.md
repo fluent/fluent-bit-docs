@@ -32,6 +32,7 @@
 * [Input Plugins](input/README.md)
     * [CPU Usage](input/cpu.md)
     * [Disk Usage](input/disk.md)
+    * [Dummy](input/dummy.md)
     * [Forward](input/forward.md)
     * [Head](input/head.md)
     * [Health](input/health.md)
