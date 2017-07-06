@@ -14,6 +14,62 @@ The plugin supports the following configuration parameters:
 | Interval_NSec | Polling interval (nanosecond). |
 | Add_Path      | If enabled, filepath is appended to each records. Default value is _false_. |
 | Key           | Rename a key. Default: head. |
+| Lines         | Line number to read. If the number N is set, in_head reads first N lines like head(1) -n. |
+| Split_line    | If enabled, in_head generates key-value pair per line. |
+
+### Split Line Mode
+
+This mode is useful to get a specific line. This is an example to get CPU frequency from /proc/cpuinfo.
+
+/proc/cpuinfo is a special file to get cpu information.
+```
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i7-2640M CPU @ 2.80GHz
+stepping	: 7
+microcode	: 41
+cpu MHz		: 2791.009
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 1
+```
+Cpu frequency is "cpu MHz		: 2791.009".
+We can get the line with this configuration file.
+
+```python
+[INPUT]
+    Name           head
+    Tag            head.cpu
+    File           /proc/cpuinfo
+    Lines          8
+    Split_line     true
+    # {"line0":"processor	: 0", "line1":"vendor_id	: GenuineIntel" ...}
+
+[FILTER]
+    Name           record_modifier
+    Match          *
+    Whitelist_key  line7
+
+[OUTPUT]
+    Name           stdout
+    Match          *
+```
+
+Output is
+
+```bash
+$ bin/fluent-bit -c head.conf 
+Fluent-Bit v0.12.0
+Copyright (C) Treasure Data
+
+[2017/06/26 22:38:24] [ info] [engine] started
+[0] head.cpu: [1498484305.000279805, {"line7"=>"cpu MHz		: 2791.009"}]
+[1] head.cpu: [1498484306.011680137, {"line7"=>"cpu MHz		: 2791.009"}]
+[2] head.cpu: [1498484307.010042482, {"line7"=>"cpu MHz		: 2791.009"}]
+[3] head.cpu: [1498484308.008447978, {"line7"=>"cpu MHz		: 2791.009"}]
+```
 
 ## Getting Started
 
