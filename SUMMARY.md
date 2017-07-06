@@ -54,6 +54,7 @@
 * [Filter Plugins](filter/README.md)
     * [Grep](filter/grep.md)
     * [Kubernetes](filter/kubernetes.md)
+    * [Parser](filter/parser.md)
     * [Record Modifier](filter/record_modifier.md)
     * [Standard Output](filter/stdout.md)
 * [Output Plugins](output/README.md)
