@@ -7,6 +7,6 @@ Starting from [Fluent Bit](http://fluentbit.io) v0.11.10, all unit sizes have be
 | Suffix           | Description       | Example |
 |------------------|-------------------|---------|
 |                  | When a suffix is __not__ specified, it's assumed that the value given is a bytes representation. | Specifying a value of 32000, means 32000 bytes|
-| k                | Kilobyte: a unit of memory equal to 1,024 bytes. | 32k means 32728 bytes. |
-| M                | Megabyte: a unit of memory equal to 1,048,576 bytes | 1M means 1024000 bytes |
-| G                | Gigabyte: a unit of memory equal to 1,073,741,824 bytes | 1G means 1073741824 bytes |
+| k, K, KB, kb     | Kilobyte: a unit of memory equal to 1,000 bytes. | 32k means 32000 bytes. |
+| m, M, MB, mb     | Megabyte: a unit of memory equal to 1,000,000 bytes | 1M means 1000000 bytes |
+| g, G, GB, gb     | Gigabyte: a unit of memory equal to 1,000,000,000 bytes | 1G means 1000000000 bytes |
