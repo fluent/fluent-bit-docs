@@ -47,7 +47,6 @@
     * [Systemd](input/systemd.md)
     * [Tail](input/tail.md)
     * [TCP](input/tcp.md)
-    * [XBee Radio](input/xbee.md)
 * [Parsers](parser/README.md)
     * [JSON](parser/json.md)
     * [Regular Expression](parser/regular_expression.md)

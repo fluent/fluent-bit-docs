@@ -21,4 +21,3 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [systemd](systemd.md) | Systemd | read logs from Systemd/Journald. |
 | [tail](tail.md)       | Tail | Tail log files |
 | [tcp](tcp.md)         | TCP | Listen for JSON messages over TCP. |
-| [xbee](xbee.md)       | XBee Radio | read data through an XBee Radio device. |
