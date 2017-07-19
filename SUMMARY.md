@@ -57,6 +57,7 @@
     * [Record Modifier](filter/record_modifier.md)
     * [Standard Output](filter/stdout.md)
 * [Output Plugins](output/README.md)
+    * [Counter](output/counter.md)
     * [Elasticsearch](output/elasticsearch.md)
     * [File](output/file.md)
     * [FlowCounter](output/flowcounter.md)

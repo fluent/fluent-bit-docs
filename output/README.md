@@ -4,13 +4,14 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 
 | name                      |  title             | description     |
 |---------------------------|--------------------|-----------------|
-| [file](file.md)           | File               | flush records to a file. |
+| [counter](counter.md)     | Count Records      | Simple records counter.  |
+| [es](elasticsearch.md)    | Elasticsearch | flush records to a Elasticsearch server.|
+| [file](file.md)           | File               | Flush records to a file. |
 | [flowcounter](flowcounter.md)| FlowCounter     | Count records.   |
 | [forward](forward.md)     | Forward  | Fluentd forward protocol. |
 | [http](http.md)           | HTTP     | Flush records to an HTTP end point. |
 | [influxdb](influxdb.md)   | InfluxDB | Flush records to InfluxDB time series database. |
 | [stdout](stdout.md)       | Standard Output | Flush records to the standard output.|
 | [td](td.md)     | [Treasure Data](http://www.treasuredata.com) | Flush records to the [Treasure Data](http://www.treasuredata.com) cloud service for analytics.|
-| [es](elasticsearch.md)     | Elasticsearch | flush records to a Elasticsearch server. |
 | [nats](nats.md) | NATS          | flush records to a NATS server. |
 | [null](null.md) | NULL          | throw away events. |
