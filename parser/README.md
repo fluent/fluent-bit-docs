@@ -29,6 +29,7 @@ The following table describes the available options for each parser definition
 | Time\_Key    | If the log entry provides a field with a timestamp, this option specify the name of that field. |
 | Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. |
 | Time_Keep    | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and it value in the log entry. |
+| Types        | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`(default), `integer`, `bool`, `float`.|
 
 ## Parsers Configuration File
 
@@ -49,6 +50,7 @@ The parsers file expose all parsers available that can be used by the Input plug
     Time_Key    time
     Time_Format %Y-%m-%dT%H:%M:%S.%L
     Time_Keep   On
+    Types pid:integer
 ```
 
 For more information about the parsers available, please refer to the default parsers file distributed with Fluent Bit source code:
