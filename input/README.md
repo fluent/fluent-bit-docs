@@ -13,6 +13,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [kmsg](kmsg.md)       | Kernel Log Buffer | read the Linux Kernel log buffer messages.|
 | [mem](mem.md)         | Memory Usage | measure the total amount of memory used on the system.|
 | [mqtt](mqtt.md)       | MQTT | start a MQTT server and receive publish messages. |
+| [netif](netif.md)     | Network Traffic | measure network traffic. |
 | [proc](proc.md)       | Process | Check health of Process. |
 | [random](random.md)   | Random |Generate Random samples. |
 | [serial](serial.md)   | Serial Interface | read data information from the serial interface.|
