@@ -8,6 +8,7 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 |--------------|----------------------|-------------------|
 | Host         | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port         | TCP port of the target Elasticsearch instance | 9200 |
+| Buffer_Size  | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to __False__, otherwise the value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 4KB |
 | HTTP\_User   | Optional username credential for Elastic X-Pack access | |
 | HTTP\_Passwd | Password for user defined in HTTP\_User | |
 | Index        | Index name | fluentbit |
