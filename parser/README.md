@@ -15,16 +15,16 @@ By default, Fluent Bit provides a set of pre-configured parsers that can be used
 - Syslog rfc5424
 - Syslog rfc3164
 
-Parsers are defined in a configuration file that might be loaded at start time, either from the command line or through the main Fluent Bit configuration file.
+Parsers are defined in one or multiple configuration files that are loaded at start time, either from the command line or through the main Fluent Bit configuration file.
 
 ## Configuration Parameters
 
-The following table describes the available options for each parser definition
+Multiple parsers can be defined and each section have it own properties. The following table describes the available options for each parser definition:
 
 | Key         | Description                                            |
 |-------------|--------------------------------------------------------|
 | Name        | Set an unique name for the parser in question.         |
-| Format      | Specify the format of the parser, the available options here are: json or regex. |
+| Format      | Specify the format of the parser, the available options here are: [json](json.md) or [regex](regular_expression.md). |
 | Regex       | If format is _regex_, this option _must_ be set specifying the Ruby Regular Expression that will be used to parse and compose the structured message. |
 | Time\_Key    | If the log entry provides a field with a timestamp, this option specify the name of that field. |
 | Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. |
@@ -33,7 +33,7 @@ The following table describes the available options for each parser definition
 
 ## Parsers Configuration File
 
-The parsers file expose all parsers available that can be used by the Input plugins that are aware of this feature. A parsers file can have multiple entries like this:
+All parsers __must__ be defined in a _parsers.conf_ file, __not__ in the Fluent Bit global configuration file. The parsers file expose all parsers available that can be used by the Input plugins that are aware of this feature. A parsers file can have multiple entries like this:
 
 ```
 [PARSER]
@@ -57,7 +57,7 @@ For more information about the parsers available, please refer to the default pa
 
 https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf
 
-## Fractional Seconds
+## Time Resolution and Fractional Seconds
 
 Some timestamps might have fractional seconds like _2017-05-17T15:44:31__.187512963__Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the __%L__ format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
 
