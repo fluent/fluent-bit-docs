@@ -4,7 +4,15 @@ The __tail__ input plugin allows to monitor one or several text files. It have a
 
 The plugin reads every matched file in the _Path_ pattern and for every new line found (separated by a \n), it generate a new record. Optionally a database file can be used so the plugin can have a history of tracked files and a state of offsets, this is very useful to resume a state if the service is restarted.
 
-## Configuration Parameters
+
+Content:
+
+- [Configuration Parameters](#config)
+- [Multiline Parameters](#multiline)
+- [Getting Started](#getting_started)
+- [Tailing Files Keeping State](#keep_state)
+
+## Configuration Parameters {#config}
 
 The plugin supports the following configuration parameters:
 
@@ -24,6 +32,8 @@ The plugin supports the following configuration parameters:
 
 Note that if the database parameter _db_ is __not__ specified, by default the plugin will start reading each target file from the beginning.
 
+### Multiline Configuration Parameters {#multiline}
+
 Additionally the following options exists to configure the handling of multi-lines files:
 
 | Key          | Description       | Default |
@@ -33,7 +43,7 @@ Additionally the following options exists to configure the handling of multi-lin
 | Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. | |
 | Parser_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. | |
 
-## Getting Started
+## Getting Started {#getting_started}
 
 In order to tail text or log files, you can run the plugin from the command line or through the configuration file:
 
@@ -59,7 +69,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-### Tailing files keeping state
+## Tailing files keeping state {#keep_state}
 
 The _tail_ input plugin a feature to save the state of the tracked files, is strongly suggested you enabled this. For this purpose the __db__ property is available, e.g:
 
