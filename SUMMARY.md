@@ -65,6 +65,7 @@
     * [Forward](output/forward.md)
     * [HTTP](output/http.md)
     * [InfluxDB](output/influxdb.md)
+    * [Kafka REST Proxy](output/kafka-rest-proxy.md)
     * [NATS](output/nats.md)
     * [NULL](output/null.md)
     * [Standard Output](output/stdout.md)
