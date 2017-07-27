@@ -2,7 +2,7 @@
 
 Routing is a core feature that allows to __route__ your data through Filters and finally to one or multiple destinations.
 
-![](../imgs/flb_workflow_routing.jpg)
+![](../diagrams/logging_pipeline_routing.png)
 
 There are two important concepts in Routing:
 

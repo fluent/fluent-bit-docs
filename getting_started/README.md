@@ -2,7 +2,7 @@
 
 [Fluent Bit](http://fluentbit.io) is a straightforward tool and to get started with it we need to understand it basic workflow. Consider the following diagram a global overview of it:
 
-![Fluent Bit Workflow](../imgs/flb_workflow.jpg)
+![Fluent Bit Workflow](../diagrams/logging_pipeline.png)
 
 | Interface | Description |
 |-----------|-------------|

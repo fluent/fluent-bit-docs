@@ -2,7 +2,7 @@
 
 When the data or logs are ready to be routed to some destination, by default they are buffered in memory.
 
-![](../imgs/flb_workflow_buffer.jpg)
+![](../diagrams/logging_pipeline_buffer.png)
 
 > Note that buffered data is not longer a raw text, instead it's in Fluent Bit internal binary representation.
 

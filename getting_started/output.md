@@ -2,7 +2,7 @@
 
 The output interface allows to define destinations for the data. Common destinations are remote services, local file system or standard interface within others. Otputs are implemented as plugins and there are many available.
 
-![](../imgs/flb_workflow_output.jpg)
+![](../diagrams/logging_pipeline_output.png)
 
 When an output plugin is loaded, an internal _instance_ is created. Every instance have it own and independent configuration. Configuration keys are often called __properties__.
 

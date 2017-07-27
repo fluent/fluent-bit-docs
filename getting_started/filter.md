@@ -2,7 +2,7 @@
 
 In production environments we want to have full control of the data we are collecting, filtering is an important feature that allows to __alter__ the data before to deliver it to some destination.
 
-![](../imgs/flb_workflow_filter.jpg)
+![](../diagrams/logging_pipeline_filter.png)
 
 Filtering is implemented through plugins, so each filter available could be used to match, exclude or enrich your logs with some specific metadata.
 
