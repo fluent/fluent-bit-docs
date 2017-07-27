@@ -6,6 +6,6 @@ The output interface allows to define destinations for the data. Common destinat
 
 When an output plugin is loaded, an internal _instance_ is created. Every instance have it own and independent configuration. Configuration keys are often called __properties__.
 
-Every output plugin have it own documentation section where it specify how it can be used and the properties available.
+Every output plugin has its own documentation section where it's specified how it can be used and what properties are available.
 
 For more details, please refer to the [Output Plugins](../output/README.md) section.
