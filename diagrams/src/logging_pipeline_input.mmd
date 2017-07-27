@@ -1,0 +1,11 @@
+graph LR;
+    A(Input)-->B(Parser)
+    B-->C(Filter)
+    C-->D(Buffer)
+    D-->E(Routing)
+      E-->G1(Output 1)
+      E-->G2(Output 2)
+      E-->G3(Output N)
+
+class E def;
+class A active;
