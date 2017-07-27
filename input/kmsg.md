@@ -20,7 +20,7 @@ Copyright (C) Treasure Data
 ...
 ```
 
-As described above, the plugin processed all messages that the Linux Kernel reported, the output have been truncated for clarification.
+As described above, the plugin processed all messages that the Linux Kernel reported, the output has been truncated for clarification.
 
 ### Configuration File
 

@@ -199,7 +199,7 @@ The properties allowed per output plugin are specified on each specific plugin d
 
 ## Start Fluent Bit Engine
 
-Once the library context have been created and the input/output plugin instances are set, the next step is to start the engine. When started, the engine runs inside a new thread (POSIX thread) without blocking the caller application. To start the engine the function __flb_start()__ is used.
+Once the library context has been created and the input/output plugin instances are set, the next step is to start the engine. When started, the engine runs inside a new thread (POSIX thread) without blocking the caller application. To start the engine the function __flb_start()__ is used.
 
 __Prototype__
 

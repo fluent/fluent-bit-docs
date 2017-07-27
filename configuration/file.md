@@ -124,7 +124,7 @@ The following configuration file example demonstrates how to collect CPU metrics
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file.
 
-Starting from Fluent Bit 0.12 the new configuration command _@INCLUDE_ have been added and can be used in the following way:
+Starting from Fluent Bit 0.12 the new configuration command _@INCLUDE_ has been added and can be used in the following way:
 
 ```
 @INCLUDE somefile.conf

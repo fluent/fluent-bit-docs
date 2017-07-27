@@ -17,7 +17,7 @@ A simple example of a configuration file is as follows:
 
 ## Sections {#sections}
 
-A section is defined by a name or title inside brackets. Looking at the example above a Server section have been set using __[SERVICE]__ definition. Section rules:
+A section is defined by a name or title inside brackets. Looking at the example above a Server section has been set using __[SERVICE]__ definition. Section rules:
 
 * All section content must be indented (4 spaces ideally).
 * Multiples sections can exists on the same file.

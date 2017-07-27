@@ -18,7 +18,7 @@ Is well known that in intensive environments where memory allocations happens in
 
 It's strongly suggested that in any production environment, Fluent Bit be build with Jemalloc enabled (-DFLB_JEMALLOC=On), which is an alternative memory allocator that have better strategies to reduce fragmentation among others for better performance.
 
-You can check if Fluent Bit have been built with Jemalloc using the following command:
+You can check if Fluent Bit has been built with Jemalloc using the following command:
 
 ```
 $ bin/fluent-bit -h|grep JEMALLOC

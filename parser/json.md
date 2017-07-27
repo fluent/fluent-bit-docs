@@ -24,4 +24,4 @@ After processing, it internal representation will be:
 [1154103724, {"key1"=>12345, "key2"=>"abc"}]
 ```
 
-The time have been converted to Unix timestamp (UTC) and the map reduced to each component of the original message.
+The time has been converted to Unix timestamp (UTC) and the map reduced to each component of the original message.
