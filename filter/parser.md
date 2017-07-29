@@ -10,6 +10,7 @@ The plugin supports the following configuration parameters:
 | ------------|-------------------|
 | Key_Name    | Specify field name in record to parse. |
 | Parser      | Specify the name of a parser to interpret the field.|
+| Reserve_data| Keep original key-value pair in parsed result. Default: false|
 
 ## Getting Started
 
