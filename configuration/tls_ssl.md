@@ -8,6 +8,7 @@ Each output plugin that requires to perform Network I\/O can optionally enable T
 | --- | --- | --- |
 | tls | enable or disable TLS support | Off |
 | tls.verify | force certificate validation | On |
+| tls.debug  | Set TLS debug verbosity level. It accept the following values: 0 (No debug), 1 (Error), 2 (State change), 3 (Informational) and 4 Verbose| 1 |
 | tls.ca\_file | absolute path to CA certificate file |  |
 | tls.crt\_file | absolute path to Certificate file |  |
 | tls.key\_file | absolute path to private Key file |  |
@@ -17,6 +18,7 @@ The listed properties can be enabled in the configuration file, specifically on 
 
 * [HTTP](../output/http.md)
 * [Elasticsearch](../output/elasticsearch.md)
+* [Forward](../output/forward.md)
 
 ## Example: enable TLS on HTTP output
 
