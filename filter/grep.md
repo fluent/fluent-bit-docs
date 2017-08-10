@@ -46,7 +46,7 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
 [FILTER]
     Name   grep
     Match  *
-    Regex  aa
+    Regex  log aa
 
 [OUTPUT]
     Name   stdout
