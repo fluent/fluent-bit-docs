@@ -18,10 +18,11 @@ Content:
 
 The following parameters are mandatory for eiter Forward for Secure Forward modes:
 
-| Key      | Description       |
-| ---------|-------------------|
-| Host     | Target host where Fluent-Bit or Fluentd are listening for Forward messages. |
-| Port     | TCP Port of the target service. |
+| Key      | Description       | Default         |
+| ---------|-------------------|-----------------|
+| Host     | Target host where Fluent-Bit or Fluentd are listening for Forward messages.| 127.0.0.1|
+| Port     | TCP Port of the target service.| 24224 |
+| Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
 
 ## Secure Forward Mode Configuration Parameters {#config_tls}
 
@@ -33,6 +34,7 @@ When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requ
 | Self\_Hostname | Default value of the auto-generated certificate common name (CN).||
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
+| tls.debug  | Set TLS debug verbosity level. It accept the following values: 0 (No debug), 1 (Error), 2 (State change), 3 (Informational) and 4 Verbose| 1 |
 | tls.ca\_file | Absolute path to CA certificate file ||
 | tls.crt\_file | Absolute path to Certificate file. ||
 | tls.key\_file | Absolute path to private Key file. ||
