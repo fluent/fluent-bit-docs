@@ -35,7 +35,7 @@ $ fluent-bit -i systemd \
 In your main configuration file append the following _Input_ & _Output_ sections:
 
 ```
-[SERVER]
+[SERVICE]
     Flush        1
     Log_Level    info
     Parsers_File parsers.conf
