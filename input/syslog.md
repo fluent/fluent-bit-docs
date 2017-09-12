@@ -37,7 +37,7 @@ By default the service will create and listen for Syslog messages on the unix so
 In your main configuration file append the following _Input_ & _Output_ sections:
 
 ```python
-[SERVER]
+[SERVICE]
     Flush        1
     Log_Level    info
     Parsers_File parsers.conf
