@@ -1,11 +1,15 @@
 # Fluent Bit Docker Images
 
-Every version of Fluent Bit is available on Docker Hub ready for production usage, the following tags are available on [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) image:
+Fluent Bit container image is also available on Docker Hub ready for production usage. The following table describe the tags are available on [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tag    | Description                                        |
-|--------|----------------------------------------------------|
-| 0.12   | Latest build for 0.12 stable series                |
-| 0.11   | Latest build for 0.11 series, no longer maintained |
+| Tag(s)       | Description                                                                        |
+|--------------|------------------------------------------------------------------------------------|
+| 0.12, latest | Latest release of 0.12 stable series                                               |
+| 0.12.2       | Container image of Fluent Bit [v0.12.2](http://fluentbit.io/announcements/v0.12.2) |
+| 0.12.1       | Container image of Fluent Bit [v0.12.1](http://fluentbit.io/announcements/v0.12.1) |
+| 0.12.0       | Container image of Fluent Bit [v0.12.0](http://fluentbit.io/announcements/v0.12.0) |
+
+Is strongly suggest that you always use the newest image of Fluent Bit.
 
 ## Getting Started
 
@@ -25,9 +29,9 @@ That command will let Fluent Bit meassure CPU usage every second and flush the r
 
 
 ```
-Fluent-Bit v0.12.1
+Fluent-Bit v0.12.2
 Copyright (C) Treasure Data
 
-[2017/09/01 18:29:02] [ info] [engine] started
+[2017/09/15 18:29:02] [ info] [engine] started
 [0] cpu.0: [1504290543.000487750, {"cpu_p"=>0.750000, "user_p"=>0.250000, "system_p"=>0.500000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>1.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>1.000000, "cpu2.p_cpu"=>1.000000, "cpu2.p_user"=>1.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>0.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>0.000000}]
 ```
