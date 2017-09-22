@@ -25,6 +25,7 @@ The plugin supports the following configuration parameters:
 | Exclude\_Path        | Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude_path=\*.gz,\*.zip | |
 | Refresh\_Interval    | The interval of refreshing the list of watched files. Default is 60 seconds. | |
 | Rotate\_Wait         | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.| |
+| Skip\_Long\_Lines    | When a monitored file reach it buffer capacity due to a very long line (Buffer\_Max\_Size), the default behavior is to stop monitoring that file. Skip\_Long\_Lines alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fits into the buffer size. | Off |
 | DB                   | Specify the database file to keep track of monitored files and offsets. | |
 | Mem\_Buf\_Limit      | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | Parser               | Specify the name of a parser to interpret the entry as a structured message. |
