@@ -6,10 +6,9 @@
 
 > In the following steps you can find exact commands to build and install the project with the default options. If you already know how CMake works you can skip this part and look at the build options available.
 
-Create a temporary _build/_ directory inside the Fluent Bit sources:
+Change to the _build/_ directory inside the Fluent Bit sources:
 
 ```bash
-$ mkdir build
 $ cd build/
 ```
 
