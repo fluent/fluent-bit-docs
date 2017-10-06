@@ -6,13 +6,14 @@ The _Systemd_ input plugin allows to collect log messages from the Journald daem
 
 The plugin supports the following configuration parameters:
 
-| Key             | Description       | Default |
-| ----------------|-------------------|---------|
-| Path            | Optional path to the Systemd journal directory, if not set, the plugin will use default paths to read local-only logs.| |
-| Max\_Entries    | When Fluent Bit starts, the Journal might have a high number of logs in the queue. In order to avoid delays and reduce memory usage, this option allows to specify the maximum number of log entries that can be processed per round. Once the limit is reached, Fluent Bit will continue processing the remaining log entries once Journald performs the notification. | 5000 |
-| Systemd\_Filter | allows to perform a query over logs that contains a specific Journald key/value pairs, e.g: \_SYSTEMD\_UNIT=UNIT. The Systemd\_Filter option can be specified multiple times in the input section to apply multiple filters as required. | |
-| Tag             | The tag is used to route messages but on Systemd plugin there is an extra functionality: if the tag includes a star/wildcard, it will be expanded with the Systemd Unit file (e.g: host.* => host.UNIT_NAME). | |
-| DB              | Specify the absolute path of a database file to keep track of Journald cursor. | |
+| Key              | Description       | Default |
+| -----------------|-------------------|---------|
+| Path             | Optional path to the Systemd journal directory, if not set, the plugin will use default paths to read local-only logs.| |
+| Max\_Entries     | When Fluent Bit starts, the Journal might have a high number of logs in the queue. In order to avoid delays and reduce memory usage, this option allows to specify the maximum number of log entries that can be processed per round. Once the limit is reached, Fluent Bit will continue processing the remaining log entries once Journald performs the notification. | 5000 |
+| Systemd\_Filter  | allows to perform a query over logs that contains a specific Journald key/value pairs, e.g: \_SYSTEMD\_UNIT=UNIT. The Systemd\_Filter option can be specified multiple times in the input section to apply multiple filters as required. | |
+| Tag              | The tag is used to route messages but on Systemd plugin there is an extra functionality: if the tag includes a star/wildcard, it will be expanded with the Systemd Unit file (e.g: host.* => host.UNIT_NAME). | |
+| DB               | Specify the absolute path of a database file to keep track of Journald cursor. | |
+| Read\_From\_Tail | Start reading new entries. skip entries already stored in Journald. | false |
 
 ## Getting Started
 
