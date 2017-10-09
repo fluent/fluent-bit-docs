@@ -17,6 +17,8 @@ By default, Fluent Bit provides a set of pre-configured parsers that can be used
 
 Parsers are defined in one or multiple configuration files that are loaded at start time, either from the command line or through the main Fluent Bit configuration file.
 
+Note: if you are using Regular Expressions note that Fluent Bit uses Ruby based regular expressions and we encourage to use [Rubular](http://www.rubular.com) web site as an online editor to test them.
+
 ## Configuration Parameters
 
 Multiple parsers can be defined and each section have it own properties. The following table describes the available options for each parser definition:
