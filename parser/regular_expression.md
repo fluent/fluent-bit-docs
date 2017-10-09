@@ -2,6 +2,12 @@
 
 The __regex__ parser allows to define a custom Ruby Regular Expression that will use a named capture feature to define which content belongs to which key name.
 
+Fluent Bit uses [Onigmo](https://github.com/k-takata/Onigmo) regular expression library on Ruby mode, for testing purposes you can use the following web editor to test your expressions:
+
+http://rubular.com/
+
+Important: do not attempt to add multiline support in your regular expressions if you are using [Tail](../input/tail.md) input plugin since each line is handled as a separated entity. Instead use Tail [Multiline](../input/tail.md#multiline) support configuration feature.
+
 > Note: understanding how regular expressions works is out of the scope of this content.
 
 From a configuration perspective, when the format is set to __regex__, is mandatory and expected that a _Regex_ configuration key exists.
