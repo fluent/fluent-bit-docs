@@ -26,7 +26,7 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../getting_started/tls_ssl.md) section.
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../configuration/tls_ssl.md) section.
 
 ## Getting Started
 
