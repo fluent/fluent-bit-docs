@@ -8,6 +8,7 @@ Note that all configuration files uses a specific fixed and strict schema, pleas
 - [Configuration Files](file.md)
 - [Configuration Variables](variables.md)
 - [Configuration Commands](commands.md)
+- [Monitoring](monitoring.md)
 - [Unit Sizes](unit_sizes.md)
 - [TLS / SSL](tls_ssl.md)
 - [Backpressure](backpressure.md)

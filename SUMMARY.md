@@ -27,6 +27,7 @@
     * [Configuration File](configuration/file.md)
     * [Configuration Variables](configuration/variables.md)
     * [Configuration Commands](configuration/commands.md)
+    * [Monitoring](configuration/monitoring.md)
     * [Unit Sizes](configuration/unit_sizes.md)
     * [TLS / SSL](configuration/tls_ssl.md)
     * [Backpressure](configuration/backpressure.md)
