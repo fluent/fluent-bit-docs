@@ -9,6 +9,7 @@
     * [Download Sources](installation/download_sources.md)
     * [Build and Install](installation/build_install.md)
     * [Docker Images](installation/docker.md)
+    * [Kubernetes](installation/kubernetes.md)
     * [TD Agent Bit](installation/td-agent-bit.md)
     * [Debian Packages](installation/debian.md)
     * [Ubuntu Packages](installation/ubuntu.md)
