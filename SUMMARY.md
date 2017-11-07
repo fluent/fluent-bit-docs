@@ -74,7 +74,6 @@
     * [NULL](output/null.md)
     * [Standard Output](output/stdout.md)
     * [Treasure Data](output/td.md)
-* [Kubernetes](kubernetes/README.md)
 * [Fluent Bit for Developers](development/README.md)
     * [Library API](development/library_api.md)
     * [Ingest Records Manually](development/ingest_records_manually.md)
