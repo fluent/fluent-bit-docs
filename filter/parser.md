@@ -6,11 +6,12 @@ The _Parser Filter_ plugin allows to parse field in event records.
 
 The plugin supports the following configuration parameters:
 
-| Key         | Description       |
-| ------------|-------------------|
-| Key_Name    | Specify field name in record to parse. |
-| Parser      | Specify the name of a parser to interpret the field.|
-| Reserve_data| Keep original key-value pair in parsed result. Default: false|
+| Key          | Description                                         | Default |
+| -------------|-----------------------------------------------------|---------|
+| Key_Name     | Specify field name in record to parse.              |         |
+| Parser       | Specify the name of a parser to interpret the field.|         |
+| Reserve_Data | Keep original key-value pair in parsed result.      | False   |
+| Unescape_Key | If the key is a escaped string (e.g: stringify JSON), unescape the string before to apply the parser. | False |
 
 ## Getting Started
 
@@ -50,9 +51,9 @@ The path of parser file should be written in configuration file at __[SERVICE]__
     Match *
 ```
 
-The output is 
+The output is
 ```
-$ fluent-bit -c dummy.conf 
+$ fluent-bit -c dummy.conf
 Fluent-Bit v0.12.0
 Copyright (C) Treasure Data
 
