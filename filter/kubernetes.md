@@ -26,3 +26,4 @@ The plugin supports the following configuration parameters:
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
 | Merge\_JSON\_Log | When enabled, it checks if the _log_ field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
+| Annotations | Include Kubernetes Pod annotations in the record | On |
