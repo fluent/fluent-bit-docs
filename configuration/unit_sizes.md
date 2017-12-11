@@ -1,8 +1,8 @@
 # Unit Sizes
 
-Certain configuration directives in Fluent Bit refers to unit sizes such as when defining the size of a buffer or specific limits, we can find these in plugins like [Tail Input](../input/tail.md), [Forward Input](../input/forward.md) or in generic properties like [Mem_Buf_Limit](backpressure.md).
+Certain configuration directives in Fluent Bit refer to unit sizes such as when defining the size of a buffer or specific limits, we can find these in plugins like [Tail Input](../input/tail.md), [Forward Input](../input/forward.md) or in generic properties like [Mem_Buf_Limit](backpressure.md).
 
-Starting from [Fluent Bit](http://fluentbit.io) v0.11.10, all unit sizes have been standarizes across the core and plugins, the following table describe the options that can be used and what do they mean:
+Starting from [Fluent Bit](http://fluentbit.io) v0.11.10, all unit sizes have been standardized across the core and plugins, the following table describes the options that can be used and what they mean:
 
 | Suffix           | Description       | Example |
 |------------------|-------------------|---------|

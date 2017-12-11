@@ -2,7 +2,7 @@
 
 Fluent Bit provides integrated support for _Transport Layer Security_ \(TLS\) and it predecessor _Secure Sockets Layer_ \(SSL\) respectively. In this section we will refer as TLS only for both implementations.
 
-Each output plugin that requires to perform Network I\/O can optionally enable TLS and configure the behavior. The following table describe the properties available:
+Each output plugin that requires to perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
 | Property | Description | Default |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Each output plugin that requires to perform Network I\/O can optionally enable T
 | tls.key\_file | absolute path to private Key file |  |
 | tls.key\_passwd | optional password for tls.key\_file file |  |
 
-The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. The following **output** plugins can take advante of the TLS feature:
+The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. The following **output** plugins can take advantage of the TLS feature:
 
 * [HTTP](../output/http.md)
 * [Elasticsearch](../output/elasticsearch.md)
