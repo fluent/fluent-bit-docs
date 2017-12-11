@@ -21,6 +21,7 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 | Time\_Key\_Format | When Logstash\_Format is enabled, this property defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S|
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
 | Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | _flb-key |
+| Generate_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts.
 
