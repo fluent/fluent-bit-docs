@@ -1,6 +1,6 @@
 # Output
 
-The output interface allows to define destinations for the data. Common destinations are remote services, local file system or standard interface within others. Otputs are implemented as plugins and there are many available.
+The output interface allows to define destinations for the data. Common destinations are remote services, local file system or standard interface within others. Outputs are implemented as plugins and there are many available.
 
 ![](../diagrams/logging_pipeline_output.png)
 
