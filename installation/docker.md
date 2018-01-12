@@ -2,19 +2,21 @@
 
 Fluent Bit container image is also available on Docker Hub ready for production usage. The following table describe the tags are available on [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tag(s)       | Description                                                                        |
-|--------------|------------------------------------------------------------------------------------|
-| 0.12, latest | Latest release of 0.12 stable series                                               |
-| 0.12.9       | Container image of Fluent Bit [v0.12.8](http://fluentbit.io/announcements/v0.12.9) |
-| 0.12.8       | Container image of Fluent Bit [v0.12.8](http://fluentbit.io/announcements/v0.12.8) |
-| 0.12.7       | Container image of Fluent Bit [v0.12.7](http://fluentbit.io/announcements/v0.12.7) |
-| 0.12.6       | Container image of Fluent Bit [v0.12.6](http://fluentbit.io/announcements/v0.12.6) |
-| 0.12.5       | Container image of Fluent Bit [v0.12.5](http://fluentbit.io/announcements/v0.12.5) |
-| 0.12.4       | Container image of Fluent Bit [v0.12.4](http://fluentbit.io/announcements/v0.12.4) |
-| 0.12.3       | Container image of Fluent Bit [v0.12.3](http://fluentbit.io/announcements/v0.12.3) |
-| 0.12.2       | Container image of Fluent Bit [v0.12.2](http://fluentbit.io/announcements/v0.12.2) |
-| 0.12.1       | Container image of Fluent Bit [v0.12.1](http://fluentbit.io/announcements/v0.12.1) |
-| 0.12.0       | Container image of Fluent Bit [v0.12.0](http://fluentbit.io/announcements/v0.12.0) |
+| Tag(s)       | Description                                                                          |
+|--------------|--------------------------------------------------------------------------------------|
+| 0.12, latest | Latest release of 0.12 stable series                                                 |
+| 0.12.11      | Container image of Fluent Bit [v0.12.11](http://fluentbit.io/announcements/v0.12.11) |
+| 0.12.10      | Container image of Fluent Bit [v0.12.10](http://fluentbit.io/announcements/v0.12.10) |
+| 0.12.9       | Container image of Fluent Bit [v0.12.9](http://fluentbit.io/announcements/v0.12.9)   |
+| 0.12.8       | Container image of Fluent Bit [v0.12.8](http://fluentbit.io/announcements/v0.12.8)   |
+| 0.12.7       | Container image of Fluent Bit [v0.12.7](http://fluentbit.io/announcements/v0.12.7)   |
+| 0.12.6       | Container image of Fluent Bit [v0.12.6](http://fluentbit.io/announcements/v0.12.6)   |
+| 0.12.5       | Container image of Fluent Bit [v0.12.5](http://fluentbit.io/announcements/v0.12.5)   |
+| 0.12.4       | Container image of Fluent Bit [v0.12.4](http://fluentbit.io/announcements/v0.12.4)   |
+| 0.12.3       | Container image of Fluent Bit [v0.12.3](http://fluentbit.io/announcements/v0.12.3)   |
+| 0.12.2       | Container image of Fluent Bit [v0.12.2](http://fluentbit.io/announcements/v0.12.2)   |
+| 0.12.1       | Container image of Fluent Bit [v0.12.1](http://fluentbit.io/announcements/v0.12.1)   |
+| 0.12.0       | Container image of Fluent Bit [v0.12.0](http://fluentbit.io/announcements/v0.12.0)   |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
