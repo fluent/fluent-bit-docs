@@ -27,6 +27,7 @@ The plugin supports the following configuration parameters:
 | Rotate\_Wait         | Specify the number of extra seconds to monitor a file once is rotated in case some pending data is flushed. Default is 5 seconds.| |
 | Skip\_Long\_Lines    | When a monitored file reach it buffer capacity due to a very long line (Buffer\_Max\_Size), the default behavior is to stop monitoring that file. Skip\_Long\_Lines alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fits into the buffer size. | Off |
 | DB                   | Specify the database file to keep track of monitored files and offsets. | |
+| DB.Sync              | Set a default synchronization (I/O) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). | Full |
 | Mem\_Buf\_Limit      | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | Parser               | Specify the name of a parser to interpret the entry as a structured message. |
 | Key                  | When a message is unstructured (no parser applied), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
@@ -41,7 +42,7 @@ Additionally the following options exists to configure the handling of multi-lin
 |--------------|-------------------|---------|
 | Multiline    | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. Note that when this option is enabled the Parser option is not used. | Off |
 | Multiline\_Flush | Wait period time in seconds to process queued multiline messages  | 4 |
-| Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. | |
+| Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name (named capture) | |
 | Parser_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. | |
 
 ## Getting Started {#getting_started}
