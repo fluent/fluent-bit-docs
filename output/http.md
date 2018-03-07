@@ -9,6 +9,8 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | Key         | Description          | default           |
 |-------------|----------------------|-------------------|
 | Host        | IP address or hostname of the target HTTP Server | 127.0.0.1 |
+| HTTP_User   | Basic Auth Username |         |
+| HTTP_Passwd | Basic Auth Password. Requires HTTP_User to be set |         |
 | Port        | TCP port of the target HTTP Server | 80 |
 | Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
