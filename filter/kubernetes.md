@@ -4,7 +4,7 @@ The _Kubernetes Filter_ allows to enrich your log files with Kubernetes metadata
 
 When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers (using tail plugin), this filter aims to perform the following operations:
 
-- Analize the Tag and extract the following metadata:
+- Analyze the Tag and extract the following metadata:
   - POD Name
   - Namespace
   - Container Name
