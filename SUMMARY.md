@@ -37,6 +37,7 @@
     * [CPU Usage](input/cpu.md)
     * [Disk Usage](input/disk.md)
     * [Dummy](input/dummy.md)
+    * [Exec](input/exec.md)
     * [Forward](input/forward.md)
     * [Head](input/head.md)
     * [Health](input/health.md)
