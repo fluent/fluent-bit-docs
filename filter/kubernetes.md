@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 | Key         |  Description             | Default                            |
 | ------------|--------------------------|------------------------------------|
 | Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 32k |
-| Kube\_URL       | API Server end-point  | https://kubernetes.default.svc:443 |
+| Kube\_URL       | API Server end-point  | https://kubernetes.default.svc.cluster.local:443 |
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
 | Kube\_CA\_Path | CA path |  |
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
