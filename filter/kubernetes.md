@@ -22,7 +22,7 @@ The plugin supports the following configuration parameters:
 
 | Key         |  Description             | Default                            |
 | ------------|--------------------------|------------------------------------|
-| Kube\_URL       | API Server end-point  | https://kubernetes.default.svc:443 |
+| Kube\_URL       | API Server end-point  | https://kubernetes.default.svc.cluster.local:443 |
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
 | Merge\_JSON\_Log | When enabled, it checks if the _log_ field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
