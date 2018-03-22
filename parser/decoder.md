@@ -15,11 +15,16 @@ Then the Docker log message become encapsulated as follows:
 
 ```
 
-as you can see the original message is handled as a escaped string. Ideally in Fluent Bit we would like to keep having the original structured message and not a string.
+as you can see the original message is handled as an escaped string. Ideally in Fluent Bit we would like to keep having the original structured message and not a string.
 
-## Getting Started 
+## Getting Started
 
-Decoders are a built-in feature available through the Parsers file, each Parser definition can optionally set one or multiple decoders. Our pre-defined Docker Parser have the following definition:
+Decoders are a built-in feature available through the Parsers file, each Parser definition can optionally set one or multiple decoders. There are two type of decoders type:
+
+- Decode_Field: if the content can be decoded in a structured message, append that structure message (keys and values) to the original log message.
+- Decode_Field_As: any content decoded (unstructured or structured) will be replaced in the same key/value, no extra keys are added.
+
+Our pre-defined Docker Parser have the following definition:
 
 ```
 [PARSER]
@@ -28,13 +33,12 @@ Decoders are a built-in feature available through the Parsers file, each Parser 
     Time_Key     time
     Time_Format  %Y-%m-%dT%H:%M:%S.%L
     Time_Keep    On
-    # Command    |  Decoder | Field | Optional Action   |
-    # ===========|==========|=======|===================|
-    Decode_Field    json       log    try_next
-    Decode_Field    escaped    log
+    # Command       |  Decoder  | Field | Optional Action   |
+    # ==============|===========|=======|===================|
+    Decode_Field_As    escaped     log
 ```
 
-Each line in the parser with a key _Decode_Field_  instruct the parser to apply a specific decoder on a given field, optionally it offer the option to take an extra action if the decoder cannot succeed. 
+Each line in the parser with a key _Decode_Field_  instruct the parser to apply a specific decoder on a given field, optionally it offer the option to take an extra action if the decoder cannot succeed.
 
 ### Decoders
 
@@ -45,5 +49,14 @@ Each line in the parser with a key _Decode_Field_  instruct the parser to apply 
 
 ### Optional Actions
 
-By default if a decoder fails to decode the field, it will pack the raw message without any changes. Optionally an action can be defined when that exception happens. If the action __try_next__ was defined, it will use the next decoder available.
+By default if a decoder fails to decode the field or want to try a next decoder, is possible to define an optional action. Available actions are:
 
+| Name     | Description                                                                |
+| ---------| -------------------------------------------------------------------------- |
+| try_next | if the decoder failed, apply the next Decoder in the list for the same field.
+| do_next  | if the decoder succeeded or failed, apply the next Decoder in the list for the same field. |
+
+Note that actions are affected by some restrictions:
+
+- on Decode_Field_As, if succeeded, another decoder of the same type in the same field can be applied only if the data continue being a unstructed message (raw text).
+- on Decode_Field, if succeeded, can only be applied once for the same field. By nature Decode_Field aims to decode a structured message.
