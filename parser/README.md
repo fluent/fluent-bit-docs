@@ -64,4 +64,4 @@ https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf
 
 Some timestamps might have fractional seconds like _2017-05-17T15:44:31__.187512963__Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the __%L__ format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
 
-> Note: The option %L is only valid when used after seconds, e.g: %S.%L
+> Note: The option %L is only valid when used after seconds (`%S`) or seconds since the Epoch (`%s`), e.g: `%S.%L` or `%s.%L`
