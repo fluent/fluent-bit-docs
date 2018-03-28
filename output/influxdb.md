@@ -10,6 +10,8 @@ The __influxdb__ output plugin, allows to flush your records into a [InfluxDB](h
 | Port         | TCP port of the target InfluxDB service | 8086 |
 | Database     | InfluxDB database name where records will be inserted | fluentbit |
 | Sequence_Tag | The name of the tag whose value is incremented for the consecutive simultaneous events. | _seq |
+| HTTP\_User   | Optional username for HTTP Basic Authentication | |
+| HTTP\_Passwd | Password for user defined in HTTP\_User | |
 
 ### TLS / SSL
 
