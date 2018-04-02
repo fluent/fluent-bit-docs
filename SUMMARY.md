@@ -76,6 +76,7 @@
     * [NATS](output/nats.md)
     * [NULL](output/null.md)
     * [Standard Output](output/stdout.md)
+    * [Splunk](output/splunk.md)
     * [Treasure Data](output/td.md)
 * [Fluent Bit for Developers](development/README.md)
     * [Library API](development/library_api.md)

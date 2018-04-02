@@ -13,6 +13,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 | [influxdb](influxdb.md)   | InfluxDB | Flush records to InfluxDB time series database. |
 |[kafka-rest](kafka-rest-proxy.md)   | Kafka REST Proxy | Flush records to a Kafka REST Proxy server.|
 | [stdout](stdout.md)       | Standard Output | Flush records to the standard output.|
+| [splunk](splunk.md) | Splunk | Flush records to a Splunk Enterprise service |
 | [td](td.md)     | [Treasure Data](http://www.treasuredata.com) | Flush records to the [Treasure Data](http://www.treasuredata.com) cloud service for analytics.|
 | [nats](nats.md) | NATS          | flush records to a NATS server. |
 | [null](null.md) | NULL          | throw away events. |
