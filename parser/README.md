@@ -29,7 +29,7 @@ Multiple parsers can be defined and each section have it own properties. The fol
 | Format      | Specify the format of the parser, the available options here are: [json](json.md) or [regex](regular_expression.md). |
 | Regex       | If format is _regex_, this option _must_ be set specifying the Ruby Regular Expression that will be used to parse and compose the structured message. |
 | Time\_Key    | If the log entry provides a field with a timestamp, this option specify the name of that field. |
-| Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. |
+| Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. Fluent-bit uses `strptime(3)` to parse time so you can ferer to [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers.|
 | Time_Keep    | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and it value in the log entry. |
 | Types        | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`(default), `integer`, `bool`, `float`, `hex`.|
 | Decode_Field | Decode a field value, the only decoder available is `json`. The syntax is: `Decode_Field json <field_name>`.
@@ -64,4 +64,4 @@ https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf
 
 Some timestamps might have fractional seconds like _2017-05-17T15:44:31__.187512963__Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the __%L__ format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
 
-> Note: The option %L is only valid when used after seconds, e.g: %S.%L
+> Note: The option %L is only valid when used after seconds (`%S`) or seconds since the Epoch (`%s`), e.g: `%S.%L` or `%s.%L`
