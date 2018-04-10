@@ -12,6 +12,8 @@ The __influxdb__ output plugin, allows to flush your records into a [InfluxDB](h
 | Sequence_Tag | The name of the tag whose value is incremented for the consecutive simultaneous events. | _seq |
 | HTTP\_User   | Optional username for HTTP Basic Authentication | |
 | HTTP\_Passwd | Password for user defined in HTTP\_User | |
+| Tag\_Keys    | Space separated list of keys that needs to be tagged |  |
+| Auto\_Tags   | Automatically tag keys where value is *string*. This option takes a boolean value: True/False, On/Off. | Off |
 
 ### TLS / SSL
 
@@ -52,6 +54,33 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Database      fluentbit
     Sequence_Tag  _seq
 ```
+
+#### Tagging
+
+Basic example of `Tag_Keys` usage:
+
+```Python
+[INPUT]
+    Name            tail
+    Tag             apache.access
+    parser          apache2
+    path            /var/log/apache2/access.log
+
+[OUTPUT]
+    Name          influxdb
+    Match         *
+    Host          127.0.0.1
+    Port          8086
+    Database      fluentbit
+    Sequence_Tag  _seq
+    # make tags from method and path fields
+    Tag_Keys      method path
+```
+
+With __Auto_Tags=On__ in this example cause error,
+because every parsed field value type is *string*.
+Best usage of this option in metrics like record where
+one ore more field value is not *string* typed.
 
 ### Testing
 
@@ -128,4 +157,29 @@ The CPU input plugin gather more metrics per CPU core, in the above example we j
 
 ```
 > SELECT * FROM cpu
+```
+
+#### 4. View tags
+
+Query tagged keys:
+
+```
+> SHOW TAG KEYS ON fluentbit FROM "apache.access"
+name: apache.access
+tagKey
+------
+_seq
+method
+path
+```
+
+And now query *method* key values:
+
+```
+> SHOW TAG VALUES ON fluentbit FROM "apache.access" WITH KEY = "method"
+name: apache.access
+key    value
+---    -----
+method "MATCH"
+method "POST"
 ```
