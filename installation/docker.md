@@ -4,38 +4,30 @@ Fluent Bit container image is also available on Docker Hub ready for production 
 
 | Tag(s)       | Description                                                                        |
 |--------------|------------------------------------------------------------------------------------|
-| 0.12, latest | Latest release of 0.12 stable series                                               |
-| 0.12.8       | Container image of Fluent Bit [v0.12.8](http://fluentbit.io/announcements/v0.12.8) |
-| 0.12.7       | Container image of Fluent Bit [v0.12.7](http://fluentbit.io/announcements/v0.12.7) |
-| 0.12.6       | Container image of Fluent Bit [v0.12.6](http://fluentbit.io/announcements/v0.12.6) |
-| 0.12.5       | Container image of Fluent Bit [v0.12.5](http://fluentbit.io/announcements/v0.12.5) |
-| 0.12.4       | Container image of Fluent Bit [v0.12.4](http://fluentbit.io/announcements/v0.12.4) |
-| 0.12.3       | Container image of Fluent Bit [v0.12.3](http://fluentbit.io/announcements/v0.12.3) |
-| 0.12.2       | Container image of Fluent Bit [v0.12.2](http://fluentbit.io/announcements/v0.12.2) |
-| 0.12.1       | Container image of Fluent Bit [v0.12.1](http://fluentbit.io/announcements/v0.12.1) |
-| 0.12.0       | Container image of Fluent Bit [v0.12.0](http://fluentbit.io/announcements/v0.12.0) |
+| 0.13, latest | Latest release of 0.13 stable series                                               |
+| 0.13.0       | Container image of Fluent Bit [v0.13.0](http://fluentbit.io/announcements/v0.13.0) |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
 ## Getting Started
 
-Download the last stable image from 0.12 series:
+Download the last stable image from 0.13 series:
 
 ```
-$ docker pull fluent/fluent-bit:0.12
+$ docker pull fluent/fluent-bit:0.13
 ```
 
 Once the image is in place, now run the following (useless) test which makes Fluent Bit meassure CPU usage by the container:
 
 ```
-$ docker run -ti fluent/fluent-bit:0.12 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:0.13 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit meassure CPU usage every second and flush the results to the standard output, e.g:
 
 
 ```
-Fluent-Bit v0.12.8
+Fluent-Bit v0.13.0
 Copyright (C) Treasure Data
 
 [2017/11/07 14:29:02] [ info] [engine] started
