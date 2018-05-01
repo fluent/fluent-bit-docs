@@ -16,7 +16,8 @@ So, if we impose a limit of _10MB_ for the input plugins and considering the wor
 
 Is well known that in intensive environments where memory allocations happens in the order of magnitude, the default memory allocator provided by Glibc could lead to a high fragmentation, reporting a high memory usage by the service.
 
-It's strongly suggested that in any production environment, Fluent Bit be build with Jemalloc enabled (-DFLB_JEMALLOC=On), which is an alternative memory allocator that have better strategies to reduce fragmentation among others for better performance.
+It's strongly suggested that in any production environment, Fluent Bit should be built with [jemalloc](http://jemalloc.net/) enabled (e.g. `-DFLB_JEMALLOC=On`).
+Jemalloc is an alternative memory allocator that can reduce fragmentation (among others things) resulting in better performance.
 
 You can check if Fluent Bit has been built with Jemalloc using the following command:
 
