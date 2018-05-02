@@ -14,7 +14,7 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | Port        | TCP port of the target HTTP Server | 80 |
 | Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
-| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_, optionally it can be set to _json_. | msgpack |
+| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_ and _json_stream_. | msgpack |
 
 ### TLS / SSL
 
