@@ -65,7 +65,7 @@ The plugin supports the following configuration parameters:
 
 | Key           | Value Format          | Operation   | Description       |
 |---------------|-----------------------|-------------|-------------------|
-| Operatio      | ENUM [`nest`|`lift`]  |             | Nest records which field matches the wildcard |
+| Operation     | ENUM [`nest`\|`lift`] |             | Nest records which field matches the wildcard |
 | Wildcard      | FIELD WILDCARD        | `nest`      | Nest records which field matches the wildcard |
 | Nest\_under   | FIELD STRING          | `nest`      | Nest records matching the `Wildcard` under this key |
 | Nested\_under | FIELD STRING          | `lift`      | Lift records nested under the `Nested_under` key |
