@@ -65,10 +65,11 @@ The plugin supports the following configuration parameters:
 
 | Key           | Value Format          | Operation   | Description       |
 |---------------|-----------------------|-------------|-------------------|
-| Operation     | ENUM [`nest`\|`lift`] |             | Nest records which field matches the wildcard |
+| Operation     | ENUM [`nest`\|`lift`] |             | Select the operation `nest` or `lift` |
 | Wildcard      | FIELD WILDCARD        | `nest`      | Nest records which field matches the wildcard |
 | Nest\_under   | FIELD STRING          | `nest`      | Nest records matching the `Wildcard` under this key |
 | Nested\_under | FIELD STRING          | `lift`      | Lift records nested under the `Nested_under` key |
+| Prefix\_with  | FIELD STRING          | `lift`      | Prefix lifted keys with this string |
 
 ## Getting Started
 
@@ -186,11 +187,12 @@ This example takes the keys starting with `Mem.*` and nests them under
 }
 ```
 
-## Example #3 - multiple nest and lift filters
+## Example #3 - multiple nest and lift filters with prefix
 
 This example starts with the 3-level deep nesting of _Example 2_ and applies
 the `lift` filter three times to reverse the operations. The end result is that
-all records are at the top level, without nesting, again.
+all records are at the top level, without nesting, again. One prefix is added
+for each level that is lifted.
 
 ### Configuration file
 
@@ -229,31 +231,35 @@ all records are at the top level, without nesting, again.
     Match *
     Operation lift
     Nested_under LAYER3
+    Prefix_with Lifted3_
 
 [FILTER]
     Name nest
     Match *
     Operation lift
-    Nested_under LAYER2
+    Nested_under Lifted3_LAYER2
+    Prefix_with Lifted3_Lifted2_
 
 [FILTER]
     Name nest
     Match *
     Operation lift
-    Nested_under LAYER1
+    Nested_under Lifted3_Lifted2_LAYER1
+    Prefix_with Lifted3_Lifted2_Lifted1_
 ```
 
 ### Result
 
 ```
-[0] mem.local: [1524795951.007280437, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Mem.total"=>4050908, "Mem.used"=>1112192, "Mem.free"=>2938716}]
+[0] mem.local: [1524862951.013414798, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Lifted3_Lifted2_Lifted1_Mem.total"=>4050908, "Lifted3_Lifted2_Lifted1_Mem.used"=>1253912, "Lifted3_Lifted2_Lifted1_Mem.free"=>2796996}]
+
 
 {
   "Swap.total"=>1046524, 
   "Swap.used"=>0, 
   "Swap.free"=>1046524, 
-  "Mem.total"=>4050908, 
-  "Mem.used"=>1112192, 
-  "Mem.free"=>2938716
+  "Lifted3_Lifted2_Lifted1_Mem.total"=>4050908, 
+  "Lifted3_Lifted2_Lifted1_Mem.used"=>1253912, 
+  "Lifted3_Lifted2_Lifted1_Mem.free"=>2796996
 }
 ```    
