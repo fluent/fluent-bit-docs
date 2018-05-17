@@ -65,6 +65,7 @@
     * [Standard Output](filter/stdout.md)
     * [Throttle](filter/throttle.md)
     * [Nest](filter/nest.md)
+    * [Modify](filter/modify.md)
 * [Output Plugins](output/README.md)
     * [Azure](output/azure.md)
     * [Counter](output/counter.md)

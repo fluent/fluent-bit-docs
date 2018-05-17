@@ -70,7 +70,7 @@ A _FILTER_ section defines a filter (related to an filter plugin), here we will 
 | Key    | Description               |
 |--------|---------------------------|
 | Name   | Name of the filter plugin. |
-| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the start (*) character as a wildcard. | |
+| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the star (*) character as a wildcard. | |
 
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ is mandatory for all plugins.
@@ -92,7 +92,7 @@ The _OUTPUT_ section specify a destination that certain records should follow af
 | Key    | Description                |
 |--------|----------------------------|
 | Name   | Name of the output plugin. |
-| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the start (*) character as a wildcard. |
+| Match  | It sets a pattern to match certain records Tag. It's case sensitive and support the star (*) character as a wildcard. |
 
 ### Example
 
@@ -140,3 +140,9 @@ The configuration reader will try to open the path _somefile.conf_, if not found
 - Fluent Bit will try to open somefile.conf, if it fails it will try /tmp/somefile.conf.
 
 The _@INCLUDE_ command only works at top-left level of the configuration line, it cannot be used inside sections.
+
+Wildcard character (*) is supported to include multiple files, e.g:
+
+```
+@INCLUDE input_*.conf
+```
