@@ -15,7 +15,7 @@ This option is disabled by default and can be applied to all input plugins. Let'
 - engine scheduler will retry the flush after 10 seconds
 - input plugin tries to append 500KB
 
-At this exact point, the engine will __allow__ to append those 500KB of data into the engine: in total we have 1.2MB. The options works in a permisive mode before to reach the limit, but the limit is__exceeded__ the following actions are taken:
+At this exact point, the engine will __allow__ to append those 500KB of data into the engine: in total we have 1.2MB. The options works in a permisive mode before to reach the limit, but the limit is __exceeded__ the following actions are taken:
 
 - block local buffers for the input plugin (cannot append more data)
 - notify the input plugin invoking a __pause__ callback
@@ -26,8 +26,8 @@ After some seconds if the scheduler was able to flush the initial 700KB of data 
 
 - Upon data buffer release (700KB), the internal counters get updated
 - Counters now are set at 500KB
-- Since 500KB is < 1MB it check the input plugin state
-- If the plugin is paused, it invoke a __resume__ callback
+- Since 500KB is < 1MB it checks the input plugin state
+- If the plugin is paused, it invokes a __resume__ callback
 - input plugin can continue appending more data
 
 ## About pause and resume Callbacks
