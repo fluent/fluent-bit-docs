@@ -18,10 +18,10 @@ In order to insert records into a Azure, you can run the plugin from the command
 
 ### Command Line
 
-The **splunk** plugin, can read the parameters from the command line in two ways, through the **-p** argument (property), e.g:
+The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument (property), e.g:
 
 ```
-$ fluent-bit -i cpu -o splunk -p customer_id=abc -p shared_key=def -m '*' -f 1
+$ fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 ```
 
 ### Configuration File
