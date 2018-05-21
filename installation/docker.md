@@ -5,6 +5,8 @@ Fluent Bit container image is also available on Docker Hub ready for production 
 | Tag(s)       | Description                                                                        |
 |--------------|------------------------------------------------------------------------------------|
 | 0.13, latest | Latest release of 0.13 stable series                                               |
+| 0.13.2       | Container image of Fluent Bit [v0.13.2](http://fluentbit.io/announcements/v0.13.2) |
+| 0.13.1       | Container image of Fluent Bit [v0.13.1](http://fluentbit.io/announcements/v0.13.1) |
 | 0.13.0       | Container image of Fluent Bit [v0.13.0](http://fluentbit.io/announcements/v0.13.0) |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
@@ -27,7 +29,7 @@ That command will let Fluent Bit meassure CPU usage every second and flush the r
 
 
 ```
-Fluent-Bit v0.13.0
+Fluent-Bit v0.13.x
 Copyright (C) Treasure Data
 
 [2017/11/07 14:29:02] [ info] [engine] started
