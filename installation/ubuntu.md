@@ -12,12 +12,18 @@ $ wget -qO - http://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 
 ## Update your sources lists
 
-On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your __/etc/apt/sources.list__ file:
+On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your __/etc/apt/sources.list__ file:
 
-#### Ubuntu 16.04 (Xenial Xerus)
+#### Ubuntu 18.04 LTS (Bionic Beaver)
 
 ```
-deb http://packages.fluentbit.io/ubuntu xenial main
+deb http://packages.fluentbit.io/ubuntu/bionic bionic main
+```
+
+#### Ubuntu 16.04 LTS (Xenial Xerus)
+
+```
+deb http://packages.fluentbit.io/ubuntu/xenial xenial main
 ```
 
 ### Update your repositories database
