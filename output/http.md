@@ -17,7 +17,7 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_ and _json_stream_. | msgpack |
 | header_tag | Specify an optional HTTP header field for the original message tag. |         |
 | json_date_key | Specify the name of the date field in output | date |
-
+| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
 
 ### TLS / SSL
 
