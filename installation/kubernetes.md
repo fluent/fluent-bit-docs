@@ -44,7 +44,7 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 The next step is to create a ConfigMap that will be used by our Fluent Bit DaemonSet:
 
 ```
-$ kubectl create -f https://github.com/fluent/fluent-bit-kubernetes-logging/blob/master/output/elasticsearch/fluent-bit-configmap.yaml
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
 #### Fluent Bit to Elasticsearch
@@ -52,7 +52,7 @@ $ kubectl create -f https://github.com/fluent/fluent-bit-kubernetes-logging/blob
 Fluent Bit DaemonSet ready to be used with Elasticsearch on a normal Kubernetes Cluster:
 
 ```
-$ kubectl create -f https://github.com/fluent/fluent-bit-kubernetes-logging/blob/master/output/elasticsearch/fluent-bit-ds.yaml
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml
 ```
 
 #### Fluent Bit to Elasticsearch on Minikube
@@ -60,7 +60,7 @@ $ kubectl create -f https://github.com/fluent/fluent-bit-kubernetes-logging/blob
 If you are using Minikube for testing purposes, use the following alternative DaemonSet manifest:
 
 ```
-$ kubectl create -f https://github.com/fluent/fluent-bit-kubernetes-logging/blob/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
 ```
 
 ## Details
