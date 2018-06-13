@@ -182,3 +182,42 @@ The output of both the command line and configuration invocations should be iden
 [2] mem.local: [1528925857.000165965, {"cpustats"=>"UNKNOWN", "sourcetype"=>"memstats", "cpustats_more"=>"STILL_UNKNOWN"}]
 [3] mem.local: [1528925858.000152319, {"cpustats"=>"UNKNOWN", "sourcetype"=>"memstats", "cpustats_more"=>"STILL_UNKNOWN"}]
 ```
+
+## Example #3 - Emoji
+
+### Configuration File
+
+```python
+[INPUT]
+    Name mem
+    Tag  mem.local
+
+[OUTPUT]
+    Name  stdout
+    Match *
+
+[FILTER]
+    Name modify
+    Match *
+
+    Remove_Wildcard Mem
+    Remove_Wildcard Swap
+    Set This_plugin_is_on 🔥
+    Set 🔥 is_hot
+    Copy 🔥 💦
+    Rename  💦 ❄️
+    Set ❄️ is_cold
+    Set 💦 is_wet
+```
+
+### Result
+
+```
+[2018/06/14 07:46:11] [ info] [engine] started (pid=21875)
+[0] mem.local: [1528926372.000197916, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
+[1] mem.local: [1528926373.000107868, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
+[2] mem.local: [1528926374.000181042, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
+[3] mem.local: [1528926375.000090841, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
+[0] mem.local: [1528926376.000610974, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
+
+```
