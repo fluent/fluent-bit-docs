@@ -7,7 +7,7 @@ Fluent Bit is distributed as __td-agent-bit__ package and is available for the l
 The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
 
 ```shell
-$ wget -qO - http://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+$ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ## Update your sources lists
@@ -17,13 +17,13 @@ On Ubuntu, you need to add our APT server entry to your sources lists, please ad
 #### Ubuntu 18.04 LTS (Bionic Beaver)
 
 ```
-deb http://packages.fluentbit.io/ubuntu/bionic bionic main
+deb https://packages.fluentbit.io/ubuntu/bionic bionic main
 ```
 
 #### Ubuntu 16.04 LTS (Xenial Xerus)
 
 ```
-deb http://packages.fluentbit.io/ubuntu/xenial xenial main
+deb https://packages.fluentbit.io/ubuntu/xenial xenial main
 ```
 
 ### Update your repositories database
