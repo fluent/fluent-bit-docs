@@ -35,7 +35,7 @@ Consider the following configuration example that aims to deliver CPU metrics to
 
 > Note: the above example aim to demonstrate in a simplified way how Routing is configured.
 
-Routing works automatically reading the Input Tags and the Output Match rules. If some data have a Tag that don't have a match upon routing time, the data it's deleted.
+Routing works automatically reading the Input Tags and the Output Match rules. If some data have a Tag that don't have a match upon routing time, the data is deleted.
 
 ## Routing with Wildcard
 
