@@ -7,7 +7,7 @@ Fluent Bit is distributed as __td-agent-bit__ package and is available for the l
 The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
 
 ```shell
-$ wget -qO - http://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+$ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ## Update your sources lists
@@ -17,13 +17,13 @@ On Debian, you need to add our APT server entry to your sources lists, please ad
 #### Debian 9 (Stretch)
 
 ```
-deb http://packages.fluentbit.io/debian/stretch stretch main
+deb https://packages.fluentbit.io/debian/stretch stretch main
 ```
 
 #### Debian 8 (Jessie)
 
 ```
-deb http://packages.fluentbit.io/debian/jessie jessie main
+deb https://packages.fluentbit.io/debian/jessie jessie main
 ```
 
 ### Update your repositories database
