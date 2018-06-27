@@ -6,7 +6,7 @@ The _Modify Filter_ plugin allows you to change records using rules and conditio
 
 As an example using JSON notation to,
 
- - Rename 'Key2` to `RenamedKey`
+ - Rename `Key2` to `RenamedKey`
  - Add a key `OtherKey` with value `Value3` if `OtherKey` does not yet exist
 
 _Example (input)_
@@ -55,18 +55,18 @@ The plugin supports the following rules:
 
 The plugin supports the following conditions:
 
-| Condition                                 | Parameter  | Parameter 2  |  Description  |
-|-------------------------------------------|------------|--------------|---------------|
-| Key\_exists                               | STRING:KEY | NONE         | Is `true` if `KEY` exists |
-| Key\_does\_not\_exist                     | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
-| A\_key\_matches                           | REGEXP:KEY | NONE         | Is `true` if a key matches regex `KEY` |
-| No\_key\_matches                          | REGEXP:KEY | NONE         | Is `true` if no key matches regex `KEY` |
-| Key\_value\_equals                        | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |
-| Key\_value\_does\_not\_equal              | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is not `VALUE` |
-| Key\_value\_matches                       | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value matches `VALUE` |
-| Key\_value\_does\_not\match               | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value does not match `VALUE` |
-| Matching_keys_have_matching_values        | STRING:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that match `VALUE` |
-| Matching_keys_do_not_have_matching_values | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that do not match `VALUE` |
+| Condition                                       | Parameter  | Parameter 2  |  Description  |
+|-------------------------------------------------|------------|--------------|---------------|
+| Key\_exists                                     | STRING:KEY | NONE         | Is `true` if `KEY` exists |
+| Key\_does\_not\_exist                           | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
+| A\_key\_matches                                 | REGEXP:KEY | NONE         | Is `true` if a key matches regex `KEY` |
+| No\_key\_matches                                | REGEXP:KEY | NONE         | Is `true` if no key matches regex `KEY` |
+| Key\_value\_equals                              | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |
+| Key\_value\_does\_not\_equal                    | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is not `VALUE` |
+| Key\_value\_matches                             | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value matches `VALUE` |
+| Key\_value\_does\_not\_match                    | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value does not match `VALUE` |
+| Matching\_keys\_have\_matching\_values          | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that match `VALUE` |
+| Matching\_keys\_do\_not\_have\_matching\_values | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that do not match `VALUE` |
 
  - Conditions are case insensitive, parameters are not
  - Any number of conditions can be set.
