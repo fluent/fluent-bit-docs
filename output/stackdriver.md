@@ -2,7 +2,7 @@
 
 Stackdriver output plugin allows to ingest your records into [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
 
-Before to get started with the plugin configuration, make sure to obtain the proper credentials to get access to the service. We strongly recommend to use a commong credentials file, reference link:
+Before to get started with the plugin configuration, make sure to obtain the proper credentials to get access to the service. We strongly recommend to use a common JSON credentials file, reference link:
 
 - [Creating a Google Service Account for Stackdriver](https://cloud.google.com/logging/docs/agent/authorization#create-service-account)
 
