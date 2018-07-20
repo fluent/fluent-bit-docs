@@ -80,6 +80,7 @@
     * [Kafka REST Proxy](output/kafka-rest-proxy.md)
     * [NATS](output/nats.md)
     * [NULL](output/null.md)
+    * [Stackdriver](output/stackdriver.md)
     * [Standard Output](output/stdout.md)
     * [Splunk](output/splunk.md)
     * [Treasure Data](output/td.md)
