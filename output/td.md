@@ -7,11 +7,12 @@ The __td__ output plugin, allows to flush your records into the [Treasure Data](
 
 The plugin supports the following configuration parameters:
 
-| Key      | Description       |
-| ---------|-------------------|
-| API      | The [Treasure Data](http://treasuredata.com) API key. To obtain it please log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash.|
-| Database | Specify the name of your target database. |
-| Table    | Specify the name of your target table where the records will be stored.|
+| Key      | Description       | Default |
+| ---------|-------------------|         |
+| API      | The [Treasure Data](http://treasuredata.com) API key. To obtain it please log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash.|            |
+| Database | Specify the name of your target database. |            |
+| Table    | Specify the name of your target table where the records will be stored.|           |
+| Region   | Set the service region, available values: US and JP | US |
 
 ## Getting Started
 
