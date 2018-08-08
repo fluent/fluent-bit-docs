@@ -16,6 +16,7 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
 | Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_ and _json_stream_. | msgpack |
 | header_tag | Specify an optional HTTP header field for the original message tag. |         |
+| Header     | Add a HTTP header key/value pair. Multiple headers can be set. |         |
 
 ### TLS / SSL
 
@@ -91,3 +92,17 @@ We can easily parse the tag like this:
 ```
 
 Notice how we override the tag, which is from URI path, with our custom header
+
+#### Example : Add a header
+
+```
+[OUTPUT]
+    Name           http
+    Match          *
+    Host           127.0.0.1
+    Port           9000
+    Header         X-Key-A Value_A
+    Header         X-Key-B Value_B
+    URI            /something
+```
+
