@@ -15,13 +15,14 @@ The __es__ output plugin, allows to flush your records into a [Elasticsearch](ht
 | Index        | Index name | fluentbit |
 | Type         | Type name  | flb_type |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off | Off |
-| Logstash\_Prefix | When enabling Logstash\_Format, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
+| Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
 | Logstash\_DateFormat | Time format (based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)) to generate the second part of the Index name. | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field. | @timestamp |
 | Time\_Key\_Format | When Logstash\_Format is enabled, this property defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S|
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
-| Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | _flb-key |
+| Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | _flb-key |
 | Generate_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
+| Replace_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts.
 
