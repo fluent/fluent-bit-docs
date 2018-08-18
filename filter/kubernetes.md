@@ -28,7 +28,6 @@ The plugin supports the following configuration parameters:
 | Kube\_CA\_Path | CA path |  |
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
 | Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
-| Merge\_JSON\_Key | When `Merge_JSON_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_JSON_Key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
 | tls.debug | Debug level between 0 (nothing) and 4 (every detail). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
 | Use\_Journal | When enabled, the filter reads logs coming in Journald format. | Off |
