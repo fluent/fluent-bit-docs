@@ -6,15 +6,15 @@ _Health_ input plugin allows you to check how _healthy_ a TCP server is. It does
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description       |
-| -------------|-------------------|
-| Host         | Name of the target host or IP address to check. |
-| Port         | TCP port where to perform the connection check. |
-| Interval\_Sec| Interval in seconds between the service checks. Default value is _1_. |
-| Internal\_Nsec| Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_.|
-| Alert        | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled.|
-| Add_Host     | If enabled, hostname is appended to each records. Default value is _false_. |
-| Add_Port     | If enabled, port number is appended to each records. Default value is _false_. |
+| Key | Description |
+| :--- | :--- |
+| Host | Name of the target host or IP address to check. |
+| Port | TCP port where to perform the connection check. |
+| Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
+| Internal\_Nsec | Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Alert | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled. |
+| Add\_Host | If enabled, hostname is appended to each records. Default value is _false_. |
+| Add\_Port | If enabled, port number is appended to each records. Default value is _false_. |
 
 ## Getting Started
 
@@ -60,3 +60,4 @@ Copyright (C) Treasure Data
 [2] health.0: [1475897873, {"alive"=>true}]
 [3] health.0: [1475897874, {"alive"=>true}]
 ```
+

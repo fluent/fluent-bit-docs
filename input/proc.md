@@ -6,14 +6,14 @@ _Process_ input plugin allows you to check how health a process is. It does the 
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description       |
-| -------------|-------------------|
-| Proc_Name    | Name of the target Process to check. |
-| Interval\_Sec| Interval in seconds between the service checks. Default value is _1_. |
-| Internal\_Nsec| Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_.|
-| Alert        | If enabled, it will only generate messages if the target process is down. By default this option is disabled.|
-| Fd           | If enabled, a number of fd is appended to each records. Default value is true.|
-| Mem          | If enabled, memory usage of the process is appended to each records. Default value is true.|
+| Key | Description |
+| :--- | :--- |
+| Proc\_Name | Name of the target Process to check. |
+| Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
+| Internal\_Nsec | Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Alert | If enabled, it will only generate messages if the target process is down. By default this option is disabled. |
+| Fd | If enabled, a number of fd is appended to each records. Default value is true. |
+| Mem | If enabled, memory usage of the process is appended to each records. Default value is true. |
 
 ## Getting Started
 
@@ -58,3 +58,4 @@ Copyright (C) Treasure Data
 [2] proc.0: [1485780299, {"alive"=>true, "proc_name"=>"fluent-bit", "pid"=>10964, "mem.VmPeak"=>14740000, "mem.VmSize"=>14740000, "mem.VmLck"=>0, "mem.VmHWM"=>1152000, "mem.VmRSS"=>1148000, "mem.VmData"=>2276000, "mem.VmStk"=>88000, "mem.VmExe"=>1768000, "mem.VmLib"=>2328000, "mem.VmPTE"=>68000, "mem.VmSwap"=>0, "fd"=>18}]
 [3] proc.0: [1485780300, {"alive"=>true, "proc_name"=>"fluent-bit", "pid"=>10964, "mem.VmPeak"=>14740000, "mem.VmSize"=>14740000, "mem.VmLck"=>0, "mem.VmHWM"=>1152000, "mem.VmRSS"=>1148000, "mem.VmData"=>2276000, "mem.VmStk"=>88000, "mem.VmExe"=>1768000, "mem.VmLib"=>2328000, "mem.VmPTE"=>68000, "mem.VmSwap"=>0, "fd"=>18}]
 ```
+

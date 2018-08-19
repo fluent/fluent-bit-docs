@@ -2,19 +2,19 @@
 
 There are some cases where Fluent Bit library is used to send records from the caller application to some destination, this process is called _manual data ingestion_.
 
-For this purpose a specific input plugin called __lib__ exists and can be using in conjunction with the __flb_lib_push()__ API function.
+For this purpose a specific input plugin called **lib** exists and can be using in conjunction with the **flb\_lib\_push\(\)** API function.
 
 ## Data Format
 
-The __lib__ input plugin expect the data comes in a fixed JSON format as follows:
+The **lib** input plugin expect the data comes in a fixed JSON format as follows:
 
-```
+```text
 [UNIX_TIMESTAMP, MAP]
 ```
 
-Every record must be a JSON array that contains at least two entries. The first one is the _UNIX\_TIMESTAMP_ which is a number representing time associated to the event generation (Epoch time) and the second entry is a JSON map with a list of key/values. A valid entry can be the following:
+Every record must be a JSON array that contains at least two entries. The first one is the _UNIX\_TIMESTAMP_ which is a number representing time associated to the event generation \(Epoch time\) and the second entry is a JSON map with a list of key/values. A valid entry can be the following:
 
-```json
+```javascript
 [1449505010, {"key1": "some value", "key2": false}]
 ```
 
@@ -22,7 +22,7 @@ Every record must be a JSON array that contains at least two entries. The first 
 
 The following C code snippet shows how to insert a few JSON records into a running Fluent Bit engine:
 
-```C
+```c
 #include <fluent-bit.h>
 
 #define JSON_1   "[1449505010, {\"key1\": \"some value\"}]"
@@ -75,3 +75,4 @@ int main()
     return 0;
 }
 ```
+

@@ -1,6 +1,6 @@
 # NULL
 
-The __null__ output plugin just throws away events.
+The **null** output plugin just throws away events.
 
 ## Configuration Parameters
 
@@ -31,3 +31,4 @@ In your main configuration file append the following Input & Output sections:
     Name null
     Match *
 ```
+

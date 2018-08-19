@@ -1,18 +1,16 @@
 # Treasure Data
 
-The __td__ output plugin, allows to flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
-
+The **td** output plugin, allows to flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key      | Description       | Default |
-| ---------|-------------------|         |
-| API      | The [Treasure Data](http://treasuredata.com) API key. To obtain it please log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash.|            |
-| Database | Specify the name of your target database. |            |
-| Table    | Specify the name of your target table where the records will be stored.|           |
-| Region   | Set the service region, available values: US and JP | US |
+| Key | Description |
+| :--- | :--- |
+| API | The [Treasure Data](http://treasuredata.com) API key. To obtain it please log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash. |
+| Database | Specify the name of your target database. |
+| Table | Specify the name of your target table where the records will be stored. |
 
 ## Getting Started
 
@@ -30,7 +28,7 @@ Ideally you don't want to expose your API key from the command line, using a con
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```Python
+```python
 [INPUT]
     Name cpu
     Tag  my_cpu
@@ -42,3 +40,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Database fluentbit
     Table    cpu_samples
 ```
+
