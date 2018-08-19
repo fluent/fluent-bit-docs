@@ -1,14 +1,14 @@
 # FlowCounter
 
-_FlowCounter_ is the protocol to count records. The __flowcounter__ output plugin allows to count up records and its size.
+_FlowCounter_ is the protocol to count records. The **flowcounter** output plugin allows to count up records and its size.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key  | Description | Default | 
-|------|-------------|---------|
-| Unit | The unit of duration. (second/minute/hour/day)| minute |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Unit | The unit of duration. \(second/minute/hour/day\) | minute |
 
 ## Getting Started
 
@@ -49,3 +49,4 @@ Copyright (C) Treasure Data
 [2016/12/23 11:01:20] [ info] [engine] started
 [out_flowcounter] cpu.0:[1482458540, {"counts":60, "bytes":7560, "counts/minute":1, "bytes/minute":126 }]
 ```
+

@@ -1,22 +1,22 @@
-# Install on Ubuntu
+# Ubuntu Packages
 
-Fluent Bit is distributed as __td-agent-bit__ package and is available for the latest stable Ubuntu system: Xenial Xerus. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable Ubuntu system: Xenial Xerus. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
 ## Server GPG key
 
 The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
 
-```shell
+```text
 $ wget -qO - http://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ## Update your sources lists
 
-On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your __/etc/apt/sources.list__ file:
+On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
 
-#### Ubuntu 16.04 (Xenial Xerus)
+#### Ubuntu 16.04 \(Xenial Xerus\)
 
-```
+```text
 deb http://packages.fluentbit.io/ubuntu xenial main
 ```
 
@@ -32,7 +32,7 @@ $ sudo apt-get update
 
 Using the following _apt-get_ command you are able now to install the latest _td-agent-bit_:
 
-```shell
+```text
 $ sudo apt-get install td-agent-bit
 ```
 
@@ -58,4 +58,5 @@ sudo service td-agent-bit status
 ...
 ```
 
-The default configuration of __td-agent-bit__ is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+
