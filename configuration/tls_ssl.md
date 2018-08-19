@@ -5,7 +5,7 @@ Fluent Bit provides integrated support for _Transport Layer Security_ \(TLS\) an
 Each output plugin that requires to perform Network I\/O can optionally enable TLS and configure the behavior. The following table describe the properties available:
 
 | Property | Description | Default |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | tls | enable or disable TLS support | Off |
 | tls.verify | force certificate validation | On |
 | tls.ca\_file | absolute path to CA certificate file |  |
@@ -22,19 +22,18 @@ The listed properties can be enabled in the configuration file, specifically on 
 
 By default HTTP output plugin uses plain TCP, enabling TLS from the command line can be done with:
 
-```
+```text
 $ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
     -p tls=on         \
     -p tls.verify=off \
     -m '*'
-
 ```
 
 In the command line above, the two properties _tls_ and _tls.verify_ where enabled for demonstration purposes \(we strongly suggest always keep verification ON\).
 
 The same behavior can be accomplished using a configuration file:
 
-```
+```text
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -48,3 +47,4 @@ The same behavior can be accomplished using a configuration file:
     tls        On
     tls.verify Off
 ```
+

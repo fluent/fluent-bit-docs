@@ -6,14 +6,14 @@ _Syslog_ input plugins allows to collect messages using the syslog protocol thro
 
 The plugin supports the following configuration parameters:
 
-| Key         | Description       |
-| ------------|-------------------|
-| Path        | Absolute path to the Unix socket file. |
-| Parser      | Specify an alternative parser for the message. |
-| Buffer\_Size| Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |
-| Chunk_Size  | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). |
+| Key | Description |
+| :--- | :--- |
+| Path | Absolute path to the Unix socket file. |
+| Parser | Specify an alternative parser for the message. |
+| Buffer\_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |
+| Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). |
 
-Note that Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the [SERVER] section (more details below).
+Note that Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the \[SERVER\] section \(more details below\).
 
 ## Getting Started
 
@@ -68,3 +68,4 @@ Copyright (C) Treasure Data
 [2017/03/09 02:23:27] [ info] [engine] started
 [0] syslog.0: [1489047822, {"pri"=>"13", "host"=>"edsiper:", "ident"=>"my_ident", "pid"=>"", "message"=>"my_message"}]
 ```
+

@@ -1,14 +1,14 @@
 # File
 
-The __file__ output plugin allows to write the data received through the _input_ plugin to file. 
+The **file** output plugin allows to write the data received through the _input_ plugin to file.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key  | Description |
-|------|-------------|
-| Path | File path to output. If not set, the filename will be tag name.|
+| Key | Description |
+| :--- | :--- |
+| Path | File path to output. If not set, the filename will be tag name. |
 
 ## Getting Started
 
@@ -36,3 +36,4 @@ In your main configuration file append the following Input & Output sections:
     Match *
     Path output.txt
 ```
+

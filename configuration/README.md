@@ -5,3 +5,4 @@ Fluent Bit is flexible enough to be configured either from the command line or t
 Note that all configuration files uses a specific fixed and strict schema, please proceed to the following sections for a better understanding:
 
 [Configuration Schema](schema.md)
+
