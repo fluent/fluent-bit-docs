@@ -1,5 +1,71 @@
-![](imgs/logo_documentation_0.9.png)
+# README
 
-[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Data Forwarder for Linux, OSX and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
+![](.gitbook/assets/fluentbit_logo.png)
 
-[Fluent Bit](http://fluentbit.io) is part of the [Fluentd](http://fluentd.org) project ecosystem, it's licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). This project is made and sponsored by [Treasure Data](https://www.treasuredata.com).
+[Fluent Bit](http://fluentbit.io) is a data collector for Linux, Embedded Linux, OSX and BSD family operating systems. It's part of the [Fluentd](http://fluentd.org) project ecosystem. Fluent Bit allows collection of information from different sources, buffering and dispatching them to different outputs such as Elastic, Nats or [Fluentd](http://fluentd.org). Despite having a strong focus on Embedded & IoT environments, it's fully supported on common x86 and x86\_64 architectures.
+
+## Quick Start
+
+```text
+$ cd build
+$ cmake ..
+$ make
+$ bin/fluent-bit -i cpu -o stdout
+```
+
+## Features
+
+[Fluent Bit](http://fluentbit.io) support the following features through plugins:
+
+### Input plugins
+
+| name | option | description |
+| :--- | :--- | :--- |
+| CPU | cpu | gather CPU usage between snapshots of one second. It support multiple cores |
+| Forward | forward | Fluentd forward protocol |
+| Memory | mem | usage of system memory |
+| MQTT | mqtt | start a MQTT server and receive publish messages |
+| Kernel Ring Buffer | kmsg | read Linux Kernel messages, same behavior as the **dmesg** command line program |
+| Serial Port | serial | read from serial port |
+| Standard Input | stdin | read from the standard input |
+| XBee | xbee | listen for incoming messages over a Xbee device |
+| Head | head | read first part of files |
+| Random | random | generate random numbers |
+
+### Output Plugins
+
+| name | option | description |
+| :--- | :--- | :--- |
+| Elasticsearch | es | flush records to a Elasticsearch server |
+| Forward | forward | flush records to a [Fluentd](http://fluentd.org) service. On the [Fluentd](http://fluentd.org) side, it requires an **in\_forward**. |
+| NATS | nats | flush records to a NATS server |
+| HTTP | http | flush records to a HTTP end point |
+| Standard Output | stdout | prints the records to the standard output stream |
+| Treasure Data | td | flush records to [Treasure Data](http://treasuredata.com) service \(cloud analytics\) |
+
+## Official Documentation
+
+The official documentation of [Fluent Bit](http://fluentbit.io) can be found in the following site:
+
+[http://fluentbit.io/documentation/](http://fluentbit.io/documentation/)
+
+## Contributing
+
+In order to contribute to the project please refer to the [CONTRIBUTING](contributing.md) guidelines.
+
+## Contact
+
+Feel free to join us on our Mailing List or IRC:
+
+* Mailing List: [https://groups.google.com/forum/\#!forum/fluent-bit](https://groups.google.com/forum/#!forum/fluent-bit)
+* IRC: irc.freenode.net \#fluent-bit
+* Twitter: [http://twitter.com/fluentbit](http://twitter.com/fluentbit)
+
+## License
+
+This program is under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Authors
+
+[Fluent Bit](http://fluentbit.io) is made and sponsored by [Treasure Data](http://treasuredata.com) among other [contributors](https://github.com/fluent/fluent-bit/graphs/contributors).
+
