@@ -79,7 +79,7 @@
     * [Kafka](output/kafka.md)
     * [Kafka REST Proxy](output/kafka-rest-proxy.md)
     * [NATS](output/nats.md)
-    * [NULL](output/null.md)
+    * [Null](output/null.md)
     * [Stackdriver](output/stackdriver.md)
     * [Standard Output](output/stdout.md)
     * [Splunk](output/splunk.md)
