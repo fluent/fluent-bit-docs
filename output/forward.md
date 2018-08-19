@@ -1,15 +1,15 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The __forward__ output plugin allows to integrate [Fluent Bit](http://fluentbit.io) with [Fluentd](http://fluentd.org) easily. There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be on the local host or a in a remote machine.
+_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The **forward** output plugin allows to integrate [Fluent Bit](http://fluentbit.io) with [Fluentd](http://fluentd.org) easily. There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be on the local host or a in a remote machine.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key      | Description       |
-| ---------|-------------------|
-| Host     | Target host where Fluent-Bit or Fluentd are listening for Forward messages. |
-| Port     | TCP Port of the target service. |
+| Key | Description |
+| :--- | :--- |
+| Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. |
+| Port | TCP Port of the target service. |
 
 ## Forward Setup
 
@@ -17,7 +17,7 @@ Before to proceed, make sure that [Fluentd](http://fluentd.org) is installed in 
 
 Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
 
-```
+```text
 <source>
   type forward
   bind 0.0.0.0
@@ -29,9 +29,9 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specifies that will listen for _TCP_ connections on the port _12225_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG, will print it out to the standard output.
+That configuration file specifies that will listen for _TCP_ connections on the port _12225_ through the **forward** input type. Then for every message with a _fluent\_bit_ \_\_TAG, will print it out to the standard output.
 
-In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created (in_fluent-bit.conf):
+In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created \(in\_fluent-bit.conf\):
 
 ```bash
 $ fluentd -c in_fluent-bit.conf
@@ -60,13 +60,13 @@ $ fluentd -c in_fluent-bit.conf
 
 ## Fluent Bit Setup
 
-Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the __forward__ output plugin will flush the information using the following format:
+Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
-```
+```text
 bin/fluent-bit -i INPUT -o forward://HOST:PORT/TAG
 ```
 
-If the __TAG__ parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that __TAG__ is important for routing rules inside [Fluentd](http://fluentd.org).
+If the **TAG** parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
 
 Using the [CPU](../input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
 
@@ -76,7 +76,7 @@ $ bin/fluent-bit -i cpu -o forward://127.0.0.1:12225
 
 In [Fluent Bit](http://fluentbit.io) we should see the following output:
 
-```
+```text
 Fluent Bit v0.3.0
 Copyright (C) Treasure Data
 
@@ -103,3 +103,4 @@ Now on the [Fluentd](http://fluentd.org) side the following:
 ```
 
 So we gathered [CPU](../input/cpu.md) metrics and flush them out to [Fluentd](http://fluentd.org) properly.
+

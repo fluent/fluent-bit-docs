@@ -15,7 +15,6 @@ $ cd build/
 
 Let [CMake](http://cmake.org) configure the project specifying where the root path is located:
 
-
 ```bash
 $ cmake ../
 -- The C compiler identification is GNU 4.9.2
@@ -71,54 +70,53 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 
 ### General Options
 
-| option                 |  description                             | default  |
-|------------------------|------------------------------------------|----------|
-| FLB_ALL                | Enable all features available            | No       |
-| FLB_DEBUG              | Build binaries with debug symbols        | No       |
-| FLB_JEMALLOC           | Use Jemalloc as default memory allocator | No       |
-| FLB_TLS                | Buils with SSL/TLS support               | No       |
-| FLB_WITHOUT_BIN        | Do not build executable                  | No       |
-| FLB_WITHOUT_EXAMPLES   | Do not build examples                    | No       |
-| FLB_WITHOUT_SHARED_LIB | Do not build shared library              | No       |
-| FLB_VALGRIND           | Enable Valgrind support                  | No       |
-| FLB_TRACE              | Enable trace mode                        | No       |
-| FLB_TESTS              | Enable tests                             | No       |
-| FLB_MTRACE             | Enable mtrace support                    | No       |
-| FLB_BUFFERING          | Enable buffering support                 | No       |
-| FLB_POSIX_TLS          | Force POSIX thread storage               | No       |
+| option | description | default |
+| :--- | :--- | :--- |
+| FLB\_ALL | Enable all features available | No |
+| FLB\_DEBUG | Build binaries with debug symbols | No |
+| FLB\_JEMALLOC | Use Jemalloc as default memory allocator | No |
+| FLB\_TLS | Buils with SSL/TLS support | No |
+| FLB\_WITHOUT\_BIN | Do not build executable | No |
+| FLB\_WITHOUT\_EXAMPLES | Do not build examples | No |
+| FLB\_WITHOUT\_SHARED\_LIB | Do not build shared library | No |
+| FLB\_VALGRIND | Enable Valgrind support | No |
+| FLB\_TRACE | Enable trace mode | No |
+| FLB\_TESTS | Enable tests | No |
+| FLB\_MTRACE | Enable mtrace support | No |
+| FLB\_BUFFERING | Enable buffering support | No |
+| FLB\_POSIX\_TLS | Force POSIX thread storage | No |
 
 ### Input Plugins
 
-The _input plugins_ provides certain features to gather information from a specific source type which can be a
-network interface, some built-in metric or through a specific input device, the following input plugins are
-available:
+The _input plugins_ provides certain features to gather information from a specific source type which can be a network interface, some built-in metric or through a specific input device, the following input plugins are available:
 
-| option           |  description                                      | default  |
-|------------------|---------------------------------------------------|----------|
-| [FLB_IN_CPU](../input/cpu.md)      | Enable CPU input plugin              | On |
-| [FLB_IN_FORWARD](../input/forward.md) | Enable Forward input plugin       | On |
-| [FLB_IN_HEAD](../input/head.md)    | Enable Head input plugin             | On |
-| [FLB_IN_HEALTH](../input/health.md)| Enable Health input plugin           | On |
-| [FLB_IN_KMSG](../input/kmsg.md)    | Enable Kernel log input plugin       | On |
-| [FLB_IN_MEM](../input/mem.md)      | Enable Memory input plugin           | On |
-| FLB_IN_RANDOM                      | Enable Random input plugin           | On |
-| [FLB_IN_SERIAL](../input/serial.md)| Enable Serial input plugin           | On |
-| [FLB_IN_STDIN](../input/stdin.md)  | Enable Standard input plugin         | On |
-| FLB_IN_TCP                         | Enable TCP input plugin              | On |
-| [FLB_IN_MQTT](../input/mqtt.md)    | Enable MQTT input plugin             | On |
-| [FLB_IN_XBEE](../input/xbee.md)    | Enable Xbee input plugin             | Off |
+| option | description | default |
+| :--- | :--- | :--- |
+| [FLB\_IN\_CPU](../input/cpu.md) | Enable CPU input plugin | On |
+| [FLB\_IN\_FORWARD](../input/forward.md) | Enable Forward input plugin | On |
+| [FLB\_IN\_HEAD](../input/head.md) | Enable Head input plugin | On |
+| [FLB\_IN\_HEALTH](../input/health.md) | Enable Health input plugin | On |
+| [FLB\_IN\_KMSG](../input/kmsg.md) | Enable Kernel log input plugin | On |
+| [FLB\_IN\_MEM](../input/mem.md) | Enable Memory input plugin | On |
+| FLB\_IN\_RANDOM | Enable Random input plugin | On |
+| [FLB\_IN\_SERIAL](../input/serial.md) | Enable Serial input plugin | On |
+| [FLB\_IN\_STDIN](../input/stdin.md) | Enable Standard input plugin | On |
+| FLB\_IN\_TCP | Enable TCP input plugin | On |
+| [FLB\_IN\_MQTT](../input/mqtt.md) | Enable MQTT input plugin | On |
+| [FLB\_IN\_XBEE](../input/xbee.md) | Enable Xbee input plugin | Off |
 
 ### Output Plugins
 
 The _output plugins_ gives the capacity to flush the information to some external interface, service or terminal, the following table describes the output plugins available as of this version:
 
-| option           |  description                         | default  |
-|------------------|--------------------------------------|----------|
-| [FLB_OUT_ES](../output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
-| [FLB_OUT_FORWARD](../output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
-| [FLB_OUT_HTTP](../output/http.md) | Enable HTTP output plugin          | On       |
-| [FLB_OUT_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
-| FLB_OUT_PLOT                      | Enable Plot output plugin                | On |
-| [FLB_OUT_STDOUT](../output/stdout.md) | Enable STDOUT output plugin          | On |
-| [FLB_OUT_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
-| FLB_OUT_NULL                  | Enable /dev/null output plugin               | On |
+| option | description | default |
+| :--- | :--- | :--- |
+| [FLB\_OUT\_ES](../output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
+| [FLB\_OUT\_FORWARD](../output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
+| [FLB\_OUT\_HTTP](../output/http.md) | Enable HTTP output plugin | On |
+| [FLB\_OUT\_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
+| FLB\_OUT\_PLOT | Enable Plot output plugin | On |
+| [FLB\_OUT\_STDOUT](../output/stdout.md) | Enable STDOUT output plugin | On |
+| [FLB\_OUT\_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
+| FLB\_OUT\_NULL | Enable /dev/null output plugin | On |
+

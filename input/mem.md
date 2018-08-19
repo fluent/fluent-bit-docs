@@ -1,6 +1,6 @@
 # Memory Usage
 
-The __mem__ input plugin, gathers the information about the memory usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
+The **mem** input plugin, gathers the information about the memory usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
 
 ## Getting Started
 
@@ -32,3 +32,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+

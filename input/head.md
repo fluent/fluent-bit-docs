@@ -1,18 +1,18 @@
 # Head
 
-The __head__ input plugin, allows to read events from the head of file. It's behavior is similar to the _head_ command.
+The **head** input plugin, allows to read events from the head of file. It's behavior is similar to the _head_ command.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key           | Description |
-| --------------|-------------|
-| File          | Absolute path to the target file, e.g: /proc/uptime |
-| Buf_Size      | Buffer size to read the file. |
-| Interval_Sec  | Polling interval (seconds). |
-| Interval_NSec | Polling interval (nanosecond). |
-| Add_Path      | If enabled, filepath is appended to each records. Default value is _false_. |
+| Key | Description |
+| :--- | :--- |
+| File | Absolute path to the target file, e.g: /proc/uptime |
+| Buf\_Size | Buffer size to read the file. |
+| Interval\_Sec | Polling interval \(seconds\). |
+| Interval\_NSec | Polling interval \(nanosecond\). |
+| Add\_Path | If enabled, filepath is appended to each records. Default value is _false_. |
 
 ## Getting Started
 
@@ -52,6 +52,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-Note: Total interval (sec) = Interval_Sec + (Interval_Nsec / 1000000000).
+Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
+

@@ -1,18 +1,17 @@
 # TCP
 
-
-The __tcp__ input plugin allows to listen for JSON messages through a network interface (TCP port).
+The **tcp** input plugin allows to listen for JSON messages through a network interface \(TCP port\).
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key         | Description       |
-| ------------|-------------------|
-| Listen      | Listener network interface, default: 0.0.0.0. |
-| Port        | TCP port where listening for connections, default: 5170. |
-| Buffer\_Size| Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_. |
-| Chunk_Size  | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). |
+| Key | Description |
+| :--- | :--- |
+| Listen | Listener network interface, default: 0.0.0.0. |
+| Port | TCP port where listening for connections, default: 5170. |
+| Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_. |
+| Chunk\_Size | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). |
 
 ## Getting Started
 
@@ -26,7 +25,7 @@ From the command line you can let Fluent Bit listen for _JSON_ messages with the
 $ fluent-bit -i tcp -o stdout
 ```
 
-By default the service will listen an all interfaces (0.0.0.0) through TCP port 5170, optionally you can change this directly, e.g:
+By default the service will listen an all interfaces \(0.0.0.0\) through TCP port 5170, optionally you can change this directly, e.g:
 
 ```bash
 $ fluent-bit -i tcp://192.168.3.2:9090 -o stdout
@@ -70,3 +69,4 @@ Copyright (C) Treasure Data
 [2017/01/02 10:57:44] [ info] [in_tcp] binding 0.0.0.0:5170
 [0] tcp.0: [1483376268, {"msg"=>{"key 1"=>123456789, "key 2"=>"abcdefg"}}]
 ```
+

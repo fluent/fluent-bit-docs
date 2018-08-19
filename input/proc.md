@@ -6,12 +6,12 @@ _Process_ input plugin allows you to check how health a process is. It does the 
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description       |
-| -------------|-------------------|
-| Proc_Name    | Name of the target Process to check. |
-| Interval\_Sec| Interval in seconds between the service checks. Default value is _1_. |
-| Internal\_Nsec| Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_.|
-| Alert        | If enabled, it will only generate messages if the target process is down. By default this option is disabled.|
+| Key | Description |
+| :--- | :--- |
+| Proc\_Name | Name of the target Process to check. |
+| Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
+| Internal\_Nsec | Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Alert | If enabled, it will only generate messages if the target process is down. By default this option is disabled. |
 
 ## Getting Started
 
@@ -54,3 +54,4 @@ Copyright (C) Treasure Data
 [2] proc.0: [1480846495, {"alive"=>true, "proc_name"=>"crond", "pid"=>2425}]
 [3] proc.0: [1480846496, {"alive"=>true, "proc_name"=>"crond", "pid"=>2425}]
 ```
+

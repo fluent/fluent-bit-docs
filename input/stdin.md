@@ -1,6 +1,6 @@
 # Standard Input
 
-The __stdin__ plugin allows to retrieve valid JSON text messages over the standard input interface (stdin). In order to use it, specify the plugin name as the input, e.g:
+The **stdin** plugin allows to retrieve valid JSON text messages over the standard input interface \(stdin\). In order to use it, specify the plugin name as the input, e.g:
 
 ```bash
 $ fluent-bit -i stdin -o stdout
@@ -44,3 +44,4 @@ Copyright (C) Treasure Data
 [3] stdin.0: [1475898289, {"key"=>"some value"}]
 [4] stdin.0: [1475898290, {"key"=>"some value"}]
 ```
+

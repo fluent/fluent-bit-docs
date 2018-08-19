@@ -1,16 +1,15 @@
 # XBee Radio
 
-The __xbee__ plugin allows to listen for data through an [XBee Radio](http://www.digi.com/lp/xbee/) device. These devices uses ZigBee for their communication and the __xbee__ plugin allows to retrieve those messages when using an [XBee](http://www.digi.com/lp/xbee/). In order to use this plugin is required to write a siple configuration file before to run [Fluent Bit](http://fluentbit.io).
+The **xbee** plugin allows to listen for data through an [XBee Radio](http://www.digi.com/lp/xbee/) device. These devices uses ZigBee for their communication and the **xbee** plugin allows to retrieve those messages when using an [XBee](http://www.digi.com/lp/xbee/). In order to use this plugin is required to write a siple configuration file before to run [Fluent Bit](http://fluentbit.io).
 
 ## Configuration File
 
-[Fluent Bit](http://fluentbit.io) sources distribute an example configuration file for the serial interface and it's located under _conf/serial_input.conf_. The plugin recognizes the following setup under a __XBEE__ section:
+[Fluent Bit](http://fluentbit.io) sources distribute an example configuration file for the serial interface and it's located under _conf/serial\_input.conf_. The plugin recognizes the following setup under a **XBEE** section:
 
-| Key             | Description       |
-| ----------------|-------------------|
-| File            | Absolute path to the device entry, e.g: /dev/ttyUSB0 |
-| Baudrate        | Specify the baudrate for the communication, e.g: 9600, 38400, 115200, etc |
-
+| Key | Description |
+| :--- | :--- |
+| File | Absolute path to the device entry, e.g: /dev/ttyUSB0 |
+| Baudrate | Specify the baudrate for the communication, e.g: 9600, 38400, 115200, etc |
 
 Here is an example:
 
@@ -43,3 +42,4 @@ As input data the _xbee_ plugin recognize the following JSON data formats:
 1. { map => val, map => val, map => val }
 2. [ time, { map => val, map => val, map => val } ]
 ```
+
