@@ -1,16 +1,16 @@
 # Serial Interface
 
-The __serial__ input plugin, allows to retrieve messages/data from a _Serial_ interface.
+The **serial** input plugin, allows to retrieve messages/data from a _Serial_ interface.
 
 ## Configuration Parameters
 
-| Key             | Description       |
-| ----------------|-------------------|
-| File            | Absolute path to the device entry, e.g: /dev/ttyS0 |
-| Bitrate         | The bitrate for the communication, e.g: 9600, 38400, 115200, etc |
-| Min_Bytes       | The serial interface will expect at least _Min\_Bytes_ to be available before to process the message (default: 1)
-| Separator       | Allows to specify a _separator_ string that's used to determinate when a message ends. |
-| Format          | Specify the format of the incoming data stream. The only option available is 'json'. Note that _Format_ and _Separator_ cannot be used at the same time.|
+| Key | Description |
+| :--- | :--- |
+| File | Absolute path to the device entry, e.g: /dev/ttyS0 |
+| Bitrate | The bitrate for the communication, e.g: 9600, 38400, 115200, etc |
+| Min\_Bytes | The serial interface will expect at least _Min\_Bytes_ to be available before to process the message \(default: 1\) |
+| Separator | Allows to specify a _separator_ string that's used to determinate when a message ends. |
+| Format | Specify the format of the incoming data stream. The only option available is 'json'. Note that _Format_ and _Separator_ cannot be used at the same time. |
 
 ## Getting Started
 
@@ -18,18 +18,16 @@ In order to retrieve messages over the _Serial_ interface, you can run the plugi
 
 ### Command Line
 
-The following example loads the input _serial_ plugin where it set a Bitrate of 9600, listen from the _/dev/tnt0_ interface and use the custom tag _data_ to route the
-message.
+The following example loads the input _serial_ plugin where it set a Bitrate of 9600, listen from the _/dev/tnt0_ interface and use the custom tag _data_ to route the message.
 
-```
+```text
 $ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
 ```
 
-The above interface (/dev/tnt0) is an emulation of the serial interface (more details at bottom), for demonstrative purposes we will write some message to the other end of the interface, in this case _/dev/tnt1_, e.g:
+The above interface \(/dev/tnt0\) is an emulation of the serial interface \(more details at bottom\), for demonstrative purposes we will write some message to the other end of the interface, in this case _/dev/tnt1_, e.g:
 
-```
+```text
 $ echo 'this is some message' > /dev/tnt1
-
 ```
 
 In Fluent Bit you should see an output like this:
@@ -41,17 +39,15 @@ Copyright (C) Treasure Data
 
 [2016/05/20 15:44:39] [ info] starting engine
 [0] data: [1463780680, {"msg"=>"this is some message"}]
-
 ```
 
-Now using the _Separator_ configuration, we could send multiple messages at once (run this command after starting Fluent Bit):
+Now using the _Separator_ configuration, we could send multiple messages at once \(run this command after starting Fluent Bit\):
 
-
-```
+```text
 $ echo 'aaXbbXccXddXee' > /dev/tnt1
 ```
 
-```
+```text
 $ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
 Fluent-Bit v0.8.0
 Copyright (C) Treasure Data
@@ -112,7 +108,7 @@ $ sudo depmod
 $ sudo modprobe tty0tty
 ```
 
-You should see new serial ports in /dev/ (ls /dev/tnt*) Give appropriate permissions to the new serial ports:
+You should see new serial ports in /dev/ \(ls /dev/tnt\*\) Give appropriate permissions to the new serial ports:
 
 ```bash
 $ sudo chmod 666 /dev/tnt*
@@ -126,3 +122,4 @@ When the module is loaded, it will interconnect the following virtual interfaces
 /dev/tnt4 <=> /dev/tnt5
 /dev/tnt6 <=> /dev/tnt7
 ```
+

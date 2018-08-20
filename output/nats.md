@@ -1,23 +1,23 @@
 # NATS
 
-The __nats__ output plugin, allows to flush your records into a [NATS Server](http://nats.io/documentation/server/gnatsd-intro/) end point. The following instructions assumes that you have a fully operational NATS Server in place.
+The **nats** output plugin, allows to flush your records into a [NATS Server](http://nats.io/documentation/server/gnatsd-intro/) end point. The following instructions assumes that you have a fully operational NATS Server in place.
 
-In order to flush records, the __nats__ plugin requires to know two parameters:
+In order to flush records, the **nats** plugin requires to know two parameters:
 
-| parameter   | description          | default           |
-|-------------|----------------------|-------------------|
-| host        | IP address or hostname of the NATS Server | 127.0.0.1 |
-| port        | TCP port of the target NATS Server | 4222 |
+| parameter | description | default |
+| :--- | :--- | :--- |
+| host | IP address or hostname of the NATS Server | 127.0.0.1 |
+| port | TCP port of the target NATS Server | 4222 |
 
 In order to override the default configuration values, the plugin uses the optional Fluent Bit network address format, e.g:
 
-```
+```text
 nats://host:port
 ```
 
 ## Running
 
-[Fluent Bit](http://fluentbit.io) only requires to know that it needs to use the __nats__ output plugin, if no extra information is given, it will use the default values specified in the above table.
+[Fluent Bit](http://fluentbit.io) only requires to know that it needs to use the **nats** output plugin, if no extra information is given, it will use the default values specified in the above table.
 
 ```bash
 $ bin/fluent-bit -i cpu -o nats -V -f 5
@@ -40,12 +40,11 @@ cpu[i=3] all=6.000000 user=5.000000 system=1.000000
 
 As described above, the target service and storage point can be changed, e.g:
 
-
 ## Data format
 
 For every set of records flushed to a NATS Server, Fluent Bit uses the following JSON format:
 
-```json
+```javascript
 [
   [UNIX_TIMESTAMP, JSON_MAP_1],
   [UNIX_TIMESTAMP, JSON_MAP_2],
@@ -53,12 +52,13 @@ For every set of records flushed to a NATS Server, Fluent Bit uses the following
 ]
 ```
 
-Each record is an individual entity represented in a JSON array that contains a UNIX_TIMESTAMP and a JSON map with a set of key/values. A summarized output of the CPU input plugin will looks as this:
+Each record is an individual entity represented in a JSON array that contains a UNIX\_TIMESTAMP and a JSON map with a set of key/values. A summarized output of the CPU input plugin will looks as this:
 
-```
+```text
 [
   [1457108504,{"tag":"fluentbit","cpu_p":1.500000,"user_p":1,"system_p":0.500000}],
   [1457108505,{"tag":"fluentbit","cpu_p":4.500000,"user_p":3,"system_p":1.500000}],
   [1457108506,{"tag":"fluentbit","cpu_p":6.500000,"user_p":4.500000,"system_p":2}]
 ]
 ```
+

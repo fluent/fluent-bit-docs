@@ -2,7 +2,7 @@
 
 _Counter_ is a very simple plugin that counts how many records it's getting upon flush time. Plugin output is as follows:
 
-```
+```text
 [TIMESTAMP, NUMBER_OF_RECORDS_NOW] (total = RECORDS_SINCE_IT_STARTED)
 ```
 
@@ -48,3 +48,4 @@ Copyright (C) Treasure Data
 1500484746,1 (total = 4)
 1500484747,1 (total = 5)
 ```
+
