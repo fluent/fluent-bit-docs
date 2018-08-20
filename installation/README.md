@@ -4,4 +4,5 @@ The following section will guide you to the step to download, build and install 
 
 If you find some problem on a certain step, don't hesitate to report the problem on our bug tracker:
 
-https://github.com/fluent/fluent-bit/issues
+[https://github.com/fluent/fluent-bit/issues](https://github.com/fluent/fluent-bit/issues)
+

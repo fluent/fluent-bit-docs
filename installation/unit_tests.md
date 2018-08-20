@@ -10,7 +10,7 @@ In order to build and run the tests, your system needs a C++ compiler and an ins
 $ sudo apt-get install g++ libgtest-dev
 ```
 
-Note that _libgtest-dev_ will __only__ install the sources of the test suite, you need to take some extra steps to make this work:
+Note that _libgtest-dev_ will **only** install the sources of the test suite, you need to take some extra steps to make this work:
 
 ```bash
 $ cd /usr/src/gtest
@@ -21,7 +21,7 @@ $ sudo cp libg* /usr/lib/
 
 ## Enable Tests
 
-By default [Fluent Bit](http://fluentbit.io) have the tests disabled, you need to append the _ENABLE_TESTS_ option to your __cmake__ line, e.g:
+By default [Fluent Bit](http://fluentbit.io) have the tests disabled, you need to append the _ENABLE\_TESTS_ option to your **cmake** line, e.g:
 
 ```bash
 $ cd build/
@@ -35,3 +35,4 @@ To run the tests just issue the following command:
 ```bash
 $ make test
 ```
+

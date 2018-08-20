@@ -4,15 +4,15 @@ Fluent Bit comes with a built-in HTTP Server that can be used to query internal 
 
 Content:
 
-- [Getting Started](#getting_started)
-- [REST API Interface](#rest_api)
-- [Examples](#examples)
+* [Getting Started](monitoring.md#getting_started)
+* [REST API Interface](monitoring.md#rest_api)
+* [Examples](monitoring.md#examples)
 
 ## Getting Started {#getting_started}
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
-```
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -28,7 +28,7 @@ To get started, the first step is to enable the HTTP Server from the configurati
 
 the above configuration snippet will instruct Fluent Bit to start it HTTP Server on TCP Port 2020 and listening on all network interfaces:
 
-```
+```text
 $ bin/fluent-bit -c fluent-bit.conf
 Fluent-Bit v0.13.0
 Copyright (C) Treasure Data
@@ -37,9 +37,9 @@ Copyright (C) Treasure Data
 [2017/10/27 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
-now with a simple __curl__ command is enough to gather some information:
+now with a simple **curl** command is enough to gather some information:
 
-```
+```text
 $ curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
@@ -72,17 +72,17 @@ Note that we are sending the _curl_ command output to the _jq_ program which hel
 
 Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.13 the following end points are available:
 
-| URI              | Description              |  Data Format        |
-|------------------|--------------------------|---------------------|
-| /                | Fluent Bit build information            | JSON |
-| /api/v1/metrics  | Internal metrics per loaded plugin      | JSON |
+| URI | Description | Data Format |
+| :--- | :--- | :--- |
+| / | Fluent Bit build information | JSON |
+| /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
 
 ## Examples {#examples}
 
 Query internal metrics in JSON format:
 
-```
+```text
 $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 {
   "input": {
@@ -101,13 +101,11 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
     }
   }
 }
-
 ```
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
-
-```
+```text
 $ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
@@ -117,3 +115,4 @@ fluentbit_output_errors_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
+
