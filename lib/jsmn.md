@@ -48,11 +48,11 @@ Every jsmn token has a type, which indicates the type of corresponding JSON toke
 
 * Object - a container of key-value pairs, e.g.:
 
-    `{ "foo":"bar", "x":0.3 }`
+  `{ "foo":"bar", "x":0.3 }`
 
 * Array - a sequence of values, e.g.:
 
-    `[ 1, 2, 3 ]`
+  `[ 1, 2, 3 ]`
 
 * String - a quoted sequence of chars, e.g.: `"foo"`
 * Primitive - a number, a boolean \(`true`, `false`\) or `null`
