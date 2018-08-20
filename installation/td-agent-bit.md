@@ -9,5 +9,5 @@ The following distributions are supported:
 | [Ubuntu](ubuntu.md) | 16.04 | Xenial Xerus |
 | [Debian](debian.md) | 8 | Jessie |
 | [Raspbian](raspberry_pi.md) | 8 | Jessie |
-| [CentOS](redhat_centos.md) | 7 |   |
+| [CentOS](redhat_centos.md) | 7 |  |
 
