@@ -1,6 +1,6 @@
 # Dummy
 
-The __dummy__ input plugin, generates dummy events. It is useful for testing, debugging, benchmarking and getting started with Fluent Bit.
+The **dummy** input plugin, generates dummy events. It is useful for testing, debugging, benchmarking and getting started with Fluent Bit.
 
 ## Configuration Parameters
 
@@ -10,10 +10,10 @@ The plugin supports the following configuration parameters:
 
 You can run the plugin from the command line or through the configuration file:
 
-| Key           | Description |
-| --------------|-------------|
-| Dummy         | Dummy JSON record. Default: `{"message":"dummy"}` |
-| Rate          | Events number generated per second. Default: 1|
+| Key | Description |
+| :--- | :--- |
+| Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
+| Rate | Events number generated per second. Default: 1 |
 
 ### Command Line
 
@@ -42,3 +42,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+

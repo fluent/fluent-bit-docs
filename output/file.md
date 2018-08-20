@@ -1,23 +1,23 @@
 # File
 
-The __file__ output plugin allows to write the data received through the _input_ plugin to file. 
+The **file** output plugin allows to write the data received through the _input_ plugin to file.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key  | Description |
-|------|-------------|
-| Path | File path to output. If not set, the filename will be tag name.|
-| Format | The format of the file content. See also Format section. Default: out_file.|
+| Key | Description |
+| :--- | :--- |
+| Path | File path to output. If not set, the filename will be tag name. |
+| Format | The format of the file content. See also Format section. Default: out\_file. |
 
 ## Format
 
-### out_file format
+### out\_file format
 
-Output time, tag and json records. There is no configuration parameters for out_file.
+Output time, tag and json records. There is no configuration parameters for out\_file.
 
-```json
+```javascript
 tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 ```
 
@@ -25,10 +25,9 @@ tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 
 Output the records as csv. Csv supports an additional configuration parameter.
 
-| Key  | Description |
-|------|-------------|
-| Delimiter | The character to separate each data. Default: ','|
-
+| Key | Description |
+| :--- | :--- |
+| Delimiter | The character to separate each data. Default: ',' |
 
 ```python
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
@@ -38,10 +37,10 @@ time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 
 Output the records as LTSV. LTSV supports an additional configuration parameter.
 
-| Key  | Description |
-|------|-------------|
-| Delimiter       | The character to separate each pair. Default: '\t'(TAB)|
-| Label_Delimiter | The character to separate label and the value. Default: ':'|
+| Key | Description |
+| :--- | :--- |
+| Delimiter | The character to separate each pair. Default: '\t'\(TAB\) |
+| Label\_Delimiter | The character to separate label and the value. Default: ':' |
 
 ```python
 field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
@@ -73,3 +72,4 @@ In your main configuration file append the following Input & Output sections:
     Match *
     Path output.txt
 ```
+
