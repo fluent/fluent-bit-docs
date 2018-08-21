@@ -1,6 +1,6 @@
 # Standard Output
 
-The __stdout__ output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
+The **stdout** output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
 
 ```bash
 $ bin/fluent-bit -i cpu -o stdout -v
@@ -21,3 +21,4 @@ Copyright (C) Treasure Data
 ```
 
 No more, no less, it just works.
+

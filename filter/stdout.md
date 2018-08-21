@@ -1,4 +1,4 @@
-# Standard Output Filter
+# Standard Output
 
 The _Standard Output Filter_ plugin allows to print to the standard output the data received through the _input_ plugin.
 
@@ -12,7 +12,7 @@ In order to start filtering records, you can run the filter from the command lin
 
 ### Command Line
 
-```
+```text
 $ fluent-bit -i cpu -t cpu.local -F stdout -m '*' -o null -m '*'
 ```
 
@@ -33,3 +33,4 @@ In your main configuration file append the following _FILTER_ sections:
     Name  null
     Match *
 ```
+
