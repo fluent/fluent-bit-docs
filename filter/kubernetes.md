@@ -25,7 +25,7 @@ The plugin supports the following configuration parameters:
 | Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 32k |
 | Kube\_URL       | API Server end-point  | https://kubernetes.default.svc.cluster.local:443 |
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
-| Kube\_CA\_Path | CA path |  |
+| Kube\_CA\_Path | Absolute path to scan for certificate files |  |
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
 | Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
 | Merge\_Log\_Key | When `Merge_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_Log_Key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
