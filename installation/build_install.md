@@ -75,9 +75,9 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_DEBUG | Build binaries with debug symbols | No |
 | FLB\_JEMALLOC | Use Jemalloc as default memory allocator | No |
 | FLB\_TLS | Buils with SSL/TLS support | No |
-| FLB\_WITHOUT\_BIN | Do not build executable | No |
-| FLB\_WITHOUT\_EXAMPLES | Do not build examples | No |
-| FLB\_WITHOUT\_SHARED\_LIB | Do not build shared library | No |
+| FLB\_BINARY | Build executable | Yes |
+| FLB\_EXAMPLES | Build examples | Yes |
+| FLB\_SHARED\_LIB | Build shared library | Yes |
 | FLB\_VALGRIND | Enable Valgrind support | No |
 | FLB\_TRACE | Enable trace mode | No |
 | FLB\_TESTS | Enable tests | No |
@@ -118,4 +118,3 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT](../output/stdout.md) | Enable STDOUT output plugin | On |
 | [FLB\_OUT\_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 | FLB\_OUT\_NULL | Enable /dev/null output plugin | On |
-
