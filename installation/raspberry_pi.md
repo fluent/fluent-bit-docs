@@ -14,8 +14,16 @@ $ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 
 On Debian and derivated systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
 
+#### Raspbian 9 \(Stretch\)
+
 ```text
-deb https://packages.fluentbit.io/raspbian jessie main
+deb https://packages.fluentbit.io/raspbian/stretch stretch main
+```
+
+#### Raspbian 8 \(Jessie\)
+
+```text
+deb https://packages.fluentbit.io/raspbian/jessie jessie main
 ```
 
 ### Update your repositories database
@@ -57,4 +65,3 @@ sudo service td-agent-bit status
 ```
 
 The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
-
