@@ -50,3 +50,56 @@ In your main configuration file append the following _Input_ & _Output_ sections
     TLS.Verify  Off
     Message_Key my_key
 ```
+
+### Data format
+
+By default, the Splunk output plugin nests the record under the `event` key in the payload sent to the HEC. It will also append the time of the record to a top level `time` key.
+
+If you would like to customize any of the Splunk event metadata, such as the host or target index, you can set `Splunk_Send_Raw On` in the plugin configuraiton, and add the metadata as keys/values in the record. *Note*: with `Splunk_Send_Raw` enabled, you are responsible for creating and populating the `event` section of the payload.
+
+For example, to add a custom index and hostname:
+
+```text
+[INPUT]
+    Name  cpu
+    Tag   cpu
+
+# nest the record under the 'event' key
+[FILTER]
+    Name nest
+    Match *
+    Operation nest
+    Wildcard *
+    Nest_under event
+
+# add event metadata
+[FILTER]
+    Name      modify
+    Match     *
+    Add index my-splunk-index
+    Add host  my-host
+
+[OUTPUT]
+    Name        splunk
+    Match       *
+    Host        127.0.0.1
+    Splunk_Token xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+    Splunk_Send_Raw On
+```
+
+This will create a payload that looks like:
+
+```json
+{
+    "time": "1535995058.003385189",
+    "index": "my-splunk-index",
+    "host": "my-host",
+    "event": {
+        "cpu_p":0.000000,
+        "user_p":0.000000,
+        "system_p":0.000000
+    }
+}
+```
+
+For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC
