@@ -11,7 +11,7 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 | Host | IP address or hostname of the target Splunk service. | 127.0.0.1 |
 | Port | TCP port of the target Splunk service. | 8088 |
 | Splunk\_Token | Specify the Authentication [Token](http://dev.splunk.com/view/event-collector/SP-CAAAE7C) for the HTTP Event Collector interface. |  |
-| Splunk\_Send\_Raw | If enabled, record keys and values are set in the main map. | Off |
+| Splunk\_Send\_Raw | When enabled, the record keys and values are set in the top level of the map instead of under the _event_ key. | Off |
 | HTTP\_User | Optional username for Basic Authentication on HEC |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 
@@ -50,4 +50,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     TLS.Verify  Off
     Message_Key my_key
 ```
-
