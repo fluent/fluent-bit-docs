@@ -7,14 +7,7 @@ This plugin offers two different transports and modes:
 * Forward \(TCP\): It uses a plain TCP connection.
 * Secure Forward \(TLS\): when TLS is enabled, the plugin switch to Secure Forward mode.
 
-Content:
-
-* [Configuration Parameters](forward.md#config_tcp)
-* [Secure Forward Configuration Parameters](forward.md#config_tls)
-* [Forward Setup](forward.md#forward_setup)
-* [Secure Forward Setup](forward.md#secure_forward_setup)
-
-## Configuration Parameters {#config_tcp}
+## Configuration Parameters
 
 The following parameters are mandatory for eiter Forward for Secure Forward modes:
 
@@ -23,8 +16,9 @@ The following parameters are mandatory for eiter Forward for Secure Forward mode
 | Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
 | Port | TCP Port of the target service. | 24224 |
 | Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
+| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
 
-## Secure Forward Mode Configuration Parameters {#config_tls}
+## Secure Forward Mode Configuration Parameters 
 
 When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
 
