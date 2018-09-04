@@ -17,9 +17,10 @@ Each output plugin that requires to perform Network I/O can optionally enable TL
 
 The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. The following **output** plugins can take advantage of the TLS feature:
 
-* [HTTP](../output/http.md)
 * [Elasticsearch](../output/elasticsearch.md)
 * [Forward](../output/forward.md)
+* [HTTP](../output/http.md)
+* [Splunk](../output/splunk.md)
 
 ## Example: enable TLS on HTTP output
 
@@ -50,4 +51,3 @@ The same behavior can be accomplished using a configuration file:
     tls        On
     tls.verify Off
 ```
-
