@@ -6,6 +6,7 @@
   * [Fluentd & Fluent Bit](about/fluentd_and_fluentbit.md)
   * [License](about/license.md)
 * [Installation](installation/README.md)
+  * [Supported Platforms](installation/supported_platforms.md)
   * [Requirements](installation/requirements.md)
   * [Download Sources](installation/download_sources.md)
   * [Build and Install](installation/build_install.md)
@@ -88,4 +89,3 @@
 * [Fluent Bit for Developers](development/README.md)
   * [Library API](development/library_api.md)
   * [Ingest Records Manually](development/ingest_records_manually.md)
-
