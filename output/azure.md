@@ -1,4 +1,4 @@
-# Azure Log Analytics
+# Azure
 
 Azure output plugin allows to ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
 
@@ -6,11 +6,11 @@ To get more details about how to setup the Azure Log Analytics please refer to t
 
 ## Configuration Parameters
 
-| Key         | Description                                                  | default   |
-| ----------- | ------------------------------------------------------------ | --------- |
-| Customer_ID | Customer ID or WorkspaceID string.                           |           |
-| Shared_Key  | The primary or the secondary Connected Sources client authentication key. |           |
-| Log_Type    | The name of the event type.                                  | fluentbit |
+| Key | Description | default |
+| :--- | :--- | :--- |
+| Customer\_ID | Customer ID or WorkspaceID string. |  |
+| Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
+| Log\_Type | The name of the event type. | fluentbit |
 
 ## Getting Started
 
@@ -18,17 +18,17 @@ In order to insert records into a Azure, you can run the plugin from the command
 
 ### Command Line
 
-The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument (property), e.g:
+The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
-```
+```text
 $ fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 ```
 
 ### Configuration File
 
-In your main configuration file append the following *Input* & *Output* sections:
+In your main configuration file append the following _Input_ & _Output_ sections:
 
-```
+```text
 [INPUT]
     Name  cpu
 
@@ -37,5 +37,5 @@ In your main configuration file append the following *Input* & *Output* sections
     Match       *
     Customer_ID abc
     Shared_Key  def
-    
 ```
+

@@ -1,4 +1,4 @@
-# Modify Filter
+# Modify
 
 The _Modify Filter_ plugin allows you to change records using rules and conditions.
 
@@ -9,23 +9,23 @@ As an example using JSON notation to,
  - Rename `Key2` to `RenamedKey`
  - Add a key `OtherKey` with value `Value3` if `OtherKey` does not yet exist
 
-_Example (input)_
-```
+_Example \(input\)_
+
+```text
 {
   "Key1"     : "Value1",
   "Key2"     : "Value2"
 }
-
 ```
 
-_Example (output)_
-```
+_Example \(output\)_
+
+```text
 {
   "Key1"       : "Value1",
   "RenamedKey" : "Value2",
   "OtherKey"   : "Value3"
 }
-
 ```
 
 ## Configuration Parameters
@@ -51,6 +51,7 @@ The plugin supports the following rules:
  - Any number of rules can be set in a filter instance.
  - Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
 
+
 ### Conditions
 
 The plugin supports the following conditions:
@@ -73,12 +74,11 @@ The plugin supports the following conditions:
  - Conditions apply to the whole filter instance and all its rules. *Not* to individual rules.
  - All conditions have to be `true` for the rules to be applied.
 
-## Example #1 - Add and Rename
+## Example \#1 - Add and Rename
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file.
-The following invokes the [Memory Usage Input Plugin](../input/mem.html), which outputs the following (example),
+In order to start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/input/mem.html), which outputs the following \(example\),
 
-```
+```text
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
 [1] memory: [1488543157, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
 [2] memory: [1488543158, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
@@ -89,7 +89,7 @@ The following invokes the [Memory Usage Input Plugin](../input/mem.html), which 
 
 > Note: Using the command line mode requires quotes parse the wildcard properly. The use of a configuration file is recommended.
 
-```
+```text
 bin/fluent-bit -i mem \
   -p 'tag=mem.local' \
   -F modify \
@@ -131,19 +131,19 @@ bin/fluent-bit -i mem \
 
 The output of both the command line and configuration invocations should be identical and result in the following output.
 
-```
+```text
 [2018/04/06 01:35:13] [ info] [engine] started
 [0] mem.local: [1522980610.006892802, {"Mem.total"=>4050908, "MEMUSED"=>738100, "MEMFREE"=>3312808, "SWAPTOTAL"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Service1"=>"SOMEVALUE", "Service3"=>"SOMEVALUE3", "Mem.total2"=>"TOTALMEM2"}]
 [1] mem.local: [1522980611.000658288, {"Mem.total"=>4050908, "MEMUSED"=>738068, "MEMFREE"=>3312840, "SWAPTOTAL"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Service1"=>"SOMEVALUE", "Service3"=>"SOMEVALUE3", "Mem.total2"=>"TOTALMEM2"}]
 [2] mem.local: [1522980612.000307652, {"Mem.total"=>4050908, "MEMUSED"=>738068, "MEMFREE"=>3312840, "SWAPTOTAL"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Service1"=>"SOMEVALUE", "Service3"=>"SOMEVALUE3", "Mem.total2"=>"TOTALMEM2"}]
 [3] mem.local: [1522980613.000122671, {"Mem.total"=>4050908, "MEMUSED"=>738068, "MEMFREE"=>3312840, "SWAPTOTAL"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Service1"=>"SOMEVALUE", "Service3"=>"SOMEVALUE3", "Mem.total2"=>"TOTALMEM2"}]
 ```
-## Example #2 - Conditionally Add and Remove
+
+## Example \#2 - Conditionally Add and Remove
 
 ### Configuration File
 
 ```python
-
 [INPUT]
     Name mem
     Tag  mem.local
@@ -183,7 +183,7 @@ The output of both the command line and configuration invocations should be iden
 
 ### Result
 
-```
+```text
 [2018/06/14 07:37:34] [ info] [engine] started (pid=1493)
 [0] mem.local: [1528925855.000223110, {"cpustats"=>"UNKNOWN", "sourcetype"=>"memstats", "cpustats_more"=>"STILL_UNKNOWN"}]
 [1] mem.local: [1528925856.000064516, {"cpustats"=>"UNKNOWN", "sourcetype"=>"memstats", "cpustats_more"=>"STILL_UNKNOWN"}]
@@ -191,7 +191,7 @@ The output of both the command line and configuration invocations should be iden
 [3] mem.local: [1528925858.000152319, {"cpustats"=>"UNKNOWN", "sourcetype"=>"memstats", "cpustats_more"=>"STILL_UNKNOWN"}]
 ```
 
-## Example #3 - Emoji
+## Example \#3 - Emoji
 
 ### Configuration File
 
@@ -220,12 +220,12 @@ The output of both the command line and configuration invocations should be iden
 
 ### Result
 
-```
+```text
 [2018/06/14 07:46:11] [ info] [engine] started (pid=21875)
 [0] mem.local: [1528926372.000197916, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
 [1] mem.local: [1528926373.000107868, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
 [2] mem.local: [1528926374.000181042, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
 [3] mem.local: [1528926375.000090841, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
 [0] mem.local: [1528926376.000610974, {"This_plugin_is_on"=>"🔥", "🔥"=>"is_hot", "❄️"=>"is_cold", "💦"=>"is_wet"}]
-
 ```
+
