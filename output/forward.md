@@ -1,44 +1,38 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The __forward__ output plugin allows to provide interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org). There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be in the local host or a in a remote machine.
+_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The **forward** output plugin allows to provide interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org). There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be in the local host or a in a remote machine.
 
 This plugin offers two different transports and modes:
 
-- Forward (TCP): It uses a plain TCP connection.
-- Secure Forward (TLS): when TLS is enabled, the plugin switch to Secure Forward mode.
+* Forward \(TCP\): It uses a plain TCP connection.
+* Secure Forward \(TLS\): when TLS is enabled, the plugin switch to Secure Forward mode.
 
-Content:
-
-- [Configuration Parameters](#config_tcp)
-- [Secure Forward Configuration Parameters](#config_tls)
-- [Forward Setup](#forward_setup)
-- [Secure Forward Setup](#secure_forward_setup)
-
-## Configuration Parameters {#config_tcp}
+## Configuration Parameters
 
 The following parameters are mandatory for eiter Forward for Secure Forward modes:
 
-| Key      | Description       | Default         |
-| ---------|-------------------|-----------------|
-| Host     | Target host where Fluent-Bit or Fluentd are listening for Forward messages.| 127.0.0.1|
-| Port     | TCP Port of the target service.| 24224 |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
+| Port | TCP Port of the target service. | 24224 |
 | Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
+| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
 
-## Secure Forward Mode Configuration Parameters {#config_tls}
+## Secure Forward Mode Configuration Parameters 
 
 When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
 
-| Key            | Description       | Default |
-|----------------|-------------------|---------|
-| Shared\_Key    | A key string known by the remote Fluentd used for authorization. ||
-| Self\_Hostname | Default value of the auto-generated certificate common name (CN).||
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Shared\_Key | A key string known by the remote Fluentd used for authorization. |  |
+| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). |  |
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
-| tls.debug  | Set TLS debug verbosity level. It accept the following values: 0 (No debug), 1 (Error), 2 (State change), 3 (Informational) and 4 Verbose| 1 |
-| tls.ca\_file | Absolute path to CA certificate file ||
-| tls.crt\_file | Absolute path to Certificate file. ||
-| tls.key\_file | Absolute path to private Key file. ||
-| tls.key\_passwd | Optional password for tls.key\_file file. ||
+| tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
+| tls.ca\_file | Absolute path to CA certificate file |  |
+| tls.crt\_file | Absolute path to Certificate file. |  |
+| tls.key\_file | Absolute path to private Key file. |  |
+| tls.key\_passwd | Optional password for tls.key\_file file. |  |
 
 ## Forward Setup
 
@@ -46,7 +40,7 @@ Before to proceed, make sure that [Fluentd](http://fluentd.org) is installed in 
 
 Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
 
-```
+```text
 <source>
   type forward
   bind 0.0.0.0
@@ -58,9 +52,9 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specifies that will listen for _TCP_ connections on the port _24224_ through the __forward__ input type. Then for every message with a _fluent\_bit_ __TAG__, will print the message to the standard output.
+That configuration file specifies that will listen for _TCP_ connections on the port _24224_ through the **forward** input type. Then for every message with a _fluent\_bit_ **TAG**, will print the message to the standard output.
 
-In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created (in_fluent-bit.conf):
+In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created \(in\_fluent-bit.conf\):
 
 ```bash
 $ fluentd -c test.conf
@@ -97,19 +91,20 @@ $ fluentd -c test.conf
 
 ## Fluent Bit + Forward Setup {#forward_setup}
 
-Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the __forward__ output plugin will flush the information using the following format:
+Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
-```
+```text
 bin/fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
-If the __TAG__ parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that __TAG__ is important for routing rules inside [Fluentd](http://fluentd.org).
+If the **TAG** parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
 
 Using the [CPU](../input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
 
 ```bash
 $ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
 ```
+
 Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gathered in the last seconds:
 
 ```bash
@@ -127,11 +122,11 @@ So we gathered [CPU](../input/cpu.md) metrics and flush them out to [Fluentd](ht
 
 Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](../configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
 
-#### Fluent Bit
+### Fluent Bit
 
 Paste this content in a file called _flb.conf_:
 
-```
+```text
 [SERVICE]
     Flush      5
     Daemon     off
@@ -152,11 +147,11 @@ Paste this content in a file called _flb.conf_:
     tls.verify    off
 ```
 
-#### Fluentd
+### Fluentd
 
 Paste this content in a file called _fld.conf_:
 
-```
+```text
 <source>
   @type         secure_forward
   self_hostname myserver.local
@@ -169,23 +164,23 @@ Paste this content in a file called _fld.conf_:
 </match>
 ```
 
-#### Test Communication
+### Test Communication
 
 Start Fluentd:
 
-```
+```text
 $ fluentd -c fld.conf
 ```
 
 Start Fluent Bit:
 
-```
+```text
 $ fluent-bit -c flb.conf
 ```
 
 After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd output you will see a message like this:
 
-```
+```text
 2017-03-23 13:34:40 -0600 [info]: using configuration file: <ROOT>
   <source>
     @type secure_forward
@@ -202,3 +197,4 @@ After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd out
 2017-03-23 13:34:43 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.25,"system_p":0.5,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":0.0,"cpu3.p_system":1.0}
 2017-03-23 13:34:44 -0600 cpu_usage: {"cpu_p":5.0,"user_p":3.25,"system_p":1.75,"cpu0.p_cpu":4.0,"cpu0.p_user":2.0,"cpu0.p_system":2.0,"cpu1.p_cpu":8.0,"cpu1.p_user":5.0,"cpu1.p_system":3.0,"cpu2.p_cpu":4.0,"cpu2.p_user":3.0,"cpu2.p_system":1.0,"cpu3.p_cpu":4.0,"cpu3.p_user":2.0,"cpu3.p_system":2.0}
 ```
+

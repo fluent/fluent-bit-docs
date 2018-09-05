@@ -1,18 +1,18 @@
-# Kubernetes Filter
+# Kubernetes
 
 The _Kubernetes Filter_ allows to enrich your log files with Kubernetes metadata.
 
-When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers (using tail plugin), this filter aims to perform the following operations:
+When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers \(using tail plugin\), this filter aims to perform the following operations:
 
-- Analyze the Tag and extract the following metadata:
-  - POD Name
-  - Namespace
-  - Container Name
-  - Container ID
-- Query Kubernetes API Server to obtain extra metadata for the POD in question:
-  - POD ID
-  - Labels
-  - Annotations
+* Analyze the Tag and extract the following metadata:
+  * POD Name
+  * Namespace
+  * Container Name
+  * Container ID
+* Query Kubernetes API Server to obtain extra metadata for the POD in question:
+  * POD ID
+  * Labels
+  * Annotations
 
 The data is cached locally in memory and appended to each record.
 
@@ -20,15 +20,77 @@ The data is cached locally in memory and appended to each record.
 
 The plugin supports the following configuration parameters:
 
-| Key         |  Description             | Default                            |
-| ------------|--------------------------|------------------------------------|
+| Key | Description | Default |
+| :--- | :--- | :--- |
 | Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 32k |
 | Kube\_URL       | API Server end-point  | https://kubernetes.default.svc.cluster.local:443 |
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
-| Kube\_CA\_Path | CA path |  |
+| Kube\_CA\_Path | Absolute path to scan for certificate files |  |
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
-| Merge\_JSON\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
-| Merge\_JSON\_Key | When `Merge_JSON_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_JSON_Key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
-| tls.debug | Debug level between 0 (nothing) and 4 (every detail). | -1 |
+| Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
+| Merge\_Log\_Key | When `Merge_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_Log_Key` is set \(a string name\), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
+| tls.debug | Debug level between 0 \(nothing\) and 4 \(every detail\). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
 | Use\_Journal | When enabled, the filter reads logs coming in Journald format. | Off |
+| Regex\_Parser | Set an alternative Parser to process record Tag and extract pod\_name, namespace\_name, container\_name and docker\_id. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) \(refer to parser _filter-kube-test_ as an example\). |  |
+| K8S-Logging.Parser | Allow Kubernetes Pods to  suggest a pre-defined Parser (read more about it in Kubernetes Annotations section) | Off |
+| K8S-Logging.Exclude | Allow Kubernetes Pods to exclude their logs from the log processor (read more about it in Kubernetes Annotations section). | Off |
+
+
+
+## Kubernetes Annotations
+
+A flexible feature of Fluent Bit Kubernetes filter is that allow Kubernetes Pods to suggest certain behaviors for the log processor pipeline when processing the records. At the moment it support:
+
+- Suggest a pre-defined parser
+- Request to exclude logs
+
+The following annotations are available:
+
+| Annotation           | Description                                                  | Default |
+| -------------------- | ------------------------------------------------------------ | ------- |
+| fluentbit.io/parser  | Suggest a pre-defined parser. The parser must be registered already by Fluent Bit. This option will only be processed if Fluent Bit configuration (Kubernetes Filter) have enabled the option _K8S-Logging.Parser_. |         |
+| fluentbit.io/exclude | Request to Fluent Bit to exclude or not the logs generated by the Pod.  This option will only be processed if Fluent Bit configuration  (Kubernetes Filter) have enabled the option _K8S-Logging.Exclude_. | False   |
+
+### Annotation Examples in Pod definition
+
+#### Suggest a parser
+
+The following Pod definition runs a Pod that emits Apache logs to the standard output, in the Annotations it suggest that the data should be processed using the pre-defined parser called _apache_: 
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apache-logs
+  labels:
+    app: apache-logs
+  annotations:
+    fluentbit.io/parser: apache
+spec:
+  containers:
+  - name: apache
+    image: edsiper/apache_logs
+```
+
+#### Request to exclude logs
+
+There are certain situations where the user would like to request that the log processor simply skip the logs from the Pod in question:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apache-logs
+  labels:
+    app: apache-logs
+  annotations:
+    fluentbit.io/exclude: "true"
+spec:
+  containers:
+  - name: apache
+    image: edsiper/apache_logs
+```
+
+Note that the annotation value is boolean which can take a _true_ or _false_ and __must__ be quoted. 
+
