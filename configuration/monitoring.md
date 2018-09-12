@@ -2,12 +2,6 @@
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
 
-Content:
-
-* [Getting Started](monitoring.md#getting_started)
-* [REST API Interface](monitoring.md#rest_api)
-* [Examples](monitoring.md#examples)
-
 ## Getting Started {#getting_started}
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
@@ -30,7 +24,7 @@ the above configuration snippet will instruct Fluent Bit to start it HTTP Server
 
 ```text
 $ bin/fluent-bit -c fluent-bit.conf
-Fluent-Bit v0.13.0
+Fluent-Bit v0.14.x
 Copyright (C) Treasure Data
 
 [2017/10/27 19:08:24] [ info] [engine] started
@@ -70,20 +64,44 @@ Note that we are sending the _curl_ command output to the _jq_ program which hel
 
 ## REST API Interface {#rest_api}
 
-Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.13 the following end points are available:
+Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.14 the following end points are available:
 
 | URI | Description | Data Format |
 | :--- | :--- | :--- |
 | / | Fluent Bit build information | JSON |
+| /api/v1/uptime | Get uptime information in seconds and human readable format | JSON |
 | /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
 
-## Examples {#examples}
+## Uptime Example
 
-Query internal metrics in JSON format:
+Query the service uptime with the following command:
 
-```text
+```
+$ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
+```
+
+it should print a similar output like this:
+
+```json
+{
+  "uptime_sec": 8950000,
+  "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
+}
+
+```
+
+## Metrics Examples
+
+Query internal metrics in JSON format with the following command:
+
+```bash
 $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
+```
+
+it should print a similar output like this:
+
+```json
 {
   "input": {
     "cpu.0": {
@@ -103,10 +121,17 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 }
 ```
 
+#### Metrics in Prometheus format
+
 Query internal metrics in Prometheus Text 0.0.4 format:
 
-```text
+```bash
 $ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
+```
+
+this time the same metrics will be in Prometheus format instead of JSON:
+
+```
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
 fluentbit_output_proc_records_total{name="stdout.0"} 54 1509150350542
