@@ -21,6 +21,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Script | Path to the Lua script that will be used. |
 | Call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
+| Type_int_key | If the key is matched, that field will be converted to integer. |
 
 ## Getting Started {#getting_started}
 
@@ -96,3 +97,6 @@ For functional examples of this interface, please refer to the code samples prov
 
 [https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
 
+### Number Type
+
+In Lua, Fluent Bit treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, **Type_int_key** property is available.
