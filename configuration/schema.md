@@ -26,7 +26,7 @@ A section is defined by a name or title inside brackets. Looking at the example 
 
 ## Entries: Key/Value {#entries_kv}
 
-A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **on**. Entries rules:
+A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **debug**. Entries rules:
 
 * An entry is defined by a key and a value.
 * A key must be indented.
