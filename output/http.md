@@ -14,9 +14,11 @@ The **http** output plugin, allows to flush your records into an HTTP end point.
 | Port        | TCP port of the target HTTP Server | 80 |
 | Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
-| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_ and _json_stream_. | msgpack |
+| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json_stream_ and _json_lines_. | msgpack |
 | header_tag | Specify an optional HTTP header field for the original message tag. |         |
 | Header     | Add a HTTP header key/value pair. Multiple headers can be set. |         |
+| json_date_key | Specify the name of the date field in output | date |
+| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
 
 ### TLS / SSL
 
@@ -100,4 +102,3 @@ Notice how we override the tag, which is from URI path, with our custom header
     Header         X-Key-B Value_B
     URI            /something
 ```
-
