@@ -1,6 +1,6 @@
 # HTTP
 
-The __http__ output plugin, allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issue a POST request with the data records in [MessagePack](http://msgpack.org) format.
+The **http** output plugin, allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issue a POST request with the data records in [MessagePack](http://msgpack.org) format.
 
 > In future versions the target URI and data format will be configurable.
 
@@ -29,15 +29,15 @@ In order to insert records into a HTTP server, you can run the plugin from the c
 
 ### Command Line
 
-The __http__ plugin, can read the parameters from the command line in two ways, through the __-p__ argument (property) or setting them directly through the service URI. The URI format is the following:
+The **http** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\) or setting them directly through the service URI. The URI format is the following:
 
-```
+```text
 http://host:port/something
 ```
 
 Using the format specified, you could start Fluent Bit through:
 
-```
+```text
 $ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -o stdout -m '*'
 ```
 
@@ -45,7 +45,7 @@ $ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -o stdout -m '*'
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```Python
+```python
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -58,18 +58,13 @@ In your main configuration file append the following _Input_ & _Output_ sections
     URI   /something
 ```
 
-By default, the URI becomes tag of the message, the original tag is ignore. To
-retain the tag, multiple configuration sections has to be made based and flush
-to different URIs.
+By default, the URI becomes tag of the message, the original tag is ignore. To retain the tag, multiple configuration sections has to be made based and flush to different URIs.
 
-Another approach we also support is the sending the original message tag
-in a configurabled header. It's up to the receiver to do what it want with that
-header field: parse it and use it as the tag for example. With fluend
-http plugin, it's straightforward.
+Another approach we also support is the sending the original message tag in a configurabled header. It's up to the receiver to do what it want with that header field: parse it and use it as the tag for example. With fluend http plugin, it's straightforward.
 
 To configure this behaviour, add this config:
 
-```
+```text
 [OUTPUT]
     Name  http
     Match *
@@ -79,7 +74,7 @@ To configure this behaviour, add this config:
     header_tag  FLUENT-TAG
 ```
 
-Given the default http input fluentd plugin: https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in_http.rb#L212-L215
+Given the default http input fluentd plugin: [https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in\_http.rb\#L212-L215](https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in_http.rb#L212-L215)
 
 We can easily parse the tag like this:
 
@@ -93,3 +88,4 @@ We can easily parse the tag like this:
 ```
 
 Notice how we override the tag, which is from URI path, with our custom header
+
