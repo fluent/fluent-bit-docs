@@ -1,6 +1,6 @@
 # HTTP
 
-The **http** output plugin, allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issue a POST request with the data records in [MessagePack](http://msgpack.org) format.
+The **http** output plugin allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) format.
 
 > In future versions the target URI and data format will be configurable.
 
@@ -42,7 +42,7 @@ $ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -o stdout -m '*'
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file, append the following _Input_ & _Output_ sections:
 
 ```python
 [INPUT]
@@ -57,9 +57,9 @@ In your main configuration file append the following _Input_ & _Output_ sections
     URI   /something
 ```
 
-By default, the URI becomes tag of the message, the original tag is ignore. To retain the tag, multiple configuration sections has to be made based and flush to different URIs.
+By default, the URI becomes tag of the message, the original tag is ignored. To retain the tag, multiple configuration sections have to be made based and flush to different URIs.
 
-Another approach we also support is the sending the original message tag in a configurabled header. It's up to the receiver to do what it want with that header field: parse it and use it as the tag for example. With fluend http plugin, it's straightforward.
+Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example. With fluend http plugin, it's straightforward.
 
 To configure this behaviour, add this config:
 
