@@ -1,6 +1,6 @@
 # Parsers
 
-Parsers are an inportant component of [Fluent Bit](http://fluentbit.io), with them you can take any unstructured log entry and give them a structure that makes easier it processing and further filtering.
+Parsers are an important component of [Fluent Bit](http://fluentbit.io), with them you can take any unstructured log entry and give them a structure that makes easier it processing and further filtering.
 
 The parser engine is fully configurable and can process log entries based in two types of format:
 
