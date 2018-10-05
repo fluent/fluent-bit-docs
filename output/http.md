@@ -1,8 +1,6 @@
 # HTTP
 
-The **http** output plugin allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) format.
-
-> In future versions the target URI and data format will be configurable.
+The **http** output plugin allows to flush your records into a HTTP endpoint. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
 
 ## Configuration Parameters
 
