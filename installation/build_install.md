@@ -80,10 +80,17 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_SHARED\_LIB | Build shared library | Yes |
 | FLB\_VALGRIND | Enable Valgrind support | No |
 | FLB\_TRACE | Enable trace mode | No |
+| FLB_TESTS_RUNTIME | Enable runtime tests | No |
+| FLB_TESTS_INTERNAL | Enable internal tests | No |
 | FLB\_TESTS | Enable tests | No |
 | FLB\_MTRACE | Enable mtrace support | No |
-| FLB\_BUFFERING | Enable buffering support | No |
+| FLB_INOTIFY | Enable Inotify support | Yes |
 | FLB\_POSIX\_TLS | Force POSIX thread storage | No |
+| FLB_SQLDB | Enable SQL embedded database support | No |
+| FLB_HTTP_SERVER | Enable HTTP Server | No |
+| FLB_BACKTRACE | Enable backtrace/stacktrace support | Yes |
+| FLB_LUAJIT | Enable Lua scripting support | Yes |
+| FLB_STATIC_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
 
 ### Input Plugins
 
