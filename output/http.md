@@ -59,7 +59,7 @@ In your main configuration file, append the following _Input_ & _Output_ section
 
 By default, the URI becomes tag of the message, the original tag is ignored. To retain the tag, multiple configuration sections have to be made based and flush to different URIs.
 
-Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example. With fluend http plugin, it's straightforward.
+Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example.
 
 To configure this behaviour, add this config:
 
@@ -70,20 +70,26 @@ To configure this behaviour, add this config:
     Host  192.168.2.3
     Port  80
     URI   /something
+    Format json
     header_tag  FLUENT-TAG
 ```
 
-Given the default http input fluentd plugin: [https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in\_http.rb\#L212-L215](https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in_http.rb#L212-L215)
+Provided you are using Fluentd as data receiver, you can combine `in_http` and `out_rewrite_tag_filter` to make use of this HTTP header.
 
-We can easily parse the tag like this:
+```
+<source>
+  @type http
+  add_http_headers true
+</source>
 
-```ruby
-@@ -153,6 +153,7 @@ module Fluent::Plugin
-       begin
-         path = path_info[1..-1]  # remove /
-         tag = path.split('/').join('.')
-+        tag = params["HTTP_FLUENT_TAG"] if params["HTTP_FLUENT_TAG"]
-         record_time, record = parse_params(params)
+<match something>
+  @type rewrite_tag_filter
+  <rule>
+    key HTTP_FLUENT_TAG
+    pattern /^(.*)$/
+    tag $1
+  </rule>
+</match>
 ```
 
 Notice how we override the tag, which is from URI path, with our custom header
