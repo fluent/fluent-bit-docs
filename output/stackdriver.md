@@ -31,3 +31,6 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
     Match       *
 ```
 
+## Other implementations
+
+Stackdriver officially supports a [logging agent based on fluentd](https://cloud.google.com/logging/docs/agent).
