@@ -8,6 +8,7 @@ Content:
 
 * [Configuration Parameters](tail.md#config)
 * [Multiline Parameters](tail.md#multiline)
+* [Docker Mode Parameters](tail.md#docker_mode)
 * [Getting Started](tail.md#getting_started)
 * [Tailing Files Keeping State](tail.md#keep_state)
 
@@ -46,6 +47,15 @@ Additionally the following options exists to configure the handling of multi-lin
 | Multiline\_Flush | Wait period time in seconds to process queued multiline messages | 4 |
 | Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name \(named capture\) |  |
 | Parser\_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. |  |
+
+### Docker Mode Configuration Parameters {#docker_mode}
+
+Docker mode exists to recombine JSON log lines split by the Docker daemon due to its line length limit. To use this feature, configure the tail plugin with the corresponding parser and then enable Docker mode:
+
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Docker\_Mode | If enabled, the plugin will recombine split Docker log lines before passing them to any parser as configured above. This mode cannot be used at the same time as Multiline. | Off |
+| Docker\_Mode\_Flush | Wait period time in seconds to flush queued unfinished split lines. | 4 |
 
 ## Getting Started {#getting_started}
 
