@@ -9,7 +9,7 @@ This plugin offers two different transports and modes:
 
 ## Configuration Parameters
 
-The following parameters are mandatory for eiter Forward for Secure Forward modes:
+The following parameters are mandatory for either Forward for Secure Forward modes:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
@@ -36,7 +36,7 @@ When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requ
 
 ## Forward Setup
 
-Before to proceed, make sure that [Fluentd](http://fluentd.org) is installed in your system, if it's not the case please refer to the following [Fluentd Installation](http://docs.fluentd.org/v0.12/categories/installation) document and go ahead with that.
+Before proceeding, make sure that [Fluentd](http://fluentd.org) is installed in your system, if it's not the case please refer to the following [Fluentd Installation](http://docs.fluentd.org/v0.12/categories/installation) document and go ahead with that.
 
 Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
 
@@ -52,7 +52,7 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specifies that will listen for _TCP_ connections on the port _24224_ through the **forward** input type. Then for every message with a _fluent\_bit_ **TAG**, will print the message to the standard output.
+That configuration file specifies that it will listen for _TCP_ connections on the port _24224_ through the **forward** input type. Then for every message with a _fluent\_bit_ **TAG**, will print the message to the standard output.
 
 In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created \(in\_fluent-bit.conf\):
 
@@ -114,7 +114,7 @@ Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gath
 2017-03-23 11:53:09 -0600 fluent_bit: {"cpu_p":4.75,"user_p":3.5,"system_p":1.25,"cpu0.p_cpu":4.0,"cpu0.p_user":3.0,"cpu0.p_system":1.0,"cpu1.p_cpu":5.0,"cpu1.p_user":4.0,"cpu1.p_system":1.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":5.0,"cpu3.p_user":4.0,"cpu3.p_system":1.0}
 ```
 
-So we gathered [CPU](../input/cpu.md) metrics and flush them out to [Fluentd](http://fluentd.org) properly.
+So we gathered [CPU](../input/cpu.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
 
 ## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
 
