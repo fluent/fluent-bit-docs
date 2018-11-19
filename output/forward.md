@@ -5,7 +5,7 @@ _Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route mes
 This plugin offers two different transports and modes:
 
 * Forward \(TCP\): It uses a plain TCP connection.
-* Secure Forward \(TLS\): when TLS is enabled, the plugin switch to Secure Forward mode.
+* Secure Forward \(TLS\): when TLS is enabled, the plugin switches to Secure Forward mode.
 
 ## Configuration Parameters
 
@@ -13,14 +13,14 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
+| Host | Target host where Fluent-Bit or Fluentd is listening for Forward messages. | 127.0.0.1 |
 | Port | TCP Port of the target service. | 24224 |
-| Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
-| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
+| Time\_as\_Integer | Set timestamps in integer format, it enables compatibility mode for Fluentd v0.12 series. | False |
+| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this, refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
 
 ## Secure Forward Mode Configuration Parameters 
 
-When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
+When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode is required to be enabled. The following additional configuration parameters are available:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
@@ -28,7 +28,7 @@ When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requ
 | Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). |  |
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
-| tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
+| tls.debug | Set TLS debug verbosity level. It accepts the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
 | tls.ca\_file | Absolute path to CA certificate file |  |
 | tls.crt\_file | Absolute path to Certificate file. |  |
 | tls.key\_file | Absolute path to private Key file. |  |
@@ -118,7 +118,7 @@ So we gathered [CPU](../input/cpu.md) metrics and flushed them out to [Fluentd](
 
 ## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
 
-> DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
+> DISCLAIMER: the following example does not consider the generation of certificates for a proper usage of production environments.
 
 Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](../configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
 
