@@ -164,6 +164,27 @@ Paste this content in a file called _fld.conf_:
 </match>
 ```
 
+If you're using Fluentd v1, set up it as below:
+
+```text
+<source>
+  @type forward
+  <transport tls>
+    cert_path /etc/td-agent/certs/fluentd.crt
+    private_key_path /etc/td-agent/certs/fluentd.key
+    private_key_passphrase password
+  </transport>
+  <security>
+    self_hostname myserver.local
+    shared_key secret
+  </security>
+</source>
+
+<match **>
+ @type stdout
+</match>
+```
+
 ### Test Communication
 
 Start Fluentd:
