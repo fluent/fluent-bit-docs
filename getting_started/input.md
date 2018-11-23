@@ -4,7 +4,7 @@
 
 ![](../.gitbook/assets/logging_pipeline_input.png)
 
-When an input plugin is loaded, an internal _instance_ is created. Every instance have it own and independent configuration. Configuration keys are often called **properties**.
+When an input plugin is loaded, an internal _instance_ is created. Every instance has its own and independent configuration. Configuration keys are often called **properties**.
 
 Every input plugin has its own documentation section where it's specified how it can be used and what properties are available.
 
