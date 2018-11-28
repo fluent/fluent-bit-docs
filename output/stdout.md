@@ -2,6 +2,16 @@
 
 The **stdout** output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
 
+## Configuration Parameters
+
+| Key         | Description          | default           |
+|-------------|----------------------|-------------------|
+| Format      | Specify the data format to be printed. Supported formats are _msgpack_ and _json_lines_. | msgpack |
+| json_date_key | Specify the name of the date field in output | date |
+| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) | double |
+
+### Command Line
+
 ```bash
 $ bin/fluent-bit -i cpu -o stdout -v
 ```
