@@ -141,3 +141,51 @@ fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
 
+
+
+### Configuring Aliases
+
+By default configured plugins on runtime get an internal name in the format _plugin_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
+
+The following example set an alias to the INPUT section which is using the [CPU](../input/cpu.md) input plugin:
+
+```
+[SERVICE]
+    HTTP_Server  On
+    HTTP_Listen  0.0.0.0
+    HTTP_PORT    2020
+
+[INPUT]
+    Name  cpu
+    Alias server1_cpu
+    
+[OUTPUT]
+    Name  stdout
+    Alias raw_output
+    Match *
+```
+
+Now when querying the metrics we get the aliases in place instead of the plugin name:
+
+```json
+{
+  "input": {
+    "server1_cpu": {
+      "records": 8,
+      "bytes": 2536
+    }
+  },
+  "output": {
+    "raw_output": {
+      "proc_records": 5,
+      "proc_bytes": 1585,
+      "errors": 0,
+      "retries": 0,
+      "retries_failed": 0
+    }
+  }
+}
+```
+
+
+
