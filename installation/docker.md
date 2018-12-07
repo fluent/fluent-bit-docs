@@ -5,6 +5,7 @@ Fluent Bit container image is also available on Docker Hub ready for production 
 | Tag\(s\) | Description |
 | :--- | :--- |
 | 0.14, latest | Latest release of 0.14 stable series |
+| 0.14.9 | Container image of Fluent Bit [v0.14.9](http://fluentbit.io/announcements/v0.14.9) |
 | 0.14.8 | Container image of Fluent Bit [v0.14.8](http://fluentbit.io/announcements/v0.14.8) |
 | 0.14.7 | Container image of Fluent Bit [v0.14.7](http://fluentbit.io/announcements/v0.14.7) |
 | 0.14.6 | Container image of Fluent Bit [v0.14.6](http://fluentbit.io/announcements/v0.14.6) |
