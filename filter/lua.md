@@ -87,7 +87,7 @@ Each callback **must** return three values:
 
 | name | data type | description |
 | :--- | :--- | :--- |
-| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter_lua must drop the record. If \_code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp or record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). |
+| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter_lua must drop the record. If _code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp or record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). |
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | if code equals 1, the original record information will be replaced with this new value. Note that the format of this value **must** be a valid Lua table. |
 
