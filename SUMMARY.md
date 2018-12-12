@@ -32,6 +32,7 @@
   * [Configuration File](configuration/file.md)
   * [Configuration Variables](configuration/variables.md)
   * [Configuration Commands](configuration/commands.md)
+  * [Buffering / Storage](configuration/buffering.md)
   * [Monitoring](configuration/monitoring.md)
   * [Unit Sizes](configuration/unit_sizes.md)
   * [TLS / SSL](configuration/tls_ssl.md)
