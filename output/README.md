@@ -5,6 +5,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 | name | title | description |
 | :--- | :--- | :--- |
 | [azure](azure.md) | Azure Log Analytics | Ingest records into Azure Log Analytics |
+| [bigquery](biggquery.md) | BigQuery | Ingest records into Google BigQuery |
 | [counter](counter.md) | Count Records | Simple records counter. |
 | [es](elasticsearch.md) | Elasticsearch | flush records to a Elasticsearch server. |
 | [file](file.md) | File | Flush records to a file. |
