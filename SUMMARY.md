@@ -77,6 +77,7 @@
   * [Modify](filter/modify.md)
 * [Output Plugins](output/README.md)
   * [Azure](output/azure.md)
+  * [BigQuery](output/bigquery.md)
   * [Counter](output/counter.md)
   * [Elasticsearch](output/elasticsearch.md)
   * [File](output/file.md)
