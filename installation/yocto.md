@@ -10,3 +10,18 @@ We distribute two main recipes, one for testing/dev purposes and other with the 
 | v1.0.3  | [fluent-bit_1.0.3.bb](https://github.com/fluent/fluent-bit/blob/1.0/fluent-bit_1.0.3.bb) | Build latest stable version of Fluent Bit.                   |
 
 It's strongly recommended to always use the stable release of Fluent Bit recipe and not the one from GIT master for production deployments.
+
+## Notes about AArch64
+
+The stable Fluent Bit series v1.0.x when is build for AArch64 target platform, as default mechanism for co-routines support will use sigaltstack(2), if the compiler flags specified _FORTIFY_SOURCE, it will generate an explicit crash with an error message similar to this one: 
+
+```
+*** longjmp causes uninitialized stack frame ***: ...
+```
+
+the workaround for this problem is to remove the _FORTIFY_SOURCE from the build system.
+
+### Fluent Bit v1.1.0 (dev) and native AArch64 support
+
+Fluent Bit v1.1.0 which is under active development on [GIT Master](https://github.com/fluent/fluent-bit), already integrates native AArch64 support where stack switches for co-routines are done through native ASM calls, on this scenario there is no issues as the one faced with _FORTIFY_SOURCE in previous 1.0.x series.
+
