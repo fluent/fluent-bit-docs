@@ -1,6 +1,6 @@
 # Yocto Project
 
-[Fluent Bit](https://fluentbit.io) source code provides Bitbake recipes to configure, build and package the software for a Yocto based image. Note that specific steps of usage of these recipes in your Yocto environment (Poky) is out of the scope of this documentation. 
+[Fluent Bit](https://fluentbit.io) source code provides Bitbake recipes to configure, build and package the software for a Yocto based image. Note that specific steps of usage of these recipes in your Yocto environment (Poky) is out of the scope of this documentation.
 
 We distribute two main recipes, one for testing/dev purposes and other with the latest stable release.
 
@@ -13,7 +13,7 @@ It's strongly recommended to always use the stable release of Fluent Bit recipe 
 
 ## Notes about AArch64
 
-The stable Fluent Bit series v1.0.x when is build for AArch64 target platform, as default mechanism for co-routines support will use sigaltstack(2), if the compiler flags specified _FORTIFY_SOURCE, it will generate an explicit crash with an error message similar to this one: 
+When Fluent Bit series v1.0.x is build for an AArch64 target platform, the default backend mechanism for co-routines will be sigaltstack(2), if the compiler flags specified _FORTIFY_SOURCE, it will generate an explicit crash with an error message similar to this one:
 
 ```
 *** longjmp causes uninitialized stack frame ***: ...
@@ -24,4 +24,3 @@ the workaround for this problem is to remove the _FORTIFY_SOURCE from the build 
 ### Fluent Bit v1.1.0 (dev) and native AArch64 support
 
 Fluent Bit v1.1.0 which is under active development on [GIT Master](https://github.com/fluent/fluent-bit), already integrates native AArch64 support where stack switches for co-routines are done through native ASM calls, on this scenario there is no issues as the one faced with _FORTIFY_SOURCE in previous 1.0.x series.
-
