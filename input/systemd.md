@@ -14,7 +14,8 @@ The plugin supports the following configuration parameters:
 | Systemd\_Filter | allows to perform a query over logs that contains a specific Journald key/value pairs, e.g: \_SYSTEMD\_UNIT=UNIT. The Systemd\_Filter option can be specified multiple times in the input section to apply multiple filters as required. |  |
 | Tag | The tag is used to route messages but on Systemd plugin there is an extra functionality: if the tag includes a star/wildcard, it will be expanded with the Systemd Unit file \(e.g: host.\* =&gt; host.UNIT\_NAME\). |  |
 | DB | Specify the absolute path of a database file to keep track of Journald cursor. |  |
-| Read\_From\_Tail | Start reading new entries. skip entries already stored in Journald. | false |
+| Read\_From\_Tail | Start reading new entries. Skip entries already stored in Journald. | false |
+| Strip\_Underscores | Delete underscores at the start of field name. This is useful when logs are further forwarded into elasticsearch, where fields with leading underscore are reserved for internal use. | false |
 
 ## Getting Started
 
