@@ -8,7 +8,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Value Format | Description |
 | :--- | :--- | :--- |
-| Rate | Integer | Amount of meassages for the time. |
+| Rate | Integer | Amount of messages for the time. |
 | Window | Integer | Amount of intervals to calculate average over. Default 5. |
 | Interval | String | Time interval, expressed in "sleep" format. e.g 3s, 1.5m, 0.5h etc |
 | Print\_Status | Bool | Whether to print status messages with current rate and the limits to information logs |
@@ -103,7 +103,7 @@ XXXX XXXX  XXXX XXXX XXXX XXXX
 +-+-+-+-+-+--+-+-+-+-+-+-+-+-+-+
 ```
 
-It may drop some data if the rate is ragged. I would recommend to use bigger interval and rate for streams of rare but important events, while keep _Window_ bigger and _Interval_ small for contantly intensive inputs.
+It may drop some data if the rate is ragged. I would recommend to use bigger interval and rate for streams of rare but important events, while keep _Window_ bigger and _Interval_ small for constantly intensive inputs.
 
 ### Command Line
 

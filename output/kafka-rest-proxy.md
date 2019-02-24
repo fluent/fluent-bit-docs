@@ -13,7 +13,7 @@ The **kafka-rest** output plugin, allows to flush your records into a [Kafka RES
 | Message\_Key | Set a message key \(optional\) |  |
 | Time\_Key | The Time\_Key property defines the name of the field that holds the record timestamp. | @timestamp |
 | Time\_Key\_Format | Defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
-| Include\_Tag\_Key | Aappend the Tag name to the final record. | Off |
+| Include\_Tag\_Key | Append the Tag name to the final record. | Off |
 | Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 
 ### TLS / SSL
