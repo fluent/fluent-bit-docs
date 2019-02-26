@@ -15,7 +15,7 @@ Content:
 
 ## Concepts {#concepts}
 
-Before to get started is important to understand how Fluent Bit will be deployed. Kubernetes manage a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, for hence Fluent Bit is deployed as a DaemonSet \(a POD that runs on every _node_ of the cluster\).
+Before geting started it is important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, hence Fluent Bit is deployed as a DaemonSet \(a POD that runs on every _node_ of the cluster\).
 
 When Fluent Bit runs, it will read, parse and filter the logs of every POD and will enrich each entry with the following information \(metadata\):
 
