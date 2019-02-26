@@ -21,6 +21,14 @@ Output time, tag and json records. There is no configuration parameters for out\
 tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 ```
 
+### plain format
+
+Output the records as JSON (without additional `tag` and `timestamp` attributes). There is no configuration parameters for plain format.
+
+```javascript
+{"key1":"value1", "key2":"value2", "key3":"value3"}
+```
+
 ### csv format
 
 Output the records as csv. Csv supports an additional configuration parameter.
