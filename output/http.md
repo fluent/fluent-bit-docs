@@ -16,7 +16,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | header_tag | Specify an optional HTTP header field for the original message tag. |         |
 | Header     | Add a HTTP header key/value pair. Multiple headers can be set. |         |
 | json_date_key | Specify the name of the date field in output | date |
-| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
+| json_date_format | Specify the format of the date. Supported formats are _double_, _epoch_, and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
 
 ### TLS / SSL
 
