@@ -15,7 +15,7 @@ A simple configuration that can be found in the default parsers configuration fi
 The following log entry is a valid content for the parser defined above:
 
 ```javascript
-{"key1": 12345, "key2": "abc", "time": "28/Jul/2006:10:22:04 -0300"}
+{"key1": 12345, "key2": "abc", "time": "2006-07-28T13:22:04Z"}
 ```
 
 After processing, it internal representation will be:
