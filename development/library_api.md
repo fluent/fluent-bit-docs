@@ -227,7 +227,7 @@ To stop a running Fluent Bit engine, we provide the call **flb\_stop\(\)** for t
 int flb_stop(flb_ctx_t *ctx);
 ```
 
-The argument **ctx** is a reference to the context created at the beginnning with **flb\_create\(\)** and previously started with **flb\_start\(\)**.
+The argument **ctx** is a reference to the context created at the beginning with **flb\_create\(\)** and previously started with **flb\_start\(\)**.
 
 When the call is invoked, the engine will wait a maximum of five seconds to flush buffers and release the resources in use. A stopped context can be re-started any time but without any data on it.
 
@@ -253,7 +253,7 @@ A library context must be destroyed after is not longer necessary, note that a p
 void flb_destroy(flb_ctx_t *ctx);
 ```
 
-The argument **ctx** is a reference to the context created at the beginnning with **flb\_create\(\)**.
+The argument **ctx** is a reference to the context created at the beginning with **flb\_create\(\)**.
 
 **Return Value**
 

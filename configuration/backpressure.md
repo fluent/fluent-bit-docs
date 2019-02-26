@@ -15,12 +15,12 @@ This option is disabled by default and can be applied to all input plugins. Let'
 * engine scheduler will retry the flush after 10 seconds
 * input plugin tries to append 500KB
 
-At this exact point, the engine will **allow** to append those 500KB of data into the engine: in total we have 1.2MB. The options works in a permisive mode before to reach the limit, but the limit is **exceeded** the following actions are taken:
+At this exact point, the engine will **allow** to append those 500KB of data into the engine: in total we have 1.2MB. The options works in a permissive mode before to reach the limit, but the limit is **exceeded** the following actions are taken:
 
 * block local buffers for the input plugin \(cannot append more data\)
 * notify the input plugin invoking a **pause** callback
 
-The engine will protect it self and will not append more data coming from the input plugin in question; Note that is the plugin responsability to keep their state and take some decisions about what to do on that _paused_ state.
+The engine will protect it self and will not append more data coming from the input plugin in question; Note that is the plugin responsibility to keep their state and take some decisions about what to do on that _paused_ state.
 
 After some seconds if the scheduler was able to flush the initial 700KB of data or it gave up after retrying, that amount memory is released and internally the following actions happens:
 
