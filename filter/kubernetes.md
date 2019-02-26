@@ -29,14 +29,15 @@ The plugin supports the following configuration parameters:
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
 | Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
 | Merge\_Log\_Key | When `Merge_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_Log_Key` is set \(a string name\), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
+| Merge\_Log\_Trim | When `Merge_Log` is enabled, trim (remove possible \n or \r) field values. | On |
 | tls.debug | Debug level between 0 \(nothing\) and 4 \(every detail\). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
 | Use\_Journal | When enabled, the filter reads logs coming in Journald format. | Off |
 | Regex\_Parser | Set an alternative Parser to process record Tag and extract pod\_name, namespace\_name, container\_name and docker\_id. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) \(refer to parser _filter-kube-test_ as an example\). |  |
 | K8S-Logging.Parser | Allow Kubernetes Pods to  suggest a pre-defined Parser (read more about it in Kubernetes Annotations section) | Off |
 | K8S-Logging.Exclude | Allow Kubernetes Pods to exclude their logs from the log processor (read more about it in Kubernetes Annotations section). | Off |
-
-
+| Annotations | Include Kubernetes resource annotations in the extra metadata. | On |
+| Dummy\_Meta | If set, use dummy-meta data (for test/dev purposes) | Off |
 
 ## Kubernetes Annotations
 
