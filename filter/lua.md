@@ -21,7 +21,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Script | Path to the Lua script that will be used. |
 | Call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
-| Type_int_key | If the key is matched, that field will be converted to integer. |
+| Type_int_key | If these keys are matched, the fields are converted to integer. If more than one key, delimit by space |
 
 ## Getting Started {#getting_started}
 
