@@ -8,6 +8,7 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | :--- | :--- | :--- |
 | Format | Specify data format, options available: json, msgpack. | json |
 | Message\_Key | Optional key to store the message |  |
+| Message\_Key\_Field | If set, the value of Message\_Key\_Field in the record will indicate the message key. If not set nor found in the record, Message\_Key will be used (if set).  |  |
 | Timestamp\_Key | Set the key to store the record timestamp | @timestamp |
 | Timestamp\_Format | 'iso8601' or 'double' | double |
 | Brokers | Single of multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
