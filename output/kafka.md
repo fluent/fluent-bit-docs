@@ -12,7 +12,7 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | Timestamp\_Format | 'iso8601' or 'double' | double |
 | Brokers | Single of multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
 | Topics | Single entry or list of topics separated by comma \(,\) that Fluent Bit will use to send messages to Kafka. If only one topic is set, that one will be used for all records. Instead if multiple topics exists, the one set in the record by Topic\_Key will be used. | fluent-bit |
-| Topic\_Key | If multiple Topics exists, the value of Topic_Key in the record will indicate the topic to use. E.g: if Topic\_Key is \_router_ and the record is {"key1": 123, "router": "route_2"}, Fluent Bit will use topic \_route\_2_. Note that the topic **must** be registered in the Topics list. |  |
+| Topic\_Key | If multiple Topics exists, the value of Topic\_Key in the record will indicate the topic to use. E.g: if Topic\_Key is _router_ and the record is {"key1": 123, "router": "route_2"}, Fluent Bit will use topic _route\_2_. Note that the topic **must** be registered in the Topics list. |  |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 
 > Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to 1 are examples of recommended settings of librdfkafka properties.
