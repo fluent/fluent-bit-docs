@@ -9,6 +9,8 @@ The following table describe the tags are available on [fluent/fluent-bit](https
 | Tag\(s\) | Description |
 | :--- | :--- |
 | 1.0, 1.0-debug | Latest release of 1.0.x series |
+| 1.0.6, 1.0.6-debug | Container image of Fluent Bit [v1.0.6](http://fluentbit.io/announcements/v1.0.6) |
+| 1.0.5, 1.0.5-debug | Container image of Fluent Bit [v1.0.5](http://fluentbit.io/announcements/v1.0.5) |
 | 1.0.4, 1.0.4-debug | Container image of Fluent Bit [v1.0.4](http://fluentbit.io/announcements/v1.0.4) |
 | 1.0.3, 1.0.3-debug | Container image of Fluent Bit [v1.0.3](http://fluentbit.io/announcements/v1.0.3) |
 | 1.0.2 | Container image of Fluent Bit [v1.0.2](http://fluentbit.io/announcements/v1.0.2) |
@@ -49,5 +51,5 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 
 - Memory Allocator: to run Fluent Bit properly in high-load environments, we use Jemalloc as a default memory allocator which reduce fragmentation and provides better performance for our needs. Jemalloc cannot run smoothly with Musl and requires extra work.
 - Alpine Linux Musl functions bootstrap have a compatibility issue when loading Golang shared libraries, this generate problems when trying to load Golang output plugins in Fluent Bit.
-- Alpine Linux Musl Time format parser does not support Glibc extensions 
+- Alpine Linux Musl Time format parser does not support Glibc extensions
 - Maintainers preference in terms of base image due to security and maintenance reasons are Distroless and Debian.
