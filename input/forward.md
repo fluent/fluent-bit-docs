@@ -39,11 +39,11 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ```python
 [INPUT]
-    Name        forward
-    Listen      0.0.0.0
-    Port        24224
-    Chunk_Size  32
-    Buffer_Size 64
+    Name              forward
+    Listen            0.0.0.0
+    Port              24224
+    Buffer_Chunk_Size 32KB
+    Buffer_Max_Size   64KB
 
 [OUTPUT]
     Name   stdout
