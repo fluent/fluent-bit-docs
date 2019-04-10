@@ -20,18 +20,18 @@ A simple example of a configuration file is as follows:
 A section is defined by a name or title inside brackets. Looking at the example above a Server section has been set using **\[SERVICE\]** definition. Section rules:
 
 * All section content must be indented \(4 spaces ideally\).
-* Multiples sections can exists on the same file.
+* Multiple sections can exist on the same file.
 * Under a section is expected to have comments and entries, a section cannot be empty.
 * Any commented line under a section, must be indented too.
 
 ## Entries: Key/Value {#entries_kv}
 
-A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **on**. Entries rules:
+A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **debug**. Entries rules:
 
 * An entry is defined by a key and a value.
 * A key must be indented.
 * A key must contain a value which ends in the breakline.
-* Multiple keys with the same name can exists.
+* Multiple keys with the same name can exist.
 
 Also commented lines are set prefixing the **\#** character, those lines are not processed but they must be indented too.
 
