@@ -1,6 +1,6 @@
 # Configuration File
 
-There are some cases where using the command line to start Fluent Bit is not ideal for some scenarios, when running it as a service a configuration file it's times better.
+There are some cases where using the command line to start Fluent Bit is not ideal. When running Fluent Bit as a service, a configuration file is preferred.
 
 Fluent Bit allows to use one configuration file which works at a global scope and uses the [schema](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/configuration/configuration_schema.md) defined previously.
 
