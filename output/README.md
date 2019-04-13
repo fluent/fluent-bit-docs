@@ -1,6 +1,6 @@
 # Output Plugins
 
-The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flush the information it gather from the input. At the moment the available options are the following:
+The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flush the information it gathers from the input. At the moment the available options are the following:
 
 | name | title | description |
 | :--- | :--- | :--- |
