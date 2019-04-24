@@ -1,16 +1,16 @@
 # Kubernetes
 
-The _Kubernetes Filter_ allows to enrich your log files with Kubernetes metadata.
+Fluent Bit _Kubernetes Filter_ allows to enrich your log files with Kubernetes metadata.
 
-When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers \(using tail plugin\), this filter aims to perform the following operations:
+When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers \(using tail or systemd input plugins), this filter aims to perform the following operations:
 
 * Analyze the Tag and extract the following metadata:
-  * POD Name
+  * Pod Name
   * Namespace
   * Container Name
   * Container ID
 * Query Kubernetes API Server to obtain extra metadata for the POD in question:
-  * POD ID
+  * Pod ID
   * Labels
   * Annotations
 
@@ -27,6 +27,7 @@ The plugin supports the following configuration parameters:
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
 | Kube\_CA\_Path | Absolute path to scan for certificate files |  |
 | Kube\_Token\_File | Token file | /var/run/secrets/kubernetes.io/serviceaccount/token |
+| Kube_Tag_Prefix | When the source records comes from Tail input plugin, this option allows to specify what's the prefix used in Tail configuration. | kube.var.log.containers. |
 | Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
 | Merge\_Log\_Key | When `Merge_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_Log_Key` is set \(a string name\), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
 | Merge\_Log\_Trim | When `Merge_Log` is enabled, trim (remove possible \n or \r) field values. | On |
@@ -97,4 +98,78 @@ spec:
 ```
 
 Note that the annotation value is boolean which can take a _true_ or _false_ and __must__ be quoted. 
+
+## Workflow of Tail + Kubernetes Filter
+
+Kubernetes Filter depends on either [Tail](../input/tail.md) or [Systemd](../input/systemd.md) input plugins to process and enrich records with Kubernetes metadata. Here we will explain the workflow of Tail and how it configuration is correlated with Kubernetes filter. Consider the following configuration example (just for demo purposes, not production):
+
+```
+[INPUT]
+    Name    tail
+    Tag     kube.*
+	Path    /var/log/containers/*.log
+    Parser  docker
+
+[FILTER]
+    Name             kubernetes
+    Match            kube.*
+    Kube_URL         https://kubernetes.default.svc:443
+    Kube_CA_File     /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    Kube_Token_File  /var/run/secrets/kubernetes.io/serviceaccount/token
+    Kube_Tag_Prefix  kube.
+```
+
+In the input section, the [Tail](../input/tail.md) plugin will monitor all files ending in _.log_ in path _/var/log/containers/_. For every file it will read every line and apply the docker parser. Then the records are emitted to the next step with an expanded tag.
+
+Tail support Tags expansion, which means that if a tag have a star character (*), it will replace the value with the absolute path of the monitored file, so if you file name and path is:
+
+```
+/var/log/container/apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
+```
+
+then the Tag for every record of that file becomes:
+
+```
+kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
+```
+
+> note that slashes are replaced with dots.
+
+When [Kubernetes Filter](kubernetes.md) runs, it will try to match all records that starts with _kube._ (note the ending dot), so records from the file mentioned above will hit the matching rule and the filter will try to enrich the records
+
+Kubernetes Filter do not care from where the logs comes from, but it cares about the absolute name of the monitored file, because that information contains the pod name and namespace name that are used to retrieve associated metadata to the running Pod from the Kubernetes Master/API Server.
+
+If the configuration property __Kube_Tag_Prefix__ was configured (available on Fluent Bit >= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to _kube._var.logs.containers. , so the previous Tag content will be transformed from:
+
+```
+kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
+```
+
+to:
+
+```
+apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
+```
+
+> the transformation above do not modify the original Tag, just creates a new representation for the filter to perform metadata lookup.
+
+that new value is used by the filter to lookup the pod name and namespace, for that purpose it uses an internal Regular expression:
+
+```
+(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
+```
+
+> If you want to know more details, check the source code of that definition [here](<https://github.com/fluent/fluent-bit/blob/master/plugins/filter_kubernetes/kube_regex.h#L26>).
+
+You can see on [Rublar.com](https://rubular.com/r/HZz3tYAahj6JCd) web site how this operation is performed, check the following demo link:
+
+- [https://rubular.com/r/HZz3tYAahj6JCd](https://rubular.com/r/HZz3tYAahj6JCd)
+
+#### Custom Regex
+
+Under certain and not common conditions, a user would want to alter that hard-coded regular expression, for that purpose the option __Regex_Parser__ can be used (documented on top).
+
+#### Final Comments
+
+So at this point the filter is able to gather the values of _pod_name_ and _namespace_, with that information it will check in the local cache (internal hash table) if some metadata for that key pair exists, if so, it will enrich the record with the metadata value, otherwise it will connect to the Kubernetes Master/API Server and retrieve that information.
 
