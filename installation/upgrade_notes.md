@@ -11,7 +11,7 @@ Duing 1.0.x release cycle, a commit in Tail input plugin changed the default beh
 ```
 [INPUT]
     Name  tail
-    Path  /var/log/containers/.log
+    Path  /var/log/containers/*.log
     Tag   kube.*
 ```
 
@@ -36,7 +36,7 @@ This behavior switch in Tail input plugin affects how Filter Kubernetes operates
 ```
 [INPUT]
     Name  tail
-    Path  /var/log/containers/.log
+    Path  /var/log/containers/*.log
     Tag   kube.*
 
 [FILTER]
