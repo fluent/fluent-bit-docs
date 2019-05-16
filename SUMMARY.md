@@ -9,7 +9,7 @@
   * [Supported Platforms](installation/supported_platforms.md)
   * [Requirements](installation/requirements.md)
   * [Download Sources](installation/download_sources.md)
-  * [Upgrade Notes](installation/upgrade_nodes.md)
+  * [Upgrade Notes](installation/upgrade_notes.md)
   * [Build and Install](installation/build_install.md)
   * [Build with Static Configuration](installation/build_static_configuration.md)
   * [Docker Images](installation/docker.md)
