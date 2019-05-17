@@ -18,7 +18,7 @@ The **kafka-rest** output plugin, allows to flush your records into a [Kafka RES
 
 ### TLS / SSL
 
-Kafka REST Proxy output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/getting_started/tls_ssl.md) section.
+Kafka REST Proxy output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../configuration/tls_ssl.md) section.
 
 ## Getting Started
 
