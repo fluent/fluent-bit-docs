@@ -99,3 +99,4 @@
 * [Fluent Bit for Developers](development/README.md)
   * [Library API](development/library_api.md)
   * [Ingest Records Manually](development/ingest_records_manually.md)
+  * [Fluent Bit and Golang Plugins](development/golang_plugins.md)
