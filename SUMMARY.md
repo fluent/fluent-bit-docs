@@ -42,7 +42,7 @@
   * [Memory Usage](configuration/memory_usage.md)
   * [Upstream Servers](configuration/upstream_servers.md)
   * [Scheduler](configuration/scheduler.md)
-  * [Stream Processor](stream_processor.md)
+  * [Stream Processor](configuration/stream_processor.md)
 * [Service](service/README.md)
 * [Input Plugins](input/README.md)
   * [CPU Usage](input/cpu.md)
