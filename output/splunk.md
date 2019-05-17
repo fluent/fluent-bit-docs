@@ -17,7 +17,7 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 ### TLS / SSL
 
-Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://docs.fluentbit.io/manual/configuration/tls_ssl) section.
+Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../configuration/tls_ssl.md) section.
 
 ## Getting Started
 
