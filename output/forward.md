@@ -17,6 +17,9 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 | Port | TCP Port of the target service. | 24224 |
 | Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
 | Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
+| Send_options | Always send options (with "size"=count of messages) | False |
+| Require_ack_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. (Requires Fluentd v0.14.0+ server) | False |
+
 
 ## Secure Forward Mode Configuration Parameters 
 
