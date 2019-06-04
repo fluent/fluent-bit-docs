@@ -116,7 +116,7 @@ Kubernetes Filter depends on either [Tail](../input/tail.md) or [Systemd](../inp
     Kube_URL         https://kubernetes.default.svc:443
     Kube_CA_File     /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     Kube_Token_File  /var/run/secrets/kubernetes.io/serviceaccount/token
-    Kube_Tag_Prefix  kube.
+    Kube_Tag_Prefix  kube.var.log.containers.
 ```
 
 In the input section, the [Tail](../input/tail.md) plugin will monitor all files ending in _.log_ in path _/var/log/containers/_. For every file it will read every line and apply the docker parser. Then the records are emitted to the next step with an expanded tag.
