@@ -31,6 +31,7 @@ The plugin supports the following configuration parameters:
 | Merge\_Log | When enabled, it checks if the `log` field content is a JSON string map, if so, it append the map fields as part of the log structure. | Off |
 | Merge\_Log\_Key | When `Merge_Log` is enabled, the filter tries to assume the `log` field from the incoming message is a JSON string message and make a structured representation of it at the same level of the `log` field in the map. Now if `Merge_Log_Key` is set \(a string name\), all the new structured fields taken from the original `log` content are inserted under the new key. |  |
 | Merge\_Log\_Trim | When `Merge_Log` is enabled, trim (remove possible \n or \r) field values. | On |
+| Merge\_Parser | Optional parser name to specify how to parse the data contained in the _log_ key. Recommended use is for developers or testing only.  | |
 | Keep\_Log | When `Keep_Log` is disabled, the `log` field is removed from the incoming message once it has been successfully merged (`Merge_Log` must be enabled as well). | On |
 | tls.debug | Debug level between 0 \(nothing\) and 4 \(every detail\). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
@@ -42,6 +43,29 @@ The plugin supports the following configuration parameters:
 | Annotations | Include Kubernetes resource annotations in the extra metadata. | On |
 | Kube\_meta_preload_cache_dir | If set, Kubernetes meta-data can be cached/pre-loaded from files in JSON format in this directory, named as namespace-pod.meta | |
 | Dummy\_Meta | If set, use dummy-meta data (for test/dev purposes) | Off |
+
+## Processing the 'log' value
+
+Kubernetes Filter aims to provide several ways to process the data contained in the _log_ key. The following explanation of the workflow assumes that your original Docker parser defined in _parsers.conf_ is as follows:
+
+```
+[PARSER]
+    Name         docker
+    Format       json
+    Time_Key     time
+    Time_Format  %Y-%m-%dT%H:%M:%S.%L
+    Time_Keep    On
+```
+
+> Since Fluent Bit v1.2 we are not suggesting the use of decoders (Decode\_Field\_As) if you are using Elasticsearch database in the output to avoid data type conflicts.
+
+To perform processing of the _log_ key, it's __mandatory to enable__ the _Merge\_Log_ configuration property in this filter, then the following processing order will be done:
+
+- If a Pod suggest a parser, the filter will use that parser to process the content of _log_.
+- If the option _Merge\_Parser_ was set and the Pod did not suggest a parser, process the _log_ content using the suggested parser in the configuration.
+- If no Pod was suggested and no _Merge\_Parser_ is set, try to handle the content as JSON.
+
+If _log_ value processing fails, the value is untouched. The order above is not chained, meaning it's exclusive and the filter will try only one of the options above, __not__ all of them.
 
 ## Kubernetes Annotations
 
@@ -61,7 +85,7 @@ The following annotations are available:
 
 #### Suggest a parser
 
-The following Pod definition runs a Pod that emits Apache logs to the standard output, in the Annotations it suggest that the data should be processed using the pre-defined parser called _apache_: 
+The following Pod definition runs a Pod that emits Apache logs to the standard output, in the Annotations it suggest that the data should be processed using the pre-defined parser called _apache_:
 
 ```yaml
 apiVersion: v1
@@ -97,7 +121,7 @@ spec:
     image: edsiper/apache_logs
 ```
 
-Note that the annotation value is boolean which can take a _true_ or _false_ and __must__ be quoted. 
+Note that the annotation value is boolean which can take a _true_ or _false_ and __must__ be quoted.
 
 ## Workflow of Tail + Kubernetes Filter
 
@@ -107,7 +131,7 @@ Kubernetes Filter depends on either [Tail](../input/tail.md) or [Systemd](../inp
 [INPUT]
     Name    tail
     Tag     kube.*
-	Path    /var/log/containers/*.log
+    Path    /var/log/containers/*.log
     Parser  docker
 
 [FILTER]
@@ -116,7 +140,9 @@ Kubernetes Filter depends on either [Tail](../input/tail.md) or [Systemd](../inp
     Kube_URL         https://kubernetes.default.svc:443
     Kube_CA_File     /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     Kube_Token_File  /var/run/secrets/kubernetes.io/serviceaccount/token
-    Kube_Tag_Prefix  kube.
+    Kube_Tag_Prefix  kube.var.log.containers.
+    Merge_Log        On
+    Merge_Log_Key    log_processed
 ```
 
 In the input section, the [Tail](../input/tail.md) plugin will monitor all files ending in _.log_ in path _/var/log/containers/_. For every file it will read every line and apply the docker parser. Then the records are emitted to the next step with an expanded tag.
@@ -172,4 +198,3 @@ Under certain and not common conditions, a user would want to alter that hard-co
 #### Final Comments
 
 So at this point the filter is able to gather the values of _pod_name_ and _namespace_, with that information it will check in the local cache (internal hash table) if some metadata for that key pair exists, if so, it will enrich the record with the metadata value, otherwise it will connect to the Kubernetes Master/API Server and retrieve that information.
-
