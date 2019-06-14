@@ -9,6 +9,8 @@ The following table describe the tags are available on [fluent/fluent-bit](https
 | Tag\(s\) | Description |
 | :--- | :--- |
 | 1.1, 1.1-debug | Latest release of 1.1.x series |
+| 1.1.3, 1.1.3-debug | Container image of Fluent Bit [v1.1.3](http://fluentbit.io/announcements/v1.1.3) |
+| 1.1.2, 1.1.2-debug | Container image of Fluent Bit [v1.1.2](http://fluentbit.io/announcements/v1.1.2) |
 | 1.1.1, 1.1.1-debug | Container image of Fluent Bit [v1.1.1](http://fluentbit.io/announcements/v1.1.1) |
 | 1.1.0, 1.1.0-debug | Container image of Fluent Bit [v1.1.0](http://fluentbit.io/announcements/v1.1.0) |
 
