@@ -67,6 +67,8 @@
 * [Parsers](parser/README.md)
   * [JSON Parser](parser/json.md)
   * [Regular Expression Parser](parser/regular_expression.md)
+  * [LTSV Parser](parser/ltsv.md)
+  * [Logfmt Parser](parser/logfmt.md)
   * [Decoders](parser/decoder.md)
 * [Filter Plugins](filter/README.md)
   * [Grep](filter/grep.md)
