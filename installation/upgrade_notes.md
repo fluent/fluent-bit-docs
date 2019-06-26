@@ -1,8 +1,66 @@
-# Upgrade Notes
+# Upgrading Notes
+
+The following article cover the relevant notes for users upgrading from previous Fluent Bit versions. We aim to cover compatibility changes that you must be aware of. 
+
+For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
+
+## Fluent Bit v1.2
+
+### Docker, JSON, Parsers and Decoders
+
+On Fluent Bit v1.2 we have fixed many issues associated with JSON encoding and decoding, for hence when parsing Docker logs __is not longer necessary__ to use decoders. The new Docker parser looks like this:
+
+```
+[PARSER]
+    Name         docker
+    Format       json
+    Time_Key     time
+    Time_Format  %Y-%m-%dT%H:%M:%S.%L
+    Time_Keep    On
+```
+
+> Note: again, do not use decoders.
+
+### Kubernetes Filter
+
+We have done improvements also on how Kubernetes Filter handle the stringified _log_ message. If the option _Merge\_Log_ is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
+
+In addition, we have fixed and improved the option called _Merge\_Log\_Key_. If a merge log succeed, all new keys will be packaged under the key specified by this option, a suggested configuration is as follows:
+
+```
+[FILTER]
+    Name             Kubernetes
+    Match            kube.*
+    Kube_Tag_Prefix  kube.var.log.containers.
+    Merge_Log        On
+    Merge_Log_Key    log_processed
+```
+
+As an example, if the original log content is the following map:
+
+```json
+{"key1": "val1", "key2": "val2"}
+```
+
+the final record will be composed as follows:
+
+```json
+{
+	"log": "{\"key1\": \"val1\", \"key2\": \"val2\"}",
+	"log_processed": {
+		"key1": "val1",
+		"key2": "val2"
+	}
+}
+```
+
+
+
+## Fluent Bit v1.1
 
 If you are upgrading from **Fluent Bit <= 1.0.x** you should take in consideration the following relevant changes when switching to **Fluent Bit v1.1** series:
 
-## Kubernetes Filter
+### Kubernetes Filter
 
 We introduced a new configuration property called _Kube\_Tag\_Prefix_ to help Tag prefix resolution and address an unexpected behavior that landed in previous versions.
 
@@ -46,3 +104,4 @@ This behavior switch in Tail input plugin affects how Filter Kubernetes operates
 ```
 
 So the proper for _Kube\_Tag\_Prefix_ value must be composed by Tag prefix set in Tail input plugin plus the converted monitored directory replacing slashes with dots.
+
