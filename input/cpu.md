@@ -18,6 +18,15 @@ In addition to the keys reported in the above table, a similar content is create
 | cpu**N**.p\_user | Total CPU spent in user mode or user space programs associated to this core. |
 | cpu**N**.p\_system | Total CPU spent in system or kernel mode associated to this core. |
 
+## Configuration Parameters
+
+The plugin supports the following configuration parameters:
+
+| Key | Description |
+| :--- | :--- |
+| Interval\_Sec | Polling interval \(seconds\).  default: 1 |
+| Interval\_NSec | Polling interval \(nanosecond\). default: 0 |
+
 ## Getting Started
 
 In order to get the statistics of the CPU usage of your system, you can run the plugin from the command line or through the configuration file:
