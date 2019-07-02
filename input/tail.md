@@ -118,7 +118,6 @@ By default SQLite client tool do not format the columns in a human read-way, so 
 .width 5 32 12 12 10
 ```
 
-## Rotation
+## Files Rotation
 
-Rotation with truncation \(e.g. logrotate's `copytruncate` mode\) is _not_ supported.
-
+Files rotation are properly handled, including logrotate _copytruncate_ mode.
