@@ -20,7 +20,7 @@
   * [CentOS Packages](installation/redhat_centos.md)
   * [Raspberry Pi](installation/raspberry_pi.md)
   * [Yocto Project](installation/yocto.md)
-  * [Unit Tests](installation/unit_tests.md)
+  * [Windows](installation/windows.md)
 * [Getting Started](getting_started/README.md)
   * [Service](getting_started/service.md)
   * [Input](getting_started/input.md)
