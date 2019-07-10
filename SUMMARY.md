@@ -98,6 +98,7 @@
   * [Stackdriver](output/stackdriver.md)
   * [Standard Output](output/stdout.md)
   * [Splunk](output/splunk.md)
+  * [TCP & TLS](output/tcp.md)
   * [Treasure Data](output/td.md)
 * [Fluent Bit for Developers](development/README.md)
   * [Library API](development/library_api.md)
