@@ -14,7 +14,7 @@ The _SERVICE_ defines the global behaviour of the [Fluent Bit](http://fluentbit.
 | HTTP_Port      | Int  |Port to listen (e.g. 8888)                          |
 | HTTP_Server    | Bool |If true enable statistics HTTP server               |
 | Log_File       | Str  |File to log diagnostic output                       |
-| Log_Level      | Int  |Diagnostic level (error/warning/info/debug/trace)   |
+| Log_Level      | Str  |Diagnostic level (error/warning/info/debug/trace)   |
 | Parsers_File   | Str  |Optional 'parsers' config file (can be multiple)    |
 | Plugins_File   | Str  |Optional 'plugins' config file (can be multiple)    |
 
