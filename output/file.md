@@ -54,6 +54,35 @@ Output the records as LTSV. LTSV supports an additional configuration parameter.
 field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
 ```
 
+### template format
+
+Output the records using a custom format template.
+
+| Key      | Description                                    |
+| :------- | :--------------------------------------------- |
+| Template | The format string. Default: '{time} {message}' |
+
+This accepts a formatting template and fills placeholders using corresponding
+values in a record.
+
+For example, if you set up the configuration as below:
+
+```
+[INPUT]
+  Name mem
+
+[OUTPUT]
+  Name file
+  Format template
+  Template {time} used={Mem.used} free={Mem.free} total={Mem.total}
+```
+
+You will get the following output:
+
+```
+1564462620.000254 used=1045448 free=31760160 total=32805608
+```
+
 ## Getting Started
 
 You can run the plugin from the command line or through the configuration file:
