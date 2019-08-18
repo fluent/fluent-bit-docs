@@ -42,16 +42,14 @@ Copyright (C) Treasure Data
 Some systems provide multiple thermal zones.  In this example monitor only _thermal\_zone0_ by name.
 
 ```bash
-$ bin/fluent-bit -i thermal -t my_thermal -p "interval_sec=1" -p "name_regex=thermal_zone0" -o stdout -m '*'
+$ bin/fluent-bit -i thermal -t my_thermal -p "name_regex=thermal_zone0" -o stdout -m '*'
 Fluent Bit v1.3.0
 Copyright (C) Treasure Data
 
 [2019/08/18 13:39:43] [ info] [storage] initializing...
 ...
-[0] my_thermal: [1566099782.000153065, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
-[1] my_thermal: [1566099783.000121844, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
-[2] my_thermal: [1566099784.000115964, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>60.000000}]
-[3] my_thermal: [1566099785.000124242, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>62.000000}]
+[0] my_temp: [1565759542.001053749, {"name"=>"thermal_zone0", "type"=>"pch_skylake", "temp"=>48.500000}]
+[0] my_temp: [1565759602.001661061, {"name"=>"thermal_zone0", "type"=>"pch_skylake", "temp"=>48.500000}]
 ```
 
 ### Configuration File
