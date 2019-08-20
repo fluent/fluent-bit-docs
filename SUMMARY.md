@@ -45,6 +45,7 @@
   * [Stream Processor](configuration/stream_processor.md)
 * [Service](service/README.md)
 * [Input Plugins](input/README.md)
+  * [Collectd](input/collectd.md)
   * [CPU Usage](input/cpu.md)
   * [Disk Usage](input/disk.md)
   * [Dummy](input/dummy.md)
