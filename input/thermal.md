@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Interval\_Sec  | Polling interval \(seconds\).  default: 60 |
+| Interval\_Sec  | Polling interval \(seconds\).  default: 1 |
 | Interval\_NSec | Polling interval \(nanosecond\).  default: 0 |
 | name\_regex    | Optional name filter regex.  default: None |
 | type\_regex    | Optional type filter regex.  default: None |
@@ -28,7 +28,7 @@ In order to get temperature(s) of your system, you can run the plugin from the c
 ### Command Line
 
 ```bash
-$ bin/fluent-bit -i thermal -t my_thermal -p "interval_sec=1" -o stdout -m '*'
+$ bin/fluent-bit -i thermal -t my_thermal -o stdout -m '*'
 Fluent Bit v1.3.0
 Copyright (C) Treasure Data
 
@@ -39,10 +39,10 @@ Copyright (C) Treasure Data
 [2] my_thermal: [1566099586.000083156, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
 ```
 
-Some systems provide multiple thermal zones.  In this example monitor only _thermal\_zone0_ by name.
+Some systems provide multiple thermal zones.  In this example monitor only _thermal\_zone0_ by name, once per minute.
 
 ```bash
-$ bin/fluent-bit -i thermal -t my_thermal -p "name_regex=thermal_zone0" -o stdout -m '*'
+$ bin/fluent-bit -i thermal -t my_thermal -p "interval_sec=60" -p "name_regex=thermal_zone0" -o stdout -m '*'
 Fluent Bit v1.3.0
 Copyright (C) Treasure Data
 
