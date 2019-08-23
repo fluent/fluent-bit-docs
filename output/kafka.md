@@ -23,7 +23,7 @@ In order to insert records into Apache Kafka, you can run the plugin from the co
 
 ### Command Line
 
-The **splunk** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
+The **kafka** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
 ```text
 $ fluent-bit -i cpu -o kafka -p brokers=192.168.1.3:9092 -p topics=test
