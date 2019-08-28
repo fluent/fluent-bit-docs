@@ -95,7 +95,7 @@ By default, GELF tcp uses port 12201 and Docker places your logs in `/var/log/co
 {"log":"{\"data\": \"This is an example.\"}","stream":"stderr","time":"2019-07-21T12:45:11.273315023Z"}
 ```
 
-If you use `tail` input and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` (and any other present) field. This is how this log in [stdout](stdout.md) looks like after decoding:
+If you use [`tail`](input/tail.md) input and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` (and any other present) field. This is how this log in [stdout](stdout.md) looks like after decoding:
 
 ```text
 [0] kube.log: [1565770310.000198491, {"log"=>{"data"=>"This is an example."}, "stream"=>"stderr", "time"=>"2019-07-21T12:45:11.273315023Z"}]
@@ -105,7 +105,7 @@ Now, this is what happens to this log:
 
 1. Fluent Bit GELF plugin adds `"version": "1.1"` to it.
 
-2. The `nest` Filter, unnests fields inside `log` key. In our example, it puts `data` alongside `stream` and `time`.
+2. The [`nest`](filter/nest.md) Filter, unnests fields inside `log` key. In our example, it puts `data` alongside `stream` and `time`.
 
 3. We used this `data` key as `Gelf_Short_Message_Key`; so GELF plugin changes it to `short_message`.
 
