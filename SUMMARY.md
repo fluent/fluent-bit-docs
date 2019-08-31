@@ -65,6 +65,7 @@
   * [Systemd](input/systemd.md)
   * [Tail](input/tail.md)
   * [TCP](input/tcp.md)
+  * [Thermal](input/thermal.md)
   * [Windows Event Log](input/winlog.md)
 * [Parsers](parser/README.md)
   * [JSON Parser](parser/json.md)
