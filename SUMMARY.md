@@ -90,6 +90,7 @@
   * [File](output/file.md)
   * [FlowCounter](output/flowcounter.md)
   * [Forward](output/forward.md)
+  * [GELF](output/gelf.md)
   * [HTTP](output/http.md)
   * [InfluxDB](output/influxdb.md)
   * [Kafka](output/kafka.md)
