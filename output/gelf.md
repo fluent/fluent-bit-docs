@@ -34,12 +34,12 @@ GELF output plugin supports TLS/SSL, for more details about the properties avail
 
   1. Value of `Gelf_Timestamp_Key` provided in configuration
   2. Value of `timestamp` key
-  3. If you're using [Docker JSON parser](https://docs.fluentbit.io/manual/v/1.2/parser/json), this parser can parse time and use it as timestamp of message. If all above fail, Fluent Bit tries to get timestamp extracted by your parser.
+  3. If you're using [Docker JSON parser](../parser/json.md), this parser can parse time and use it as timestamp of message. If all above fail, Fluent Bit tries to get timestamp extracted by your parser.
   4. Timestamp does not set by Fluent Bit. In this case, your Graylog server will set it to the current timestamp (now).
 
 * Your log timestamp has to be in [UNIX Epoch Timestamp](https://en.wikipedia.org/wiki/Unix_time) format. If the `Gelf_Timestamp_Key` value of your log is not in this format, your Graylog server will ignore it.
 
-* If you're using Fluent Bit in Kubernetes and you're using [Kubernetes Filter Plugin](https://docs.fluentbit.io/manual/v/1.2/filter/kubernetes), this plugin adds `host` value to your log by default, and you don't need to add it by your own.
+* If you're using Fluent Bit in Kubernetes and you're using [Kubernetes Filter Plugin](../filter/kubernetes.md), this plugin adds `host` value to your log by default, and you don't need to add it by your own.
 
 * The `version` of GELF message is also mandatory and Fluent Bit sets it to 1.1 which is the current latest version of GELF.
 
