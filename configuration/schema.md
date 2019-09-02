@@ -1,6 +1,6 @@
 # Configuration Schema
 
-Fluent Bit may use optionally a configuration file to define how the service will behave, and before to proceed we need to understand how the configuration schema works. The schema is defined by three concepts:
+Fluent Bit may optionally use a configuration file to define how the service will behave, and before proceeding we need to understand how the configuration schema works. The schema is defined by three concepts:
 
 * [Sections](schema.md#sections)
 * [Entries: Key/Value](schema.md#entries_kv)
@@ -17,27 +17,28 @@ A simple example of a configuration file is as follows:
 
 ## Sections {#sections}
 
-A section is defined by a name or title inside brackets. Looking at the example above a Server section has been set using **\[SERVICE\]** definition. Section rules:
+A section is defined by a name or title inside brackets. Looking at the example above, a Service section has been set using **\[SERVICE\]** definition. Section rules:
 
 * All section content must be indented \(4 spaces ideally\).
-* Multiples sections can exists on the same file.
-* Under a section is expected to have comments and entries, a section cannot be empty.
+* Multiple sections can exist on the same file.
+* A section is expected to have comments and entries, it cannot be empty.
 * Any commented line under a section, must be indented too.
 
 ## Entries: Key/Value {#entries_kv}
 
-A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **on**. Entries rules:
+A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other is the key **Log\_Level** with the value **debug**.
+Entries rules:
 
 * An entry is defined by a key and a value.
 * A key must be indented.
 * A key must contain a value which ends in the breakline.
-* Multiple keys with the same name can exists.
+* Multiple keys with the same name can exist.
 
 Also commented lines are set prefixing the **\#** character, those lines are not processed but they must be indented too.
 
 ## Indented Configuration Mode {#indented_mode}
 
-Fluent Bit configuration files are based in a strict **Indented Mode**, that means that each configuration file must follow the same pattern of alignment from left to right when writing text. By default is suggested an indentation level of four spaces from left to right. Example:
+Fluent Bit configuration files are based in a strict **Indented Mode**, that means that each configuration file must follow the same pattern of alignment from left to right when writing text. By default an indentation level of four spaces from left to right is suggested. Example:
 
 ```python
 [FIRST_SECTION]

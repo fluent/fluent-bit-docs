@@ -19,6 +19,7 @@ The listed properties can be enabled in the configuration file, specifically on 
 
 * [Elasticsearch](../output/elasticsearch.md)
 * [Forward](../output/forward.md)
+* [GELF](../output/gelf.md)
 * [HTTP](../output/http.md)
 * [Splunk](../output/splunk.md)
 

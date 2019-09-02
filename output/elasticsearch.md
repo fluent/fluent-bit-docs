@@ -28,7 +28,7 @@ The **es** output plugin, allows to flush your records into a [Elasticsearch](ht
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Logstash\_Prefix\_Key | Prefix keys with this string | |
 
-> The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts.
+> The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq-multiple-types)
 
 ### TLS / SSL
 
@@ -92,3 +92,28 @@ becomes
 {"cpu0_p_cpu"=>17.000000}
 ```
 
+## FAQ
+
+### Elasticsearch rejects requests saying "the final mapping would have more than 1 type" {#faq-multiple-types}
+
+Since Elasticsearch 6.0, you cannot create multiple types in a single index. This means that you cannot set up your configuration as below anymore.
+
+```
+[OUTPUT]
+    Name  es
+    Match foo.*
+    Index search
+    Type  type1
+
+[OUTPUT]
+    Name  es
+    Match bar.*
+    Index search
+    Type  type2
+```
+
+If you see an error message like below, you'll need to fix your configuration to use a single type on each index.
+
+> Rejecting mapping update to [search] as the final mapping would have more than 1 type
+
+For details, please read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).

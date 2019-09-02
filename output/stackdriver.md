@@ -15,7 +15,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
 | service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
-| resource | Set resource type of data. Only _global_ is supported. | global |
+| resource | Set resource type of data. Only _global_ and _gce_instance_ are supported. | global, gce_instance |
 
 ### Configuration File
 

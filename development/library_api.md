@@ -1,6 +1,6 @@
 # Library API
 
-[Fluent Bit](http://fluentbit.io) library it's written in C language and can be used from any C or C++ application. Before to digging into the specification is recommended to understand the workflow involved in the runtime.
+[Fluent Bit](http://fluentbit.io) library is written in C language and can be used from any C or C++ application. Before digging into the specification it is recommended to understand the workflow involved in the runtime.
 
 ## Workflow
 

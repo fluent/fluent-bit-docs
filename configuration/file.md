@@ -1,6 +1,6 @@
 # Configuration File
 
-There are some cases where using the command line to start Fluent Bit is not ideal for some scenarios, when running it as a service a configuration file it's times better.
+There are some cases where using the command line to start Fluent Bit is not ideal. When running Fluent Bit as a service, a configuration file is preferred.
 
 Fluent Bit allows to use one configuration file which works at a global scope and uses the [schema](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/configuration/configuration_schema.md) defined previously.
 
@@ -27,10 +27,11 @@ The _Service_ section defines global properties of the service, the keys availab
 | Log\_Level | Set the logging verbosity level. Allowed values are: error, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, info and debug. Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | Parsers\_File | Path for a _parsers_ configuration file. Multiple Parsers\_File entries can be used. |  |
 | Plugins\_File | Path for a _plugins_ configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). ||
+| Streams\_File | Path for the Stream Processor configuration file. For details about the format of SP configuration file [see here](stream_processor.md). ||
 | HTTP\_Server | Enable built-in HTTP Server | Off |
 | HTTP\_Listen | Set listening interface for HTTP Server when it's enabled | 0.0.0.0 |
 | HTTP\_Port | Set TCP Port for the HTTP Server | 2020 |
-| Coro_Stack_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. | 24576 |
+| Coro_Stack_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value (say 4096), or coroutine threads can overrun the stack buffer. | 24576 |
 
 ### Example
 

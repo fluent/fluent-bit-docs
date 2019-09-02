@@ -4,6 +4,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 
 | name | title | description |
 | :--- | :--- | :--- |
+| [collectd](collectd.md) | Collectd | Listen for UDP packets from Collectd. |
 | [cpu](cpu.md) | CPU Usage | measure total CPU usage of the system. |
 | [disk](disk.md) | Disk Usage | measure Disk I/Os. |
 | [dummy](dummy.md) | Dummy | generate dummy event. |
@@ -23,4 +24,5 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [systemd](systemd.md) | Systemd | read logs from Systemd/Journald. |
 | [tail](tail.md) | Tail | Tail log files |
 | [tcp](tcp.md) | TCP | Listen for JSON messages over TCP. |
+| [thermal](thermal.md) | Thermal | measure system temperature(s). |
 
