@@ -1,6 +1,6 @@
-# Disk Usage
+# Disk Throughput
 
-The **disk** input plugin, gathers the information about the disk usage of the running system every certain interval of time and reports them.
+The **disk** input plugin, gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 
 ## Configuration Parameters
 
