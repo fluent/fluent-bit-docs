@@ -33,5 +33,5 @@ FLB_HAVE_PROXY_GO FLB_HAVE_JEMALLOC JEMALLOC_MANGLE FLB_HAVE_REGEX
 FLB_HAVE_C_TLS FLB_HAVE_SETJMP FLB_HAVE_ACCEPT4 FLB_HAVE_INOTIFY
 ```
 
-If the FLB\_JEMALLOC option is listed in _Build Flags_, everything will be fine.
+If the FLB\_HAVE\_JEMALLOC option is listed in _Build Flags_, everything will be fine.
 
