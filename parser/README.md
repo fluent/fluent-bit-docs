@@ -63,7 +63,9 @@ For more information about the parsers available, please refer to the default pa
 
 ## Time Resolution and Fractional Seconds
 
-Some timestamps might have fractional seconds like _2017-05-17T15:44:31**.187512963**Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the **%L** format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
+Time resolution and it format supported are handled by using the [strftime(3)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function. 
+
+In addition, we extended our time resolution to support fractional seconds like _2017-05-17T15:44:31**.187512963**Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the **%L** format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
 
 > Note: The option %L is only valid when used after seconds \(`%S`\) or seconds since the Epoch \(`%s`\), e.g: `%S.%L` or `%s.%L`
 
