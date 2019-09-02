@@ -87,6 +87,7 @@
   * [Azure](output/azure.md)
   * [BigQuery](output/bigquery.md)
   * [Counter](output/counter.md)
+  * [Datadog](output/datadog.md)
   * [Elasticsearch](output/elasticsearch.md)
   * [File](output/file.md)
   * [FlowCounter](output/flowcounter.md)

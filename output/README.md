@@ -7,6 +7,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 | [azure](azure.md) | Azure Log Analytics | Ingest records into Azure Log Analytics |
 | [bigquery](bigquery.md) | BigQuery | Ingest records into Google BigQuery |
 | [counter](counter.md) | Count Records | Simple records counter. |
+| [datadog](datadog.md) | Datadog | Ingest logs into Datadog. |
 | [es](elasticsearch.md) | Elasticsearch | flush records to a Elasticsearch server. |
 | [file](file.md) | File | Flush records to a file. |
 | [flowcounter](flowcounter.md) | FlowCounter | Count records. |
