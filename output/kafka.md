@@ -17,7 +17,6 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 
 > Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to 1 are examples of recommended settings of librdfkafka properties.
-ssh terminal texts wraps in same line
 
 ## Getting Started
 
