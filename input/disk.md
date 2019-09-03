@@ -1,16 +1,16 @@
-# Disk Usage 
+# Disk Throughput
 
-The __disk__ input plugin, gathers the information about the disk usage of the running system every certain interval of time and reports them.
+The **disk** input plugin, gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key           | Description |
-| --------------|-------------|
-| Interval_Sec  | Polling interval (seconds).  default: 1|
-| Interval_NSec | Polling interval (nanosecond). default: 0|
-| Dev_Name      | Device name to limit the target. (e.g. sda). If not set, _in_disk_ gathers information from all of disks and partitions.|
+| Key | Description |
+| :--- | :--- |
+| Interval\_Sec | Polling interval \(seconds\).  default: 1 |
+| Interval\_NSec | Polling interval \(nanosecond\). default: 0 |
+| Dev\_Name | Device name to limit the target. \(e.g. sda\). If not set, _in\_disk_ gathers information from all of disks and partitions. |
 
 ## Getting Started
 
@@ -45,6 +45,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-Note: Total interval (sec) = Interval_Sec + (Interval_Nsec / 1000000000).
+Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
+

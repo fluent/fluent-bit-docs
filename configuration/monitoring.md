@@ -2,17 +2,11 @@
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
 
-Content:
-
-- [Getting Started](#getting_started)
-- [REST API Interface](#rest_api)
-- [Examples](#examples)
-
 ## Getting Started {#getting_started}
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
-```
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -28,18 +22,18 @@ To get started, the first step is to enable the HTTP Server from the configurati
 
 the above configuration snippet will instruct Fluent Bit to start it HTTP Server on TCP Port 2020 and listening on all network interfaces:
 
-```
+```text
 $ bin/fluent-bit -c fluent-bit.conf
-Fluent-Bit v0.13.0
+Fluent-Bit v0.14.x
 Copyright (C) Treasure Data
 
 [2017/10/27 19:08:24] [ info] [engine] started
 [2017/10/27 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
-now with a simple __curl__ command is enough to gather some information:
+now with a simple **curl** command is enough to gather some information:
 
-```
+```text
 $ curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
@@ -70,20 +64,44 @@ Note that we are sending the _curl_ command output to the _jq_ program which hel
 
 ## REST API Interface {#rest_api}
 
-Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.13 the following end points are available:
+Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.14 the following end points are available:
 
-| URI              | Description              |  Data Format        |
-|------------------|--------------------------|---------------------|
-| /                | Fluent Bit build information            | JSON |
-| /api/v1/metrics  | Internal metrics per loaded plugin      | JSON |
+| URI | Description | Data Format |
+| :--- | :--- | :--- |
+| / | Fluent Bit build information | JSON |
+| /api/v1/uptime | Get uptime information in seconds and human readable format | JSON |
+| /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
 
-## Examples {#examples}
+## Uptime Example
 
-Query internal metrics in JSON format:
+Query the service uptime with the following command:
 
 ```
+$ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
+```
+
+it should print a similar output like this:
+
+```json
+{
+  "uptime_sec": 8950000,
+  "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
+}
+
+```
+
+## Metrics Examples
+
+Query internal metrics in JSON format with the following command:
+
+```bash
 $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
+```
+
+it should print a similar output like this:
+
+```json
 {
   "input": {
     "cpu.0": {
@@ -101,14 +119,19 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
     }
   }
 }
-
 ```
+
+#### Metrics in Prometheus format
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
+```bash
+$ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
+```
+
+this time the same metrics will be in Prometheus format instead of JSON:
 
 ```
-$ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
 fluentbit_output_proc_records_total{name="stdout.0"} 54 1509150350542
@@ -117,3 +140,52 @@ fluentbit_output_errors_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
+
+
+
+### Configuring Aliases
+
+By default configured plugins on runtime get an internal name in the format _plugin_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
+
+The following example set an alias to the INPUT section which is using the [CPU](../input/cpu.md) input plugin:
+
+```
+[SERVICE]
+    HTTP_Server  On
+    HTTP_Listen  0.0.0.0
+    HTTP_PORT    2020
+
+[INPUT]
+    Name  cpu
+    Alias server1_cpu
+    
+[OUTPUT]
+    Name  stdout
+    Alias raw_output
+    Match *
+```
+
+Now when querying the metrics we get the aliases in place instead of the plugin name:
+
+```json
+{
+  "input": {
+    "server1_cpu": {
+      "records": 8,
+      "bytes": 2536
+    }
+  },
+  "output": {
+    "raw_output": {
+      "proc_records": 5,
+      "proc_bytes": 1585,
+      "errors": 0,
+      "retries": 0,
+      "retries_failed": 0
+    }
+  }
+}
+```
+
+
+

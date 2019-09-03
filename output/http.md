@@ -1,8 +1,6 @@
 # HTTP
 
-The __http__ output plugin, allows to flush your records into an HTTP end point. For now the functionality is pretty basic and it issue a POST request with the data records in [MessagePack](http://msgpack.org) format.
-
-> In future versions the target URI and data format will be configurable.
+The **http** output plugin allows to flush your records into a HTTP endpoint. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
 
 ## Configuration Parameters
 
@@ -14,8 +12,16 @@ The __http__ output plugin, allows to flush your records into an HTTP end point.
 | Port        | TCP port of the target HTTP Server | 80 |
 | Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
 | URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
-| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_ and _json_stream_. | msgpack |
+| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json_stream_ and _json_lines_ and _gelf_. | msgpack |
 | header_tag | Specify an optional HTTP header field for the original message tag. |         |
+| Header     | Add a HTTP header key/value pair. Multiple headers can be set. |         |
+| json_date_key | Specify the name of the date field in output | date |
+| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
+| gelf_timestamp_key | Specify the key to use for `timestamp` in _gelf_ format | |
+| gelf_host_key | Specify the key to use for the `host` in _gelf_ format | |
+| gelf_short_messge_key | Specify the key to use as the `short` message in _gelf_ format | |
+| gelf_full_message_key | Specify the key to use for the `full` message in _gelf_ format | |
+| gelf_level_key | Specify the key to use for the `level` in _gelf_ format | |
 
 ### TLS / SSL
 
@@ -27,23 +33,23 @@ In order to insert records into a HTTP server, you can run the plugin from the c
 
 ### Command Line
 
-The __http__ plugin, can read the parameters from the command line in two ways, through the __-p__ argument (property) or setting them directly through the service URI. The URI format is the following:
+The **http** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\) or setting them directly through the service URI. The URI format is the following:
 
-```
+```text
 http://host:port/something
 ```
 
 Using the format specified, you could start Fluent Bit through:
 
-```
-$ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -o stdout -m '*'
+```text
+$ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -m '*'
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file, append the following _Input_ & _Output_ sections:
 
-```Python
+```python
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -56,38 +62,52 @@ In your main configuration file append the following _Input_ & _Output_ sections
     URI   /something
 ```
 
-By default, the URI becomes tag of the message, the original tag is ignore. To
-retain the tag, multiple configuration sections has to be made based and flush
-to different URIs.
+By default, the URI becomes tag of the message, the original tag is ignored. To retain the tag, multiple configuration sections have to be made based and flush to different URIs.
 
-Another approach we also support is the sending the original message tag
-in a configurabled header. It's up to the receiver to do what it want with that
-header field: parse it and use it as the tag for example. With fluend
-http plugin, it's straightforward.
+Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example.
 
 To configure this behaviour, add this config:
 
-```
+```text
 [OUTPUT]
     Name  http
     Match *
     Host  192.168.2.3
     Port  80
     URI   /something
+    Format json
     header_tag  FLUENT-TAG
 ```
 
-Given the default http input fluentd plugin: https://github.com/fluent/fluentd/blob/1afbfb17c833b05757122a53ea14b17af659fd75/lib/fluent/plugin/in_http.rb#L212-L215
+Provided you are using Fluentd as data receiver, you can combine `in_http` and `out_rewrite_tag_filter` to make use of this HTTP header.
 
-We can easily parse the tag like this:
+```
+<source>
+  @type http
+  add_http_headers true
+</source>
 
-```ruby
-@@ -153,6 +153,7 @@ module Fluent::Plugin
-       begin
-         path = path_info[1..-1]  # remove /
-         tag = path.split('/').join('.')
-+        tag = params["HTTP_FLUENT_TAG"] if params["HTTP_FLUENT_TAG"]
-         record_time, record = parse_params(params)
+<match something>
+  @type rewrite_tag_filter
+  <rule>
+    key HTTP_FLUENT_TAG
+    pattern /^(.*)$/
+    tag $1
+  </rule>
+</match>
 ```
 
 Notice how we override the tag, which is from URI path, with our custom header
+
+#### Example : Add a header
+
+```
+[OUTPUT]
+    Name           http
+    Match          *
+    Host           127.0.0.1
+    Port           9000
+    Header         X-Key-A Value_A
+    Header         X-Key-B Value_B
+    URI            /something
+```

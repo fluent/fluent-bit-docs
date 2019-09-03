@@ -2,17 +2,17 @@
 
 Dealing with raw strings is a constant pain; having a structure is highly desired. Ideally we want to set a structure to the incoming data by the Input Plugins as soon as they are collected:
 
-![](../diagrams/logging_pipeline_parser.png)
+![](../.gitbook/assets/logging_pipeline_parser.png)
 
-The Parser allows you to convert from unstructured to structured data. As a demonstrative example consider the following Apache (HTTP Server) log entry:
+The Parser allows you to convert from unstructured to structured data. As a demonstrative example consider the following Apache \(HTTP Server\) log entry:
 
-```
+```text
 192.168.2.20 - - [28/Jul/2006:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
 The above log line is a raw string without format, ideally we would like to give it a structure that can be processed later easily. If the proper configuration is used, the log entry could be converted to:
 
-```json
+```javascript
 {
   "host":    "192.168.2.20",
   "user":    "-",
@@ -23,6 +23,7 @@ The above log line is a raw string without format, ideally we would like to give
   "referer": "",
   "agent":   ""
  }
- ```
+```
 
-Parsers are fully configurable and are independently and optionally handled by each input plugin, for more details please refer to the [Parsers](../parser/README.md) section.
+Parsers are fully configurable and are independently and optionally handled by each input plugin, for more details please refer to the [Parsers](../parser/) section.
+

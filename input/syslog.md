@@ -1,32 +1,28 @@
 # Syslog
 
-_Syslog_ input plugins allows to collect Syslog messages through a Unix socket server (UDP or TCP) or over the network using TCP mode.
+_Syslog_ input plugins allows to collect Syslog messages through a Unix socket server \(UDP or TCP\) or over the network using TCP or UDP.
 
-Content:
-
-- [Configuration Parameters](#config)
-- [Getting Started](#getting_started)
-- [Recipes](#recipes)
- - [Rsyslog to Fluent Bit / Network TCP](#rsyslog_to_fluentbit_network)
- - [Rsyslog to Fluent Bit / Unix Socket UDP](#rsyslog_to_fluentbit_unix_udp)
-
-## Configuration Parameters {#config}
+## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key         | Description       | Default |
-| ------------|-------------------|---------|
-| Mode        | Defines transport protocol mode: unix\_udp (UDP over Unix socket), unix\_tcp (TCP over Unix socket) or common tcp | unix_udp |
-| Listen      | If _Mode_ is set to _tcp_, specify the network interface to bind. | 0.0.0.0 |
-| Port        | If _Mode_ is set to _tcp_, specify the TCP port to listen for incoming connections. | 5140 |
-| Path        | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the absolute path to the Unix socket file. | |
-| Parser      | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. | |
-| Buffer\_Size| Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |
-| Chunk\_Size  | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). | |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Mode | Defines transport protocol mode: unix\_udp \(UDP over Unix socket\), unix\_tcp \(TCP over Unix socket\), tcp or udp| unix\_udp |
+| Listen | If _Mode_ is set to _tcp_, specify the network interface to bind. | 0.0.0.0 |
+| Port | If _Mode_ is set to _tcp_, specify the TCP port to listen for incoming connections. | 5140 |
+| Path | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the absolute path to the Unix socket file. |  |
+| Parser | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
+| Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
+| Buffer\_Max_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |  |
 
-Note that Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the [SERVER] section (more details below).
+### Considerations
 
-## Getting Started {#getting_started}
+- When using Syslog input plugin, Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the \[SERVER\] section \(more details below\).
+
+- When _udp_ or _unix\_udp_ is used, the buffer size to receive messages is configurable __only__ through the _Buffer\_Chunk\_Size_ option which defaults to 32kb.
+
+## Getting Started
 
 In order to receive Syslog messages, you can run the plugin from the command line or through the configuration file:
 
@@ -80,17 +76,17 @@ Copyright (C) Treasure Data
 [0] syslog.0: [1489047822, {"pri"=>"13", "host"=>"edsiper:", "ident"=>"my_ident", "pid"=>"", "message"=>"my_message"}]
 ```
 
-## Recipes {#recipes}
+## Recipes
 
 The following content aims to provide configuration examples for different use cases to integrate Fluent Bit and make it listen for Syslog messages from your systems.
 
 ### Rsyslog to Fluent Bit: Network mode over TCP {#rsyslog_to_fluentbit_network}
 
-##### Fluent Bit Configuration
+#### Fluent Bit Configuration
 
 Put the following content in your fluent-bit.conf file:
 
-```
+```text
 [SERVICE]
     Flush        1
     Parsers_File parsers.conf
@@ -109,11 +105,11 @@ Put the following content in your fluent-bit.conf file:
 
 then start Fluent Bit.
 
-##### RSyslog Configuration
+#### RSyslog Configuration
 
 Add a new file to your rsyslog config rules called _60-fluent-bit.conf_ inside the directory _/etc/rsyslog.d/_ and add the following content:
 
-```
+```text
 action(type="omfwd" Target="127.0.0.1" Port="5140" Protocol="tcp")
 ```
 
@@ -123,13 +119,13 @@ then make sure to restart your rsyslog daemon:
 $ sudo service rsyslog restart
 ```
 
-### Rsyslog to Fluent Bit: Unix socket mode over UDP {#rsyslog_to_fluentbit_unix_udp}
+### Rsyslog to Fluent Bit: Unix socket mode over UDP
 
-##### Fluent Bit Configuration
+#### Fluent Bit Configuration
 
 Put the following content in your fluent-bit.conf file:
 
-```
+```text
 [SERVICE]
     Flush        1
     Parsers_File parsers.conf
@@ -147,11 +143,11 @@ Put the following content in your fluent-bit.conf file:
 
 then start Fluent Bit.
 
-##### RSyslog Configuration
+#### RSyslog Configuration
 
 Add a new file to your rsyslog config rules called _60-fluent-bit.conf_ inside the directory _/etc/rsyslog.d/_ and place the following content:
 
-```
+```text
 $ModLoad omuxsock
 $OMUxSockSocket /tmp/fluent-bit.sock
 *.* :omuxsock:

@@ -1,12 +1,14 @@
-# Install on Redhat / CentOS
+# CentOS Packages
 
-Fluent Bit is distributed as __td-agent-bit__ package and is available for the latest stable CentOS system. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+## Install on Redhat / CentOS
 
-# Configure Yum
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable CentOS system. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
-We provide __td-agent-bit__ through a Yum repository. In order to add the repository reference to your system, please add a new file called _td-agent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
+## Configure Yum
 
-```
+We provide **td-agent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _td-agent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
+
+```text
 [td-agent-bit]
 name = TD Agent Bit
 baseurl = http://packages.fluentbit.io/centos/7
@@ -17,7 +19,7 @@ enabled=1
 
 note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed.
 
-## Install
+### Install
 
 Once your repository is configured, run the following command to install it:
 
@@ -30,8 +32,6 @@ Now the following step is to instruct _systemd_ to enable the service:
 ```bash
 $ service td-agent-bit start
 ```
-
-
 
 If you do a status check, you should see a similar output like this:
 
@@ -47,4 +47,5 @@ Redirecting to /bin/systemctl status  td-agent-bit.service
 ...
 ```
 
-The default configuration of __td-agent-bit__ is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/messages_ file.
+The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/messages_ file.
+

@@ -1,4 +1,6 @@
-![](imgs/logo_documentation_0.14.png)
+# Introduction
+
+![](imgs/logo_documentation_1.2.png)
 
 [Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Log Processor and Forwarder for Linux, OSX and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
 

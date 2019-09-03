@@ -1,6 +1,16 @@
 # Standard Output
 
-The __stdout__ output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
+The **stdout** output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
+
+## Configuration Parameters
+
+| Key         | Description          | default           |
+|-------------|----------------------|-------------------|
+| Format      | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json_lines_ and _json\_stream_. | msgpack |
+| json_date_key | Specify the name of the date field in output | date |
+| json_date_format | Specify the format of the date. Supported formats are _double_,  _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _epoch_. | double |
+
+### Command Line
 
 ```bash
 $ bin/fluent-bit -i cpu -o stdout -v
@@ -9,8 +19,8 @@ $ bin/fluent-bit -i cpu -o stdout -v
 We have specified to gather [CPU](../input/cpu.md) usage metrics and print them out to the standard output in a human readable way:
 
 ```bash
-$ bin/fluent-bit -i cpu -o stdout -v
-Fluent-Bit v0.9.0
+$ bin/fluent-bit -i cpu -o stdout -p format=msgpack -v
+Fluent-Bit v1.2.x
 Copyright (C) Treasure Data
 
 [2016/10/07 21:52:01] [ info] [engine] started
@@ -21,3 +31,4 @@ Copyright (C) Treasure Data
 ```
 
 No more, no less, it just works.
+

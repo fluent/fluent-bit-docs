@@ -1,17 +1,17 @@
 # Exec
 
-The __exec__ input plugin, allows to execute external program and collects event logs.
+The **exec** input plugin, allows to execute external program and collects event logs.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key           | Description |
-| --------------|-------------|
-| Command       | The command to execute. |
-| Parser        | Specify the name of a parser to interpret the entry as a structured message.|
-| Interval_Sec  | Polling interval (seconds). |
-| Interval_NSec | Polling interval (nanosecond). |
+| Key | Description |
+| :--- | :--- |
+| Command | The command to execute. |
+| Parser | Specify the name of a parser to interpret the entry as a structured message. |
+| Interval\_Sec | Polling interval \(seconds\). |
+| Interval\_NSec | Polling interval \(nanosecond\). |
 
 ## Getting Started
 
@@ -52,3 +52,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+

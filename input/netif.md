@@ -1,18 +1,17 @@
-# Network Traffic
+# Network Throughput
 
-The __netif__ input plugin, gathers the information about the network traffic of the running system every certain interval of time and reports them.
-
+The **netif** input plugin gathers network traffic information of the running system every certain interval of time, and reports them.
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key           | Description |
-| --------------|-------------|
-| Interface     | Specify the network interface to monitor. e.g. eth0|
-| Interval_Sec  | Polling interval (seconds).  default: 1|
-| Interval_NSec | Polling interval (nanosecond). default: 0|
-| Verbose       | If true, gather metrics precisely. default: false|
+| Key | Description |
+| :--- | :--- |
+| Interface | Specify the network interface to monitor. e.g. eth0 |
+| Interval\_Sec | Polling interval \(seconds\).  default: 1 |
+| Interval\_NSec | Polling interval \(nanosecond\). default: 0 |
+| Verbose | If true, gather metrics precisely. default: false |
 
 ## Getting Started
 
@@ -48,6 +47,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-Note: Total interval (sec) = Interval_Sec + (Interval_Nsec / 1000000000).
+Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
+

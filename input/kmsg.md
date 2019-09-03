@@ -1,6 +1,6 @@
-# Kernel Log Messages
+# Kernel Log Buffer
 
-The __kmsg__ input plugin reads the Linux Kernel log buffer since the beginning, it gets every record and parse it field as priority, sequence, seconds, useconds, and message.
+The **kmsg** input plugin reads the Linux Kernel log buffer since the beginning, it gets every record and parse it field as priority, sequence, seconds, useconds, and message.
 
 ## Getting Started
 
@@ -35,3 +35,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+
