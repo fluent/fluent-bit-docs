@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Listen | If _Mode_ is set to _tcp_, specify the network interface to bind. | 0.0.0.0 |
 | Port | If _Mode_ is set to _tcp_, specify the TCP port to listen for incoming connections. | 5140 |
 | Path | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the absolute path to the Unix socket file. |  |
+| Unix_Perm | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the permission of the Unix socket file. | 0644 |
 | Parser | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
 | Buffer\_Max_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |  |
@@ -131,14 +132,15 @@ Put the following content in your fluent-bit.conf file:
     Parsers_File parsers.conf
 
 [INPUT]
-    Name     syslog
-    Parser   syslog-rfc3164
-    Path     /tmp/fluent-bit.sock
-    Mode     unix_udp
+    Name      syslog
+    Parser    syslog-rfc3164
+    Path      /tmp/fluent-bit.sock
+    Mode      unix_udp
+    Unix_Perm 0644
 
 [OUTPUT]
-    Name     stdout
-    Match    *
+    Name      stdout
+    Match     *
 ```
 
 then start Fluent Bit.
@@ -153,9 +155,4 @@ $OMUxSockSocket /tmp/fluent-bit.sock
 *.* :omuxsock:
 ```
 
-then make sure to set proper permissions to the socket and restart your rsyslog daemon:
-
-```bash
-$ sudo chmod 666 /tmp/fluent-bit.sock
-$ sudo service rsyslog restart
-```
+Make sure that the socket file is readable by rsyslog (tweak the `Unix_Perm` option shown above).
