@@ -1,6 +1,6 @@
-# Network Traffic
+# Network Throughput
 
-The **netif** input plugin, gathers the information about the network traffic of the running system every certain interval of time and reports them.
+The **netif** input plugin gathers network traffic information of the running system every certain interval of time, and reports them.
 
 ## Configuration Parameters
 

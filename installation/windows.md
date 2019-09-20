@@ -2,9 +2,26 @@
 
 Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
 
+## Installation Packages
+
+The latest stable version is 1.2.2.
+
+| INSTALLERS                   | SHA256 CHECKSUMS                                                |
+| ---------------------------- | ---------------------------------------------------------------- |
+| td-agent-bit-1.2.2-win32.exe | b9e2695e6cc1b15e0e47d20624d6509cecbdd1767b6681751190f54e52832b6a |
+| td-agent-bit-1.2.2-win32.zip | 4212e28fb6cb970ce9f27439f8dce3281ab544a4f7c9ae71991480a7e7a64afd |
+| td-agent-bit-1.2.2-win64.exe | 6059e2f4892031125aac30325be4c167daed89742705fa883d34d91dc306645e |
+| td-agent-bit-1.2.2-win64.zip | a6a02e7027f4409c1392e6df0c1463d5e979deab818f23959b4a00c741399e8e |
+
+To check the integrity, use `Get-FileHash` commandlet on PowerShell.
+
+```text
+PS> Get-FileHash td-agent-bit-1.2.2-win32.exe
+```
+
 ## Installing from ZIP archive
 
-Download a ZIP archive from the [download page](https://fluentbit.io/xxx/). There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
+Download a ZIP archive [from the download page](https://fluentbit.io/). There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
 
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 

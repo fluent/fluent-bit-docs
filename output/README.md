@@ -7,6 +7,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 | [azure](azure.md) | Azure Log Analytics | Ingest records into Azure Log Analytics |
 | [bigquery](bigquery.md) | BigQuery | Ingest records into Google BigQuery |
 | [counter](counter.md) | Count Records | Simple records counter. |
+| [datadog](datadog.md) | Datadog | Ingest logs into Datadog. |
 | [es](elasticsearch.md) | Elasticsearch | flush records to a Elasticsearch server. |
 | [file](file.md) | File | Flush records to a file. |
 | [flowcounter](flowcounter.md) | FlowCounter | Count records. |
@@ -18,6 +19,7 @@ The _output plugins_ defines where [Fluent Bit](http://fluentbit.io) should flus
 | [stackdriver](stackdriver.md) | Google Stackdriver Logging | Flush records to Google Stackdriver Logging service. |
 | [stdout](stdout.md) | Standard Output | Flush records to the standard output. |
 | [splunk](splunk.md) | Splunk | Flush records to a Splunk Enterprise service |
+| [tcp](tcp.md) | TCP & TLS | flush records to a TCP server. |
 | [td](td.md) | [Treasure Data](http://www.treasuredata.com) | Flush records to the [Treasure Data](http://www.treasuredata.com) cloud service for analytics. |
 | [nats](nats.md) | NATS | flush records to a NATS server. |
 | [null](null.md) | NULL | throw away events. |
