@@ -21,7 +21,7 @@ Note that _Parsers_File_ and _Plugins_File_ are both relative to the directory t
 
 In addition to the properties listed in the table above, the Storage and Buffering options are extensively documented in the following section:
 
-- [Storage & Buffering](../configuration/buffering/README.md)
+- [Storage & Buffering](../configuration/buffering.md)
 
 ## Configuration Example
 
