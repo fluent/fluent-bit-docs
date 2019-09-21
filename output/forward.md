@@ -28,6 +28,8 @@ When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requ
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Shared\_Key | A key string known by the remote Fluentd used for authorization. |  |
+| Username | Specify the username to present to a Fluentd server that enables `user_auth`. |  |
+| Password | Specify the password corresponding to the username. |  |
 | Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). |  |
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
