@@ -9,7 +9,7 @@ Fluent Bit _Commands_ extends a configuration file with specific built-in featur
 | [@INCLUDE](commands.md#cmd_include) | @INCLUDE FILE | Include a configuration file |
 | [@SET](commands.md#cmd_set) | @SET KEY=VAL | Set a configuration variable |
 
-## @INCLUDE Command {#cmd_include}
+## @INCLUDE Command <a id="cmd_include"></a>
 
 Configuring a logging pipeline might lead to an extensive configuration file. In order to maintain a human-readable configuration, it's suggested to split the configuration in multiple files.
 
@@ -60,7 +60,7 @@ Note that despites the order of inclusion, Fluent Bit will **ALWAYS** respect th
 * Filters
 * Outputs
 
-## @SET Command {#cmd_set}
+## @SET Command <a id="cmd_set"></a>
 
 Fluent Bit supports [configuration variables](variables.md), one way to expose this variables to Fluent Bit is through setting a Shell environment variable, the other is through the _@SET_ command.
 

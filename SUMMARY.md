@@ -43,7 +43,7 @@
   * [Upstream Servers](configuration/upstream_servers.md)
   * [Scheduler](configuration/scheduler.md)
   * [Stream Processor](configuration/stream_processor.md)
-* [Service](service/README.md)
+* [Service](service.md)
 * [Input Plugins](input/README.md)
   * [Collectd](input/collectd.md)
   * [CPU Usage](input/cpu.md)
@@ -108,3 +108,4 @@
   * [Library API](development/library_api.md)
   * [Ingest Records Manually](development/ingest_records_manually.md)
   * [Fluent Bit and Golang Plugins](development/golang_plugins.md)
+

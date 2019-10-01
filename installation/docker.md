@@ -43,7 +43,8 @@ Copyright (C) Treasure Data
 
 Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible with Glibc which generated many issues in the following areas when used with Fluent Bit:
 
-- Memory Allocator: to run Fluent Bit properly in high-load environments, we use Jemalloc as a default memory allocator which reduce fragmentation and provides better performance for our needs. Jemalloc cannot run smoothly with Musl and requires extra work.
-- Alpine Linux Musl functions bootstrap have a compatibility issue when loading Golang shared libraries, this generate problems when trying to load Golang output plugins in Fluent Bit.
-- Alpine Linux Musl Time format parser does not support Glibc extensions
-- Maintainers preference in terms of base image due to security and maintenance reasons are Distroless and Debian.
+* Memory Allocator: to run Fluent Bit properly in high-load environments, we use Jemalloc as a default memory allocator which reduce fragmentation and provides better performance for our needs. Jemalloc cannot run smoothly with Musl and requires extra work.
+* Alpine Linux Musl functions bootstrap have a compatibility issue when loading Golang shared libraries, this generate problems when trying to load Golang output plugins in Fluent Bit.
+* Alpine Linux Musl Time format parser does not support Glibc extensions
+* Maintainers preference in terms of base image due to security and maintenance reasons are Distroless and Debian.
+

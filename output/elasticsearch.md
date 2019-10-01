@@ -24,9 +24,9 @@ The **es** output plugin, allows to flush your records into a [Elasticsearch](ht
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
-| Trace\_Output | When enabled print the elasticsearch API calls to stdout (for diag only) | Off |
+| Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-| Logstash\_Prefix\_Key | Prefix keys with this string | |
+| Logstash\_Prefix\_Key | Prefix keys with this string |  |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq-multiple-types)
 
@@ -94,11 +94,11 @@ becomes
 
 ## FAQ
 
-### Elasticsearch rejects requests saying "the final mapping would have more than 1 type" {#faq-multiple-types}
+### Elasticsearch rejects requests saying "the final mapping would have more than 1 type" <a id="faq-multiple-types"></a>
 
 Since Elasticsearch 6.0, you cannot create multiple types in a single index. This means that you cannot set up your configuration as below anymore.
 
-```
+```text
 [OUTPUT]
     Name  es
     Match foo.*
@@ -114,6 +114,7 @@ Since Elasticsearch 6.0, you cannot create multiple types in a single index. Thi
 
 If you see an error message like below, you'll need to fix your configuration to use a single type on each index.
 
-> Rejecting mapping update to [search] as the final mapping would have more than 1 type
+> Rejecting mapping update to \[search\] as the final mapping would have more than 1 type
 
 For details, please read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).
+

@@ -4,7 +4,8 @@
 
 * Compiler: GCC or clang
 * CMake
-* Flex  (only if Stream Processor is enabled)
-* Bison (only if Stream Processor is enabled)
+* Flex  \(only if Stream Processor is enabled\)
+* Bison \(only if Stream Processor is enabled\)
 
 There are not other dependencies besides _libc_ and _pthreads_ in the most basic mode. For certain features that depends on third party components, those are included in the main source code repository.
+

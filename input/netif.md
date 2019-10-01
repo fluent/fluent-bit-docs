@@ -1,4 +1,4 @@
-# Network Throughput
+# Network Traffic
 
 The **netif** input plugin gathers network traffic information of the running system every certain interval of time, and reports them.
 

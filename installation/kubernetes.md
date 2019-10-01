@@ -13,7 +13,7 @@ Content:
 * [Concepts](kubernetes.md#concepts)
 * [Installation Steps](kubernetes.md#installation)
 
-## Concepts {#concepts}
+## Concepts <a id="concepts"></a>
 
 Before geting started it is important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, hence Fluent Bit is deployed as a DaemonSet \(a POD that runs on every _node_ of the cluster\).
 
@@ -30,7 +30,7 @@ To obtain these information, a built-in filter plugin called _kubernetes_ talks 
 
 > Our Kubernetes Filter plugin is fully inspired on the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
 
-## Installation {#installation}
+## Installation <a id="installation"></a>
 
 [Fluent Bit](http://fluentbit.io) must be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster. To get started run the following commands to create the namespace, service account and role setup:
 
