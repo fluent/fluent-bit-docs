@@ -44,9 +44,7 @@ The above content do not provide a defined structure for Fluent Bit, but enablin
 ]
 ```
 
-A common pitfall is that you cannot use characters other than alphabets, numbers
-and underscore in group names. For example, a group name like `(?<user-name>.*)`
-will cause an error due to containing an invalid character (`-`).
+A common pitfall is that you cannot use characters other than alphabets, numbers and underscore in group names. For example, a group name like `(?<user-name>.*)` will cause an error due to containing an invalid character \(`-`\).
 
 In order to understand, learn and test regular expressions like the example above, we suggest you try the following Ruby Regular Expression Editor: [http://rubular.com/r/X7BH0M4Ivm](http://rubular.com/r/X7BH0M4Ivm)
 

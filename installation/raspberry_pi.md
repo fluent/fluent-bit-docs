@@ -65,3 +65,4 @@ sudo service td-agent-bit status
 ```
 
 The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+

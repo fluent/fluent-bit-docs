@@ -1,8 +1,8 @@
 # LTSV Parser
 
-The **ltsv** parser allows to parse [LTSV](http://ltsv.org/) formatted texts. 
+The **ltsv** parser allows to parse [LTSV](http://ltsv.org/) formatted texts.
 
-Labeled Tab-separated Values (LTSV format is a variant of Tab-separated Values (TSV). Each record in a LTSV file is represented as a single line. Each field is separated by TAB and has a label and a value. The label and the value have been separated by ':'.
+Labeled Tab-separated Values \(LTSV format is a variant of Tab-separated Values \(TSV\). Each record in a LTSV file is represented as a single line. Each field is separated by TAB and has a label and a value. The label and the value have been separated by ':'.
 
 Here is an example how to use this format in the apache access log.
 
@@ -43,3 +43,4 @@ After processing, it internal representation will be:
 ```
 
 The time has been converted to Unix timestamp \(UTC\).
+

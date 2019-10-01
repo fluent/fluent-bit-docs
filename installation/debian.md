@@ -1,6 +1,6 @@
 # Debian Packages
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the latest (and old) stable Debian systems: Buster, Stretch and Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest \(and old\) stable Debian systems: Buster, Stretch and Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
 ## Server GPG key
 
@@ -14,9 +14,9 @@ $ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 
 On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
 
-#### Debian 10 (Buster)
+#### Debian 10 \(Buster\)
 
-```
+```text
 deb https://packages.fluentbit.io/debian/buster buster main
 ```
 

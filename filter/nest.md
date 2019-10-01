@@ -61,14 +61,14 @@ _Example \(output\)_
 
 The plugin supports the following configuration parameters:
 
-| Key            | Value Format          | Operation   | Description       |
-|----------------|-----------------------|-------------|-------------------|
-| Operation      | ENUM [`nest` or `lift`] | &nbsp;      | Select the operation `nest` or `lift` |
-| Wildcard       | FIELD WILDCARD        | `nest`      | Nest records which field matches the wildcard |
-| Nest\_under    | FIELD STRING          | `nest`      | Nest records matching the `Wildcard` under this key |
-| Nested\_under  | FIELD STRING          | `lift`      | Lift records nested under the `Nested_under` key |
-| Add\_prefix    | FIELD STRING          | ANY         | Prefix affected keys with this string |
-| Remove\_prefix | FIELD STRING          | ANY         | Remove prefix from affected keys if it matches this string |
+| Key | Value Format | Operation | Description |
+| :--- | :--- | :--- | :--- |
+| Operation | ENUM \[`nest` or `lift`\] |  | Select the operation `nest` or `lift` |
+| Wildcard | FIELD WILDCARD | `nest` | Nest records which field matches the wildcard |
+| Nest\_under | FIELD STRING | `nest` | Nest records matching the `Wildcard` under this key |
+| Nested\_under | FIELD STRING | `lift` | Lift records nested under the `Nested_under` key |
+| Add\_prefix | FIELD STRING | ANY | Prefix affected keys with this string |
+| Remove\_prefix | FIELD STRING | ANY | Remove prefix from affected keys if it matches this string |
 
 ## Getting Started
 
@@ -86,7 +86,7 @@ In order to start filtering records, you can run the filter from the command lin
 
 The following command will load the _mem_ plugin. Then the _nest_ filter will match the wildcard rule to the keys and nest the keys matching `Mem.*` under the new key `NEST`.
 
-```
+```text
 $ bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
 ```
 
@@ -119,11 +119,12 @@ The output of both the command line and configuration invocations should be iden
 [0] mem.local: [1522978514.007359767, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Memstats"=>{"total"=>4050908, "used"=>714984, "free"=>3335924}}]
 ```
 
-## Example #1 - nest and lift undo
+## Example \#1 - nest and lift undo
 
 This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then reverses these actions with a `lift` operation. The output appears unchanged.
 
 ### Configuration File
+
 ```python
 [INPUT]
     Name mem
@@ -152,7 +153,7 @@ This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then
 
 ### Result
 
-```
+```text
 [2018/06/21 17:42:37] [ info] [engine] started (pid=17285)
 [0] mem.local: [1529566958.000940636, {"Mem.total"=>8053656, "Mem.used"=>6940380, "Mem.free"=>1113276, "Swap.total"=>16532988, "Swap.used"=>1286772, "Swap.free"=>15246216}]
 ```
