@@ -1,4 +1,4 @@
-# Thermal Information
+# Thermal
 
 The **thermal** input plugin reports system temeratures at the given time interval, one second by default. At the moment this plugin is only available for Linux.
 
@@ -16,14 +16,14 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Interval\_Sec  | Polling interval \(seconds\).  default: 1 |
+| Interval\_Sec | Polling interval \(seconds\).  default: 1 |
 | Interval\_NSec | Polling interval \(nanosecond\).  default: 0 |
-| name\_regex    | Optional name filter regex.  default: None |
-| type\_regex    | Optional type filter regex.  default: None |
+| name\_regex | Optional name filter regex.  default: None |
+| type\_regex | Optional type filter regex.  default: None |
 
 ## Getting Started
 
-In order to get temperature(s) of your system, you can run the plugin from the command line or through the configuration file:
+In order to get temperature\(s\) of your system, you can run the plugin from the command line or through the configuration file:
 
 ### Command Line
 
@@ -39,7 +39,7 @@ Copyright (C) Treasure Data
 [2] my_thermal: [1566099586.000083156, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
 ```
 
-Some systems provide multiple thermal zones.  In this example monitor only _thermal\_zone0_ by name, once per minute.
+Some systems provide multiple thermal zones. In this example monitor only _thermal\_zone0_ by name, once per minute.
 
 ```bash
 $ bin/fluent-bit -i thermal -t my_thermal -p "interval_sec=60" -p "name_regex=thermal_zone0" -o stdout -m '*'

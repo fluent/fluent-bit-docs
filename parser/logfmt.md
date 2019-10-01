@@ -1,7 +1,6 @@
 # Logfmt Parser
 
-The **logfmt** parser allows to parse the logfmt format described in https://brandur.org/logfmt .
-A more formal description is in https://godoc.org/github.com/kr/logfmt .
+The **logfmt** parser allows to parse the logfmt format described in [https://brandur.org/logfmt](https://brandur.org/logfmt) . A more formal description is in [https://godoc.org/github.com/kr/logfmt](https://godoc.org/github.com/kr/logfmt) .
 
 Here is an example configuration:
 
@@ -23,3 +22,4 @@ After processing, it internal representation will be:
 [1540936693, {"key1"=>"val1",
               "key2"=>"val2"}]
 ```
+

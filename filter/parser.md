@@ -9,7 +9,7 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Key\_Name | Specify field name in record to parse. |  |
-| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed (one per line). |  |
+| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
 | Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
 | Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
 | Unescape\_Key | If the key is a escaped string \(e.g: stringify JSON\), unescape the string before to apply the parser. | False |
@@ -111,8 +111,7 @@ Copyright (C) Treasure Data
 [3] dummy.data: [1499347996.001320284, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
 ```
 
-If you enable `Reserved_Data` and `Preserve_Key`, the original key field will be
-preserved as well:
+If you enable `Reserved_Data` and `Preserve_Key`, the original key field will be preserved as well:
 
 ```python
 [PARSER]

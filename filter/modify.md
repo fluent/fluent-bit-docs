@@ -6,8 +6,8 @@ The _Modify Filter_ plugin allows you to change records using rules and conditio
 
 As an example using JSON notation to,
 
- - Rename `Key2` to `RenamedKey`
- - Add a key `OtherKey` with value `Value3` if `OtherKey` does not yet exist
+* Rename `Key2` to `RenamedKey`
+* Add a key `OtherKey` with value `Value3` if `OtherKey` does not yet exist
 
 _Example \(input\)_
 
@@ -34,45 +34,43 @@ _Example \(output\)_
 
 The plugin supports the following rules:
 
-| Operation        | Parameter 1    | Parameter 2       |  Description  |
-|------------------|----------------|-------------------|---------------|
-| Set              | STRING:KEY   | STRING:VALUE        | Add a key/value pair with key `KEY` and value `VALUE`. If `KEY` already exists, *this field is overwritten* |
-| Add              | STRING:KEY   | STRING:VALUE        | Add a key/value pair with key `KEY` and value `VALUE` if `KEY` does not exist |
-| Remove           | STRING:KEY   | NONE                | Remove a key/value pair with key `KEY` if it exists |
-| Remove\_wildcard | WILDCARD:KEY | NONE                | Remove all key/value pairs with key matching wildcard `KEY` |
-| Remove\_regex    | REGEXP:KEY   | NONE                | Remove all key/value pairs with key matching regexp `KEY` |
-| Rename           | STRING:KEY   | STRING:RENAMED\_KEY | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists AND `RENAMED_KEY` *does not exist* |
-| Hard\_rename     | STRING:KEY   | STRING:RENAMED\_KEY | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists. If `RENAMED_KEY` already exists, *this field is overwritten* |
-| Copy             | STRING:KEY   | STRING:COPIED\_KEY  | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists AND `COPIED_KEY` *does not exist* |
-| Hard\_copy       | STRING:KEY   | STRING:COPIED\_KEY  | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists. If `COPIED_KEY` already exists, *this field is overwritten* |
+| Operation | Parameter 1 | Parameter 2 | Description |
+| :--- | :--- | :--- | :--- |
+| Set | STRING:KEY | STRING:VALUE | Add a key/value pair with key `KEY` and value `VALUE`. If `KEY` already exists, _this field is overwritten_ |
+| Add | STRING:KEY | STRING:VALUE | Add a key/value pair with key `KEY` and value `VALUE` if `KEY` does not exist |
+| Remove | STRING:KEY | NONE | Remove a key/value pair with key `KEY` if it exists |
+| Remove\_wildcard | WILDCARD:KEY | NONE | Remove all key/value pairs with key matching wildcard `KEY` |
+| Remove\_regex | REGEXP:KEY | NONE | Remove all key/value pairs with key matching regexp `KEY` |
+| Rename | STRING:KEY | STRING:RENAMED\_KEY | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists AND `RENAMED_KEY` _does not exist_ |
+| Hard\_rename | STRING:KEY | STRING:RENAMED\_KEY | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists. If `RENAMED_KEY` already exists, _this field is overwritten_ |
+| Copy | STRING:KEY | STRING:COPIED\_KEY | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists AND `COPIED_KEY` _does not exist_ |
+| Hard\_copy | STRING:KEY | STRING:COPIED\_KEY | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists. If `COPIED_KEY` already exists, _this field is overwritten_ |
 
-
- - Rules are case insensitive, parameters are not
- - Any number of rules can be set in a filter instance.
- - Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
-
+* Rules are case insensitive, parameters are not
+* Any number of rules can be set in a filter instance.
+* Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
 
 ### Conditions
 
 The plugin supports the following conditions:
 
-| Condition                                       | Parameter  | Parameter 2  |  Description  |
-|-------------------------------------------------|------------|--------------|---------------|
-| Key\_exists                                     | STRING:KEY | NONE         | Is `true` if `KEY` exists |
-| Key\_does\_not\_exist                           | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
-| A\_key\_matches                                 | REGEXP:KEY | NONE         | Is `true` if a key matches regex `KEY` |
-| No\_key\_matches                                | REGEXP:KEY | NONE         | Is `true` if no key matches regex `KEY` |
-| Key\_value\_equals                              | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |
-| Key\_value\_does\_not\_equal                    | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is not `VALUE` |
-| Key\_value\_matches                             | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value matches `VALUE` |
-| Key\_value\_does\_not\_match                    | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value does not match `VALUE` |
-| Matching\_keys\_have\_matching\_values          | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that match `VALUE` |
+| Condition | Parameter | Parameter 2 | Description |
+| :--- | :--- | :--- | :--- |
+| Key\_exists | STRING:KEY | NONE | Is `true` if `KEY` exists |
+| Key\_does\_not\_exist | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
+| A\_key\_matches | REGEXP:KEY | NONE | Is `true` if a key matches regex `KEY` |
+| No\_key\_matches | REGEXP:KEY | NONE | Is `true` if no key matches regex `KEY` |
+| Key\_value\_equals | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |
+| Key\_value\_does\_not\_equal | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is not `VALUE` |
+| Key\_value\_matches | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value matches `VALUE` |
+| Key\_value\_does\_not\_match | STRING:KEY | REGEXP:VALUE | Is `true` if key `KEY` exists and its value does not match `VALUE` |
+| Matching\_keys\_have\_matching\_values | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that match `VALUE` |
 | Matching\_keys\_do\_not\_have\_matching\_values | REGEXP:KEY | REGEXP:VALUE | Is `true` if all keys matching `KEY` have values that do not match `VALUE` |
 
- - Conditions are case insensitive, parameters are not
- - Any number of conditions can be set.
- - Conditions apply to the whole filter instance and all its rules. *Not* to individual rules.
- - All conditions have to be `true` for the rules to be applied.
+* Conditions are case insensitive, parameters are not
+* Any number of conditions can be set.
+* Conditions apply to the whole filter instance and all its rules. _Not_ to individual rules.
+* All conditions have to be `true` for the rules to be applied.
 
 ## Example \#1 - Add and Rename
 

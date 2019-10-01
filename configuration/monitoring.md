@@ -2,7 +2,7 @@
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
@@ -62,7 +62,7 @@ $ curl -s http://127.0.0.1:2020 | jq
 
 Note that we are sending the _curl_ command output to the _jq_ program which helps to make the JSON data easy to read from the terminal. Fluent Bit don't aim to do JSON pretty-printing.
 
-## REST API Interface {#rest_api}
+## REST API Interface <a id="rest_api"></a>
 
 Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.14 the following end points are available:
 
@@ -77,18 +77,17 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 
 Query the service uptime with the following command:
 
-```
+```text
 $ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 it should print a similar output like this:
 
-```json
+```javascript
 {
   "uptime_sec": 8950000,
   "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
 }
-
 ```
 
 ## Metrics Examples
@@ -101,7 +100,7 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 
 it should print a similar output like this:
 
-```json
+```javascript
 {
   "input": {
     "cpu.0": {
@@ -131,7 +130,7 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 
 this time the same metrics will be in Prometheus format instead of JSON:
 
-```
+```text
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
 fluentbit_output_proc_records_total{name="stdout.0"} 54 1509150350542
@@ -141,15 +140,13 @@ fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
 
-
-
 ### Configuring Aliases
 
-By default configured plugins on runtime get an internal name in the format _plugin_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
+By default configured plugins on runtime get an internal name in the format _plugin\_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
 The following example set an alias to the INPUT section which is using the [CPU](../input/cpu.md) input plugin:
 
-```
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -158,7 +155,7 @@ The following example set an alias to the INPUT section which is using the [CPU]
 [INPUT]
     Name  cpu
     Alias server1_cpu
-    
+
 [OUTPUT]
     Name  stdout
     Alias raw_output
@@ -167,7 +164,7 @@ The following example set an alias to the INPUT section which is using the [CPU]
 
 Now when querying the metrics we get the aliases in place instead of the plugin name:
 
-```json
+```javascript
 {
   "input": {
     "server1_cpu": {
@@ -186,6 +183,4 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
   }
 }
 ```
-
-
 

@@ -23,7 +23,7 @@ tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 
 ### plain format
 
-Output the records as JSON (without additional `tag` and `timestamp` attributes). There is no configuration parameters for plain format.
+Output the records as JSON \(without additional `tag` and `timestamp` attributes\). There is no configuration parameters for plain format.
 
 ```javascript
 {"key1":"value1", "key2":"value2", "key3":"value3"}
@@ -58,16 +58,15 @@ field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
 
 Output the records using a custom format template.
 
-| Key      | Description                                    |
-| :------- | :--------------------------------------------- |
+| Key | Description |
+| :--- | :--- |
 | Template | The format string. Default: '{time} {message}' |
 
-This accepts a formatting template and fills placeholders using corresponding
-values in a record.
+This accepts a formatting template and fills placeholders using corresponding values in a record.
 
 For example, if you set up the configuration as below:
 
-```
+```text
 [INPUT]
   Name mem
 
@@ -79,7 +78,7 @@ For example, if you set up the configuration as below:
 
 You will get the following output:
 
-```
+```text
 1564462620.000254 used=1045448 free=31760160 total=32805608
 ```
 
