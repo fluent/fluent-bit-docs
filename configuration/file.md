@@ -24,7 +24,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | Flush | Set the flush time in seconds. Everytime it timeouts, the engine will flush the records to the output plugin. | 5 |
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off. | Off |
 | Log\_File | Absolute path for an optional log file. |  |
-| Log\_Level | Set the logging verbosity level. Allowed values are: error, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, info and debug. Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, info and debug. Note that _trace_ mode is only available if Fluent Bit was built with the _FLB\_TRACE_ option enabled (previously named _WITH\_TRACE_ ). | info |
 | Parsers\_File | Path for a _parsers_ configuration file. Multiple Parsers\_File entries can be used. |  |
 | Plugins\_File | Path for a _plugins_ configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). ||
 | Streams\_File | Path for the Stream Processor configuration file. For details about the format of SP configuration file [see here](stream_processor.md). ||
