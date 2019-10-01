@@ -1,6 +1,6 @@
 # Debian Packages
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable Debian system: Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest (and old) stable Debian systems: Buster, Stretch and Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
 ## Server GPG key
 
@@ -13,6 +13,12 @@ $ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ## Update your sources lists
 
 On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+
+#### Debian 10 (Buster)
+
+```
+deb https://packages.fluentbit.io/debian/buster buster main
+```
 
 #### Debian 9 \(Stretch\)
 
@@ -34,7 +40,7 @@ Now let your system update the _apt_ database:
 $ sudo apt-get update
 ```
 
-## Install TD-Agent Bit
+## Install TD Agent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _td-agent-bit_:
 
