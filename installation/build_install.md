@@ -80,17 +80,17 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_SHARED\_LIB | Build shared library | Yes |
 | FLB\_VALGRIND | Enable Valgrind support | No |
 | FLB\_TRACE | Enable trace mode | No |
-| FLB_TESTS_RUNTIME | Enable runtime tests | No |
-| FLB_TESTS_INTERNAL | Enable internal tests | No |
+| FLB\_TESTS\_RUNTIME | Enable runtime tests | No |
+| FLB\_TESTS\_INTERNAL | Enable internal tests | No |
 | FLB\_TESTS | Enable tests | No |
 | FLB\_MTRACE | Enable mtrace support | No |
-| FLB_INOTIFY | Enable Inotify support | Yes |
+| FLB\_INOTIFY | Enable Inotify support | Yes |
 | FLB\_POSIX\_TLS | Force POSIX thread storage | No |
-| FLB_SQLDB | Enable SQL embedded database support | No |
-| FLB_HTTP_SERVER | Enable HTTP Server | No |
-| FLB_BACKTRACE | Enable backtrace/stacktrace support | Yes |
-| FLB_LUAJIT | Enable Lua scripting support | Yes |
-| FLB_STATIC_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
+| FLB\_SQLDB | Enable SQL embedded database support | No |
+| FLB\_HTTP\_SERVER | Enable HTTP Server | No |
+| FLB\_BACKTRACE | Enable backtrace/stacktrace support | Yes |
+| FLB\_LUAJIT | Enable Lua scripting support | Yes |
+| FLB\_STATIC\_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
 
 ### Input Plugins
 
@@ -125,3 +125,4 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT](../output/stdout.md) | Enable STDOUT output plugin | On |
 | [FLB\_OUT\_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 | FLB\_OUT\_NULL | Enable /dev/null output plugin | On |
+

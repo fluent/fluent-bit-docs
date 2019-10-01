@@ -11,5 +11,5 @@ The following distributions are supported:
 | [Debian](debian.md) | 9 | Stretch |
 | [Debian](debian.md) | 8 | Jessie |
 | [Raspbian](raspberry_pi.md) | 8 | Jessie |
-| [CentOS](redhat_centos.md) | 7 |   |
+| [CentOS](redhat_centos.md) | 7 |  |
 
