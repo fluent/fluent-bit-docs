@@ -11,7 +11,7 @@ Content:
 * [Getting Started](tail.md#getting_started)
 * [Tailing Files Keeping State](tail.md#keep_state)
 
-## Configuration Parameters {#config}
+## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:
 
@@ -33,7 +33,7 @@ The plugin supports the following configuration parameters:
 
 Note that if the database parameter _db_ is **not** specified, by default the plugin will start reading each target file from the beginning.
 
-### Multiline Configuration Parameters {#multiline}
+### Multiline Configuration Parameters <a id="multiline"></a>
 
 Additionally the following options exists to configure the handling of multi-lines files:
 
@@ -44,7 +44,7 @@ Additionally the following options exists to configure the handling of multi-lin
 | Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name \(named capture\) |  |
 | Parser\_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. |  |
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 In order to tail text or log files, you can run the plugin from the command line or through the configuration file:
 
@@ -70,7 +70,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-## Tailing files keeping state {#keep_state}
+## Tailing files keeping state <a id="keep_state"></a>
 
 The _tail_ input plugin a feature to save the state of the tracked files, is strongly suggested you enabled this. For this purpose the **db** property is available, e.g:
 

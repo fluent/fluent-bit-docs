@@ -8,7 +8,7 @@ Content:
 * [REST API Interface](monitoring.md#rest_api)
 * [Examples](monitoring.md#examples)
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
@@ -68,7 +68,7 @@ $ curl -s http://127.0.0.1:2020 | jq
 
 Note that we are sending the _curl_ command output to the _jq_ program which helps to make the JSON data easy to read from the terminal. Fluent Bit don't aim to do JSON pretty-printing.
 
-## REST API Interface {#rest_api}
+## REST API Interface <a id="rest_api"></a>
 
 Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.13 the following end points are available:
 
@@ -78,7 +78,7 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 | /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
 
-## Examples {#examples}
+## Examples <a id="examples"></a>
 
 Query internal metrics in JSON format:
 

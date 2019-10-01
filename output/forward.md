@@ -14,7 +14,7 @@ Content:
 * [Forward Setup](forward.md#forward_setup)
 * [Secure Forward Setup](forward.md#secure_forward_setup)
 
-## Configuration Parameters {#config_tcp}
+## Configuration Parameters <a id="config_tcp"></a>
 
 The following parameters are mandatory for eiter Forward for Secure Forward modes:
 
@@ -24,7 +24,7 @@ The following parameters are mandatory for eiter Forward for Secure Forward mode
 | Port | TCP Port of the target service. | 24224 |
 | Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
 
-## Secure Forward Mode Configuration Parameters {#config_tls}
+## Secure Forward Mode Configuration Parameters <a id="config_tls"></a>
 
 When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
 
@@ -95,7 +95,7 @@ $ fluentd -c test.conf
 2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
 ```
 
-## Fluent Bit + Forward Setup {#forward_setup}
+## Fluent Bit + Forward Setup <a id="forward_setup"></a>
 
 Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
@@ -122,7 +122,7 @@ Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gath
 
 So we gathered [CPU](../input/cpu.md) metrics and flush them out to [Fluentd](http://fluentd.org) properly.
 
-## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
+## Fluent Bit + Secure Forward Setup <a id="secure_forward_setup"></a>
 
 > DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
 

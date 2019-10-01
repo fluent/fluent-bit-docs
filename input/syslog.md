@@ -10,7 +10,7 @@ Content:
   * [Rsyslog to Fluent Bit / Network TCP](syslog.md#rsyslog_to_fluentbit_network)
   * [Rsyslog to Fluent Bit / Unix Socket UDP](syslog.md#rsyslog_to_fluentbit_unix_udp)
 
-## Configuration Parameters {#config}
+## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:
 
@@ -26,7 +26,7 @@ The plugin supports the following configuration parameters:
 
 Note that Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the \[SERVER\] section \(more details below\).
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 In order to receive Syslog messages, you can run the plugin from the command line or through the configuration file:
 
@@ -80,11 +80,11 @@ Copyright (C) Treasure Data
 [0] syslog.0: [1489047822, {"pri"=>"13", "host"=>"edsiper:", "ident"=>"my_ident", "pid"=>"", "message"=>"my_message"}]
 ```
 
-## Recipes {#recipes}
+## Recipes <a id="recipes"></a>
 
 The following content aims to provide configuration examples for different use cases to integrate Fluent Bit and make it listen for Syslog messages from your systems.
 
-### Rsyslog to Fluent Bit: Network mode over TCP {#rsyslog_to_fluentbit_network}
+### Rsyslog to Fluent Bit: Network mode over TCP <a id="rsyslog_to_fluentbit_network"></a>
 
 #### Fluent Bit Configuration
 
@@ -123,7 +123,7 @@ then make sure to restart your rsyslog daemon:
 $ sudo service rsyslog restart
 ```
 
-### Rsyslog to Fluent Bit: Unix socket mode over UDP {#rsyslog_to_fluentbit_unix_udp}
+### Rsyslog to Fluent Bit: Unix socket mode over UDP <a id="rsyslog_to_fluentbit_unix_udp"></a>
 
 #### Fluent Bit Configuration
 
