@@ -55,7 +55,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 By default, the Splunk output plugin nests the record under the `event` key in the payload sent to the HEC. It will also append the time of the record to a top level `time` key.
 
-If you would like to customize any of the Splunk event metadata, such as the host or target index, you can set `Splunk_Send_Raw On` in the plugin configuration, and add the metadata as keys/values in the record. *Note*: with `Splunk_Send_Raw` enabled, you are responsible for creating and populating the `event` section of the payload.
+If you would like to customize any of the Splunk event metadata, such as the host or target index, you can set `Splunk_Send_Raw On` in the plugin configuration, and add the metadata as keys/values in the record. _Note_: with `Splunk_Send_Raw` enabled, you are responsible for creating and populating the `event` section of the payload.
 
 For example, to add a custom index and hostname:
 
@@ -89,7 +89,7 @@ For example, to add a custom index and hostname:
 
 This will create a payload that looks like:
 
-```json
+```javascript
 {
     "time": "1535995058.003385189",
     "index": "my-splunk-index",
@@ -102,4 +102,5 @@ This will create a payload that looks like:
 }
 ```
 
-For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC
+For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
+

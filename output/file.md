@@ -23,7 +23,7 @@ tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 
 ### plain format
 
-Output the records as JSON (without additional `tag` and `timestamp` attributes). There is no configuration parameters for plain format.
+Output the records as JSON \(without additional `tag` and `timestamp` attributes\). There is no configuration parameters for plain format.
 
 ```javascript
 {"key1":"value1", "key2":"value2", "key3":"value3"}
