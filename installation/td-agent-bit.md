@@ -8,6 +8,7 @@ The following distributions are supported:
 | :--- | :--- | :--- |
 | [Ubuntu](ubuntu.md) | 18.04 | Bionic Beaver |
 | [Ubuntu](ubuntu.md) | 16.04 | Xenial Xerus |
+| [Debian](debian.md) | 10 | Buster |
 | [Debian](debian.md) | 9 | Stretch |
 | [Debian](debian.md) | 8 | Jessie |
 | [Raspbian](raspberry_pi.md) | 8 | Jessie |
