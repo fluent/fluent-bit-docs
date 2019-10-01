@@ -9,7 +9,7 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Key\_Name | Specify field name in record to parse. |  |
-| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed (one per line). |  |
+| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
 | Reserve\_Data | Keep original key-value pair in parsed result. | False |
 | Unescape\_Key | If the key is a escaped string \(e.g: stringify JSON\), unescape the string before to apply the parser. | False |
 
@@ -65,3 +65,4 @@ Copyright (C) Treasure Data
 ```
 
 You can see the record `{"data":"100 0.5 true This is example"}` are parsed.
+

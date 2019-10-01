@@ -18,7 +18,7 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 | Time\_as\_Integer | Set timestamps in integer format, it enables compatibility mode for Fluentd v0.12 series. | False |
 | Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this, refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
 
-## Secure Forward Mode Configuration Parameters 
+## Secure Forward Mode Configuration Parameters
 
 When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode is required to be enabled. The following additional configuration parameters are available:
 
@@ -89,7 +89,7 @@ $ fluentd -c test.conf
 2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
 ```
 
-## Fluent Bit + Forward Setup {#forward_setup}
+## Fluent Bit + Forward Setup <a id="forward_setup"></a>
 
 Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
@@ -116,7 +116,7 @@ Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gath
 
 So we gathered [CPU](../input/cpu.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
 
-## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
+## Fluent Bit + Secure Forward Setup <a id="secure_forward_setup"></a>
 
 > DISCLAIMER: the following example does not consider the generation of certificates for a proper usage of production environments.
 

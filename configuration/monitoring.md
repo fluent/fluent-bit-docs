@@ -2,7 +2,7 @@
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
@@ -62,7 +62,7 @@ $ curl -s http://127.0.0.1:2020 | jq
 
 Note that we are sending the _curl_ command output to the _jq_ program which helps to make the JSON data easy to read from the terminal. Fluent Bit don't aim to do JSON pretty-printing.
 
-## REST API Interface {#rest_api}
+## REST API Interface <a id="rest_api"></a>
 
 Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.14 the following end points are available:
 
@@ -77,18 +77,17 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 
 Query the service uptime with the following command:
 
-```
+```text
 $ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 it should print a similar output like this:
 
-```json
+```javascript
 {
   "uptime_sec": 8950000,
   "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
 }
-
 ```
 
 ## Metrics Examples
@@ -101,7 +100,7 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 
 it should print a similar output like this:
 
-```json
+```javascript
 {
   "input": {
     "cpu.0": {
@@ -121,7 +120,7 @@ it should print a similar output like this:
 }
 ```
 
-#### Metrics in Prometheus format
+### Metrics in Prometheus format
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
@@ -131,7 +130,7 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 
 this time the same metrics will be in Prometheus format instead of JSON:
 
-```
+```text
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
 fluentbit_output_proc_records_total{name="stdout.0"} 54 1509150350542

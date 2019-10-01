@@ -15,7 +15,7 @@ A simple example of a configuration file is as follows:
     log_level debug
 ```
 
-## Sections {#sections}
+## Sections <a id="sections"></a>
 
 A section is defined by a name or title inside brackets. Looking at the example above a Server section has been set using **\[SERVICE\]** definition. Section rules:
 
@@ -24,7 +24,7 @@ A section is defined by a name or title inside brackets. Looking at the example 
 * Under a section is expected to have comments and entries, a section cannot be empty.
 * Any commented line under a section, must be indented too.
 
-## Entries: Key/Value {#entries_kv}
+## Entries: Key/Value <a id="entries_kv"></a>
 
 A section may contain **Entries**, an entry is defined by a line of text that contains a **Key** and a **Value**, using the above example, the **\[SERVICE\]** section contains two entries, one is the key **Daemon** with value **off** and the other the key **Log\_Level** with the value **debug**. Entries rules:
 
@@ -35,7 +35,7 @@ A section may contain **Entries**, an entry is defined by a line of text that co
 
 Also commented lines are set prefixing the **\#** character, those lines are not processed but they must be indented too.
 
-## Indented Configuration Mode {#indented_mode}
+## Indented Configuration Mode <a id="indented_mode"></a>
 
 Fluent Bit configuration files are based in a strict **Indented Mode**, that means that each configuration file must follow the same pattern of alignment from left to right when writing text. By default is suggested an indentation level of four spaces from left to right. Example:
 

@@ -118,3 +118,4 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT](../output/stdout.md) | Enable STDOUT output plugin | On |
 | [FLB\_OUT\_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 | FLB\_OUT\_NULL | Enable /dev/null output plugin | On |
+

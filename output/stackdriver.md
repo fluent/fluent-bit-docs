@@ -34,3 +34,4 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 ## Other implementations
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
+

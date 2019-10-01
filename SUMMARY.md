@@ -38,7 +38,7 @@
   * [Memory Usage](configuration/memory_usage.md)
   * [Upstream Servers](configuration/upstream_servers.md)
   * [Scheduler](configuration/scheduler.md)
-* [Service](service/README.md)
+* [Service](service.md)
 * [Input Plugins](input/README.md)
   * [CPU Usage](input/cpu.md)
   * [Disk Usage](input/disk.md)
@@ -93,3 +93,4 @@
 * [Fluent Bit for Developers](development/README.md)
   * [Library API](development/library_api.md)
   * [Ingest Records Manually](development/ingest_records_manually.md)
+

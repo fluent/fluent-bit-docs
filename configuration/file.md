@@ -15,7 +15,7 @@ In addition there is an additional feature to include external files:
 
 * [Include File](file.md#config_include_file)
 
-## Service {#config_section}
+## Service <a id="config_section"></a>
 
 The _Service_ section defines global properties of the service, the keys available as of this version are described in the following table:
 
@@ -29,7 +29,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | HTTP\_Server | Enable built-in HTTP Server | Off |
 | HTTP\_Listen | Set listening interface for HTTP Server when it's enabled | 0.0.0.0 |
 | HTTP\_Port | Set TCP Port for the HTTP Server | 2020 |
-| Coro_Stack_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. | 24576 |
+| Coro\_Stack\_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. | 24576 |
 
 ### Example
 
@@ -42,7 +42,7 @@ The following is an example of a _SERVICE_ section:
     Log_Level       debug
 ```
 
-## Input {#config_input}
+## Input <a id="config_input"></a>
 
 An _INPUT_ section defines a source \(related to an input plugin\), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
 
@@ -63,7 +63,7 @@ The following is an example of an _INPUT_ section:
     Tag  my_cpu
 ```
 
-## Filter {#config_filter}
+## Filter <a id="config_filter"></a>
 
 A _FILTER_ section defines a filter \(related to an filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
 
@@ -84,7 +84,7 @@ The following is an example of an _FILTER_ section:
     Match *
 ```
 
-## Output {#config_output}
+## Output <a id="config_output"></a>
 
 The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
 
@@ -122,7 +122,7 @@ The following configuration file example demonstrates how to collect CPU metrics
     Match my*cpu
 ```
 
-## Include File {#config_include_file}
+## Include File <a id="config_include_file"></a>
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them \(include\) from one main file.
 

@@ -13,7 +13,7 @@ Content:
 * [Getting Started](lua.md#getting_started)
 * [Lua Script Filter API](lua.md#lua_api)
 
-## Configuration Parameters {#config}
+## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:
 
@@ -21,9 +21,9 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Script | Path to the Lua script that will be used. |
 | Call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
-| Type_int_key | If the key is matched, that field will be converted to integer. |
+| Type\_int\_key | If the key is matched, that field will be converted to integer. |
 
-## Getting Started {#getting_started}
+## Getting Started <a id="getting_started"></a>
 
 In order to test the filter, you can run the plugin from the command line or through the configuration file. The following examples uses the [dummy](../input/dummy.md) input plugin for data ingestion, invoke Lua filter using the [test.lua](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua) script and calls the [cb\_print\(\)](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua#L29) function which only print the same information to the standard output:
 
@@ -54,7 +54,7 @@ In your main configuration file append the following _Input_, _Filter_ & _Output
     Match  *
 ```
 
-## Lua Script Filter API {#lua_script}
+## Lua Script Filter API <a id="lua_script"></a>
 
 The life cycle of a filter have the following steps:
 
@@ -87,7 +87,7 @@ Each callback **must** return three values:
 
 | name | data type | description |
 | :--- | :--- | :--- |
-| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter_lua must drop the record. If _code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp or record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). |
+| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter_lua must drop the record. If \_code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp or record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). |
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | if code equals 1, the original record information will be replaced with this new value. Note that the format of this value **must** be a valid Lua table. |
 
@@ -99,4 +99,5 @@ For functional examples of this interface, please refer to the code samples prov
 
 ### Number Type
 
-In Lua, Fluent Bit treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, **Type_int_key** property is available.
+In Lua, Fluent Bit treats number as double. It means an integer field \(e.g. IDs, log levels\) will be converted double. To avoid type conversion, **Type\_int\_key** property is available.
+

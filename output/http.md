@@ -1,22 +1,22 @@
 # HTTP
 
-The **http** output plugin allows to flush your records into a HTTP endpoint. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
+The **http** output plugin allows to flush your records into a HTTP endpoint. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) \(or JSON\) format.
 
 ## Configuration Parameters
 
-| Key         | Description          | default           |
-|-------------|----------------------|-------------------|
-| Host        | IP address or hostname of the target HTTP Server | 127.0.0.1 |
-| HTTP_User   | Basic Auth Username |         |
-| HTTP_Passwd | Basic Auth Password. Requires HTTP_User to be set |         |
-| Port        | TCP port of the target HTTP Server | 80 |
-| Proxy       | Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. ||
-| URI         | Specify an optional HTTP URI for the target web server, e.g: /something  | / |
-| Format      | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json_stream_ and _json_lines_. | msgpack |
-| header_tag | Specify an optional HTTP header field for the original message tag. |         |
-| Header     | Add a HTTP header key/value pair. Multiple headers can be set. |         |
-| json_date_key | Specify the name of the date field in output | date |
-| json_date_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_)| double |
+| Key | Description | default |
+| :--- | :--- | :--- |
+| Host | IP address or hostname of the target HTTP Server | 127.0.0.1 |
+| HTTP\_User | Basic Auth Username |  |
+| HTTP\_Passwd | Basic Auth Password. Requires HTTP\_User to be set |  |
+| Port | TCP port of the target HTTP Server | 80 |
+| Proxy | Specify an HTTP Proxy. The expected format of this value is [http://host:port](http://host:port). Note that _https_ is **not** supported yet. |  |
+| URI | Specify an optional HTTP URI for the target web server, e.g: /something | / |
+| Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_. | msgpack |
+| header\_tag | Specify an optional HTTP header field for the original message tag. |  |
+| Header | Add a HTTP header key/value pair. Multiple headers can be set. |  |
+| json\_date\_key | Specify the name of the date field in output | date |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 
 ### TLS / SSL
 
@@ -76,7 +76,7 @@ To configure this behaviour, add this config:
 
 Provided you are using Fluentd as data receiver, you can combine `in_http` and `out_rewrite_tag_filter` to make use of this HTTP header.
 
-```
+```text
 <source>
   @type http
   add_http_headers true
@@ -96,7 +96,7 @@ Notice how we override the tag, which is from URI path, with our custom header
 
 #### Example : Add a header
 
-```
+```text
 [OUTPUT]
     Name           http
     Match          *
@@ -106,3 +106,4 @@ Notice how we override the tag, which is from URI path, with our custom header
     Header         X-Key-B Value_B
     URI            /something
 ```
+
