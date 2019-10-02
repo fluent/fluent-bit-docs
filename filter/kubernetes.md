@@ -199,3 +199,21 @@ Under certain and not common conditions, a user would want to alter that hard-co
 
 So at this point the filter is able to gather the values of _pod\_name_ and _namespace_, with that information it will check in the local cache \(internal hash table\) if some metadata for that key pair exists, if so, it will enrich the record with the metadata value, otherwise it will connect to the Kubernetes Master/API Server and retrieve that information.
 
+## Helm Charts and Yaml
+
+Fluent Bit configuration reader expects that every line in the configuration files, ends with a ```\n``` (LF or 0x10). When composing Yaml files for a Helm chart always enable the multiline mode, example:
+
+```yaml
+apiVersion: v1
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush           2
+        Daemon          off
+        Log_Level       info
+        Parsers_File    parsers.conf
+        Plugins_File    plugins.conf
+        HTTP_Server     On
+        HTTP_Listen     0.0.0.0
+        HTTP_Port       2020
+```
