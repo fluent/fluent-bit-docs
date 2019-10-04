@@ -4,17 +4,17 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Installation Packages
 
-The latest stable version is v1.3.0:
+The latest stable version is v1.3.1:
 
 | Installers | SHA256 Checksums |
 | :--- | :--- |
-| [td-agent-bit-1.3.0-1.AMD64.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.0-1.AMD64.exe) | f91181e14bcd8d66f6d7761180a359c9d192b7665e41deda1f29db65a8b91426 |
-| [td-agent-bit-1.3.0-1.AMD64.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.0-1.AMD64.zip) | 5d3af81500a0aa5d33ce692baf870fbe4669f628c77af739bf1443a1f7b6663e |
+| [td-agent-bit-1.3.1-1.AMD64.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.1-1.AMD64.exe) | c203fcfb53760a045c48716f6912a2485d84862c9dc9f027fc1c275efe9bd859 |
+| [td-agent-bit-1.3.1-1.AMD64.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.1-1.AMD64.zip) | 378a5a8ba9f66015dcc9179b1525c8a57a6f40ac3dfbdb7871d69d25cdc39af1 |
 
 To check the integrity, use `Get-FileHash` command on PowerShell.
 
 ```text
-PS> Get-FileHash td-agent-bit-1.2.2-win32.exe
+PS> Get-FileHash td-agent-bit-1.3.1-1.AMD64.exe
 ```
 
 ## Installing from ZIP archive
@@ -22,7 +22,7 @@ PS> Get-FileHash td-agent-bit-1.2.2-win32.exe
 Download a ZIP archive from the list above. Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 
 ```text
-PS> Expand-Archive td-agent-bit-1.2.0-win64.zip
+PS> Expand-Archive td-agent-bit-1.3.1.AMD64.zip
 ```
 
 The ZIP package contains the following set of files.
@@ -53,7 +53,7 @@ If you see the following output, it's working fine!
 
 ```text
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v1.3.0
+Fluent Bit v1.3.1
 Copyright (C) Treasure Data
 
 [2019/06/28 10:13:04] [ info] [storage] initializing...
