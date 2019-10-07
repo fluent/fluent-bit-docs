@@ -2,7 +2,7 @@
 
 Azure output plugin allows to ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
 
-To get more details about how to setup the Azure Log Analytics please refer to the following documentation: [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/)
+To get more details about how to setup Azure Log Analytics, please refer to the following documentation: [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/)
 
 ## Configuration Parameters
 
@@ -14,7 +14,7 @@ To get more details about how to setup the Azure Log Analytics please refer to t
 
 ## Getting Started
 
-In order to insert records into a Azure, you can run the plugin from the command line or through the configuration file:
+In order to insert records into an Azure Log Analytics instance, you can run the plugin from the command line or through the configuration file:
 
 ### Command Line
 
