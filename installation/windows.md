@@ -71,9 +71,7 @@ To halt the process, press CTRL-C in the terminal.
 
 ## Installing from EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/). It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
-
-Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
+Download an EXE installer from the links above. Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
 
 ![](../.gitbook/assets/windows_installer%20%281%29.png)
 
