@@ -11,13 +11,15 @@ We provide **td-agent-bit** through a Yum repository. In order to add the reposi
 ```text
 [td-agent-bit]
 name = TD Agent Bit
-baseurl = http://packages.fluentbit.io/centos/7
+baseurl = https://packages.fluentbit.io/centos/7
 gpgcheck=1
-gpgkey=http://packages.fluentbit.io/fluentbit.key
+gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
 ```
 
-note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed.
+note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed. 
+
+The GPG Key fingerprint is `F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A`
 
 ### Install
 
