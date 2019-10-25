@@ -48,6 +48,7 @@
   * [Collectd](input/collectd.md)
   * [CPU Usage](input/cpu.md)
   * [Disk Usage](input/disk.md)
+  * [Docker](input/docker.md)
   * [Dummy](input/dummy.md)
   * [Exec](input/exec.md)
   * [Forward](input/forward.md)
