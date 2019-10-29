@@ -14,8 +14,8 @@ The plugin supports the following configuration parameters:
 | Path | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the absolute path to the Unix socket file. |  |
 | Unix\_Perm | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the permission of the Unix socket file. | 0644 |
 | Parser | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
-| Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
-| Buffer\_Max\_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Chunk\_Size_. |  |
+| Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_ in KB. If not set, _Buffer\_Chunk\_Size_ is equal to 32 \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
+| Buffer\_Max_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Buffer\_Chunk\_Size_. |  |
 
 ### Considerations
 
@@ -42,15 +42,15 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ```python
 [SERVICE]
-    Flush        1
-    Log_Level    info
-    Parsers_File parsers.conf
+    Flush               1
+    Log_Level           info
+    Parsers_File        parsers.conf
 
 [INPUT]
-    Name         syslog
-    Path         /tmp/in_syslog
-    Chunk_Size   32
-    Buffer_Size  64
+    Name                syslog
+    Path                /tmp/in_syslog
+    Buffer_Chunk_Size   32
+    Buffer_Max_Size     64
 
 [OUTPUT]
     Name   stdout
