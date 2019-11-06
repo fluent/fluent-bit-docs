@@ -13,4 +13,5 @@ Note that all configuration files use a specific fixed and strict schema, please
 * [TLS / SSL](tls_ssl.md)
 * [Backpressure](backpressure.md)
 * [Memory Usage](memory_usage.md)
+* [UTF-8 Encoding](encoder.md)
 

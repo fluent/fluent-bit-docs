@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Key | Rename a key. Default: head. |
 | Lines | Line number to read. If the number N is set, in\_head reads first N lines like head\(1\) -n. |
 | Split\_line | If enabled, in\_head generates key-value pair per line. |
+| Encoder | Optionally encode input to UTF-8. E.g. `iso-8859-1` |
 
 ### Split Line Mode
 

@@ -1,6 +1,6 @@
 # Tail
 
-The **tail** input plugin allows to monitor one or several text files. It has a similar behavior like _tail -f_ shell command.
+The **tail** input plugin allows to monitor one or several text files. It has a similar behavior to the _tail -f_ shell command.
 
 The plugin reads every matched file in the _Path_ pattern and for every new line found \(separated by a \n\), it generates a new record. Optionally a database file can be used so the plugin can have a history of tracked files and a state of offsets, this is very useful to resume a state if the service is restarted.
 
@@ -34,6 +34,7 @@ The plugin supports the following configuration parameters:
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
 | Tag | Set a tag (with regex-extract fields) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>` | |
 | Tag_Regex | Set a regex to exctract fields from the file. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` | |
+| Encoder | Optionally encode input to UTF-8. E.g. `iso-8859-1` | |
 
 Note that if the database parameter _db_ is **not** specified, by default the plugin will start reading each target file from the beginning.
 

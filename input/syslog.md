@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Parser | Specify an alternative parser for the message. By default, the plugin uses the parser _syslog-rfc3164_. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_ in KB. If not set, _Buffer\_Chunk\_Size_ is equal to 32 \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
 | Buffer\_Max_Size | Specify the maximum buffer size in KB to receive a Syslog message. If not set, the default size will be the value of _Buffer\_Chunk\_Size_. |  |
+| Encoder | Optionally encode input to UTF-8. E.g. `iso-8859-1` | |
 
 ### Considerations
 
