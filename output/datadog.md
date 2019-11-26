@@ -9,7 +9,8 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 | Key | Description | Default |
 |------------|---------------------------------------------------------------------------------------------|----------------------------------|
 | Host | _Required_ - The Datadog server where you are sending your logs.  | `http-intake.logs.datadoghq.com` |
-| TLS | _Required_ - End-to-end security communications security protocol. Datadog recommends leaving this `on`. | `on` |
+| TLS | _Required_ - End-to-end security communications security protocol. Datadog recommends setting this to `on`. | `off` |
+| compress | _Recommended_ - compresses the payload in GZIP format, Datadog supports and recommends setting this to `gzip`. |  |
 | apikey | _Required_ - Your [Datadog API key](https://app.datadoghq.com/account/settings#api). |  |
 | dd_service | _Recommended_ - The human readable name for your service generating the logs - the name of your application or database. |  |
 | dd_source | _Recommended_ - A human readable name for the underlying technology of your service. For example, `postgres` or `nginx`. |  |
@@ -25,6 +26,7 @@ Get started quickly with this configuration file:
     Match       *
     Host        http-intake.logs.datadoghq.com
     TLS         on
+    compress    gzip
     apikey      <my-datadog-api-key>
     dd_service  <my-app-service>
     dd_source   <my-app-source>
