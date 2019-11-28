@@ -20,6 +20,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [random](random.md) | Random | Generate Random samples. |
 | [serial](serial.md) | Serial Interface | read data information from the serial interface. |
 | [stdin](stdin.md) | Standard Input | read data from the standard input. |
+| [statsd](statsd.md) | StatsD | receive metrics in StatsD protocol. |
 | [syslog](syslog.md) | Syslog | read syslog messages from a Unix socket. |
 | [systemd](systemd.md) | Systemd | read logs from Systemd/Journald. |
 | [tail](tail.md) | Tail | Tail log files |
