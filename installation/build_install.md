@@ -74,7 +74,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_ALL | Enable all features available | No |
 | FLB\_DEBUG | Build binaries with debug symbols | No |
 | FLB\_JEMALLOC | Use Jemalloc as default memory allocator | No |
-| FLB\_TLS | Buils with SSL/TLS support | No |
+| FLB\_TLS | Builds with SSL/TLS support | No |
 | FLB\_BINARY | Build executable | Yes |
 | FLB\_EXAMPLES | Build examples | Yes |
 | FLB\_SHARED\_LIB | Build shared library | Yes |
