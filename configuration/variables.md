@@ -1,6 +1,6 @@
 # Configuration Variables
 
-Fluent Bit support the usage of environment variables in any value associated to a key when using a configuration file.
+Fluent Bit supports the usage of environment variables in any value associated to a key when using a configuration file.
 
 The variables are case sensitive and can be used in the following format:
 
@@ -8,11 +8,11 @@ The variables are case sensitive and can be used in the following format:
 ${MY_VARIABLE}
 ```
 
-When Fluent Bit starts, the configuration reader will detect any request for ${MY\_VARIABLE} and will try to resolve it value.
+When Fluent Bit starts, the configuration reader will detect any request for `${MY_VARIABLE}` and will try to resolve its value.
 
 ## Example
 
-Create the following configuration file \(_fluent-bit.conf_\):
+Create the following configuration file (`fluent-bit.conf`):
 
 ```text
 [SERVICE]
@@ -35,7 +35,7 @@ Open a terminal and set the environment variable:
 $ export MY_OUTPUT=stdout
 ```
 
-> The above command set the 'stdout' value to the variable MY\_OUTPUT.
+> The above command set the 'stdout' value to the variable `MY_OUTPUT`.
 
 Run Fluent Bit with the recently created configuration file:
 
@@ -49,4 +49,3 @@ Copyright (C) Treasure Data
 ```
 
 As you can see the service worked properly as the configuration was valid.
-
