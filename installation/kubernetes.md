@@ -47,6 +47,26 @@ The next step is to create a ConfigMap that will be used by our Fluent Bit Daemo
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
+### Note for Kubernetes v1.16
+
+Starting from Kubernetes v1.16, DaemonSet resources are not longer served from ```extensions/v1beta``` . Our current Daemonset Yaml files uses the old ```apiVersion```. 
+
+If you are using Kubernetes v1.16, grab manually a copy of your Daemonset Yaml file and replace the value of ```apiVersion```  from:
+
+```yaml
+apiVersion: extensions/v1beta1
+```
+
+to
+
+```yaml
+apiVersion: apps/v1
+```
+
+You can read more about this deprecation on Kubernetes v1.14 Changelog here:
+
+https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#deprecations
+
 ### Fluent Bit to Elasticsearch
 
 Fluent Bit DaemonSet ready to be used with Elasticsearch on a normal Kubernetes Cluster:
