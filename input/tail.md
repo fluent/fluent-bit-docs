@@ -25,7 +25,7 @@ The plugin supports the following configuration parameters:
 | Exclude\_Path | Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: exclude\_path=\*.gz,\*.zip |  |
 | Refresh\_Interval | The interval of refreshing the list of watched files in seconds. | 60 |
 | Rotate\_Wait | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | 5 |
-| Ignore\_Older | Ignores files that have been last modified before this time in seconds. Supports m,h,d \(minutes, hours,days\) syntax. Default behavior is to read all specified files. |  |
+| Ignore\_Older | Ignores records which are older than this time in seconds. Supports m,h,d \(minutes, hours, days\) syntax. Default behavior is to read all records from specified files. Only available when a Parser is specificied and it can parse the time of a record. |  |
 | Skip\_Long\_Lines | When a monitored file reach it buffer capacity due to a very long line \(Buffer\_Max\_Size\), the default behavior is to stop monitoring that file. Skip\_Long\_Lines alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fits into the buffer size. | Off |
 | DB | Specify the database file to keep track of monitored files and offsets. |  |
 | DB.Sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). | Full |
