@@ -72,8 +72,8 @@ A _FILTER_ section defines a filter \(related to an filter plugin\), here we wil
 | Key | Description |  |
 | :--- | :--- | :--- |
 | Name | Name of the filter plugin. |  |
-| Match | It sets a pattern to match certain records Tag. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
-| Match_Regex | It sets a pattern to match certain records Tag. |  |
+| Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
@@ -94,8 +94,8 @@ The _OUTPUT_ section specify a destination that certain records should follow af
 | Key | Description |
 | :--- | :--- |
 | Name | Name of the output plugin. |
-| Match | It sets a pattern to match certain records Tag. It's case sensitive and support the star \(\*\) character as a wildcard. |
-| Match_Regex | It sets a pattern to match certain records Tag. |
+| Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
 ### Example
 
