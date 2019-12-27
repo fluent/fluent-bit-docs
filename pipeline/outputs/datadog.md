@@ -11,6 +11,7 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 | Host | _Required_ - The Datadog server where you are sending your logs. | `http-intake.logs.datadoghq.com` |
 | TLS | _Required_ - End-to-end security communications security protocol. Datadog recommends setting this to `on`. | `off` |
 | compress | _Recommended_ - compresses the payload in GZIP format, Datadog supports and recommends setting this to `gzip`. |  |
+| Proxy | _Optional_ - Specify an HTTP Proxy. The expected format of this value is _http://host:port_. Note that _https_ is __not__ supported yet. |  |
 | apikey | _Required_ - Your [Datadog API key](https://app.datadoghq.com/account/settings#api). |  |
 | dd\_service | _Recommended_ - The human readable name for your service generating the logs - the name of your application or database. |  |
 | dd\_source | _Recommended_ - A human readable name for the underlying technology of your service. For example, `postgres` or `nginx`. |  |
