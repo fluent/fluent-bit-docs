@@ -25,6 +25,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
+| Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Logstash\_Prefix\_Key | Prefix keys with this string |  |
 
