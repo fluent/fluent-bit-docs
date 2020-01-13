@@ -12,6 +12,10 @@ The **serial** input plugin, allows to retrieve messages/data from a _Serial_ in
 | Separator | Allows to specify a _separator_ string that's used to determinate when a message ends. |
 | Format | Specify the format of the incoming data stream. The only option available is 'json'. Note that _Format_ and _Separator_ cannot be used at the same time. |
 
+### Bitrate
+The possible values for bitrate (baudrate) is limited by the code. Only a limited set of values is allowed, check `in_serial.h` for posslible values.
+If other values are required a modification of that file is needed.
+
 ## Getting Started
 
 In order to retrieve messages over the _Serial_ interface, you can run the plugin from the command line or through the configuration file:
