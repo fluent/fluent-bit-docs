@@ -74,6 +74,7 @@
   * [Logfmt Parser](parser/logfmt.md)
   * [Decoders](parser/decoder.md)
 * [Filter Plugins](filter/README.md)
+  * [AWS](filter/aws.md)
   * [Grep](filter/grep.md)
   * [Kubernetes](filter/kubernetes.md)
   * [Lua](filter/lua.md)
