@@ -5,7 +5,7 @@ The **collectd** input plugin allows you to receive datagrams from collectd.
 Content:
 
 * [Configuration Parameters](collectd.md#config)
-* [Configuration Parameters](collectd.md#config_example)
+* [Configuration Examples](collectd.md#config_example)
 
 ## Configuration Parameters <a id="config"></a>
 
