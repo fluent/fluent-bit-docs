@@ -44,7 +44,7 @@ package main
 import "github.com/fluent/fluent-bit-go/output"
 
 //export FLBPluginRegister
-func FLBPluginRegister(def unsafe.Pointer) int {
+func FLBPluginRegister(ctx unsafe.Pointer) int {
     // Gets called only once when the plugin.so is loaded
     return output.FLBPluginRegister(ctx, "gstdout", "Stdout GO!")
 }
