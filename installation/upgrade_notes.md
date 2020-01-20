@@ -12,7 +12,7 @@ If you are migrating from Fluent Bit v1.2 to v1.3, there are not breaking change
 
 ### Docker, JSON, Parsers and Decoders
 
-On Fluent Bit v1.2 we have fixed many issues associated with JSON encoding and decoding, for hence when parsing Docker logs __is not longer necessary__ to use decoders. The new Docker parser looks like this:
+On Fluent Bit v1.2 we have fixed many issues associated with JSON encoding and decoding, for hence when parsing Docker logs __is no longer necessary__ to use decoders. The new Docker parser looks like this:
 
 ```
 [PARSER]
@@ -68,7 +68,7 @@ If you are upgrading from **Fluent Bit <= 1.0.x** you should take in considerati
 
 We introduced a new configuration property called _Kube\_Tag\_Prefix_ to help Tag prefix resolution and address an unexpected behavior that landed in previous versions.
 
-Duing 1.0.x release cycle, a commit in Tail input plugin changed the default behavior on how the Tag was composed when using the wildcard for expansion generating breaking compatibility with other services. Consider the following configuration example:
+During 1.0.x release cycle, a commit in Tail input plugin changed the default behavior on how the Tag was composed when using the wildcard for expansion generating breaking compatibility with other services. Consider the following configuration example:
 
 ```
 [INPUT]
