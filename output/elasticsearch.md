@@ -26,7 +26,7 @@ The **es** output plugin, allows to flush your records into a [Elasticsearch](ht
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout (for diag only) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-| Logstash\_Prefix\_Key | Prefix keys with this string | |
+| Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported (if desired, you can use the nest filter plugin to remove nesting) | |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq-multiple-types)
 
