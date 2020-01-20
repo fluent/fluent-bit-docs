@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |
 | Interval\_Sec | Polling interval \(seconds\). |
 | Interval\_NSec | Polling interval \(nanosecond\). |
+| Buf\_Size | Size of the buffer (check [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values) |
 
 ## Getting Started
 
@@ -47,6 +48,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Command       ls /var/log
     Interval_Sec  1
     Interval_NSec 0
+    Buf_Size      8mb
 
 [OUTPUT]
     Name   stdout
