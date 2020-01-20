@@ -1,0 +1,2 @@
+# Build with Static Configuration
+

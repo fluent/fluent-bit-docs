@@ -1,0 +1,2 @@
+# Golang Output Plugins
+
