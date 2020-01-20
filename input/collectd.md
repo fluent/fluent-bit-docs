@@ -5,7 +5,7 @@ The **collectd** input plugin allows you to receive datagrams from collectd.
 Content:
 
 * [Configuration Parameters](collectd.md#config)
-* [Configuration Parameters](collectd.md#config_example)
+* [Configuration Examples](collectd.md#config_example)
 
 ## Configuration Parameters {#config}
 
@@ -13,7 +13,7 @@ The plugin supports the following configuration parameters:
 
 | Key      | Description                     | Default                      |
 | :------- | :------------------------------ | :--------------------------- |
-| Address  | Set the address to listen to    | 0.0.0.0                      |
+| Listen   | Set the address to listen to    | 0.0.0.0                      |
 | Port     | Set the port to listen to       | 25826                        |
 | TypesDB  | Set the data specification file | /usr/share/collectd/types.db |
 
@@ -24,7 +24,7 @@ Here is a basic configuration example.
 ```python
 [INPUT]
     Name         collectd
-    Address      0.0.0.0
+    Listen       0.0.0.0
     Port         25826
     TypesDB      /usr/share/collectd/types.db,/etc/collectd/custom.db
 

@@ -65,32 +65,38 @@ it's likely you may need root privileges so you can try to prefixing the command
 
 ## Build Options
 
-Fluent Bit provides certain options to CMake that can be enabled or disabled when configuring, please refer to the following tables under the _General Options_, _Input Plugins_ and _Output Plugins_ sections.
+Fluent Bit provides certain options to CMake that can be enabled or disabled when configuring, please refer to the following tables under the _General Options_, _Development Options_, Input Plugins_ and _Output Plugins_ sections.
 
 ### General Options
 
 | option | description | default |
 | :--- | :--- | :--- |
 | FLB\_ALL | Enable all features available | No |
-| FLB\_DEBUG | Build binaries with debug symbols | No |
 | FLB\_JEMALLOC | Use Jemalloc as default memory allocator | No |
-| FLB\_TLS | Buils with SSL/TLS support | No |
+| FLB\_TLS | Build with SSL/TLS support | No |
 | FLB\_BINARY | Build executable | Yes |
 | FLB\_EXAMPLES | Build examples | Yes |
 | FLB\_SHARED\_LIB | Build shared library | Yes |
-| FLB\_VALGRIND | Enable Valgrind support | No |
-| FLB\_TRACE | Enable trace mode | No |
-| FLB_TESTS_RUNTIME | Enable runtime tests | No |
-| FLB_TESTS_INTERNAL | Enable internal tests | No |
-| FLB\_TESTS | Enable tests | No |
 | FLB\_MTRACE | Enable mtrace support | No |
 | FLB_INOTIFY | Enable Inotify support | Yes |
 | FLB\_POSIX\_TLS | Force POSIX thread storage | No |
 | FLB_SQLDB | Enable SQL embedded database support | No |
 | FLB_HTTP_SERVER | Enable HTTP Server | No |
-| FLB_BACKTRACE | Enable backtrace/stacktrace support | Yes |
 | FLB_LUAJIT | Enable Lua scripting support | Yes |
 | FLB_STATIC_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
+
+### Development Options
+
+| option | description | default |
+| :--- | :--- | :--- |
+| FLB\_DEBUG | Build binaries with debug symbols | No |
+| FLB\_VALGRIND | Enable Valgrind support | No |
+| FLB\_TRACE | Enable trace mode | No |
+| FLB\_SMALL | Minimise binary size | No |
+| FLB_TESTS_RUNTIME | Enable runtime tests | No |
+| FLB_TESTS_INTERNAL | Enable internal tests | No |
+| FLB\_TESTS | Enable tests | No |
+| FLB_BACKTRACE | Enable backtrace/stacktrace support | Yes |
 
 ### Input Plugins
 
@@ -108,6 +114,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_SERIAL](../input/serial.md) | Enable Serial input plugin | On |
 | [FLB\_IN\_STDIN](../input/stdin.md) | Enable Standard input plugin | On |
 | FLB\_IN\_TCP | Enable TCP input plugin | On |
+| [FLB\_IN\_THERMAL](../input/thermal.md) | Enable system temperature(s) input plugin | On |
 | [FLB\_IN\_MQTT](../input/mqtt.md) | Enable MQTT input plugin | On |
 | [FLB\_IN\_XBEE](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/input/xbee.md) | Enable Xbee input plugin | Off |
 

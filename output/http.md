@@ -111,3 +111,30 @@ Notice how we override the tag, which is from URI path, with our custom header
     Header         X-Key-B Value_B
     URI            /something
 ```
+
+#### Example : Sumo Logic HTTP Collector
+
+Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timestamps.
+The `PrivateKey` is specific to a configured HTTP collector.
+
+```
+[OUTPUT]
+    Name             http
+    Match            *
+    Host             collectors.au.sumologic.com
+    Port             443
+    URI              /receiver/v1/http/[PrivateKey]
+    Format           json_lines
+    Json_date_key    timestamp
+    Json_date_format iso8601
+```
+
+A sample Sumo Logic query for the [CPU](../input/cpu.md) input.
+(Requires `json_lines` format with `iso8601` date format for the `timestamp` field).
+
+```
+_sourcecategory="my_fluent_bit"
+| json "cpu_p" as cpu
+| timeslice 1m
+| max(cpu) as cpu group by _timeslice
+```

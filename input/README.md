@@ -7,6 +7,7 @@ The _input plugins_ defines the source from where [Fluent Bit](http://fluentbit.
 | [collectd](collectd.md) | Collectd | Listen for UDP packets from Collectd. |
 | [cpu](cpu.md) | CPU Usage | measure total CPU usage of the system. |
 | [disk](disk.md) | Disk Usage | measure Disk I/Os. |
+| [docker](docker.md) | Docker | collect Docker container metrics. |
 | [dummy](dummy.md) | Dummy | generate dummy event. |
 | [exec](exec.md) | Exec | executes external program and collects event logs. |
 | [forward](forward.md) | Forward | Fluentd forward protocol. |
