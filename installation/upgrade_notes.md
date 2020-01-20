@@ -12,7 +12,7 @@ If you are migrating from Fluent Bit v1.2 to v1.3, there are not breaking change
 
 ### Docker, JSON, Parsers and Decoders
 
-On Fluent Bit v1.2 we have fixed many issues associated with JSON encoding and decoding, for hence when parsing Docker logs __is not longer necessary__ to use decoders. The new Docker parser looks like this:
+On Fluent Bit v1.2 we have fixed many issues associated with JSON encoding and decoding, for hence when parsing Docker logs __is no longer necessary__ to use decoders. The new Docker parser looks like this:
 
 ```
 [PARSER]
