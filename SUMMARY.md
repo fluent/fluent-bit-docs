@@ -62,6 +62,7 @@
   * [Random](input/random.md)
   * [Serial Interface](input/serial.md)
   * [Standard Input](input/stdin.md)
+  * [StatsD Input](input/statsd.md)
   * [Syslog](input/syslog.md)
   * [Systemd](input/systemd.md)
   * [Tail](input/tail.md)
