@@ -45,8 +45,8 @@
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
   * [Files Schema / Structure](administration/configuring-fluent-bit/files-schema-structure/README.md)
-    [Variables](administration/configuring-fluent-bit/variables.md)
-    [Commands](administration/configuring-fluent-bit/commands.md)
+  * [Variables](administration/configuring-fluent-bit/variables.md)
+  * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Configuration File](administration/configuring-fluent-bit/configuration-file.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
