@@ -1,2 +1,0 @@
-# Disk I/O Metrics
-
