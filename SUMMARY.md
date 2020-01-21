@@ -24,7 +24,7 @@
 ## Installation
 
 * [Upgrade Notes](installation/upgrade-notes.md)
-* [Supported Platforms](installation/untitled.md)
+* [Supported Platforms](installation/supported-platforms.md)
 * [Requirements](installation/requirements.md)
 * [Sources](installation/sources/README.md)
   * [Download Source Code](installation/sources/download-source-code.md)
@@ -32,7 +32,7 @@
   * [Build with Static Configuration](installation/sources/build-with-static-configuration.md)
 * [Linux Packages](installation/linux/README.md)
   * [Amazon Linux](installation/linux/amazon-linux.md)
-  * [CentOS](installation/linux/centos.md)
+  * [Redhat / CentOS](installation/linux/redhat-centos.md)
   * [Debian](installation/linux/debian.md)
   * [Ubuntu](installation/linux/ubuntu.md)
   * [Raspbian / Raspberry Pi](installation/linux/raspbian-raspberry-pi.md)
@@ -45,9 +45,9 @@
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
   * [Files Schema / Structure](administration/configuring-fluent-bit/files-schema-structure/README.md)
-    * [Variables](administration/configuring-fluent-bit/files-schema-structure/variables.md)
-    * [Commands](administration/configuring-fluent-bit/files-schema-structure/commands.md)
-  * [Configuration File](administration/configuring-fluent-bit/main-configuration-file.md)
+    [Variables](administration/configuring-fluent-bit/variables.md)
+    [Commands](administration/configuring-fluent-bit/commands.md)
+  * [Configuration File](administration/configuring-fluent-bit/configuration-file.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
 * [Security](administration/security.md)
