@@ -4,7 +4,7 @@ description: Powerful and flexible routing
 
 # Rewrite Tag
 
-Tags are what makes [routing]( /concepts/data-pipeline/router) possible. Tags are set in the configuration of the Input definitions where the records are generated, but there are certain scenarios where might be useful to modify the Tag in the pipeline so we can perform more advanced and flexible routing. 
+Tags are what makes [routing]( /concepts/data-pipeline/router.md) possible. Tags are set in the configuration of the Input definitions where the records are generated, but there are certain scenarios where might be useful to modify the Tag in the pipeline so we can perform more advanced and flexible routing. 
 
 The ```rewrite_tag``` filter, allows to re-emit a record under a new Tag. Once a record has been re-emitted, the  original record can be preserved or discarded.
 
