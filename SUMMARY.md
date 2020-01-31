@@ -95,6 +95,7 @@
   * [Lua](pipeline/filters/lua.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
+  * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
   * [Nest](pipeline/filters/nest.md)
