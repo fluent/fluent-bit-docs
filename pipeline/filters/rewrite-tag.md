@@ -197,11 +197,13 @@ Metrics output:
 }
 ```
 
-The *dummy* input generated two records,  the filter dropped two from the chunks and emitted two new ones under a different Tag. The new records are counted in an entry called ```emitter_for_rewrite_tag.0```.
+The *dummy* input generated two records,  the filter dropped two from the chunks and emitted two new ones under a different Tag. 
+
+The records generated are handled by the internal Emitter, so the new records are summarized in the Emitter metrics, take a look at the entry called ```emitter_for_rewrite_tag.0```.
 
 ### What is the Emitter ?
 
-The Emitter is an internal Fluent Bit plugin that allows other components to emit custom records. On this case ```rewrite_tag``` creates an Emitter instance to use it exclusively to emit records, on that way we can have a granular control of *who* is emitting what.
+The Emitter is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case ```rewrite_tag``` creates an Emitter instance to use it exclusively to emit records, on that way we can have a granular control of *who* is emitting what.
 
 The Emitter name in the metrics can be changed setting up the ```Emitter_Name``` configuration property described above.
 
