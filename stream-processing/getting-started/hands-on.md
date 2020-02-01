@@ -1,4 +1,4 @@
-# Hands on: Stream Processing 101
+# Hands On! 101
 
 This article goes through very specific and simple steps to learn how Stream Processor works. For simplicity it uses a custom Docker image that contains the relevant components for testing.
 
@@ -6,12 +6,12 @@ This article goes through very specific and simple steps to learn how Stream Pro
 
 The following tutorial requires the following software components:
 
-- [Fluent Bit](https://fluentbit.io) >= v1.2.0
-- [Docker Engine](https://www.docker.com/products/docker-engine) (not mandatory if you already have Fluent Bit binary installed in your system)
+* [Fluent Bit](https://fluentbit.io) &gt;= v1.2.0
+* [Docker Engine](https://www.docker.com/products/docker-engine) \(not mandatory if you already have Fluent Bit binary installed in your system\)
 
-In addition download the following data sample file (130KB):
+In addition download the following data sample file \(130KB\):
 
-- https://fluentbit.io/samples/sp-samples-1k.log
+* [https://fluentbit.io/samples/sp-samples-1k.log](https://fluentbit.io/samples/sp-samples-1k.log)
 
 ## Stream Processing using the command line
 
@@ -39,7 +39,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
 
 The command above will simply print the parsed content to the standard output interface. The content will print the _Tag_ associated to each record and an array with two fields: record timestamp and record map:
 
-```
+```text
 Fluent Bit v1.2.0
 Copyright (C) Treasure Data
 
@@ -56,11 +56,11 @@ Copyright (C) Treasure Data
 [5] tail.0: [1557322456.315550927, {"date"=>"22/abr/2019:12:43:52 -0600", "ip"=>"132.113.203.169", "word"=>"fendered", "country"=>"United States", "flag"=>true, "num"=>53}]
 ```
 
-As of now there is no Stream Processing, on step #3 we will start doing some basic queries.
+As of now there is no Stream Processing, on step \#3 we will start doing some basic queries.
 
 ### 3. Selecting specific record keys
 
-This command introduces a Stream Processor (SP) query through the __-T__ option and changes the output plugin to _null_, this is done with the purpose of obtaining the SP results in the standard output interface and avoid confusions in the terminal.
+This command introduces a Stream Processor \(SP\) query through the **-T** option and changes the output plugin to _null_, this is done with the purpose of obtaining the SP results in the standard output interface and avoid confusions in the terminal.
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
@@ -76,7 +76,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
 
 The query above aims to retrieve all records that a key named _country_ value matches the value _Chile_, and for each match compose and output a record using only the key fields _word_ and _num_:
 
-```
+```text
 [0] [1557322913.263534, {"word"=>"Candide", "num"=>94}]
 [0] [1557322913.263581, {"word"=>"delightfulness", "num"=>99}]
 [0] [1557322913.263607, {"word"=>"effulges", "num"=>63}]
@@ -86,7 +86,7 @@ The query above aims to retrieve all records that a key named _country_ value ma
 
 ### 4. Calculate Average Value
 
-The following query is similar to the one in the previous step, but this time we will use the aggregation function called AVG() to get the average value of the records ingested:
+The following query is similar to the one in the previous step, but this time we will use the aggregation function called AVG\(\) to get the average value of the records ingested:
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
@@ -102,7 +102,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
 
 output:
 
-```
+```text
 [0] [1557323573.940149, {"AVG(num)"=>61.230770}]
 [0] [1557323573.941890, {"AVG(num)"=>47.842106}]
 [0] [1557323573.943544, {"AVG(num)"=>40.647060}]
@@ -133,7 +133,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
 
 output:
 
-```
+```text
 [0] [1557324239.003211, {"country"=>"Chile", "AVG(num)"=>53.164558}]
 ```
 
@@ -141,7 +141,7 @@ output:
 
 Now we see a more real-world use case. Sending data results to the standard output interface is good for learning purposes, but now we will instruct the Stream Processor to ingest results as part of Fluent Bit data pipeline and attach a Tag to them.
 
-This can be done using the __CREATE STREAM__ statement that will also tag results with __sp-results__ value. Note that output plugin parameter is now _stdout_ matching all records tagged with _sp-results_:
+This can be done using the **CREATE STREAM** statement that will also tag results with **sp-results** value. Note that output plugin parameter is now _stdout_ matching all records tagged with _sp-results_:
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
@@ -162,7 +162,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
 
 output:
 
-```
+```text
 [0] sp-results: [1557325032.000160100, {"country"=>"Chile", "AVG(num)"=>53.164558}]
 ```
 
@@ -170,7 +170,7 @@ output:
 
 ### Where STREAM name comes from?
 
-Fluent Bit have the notion of streams, and every input plugin instance gets a default name. You can override that behavior by setting an alias. Check the __alias__ parameter and new __stream__ name in the following example:
+Fluent Bit have the notion of streams, and every input plugin instance gets a default name. You can override that behavior by setting an alias. Check the **alias** parameter and new **stream** name in the following example:
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
@@ -189,3 +189,4 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
                GROUP BY country;"                                   \
          -o stdout -m 'sp-results' -f 1
 ```
+

@@ -1,6 +1,6 @@
-![](imgs/stream_processor.png)
+# Introduction
 
-
+![](https://github.com/fluent/fluent-bit-docs/tree/6bc4af039821d9e8bc1636797a25ad23b52a511f/stream-processing/imgs/stream_processor.png)
 
 [Fluent Bit](https://fluentbit.io) is a fast and flexible Log processor that aims to collect, parse, filter and deliver logs to remote databases, so Data Analysis can be performed.
 

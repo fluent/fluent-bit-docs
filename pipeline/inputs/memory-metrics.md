@@ -1,4 +1,4 @@
-# Memory Usage
+# Memory Metrics
 
 The **mem** input plugin, gathers the information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
 

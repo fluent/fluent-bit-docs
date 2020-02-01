@@ -1,9 +1,16 @@
+---
+description: Performance and data safety
+---
+
 # Buffering
 
-  
-The end-goal of [Fluent Bit](https://fluentbit.io/) is to collect, parse, filter and ship logs to a central place. In this workflow there are many phases and one of the critical pieces is the ability to do _buffering_ : a mechanism to place processed data into a temporal location until is ready to be shipped.
+When [Fluent Bit](https://fluentbit.io) process data, it uses the system memory \(heap\) as a primary and temporal place to store the record logs before they get delivered, on this private memory area the records are processed. 
 
-By default when Fluent Bit process data, it uses Memory as a primary and temporal place to store the record logs, but there are certain scenarios where would be ideal to have a persistent buffering mechanism based in the filesystem to provide aggregation and data safety capabilities.
+Buffering refers to the ability to store the records somewhere, and while they are processed and delivered, still be able to store more. Buffering in memory is the fastest mechanism, but there are certain scenarios where the mechanism requires special strategies to deal with [backpressure](../administration/backpressure.md), data safety or reduce memory consumption by the service in constraint environments.
 
-Starting with Fluent Bit v1.0, we introduced a new _storage layer_ that can either work in memory or in the file system. Input plugins can be configured to use one or the other upon demand at start time.
+Fluent Bit as buffering strategies, offers a primary buffering mechanism in **memory** and an optional secondary one using the **file system**. With this hybrid solution you can adjust to any use case safety and keep a high performance while processing your data.
+
+Both mechanisms are not exclusive and when the data is ready to be processed or delivered it will be always **in memory**, while other data in the queue might be in the file system until is ready to be processed and moved up to memory. 
+
+To learn more about the buffering configuration in Fluent Bit, please jump to the [Buffering & Storage](../administration/buffering-and-storage.md) section.
 

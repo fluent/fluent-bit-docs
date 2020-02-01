@@ -8,5 +8,5 @@ Filtering is implemented through plugins, so each filter available could be used
 
 Very similar to the input plugins, Filters run in an instance context, which has its own independent configuration. Configuration keys are often called **properties**.
 
-For more details about the Filters available and their usage, please refer to the [Filters](../filter/) section.
+For more details about the Filters available and their usage, please refer to the [Filters](https://github.com/fluent/fluent-bit-docs/tree/31ef18ea4f94004badcc169d0e12e60967d50ef9/concepts/filter/README.md) section.
 

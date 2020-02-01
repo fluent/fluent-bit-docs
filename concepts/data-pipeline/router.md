@@ -1,4 +1,4 @@
-# Routing
+# Router
 
 Routing is a core feature that allows to **route** your data through Filters and finally to one or multiple destinations.
 

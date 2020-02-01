@@ -65,7 +65,7 @@ it's likely you may need root privileges so you can try to prefixing the command
 
 ## Build Options
 
-Fluent Bit provides certain options to CMake that can be enabled or disabled when configuring, please refer to the following tables under the _General Options_, _Development Options_, Input Plugins_ and _Output Plugins_ sections.
+Fluent Bit provides certain options to CMake that can be enabled or disabled when configuring, please refer to the following tables under the _General Options_, _Development Options_, Input Plugins _and \_Output Plugins_ sections.
 
 ### General Options
 
@@ -78,12 +78,12 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_EXAMPLES | Build examples | Yes |
 | FLB\_SHARED\_LIB | Build shared library | Yes |
 | FLB\_MTRACE | Enable mtrace support | No |
-| FLB_INOTIFY | Enable Inotify support | Yes |
+| FLB\_INOTIFY | Enable Inotify support | Yes |
 | FLB\_POSIX\_TLS | Force POSIX thread storage | No |
-| FLB_SQLDB | Enable SQL embedded database support | No |
-| FLB_HTTP_SERVER | Enable HTTP Server | No |
-| FLB_LUAJIT | Enable Lua scripting support | Yes |
-| FLB_STATIC_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
+| FLB\_SQLDB | Enable SQL embedded database support | No |
+| FLB\_HTTP\_SERVER | Enable HTTP Server | No |
+| FLB\_LUAJIT | Enable Lua scripting support | Yes |
+| FLB\_STATIC\_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
 
 ### Development Options
 
@@ -93,10 +93,10 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_VALGRIND | Enable Valgrind support | No |
 | FLB\_TRACE | Enable trace mode | No |
 | FLB\_SMALL | Minimise binary size | No |
-| FLB_TESTS_RUNTIME | Enable runtime tests | No |
-| FLB_TESTS_INTERNAL | Enable internal tests | No |
+| FLB\_TESTS\_RUNTIME | Enable runtime tests | No |
+| FLB\_TESTS\_INTERNAL | Enable internal tests | No |
 | FLB\_TESTS | Enable tests | No |
-| FLB_BACKTRACE | Enable backtrace/stacktrace support | Yes |
+| FLB\_BACKTRACE | Enable backtrace/stacktrace support | Yes |
 
 ### Input Plugins
 
@@ -104,18 +104,18 @@ The _input plugins_ provides certain features to gather information from a speci
 
 | option | description | default |
 | :--- | :--- | :--- |
-| [FLB\_IN\_CPU](../input/cpu.md) | Enable CPU input plugin | On |
-| [FLB\_IN\_FORWARD](../input/forward.md) | Enable Forward input plugin | On |
-| [FLB\_IN\_HEAD](../input/head.md) | Enable Head input plugin | On |
-| [FLB\_IN\_HEALTH](../input/health.md) | Enable Health input plugin | On |
-| [FLB\_IN\_KMSG](../input/kmsg.md) | Enable Kernel log input plugin | On |
-| [FLB\_IN\_MEM](../input/mem.md) | Enable Memory input plugin | On |
+| [FLB\_IN\_CPU](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/cpu.md) | Enable CPU input plugin | On |
+| [FLB\_IN\_FORWARD](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/forward.md) | Enable Forward input plugin | On |
+| [FLB\_IN\_HEAD](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/head.md) | Enable Head input plugin | On |
+| [FLB\_IN\_HEALTH](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/health.md) | Enable Health input plugin | On |
+| [FLB\_IN\_KMSG](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/kmsg.md) | Enable Kernel log input plugin | On |
+| [FLB\_IN\_MEM](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/mem.md) | Enable Memory input plugin | On |
 | FLB\_IN\_RANDOM | Enable Random input plugin | On |
-| [FLB\_IN\_SERIAL](../input/serial.md) | Enable Serial input plugin | On |
-| [FLB\_IN\_STDIN](../input/stdin.md) | Enable Standard input plugin | On |
+| [FLB\_IN\_SERIAL](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/serial.md) | Enable Serial input plugin | On |
+| [FLB\_IN\_STDIN](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/stdin.md) | Enable Standard input plugin | On |
 | FLB\_IN\_TCP | Enable TCP input plugin | On |
-| [FLB\_IN\_THERMAL](../input/thermal.md) | Enable system temperature(s) input plugin | On |
-| [FLB\_IN\_MQTT](../input/mqtt.md) | Enable MQTT input plugin | On |
+| [FLB\_IN\_THERMAL](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/thermal.md) | Enable system temperature\(s\) input plugin | On |
+| [FLB\_IN\_MQTT](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/input/mqtt.md) | Enable MQTT input plugin | On |
 | [FLB\_IN\_XBEE](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/input/xbee.md) | Enable Xbee input plugin | Off |
 
 ### Output Plugins
@@ -124,11 +124,12 @@ The _output plugins_ gives the capacity to flush the information to some externa
 
 | option | description | default |
 | :--- | :--- | :--- |
-| [FLB\_OUT\_ES](../output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
-| [FLB\_OUT\_FORWARD](../output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
-| [FLB\_OUT\_HTTP](../output/http.md) | Enable HTTP output plugin | On |
-| [FLB\_OUT\_NATS](../output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
+| [FLB\_OUT\_ES](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
+| [FLB\_OUT\_FORWARD](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
+| [FLB\_OUT\_HTTP](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/http.md) | Enable HTTP output plugin | On |
+| [FLB\_OUT\_NATS](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
 | FLB\_OUT\_PLOT | Enable Plot output plugin | On |
-| [FLB\_OUT\_STDOUT](../output/stdout.md) | Enable STDOUT output plugin | On |
-| [FLB\_OUT\_TD](../output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
+| [FLB\_OUT\_STDOUT](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/stdout.md) | Enable STDOUT output plugin | On |
+| [FLB\_OUT\_TD](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/output/td.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 | FLB\_OUT\_NULL | Enable /dev/null output plugin | On |
+

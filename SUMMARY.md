@@ -44,7 +44,7 @@
 ## Administration
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
-  * [Files Schema / Structure](administration/configuring-fluent-bit/files-schema-structure/README.md)
+  * [Files Schema / Structure](administration/configuring-fluent-bit/files-schema-structure.md)
   * [Variables](administration/configuring-fluent-bit/variables.md)
   * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Configuration File](administration/configuring-fluent-bit/configuration-file.md)
@@ -65,7 +65,7 @@
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
   * [Dummy](pipeline/inputs/dummy.md)
   * [Exec](pipeline/inputs/exec.md)
-  * [Forward](pipeline/inputs/forward.md)
+  * [Forward](pipeline/outputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [Health](pipeline/inputs/health.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
@@ -96,7 +96,7 @@
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
-  * [Standard Output](pipeline/filters/standard-output.md)
+  * [Standard Output](pipeline/outputs/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
   * [Nest](pipeline/filters/nest.md)
   * [Modify](pipeline/filters/modify.md)
@@ -124,7 +124,7 @@
 
 ## Stream Processing
 
-* [Introduction](stream-processing/README.md)
+* [Introduction](stream-processing/stream-processing.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
 * [Getting Started](stream-processing/getting-started/README.md)
@@ -137,3 +137,4 @@
 * [C Library API](development/library_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
+
