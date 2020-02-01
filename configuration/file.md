@@ -73,7 +73,7 @@ A _FILTER_ section defines a filter \(related to an filter plugin\), here we wil
 | :--- | :--- | :--- |
 | Name | Name of the filter plugin. |  |
 | Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
+| Match\_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match\_Regex_ is mandatory for all plugins. If both are specified, _Match\_Regex_ takes precedence.
 
@@ -91,11 +91,11 @@ The following is an example of an _FILTER_ section:
 
 The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
 
-| Key | Description |
-| :--- | :--- |
-| Name | Name of the output plugin. |
+| Key | Description |  |
+| :--- | :--- | :--- |
+| Name | Name of the output plugin. |  |
 | Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
+| Match\_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
 ### Example
 
@@ -149,3 +149,4 @@ Wildcard character \(\*\) is supported to include multiple files, e.g:
 ```text
 @INCLUDE input_*.conf
 ```
+

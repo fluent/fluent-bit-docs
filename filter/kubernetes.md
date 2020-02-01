@@ -201,7 +201,7 @@ So at this point the filter is able to gather the values of _pod\_name_ and _nam
 
 ## Helm Charts and Yaml
 
-Fluent Bit configuration reader expects that every line in the configuration files, ends with a ```\n``` (LF or 0x10). When composing Yaml files for a Helm chart always enable the multiline mode, example:
+Fluent Bit configuration reader expects that every line in the configuration files, ends with a `\n` \(LF or 0x10\). When composing Yaml files for a Helm chart always enable the multiline mode, example:
 
 ```yaml
 apiVersion: v1
@@ -217,3 +217,4 @@ data:
         HTTP_Listen     0.0.0.0
         HTTP_Port       2020
 ```
+

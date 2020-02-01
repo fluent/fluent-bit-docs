@@ -121,12 +121,13 @@ For details, please read [the official blog post on that issue](https://www.elas
 
 ### Fluent Bit + AWS Elasticsearch
 
-AWS Elasticsearch adds an extra security layer where the HTTP requests we must be signed with AWS Signv4, as of Fluent Bit v1.3 this is not yet supported. At the end of January 2020 with the release of Fluent Bit v1.4 we are adding such feature (among integration with other AWS Services ;) )
+AWS Elasticsearch adds an extra security layer where the HTTP requests we must be signed with AWS Signv4, as of Fluent Bit v1.3 this is not yet supported. At the end of January 2020 with the release of Fluent Bit v1.4 we are adding such feature \(among integration with other AWS Services ;\) \)
 
 As a workaround, you can use the following tool as a proxy:
 
-- https://github.com/abutaha/aws-es-proxy
+* [https://github.com/abutaha/aws-es-proxy](https://github.com/abutaha/aws-es-proxy)
 
 More details about this AWS requirement can be found here:
 
-- https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html
+* [https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html)
+
