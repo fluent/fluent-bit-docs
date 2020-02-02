@@ -4,6 +4,10 @@ The following article cover the relevant notes for users upgrading from previous
 
 For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
 
+## Fluent Bit v1.4
+
+If you are migrating from Fluent Bit v1.3, there are not breaking changes. Just new exciting features to enjoy :\)
+
 ## Fluent Bit v1.3
 
 If you are migrating from Fluent Bit v1.2 to v1.3, there are not breaking changes. If you are upgrading from an older version please review the incremental changes below.

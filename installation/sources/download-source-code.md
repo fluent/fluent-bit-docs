@@ -4,7 +4,7 @@
 
 For production systems, we strongly suggest that you always get the latest stable release from our web site, you can get the official tarballs \(.tar.gz\) from the following link:
 
-[http://fluentbit.io/download/](http://fluentbit.io/download/)
+[https://fluentbit.io/download/](https://fluentbit.io/download/)
 
 ## Development
 

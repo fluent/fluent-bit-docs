@@ -1,3 +1,7 @@
+---
+description: The way to gather data from your sources
+---
+
 # Input
 
 [Fluent Bit](http://fluentbit.io) provides different _Input Plugins_ to gather information from different sources, some of them just collect data from log files while others can gather metrics information from the operating system. There are many plugins for different needs.

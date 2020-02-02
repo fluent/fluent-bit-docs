@@ -1,3 +1,7 @@
+---
+description: Data processing with reliability
+---
+
 # Buffer
 
 When the data or logs are ready to be routed to some destination, by default they are buffered in memory.

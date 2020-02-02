@@ -1,26 +1,25 @@
+---
+description: Kubernetes Production Grade
+---
+
 # Kubernetes
-
-[Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
-
-* Read Kubernetes/Docker log files from the file system or through Systemd Journal.
-* Enrich logs with Kubernetes metadata.
-* Deliver logs to third party storage services like Elasticsearch, InfluxDB, HTTP, etc.
 
 ![](../.gitbook/assets/fluentbit_kube_logging%20%281%29.png)
 
-Content:
+[Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
 
-* [Concepts](kubernetes.md#concepts)
-* [Installation Steps](kubernetes.md#installation)
+* Process Kubernetes containers logs from the file system or Systemd/Journald.
+* Enrich logs with Kubernetes Metadata.
+* Centralize your logs in third party storage services like Elasticsearch, InfluxDB, HTTP, etc.
 
 ## Concepts <a id="concepts"></a>
 
-Before geting started it is important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, hence Fluent Bit is deployed as a DaemonSet \(a POD that runs on every _node_ of the cluster\).
+Before getting started it is important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, hence Fluent Bit is deployed as a DaemonSet \(a POD that runs on every _node_ of the cluster\).
 
 When Fluent Bit runs, it will read, parse and filter the logs of every POD and will enrich each entry with the following information \(metadata\):
 
-* POD Name
-* POD ID
+* Pod Name
+* Pod ID
 * Container Name
 * Container ID
 * Labels

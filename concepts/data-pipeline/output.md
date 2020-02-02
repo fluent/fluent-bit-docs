@@ -1,3 +1,7 @@
+---
+description: 'Destinations for your data: databases, cloud services and more'
+---
+
 # Output
 
 The output interface allows us to define destinations for the data. Common destinations are remote services, local file system or standard interface with others. Outputs are implemented as plugins and there are many available.

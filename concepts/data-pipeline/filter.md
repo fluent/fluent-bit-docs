@@ -1,3 +1,7 @@
+---
+description: 'Modify, Enrich or Drop your records'
+---
+
 # Filter
 
 In production environments we want to have full control of the data we are collecting, filtering is an important feature that allows us to **alter** the data before delivering it to some destination.
