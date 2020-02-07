@@ -4,26 +4,26 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Installation Packages
 
-The latest stable version is v1.3.6:
+The latest stable version is v1.3.7:
 
 ### 64 Bits
 
 | Installers | SHA256 Checksums |
 | :--- | :--- |
-| [td-agent-bit-1.3.6-win64.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.6-win64.exe) | 0e2626842e169f423f64bd0a2d041fc468a012fa108b377ccfc7ebc744762a6d |
-| [td-agent-bit-1.3.6-win64.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.6-win64.zip) | af7159b5c8d62857d3c3ab0122ae959994e0d91364f004c73892e27df2dc9b49 |
+| [td-agent-bit-1.3.7-win64.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.7-win64.exe) | 553c594ac7478edd805bc1839991e3d1b44fa8ab9a58540278d304e7a35bdb51 |
+| [td-agent-bit-1.3.7-win64.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.7-win64.zip) | ab1c72391ef727a821ba3c754bc95bdf8c3366e125bbcf31eb3107ab18518881 |
 
 ### 32 Bits
 
 | Installers | SHA256 Checksums |
 | :--- | :--- |
-| [td-agent-bit-1.3.6-win32.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.6-win32.exe) | be9f027f270aa0457fc090c0dc53fbac129e594180b68ecbd1f0db450a6ee3ba |
-| [td-agent-bit-1.3.6-win32.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.6-win32.zip) | be9f027f270aa0457fc090c0dc53fbac129e594180b68ecbd1f0db450a6ee3ba |
+| [td-agent-bit-1.3.7-win32.exe](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.7-win32.exe) | 718059a42767f4d0b4fdb01737b2392ca1637b69830124b8565356faff485ff7 |
+| [td-agent-bit-1.3.7-win32.zip](http://fluentbit.io/releases/1.3/td-agent-bit-1.3.7-win32.zip) | b4044870e37d2fc0b0229da41925c4f2ed1a50c0c95513c3e45d8e59bc22e93a |
 
 To check the integrity, use `Get-FileHash` command on PowerShell.
 
 ```text
-PS> Get-FileHash td-agent-bit-1.3.6-win64.zip
+PS> Get-FileHash td-agent-bit-1.3.7-win64.zip
 ```
 
 ## Installing from ZIP archive
@@ -31,7 +31,7 @@ PS> Get-FileHash td-agent-bit-1.3.6-win64.zip
 Download a ZIP archive from the list above. Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 
 ```text
-PS> Expand-Archive td-agent-bit-1.3.6-win64.zip
+PS> Expand-Archive td-agent-bit-1.3.7-win64.zip
 ```
 
 The ZIP package contains the following set of files.
@@ -62,7 +62,7 @@ If you see the following output, it's working fine!
 
 ```text
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v1.3.6
+Fluent Bit v1.3.7
 Copyright (C) Treasure Data
 
 [2019/06/28 10:13:04] [ info] [storage] initializing...
