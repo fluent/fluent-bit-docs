@@ -25,6 +25,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
+| Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Logstash\_Prefix\_Key | Prefix keys with this string |  |
 
@@ -120,12 +121,13 @@ For details, please read [the official blog post on that issue](https://www.elas
 
 ### Fluent Bit + AWS Elasticsearch
 
-AWS Elasticsearch adds an extra security layer where the HTTP requests we must be signed with AWS Signv4, as of Fluent Bit v1.3 this is not yet supported. At the end of January 2020 with the release of Fluent Bit v1.4 we are adding such feature (among integration with other AWS Services ;) )
+AWS Elasticsearch adds an extra security layer where the HTTP requests we must be signed with AWS Signv4, as of Fluent Bit v1.3 this is not yet supported. At the end of January 2020 with the release of Fluent Bit v1.4 we are adding such feature \(among integration with other AWS Services ;\) \)
 
 As a workaround, you can use the following tool as a proxy:
 
-- https://github.com/abutaha/aws-es-proxy
+* [https://github.com/abutaha/aws-es-proxy](https://github.com/abutaha/aws-es-proxy)
 
 More details about this AWS requirement can be found here:
 
-- https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html
+* [https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html)
+

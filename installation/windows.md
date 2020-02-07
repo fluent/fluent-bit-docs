@@ -89,3 +89,4 @@ Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Fil
 ```text
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
+

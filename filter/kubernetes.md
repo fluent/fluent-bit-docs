@@ -150,7 +150,7 @@ In the input section, the [Tail](../input/tail.md) plugin will monitor all files
 Tail support Tags expansion, which means that if a tag have a star character \(\*\), it will replace the value with the absolute path of the monitored file, so if you file name and path is:
 
 ```text
-/var/log/container/apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
+/var/log/containers/apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
 ```
 
 then the Tag for every record of that file becomes:
@@ -201,7 +201,7 @@ So at this point the filter is able to gather the values of _pod\_name_ and _nam
 
 ## Helm Charts and Yaml
 
-Fluent Bit configuration reader expects that every line in the configuration files, ends with a ```\n``` (LF or 0x10). When composing Yaml files for a Helm chart always enable the multiline mode, example:
+Fluent Bit configuration reader expects that every line in the configuration files, ends with a `\n` \(LF or 0x10\). When composing Yaml files for a Helm chart always enable the multiline mode, example:
 
 ```yaml
 apiVersion: v1
@@ -217,3 +217,4 @@ data:
         HTTP_Listen     0.0.0.0
         HTTP_Port       2020
 ```
+

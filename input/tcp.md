@@ -9,11 +9,12 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Listen | Listener network interface. | 0.0.0.0 |
-| Port | TCP port where listening for connections |5170|
-| Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_. ||
-| Chunk\_Size | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). |32|
-| Format | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ (option below). |json|
-| Separator | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character ```\n``` (LF or 0x10). |\n|
+| Port | TCP port where listening for connections | 5170 |
+| Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_. |  |
+| Chunk\_Size | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). | 32 |
+| Format | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ \(option below\). | json |
+| Separator | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character `\n` \(LF or 0x10\). | \n |
+
 ## Getting Started
 
 In order to receive JSON messages over TCP, you can run the plugin from the command line or through the configuration file:
@@ -79,4 +80,5 @@ Copyright (C) Treasure Data
 
 When receiving payloads in JSON format, there are high performance penalties. Parsing JSON is a very expensive task so you could expect your CPU usage increase under high load environments.
 
-To get faster data ingestion, consider to use the option ```Format none``` to avoid JSON parsing if not needed. 
+To get faster data ingestion, consider to use the option `Format none` to avoid JSON parsing if not needed.
+
