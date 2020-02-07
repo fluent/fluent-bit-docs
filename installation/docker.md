@@ -10,6 +10,8 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 | :--- | :--- | :--- |
 | 1.3 | x86\_64, arm64v8, arm32v7 | Latest release of 1.3.x series. |
 | 1.3-debug | x86\_64 | v1.3.x releases + Busybox |
+| 1.3.7 | x86\_64, arm64v8, arm32v7 | Release [v1.3.7](https://fluentbit.io/announcements/v1.3.7) |
+| 1.3.7-debug | x86\_64 | v1.3.7 release + Busybox |
 | 1.3.6 | x86\_64, arm64v8, arm32v7 | Release [v1.3.6](https://fluentbit.io/announcements/v1.3.6) |
 | 1.3.6-debug | x86\_64 | v1.3.6 release + Busybox |
 | 1.3.5 | x86\_64, arm64v8, arm32v7 | Release [v1.3.5](https://fluentbit.io/announcements/v1.3.5) |
