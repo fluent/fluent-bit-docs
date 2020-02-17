@@ -1,2 +1,2 @@
 redirects:  
-    input/cpu: ./pipeline/inputs/cpu-metrics
+    input/cpu: ./pipeline/inputs/cpu-metrics.md
