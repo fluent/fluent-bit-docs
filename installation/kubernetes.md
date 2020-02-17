@@ -61,6 +61,13 @@ to
 
 ```yaml
 apiVersion: apps/v1
+
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluent-bit-logging
+      version: v1
+      kubernetes.io/cluster-service: "true"
 ```
 
 You can read more about this deprecation on Kubernetes v1.14 Changelog here:
