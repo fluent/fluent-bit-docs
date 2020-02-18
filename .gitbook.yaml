@@ -1,4 +1,8 @@
 redirects:
+    # Installation
+    installation/upgrade_notes:       ./installation/upgrade-notes.md
+    installation/supported_platforms: ./installation/supported-platforms.md
+
     # Inputs
     input/collectd:        ./pipeline/inputs/
     input/cpu:             ./pipeline/inputs/cpu-metrics.md
