@@ -1,4 +1,4 @@
-# Raspberry Pi
+# Raspbian / Raspberry Pi
 
 Fluent Bit is distributed as **td-agent-bit** package and is available for the Raspberry, specifically for [Raspbian 8](http://raspbian.org). This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 
@@ -65,3 +65,4 @@ sudo service td-agent-bit status
 ```
 
 The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+

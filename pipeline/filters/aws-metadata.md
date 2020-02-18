@@ -1,4 +1,4 @@
-# AWS
+# AWS Metadata
 
 The _AWS Filter_ Enriches logs with AWS Metadata. Currently the plugin adds the EC2 instance ID and availability zone to log records. To use this plugin, you must be running in EC2 and have the [instance metadata service enabled](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html).
 
@@ -6,17 +6,26 @@ The _AWS Filter_ Enriches logs with AWS Metadata. Currently the plugin adds the 
 
 The plugin supports the following configuration parameters:
 
-| Key | Value Format | Description |
+| Key | Description | Default |
 | :--- | :--- | :--- |
-| imds_version | VERSION | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'; 'v2' is the default. |
+| imds\_version | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'. | v2 |
 
-Note: *If you run Fluent Bit in a container, you may have to use instance metadata v1.* The plugin behaves the same regardless of which version is used.
+Note: _If you run Fluent Bit in a container, you may have to use instance metadata v1._ The plugin behaves the same regardless of which version is used.
 
 ## Usage
 
+### Metadata Fields
+
+Currently, the plugin only adds the instance ID and availability zone. AWS plans to [expand this plugin in the future](https://github.com/fluent/fluent-bit/issues/1780).
+
+| Key | Value |
+| :--- | :--- |
+| az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, "us-east-1a". |
+| ec2\_instance\_id | The EC2 instance ID. |
+
 ### Command Line
 
-```
+```text
 $ bin/fluent-bit -i dummy -F aws -m '*' -o stdout
 
 [2020/01/17 07:57:17] [ info] [engine] started (pid=32744)
@@ -26,7 +35,7 @@ $ bin/fluent-bit -i dummy -F aws -m '*' -o stdout
 
 ### Configuration File
 
-```
+```text
 [INPUT]
     Name dummy
     Tag dummy
@@ -40,3 +49,4 @@ $ bin/fluent-bit -i dummy -F aws -m '*' -o stdout
     Name stdout
     Match *
 ```
+

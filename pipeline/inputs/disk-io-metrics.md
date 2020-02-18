@@ -1,4 +1,4 @@
-# Disk Throughput
+# Disk I/O Metrics
 
 The **disk** input plugin, gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 

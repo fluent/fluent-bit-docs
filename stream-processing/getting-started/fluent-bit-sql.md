@@ -1,4 +1,4 @@
-# Fluent Bit Query Language: SQL
+# Fluent Bit + SQL
 
 Fluent Bit stream processor uses common SQL to perform record queries. The following section describe the features available and examples of it.
 
@@ -20,7 +20,7 @@ SELECT results_statement
 
 #### Description
 
-Select keys from records coming from a stream or records matching a specific Tag pattern. Note that a simple `SELECT` statement __not__ associated from a stream creation will send the results to the standard output interface (stdout), useful for debugging purposes.
+Select keys from records coming from a stream or records matching a specific Tag pattern. Note that a simple `SELECT` statement **not** associated from a stream creation will send the results to the standard output interface \(stdout\), useful for debugging purposes.
 
 The query allows filtering the results by applying a condition using `WHERE` statement. We will explain `WINDOW` and `GROUP BY` statements later in aggregation functions section.
 
@@ -70,8 +70,7 @@ CREATE STREAM hello AS SELECT * FROM TAG:'apache.*';
 
 ## Aggregation Functions
 
-Aggregation functions are used in `results_statement` on the keys, allowing to perform data calculation on groups of records.
-Group of records that aggregation functions apply on are determined by `WINDOW` keyword. When `WINDOW` is not specified, aggregation functions apply on the current buffer of records received, which may have non-deterministic number of elements. Aggregation functions can be applied on records in a window of a specific time interval (see the syntax of `WINDOW` in select statement).
+Aggregation functions are used in `results_statement` on the keys, allowing to perform data calculation on groups of records. Group of records that aggregation functions apply on are determined by `WINDOW` keyword. When `WINDOW` is not specified, aggregation functions apply on the current buffer of records received, which may have non-deterministic number of elements. Aggregation functions can be applied on records in a window of a specific time interval \(see the syntax of `WINDOW` in select statement\).
 
 Fluent Bit streaming currently supports tumbling window, which is non-overlapping window type. That means, a window of size 5 seconds performs aggregation computations on records over a 5-second interval, and then starts new calculations for the next interval.
 
@@ -153,7 +152,7 @@ SELECT NOW() FROM STREAM:apache;
 
 Add system time using format: %Y-%m-%d %H:%M:%S. Output example: 2019-03-09 21:36:05.
 
-### UNIX_TIMESTAMP
+### UNIX\_TIMESTAMP
 
 #### Synopsis
 
@@ -169,7 +168,7 @@ Add current Unix timestamp to the record. Output example: 1552196165 .
 
 Record functions append new keys to the record using values from the record context.
 
-### RECORD_TAG
+### RECORD\_TAG
 
 #### Synopsis
 
@@ -181,27 +180,34 @@ SELECT RECORD_TAG() FROM STREAM:apache;
 
 Append Tag string associated to the record as a new key.
 
-### RECORD_TIME
+### RECORD\_TIME
 
 #### Synopsis
 
 ```sql
 SELECT RECORD_TIME() FROM STREAM:apache;
 ```
+
 ## WHERE Condition
 
 Similar to conventional SQL statements, `WHERE` condition is supported in Fluent Bit query language. The language supports conditions over keys and subkeys, for instance:
+
 ```sql
 SELECT AVG(size) FROM STREAM:apache WHERE method = 'POST' AND status = 200;
 ```
+
 It is possible to check the existence of a key in the record using record-specific function `@record.contains`:
+
 ```sql
 SELECT MAX(key) FROM STREAM:apache WHERE @record.contains(key);
 ```
+
 And to check if the value of a key is/is not `NULL`:
+
 ```sql
 SELECT MAX(key) FROM STREAM:apache WHERE key IS NULL;
 ```
+
 ```sql
 SELECT * FROM STREAM:apache WHERE user IS NOT NULL;
 ```
@@ -209,3 +215,4 @@ SELECT * FROM STREAM:apache WHERE user IS NOT NULL;
 #### Description
 
 Append a new key with the record Timestamp in _double_ format: seconds.nanoseconds. Output example: 1552196165.705683 .
+

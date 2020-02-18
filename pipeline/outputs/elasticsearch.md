@@ -9,8 +9,10 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Host | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port | TCP port of the target Elasticsearch instance | 9200 |
 | Path | Elasticsearch accepts new data on HTTP query path "/\_bulk". But it is also possible to serve Elasticsearch behind a reverse proxy on a subpath. This option defines such path on the fluent-bit side. It simply adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 4KB |
+| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/unit_sizes.md) specification. | 4KB |
 | Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
+| AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
+| AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | Index | Index name | fluentbit |
@@ -24,15 +26,15 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
-| Trace\_Output | When enabled print the elasticsearch API calls to stdout (for diag only) | Off |
+| Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-| Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported (if desired, you can use the nest filter plugin to remove nesting) | |
+| Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported \(if desired, you can use the nest filter plugin to remove nesting\) |  |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq-multiple-types)
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../configuration/tls_ssl.md) section.
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
 
 ## Getting Started
 
@@ -94,11 +96,11 @@ becomes
 
 ## FAQ
 
-### Elasticsearch rejects requests saying "the final mapping would have more than 1 type" {#faq-multiple-types}
+### Elasticsearch rejects requests saying "the final mapping would have more than 1 type" <a id="faq-multiple-types"></a>
 
 Since Elasticsearch 6.0, you cannot create multiple types in a single index. This means that you cannot set up your configuration as below anymore.
 
-```
+```text
 [OUTPUT]
     Name  es
     Match foo.*
@@ -114,18 +116,47 @@ Since Elasticsearch 6.0, you cannot create multiple types in a single index. Thi
 
 If you see an error message like below, you'll need to fix your configuration to use a single type on each index.
 
-> Rejecting mapping update to [search] as the final mapping would have more than 1 type
+> Rejecting mapping update to \[search\] as the final mapping would have more than 1 type
 
 For details, please read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).
 
-### Fluent Bit + AWS Elasticsearch
+### Fluent Bit + Amazon Elasticsearch
 
-AWS Elasticsearch adds an extra security layer where the HTTP requests we must be signed with AWS Signv4, as of Fluent Bit v1.3 this is not yet supported. At the end of January 2020 with the release of Fluent Bit v1.4 we are adding such feature (among integration with other AWS Services ;) )
+Amazon ElasticSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.4 introduces experimental support for Amazon ElasticSearch Service.
 
-As a workaround, you can use the following tool as a proxy:
+To use Amazon ElasticSearch Service, you *must* specify credentials as environment variables:
 
-- https://github.com/abutaha/aws-es-proxy
+```
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"
+export AWS_SESSION_TOKEN="your-session-token"
+```
 
-More details about this AWS requirement can be found here:
+While it is generally considered safe to set credentials as environment variables, the best practice is to obtain credentials from one of the standard AWS sources (for example, an [Amazon EKS IAM Role for a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)). Consequently, this feature may not be suitable for production workloads. Fluent Bit and AWS are working together to bring full support for all standard AWS credential sources in Fluent Bit v1.5.
 
-- https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html
+Example configuration:
+
+```
+
+[OUTPUT]
+    Name  es
+    Match *
+    Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+    Port  443
+    Index my_index
+    Type  my_type
+    AWS_Auth On
+    AWS_Region us-west-2
+    tls     On
+```
+
+Notice that the `Port` is set to `443`, and that `tls` is enabled.
+
+
+If this feature does not yet meet your needs, you can use the following proxy as an alternative workaround:
+
+* [https://github.com/abutaha/aws-es-proxy](https://github.com/abutaha/aws-es-proxy)
+
+More details about AWS Sigv4 and ElasticSearch can be found here:
+
+* [https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html)

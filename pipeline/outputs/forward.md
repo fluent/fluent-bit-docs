@@ -16,14 +16,13 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 | Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
 | Port | TCP Port of the target service. | 24224 |
 | Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
-| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../configuration/upstream_servers.md) documentation section. |  |
-| Send_options | Always send options (with "size"=count of messages) | False |
-| Require_ack_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. (Requires Fluentd v0.14.0+ server) | False |
+| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/upstream_servers.md) documentation section. |  |
+| Send\_options | Always send options \(with "size"=count of messages\) | False |
+| Require\_ack\_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. \(Requires Fluentd v0.14.0+ server\) | False |
 
+## Secure Forward Mode Configuration Parameters
 
-## Secure Forward Mode Configuration Parameters 
-
-When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
+When using Secure Forward mode, the [TLS](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
@@ -95,7 +94,7 @@ $ fluentd -c test.conf
 2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
 ```
 
-## Fluent Bit + Forward Setup {#forward_setup}
+## Fluent Bit + Forward Setup <a id="forward_setup"></a>
 
 Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
@@ -105,7 +104,7 @@ bin/fluent-bit -i INPUT -o forward://HOST:PORT
 
 If the **TAG** parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
 
-Using the [CPU](../input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
+Using the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
 
 ```bash
 $ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
@@ -120,13 +119,13 @@ Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gath
 2017-03-23 11:53:09 -0600 fluent_bit: {"cpu_p":4.75,"user_p":3.5,"system_p":1.25,"cpu0.p_cpu":4.0,"cpu0.p_user":3.0,"cpu0.p_system":1.0,"cpu1.p_cpu":5.0,"cpu1.p_user":4.0,"cpu1.p_system":1.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":5.0,"cpu3.p_user":4.0,"cpu3.p_system":1.0}
 ```
 
-So we gathered [CPU](../input/cpu.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
+So we gathered [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
 
-## Fluent Bit + Secure Forward Setup {#secure_forward_setup}
+## Fluent Bit + Secure Forward Setup <a id="secure_forward_setup"></a>
 
 > DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
 
-Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](../configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
+Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
 
 ### Fluent Bit
 

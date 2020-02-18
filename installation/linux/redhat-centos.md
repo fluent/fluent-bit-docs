@@ -1,4 +1,4 @@
-# CentOS Packages
+# Redhat / CentOS
 
 ## Install on Redhat / CentOS
 
@@ -17,7 +17,7 @@ gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
 ```
 
-note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed. 
+note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed.
 
 The GPG Key fingerprint is `F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A`
 

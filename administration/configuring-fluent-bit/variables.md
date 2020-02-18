@@ -1,4 +1,4 @@
-# Configuration Variables
+# Variables
 
 Fluent Bit supports the usage of environment variables in any value associated to a key when using a configuration file.
 
@@ -12,7 +12,7 @@ When Fluent Bit starts, the configuration reader will detect any request for `${
 
 ## Example
 
-Create the following configuration file (`fluent-bit.conf`):
+Create the following configuration file \(`fluent-bit.conf`\):
 
 ```text
 [SERVICE]

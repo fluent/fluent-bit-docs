@@ -1,4 +1,4 @@
-# Ubuntu Packages
+# Ubuntu
 
 Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable Ubuntu system: Xenial Xerus. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
 

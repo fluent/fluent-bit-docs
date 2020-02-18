@@ -1,3 +1,7 @@
+---
+description: Strong Commitment to the Openness and Collaboration
+---
+
 # License
 
 [Fluent Bit](http://fluentbit.io), including it core, plugins and tools are distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0):

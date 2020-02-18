@@ -1,4 +1,4 @@
-# JSON Parser
+# JSON
 
 The JSON parser is the simplest option: if the original log source is a JSON map string, it will take it structure and convert it directly to the internal binary representation.
 

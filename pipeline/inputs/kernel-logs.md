@@ -1,4 +1,4 @@
-# Kernel Log Buffer
+# Kernel Logs
 
 The **kmsg** input plugin reads the Linux Kernel log buffer since the beginning, it gets every record and parse it field as priority, sequence, seconds, useconds, and message.
 

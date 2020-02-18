@@ -1,4 +1,4 @@
-# Null
+# NULL
 
 The **null** output plugin just throws away events.
 

@@ -1,4 +1,4 @@
-# Memory Usage
+# Memory Management
 
 In certain scenarios would be ideal to estimate how much memory Fluent Bit could be using, this is very useful for containerized environments where memory limits are a must.
 
@@ -8,7 +8,7 @@ In order to estimate we will assume that the input plugins have set the **Mem\_B
 
 Input plugins append data independently, so in order to do an estimation a limit should be imposed through the **Mem\_Buf\_Limit** option. If the limit was set to _10MB_ we need to estimate that in the worse case, the output plugin likely could use _20MB_.
 
-Fluent Bit has an internal binary representation for the data being processed, but when this data reach an output plugin, this one will likely create their own representation in a new memory buffer for processing. The best example are the [InfluxDB](../output/influxdb.md) and [Elasticsearch](../output/elasticsearch.md) output plugins, both needs to convert the binary representation to their respective-custom JSON formats before to talk to their backend servers.
+Fluent Bit has an internal binary representation for the data being processed, but when this data reach an output plugin, this one will likely create their own representation in a new memory buffer for processing. The best example are the [InfluxDB](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/influxdb.md) and [Elasticsearch](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/elasticsearch.md) output plugins, both needs to convert the binary representation to their respective-custom JSON formats before to talk to their backend servers.
 
 So, if we impose a limit of _10MB_ for the input plugins and considering the worse case scenario of the output plugin consuming _20MB_ extra, as a minimum we need \(_30MB_ x 1.2\) = **36MB**.
 
