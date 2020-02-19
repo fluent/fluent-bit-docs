@@ -37,6 +37,8 @@
   * [Ubuntu](installation/linux/ubuntu.md)
   * [Raspbian / Raspberry Pi](installation/linux/raspbian-raspberry-pi.md)
 * [Docker](installation/docker.md)
+* [Containers on AWS](installation/aws-container.md)
+* [Amazon EC2](installation/amazon-ec2.md)
 * [Kubernetes](installation/kubernetes.md)
 * [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
 * [Windows](installation/windows.md)

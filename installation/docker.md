@@ -67,5 +67,4 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
-The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.2.x to v1.3.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
-
+The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.2.x to v1.3.0,  we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
