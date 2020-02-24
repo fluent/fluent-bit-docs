@@ -29,7 +29,6 @@ In addition to the properties listed in the table above, the Storage and Bufferi
 [SERVICE]
     Flush        1
     Daemon       Off
-    Config_Watch On
     Parsers_File parsers.conf
     Parsers_File custom_parsers.conf
 ```
