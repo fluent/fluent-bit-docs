@@ -31,7 +31,7 @@ When using Secure Forward mode, the [TLS](../configuration/tls_ssl.md) mode requ
 | Empty\_Shared\_Key | Use this option to connect to Fluentd with a zero-length secret. | False |
 | Username | Specify the username to present to a Fluentd server that enables `user_auth`. |  |
 | Password | Specify the password corresponding to the username. |  |
-| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). |  |
+| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). | localhost |
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
 | tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
