@@ -16,7 +16,7 @@ The Scheduler provides a simple configuration option called __Retry_Limit__ whic
 
 |             | Value | Description                                                  |
 | ----------- | ----- | ------------------------------------------------------------ |
-| Retry_Limit | N     | Integer value to set the maximum number of retries allowed. N must be >= 1 (default: 2) |
+| Retry_Limit | N     | Integer value to set the maximum number of retries allowed. N must be >= 1 (default: 1) |
 | Retry_Limit | False | When Retry_Limit is set to False, means that there is not limit for the number of retries that the Scheduler can do. |
 
 
