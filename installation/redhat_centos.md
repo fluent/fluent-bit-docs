@@ -11,9 +11,9 @@ We provide **td-agent-bit** through a Yum repository. In order to add the reposi
 ```text
 [td-agent-bit]
 name = TD Agent Bit
-baseurl = http://packages.fluentbit.io/centos/7
+baseurl = https://packages.fluentbit.io/centos/7/$basearch/
 gpgcheck=1
-gpgkey=http://packages.fluentbit.io/fluentbit.key
+gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
 ```
 
@@ -48,4 +48,3 @@ Redirecting to /bin/systemctl status  td-agent-bit.service
 ```
 
 The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/messages_ file.
-
