@@ -2,7 +2,10 @@
 
 ## Install on Redhat / CentOS
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable CentOS system. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable CentOS system. The following architectures are supported
+
+- x86_64
+- aarch64 / arm64v8
 
 ## Configure Yum
 
@@ -11,7 +14,7 @@ We provide **td-agent-bit** through a Yum repository. In order to add the reposi
 ```text
 [td-agent-bit]
 name = TD Agent Bit
-baseurl = https://packages.fluentbit.io/centos/7
+baseurl = https://packages.fluentbit.io/centos/7/$basearch/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
