@@ -22,7 +22,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 32k |
+| Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. A value of `0` results in no limit, and the buffer will expand as-needed. Note that if pod specifications exceed the buffer limit, the API response will be discarded when retrieving metadata, and some kubernetes metadata will fail to be injected to the logs.  | 32k |
 | Kube\_URL      | API Server end-point  | https://kubernetes.default.svc:443 |
 | Kube\_CA\_File | CA certificate file   | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt|
 | Kube\_CA\_Path | Absolute path to scan for certificate files |  |
@@ -164,6 +164,8 @@ kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e06
 When [Kubernetes Filter](kubernetes.md) runs, it will try to match all records that starts with _kube._ (note the ending dot), so records from the file mentioned above will hit the matching rule and the filter will try to enrich the records
 
 Kubernetes Filter do not care from where the logs comes from, but it cares about the absolute name of the monitored file, because that information contains the pod name and namespace name that are used to retrieve associated metadata to the running Pod from the Kubernetes Master/API Server.
+
+> If you have large pod specifications (can be caused by large numbers of environment variables, etc.), be sure to increase the `Buffer_Size` parameter of the kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
 If the configuration property __Kube_Tag_Prefix__ was configured (available on Fluent Bit >= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to _kube._var.logs.containers. , so the previous Tag content will be transformed from:
 
