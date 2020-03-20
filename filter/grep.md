@@ -96,3 +96,8 @@ and if you want to exclude records that match given nested field \(for example `
     Exclude app myapp
 ```
 
+I didn't imagine it could get worse, but it does.
+
+Not only are these docs indecipherable, the design of the tool is brought into question.  Given that a configuration can specify multiple inputs and outputs, how does one associate a filter with a specific one?  This is really not clear.
+
+I want to exclude certain lines which start with certain characters.  How, pray tell, does on do that?  A simple example please.  These docs are more confusing than helpful.
