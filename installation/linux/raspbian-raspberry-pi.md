@@ -1,6 +1,10 @@
 # Raspbian / Raspberry Pi
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the Raspberry, specifically for [Raspbian 8](http://raspbian.org). This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution, the following versions are supported:
+
+- Raspbian 10
+- Raspbian 9
+- Raspbian 8
 
 ## Server GPG key
 
@@ -13,6 +17,12 @@ $ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ## Update your sources lists
 
 On Debian and derivated systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+
+#### Raspbian 10 \(Buster\)
+
+```text
+deb https://packages.fluentbit.io/raspbian/buster buster main
+```
 
 #### Raspbian 9 \(Stretch\)
 
