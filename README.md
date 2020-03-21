@@ -1,5 +1,5 @@
 ---
-description: Next generation Log and Stream processor
+description: High Performance Logs Processor
 ---
 
 # Fluent Bit v1.4 Documentation
