@@ -14,3 +14,4 @@ It's strongly recommended to always use the stable release of Fluent Bit recipe 
 ## Fluent Bit v1.1 and native ARMv8 \(aarch64\) support
 
 Fluent Bit &gt;= v1.1.x already integrates native AArch64 support where stack switches for co-routines are done through native ASM calls, on this scenario there is no issues as the one faced in previous series.
+

@@ -8,7 +8,7 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Host | _Required_ - The Datadog server where you are sending your logs.  | `http-intake.logs.datadoghq.com` |
+| Host | _Required_ - The Datadog server where you are sending your logs. | `http-intake.logs.datadoghq.com` |
 | TLS | _Required_ - End-to-end security communications security protocol. Datadog recommends setting this to `on`. | `off` |
 | compress | _Recommended_ - compresses the payload in GZIP format, Datadog supports and recommends setting this to `gzip`. |  |
 | apikey | _Required_ - Your [Datadog API key](https://app.datadoghq.com/account/settings#api). |  |
