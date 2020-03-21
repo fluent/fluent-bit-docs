@@ -10,7 +10,7 @@ In order to understand how Stream Processing works in Fluent Bit, we will go thr
 
 > Most of the phases in the pipeline are implemented through plugins: Input, Filter and Output.
 
-![](https://github.com/fluent/fluent-bit-docs/tree/6bc4af039821d9e8bc1636797a25ad23b52a511f/imgs/flb_pipeline.png)
+![](../.gitbook/assets/flb_pipeline.png)
 
 The Filtering interface is good to perform specific record modifications like append or remove a key, enrich with specific metadata \(e.g: Kubernetes Filter\) or discard records based on specific conditions. Just after the data will not have any further modification and hits the Storage, optionally, will be redirected to the Stream Processor.
 
@@ -20,7 +20,7 @@ The Stream Processor is an independent subsystem that check for new records hitt
 
 > Every _Input_ instance is considered a **Stream**, that stream collects data and ingest records into the pipeline.
 
-![](https://github.com/fluent/fluent-bit-docs/tree/6bc4af039821d9e8bc1636797a25ad23b52a511f/imgs/flb_pipeline_sp.png)
+![](../.gitbook/assets/flb_pipeline_sp.png)
 
 By configuring specific SQL queries \(Structured Query Language\), the user can perform specific tasks like key selections, filtering and data aggregation within others. Note that there is **no** database concept here, everything is **schema-less** and happens **in-memory**, for hence the concept of _Tables_ as in common relational databases don't exists.
 

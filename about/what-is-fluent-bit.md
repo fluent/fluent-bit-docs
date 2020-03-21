@@ -1,3 +1,7 @@
+---
+description: Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+---
+
 # What is Fluent Bit ?
 
 ​[Fluent Bit](http://fluentbit.io/) is an open source and multi-platform log processor tool which aims to be a generic Swiss knife for logs processing and distribution.

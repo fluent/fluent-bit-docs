@@ -20,8 +20,8 @@ For all next steps we will run Fluent Bit from the command line, and for simplic
 ### 1. Fluent Bit version:
 
 ```bash
-$ docker run -ti fluent/fluent-bit:1.2 /fluent-bit/bin/fluent-bit --version
-Fluent Bit v1.2.0
+$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
+Fluent Bit v1.4.0
 ```
 
 ### 2. Parse sample files
@@ -30,7 +30,7 @@ The samples file contains JSON records. On this command, we are appending the Pa
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.2                                          \
+     fluent/fluent-bit:1.4                                          \
      /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
                                 -i tail -p path=/sp-samples-1k.log  \
                                         -p parser=json              \
@@ -40,8 +40,11 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
 The command above will simply print the parsed content to the standard output interface. The content will print the _Tag_ associated to each record and an array with two fields: record timestamp and record map:
 
 ```text
-Fluent Bit v1.2.0
-Copyright (C) Treasure Data
+Fluent Bit v1.4.0
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2019/05/08 13:34:16] [ info] [storage] initializing...
 [2019/05/08 13:34:16] [ info] [storage] in-memory
@@ -174,7 +177,7 @@ Fluent Bit have the notion of streams, and every input plugin instance gets a de
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.2                                          \
+     fluent/fluent-bit:1.4                                          \
      /fluent-bit/bin/fluent-bit                                     \
          -R /fluent-bit/etc/parsers.conf                            \
          -i tail                                                    \
