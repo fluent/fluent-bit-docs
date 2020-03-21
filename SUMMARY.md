@@ -124,7 +124,7 @@
 
 ## Stream Processing
 
-* [Introduction](stream-processing/introduction.md)
+* [Introduction](stream-processing/stream-processing.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
 * [Getting Started](stream-processing/getting-started/README.md)
@@ -137,5 +137,5 @@
 * [C Library API](development/library_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
-* [Developer Guide for Beginners on Contributing to Fluent Bit](development/developer-guide.md)
+* [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
 
