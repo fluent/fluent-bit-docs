@@ -124,20 +124,19 @@ For details, please read [the official blog post on that issue](https://www.elas
 
 Amazon ElasticSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.4 introduces experimental support for Amazon ElasticSearch Service.
 
-To use Amazon ElasticSearch Service, you *must* specify credentials as environment variables:
+To use Amazon ElasticSearch Service, you _must_ specify credentials as environment variables:
 
-```
+```text
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 export AWS_SESSION_TOKEN="your-session-token"
 ```
 
-While it is generally considered safe to set credentials as environment variables, the best practice is to obtain credentials from one of the standard AWS sources (for example, an [Amazon EKS IAM Role for a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)). Consequently, this feature may not be suitable for production workloads. Fluent Bit and AWS are working together to bring full support for all standard AWS credential sources in Fluent Bit v1.5.
+While it is generally considered safe to set credentials as environment variables, the best practice is to obtain credentials from one of the standard AWS sources \(for example, an [Amazon EKS IAM Role for a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)\). Consequently, this feature may not be suitable for production workloads. Fluent Bit and AWS are working together to bring full support for all standard AWS credential sources in Fluent Bit v1.5.
 
 Example configuration:
 
-```
-
+```text
 [OUTPUT]
     Name  es
     Match *
@@ -152,7 +151,6 @@ Example configuration:
 
 Notice that the `Port` is set to `443`, and that `tls` is enabled.
 
-
 If this feature does not yet meet your needs, you can use the following proxy as an alternative workaround:
 
 * [https://github.com/abutaha/aws-es-proxy](https://github.com/abutaha/aws-es-proxy)
@@ -160,3 +158,4 @@ If this feature does not yet meet your needs, you can use the following proxy as
 More details about AWS Sigv4 and ElasticSearch can be found here:
 
 * [https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html)
+

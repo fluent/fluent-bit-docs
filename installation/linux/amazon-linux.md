@@ -4,8 +4,8 @@
 
 Fluent Bit is distributed as **td-agent-bit** package and is available for the latest Amazon Linux 2. The following architectures are supported
 
-- x86_64
-- aarch64 / arm64v8
+* x86\_64
+* aarch64 / arm64v8
 
 ## Configure Yum
 
