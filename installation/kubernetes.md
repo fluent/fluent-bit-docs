@@ -1,5 +1,5 @@
 ---
-description: Kubernetes Production Grade
+description: Kubernetes Production Grade Log Processor
 ---
 
 # Kubernetes
@@ -46,20 +46,20 @@ The next step is to create a ConfigMap that will be used by our Fluent Bit Daemo
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
-### Note for Kubernetes v1.16
+### Note for Kubernetes &lt; v1.16
 
-Starting from Kubernetes v1.16, DaemonSet resources are not longer served from `extensions/v1beta` . Our current Daemonset Yaml files uses the old `apiVersion`.
+For Kubernetes versions olden than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new  `apiVersion`.
 
-If you are using Kubernetes v1.16, grab manually a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
+If you are using and older Kubernetes, grab manually a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 ```
 
 to
 
 ```yaml
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 ```
 
 You can read more about this deprecation on Kubernetes v1.14 Changelog here:

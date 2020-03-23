@@ -1,6 +1,6 @@
 # Debian
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the latest \(and old\) stable Debian systems: Buster, Stretch and Jessie. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest \(and old\) stable Debian systems: Buster, Stretch and Jessie. 
 
 ## Server GPG key
 

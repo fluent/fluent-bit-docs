@@ -32,10 +32,10 @@ Once your repository is configured, run the following command to install it:
 $ yum install td-agent-bit
 ```
 
-Now the following step is to instruct _systemd_ to enable the service:
+Now the following step is to instruct _Systemd_ to enable the service:
 
 ```bash
-$ service td-agent-bit start
+$ sudo service td-agent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:
