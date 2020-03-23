@@ -1,5 +1,5 @@
 ---
-description: 'Destinations for your data: databases, cloud services and more'
+description: 'Destinations for your data: databases, cloud services and more!'
 ---
 
 # Output
