@@ -11,6 +11,7 @@ The **tcp** output plugin allows to send records to a remote TCP server. The pay
 | Format | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json\_lines_ and _json\_stream_. | msgpack |
 | json\_date\_key | Specify the name of the date field in output | date |
 | json\_date\_format | Specify the format of the date. Supported formats are _double_ , _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) and _epoch_. | double |
+| time_key | Specify time field for event time. | time |
 
 ## TLS Configuration Parameters
 
