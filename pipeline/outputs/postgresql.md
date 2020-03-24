@@ -1,4 +1,4 @@
-# PGSQL
+# PostgreSQL
 
 The pgsql output plugin allows to send data from fluentbit to a PostgreSQL instances 9.4 or above.
 To store the date we use the json type so make sure that your PostgreSQL instance supports this type.

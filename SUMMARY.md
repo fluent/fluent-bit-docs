@@ -116,6 +116,7 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [NATS](pipeline/outputs/nats.md)
   * [NULL](pipeline/outputs/null.md)
+  * [PostgreSQL](pipeline/outputs/postgresql.md)
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Splunk](pipeline/outputs/splunk.md)
