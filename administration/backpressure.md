@@ -4,6 +4,16 @@ In certain environments is common to see that logs or data being ingested is fas
 
 In order to avoid backpressure, Fluent Bit implements a mechanism in the engine that restrict the amount of data than an input plugin can ingest, this is done through the configuration parameter **Mem\_Buf\_Limit**.
 
+{% hint style="info" %}
+As described in the [Buffering](../concepts/buffering.md) concepts section, Fluent Bit offers an hybrid mode for data handling: in-memory and filesystem \(optional\).  
+  
+In `memory` is always available and can be restricted with **Mem\_Buf\_Limit**. If your plugin gets restricted because of the configuration and you are under a backpressure scenario, you won't be able to ingest more data until the data chunks that are in memory can flushed. 
+
+Depending of the input plugin type in use, this might lead to discard incoming data \(e.g: TCP input plugin\), but you can rely on the secondary filesystem buffering to be safe. 
+
+If in addition to Mem\_Buf\_Limit the input plugin defined a `storage.type` of `filesystem` \(as described in [Buffering & Storage](buffering-and-storage.md)\), when the limit is reached, all the new data will be stored safety in the file system. 
+{% endhint %}
+
 ## Mem\_Buf\_Limit
 
 This option is disabled by default and can be applied to all input plugins. Let's explain it behavior using the following scenario:
