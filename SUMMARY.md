@@ -125,7 +125,7 @@
 
 ## Stream Processing
 
-* [Introduction](stream-processing/stream-processing.md)
+* [Introduction to Stream Processing](stream-processing/introduction.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
 * [Getting Started](stream-processing/getting-started/README.md)

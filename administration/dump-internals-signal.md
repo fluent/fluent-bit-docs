@@ -4,6 +4,10 @@ When the service is running we can export [metrics](monitoring.md) to see the ov
 
 Fluent Bit v1.4 introduces the Dump Internals feature that can be triggered easily from the command line triggering the `CONT` Unix signal.
 
+{% hint style="info" %}
+note: this feature is only available on Linux and BSD family operating systems
+{% endhint %}
+
 ## Usage
 
 Run the following `kill` command to signal Fluent Bit:
@@ -103,4 +107,6 @@ Fluent Bit relies on a custom storage layer interface designed for hybrid buffer
 | fs chunks |  | Total number of Chunks filesystem based |
 |  | up | Total number of filesystem chunks up in memory  |
 |  | down | Total number of filesystem chunks down \(not loaded in memory\) |
+
+
 

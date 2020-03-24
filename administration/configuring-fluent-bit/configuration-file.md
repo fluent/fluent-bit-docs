@@ -78,7 +78,7 @@ The _Service_ section defines global properties of the service, the keys availab
     <tr>
       <td style="text-align:left">Streams_File</td>
       <td style="text-align:left">Path for the Stream Processor configuration file. To learn more about
-        Stream Processing configuration go <a href="../../stream-processing/stream-processing.md">here</a>.</td>
+        Stream Processing configuration go <a href="../../stream-processing/introduction.md">here</a>.</td>
       <td
       style="text-align:left"></td>
     </tr>

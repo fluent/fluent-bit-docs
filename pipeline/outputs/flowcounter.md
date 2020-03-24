@@ -43,8 +43,11 @@ Once Fluent Bit is running, you will see the reports in the output interface sim
 
 ```bash
 $ fluent-bit -i cpu -o flowcounter  
-Fluent-Bit v0.10.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/12/23 11:01:20] [ info] [engine] started
 [out_flowcounter] cpu.0:[1482458540, {"counts":60, "bytes":7560, "counts/minute":1, "bytes/minute":126 }]

@@ -1,4 +1,4 @@
-# Introduction
+# Introduction to Stream Processing
 
 ![](../.gitbook/assets/stream_processor.png)
 
