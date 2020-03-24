@@ -51,8 +51,11 @@ Once Fluent Bit is running, you will see some random values in the output interf
 
 ```bash
 $ fluent-bit -i health://127.0.0.1:80 -o stdout
-Fluent-Bit v0.9.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/10/07 21:37:51] [ info] [engine] started
 [0] health.0: [1475897871, {"alive"=>true}]

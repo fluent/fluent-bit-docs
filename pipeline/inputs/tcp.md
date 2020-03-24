@@ -65,8 +65,11 @@ In [Fluent Bit](http://fluentbit.io) we should see the following output:
 
 ```bash
 $ bin/fluent-bit -i tcp -o stdout -f 1
-Fluent Bit v1.3.x
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2019/10/03 09:19:34] [ info] [storage] initializing...
 [2019/10/03 09:19:34] [ info] [storage] in-memory

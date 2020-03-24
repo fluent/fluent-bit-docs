@@ -20,8 +20,11 @@ In order to get disk usage from your system, you can run the plugin from the com
 
 ```bash
 $ fluent-bit -i disk -o stdout
-Fluent-Bit v0.11.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/01/28 16:58:16] [ info] [engine] started
 [0] disk.0: [1485590297, {"read_size"=>0, "write_size"=>0}]

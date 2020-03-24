@@ -1,11 +1,6 @@
 # Collectd
 
-The **collectd** input plugin allows you to receive datagrams from collectd.
-
-Content:
-
-* [Configuration Parameters](collectd.md#config)
-* [Configuration Examples](collectd.md#config_example)
+The **collectd** input plugin allows you to receive datagrams from collectd service.
 
 ## Configuration Parameters <a id="config"></a>
 
@@ -33,7 +28,7 @@ Here is a basic configuration example.
     Match  *
 ```
 
-With this configuration, fluent-bit listens to `0.0.0.0:25826`, and outputs incoming datagram packets to stdout.
+With this configuration, Fluent Bit listens to `0.0.0.0:25826`, and outputs incoming datagram packets to stdout.
 
-You must set the same types.db files that your collectd server uses. Otherwise, fluent-bit may not be able to interpret the payload properly.
+You must set the same types.db files that your collectd server uses. Otherwise, Fluent Bit may not be able to interpret the payload properly.
 

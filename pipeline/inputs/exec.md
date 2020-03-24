@@ -24,8 +24,11 @@ The following example will read events from the output of _ls_.
 
 ```bash
 $ fluent-bit -i exec -p 'command=ls /var/log' -o stdout
-Fluent-Bit v0.13.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2018/03/21 17:46:49] [ info] [engine] started
 [0] exec.0: [1521622010.013470159, {"exec"=>"ConsoleKit"}]
