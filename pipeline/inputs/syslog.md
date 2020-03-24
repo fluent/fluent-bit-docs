@@ -69,8 +69,11 @@ In [Fluent Bit](http://fluentbit.io) we should see the following output:
 
 ```bash
 $ bin/fluent-bit -R ../conf/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
-Fluent-Bit v0.11.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/03/09 02:23:27] [ info] [engine] started
 [0] syslog.0: [1489047822, {"pri"=>"13", "host"=>"edsiper:", "ident"=>"my_ident", "pid"=>"", "message"=>"my_message"}]

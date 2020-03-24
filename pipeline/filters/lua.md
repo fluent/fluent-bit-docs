@@ -7,12 +7,6 @@ Due to the necessity to have a flexible filtering mechanism, now is possible to 
 * Configure the Filter in the main configuration
 * Prepare a Lua script that will be used by the Filter
 
-Content:
-
-* [Configuration Parameters](lua.md#config)
-* [Getting Started](lua.md#getting_started)
-* [Lua Script Filter API](lua.md#lua_api)
-
 ## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:

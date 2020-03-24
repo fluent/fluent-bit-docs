@@ -2,9 +2,9 @@
 
 Fluent Bit is distributed as **td-agent-bit** package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution, the following versions are supported:
 
-* Raspbian 10
-* Raspbian 9
-* Raspbian 8
+* Raspbian Buster \(10\)
+* Raspbian Stretch \(9\)
+* Raspbian Jessie \(8\)
 
 ## Server GPG key
 

@@ -10,8 +10,11 @@ In order to get memory and swap usage from your system, you can run the plugin f
 
 ```bash
 $ fluent-bit -i mem -t memory -o stdout -m '*'
-Fluent-Bit v0.11.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/03/03 21:12:35] [ info] [engine] started
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]

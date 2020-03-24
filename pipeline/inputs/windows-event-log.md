@@ -2,11 +2,6 @@
 
 The **winlog** input plugin allows you to read Windows Event Log.
 
-Content:
-
-* [Configuration Parameters](https://github.com/fluent/fluent-bit-docs/tree/00bb8cbd96cc06988ff3e51b4933e16e49206c70/pipeline/inputs/winlog.md#config)
-* [Configuration Examples](https://github.com/fluent/fluent-bit-docs/tree/00bb8cbd96cc06988ff3e51b4933e16e49206c70/pipeline/inputs/winlog.md#config_example)
-
 ## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:

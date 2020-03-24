@@ -34,8 +34,11 @@ In Fluent Bit you should see an output like this:
 
 ```bash
 $ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
-Fluent-Bit v0.8.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/05/20 15:44:39] [ info] starting engine
 [0] data: [1463780680, {"msg"=>"this is some message"}]

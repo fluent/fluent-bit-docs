@@ -34,8 +34,11 @@ Now lets start the script and [Fluent Bit](http://fluentbit.io) in the following
 
 ```bash
 $ ./test.sh | fluent-bit -i stdin -o stdout
-Fluent-Bit v0.9.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/10/07 21:44:46] [ info] [engine] started
 [0] stdin.0: [1475898286, {"key"=>"some value"}]

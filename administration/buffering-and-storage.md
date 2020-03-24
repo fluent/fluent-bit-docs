@@ -17,6 +17,8 @@ The known Service section configure a global environment for the storage layer, 
 
 ### Service Section Configuration
 
+The Service section refers to the section defined in the main [configuration file](configuring-fluent-bit/configuration-file.md):
+
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | storage.path | Set an optional location in the file system to store streams and chunks of data. If this parameter is not set, Input plugins can only use in-memory buffering. |  |

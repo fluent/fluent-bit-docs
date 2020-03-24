@@ -21,8 +21,11 @@ Since the **MQTT** input plugin let Fluent Bit behave as a server, we need to di
 
 ```bash
 $ fluent-bit -i mqtt -t data -o stdout -m '*'
-Fluent-Bit v0.8.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/05/20 14:22:52] [ info] starting engine
 [0] data: [1463775773, {"topic"=>"some/topic", "key1"=>123, "key2"=>456}]

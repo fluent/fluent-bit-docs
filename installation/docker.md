@@ -8,17 +8,17 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.3 | x86\_64, arm64v8, arm32v7 | Latest release of 1.3.x series. |
-| 1.3.0 | x86\_64, arm64v8, arm32v7 | Release [v1.3.0](https://fluentbit.io/announcements/v1.3.0) |
-| 1.3-debug, 1.3.0-debug | x86\_64 | v1.3.x releases + Busybox |
+| 1.4 | x86\_64, arm64v8, arm32v7 | Latest release of 1.4.x series. |
+| 1.4.0 | x86\_64, arm64v8, arm32v7 | Release [v1.4.0](https://fluentbit.io/announcements/v1.4.0) |
+| 1.4-debug, 1.4.0-debug | x86\_64 | v1.4.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
 ## Multi Architecture Images
 
-Our x86_64 stable image is based in_ [_Distroless_](https://github.com/GoogleContainerTools/distroless) _focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. Optionally, we provide \_debug_ images for x86\_64 which contains Busybox that can be used to troubleshoot or testing purposes.
+Our x86\_64 stable image is based in [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. Optionally, we provide **debug** images for x86\_64 which contains Busybox that can be used to troubleshoot or testing purposes.
 
-In addition, the main manifest provides images for arm64v8 and arm32v7 architctectures. From a deployment perspective there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
+In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
 For every architecture we build the layers using the following base images:
 
@@ -30,22 +30,22 @@ For every architecture we build the layers using the following base images:
 
 ## Getting Started
 
-Download the last stable image from 1.3 series:
+Download the last stable image from 1.4 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.3
+$ docker pull fluent/fluent-bit:1.4
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.3 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
 ```text
-Fluent-Bit v1.3.x
+Fluent-Bit v1.4.x
 Copyright (C) Treasure Data
 
 [2019/10/01 12:29:02] [ info] [engine] started
@@ -67,5 +67,5 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
-The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.2.x to v1.3.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
+The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
 

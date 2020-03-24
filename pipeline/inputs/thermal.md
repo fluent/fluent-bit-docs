@@ -29,8 +29,11 @@ In order to get temperature\(s\) of your system, you can run the plugin from the
 
 ```bash
 $ bin/fluent-bit -i thermal -t my_thermal -o stdout -m '*'
-Fluent Bit v1.3.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2019/08/18 13:39:43] [ info] [storage] initializing...
 ...

@@ -53,8 +53,10 @@ Every Event that gets into Fluent Bit gets assigned a Tag. This tag is an intern
 Most of the tags are assigned manually in the configuration. If a tag is not specified, Fluent Bit will assign the name of the Input plugin instance from where that Event was generated from.
 
 {% hint style="info" %}
-The only input plugin that **don't** assign Tags is Forward input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
+The only input plugin that **don't** assign Tags is [Forward](../pipeline/inputs/forward.md) input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
 {% endhint %}
+
+A Tagged record must always have a Matching rule. To learn more about Tags and Matches check the [Routing](data-pipeline/router.md) section.
 
 ## Timestamp
 
@@ -78,13 +80,13 @@ A timestamp always exists, either set by the Input plugin or discovered through 
 
 ## Match
 
-Fluent Bit allows to deliver your collected and processed Events to one or multiple destinations, this is done through a routing phase. A Match represent a simple rule to select Events where it Tags maches a defined rule.
+Fluent Bit allows to deliver your collected and processed Events to one or multiple destinations, this is done through a routing phase. A Match represent a simple rule to select Events where it Tags matches a defined rule.
 
-FIXME: More about Tag and Matchs in the Routing section.
+To learn more about Tags and Matches check the [Routing](data-pipeline/router.md) section.
 
-## Structured Message
+## Structured Messages
 
-Events can have or not have a structure. A structure defines a set of _keys_ and _values_ inside the Event message. As an example consider the following two messages:
+Source events can have or not have a structure. A structure defines a set of _keys_ and _values_ inside the Event message.  As an example consider the following two messages:
 
 ### No structured message
 

@@ -16,13 +16,28 @@ Each output plugin that requires to perform Network I/O can optionally enable TL
 | tls.key\_passwd | optional password for tls.key\_file file |  |
 | tls.vhost | hostname to be used for TLS SNI extension |  |
 
-The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. The following **output** plugins can take advantage of the TLS feature:
+The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. 
 
-* [Elasticsearch](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/elasticsearch.md)
-* [Forward](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/forward.md)
-* [GELF](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/gelf.md)
-* [HTTP](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/http.md)
-* [Splunk](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/output/splunk.md)
+The following **output** plugins can take advantage of the TLS feature:
+
+* [Azure](../pipeline/outputs/azure.md)
+* [BigQuery](../pipeline/outputs/bigquery.md)
+* [Datadog](../pipeline/outputs/datadog.md)
+* [Elasticsearch](../pipeline/outputs/elasticsearch.md)
+* [Forward](../pipeline/inputs/forward.md)
+* [GELF](../pipeline/outputs/gelf.md)
+* [HTTP](../pipeline/outputs/http.md)
+* [InfluxDB](../pipeline/outputs/influxdb.md)
+* [Kafka REST Proxy](../pipeline/outputs/kafka-rest-proxy.md)
+* Slack
+* [Splunk](../pipeline/outputs/splunk.md)
+* [Stackdriver](../pipeline/outputs/stackdriver.md)
+* [TCP & TLS](../pipeline/outputs/tcp-and-tls.md)
+* [Treasure Data](../pipeline/outputs/treasure-data.md)
+
+In addition, other plugins implements a sub-set of TLS support, meaning, with restricted configuration:
+
+* [Kubernetes Filter](../pipeline/filters/kubernetes.md)
 
 ## Example: enable TLS on HTTP output
 

@@ -26,15 +26,15 @@ This mode is useful to get a specific line. This is an example to get CPU freque
 ```text
 processor    : 0
 vendor_id    : GenuineIntel
-cpu family    : 6
+cpu family   : 6
 model        : 42
-model name    : Intel(R) Core(TM) i7-2640M CPU @ 2.80GHz
-stepping    : 7
+model name   : Intel(R) Core(TM) i7-2640M CPU @ 2.80GHz
+stepping     : 7
 microcode    : 41
-cpu MHz        : 2791.009
-cache size    : 4096 KB
-physical id    : 0
-siblings    : 1
+cpu MHz      : 2791.009
+cache size   : 4096 KB
+physical id  : 0
+siblings     : 1
 ```
 
 Cpu frequency is "cpu MHz : 2791.009". We can get the line with this configuration file.
@@ -62,8 +62,11 @@ Output is
 
 ```bash
 $ bin/fluent-bit -c head.conf 
-Fluent-Bit v0.12.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/06/26 22:38:24] [ info] [engine] started
 [0] head.cpu: [1498484305.000279805, {"line7"=>"cpu MHz        : 2791.009"}]
@@ -82,8 +85,11 @@ The following example will read events from the /proc/uptime file, tag the recor
 
 ```bash
 $ fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
-Fluent-Bit v0.8.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2016/05/17 21:53:54] [ info] starting engine
 [0] uptime: [1463543634, {"head"=>"133517.70 194870.97"}]

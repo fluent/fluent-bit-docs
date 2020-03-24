@@ -44,18 +44,19 @@
 ## Administration
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
-  * [Files Schema / Structure](administration/configuring-fluent-bit/files-schema-structure.md)
+  * [Format and Schema](administration/configuring-fluent-bit/format-schema.md)
+  * [Configuration File](administration/configuring-fluent-bit/configuration-file.md)
   * [Variables](administration/configuring-fluent-bit/variables.md)
   * [Commands](administration/configuring-fluent-bit/commands.md)
-  * [Configuration File](administration/configuring-fluent-bit/configuration-file.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
 * [Security](administration/security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
+* [Scheduling and Retries](administration/scheduling-and-retries.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
-* [Scheduling and Retries](administration/scheduling-and-retries.md)
+* [Dump Internals / Signal](administration/dump-internals-signal.md)
 
 ## Data Pipeline <a id="pipeline"></a>
 
@@ -125,7 +126,7 @@
 
 ## Stream Processing
 
-* [Introduction](stream-processing/stream-processing.md)
+* [Introduction to Stream Processing](stream-processing/introduction.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
 * [Getting Started](stream-processing/getting-started/README.md)

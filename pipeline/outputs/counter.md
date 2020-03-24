@@ -38,8 +38,11 @@ Once Fluent Bit is running, you will see the reports in the output interface sim
 
 ```bash
 $ bin/fluent-bit -i cpu -o counter -f 1
-Fluent-Bit v0.12.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/07/19 11:19:02] [ info] [engine] started
 1500484743,1 (total = 1)

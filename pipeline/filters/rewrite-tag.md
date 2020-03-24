@@ -140,8 +140,11 @@ The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.o
 
 ```bash
 $ bin/fluent-bit -c example.conf 
-Fluent Bit v1.4.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 ...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]

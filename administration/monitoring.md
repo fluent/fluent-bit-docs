@@ -1,6 +1,12 @@
+---
+description: Gather Metrics from Fluent Bit pipeline
+---
+
 # Monitoring
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
+
+The monitoring interface can be easily integrated with Prometheus since we support it native format.
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -24,11 +30,14 @@ the above configuration snippet will instruct Fluent Bit to start it HTTP Server
 
 ```text
 $ bin/fluent-bit -c fluent-bit.conf
-Fluent-Bit v0.14.x
-Copyright (C) Treasure Data
+Fluent Bit v1.4.0
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
-[2017/10/27 19:08:24] [ info] [engine] started
-[2017/10/27 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
+[2020/03/10 19:08:24] [ info] [engine] started
+[2020/03/10 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
 now with a simple **curl** command is enough to gather some information:

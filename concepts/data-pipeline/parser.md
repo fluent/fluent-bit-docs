@@ -4,7 +4,7 @@ description: Convert Unstructured to Structured messages
 
 # Parser
 
-Dealing with raw strings is a constant pain; having a structure is highly desired. Ideally we want to set a structure to the incoming data by the Input Plugins as soon as they are collected:
+Dealing with raw strings or unstructured messages is a constant pain; having a structure is highly desired. Ideally we want to set a structure to the incoming data by the Input Plugins as soon as they are collected:
 
 ![](../../.gitbook/assets/logging_pipeline_parser.png)
 

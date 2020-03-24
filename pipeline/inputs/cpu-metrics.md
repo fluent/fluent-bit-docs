@@ -36,8 +36,11 @@ In order to get the statistics of the CPU usage of your system, you can run the 
 
 ```bash
 $ build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
-Fluent-Bit v1.x.x
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2019/09/02 10:46:29] [ info] starting engine
 [0] [1452185189, {"cpu_p"=>7.00, "user_p"=>5.00, "system_p"=>2.00, "cpu0.p_cpu"=>10.00, "cpu0.p_user"=>8.00, "cpu0.p_system"=>2.00, "cpu1.p_cpu"=>6.00, "cpu1.p_user"=>4.00, "cpu1.p_system"=>2.00}]

@@ -1,6 +1,6 @@
 # Ubuntu
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable Ubuntu system: Xenial Xerus. This stable Fluent Bit distribution package is maintained by [Treasure Data, Inc](https://www.treasuredata.com).
+Fluent Bit is distributed as **td-agent-bit** package and is available for the latest stable Ubuntu system: Focal Fossa.
 
 ## Server GPG key
 
@@ -13,6 +13,12 @@ $ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ## Update your sources lists
 
 On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+
+#### Ubuntu 20.04 LTS \(Focal Fossa\)
+
+```text
+deb https://packages.fluentbit.io/ubuntu/focal focal main
+```
 
 #### Ubuntu 18.04 LTS \(Bionic Beaver\)
 

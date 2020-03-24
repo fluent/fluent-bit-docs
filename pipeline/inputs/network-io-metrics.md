@@ -21,8 +21,11 @@ In order to monitor network traffic from your system, you can run the plugin fro
 
 ```bash
 $ bin/fluent-bit -i netif -p interface=eth0 -o stdout
-Fluent-Bit v0.12.0
-Copyright (C) Treasure Data
+Fluent Bit v1.x.x
+* Copyright (C) 2019-2020 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2017/07/08 23:34:18] [ info] [engine] started
 [0] netif.0: [1499524459.001698260, {"eth0.rx.bytes"=>89769869, "eth0.rx.packets"=>73357, "eth0.rx.errors"=>0, "eth0.tx.bytes"=>4256474, "eth0.tx.packets"=>24293, "eth0.tx.errors"=>0}]
