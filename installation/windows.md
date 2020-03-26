@@ -1,13 +1,13 @@
-# Windows Packages
+# Windows
 
-Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
+Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive \(for quick testing\) and an EXE installer \(for system installation\).
 
 ## Installation Packages
 
 The latest stable version is 1.2.2.
 
-| INSTALLERS                   | SHA256 CHECKSUMS                                                |
-| ---------------------------- | ---------------------------------------------------------------- |
+| INSTALLERS | SHA256 CHECKSUMS |
+| :--- | :--- |
 | td-agent-bit-1.2.2-win32.exe | b9e2695e6cc1b15e0e47d20624d6509cecbdd1767b6681751190f54e52832b6a |
 | td-agent-bit-1.2.2-win32.zip | 4212e28fb6cb970ce9f27439f8dce3281ab544a4f7c9ae71991480a7e7a64afd |
 | td-agent-bit-1.2.2-win64.exe | 6059e2f4892031125aac30325be4c167daed89742705fa883d34d91dc306645e |
@@ -34,16 +34,16 @@ The ZIP package contains the following set of files.
 ```text
 td-agent-bit
 ├── bin
-│   ├── fluent-bit.dll
-│   └── fluent-bit.exe
+│   ├── fluent-bit.dll
+│   └── fluent-bit.exe
 ├── conf
-│   ├── fluent-bit.conf
-│   ├── parsers.conf
-│   └── plugins.conf
+│   ├── fluent-bit.conf
+│   ├── parsers.conf
+│   └── plugins.conf
 └── include
-    │   ├── flb_api.h
-    │   ├── ...
-    │   └── flb_worker.h
+    │   ├── flb_api.h
+    │   ├── ...
+    │   └── flb_worker.h
     └── fluent-bit.h
 ```
 
@@ -79,10 +79,11 @@ Download an EXE installer from the [download page](https://fluentbit.io/download
 
 Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
 
-![](../imgs/windows_installer.png)
+![](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/imgs/windows_installer.png)
 
 Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\td-agent-bit\`, so you should be able to launch fluent-bit as follow after installation.
 
 ```text
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
+

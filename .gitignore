@@ -1,2 +1,5 @@
 _book/*
 node_modules/*
+.gitignore
+old/*
+
