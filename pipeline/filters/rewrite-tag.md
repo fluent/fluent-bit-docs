@@ -17,7 +17,7 @@ The new Tag to define can be composed by:
 * Alphabet characters & Numbers
 * Original Tag string or part of it
 * Regular Expressions groups capture
-* Any key or sub-key of the processed record 
+* Any key or sub-key of the processed record
 * Environment variables
 
 ## Configuration Parameters
@@ -129,17 +129,17 @@ The following configuration example will emit a dummy \(hand-crafted\) record, t
     Name          rewrite_tag
     Match         test_tag
     Rule          $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
-    Emitter_Name  
+    Emitter_Name  re_emitted
 
 [OUTPUT]
-    Name  stdout
-    Match from.*
+    Name   stdout
+    Match  from.*
 ```
 
 The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`:
 
 ```bash
-$ bin/fluent-bit -c example.conf 
+$ bin/fluent-bit -c example.conf
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -208,4 +208,3 @@ The records generated are handled by the internal Emitter, so the new records ar
 The Emitter is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an Emitter instance to use it exclusively to emit records, on that way we can have a granular control of _who_ is emitting what.
 
 The Emitter name in the metrics can be changed setting up the `Emitter_Name` configuration property described above.
-
