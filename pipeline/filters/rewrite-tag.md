@@ -28,6 +28,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | :--- | :--- |
 | Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four components: `KEY REGEX NEW_TAG KEEP`. For more specific details of the Rule format and it composition read the next section. |
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
+| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values ```memory``` (default) or ```filesystem```. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommends enabling the ```filesystem``` mode.
 
 ## Rules
 
