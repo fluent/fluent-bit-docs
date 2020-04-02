@@ -28,7 +28,8 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | :--- | :--- |
 | Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four components: `KEY REGEX NEW_TAG KEEP`. For more specific details of the Rule format and it composition read the next section. |
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
-| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values ```memory``` (default) or ```filesystem```. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommends enabling the ```filesystem``` mode.
+| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values ```memory``` (default) or ```filesystem```. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommends enabling the ```filesystem``` mode. |
+| Emitter\_Mem\_Buf\_Limit | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure.  By default this feature is disabled meaning there is no limit.  If this value is set, then the pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `5M` then the pipeline will pause once the buffer exceeds that value until the output drains the buffer. |
 
 ## Rules
 
