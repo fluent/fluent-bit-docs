@@ -29,5 +29,5 @@ The above log line is a raw string without format, ideally we would like to give
  }
 ```
 
-Parsers are fully configurable and are independently and optionally handled by each input plugin, for more details please refer to the [Parsers](https://github.com/fluent/fluent-bit-docs/tree/b6af8ea32759e6e8250d853b3d21e44b4a5427f8/concepts/parser/README.md) section.
+Parsers are fully configurable and are independently and optionally handled by each input plugin, for more details please refer to the [Parsers](https://docs.fluentbit.io/manual/concepts/data-pipeline/parser) section.
 
