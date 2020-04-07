@@ -16,7 +16,7 @@ Each output plugin that requires to perform Network I/O can optionally enable TL
 | tls.key\_passwd | optional password for tls.key\_file file |  |
 | tls.vhost | hostname to be used for TLS SNI extension |  |
 
-The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line. 
+The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line.
 
 The following **output** plugins can take advantage of the TLS feature:
 

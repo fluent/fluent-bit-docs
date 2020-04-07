@@ -115,6 +115,7 @@
   * [InfluxDB](pipeline/outputs/influxdb.md)
   * [Kafka](pipeline/outputs/kafka.md)
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
+  * [LogDNA](pipeline/outputs/logdna.md)
   * [NATS](pipeline/outputs/nats.md)
   * [NULL](pipeline/outputs/null.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)

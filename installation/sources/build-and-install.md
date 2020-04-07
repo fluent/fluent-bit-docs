@@ -141,12 +141,12 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | [FLB\_FILTER\_GREP](../../pipeline/filters/grep.md) | Enable Grep filter | On |
 | [FLB\_FILTER\_KUBERNETES](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | On |
 | [FLB\_FILTER\_LUA](../../pipeline/filters/lua.md) | Enable Lua scripting filter | On |
-| [FLB\_FILTER\_MODIFY](../../pipeline/filters/modify.md) | Enable Modify filter  | On |
+| [FLB\_FILTER\_MODIFY](../../pipeline/filters/modify.md) | Enable Modify filter | On |
 | [FLB\_FILTER\_NEST](../../pipeline/filters/nest.md) | Enable Nest filter | On |
 | [FLB\_FILTER\_PARSER](../../pipeline/filters/parser.md) | Enable Parser filter | On |
 | [FLB\_FILTER\_RECORD\_MODIFIER](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | On |
 | [FLB\_FILTER\_REWRITE\_TAG](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | On |
-| [FLB\_FILTER\_STDOUT]() | Enable Stdout filter | On |
+| [FLB\_FILTER\_STDOUT](build-and-install.md) | Enable Stdout filter | On |
 | [FLB\_FILTER\_THROTTLE](../../pipeline/filters/throttle.md) | Enable Throttle filter | On |
 
 ### Output Plugins

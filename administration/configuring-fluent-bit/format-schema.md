@@ -1,6 +1,6 @@
 # Format and Schema
 
-Fluent Bit might optionally use a configuration file to define how the service will behave, and before proceeding we need to understand how the configuration schema works. 
+Fluent Bit might optionally use a configuration file to define how the service will behave, and before proceeding we need to understand how the configuration schema works.
 
 The schema is defined by three concepts:
 
