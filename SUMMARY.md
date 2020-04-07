@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v1.4 Documentation](README.md)
+* [Fluent Bit v1.5 Documentation](README.md)
 
 ## About
 
