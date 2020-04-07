@@ -28,7 +28,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | :--- | :--- |
 | Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four components: `KEY REGEX NEW_TAG KEEP`. For more specific details of the Rule format and it composition read the next section. |
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
-| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values ```memory``` (default) or ```filesystem```. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommends enabling the ```filesystem``` mode.
+| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values `memory` \(default\) or `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommends enabling the `filesystem` mode. |
 
 ## Rules
 
@@ -209,3 +209,4 @@ The records generated are handled by the internal Emitter, so the new records ar
 The Emitter is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an Emitter instance to use it exclusively to emit records, on that way we can have a granular control of _who_ is emitting what.
 
 The Emitter name in the metrics can be changed setting up the `Emitter_Name` configuration property described above.
+
