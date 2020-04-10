@@ -59,6 +59,13 @@ Before to get started with the plugin configuration, make sure to obtain the pro
       </td>
       <td style="text-align:left"></td>
     </tr>
+    <tr>
+      <td style="text-align:left">compress</td>
+      <td style="text-align:left">Set the compression mechanism for the payload. This option allows two
+        values: <code>gzip</code> (enabled by default) or <code>false</code> to disable
+        compression.</td>
+      <td style="text-align:left">gzip</td>
+    </tr>
   </tbody>
 </table>## Getting Started
 
