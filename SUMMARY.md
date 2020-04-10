@@ -117,6 +117,7 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [NATS](pipeline/outputs/nats.md)
+  * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
   * [Stackdriver](pipeline/outputs/stackdriver.md)

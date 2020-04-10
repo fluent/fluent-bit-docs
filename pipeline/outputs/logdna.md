@@ -94,7 +94,7 @@ When the plugin process each record \(or log\), it tries to lookup for specific 
 
 ## Getting Started
 
-The following configuration example, will emit a dummy example record and ingest it on LogDNA. Past the following content in a file called `logdna.conf`:
+The following configuration example, will emit a dummy example record and ingest it on LogDNA. Copy and paste the following content in a file called `logdna.conf`:
 
 ```python
 [SERVICE]
@@ -117,6 +117,12 @@ The following configuration example, will emit a dummy example record and ingest
 ```
 
 run Fluent Bit with the new configuration file:
+
+```text
+$ fluent-bit -c logdna.conf
+```
+
+Fluent Bit output:
 
 ```text
 Fluent Bit v1.5.0
