@@ -115,7 +115,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
-| [FLB\_IN\_KMSG](../../pipeline/inputs/kmsg.md) | Enable Kernel log input plugin | On |
+| [FLB\_IN\_KMSG](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | On |
 | [FLB\_IN\_MEM](../../pipeline/inputs/memory-metrics.md) | Enable Memory input plugin | On |
 | [FLB\_IN\_MQTT](../../pipeline/inputs/mqtt.md) | Enable MQTT Server input plugin | On |
 | [FLB\_IN\_NETIF](../../pipeline/inputs/network-io-metrics.md) | Enable Network I/O metrics input plugin | On |
