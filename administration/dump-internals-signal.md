@@ -18,7 +18,7 @@ kill -CONT `pidof fluent-bit`
 
 > The command `pidof` aims to lookup the Process ID of Fluent Bit. You can replace the
 
-Fluent But will dump the following information to the standard output interface \(stdout\):
+Fluent Bit will dump the following information to the standard output interface \(stdout\):
 
 ```text
 [engine] caught signal (SIGCONT)
