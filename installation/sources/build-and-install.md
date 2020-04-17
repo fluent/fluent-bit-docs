@@ -5,6 +5,7 @@
 ## Prepare environment
 
 > In the following steps you can find exact commands to build and install the project with the default options. If you already know how CMake works you can skip this part and look at the build options available.
+> Note that Fluent Bit requires CMake 3.x. You may need to use `cmake3` instead of `cmake` to complete the following steps on your system.
 
 Change to the _build/_ directory inside the Fluent Bit sources:
 
