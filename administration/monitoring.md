@@ -129,7 +129,7 @@ it should print a similar output like this:
 }
 ```
 
-#### Metrics in Prometheus format
+### Metrics in Prometheus format
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
@@ -149,7 +149,7 @@ fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
 
-### Configuring Aliases
+## Configuring Aliases
 
 By default configured plugins on runtime get an internal name in the format _plugin\_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
@@ -193,3 +193,22 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
 }
 ```
 
+## Dashboard and Alerts
+
+Fluent Bit's exposed [prometheus style
+metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be
+leveraged to create dashboards and alerts.
+
+### Grafana Dashboard
+
+The provided [example dashboard](../monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com/)'s [logging
+operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key
+differences such as the use of the `instance` label (see [why
+here](https://www.robustperception.io/controlling-the-instance-label)),
+stacked graphs and a focus on Fluent Bit metrics.
+
+![dashboard](../monitoring/dashboard.png)
+
+### Alerts
+
+Sample alerts are available [here](../monitoring/alerts.yaml).
