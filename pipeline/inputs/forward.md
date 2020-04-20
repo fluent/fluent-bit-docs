@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Listen | Listener network interface. | 0.0.0.0 |
 | Port | TCP port to listen for incoming connections. | 24224 |
-| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | _Buffer\_Chunk\_Size_ |
-| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size](../configuration/unit_sizes.md) specification. | 32KB |
+| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../administration/configuring-fluent-bit/unit-sizes.md) specification. | _Buffer\_Chunk\_Size_ |
+| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size](../administration/configuring-fluent-bit/unit-sizes.md) specification. | 32KB |
 
 ## Getting Started
 
