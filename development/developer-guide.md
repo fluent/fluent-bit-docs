@@ -4,7 +4,7 @@ Assuming you have some basic knowledge of C, this guide should help you understa
 
 ## Libraries
 
-Most external libraries are embedded in the project in the [/lib](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/lib/README.md) folder. To keep its footprint low and make cross-platform builds simple, Fluent Bit attempts keep its dependency graph small.
+Most external libraries are embedded in the project in the [/lib](https://github.com/fluent/fluent-bit/tree/master/lib) folder. To keep its footprint low and make cross-platform builds simple, Fluent Bit attempts keep its dependency graph small.
 
 The external library you are mostly likely to interact with is [msgpack](https://github.com/msgpack/msgpack-c).
 
@@ -14,16 +14,16 @@ For crypto, Fluent Bit uses [mbedtls](https://github.com/ARMmbed/mbedtls).
 
 When you write Fluent Bit code, you will use Fluent Bit's versions of the standard C functions for working with memory:
 
-* [`flb_malloc()`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_mem.h) - equivalent to `malloc`, allocates memory.
-* [`flb_calloc()`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_mem.h)  - equivalent to `calloc`, allocates memory and initializes it to zero.
-* [`flb_realloc()`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_mem.h) - equivalent to `realloc`.
-* [`flb_free()`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_mem.h) - equivalent to `free`, releases allocated memory.
+* [`flb_malloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h) - equivalent to `malloc`, allocates memory.
+* [`flb_calloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h)  - equivalent to `calloc`, allocates memory and initializes it to zero.
+* [`flb_realloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h) - equivalent to `realloc`.
+* [`flb_free()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h) - equivalent to `free`, releases allocated memory.
 
-Note that many types have a specialized create and destroy function. For example, [`flb_sds_create()` and `flb_sds_destroy()`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_sds.h) \(more about this in the next section\).
+Note that many types have a specialized create and destroy function. For example, [`flb_sds_create()` and `flb_sds_destroy()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_sds.h) \(more about this in the next section\).
 
 ### Strings
 
-Fluent Bit has a stripped down version of the popular [SDS](https://github.com/antirez/sds) string library. See [flb\_sds.h](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_sds.h) for the API.
+Fluent Bit has a stripped down version of the popular [SDS](https://github.com/antirez/sds) string library. See [flb\_sds.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_sds.h) for the API.
 
 In general, you should use SDS strings in any string processing code. SDS strings are fully compatible with any C function that accepts a null-terminated sequence of characters; to understand how they work, see the [explanation on Github](https://github.com/antirez/sds#how-sds-strings-work).
 
@@ -31,9 +31,9 @@ In general, you should use SDS strings in any string processing code. SDS string
 
 Fluent Bit has its own network connection library. The key types and functions are defined in the following header files:
 
-* [flb\_upstream.h](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_upstream.h)
-* [flb\_http\_client.h](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_http_client.h)
-* [flb\_io.h](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/include/fluent-bit/flb_io.h)
+* [flb\_upstream.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_upstream.h)
+* [flb\_http\_client.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_http_client.h)
+* [flb\_io.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_io.h)
 
 The following code demonstrates making an HTTP request in Fluent Bit:
 
@@ -116,9 +116,9 @@ An `flb_upstream` structure represents a host/endpoint that you want to call. No
 
 ### Linked Lists
 
-Fluent Bit contains a library for constructing linked lists- [mk\_list](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/lib/monkey/include/monkey/mk_core/mk_list.h). The type stores data as a circular linked list.
+Fluent Bit contains a library for constructing linked lists- [mk\_list](https://github.com/fluent/fluent-bit/blob/master/lib/monkey/include/monkey/mk_core/mk_list.h). The type stores data as a circular linked list.
 
-The [`mk_list.h`](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/lib/monkey/include/monkey/mk_core/mk_list.h) header file contains several macros and functions for use with the lists. The example below shows how to create a list, iterate through it, and delete an element.
+The [`mk_list.h`](https://github.com/fluent/fluent-bit/blob/master/lib/monkey/include/monkey/mk_core/mk_list.h) header file contains several macros and functions for use with the lists. The example below shows how to create a list, iterate through it, and delete an element.
 
 ```c
 #include <monkey/mk_core/mk_list.h>
@@ -177,7 +177,7 @@ static int example()
 
 Fluent Bit uses [msgpack](https://msgpack.org/index.html) to internally store data. If you write code for Fluent Bit, it is almost certain that you will interact with msgpack.
 
-Fluent Bit embeds the [msgpack-c](https://github.com/msgpack/msgpack-c) library. The example below shows manipulating message pack to add a new key-value pair to a record. In Fluent Bit, the [filter\_record\_modifier](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/plugins/filter_record_modifier/README.md) plugin adds or deletes keys from records. See its code for more.
+Fluent Bit embeds the [msgpack-c](https://github.com/msgpack/msgpack-c) library. The example below shows manipulating message pack to add a new key-value pair to a record. In Fluent Bit, the [filter\_record\_modifier](https://github.com/fluent/fluent-bit/tree/master/plugins/filter_record_modifier) plugin adds or deletes keys from records. See its code for more.
 
 ```c
 #define A_NEW_KEY        "key"
@@ -271,13 +271,13 @@ Each plugin is a shared object which is [loaded into Fluent Bit](https://github.
 
 The input plugin structure is defined in [flb\_input.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_input.h#L62). There are a number of functions which a plugin can implement, most only implement `cb_init`, `cb_collect`, and `cb_exit`.
 
-The [`"dummy"` input plugin](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/plugins/in_dummy/README.md) very simple and is an excellent example to review to understand more.
+The [`"dummy"` input plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/in_dummy) is very simple and is an excellent example to review to understand more.
 
 ### Filter
 
 The structure for filter plugins is defined in [flb\_filter.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_filter.h#L44). Each plugin must implement `cb_init`, `cb_filter`, and `cb_exit`.
 
-The [filter\_record\_modifier](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/plugins/filter_record_modifier/README.md) is a good example of a filter plugin.
+The [filter\_record\_modifier](https://github.com/fluent/fluent-bit/tree/master/plugins/filter_record_modifier) is a good example of a filter plugin.
 
 Note that filter plugins can not asynchronously make HTTP requests. If your plugin needs to make a request, add the following code when you initialize your `flb_upstream`:
 
@@ -290,7 +290,7 @@ upstream->flags &= ~(FLB_IO_ASYNC);
 
 Output plugins are defined in [flb\_output.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_output.h#L57). Each plugin must implement `cb_init`, `cb_flush`, and `cb_exit`.
 
-The [stdout plugin](https://github.com/fluent/fluent-bit-docs/tree/3304eeed3122ab98a20fc4344ba573b00f698515/development/plugins/out_stdout/README.md) is very simple; review its code to understand how output plugins work.
+The [stdout plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/out_stdout) is very simple; review its code to understand how output plugins work.
 
 ## Testing
 
