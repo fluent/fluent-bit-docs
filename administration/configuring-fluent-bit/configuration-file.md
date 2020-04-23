@@ -220,6 +220,8 @@ The configuration reader will try to open the path _somefile.conf_, if not found
 * Included file: somefile.conf
 * Fluent Bit will try to open somefile.conf, if it fails it will try /tmp/somefile.conf.
 
+Once the file is found, its contents will replace the `@INCLUDE somefile.conf` line. This is a simple textual inclusion. You must still follow the [Format and Schema](format-schema.md) defined previously. For example, you cannot define multiple `[SERVICE]` sections.
+
 The _@INCLUDE_ command only works at top-left level of the configuration line, it cannot be used inside sections.
 
 Wildcard character \(\*\) is supported to include multiple files, e.g:
