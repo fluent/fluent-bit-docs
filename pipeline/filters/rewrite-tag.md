@@ -210,3 +210,4 @@ The records generated are handled by the internal Emitter, so the new records ar
 The Emitter is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an Emitter instance to use it exclusively to emit records, on that way we can have a granular control of _who_ is emitting what.
 
 The Emitter name in the metrics can be changed setting up the `Emitter_Name` configuration property described above.
+

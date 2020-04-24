@@ -6,8 +6,8 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 The latest stable version is 1.4.1.
 
-| INSTALLERS                                                                                     | SHA256 CHECKSUMS                                                 |
-| :---                                                                                           | :---                                                             |
+| INSTALLERS | SHA256 CHECKSUMS |
+| :--- | :--- |
 | [td-agent-bit-1.4.2-win32.exe](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win32.exe) | 1a7de3f12fb3453d0b7e086036426ff8265c8caf57d7b88b8d44c3d775acf2cd |
 | [td-agent-bit-1.4.2-win32.zip](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win32.zip) | e65fd9915f7b8c8d9cc3856f9bf2abd7d189b3aba55b3372d9f94a21011da2da |
 | [td-agent-bit-1.4.2-win64.exe](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win64.exe) | f022ae48797e905ced9f9fe52b9b395605bf20ad4cad22aa216d359927468ace |
@@ -89,3 +89,4 @@ Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Fil
 ```text
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
+

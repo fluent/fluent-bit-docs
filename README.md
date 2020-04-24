@@ -2,9 +2,9 @@
 description: High Performance Logs Processor
 ---
 
-# Fluent Bit v1.4 Documentation
+# Fluent Bit v1.5 Documentation
 
-![](.gitbook/assets/logo_documentation_1.4.png)
+![](.gitbook/assets/logo_documentation_1.5.png)
 
 [Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Log Processor, Stream Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
 
@@ -25,7 +25,7 @@ description: High Performance Logs Processor
     * Write any input, filter or output plugin in C language
     * Bonus: write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
 * [Monitoring](administration/monitoring.md): expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
-* [Stream Processing](./): Perform data selection and transformation using simple SQL queries
+* [Stream Processing](stream-processing/README.md): Perform data selection and transformation using simple SQL queries
   * Create new streams of data using query results
   * Aggregation Windows
   * Data analysis and prediction: Timeseries forecasting

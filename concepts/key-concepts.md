@@ -86,7 +86,7 @@ To learn more about Tags and Matches check the [Routing](data-pipeline/router.md
 
 ## Structured Messages
 
-Source events can have or not have a structure. A structure defines a set of _keys_ and _values_ inside the Event message.  As an example consider the following two messages:
+Source events can have or not have a structure. A structure defines a set of _keys_ and _values_ inside the Event message. As an example consider the following two messages:
 
 ### No structured message
 

@@ -21,99 +21,66 @@ In addition, it's also possible to split the main configuration file in multiple
 
 The _Service_ section defines global properties of the service, the keys available as of this version are described in the following table:
 
+| Key | Description | Default Value |
+| :--- | :--- | :--- |
+
+
+| Flush | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins. | 5 |
+| :--- | :--- | :--- |
+
+
+| Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
+| :--- | :--- | :--- |
+
+
+| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
+| :--- | :--- | :--- |
+
+
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, warning, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
+| :--- | :--- | :--- |
+
+
+| Parsers\_File | Path for a `parsers` configuration file. Multiple Parsers\_File entries can be defined within the section. |  |
+| :--- | :--- | :--- |
+
+
+| Plugins\_File | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). |  |
+| :--- | :--- | :--- |
+
+
+| Streams\_File | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../stream-processing/introduction.md). |  |
+| :--- | :--- | :--- |
+
+
+| HTTP\_Server | Enable built-in HTTP Server | Off |
+| :--- | :--- | :--- |
+
+
+| HTTP\_Listen | Set listening interface for HTTP Server when it's enabled | 0.0.0.0 |
+| :--- | :--- | :--- |
+
+
+| HTTP\_Port | Set TCP Port for the HTTP Server | 2020 |
+| :--- | :--- | :--- |
+
+
 <table>
   <thead>
     <tr>
-      <th style="text-align:left">Key</th>
-      <th style="text-align:left">Description</th>
-      <th style="text-align:left">Default Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:left">Flush</td>
-      <td style="text-align:left">Set the flush time in <code>seconds.nanoseconds</code>. The engine loop
-        uses a Flush timeout to define when is required to flush the records ingested
-        by input plugins through the defined output plugins.</td>
-      <td style="text-align:left">5</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Daemon</td>
-      <td style="text-align:left">Boolean value to set if Fluent Bit should run as a Daemon (background)
-        or not. Allowed values are: yes, no, on and off.
-        <br />
-        <br />note: If you are using a Systemd based unit as the one we provide in our
-        packages, do not turn on this option.</td>
-      <td style="text-align:left">Off</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Log_File</td>
-      <td style="text-align:left">Absolute path for an optional log file. By default all logs are redirected
-        to the standard output interface (stdout).</td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Log_Level</td>
-      <td style="text-align:left">Set the logging verbosity level. Allowed values are: error, warning, info,
-        debug and trace. Values are accumulative, e.g: if &apos;debug&apos; is
-        set, it will include error, warning, info and debug.
-        <br />
-        <br />Note that <em>trace</em> mode is only available if Fluent Bit was built
-        with the <em>WITH_TRACE</em> option enabled.</td>
-      <td style="text-align:left">info</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Parsers_File</td>
-      <td style="text-align:left">Path for a <code>parsers</code> configuration file. Multiple Parsers_File
-        entries can be defined within the section.</td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Plugins_File</td>
-      <td style="text-align:left">Path for a <code>plugins</code> configuration file. A <em>plugins</em> configuration
-        file allows to define paths for external plugins, for an example <a href="https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf">see here</a>.</td>
-      <td
-      style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Streams_File</td>
-      <td style="text-align:left">Path for the Stream Processor configuration file. To learn more about
-        Stream Processing configuration go <a href="../../stream-processing/introduction.md">here</a>.</td>
-      <td
-      style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">HTTP_Server</td>
-      <td style="text-align:left">Enable built-in HTTP Server</td>
-      <td style="text-align:left">Off</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">HTTP_Listen</td>
-      <td style="text-align:left">Set listening interface for HTTP Server when it&apos;s enabled</td>
-      <td
-      style="text-align:left">0.0.0.0</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">HTTP_Port</td>
-      <td style="text-align:left">Set TCP Port for the HTTP Server</td>
-      <td style="text-align:left">2020</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Coro_Stack_Size</td>
-      <td style="text-align:left">
+      <th style="text-align:left">Coro_Stack_Size</th>
+      <th style="text-align:left">
         <p>Set the coroutines stack size in bytes. The value must be greater than
           the page size of the running system. Don&apos;t set too small value (say
           4096), or coroutine threads can overrun the stack buffer.</p>
-        <p></p>
         <p>Do not change the default value of this parameter unless you know what
           you are doing.</p>
-      </td>
-      <td style="text-align:left">24576</td>
+      </th>
+      <th style="text-align:left">24576</th>
     </tr>
-  </tbody>
-</table>### Example
-
-The following is an example of a _SERVICE_ section:
+  </thead>
+  <tbody></tbody>
+</table>The following is an example of a _SERVICE_ section:
 
 ```python
 [SERVICE]

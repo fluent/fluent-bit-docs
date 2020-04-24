@@ -48,7 +48,7 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 
 ### Note for Kubernetes &lt; v1.16
 
-For Kubernetes versions olden than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new  `apiVersion`.
+For Kubernetes versions olden than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
 
 If you are using and older Kubernetes, grab manually a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
 
