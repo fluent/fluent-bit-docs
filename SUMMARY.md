@@ -57,7 +57,6 @@
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
 * [Scheduling and Retries](administration/scheduling-and-retries.md)
-* [Networking](administration/networking.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
 * [Dump Internals / Signal](administration/dump-internals-signal.md)
