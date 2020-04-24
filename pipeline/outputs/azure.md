@@ -11,6 +11,7 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Customer\_ID | Customer ID or WorkspaceID string. |  |
 | Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
 | Log\_Type | The name of the event type. | fluentbit |
+| time_key | Specify time field for event time. | time |
 
 ## Getting Started
 
