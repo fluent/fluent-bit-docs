@@ -283,5 +283,5 @@ On success, it returns the number of bytes written; on error it returns -1.
 
 **Usage**
 
-For more details and an example about how to use this function properly please refer to the next section [Ingest Records Manually](https://github.com/fluent/fluent-bit-docs/tree/f3e2d207298adf4011a0a7f4a82331362f9d3197/development/ingest_records_manually.md).
+For more details and an example about how to use this function properly please refer to the next section [Ingest Records Manually](ingest-records-manually.md).
 
