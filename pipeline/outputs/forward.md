@@ -30,7 +30,7 @@ When using Secure Forward mode, the [TLS](https://github.com/fluent/fluent-bit-d
 | Empty\_Shared\_Key | Use this option to connect to Fluentd with a zero-length secret. | False |
 | Username | Specify the username to present to a Fluentd server that enables `user_auth`. |  |
 | Password | Specify the password corresponding to the username. |  |
-| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). |  |
+| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). | localhost |
 | tls | Enable or disable TLS support | Off |
 | tls.verify | Force certificate validation | On |
 | tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
@@ -223,4 +223,3 @@ After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd out
 2017-03-23 13:34:43 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.25,"system_p":0.5,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":0.0,"cpu3.p_system":1.0}
 2017-03-23 13:34:44 -0600 cpu_usage: {"cpu_p":5.0,"user_p":3.25,"system_p":1.75,"cpu0.p_cpu":4.0,"cpu0.p_user":2.0,"cpu0.p_system":2.0,"cpu1.p_cpu":8.0,"cpu1.p_user":5.0,"cpu1.p_system":3.0,"cpu2.p_cpu":4.0,"cpu2.p_user":3.0,"cpu2.p_system":1.0,"cpu3.p_cpu":4.0,"cpu3.p_user":2.0,"cpu3.p_system":2.0}
 ```
-
