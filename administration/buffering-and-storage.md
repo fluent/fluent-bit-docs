@@ -48,7 +48,7 @@ Optionally, any Input plugin can configure their storage preference, the followi
 | :--- | :--- | :--- |
 | storage.type | Specify the buffering mechanism to use. It can be _memory_ or _filesystem_. | memory |
 
-The following example configure a service that offers filesystem buffering capabilities and two Input plugins being the first based in memory and the second with the filesystem:
+The following example configure a service that offers filesystem buffering capabilities and two Input plugins being the first based in filesystem and the second with memory only.
 
 ```text
 [SERVICE]
