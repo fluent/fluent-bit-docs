@@ -1,6 +1,6 @@
 # Dump Internals / Signal
 
-When the service is running we can export [metrics](monitoring.md) to see the overall status of the data flow of the service. But there are other use cases where we would like to know the current status of the internals of the service, specifically to answer questions like  _what's the current status of the internal buffers ?_ , the Dump Internals feature is the answer.
+When the service is running we can export [metrics](monitoring.md) to see the overall status of the data flow of the service. But there are other use cases where we would like to know the current status of the internals of the service, specifically to answer questions like _what's the current status of the internal buffers ?_ , the Dump Internals feature is the answer.
 
 Fluent Bit v1.4 introduces the Dump Internals feature that can be triggered easily from the command line triggering the `CONT` Unix signal.
 
@@ -60,7 +60,7 @@ The dump provides insights for every input instance configured.
 
 ### Status
 
-Overall ingestion status of the plugin. 
+Overall ingestion status of the plugin.
 
 | Entry | Sub-entry | Description |
 | :--- | :--- | :--- |
@@ -83,9 +83,9 @@ The Task dump describes the tasks associated to the input plugin:
 
 ### Chunks
 
-The Chunks dump tells more details about all the chunks that the input plugin has generated and are still being processed. 
+The Chunks dump tells more details about all the chunks that the input plugin has generated and are still being processed.
 
-Depending of the buffering strategy and limits imposed by configuration, some Chunks might be `up` \(in memory\) or `down` \(filesystem\). 
+Depending of the buffering strategy and limits imposed by configuration, some Chunks might be `up` \(in memory\) or `down` \(filesystem\).
 
 | Entry | Sub-entry | Description |
 | :--- | :--- | :--- |
@@ -93,7 +93,7 @@ Depending of the buffering strategy and limits imposed by configuration, some Ch
 | up\_chunks |  | Total number of Chunks that are loaded in memory. |
 | down\_chunks |  | Total number of Chunks that are stored in the filesystem but not loaded in memory yet. |
 | busy\_chunks |  | Chunks marked as busy \(being flushed\) or locked. Busy Chunks are immutable and likely are ready to \(or being\) processed. |
-|  | size | Amount of bytes used by the Chunk.  |
+|  | size | Amount of bytes used by the Chunk. |
 |  | size err | Number of Chunks in an error state where it size could not be retrieved. |
 
 ## Storage Layer Dump
@@ -105,8 +105,6 @@ Fluent Bit relies on a custom storage layer interface designed for hybrid buffer
 | total chunks |  | Total number of Chunks |
 | mem chunks |  | Total number of Chunks memory-based |
 | fs chunks |  | Total number of Chunks filesystem based |
-|  | up | Total number of filesystem chunks up in memory  |
+|  | up | Total number of filesystem chunks up in memory |
 |  | down | Total number of filesystem chunks down \(not loaded in memory\) |
-
-
 
