@@ -58,6 +58,10 @@
 * [Monitoring](administration/monitoring.md)
 * [Dump Internals / Signal](administration/dump-internals-signal.md)
 
+## Local Testing
+
+* [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
+
 ## Data Pipeline <a id="pipeline"></a>
 
 * [Inputs](pipeline/inputs/README.md)
@@ -142,4 +146,3 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-
