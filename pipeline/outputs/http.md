@@ -25,7 +25,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 
 ### TLS / SSL
 
-HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
 
 ## Getting Started
 
@@ -128,7 +128,7 @@ Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timesta
     Json_date_format iso8601
 ```
 
-A sample Sumo Logic query for the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input. \(Requires `json_lines` format with `iso8601` date format for the `timestamp` field\).
+A sample Sumo Logic query for the [CPU](../inputs/cpu-metrics.md) input. \(Requires `json_lines` format with `iso8601` date format for the `timestamp` field\).
 
 ```text
 _sourcecategory="my_fluent_bit"
