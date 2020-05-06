@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Script | Path to the Lua script that will be used. |
 | Call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
 | Type\_int\_key | If these keys are matched, the fields are converted to integer. If more than one key, delimit by space |
+| Protected\_mode| If enabled, Lua script will be executed in protected mode. It prevents to crash when invalid Lua script is executed. Default is true.|
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -95,3 +96,7 @@ For functional examples of this interface, please refer to the code samples prov
 
 In Lua, Fluent Bit treats number as double. It means an integer field \(e.g. IDs, log levels\) will be converted double. To avoid type conversion, **Type\_int\_key** property is available.
 
+
+### Protected Mode
+
+Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
