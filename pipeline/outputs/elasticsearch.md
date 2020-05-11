@@ -34,7 +34,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/tcp-and-tls.md) section.
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
 
 ## Getting Started
 
