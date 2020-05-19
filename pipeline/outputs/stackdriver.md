@@ -2,7 +2,10 @@
 
 Stackdriver output plugin allows to ingest your records into [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
 
-Before to get started with the plugin configuration, make sure to obtain the proper credentials to get access to the service. We strongly recommend to use a common JSON credentials file, reference link:
+Before to get started with the plugin configuration, make sure to obtain the proper credentials to get access to the service.
+
+We strongly recommend to use a common JSON credentials file unless running on Google Compute Engine which allows credentials to be automatically retrieved from the
+[metadata server](https://cloud.google.com/compute/docs/storing-retrieving-metadata), reference link:
 
 * [Creating a Google Service Account for Stackdriver](https://cloud.google.com/logging/docs/agent/authorization#create-service-account)
 
@@ -15,7 +18,9 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
 | service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
-| resource | Set resource type of data. Only _global_ and _gce\_instance_ are supported. | global, gce\_instance |
+| resource | Set resource type of data. Only _global_, _gce\_instance_, _generic\_node_, and _generic\_task_ are supported. | global, gce\_instance, generic\_node, generic\_task |
+| metadata_server | Set metadata server URL. | Default value: http://metadata.google.internal |
+| resource_label.*label_name* | Sets a resource label whose name is *label_name* and value set to whatever comes after. | Must be a valid resource label for your [resource](https://cloud.google.com/logging/docs/api/v2/resource-list) above |
 
 ### Configuration File
 
@@ -29,6 +34,23 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 [OUTPUT]
     Name        stackdriver
     Match       *
+```
+
+If you want to use this in a non-cloud environment, on-premises for example, you must set the generic_node or generic_task resource and associated labels.
+You will also need to use a _Google Cloud Credentials File_ and set the environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_. An example config:
+
+```text
+[INPUT]
+    Name  cpu
+    Tag   cpu
+
+[OUTPUT]
+    Name                     stackdriver
+    Match                    *
+    resource                 generic_node
+    resource_label.location  my_location
+    resource_label.namespace my_namespace
+    resource_label.node_id   ${HOSTNAME}
 ```
 
 ## Troubleshooting Notes
