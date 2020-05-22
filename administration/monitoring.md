@@ -8,6 +8,11 @@ Fluent Bit comes with a built-in HTTP Server that can be used to query internal 
 
 The monitoring interface can be easily integrated with Prometheus since we support it native format.
 
+## Requirements <a id="requirements"></a>
+
+The monitoring interface depends on the built-in HTTP server feature, make sure this one is available in your build.
+If you are building [Fluent Bit from scratch](https://docs.fluentbit.io/manual/installation/sources/build-and-install) using `cmake`, you can use `-DFLB_HTTP_SERVER=on` flag.
+
 ## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
@@ -40,7 +45,7 @@ Fluent Bit v1.4.0
 [2020/03/10 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
-now with a simple **curl** command is enough to gather some information:
+Now with a simple **curl** command is enough to gather some information:
 
 ```text
 $ curl -s http://127.0.0.1:2020 | jq
