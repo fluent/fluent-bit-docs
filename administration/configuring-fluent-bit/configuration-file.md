@@ -33,7 +33,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
-| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
+| Log\_File | Absolute path for an optional log file. By default all logs are redirected to standard error \(stderr\). |  |
 | :--- | :--- | :--- |
 
 
