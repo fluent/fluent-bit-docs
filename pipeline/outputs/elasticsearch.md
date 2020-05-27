@@ -34,7 +34,9 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 
 ### TLS / SSL
 
+
 Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+
 
 ## Getting Started
 

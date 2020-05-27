@@ -43,6 +43,8 @@ The plugin supports the following configuration parameters:
 | Annotations | Include Kubernetes resource annotations in the extra metadata. | On |
 | Kube\_meta\_preload\_cache\_dir | If set, Kubernetes meta-data can be cached/pre-loaded from files in JSON format in this directory, named as namespace-pod.meta |  |
 | Dummy\_Meta | If set, use dummy-meta data \(for test/dev purposes\) | Off |
+| DNS\_Retries | DNS lookup retries N times until the network start working | 6 |
+| DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
 
 ## Processing the 'log' value
 
