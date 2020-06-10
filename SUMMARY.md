@@ -72,6 +72,7 @@
   * [CPU Metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
   * [Dummy](pipeline/inputs/dummy.md)
+  * [Docker](pipeline/inputs/docker.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)

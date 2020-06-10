@@ -7,7 +7,7 @@ redirects:
     input/collectd:        ./pipeline/inputs/
     input/cpu:             ./pipeline/inputs/cpu-metrics.md
     input/disk:            ./pipeline/inputs/disk-io-metrics.md
-    #inputs/docker:          ./pipeline/inputs/
+    inputs/docker:         ./pipeline/inputs/docker.md
     input/dummy:           ./pipeline/inputs/dummy.md
     input/exec:            ./pipeline/inputs/exec.md
     input/forward:         ./pipeline/inputs/forward.md
