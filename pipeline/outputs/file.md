@@ -8,7 +8,8 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Path | File path to output. If not set, the filename will be tag name. |
+| Path | Absolute directory path to store files. If not set, Fluent Bit will write the files on it's own positioned directory. note: this option was added on Fluent Bit v1.4.6 |
+| File | Set file name to store the records. If not set, the file name will be the _tag_ associated with the records. |
 | Format | The format of the file content. See also Format section. Default: out\_file. |
 
 ## Format
@@ -108,4 +109,3 @@ In your main configuration file append the following Input & Output sections:
     Match *
     Path output.txt
 ```
-
