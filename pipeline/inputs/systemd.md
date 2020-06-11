@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Systemd\_Filter\_Type | Define the filter type when _Systemd\_Filter_ is specified multiple times. Allowed values are _And_ and _Or_. With _And_ a record is matched only when all of the _Systemd\_Filter_ have a match. With _Or_ a record is matched when any of the _Systemd\_Filter_ has a match. | Or |
 | Tag | The tag is used to route messages but on Systemd plugin there is an extra functionality: if the tag includes a star/wildcard, it will be expanded with the Systemd Unit file \(e.g: host.\* =&gt; host.UNIT\_NAME\). |  |
 | DB | Specify the absolute path of a database file to keep track of Journald cursor. |  |
+| DB.Sync | Set a default synchronization \(I/O\) method. values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). note: this option was introduced on Fluent Bit v1.4.6. | Full |
 | Read\_From\_Tail | Start reading new entries. Skip entries already stored in Journald. | Off |
 | Strip\_Underscores | Remove the leading underscore of the Journald field \(key\). For example the Journald field _\_PID_ becomes the key _PID_. | Off |
 
@@ -53,4 +54,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
-
