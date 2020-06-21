@@ -1,6 +1,6 @@
 # BigQuery
 
-BigQuery output plugin is and _experimental_ plugin that allows you to stream records into [Google Cloud BigQuery](https://cloud.google.com/bigquery/) service. The implementation does not support the following, which would be expected in a full production version:
+BigQuery output plugin is an _experimental_ plugin that allows you to stream records into [Google Cloud BigQuery](https://cloud.google.com/bigquery/) service. The implementation does not support the following, which would be expected in a full production version:
 
 * [Application Default Credentials](https://cloud.google.com/docs/authentication/production).
 * [Data deduplication](https://cloud.google.com/bigquery/streaming-data-into-bigquery) using `insertId`.
