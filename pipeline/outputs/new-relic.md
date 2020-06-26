@@ -2,7 +2,7 @@
 
 [New Relic](https://newrelic.com/) is a data management platform that gives you real-time insights of your data for developers, operations and management teams.
 
-The Fluent Bit `newrelic` output plugin allows you to send your logs to New Relic service. 
+The Fluent Bit `nrlogs` output plugin allows you to send your logs to New Relic service. 
 
 Before to get started with the plugin configuration, make sure to obtain the proper account  to get access to the service. You can register and start with a free trial in the following link:
 
@@ -82,7 +82,7 @@ The following configuration example, will emit a dummy example record and ingest
     samples   1
 
 [OUTPUT]
-    name      newrelic
+    name      nrlogs
     match     *
     api_key   YOUR_API_KEY_HERE
 ```
@@ -108,7 +108,7 @@ Fluent Bit v1.5.0
 [2020/04/10 10:58:32] [ info] [engine] started (pid=2772591)
 [2020/04/10 10:58:32] [ info] [output:newrelic:newrelic.0] configured, hostname=log-api.newrelic.com:443
 [2020/04/10 10:58:32] [ info] [sp] stream processor started
-[2020/04/10 10:58:35] [ info] [output:newrelic:newrelic.0] log-api.newrelic.com:443, HTTP status=202
+[2020/04/10 10:58:35] [ info] [output:nrlogs:nrlogs.0] log-api.newrelic.com:443, HTTP status=202
 {"requestId":"feb312fe-004e-b000-0000-0171650764ac"}
 
 ```
