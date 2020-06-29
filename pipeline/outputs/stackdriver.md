@@ -54,3 +54,6 @@ This belongs to a network issue by the environment where Fluent Bit is running, 
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
+We plan te support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields).
+
+Currently, we have supported [operation](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logentryoperation). See some use cases of operation [here](stackdriver_special_fields.md).
