@@ -11,7 +11,7 @@ This plugin supports the following configuration parameters:
 | Unix_Path | The docker socket unix path | /var/run/docker.sock |
 | Buffer_Size | The size of the buffer used to read docker events (in bytes) | 8192 |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. | None |
-| Field_Name | Set the field name for the data when no parser is applied. | message |
+| Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _message_. | message |
 
 ### Command Line
 
