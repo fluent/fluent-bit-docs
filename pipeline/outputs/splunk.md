@@ -6,14 +6,54 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 ## Configuration Parameters
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| Host | IP address or hostname of the target Splunk service. | 127.0.0.1 |
-| Port | TCP port of the target Splunk service. | 8088 |
-| Splunk\_Token | Specify the Authentication [Token](http://dev.splunk.com/view/event-collector/SP-CAAAE7C) for the HTTP Event Collector interface. |  |
-| Splunk\_Send\_Raw | When enabled, the record keys and values are set in the top level of the map instead of under the _event_ key. | Off |
-| HTTP\_User | Optional username for Basic Authentication on HEC |  |
-| HTTP\_Passwd | Password for user defined in HTTP\_User |  |
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Key</th>
+      <th style="text-align:left">Description</th>
+      <th style="text-align:left">default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Host</td>
+      <td style="text-align:left">IP address or hostname of the target Splunk service.</td>
+      <td style="text-align:left">127.0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Port</td>
+      <td style="text-align:left">TCP port of the target Splunk service.</td>
+      <td style="text-align:left">8088</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Splunk_Token</td>
+      <td style="text-align:left">Specify the Authentication <a href="http://dev.splunk.com/view/event-collector/SP-CAAAE7C">Token</a> for
+        the HTTP Event Collector interface.</td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Splunk_Send_Raw</td>
+      <td style="text-align:left">
+        <p>When enabled, the record keys and values are set in the top level of the
+          map instead of under the <em>event</em> key.</p>
+        <p></p>
+        <p><b>note: </b>refer to the Sending Raw Events section below for more details
+          to make this option work properly.</p>
+      </td>
+      <td style="text-align:left">Off</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">HTTP_User</td>
+      <td style="text-align:left">Optional username for Basic Authentication on HEC</td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">HTTP_Passwd</td>
+      <td style="text-align:left">Password for user defined in HTTP_User</td>
+      <td style="text-align:left"></td>
+    </tr>
+  </tbody>
+</table>
 
 ### TLS / SSL
 
@@ -103,4 +143,26 @@ This will create a payload that looks like:
 ```
 
 For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
+
+### Sending Raw Events
+
+If the option `splunk_send_raw` has been enabled, the user must take care to put all log details in the event field, and only specify fields known to Splunk in the top level event, if there is a mismatch, Splunk will return a HTTP error 400.
+
+Consider the following example:
+
+**splunk\_send\_raw off**
+
+```javascript
+{"time": ..., "event": {"k1": "foo", "k2": "bar", "index": "applogs"}}
+```
+
+**splunk\_send\_raw on**
+
+```text
+{"time": .., "k1": "foo", "k2": "bar", "index": "applogs"}
+```
+
+For up to date information about the valid keys in the top level object, refer to the Splunk documentation:
+
+[http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
 
