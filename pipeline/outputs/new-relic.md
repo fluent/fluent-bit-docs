@@ -2,26 +2,23 @@
 
 [New Relic](https://newrelic.com/) is a data management platform that gives you real-time insights of your data for developers, operations and management teams.
 
-The Fluent Bit `nrlogs` output plugin allows you to send your logs to New Relic service. 
+The Fluent Bit `nrlogs` output plugin allows you to send your logs to New Relic service.
 
-Before to get started with the plugin configuration, make sure to obtain the proper account  to get access to the service. You can register and start with a free trial in the following link:
+Before to get started with the plugin configuration, make sure to obtain the proper account to get access to the service. You can register and start with a free trial in the following link:
 
 * [New Relic Sign Up](https://newrelic.com/signup)
 
 ## Configuration Parameters
 
+| Key | Description | Default |
+| :--- | :--- | :--- |
+
+
 <table>
   <thead>
     <tr>
-      <th style="text-align:left">Key</th>
-      <th style="text-align:left">Description</th>
-      <th style="text-align:left">Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:left">base_uri</td>
-      <td style="text-align:left">
+      <th style="text-align:left">base_uri</th>
+      <th style="text-align:left">
         <p>Full address of New Relic API end-point. By default the value points to
           the US end-point.
           <br />
@@ -31,43 +28,52 @@ Before to get started with the plugin configuration, make sure to obtain the pro
           <br />
           <br /><a href="https://log-api.eu.newrelic.com/log/v1">https://log-api.eu.newrelic.com/log/v1</a>
         </p>
-      </td>
-      <td style="text-align:left"><a href="https://log-api.newrelic.com/log/v1">https://log-api.newrelic.com/log/v1</a>
-      </td>
+      </th>
+      <th style="text-align:left"><a href="https://log-api.newrelic.com/log/v1">https://log-api.newrelic.com/log/v1</a>
+      </th>
     </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<table>
+  <thead>
     <tr>
-      <td style="text-align:left">api_key</td>
-      <td style="text-align:left">
+      <th style="text-align:left">api_key</th>
+      <th style="text-align:left">
         <p>Your key for data ingestion. The API key is also called the ingestion
           key, you can get more details on how to generated in the official documentation
           <a
           href="https://docs.newrelic.com/docs/apis/get-started/intro-apis/types-new-relic-api-keys#event-insert-key">here</a>.</p>
-        <p></p>
         <p>From a configuration perspective either an <code>api_key</code> or an <code>license_key</code> is
           required. New Relic suggest to use primary the <code>api_key</code>.</p>
-      </td>
-      <td style="text-align:left"></td>
+      </th>
+      <th style="text-align:left"></th>
     </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<table>
+  <thead>
     <tr>
-      <td style="text-align:left">license_key</td>
-      <td style="text-align:left">
+      <th style="text-align:left">license_key</th>
+      <th style="text-align:left">
         <p>Optional authentication parameter for data ingestion.
           <br />
         </p>
         <p>Note that New Relic suggest to use the <code>api_key</code> instead. You
           can read more about the License Key <a href="https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/license-key">here</a>.</p>
-      </td>
-      <td style="text-align:left"></td>
+      </th>
+      <th style="text-align:left"></th>
     </tr>
-    <tr>
-      <td style="text-align:left">compress</td>
-      <td style="text-align:left">Set the compression mechanism for the payload. This option allows two
-        values: <code>gzip</code> (enabled by default) or <code>false</code> to disable
-        compression.</td>
-      <td style="text-align:left">gzip</td>
-    </tr>
-  </tbody>
-</table>## Getting Started
+  </thead>
+  <tbody></tbody>
+</table>
+
+| compress | Set the compression mechanism for the payload. This option allows two values: `gzip` \(enabled by default\) or `false` to disable compression. | gzip |
+| :--- | :--- | :--- |
+
 
 The following configuration example, will emit a dummy example record and ingest it on New Relic. Copy and paste the following content in a file called `newrelic.conf`:
 
@@ -110,6 +116,5 @@ Fluent Bit v1.5.0
 [2020/04/10 10:58:32] [ info] [sp] stream processor started
 [2020/04/10 10:58:35] [ info] [output:nrlogs:nrlogs.0] log-api.newrelic.com:443, HTTP status=202
 {"requestId":"feb312fe-004e-b000-0000-0171650764ac"}
-
 ```
 

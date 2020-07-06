@@ -37,3 +37,4 @@ The following example configure two outputs where the HTTP plugin have an unlimi
     Logstash_Format On
     Retry_Limit     5
 ```
+

@@ -13,8 +13,8 @@ You can run the plugin from the command line or through the configuration file:
 | Key | Description |
 | :--- | :--- |
 | Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
-| Start\_time\_sec| Dummy base timestamp in seconds. Default: 0 |
-| Start\_time\_nsec| Dummy base timestamp in nanoseconds. Default: 0|
+| Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
+| Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
 | Rate | Events number generated per second. Default: 1 |
 
 ### Command Line

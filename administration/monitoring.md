@@ -81,7 +81,7 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 | /api/v1/uptime | Get uptime information in seconds and human readable format | JSON |
 | /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
-| /api/v1/storage | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the ```SERVICE``` section the property ```storage.metrics``` has been enabled | JSON |
+| /api/v1/storage | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section the property `storage.metrics` has been enabled | JSON |
 
 ## Uptime Example
 
@@ -193,3 +193,4 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
   }
 }
 ```
+

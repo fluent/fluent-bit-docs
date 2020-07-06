@@ -24,7 +24,7 @@ The following **output** plugins can take advantage of the TLS feature:
 * [BigQuery](../pipeline/outputs/bigquery.md)
 * [Datadog](../pipeline/outputs/datadog.md)
 * [Elasticsearch](../pipeline/outputs/elasticsearch.md)
-* [Forward](../pipeline/inputs/forward.md)
+* [Forward](../pipeline/outputs/forward.md)
 * [GELF](../pipeline/outputs/gelf.md)
 * [HTTP](../pipeline/outputs/http.md)
 * [InfluxDB](../pipeline/outputs/influxdb.md)

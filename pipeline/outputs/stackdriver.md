@@ -16,8 +16,8 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
 | resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_ and _gce\_instance_. | global, gce\_instance |
-| k8s\_cluster\_name      | The name of the cluster that the container (node or pod based on the resource type) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |
-| k8s\_cluster\_location  | The physical location of the cluster that contains (node or pod based on the resource type) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |
+| k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
+| k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 
 ### Configuration File
 
@@ -56,4 +56,5 @@ Stackdriver officially supports a [logging agent based on Fluentd](https://cloud
 
 We plan te support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields).
 
-Currently, we have supported [operation](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logentryoperation). See some use cases of operation [here](stackdriver_special_fields.md).
+Currently, we have supported [operation](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logentryoperation). See some use cases of operation [here](https://github.com/fluent/fluent-bit-docs/tree/821f28830510947b6ec4b23406cfdfbfea6fdf31/pipeline/outputs/stackdriver_special_fields.md).
+

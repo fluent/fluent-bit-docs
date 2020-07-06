@@ -80,7 +80,9 @@ The _Service_ section defines global properties of the service, the keys availab
     </tr>
   </thead>
   <tbody></tbody>
-</table>The following is an example of a _SERVICE_ section:
+</table>
+
+The following is an example of a _SERVICE_ section:
 
 ```python
 [SERVICE]

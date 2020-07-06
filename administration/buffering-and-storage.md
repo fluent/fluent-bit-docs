@@ -25,7 +25,7 @@ The Service section refers to the section defined in the main [configuration fil
 | storage.sync | Configure the synchronization mode used to store the data into the file system. It can take the values _normal_ or _full_. | normal |
 | storage.checksum | Enable the data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. | Off |
 | storage.backlog.mem\_limit | If _storage.path_ is set, Fluent Bit will look for data chunks that were not delivered and are still in the storage layer, these are called _backlog_ data. This option configure a hint of maximum value of memory to use when processing these records. | 5M |
-| storage.metrics | If ```http_server``` option has been enable in the main ```[SERVICE]``` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | off |
+| storage.metrics | If `http_server` option has been enable in the main `[SERVICE]` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | off |
 
 a Service section will look like this:
 
@@ -68,3 +68,4 @@ The following example configure a service that offers filesystem buffering capab
     name          mem
     storage.type  memory
 ```
+
