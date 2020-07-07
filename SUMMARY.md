@@ -112,6 +112,7 @@
   * [Azure](pipeline/outputs/azure.md)
   * [BigQuery](pipeline/outputs/bigquery.md)
   * [Counter](pipeline/outputs/counter.md)
+  * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
   * [File](pipeline/outputs/file.md)
@@ -149,4 +150,3 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-

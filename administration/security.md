@@ -22,6 +22,7 @@ The following **output** plugins can take advantage of the TLS feature:
 
 * [Azure](../pipeline/outputs/azure.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
+* [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
 * [Datadog](../pipeline/outputs/datadog.md)
 * [Elasticsearch](../pipeline/outputs/elasticsearch.md)
 * [Forward](../pipeline/outputs/forward.md)
@@ -90,4 +91,3 @@ Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/S
     tls.ca_file /etc/certs/fluent.crt
     tls.vhost   fluent.example.com
 ```
-
