@@ -12,6 +12,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | Port | TCP port of the target HTTP Server | 80 |
 | Proxy | Specify an HTTP Proxy. The expected format of this value is [http://host:port](http://host:port). Note that _https_ is **not** supported yet. |  |
 | URI | Specify an optional HTTP URI for the target web server, e.g: /something | / |
+| Compress | Set payload compression mechanism. Option available is 'gzip' | |
 | Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
 | header\_tag | Specify an optional HTTP header field for the original message tag. |  |
 | Header | Add a HTTP header key/value pair. Multiple headers can be set. |  |
@@ -136,4 +137,3 @@ _sourcecategory="my_fluent_bit"
 | timeslice 1m
 | max(cpu) as cpu group by _timeslice
 ```
-
