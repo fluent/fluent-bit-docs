@@ -6,6 +6,8 @@ Currently, we also support some special fields in fluent-bit:
 | JSON log field | [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Logging agent function |
 | :--- | :--- | :--- |
 | logging.googleapis.com/operation | operation | The value of this field is also used by the Logs Viewer to group related log entries |
+| logging.googleapis.com/labels | labels | The value of this field should be a structured record |
+
 
 ## Operaiton
 Operation field contains additional information about a potentially long-running operation with which a log entry is associated.
@@ -123,6 +125,34 @@ the logEntry will be:
         "producer": "test_producer",
         "first": true,
         "last": true
+    }
+    ...
+}
+```
+## Labels
+labels field contains specific labels in a structured entry that will be added to LogEntry labels.
+
+For example, when the jsonPayload contains the subfield `logging.googleapis.com/labels`:
+```text
+jsonPayload {
+    "logging.googleapis.com/labels": {
+        "A": "valA",
+        "B": "valB",
+        "C": "valC"
+    }
+    ...
+}
+```
+the stackdriver output plugin will extract labels from the subfield `logging.googleapis.com/labels` and move it up from jsonPayload to LogEntry Labels. LogEntry will be:
+```text
+{
+    "jsonPayload": {
+        ...
+    }
+    "labels": {
+        "A": "valA",
+        "B": "valB",
+        "C": "valC"
     }
     ...
 }
