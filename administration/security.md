@@ -20,9 +20,9 @@ The listed properties can be enabled in the configuration file, specifically on 
 
 The following **output** plugins can take advantage of the TLS feature:
 
+* [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
 * [Azure](../pipeline/outputs/azure.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
-* [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
 * [Datadog](../pipeline/outputs/datadog.md)
 * [Elasticsearch](../pipeline/outputs/elasticsearch.md)
 * [Forward](../pipeline/outputs/forward.md)
