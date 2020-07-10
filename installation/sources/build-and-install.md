@@ -158,6 +158,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_AZURE](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | On |
 | [FLB\_OUT\_BIGQUERY](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | On |
 | [FLB\_OUT\_COUNTER](../../pipeline/outputs/counter.md) | Enable Counter output plugin | On |
+| [FLB\_OUT\_CLOUDWATCH\_LOGS](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | On |
 | [FLB\_OUT\_DATADOG](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | On |
 | [FLB\_OUT\_ES](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
 | [FLB\_OUT\_FILE](../../pipeline/outputs/file.md) | Enable File output plugin | On |
@@ -179,4 +180,3 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT]() | Enable STDOUT output plugin | On |
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
-
