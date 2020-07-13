@@ -4,6 +4,12 @@ The following article cover the relevant notes for users upgrading from previous
 
 For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
 
+## Fluent Bit v1.5
+
+The migration from v1.4 to v1.5 is pretty straightforward. 
+
+-  If you enabled ```keepalive``` mode in your configuration, note that this configuration property has been renamed to ```net.keepalive```. Now all Network I/O is keepalive default enabled, to learn more about this and other associated configuration properties read the [Networking Administration](https://docs.fluentbit.io/manual/administration/networking#tcp-keepalive) section.
+
 ## Fluent Bit v1.4
 
 If you are migrating from Fluent Bit v1.3, there are not breaking changes. Just new exciting features to enjoy :\)
