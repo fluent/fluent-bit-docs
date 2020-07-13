@@ -196,20 +196,15 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
 
 ## Dashboard and Alerts
 
-Fluent Bit's exposed [prometheus style
-metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be
-leveraged to create dashboards and alerts.
+Fluent Bit's exposed [prometheus style metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be leveraged to create dashboards and alerts.
 
 ### Grafana Dashboard
 
-The provided [example dashboard](../monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com/)'s [logging
-operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key
-differences such as the use of the `instance` label (see [why
-here](https://www.robustperception.io/controlling-the-instance-label)),
-stacked graphs and a focus on Fluent Bit metrics.
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com/)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key differences such as the use of the `instance` label \(see [why here](https://www.robustperception.io/controlling-the-instance-label)\), stacked graphs and a focus on Fluent Bit metrics.
 
-![dashboard](../monitoring/dashboard.png)
+![dashboard](../.gitbook/assets/dashboard.png)
 
 ### Alerts
 
-Sample alerts are available [here](../monitoring/alerts.yaml).
+Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/alerts.yaml).
+
