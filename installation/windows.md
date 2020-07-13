@@ -4,19 +4,19 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Installation Packages
 
-The latest stable version is 1.4.1.
+The latest stable version is 1.5.0:
 
 | INSTALLERS | SHA256 CHECKSUMS |
 | :--- | :--- |
-| [td-agent-bit-1.4.2-win32.exe](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win32.exe) | 1a7de3f12fb3453d0b7e086036426ff8265c8caf57d7b88b8d44c3d775acf2cd |
-| [td-agent-bit-1.4.2-win32.zip](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win32.zip) | e65fd9915f7b8c8d9cc3856f9bf2abd7d189b3aba55b3372d9f94a21011da2da |
-| [td-agent-bit-1.4.2-win64.exe](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win64.exe) | f022ae48797e905ced9f9fe52b9b395605bf20ad4cad22aa216d359927468ace |
-| [td-agent-bit-1.4.2-win64.zip](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win64.zip) | 3c8b171bfea8aeeced71a85195d83acac21af13f1a049ae7a596b7ee9fa97edc |
+| [td-agent-bit-1.5.0-win32.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.0-win32.exe) | c6905d45b03169a8415b31204f82e9c3ca2049798e412a7aee49d0882adff3ea |
+| [td-agent-bit-1.5.0-win32.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.0-win32.zip) | bb70cf13f2d3c9aca0c9e995def44c4d547f8fc821c8fedae2308169b6bfd6ba |
+| [td-agent-bit-1.5.0-win64.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.0-win64.exe) | 36fa30f30a24236d26d94496f681ddbfdd46c45ace4f680a9b4489636e933d53 |
+| [td-agent-bit-1.5.0-win64.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.0-win64.zip) | 57718bc17e030650895e0af42c849434ec44d700efe888dc8a255d2e81a6fbf9 |
 
 To check the integrity, use `Get-FileHash` commandlet on PowerShell.
 
 ```text
-PS> Get-FileHash td-agent-bit-1.4.2-win32.exe
+PS> Get-FileHash td-agent-bit-1.5.0-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -26,7 +26,7 @@ Download a ZIP archive [from the download page](https://fluentbit.io/). There ar
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 
 ```text
-PS> Expand-Archive td-agent-bit-1.4.2-win64.zip
+PS> Expand-Archive td-agent-bit-1.5.0-win64.zip
 ```
 
 The ZIP package contains the following set of files.
@@ -57,7 +57,7 @@ If you see the following output, it's working fine!
 
 ```text
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v1.4.x
+Fluent Bit v1.5.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
