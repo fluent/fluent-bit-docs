@@ -30,7 +30,7 @@ For every architecture we build the layers using the following base images:
 
 ## Getting Started
 
-Download the last stable image from 1.4 series:
+Download the last stable image from 1.5 series:
 
 ```text
 $ docker pull fluent/fluent-bit:1.5
