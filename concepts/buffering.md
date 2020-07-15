@@ -4,7 +4,7 @@ description: Performance and Data Safety
 
 # Buffering
 
-When [Fluent Bit](https://fluentbit.io) process data, it uses the system memory \(heap\) as a primary and temporal place to store the record logs before they get delivered, on this private memory area the records are processed.
+When [Fluent Bit](https://fluentbit.io) processes data, it uses the system memory \(heap\) as a primary and temporal place to store the record logs before they get delivered, on this private memory area the records are processed.
 
 Buffering refers to the ability to store the records somewhere, and while they are processed and delivered, still be able to store more. Buffering in memory is the fastest mechanism, but there are certain scenarios where the mechanism requires special strategies to deal with [backpressure](../administration/backpressure.md), data safety or reduce memory consumption by the service in constraint environments.
 

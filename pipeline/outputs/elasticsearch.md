@@ -122,9 +122,26 @@ If you see an error message like below, you'll need to fix your configuration to
 
 For details, please read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).
 
-### Fluent Bit + Amazon Elasticsearch Service
+### Elasticsearch rejects requests saying "Document mapping type name can't start with '\_'" <a id="faq-underscore"></a>
 
-Amazon ElasticSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon ElasticSearch Service with IAM Authentication.
+Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, which matches the recommendation from Elasticsearch from version 6.2 forwards \([see commit with rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)\). This doesn't work in Elasticsearch versions 5.6 through 6.1 \([see Elasticsearch discussion and fix](https://discuss.elastic.co/t/cant-use-doc-as-type-despite-it-being-declared-the-preferred-method/113837/9)\). Ensure you set an explicit map (such as `doc` or `flb_type`) in the configuration, as seen on the last line:
+
+```text
+[OUTPUT]
+    Name  es
+    Match *
+    Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+    Port  443
+    Index my_index
+    AWS_Auth On
+    AWS_Region us-west-2
+    tls   On
+    Type  doc
+```
+
+### Fluent Bit + Amazon Elasticsearch Service <a id="#aws-es"></a>
+
+The Amazon ElasticSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon ElasticSearch Service with IAM Authentication.
 
 Fluent Bit supports sourcing AWS credentials from any of the standard sources \(for example, an [Amazon EKS IAM Role for a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)\).
 
@@ -143,4 +160,4 @@ Example configuration:
     tls     On
 ```
 
-Notice that the `Port` is set to `443`, and that `tls` is enabled.
+Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.

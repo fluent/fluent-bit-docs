@@ -11,7 +11,7 @@ The `buffer` phase already contains the data in an immutable state, meaning, no 
 ![](../../.gitbook/assets/logging_pipeline_buffer%20%281%29.png)
 
 {% hint style="info" %}
-Note that buffered data is not longer a raw text, instead it's in Fluent Bit internal binary representation.
+Note that buffered data is not raw text, it's in Fluent Bit's internal binary representation.
 {% endhint %}
 
 Fluent Bit offers a buffering mechanism in the file system that acts as a _backup system_ to avoid data loss in case of system failures.
