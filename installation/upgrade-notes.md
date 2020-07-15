@@ -9,14 +9,15 @@ For more details about changes on each release please refer to the [Official Rel
 The migration from v1.4 to v1.5 is pretty straightforward. 
 
 -  If you enabled ```keepalive``` mode in your configuration, note that this configuration property has been renamed to ```net.keepalive```. Now all Network I/O is keepalive default enabled, to learn more about this and other associated configuration properties read the [Networking Administration](https://docs.fluentbit.io/manual/administration/networking#tcp-keepalive) section.
+- If you use the Elasticsearch output plugin, note the default value of ```type``` [changed from `flb\_type` to `\_doc`](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196). Many versions of Elasticsearch will tolerate this, but ES v5.6 through v6.1 require a type *without* a leading underscore. [See Elasticsearch output plugin documentation](pipeline/outputs/elasticsearch.md) for more.
 
 ## Fluent Bit v1.4
 
-If you are migrating from Fluent Bit v1.3, there are not breaking changes. Just new exciting features to enjoy :\)
+If you are migrating from Fluent Bit v1.3, there are no breaking changes. Just new exciting features to enjoy :\)
 
 ## Fluent Bit v1.3
 
-If you are migrating from Fluent Bit v1.2 to v1.3, there are not breaking changes. If you are upgrading from an older version please review the incremental changes below.
+If you are migrating from Fluent Bit v1.2 to v1.3, there are no breaking changes. If you are upgrading from an older version please review the incremental changes below.
 
 ## Fluent Bit v1.2
 
