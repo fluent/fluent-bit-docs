@@ -10,6 +10,7 @@ The following operating systems and architectures are supported in Fluent Bit.
 |  | [Debian 10 \(Buster\)](linux/debian.md) | x86\_64, Arm64v8 |
 |  | [Debian 9 \(Stretch\)](linux/debian.md) | x86\_64, Arm64v8 |
 |  | [Debian 8 \(Jessie\)](linux/debian.md) | x86\_64, Arm64v8 |
+|  | [Nixos](https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/fluent-bit/default.nix) | x86\_64, Arm64v8 |
 |  | [Ubuntu 20.04 \(Focal Fossa\)](linux/ubuntu.md) | x86\_64, Arm64v8 |
 |  | [Ubuntu 18.04 \(Bionic Beaver\)](linux/ubuntu.md) | x86\_64, Arm64v8 |
 |  | [Ubuntu 16.04 \(Xenial Xerus\)](linux/ubuntu.md) | x86\_64 |
