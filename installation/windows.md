@@ -4,19 +4,19 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Installation Packages
 
-The latest stable version is 1.5.1:
+The latest stable version is 1.5.2:
 
 | INSTALLERS | SHA256 CHECKSUMS |
 | :--- | :--- |
-| [td-agent-bit-1.5.1-win32.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.1-win32.exe) | 3075dde4ee1c9b00a5b18dbe92c831b52ed6b2af45356044044c203c0b540914 |
-| [td-agent-bit-1.5.1-win32.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.1-win32.zip) | 19255eda544862b5cfc68bd612e7b5a2c691cbc850260db3f0380675dc291e18 |
-| [td-agent-bit-1.5.1-win64.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.1-win64.exe) | 26c565e754255623763d8da4d0da42895499f73ad7bb89aca0bbae21e74d0eca |
-| [td-agent-bit-1.5.1-win64.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.1-win64.zip) | 99a029a2f1a2c2946aa753c5859c7167858d5c2300a7efeceec4e405d00f53fb |
+| [td-agent-bit-1.5.2-win32.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.2-win32.exe) | 0ec82891bccce46f083979a4d7128c5ca27f617efdfef6b889371a121cfdce64 |
+| [td-agent-bit-1.5.2-win32.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.2-win32.zip) | 3c398cf65dec58f6ad87735bd59d60ab9922356c3e6efaaa09ff5996e5b0cbfe |
+| [td-agent-bit-1.5.2-win64.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.2-win64.exe) | 463e52db607dae1cd6d34b913053d027981909f2f83a7444148fa8254a94b641 |
+| [td-agent-bit-1.5.2-win64.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.2-win64.zip) | feb26d47647b84fc3a8bb832e5cec5ba4b0b465642f7146198ac0fb4dc846c86 |
 
 To check the integrity, use `Get-FileHash` commandlet on PowerShell.
 
 ```text
-PS> Get-FileHash td-agent-bit-1.5.1-win32.exe
+PS> Get-FileHash td-agent-bit-1.5.2-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -26,7 +26,7 @@ Download a ZIP archive [from the download page](https://fluentbit.io/). There ar
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 
 ```text
-PS> Expand-Archive td-agent-bit-1.5.1-win64.zip
+PS> Expand-Archive td-agent-bit-1.5.2-win64.zip
 ```
 
 The ZIP package contains the following set of files.
@@ -89,3 +89,44 @@ Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Fil
 ```text
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
+
+## Windows Service Support
+
+Windows services are equivalent to "daemons" in UNIX (i.e. long-running background processes). Since v1.5.0, Fluent Bit has the native support for Windows Service.
+
+Suppose you have the following installation layout:
+
+```
+C:\fluent-bit\
+├── conf
+│   ├── fluent-bit.conf
+│   └── parsers.conf
+└── bin
+    ├── fluent-bit.dll
+    └── fluent-bit.exe
+
+```
+
+To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
+
+```
+% sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
+```
+
+Now Fluent Bit can be started and managed as a normal Windows service.
+
+```
+% sc.exe start fluent-bit
+% sc.exe query fluent-bit
+SERVICE_NAME: fluent-bit
+    TYPE               : 10  WIN32_OWN_PROCESS
+    STATE              : 4 Running
+    ...
+```
+
+To halt the Fluent Bit service, just execute the "stop" command.
+
+```
+% sc.exe stop fluent-bit
+``
+>>>>>>> ce18fab... installation: windows: Document "Windows Service" (#350)
