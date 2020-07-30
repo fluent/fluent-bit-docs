@@ -128,5 +128,4 @@ To halt the Fluent Bit service, just execute the "stop" command.
 
 ```
 % sc.exe stop fluent-bit
-``
->>>>>>> ce18fab... installation: windows: Document "Windows Service" (#350)
+```
