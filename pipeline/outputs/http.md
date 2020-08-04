@@ -17,8 +17,8 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | allow\_duplicated\_headers | Specify if duplicated headers are allowed. If a duplicated header is found, the latest key/value set is preserved. | true |
 | header\_tag | Specify an optional HTTP header field for the original message tag. |  |
 | header | Add a HTTP header key/value pair. Multiple headers can be set. |  |
-| json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
+| json\_date\_key | Specify the name of the time key in the output record. To disable the time key just set the value to ```false```. | date |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 | gelf\_timestamp\_key | Specify the key to use for `timestamp` in _gelf_ format |  |
 | gelf\_host\_key | Specify the key to use for the `host` in _gelf_ format |  |
 | gelf\_short\_messge\_key | Specify the key to use as the `short` message in _gelf_ format |  |
@@ -138,4 +138,3 @@ _sourcecategory="my_fluent_bit"
 | timeslice 1m
 | max(cpu) as cpu group by _timeslice
 ```
-
