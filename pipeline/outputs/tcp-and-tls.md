@@ -9,8 +9,8 @@ The **tcp** output plugin allows to send records to a remote TCP server. The pay
 | Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
 | Port | TCP Port of the target service. | 5170 |
 | Format | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json\_lines_ and _json\_stream_. | msgpack |
-| json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_ , _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) and _epoch_. | double |
+| json\_date\_key | Specify the name of the time key in the output record. To disable the time key just set the value to ```false```. | date |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 
 ## TLS Configuration Parameters
 
@@ -60,4 +60,3 @@ Fluent Bit v1.x.x
 ```
 
 No more, no less, it just works.
-
