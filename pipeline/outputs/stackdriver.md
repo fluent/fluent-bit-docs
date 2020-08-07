@@ -19,7 +19,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
-| tag\_prefix | Set the tag_prefix used to validate the tag of logs with k8s resource type. Before the tag of the log must be in foramt k8s\_container(pod/node).* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
+| tag\_prefix | Set the tag_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container(pod/node).* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
 
 ### Configuration File
 
