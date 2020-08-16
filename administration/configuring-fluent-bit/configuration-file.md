@@ -93,7 +93,7 @@ The following is an example of a _SERVICE_ section:
 
 ## Input <a id="config_input"></a>
 
-An _INPUT_ section defines a source \(related to an input plugin\), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
+An _INPUT_ section defines a source \(related to an input plugin\), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add its own configuration keys:
 
 | Key | Description |
 | :--- | :--- |
@@ -114,7 +114,7 @@ The following is an example of an _INPUT_ section:
 
 ## Filter <a id="config_filter"></a>
 
-A _FILTER_ section defines a filter \(related to an filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
+A _FILTER_ section defines a filter \(related to an filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add its own configuration keys:
 
 | Key | Description |  |
 | :--- | :--- | :--- |
