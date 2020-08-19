@@ -12,6 +12,8 @@ The monitoring interface can be easily integrated with Prometheus since we suppo
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
+**NOTE** If you build from source code, make sure to add `-DFLB_HTTP_SERVER=On` to the `cmake` command.
+
 ```text
 [SERVICE]
     HTTP_Server  On
