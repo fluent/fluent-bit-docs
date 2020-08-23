@@ -11,6 +11,9 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Customer\_ID | Customer ID or WorkspaceID string. |  |
 | Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
 | Log\_Type | The name of the event type. | fluentbit |
+| Subscription\_ID | Azure Subscription ID (optional). | |
+| Resource\_Group | Azure Resource Group Name (optional). | |
+| Additional\_Providers | Additional Resource Providers (optional). | |
 
 ## Getting Started
 
@@ -38,4 +41,46 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Customer_ID abc
     Shared_Key  def
 ```
+
+### Ressource Context Access Mode
+To use this access mode you need to specifiy the subscription id, the resource group name , and if needed additional providers
+
+
+```text
+[INPUT]
+    Name  cpu
+
+[OUTPUT]
+    Name        azure
+    Match       *
+    Customer_ID abc
+    Shared_Key  def
+    Subscription_ID 123-122-113
+    Resource_Group test
+```
+Generated Resource ID
+/subscriptions/123-122-113/resourcegroups/test 
+
+```text
+[INPUT]
+    Name  cpu
+
+[OUTPUT]
+    Name        azure
+    Match       *
+    Customer_ID abc
+    Shared_Key  def
+    Subscription_ID 123-122-113
+    Resource_Group test
+    Addidtional_Providers providers/a/b
+```
+Generated Resource ID
+/subscriptions/123-122-113/resourcegroups/test/providers/a/b 
+
+
+
+For details see:
+https://docs.microsoft.com/en-us/azure/azure-monitor/platform/design-logs-deployment#access-mode)
+https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourceid
+
 
