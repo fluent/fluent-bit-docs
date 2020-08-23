@@ -9,7 +9,13 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
 | 1.5 | x86\_64, arm64v8, arm32v7 | Latest release of 1.5.x series. |
-| 1.5.1 | x86\_64, arm64v8, arm32v7 | Release [v1.5.0](https://fluentbit.io/announcements/v1.5.1/) |
+| 1.5.4 | x86\_64, arm64v8, arm32v7 | Release [v1.5.4](https://fluentbit.io/announcements/v1.5.4/) |
+| 1.5-debug, 1.5.4-debug | x86\_64 | v1.5.x releases + Busybox |
+| 1.5.3 | x86\_64, arm64v8, arm32v7 | Release [v1.5.3](https://fluentbit.io/announcements/v1.5.3/) |
+| 1.5-debug, 1.5.3-debug | x86\_64 | v1.5.x releases + Busybox |
+| 1.5.2 | x86\_64, arm64v8, arm32v7 | Release [v1.5.2](https://fluentbit.io/announcements/v1.5.2/) |
+| 1.5-debug, 1.5.2-debug | x86\_64 | v1.5.x releases + Busybox |
+| 1.5.1 | x86\_64, arm64v8, arm32v7 | Release [v1.5.1](https://fluentbit.io/announcements/v1.5.1/) |
 | 1.5-debug, 1.5.1-debug | x86\_64 | v1.5.x releases + Busybox |
 | 1.5.0 | x86\_64, arm64v8, arm32v7 | Release [v1.5.0](https://fluentbit.io/announcements/v1.5.0/) |
 | 1.5-debug, 1.5.0-debug | x86\_64 | v1.5.x releases + Busybox |
