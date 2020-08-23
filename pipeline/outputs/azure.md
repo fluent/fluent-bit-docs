@@ -11,6 +11,7 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Customer\_ID | Customer ID or WorkspaceID string. |  |
 | Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
 | Log\_Type | The name of the event type. | fluentbit |
+| Resource\_ID | Azure Ressource ID (optional). | |
 
 ## Getting Started
 
@@ -37,5 +38,6 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match       *
     Customer_ID abc
     Shared_Key  def
+    Resource_ID /subscriptions/xxxxxxx//resourceGroups/xxxxxx
 ```
 
