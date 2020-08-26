@@ -17,6 +17,7 @@ This is the documentation for the core Fluent Bit CloudWatch plugin written in C
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
 | endpoint | Specify a custom endpoint for the CloudWatch Logs API. |
+| sts\_endpoint | Specify a custom STS endpoint for the AWS STS API. |
 
 ## Getting Started
 
