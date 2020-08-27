@@ -132,6 +132,7 @@
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Splunk](pipeline/outputs/splunk.md)
+  * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
 
