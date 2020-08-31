@@ -14,3 +14,4 @@ It's strongly recommended to always use the stable release of Fluent Bit recipe 
 ## Fluent Bit and other architectures
 
 Fluent Bit &gt;= v1.1.x fully supports x86\_64, x86, arm32v7 and arm64v8.
+

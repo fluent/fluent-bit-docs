@@ -47,8 +47,8 @@ Docker mode exists to recombine JSON log lines split by the Docker daemon due to
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Docker\_Mode | If enabled, the plugin will recombine split Docker log lines before passing them to any parser as configured above. This mode cannot be used at the same time as Multiline. | Off |
-| Docker\_Mode\_Flush  | Wait period time in seconds to flush queued unfinished split lines. | 4 |
-| Docker\_Mode\_Parser | Specify an optional parser for the first line of the docker multiline mode. The parser name to be specified must be registered in the ```parsers.conf``` file. | |
+| Docker\_Mode\_Flush | Wait period time in seconds to flush queued unfinished split lines. | 4 |
+| Docker\_Mode\_Parser | Specify an optional parser for the first line of the docker multiline mode. The parser name to be specified must be registered in the `parsers.conf` file. |  |
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -114,3 +114,4 @@ By default SQLite client tool do not format the columns in a human read-way, so 
 ## Files Rotation
 
 Files rotation are properly handled, including logrotate _copytruncate_ mode.
+
