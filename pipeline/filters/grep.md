@@ -1,6 +1,6 @@
 # Grep
 
-The _Grep Filter_ plugin allows to match or exclude specific records based in regular expression patterns.
+The _Grep Filter_ plugin allows you to match or exclude specific records based on regular expression patterns.
 
 ## Configuration Parameters
 
@@ -57,7 +57,7 @@ The filter allows to use multiple rules which are applied in order, you can have
 
 ### Nested fields example
 
-Currently nested fields are not supported. If you have records in the following format
+Currently, nested fields are not supported. If you have records in the following format
 
 ```javascript
 {
@@ -75,7 +75,7 @@ Currently nested fields are not supported. If you have records in the following 
 }
 ```
 
-and if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you could use combination of [nest](https://docs.fluentbit.io/manual/v/1.0/filter/nest) and grep filters. Here is an example that will exclude records that match `kubernetes.labels.app: myapp`:
+and if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you could use a combination of [nest](https://docs.fluentbit.io/manual/v/1.0/filter/nest) and grep filters. Here is an example that will exclude records that match `kubernetes.labels.app: myapp`:
 
 ```python
 [FILTER]

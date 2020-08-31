@@ -100,6 +100,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [Expect](pipeline/filters/expect.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Lua](pipeline/filters/lua.md)
