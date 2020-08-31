@@ -109,3 +109,4 @@ In your main configuration file append the following Input & Output sections:
     Match *
     Path output.txt
 ```
+

@@ -10,3 +10,4 @@ Starting from [Fluent Bit](http://fluentbit.io) v0.11.10, all unit sizes have be
 | k, K, KB, kb | Kilobyte: a unit of memory equal to 1,000 bytes. | 32k means 32000 bytes. |
 | m, M, MB, mb | Megabyte: a unit of memory equal to 1,000,000 bytes | 1M means 1000000 bytes |
 | g, G, GB, gb | Gigabyte: a unit of memory equal to 1,000,000,000 bytes | 1G means 1000000000 bytes |
+

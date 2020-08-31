@@ -159,6 +159,11 @@ Copyright (C) Treasure Data
 
 Some timestamps might have fractional seconds, like `2017-05-17T15:44:31.187512963Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds. To parse the previous example, you could specify `Time_Format %Y-%m-%dT%H:%M:%S.%LZ`.
 
-{% hint style="info" %} The option `%L` is only valid when used after seconds (`%S`) or seconds since the Epoch (`%s`), e.g: `%S.%L` or `%s.%L`. {% endhint %}
+{% hint style="info" %}
+The option `%L` is only valid when used after seconds \(`%S`\) or seconds since the Epoch \(`%s`\), e.g: `%S.%L` or `%s.%L`.
+{% endhint %}
 
-{% hint style="info" %} Support for `%L` was added in Fluent Bit 0.12. {% endhint %}
+{% hint style="info" %}
+Support for `%L` was added in Fluent Bit 0.12.
+{% endhint %}
+
