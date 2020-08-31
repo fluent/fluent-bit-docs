@@ -1,4 +1,4 @@
-# Docker events
+# Docker Events
 
 The **docker events** input plugin uses the docker API to capture server events. A complete list of possible events returned by this plugin can be found [here](https://docs.docker.com/engine/reference/commandline/events/)
 
@@ -8,8 +8,8 @@ This plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Unix_Path | The docker socket unix path | /var/run/docker.sock |
-| Buffer_Size | The size of the buffer used to read docker events (in bytes) | 8192 |
+| Unix\_Path | The docker socket unix path | /var/run/docker.sock |
+| Buffer\_Size | The size of the buffer used to read docker events \(in bytes\) | 8192 |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. | None |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _message_. | message |
 

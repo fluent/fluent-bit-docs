@@ -92,30 +92,29 @@ PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 
 ## Windows Service Support
 
-Windows services are equivalent to "daemons" in UNIX (i.e. long-running background processes). Since v1.5.0, Fluent Bit has the native support for Windows Service.
+Windows services are equivalent to "daemons" in UNIX \(i.e. long-running background processes\). Since v1.5.0, Fluent Bit has the native support for Windows Service.
 
 Suppose you have the following installation layout:
 
-```
+```text
 C:\fluent-bit\
 ├── conf
-│   ├── fluent-bit.conf
-│   └── parsers.conf
+│   ├── fluent-bit.conf
+│   └── parsers.conf
 └── bin
-    ├── fluent-bit.dll
-    └── fluent-bit.exe
-
+    ├── fluent-bit.dll
+    └── fluent-bit.exe
 ```
 
 To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
 
-```
+```text
 % sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
 ```
 
 Now Fluent Bit can be started and managed as a normal Windows service.
 
-```
+```text
 % sc.exe start fluent-bit
 % sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
@@ -126,6 +125,5 @@ SERVICE_NAME: fluent-bit
 
 To halt the Fluent Bit service, just execute the "stop" command.
 
-```
-% sc.exe stop fluent-bit
-``
+``` % sc.exe stop fluent-bit``
+

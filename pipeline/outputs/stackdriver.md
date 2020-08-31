@@ -19,7 +19,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
-| tag\_prefix | Set the tag_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container(pod/node).* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
+| tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
 
 ### Configuration File
 
@@ -37,14 +37,16 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 
 Example configuration file for k8s resource type:
 
-local_resource_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entey. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
+local\_resource\_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local\_resource\_id field in the log entey. If there is no field logging.googleapis.com/local\_resource\_id in the log, the plugin will then construct it by using the tag value of the log.
 
-The local_resource_id should be in format:
-* k8s_container.<namespace_name>.<pod_name>.<container_name>
-* k8s_node.<node_name>
-* k8s_pod.<namespace_name>.<pod_name>
+The local\_resource\_id should be in format:
 
-This implies that if there is no local_resource_id in the log entry then the tag of logs should match this format. Note that we have an option tag_prefix so it is not mandatory to use k8s_container(node/pod) as the prefix for tag.
+* k8s\_container...
+* k8s\_node.
+* k8s\_pod..
+
+This implies that if there is no local\_resource\_id in the log entry then the tag of logs should match this format. Note that we have an option tag\_prefix so it is not mandatory to use k8s\_container\(node/pod\) as the prefix for tag.
+
 ```text
 [INPUT]
     Name               tail
@@ -62,6 +64,7 @@ This implies that if there is no local_resource_id in the log entry then the tag
     k8s_cluster_location  test_cluster_location
     tag_prefix  custom_tag
 ```
+
 ## Troubleshooting Notes
 
 ### Upstream connection error
@@ -79,16 +82,20 @@ This belongs to a network issue by the environment where Fluent Bit is running, 
 * [https://www.googleapis.com](https://www.googleapis.com/)
 * [https://logging.googleapis.com](https://logging.googleapis.com/)
 
-### Fail to process local_resource_id
+### Fail to process local\_resource\_id
+
 The error looks like this:
+
 ```text
 [2020/08/04 14:43:03] [error] [output:stackdriver:stackdriver.0] fail to process local_resource_id from log entry for k8s_container
 ```
 
 Do following check:
-* If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
-* If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
-## Other implementations
+
+* If the log entry does not contain the local\_resource\_id field, does the tag of the log match for format?
+* If tag\_prefix is configured, does the prefix of tag specified in the input plugin match the tag\_prefix?
+
+  **Other implementations**
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
