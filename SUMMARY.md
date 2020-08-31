@@ -63,6 +63,7 @@
 
 ## Local Testing
 
+* [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
 * [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
 
 ## Data Pipeline <a id="pipeline"></a>
@@ -99,6 +100,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [Expect](pipeline/filters/expect.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Lua](pipeline/filters/lua.md)
