@@ -8,7 +8,7 @@ A simplified view of our data processing pipeline is as follows:
 
 ![](../.gitbook/assets/flb_pipeline_simplified.png)
 
-In a normal production environment, many Inputs, Filters and Outputs are defined in the configuration, so integrating a continuous validation of your configuration against expected results is a must. For this requirement, Fluent Bit provides a specific Filter called **Expect** which can be used to validate expected Keys and Values from your records and takes some action when an exception is found.
+In a normal production environment, many Inputs, Filters, and Outputs are defined in the configuration, so integrating a continuous validation of your configuration against expected results is a must. For this requirement, Fluent Bit provides a specific Filter called **Expect** which can be used to validate expected Keys and Values from your records and takes some action when an exception is found.
 
 ### How it Works
 
@@ -22,18 +22,18 @@ Ideally you want to add checkpoints of validation of your data between each step
 
 Expect filter sets rules that aims to validate certain criteria like:
 
-* does record contains a key A ?
-* does record not contains key A ?
-* does record key A value equals NULL ?
-* does record key A value a different value than NULL ?
-* does record key A value equals B ?
+* does the record contain a key A ?
+* does the record not contains key A?
+* does the record key A value equals NULL ?
+* does the record key A value a different value than NULL ?
+* does the record key A value equals B ?
 
 Every expect filter configuration can expose specific rules to validate the content of your records, it supports the following configuration properties:
 
 | Property | Description |
 | :--- | :--- |
 | key\_exists | Check if a key with a given name exists in the record. |
-| key\_not\_exists | Check if a key does not exists in the record. |
+| key\_not\_exists | Check if a key does not exist in the record. |
 | key\_val\_is\_null | check that the value of the key is NULL. |
 | key\_val\_is\_not\_null | check that the value of the key is NOT NULL. |
 | key\_val\_eq | check that the value of the key equals the given value in the configuration. |
@@ -49,7 +49,7 @@ Consider the following JSON file called `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following Fluent Bit configuration file, will configure a pipeline to consume the log above apply an expect filter to validate that keys `color` and `label` exists:
+The following Fluent Bit configuration file will configure a pipeline to consume the log above apply an expect filter to validate that keys `color` and `label` exists:
 
 ```python
 [SERVICE]
@@ -58,24 +58,25 @@ The following Fluent Bit configuration file, will configure a pipeline to consum
     parsers_file parsers.conf
 
 [INPUT]
-    name      tail
-    path      ./data.log
-    parser    json
+    name        tail
+    path        ./data.log
+    parser      json
+    exit_on_eof on
     
 # First 'expect' filter to validate that our data was structured properly
 [FILTER]
-    name       expect
-    match      *
-    key_exists color
-    key_exists $label['name']
-    action     exit
+    name        expect
+    match       *
+    key_exists  color
+    key_exists  $label['name']
+    action      exit
     
 [OUTPUT]
-    name       stdout
-    match      *
+    name        stdout
+    match       *
 ```
 
-note that if for some reason the JSON parser failed or is missing in the `tail` input \(line 9\), the `expect` filter will trigger the `exit` action. As a test, go head and comment out or remove line 9.
+note that if for some reason the JSON parser failed or is missing in the `tail` input \(line 9\), the `expect` filter will trigger the `exit` action. As a test, go ahead and comment out or remove line 9.
 
 As a second step, we will extend our pipeline and we will add a grep filter to match records that map  `label` contains a key called `name` with value `abc`, then an expect filter to re-validate that condition:
 
@@ -86,9 +87,10 @@ As a second step, we will extend our pipeline and we will add a grep filter to m
     parsers_file parsers.conf
 
 [INPUT]
-    name      tail
-    path      ./data.log
-    parser    json
+    name         tail
+    path         ./data.log
+    parser       json
+    exit_on_eof  on
     
 # First 'expect' filter to validate that our data was structured properly
 [FILTER]
