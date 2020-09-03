@@ -1,6 +1,6 @@
 # Validating your Data and Structure
 
-Fluent Bit is a powerful log processing tool that can deal with different sources and formats, in addition it provides several filters that can be used to perform custom modifications. This flexibility is really good but while your pipeline grows, it's strongly recommended to validate your data and structure. 
+Fluent Bit is a powerful log processing tool that can deal with different sources and formats, in addition it provides several filters that can be used to perform custom modifications. This flexibility is really good but while your pipeline grows, it's strongly recommended to validate your data and structure.
 
 > We encourage Fluent Bit users to integrate data validation in their CI systems
 
@@ -10,7 +10,7 @@ A simplified view of our data processing pipeline is as follows:
 
 In a normal production environment, many Inputs, Filters, and Outputs are defined in the configuration, so integrating a continuous validation of your configuration against expected results is a must. For this requirement, Fluent Bit provides a specific Filter called **Expect** which can be used to validate expected Keys and Values from your records and takes some action when an exception is found.
 
-### How it Works
+## How it Works
 
 As an example, consider the following pipeline where your source of data is a normal file with JSON content on it and then two filters: [grep](../pipeline/filters/grep.md) to exclude certain records and [record\_modifier](../pipeline/filters/record-modifier.md) to alter the record content adding and removing specific keys.
 
@@ -37,9 +37,9 @@ Every expect filter configuration can expose specific rules to validate the cont
 | key\_val\_is\_null | check that the value of the key is NULL. |
 | key\_val\_is\_not\_null | check that the value of the key is NOT NULL. |
 | key\_val\_eq | check that the value of the key equals the given value in the configuration. |
-| action | action to take when a rule does not match. The available options are  `warn` or `exit`. On `warn`, a warning message is sent to the logging layer when a mismatch of the rules above is found; using `exit` makes Fluent Bit abort with status code `255`.  |
+| action | action to take when a rule does not match. The available options are  `warn` or `exit`. On `warn`, a warning message is sent to the logging layer when a mismatch of the rules above is found; using `exit` makes Fluent Bit abort with status code `255`. |
 
-### Start Testing
+## Start Testing
 
 Consider the following JSON file called `data.log` with the following content:
 
@@ -62,7 +62,7 @@ The following Fluent Bit configuration file will configure a pipeline to consume
     path        ./data.log
     parser      json
     exit_on_eof on
-    
+
 # First 'expect' filter to validate that our data was structured properly
 [FILTER]
     name        expect
@@ -70,7 +70,7 @@ The following Fluent Bit configuration file will configure a pipeline to consume
     key_exists  color
     key_exists  $label['name']
     action      exit
-    
+
 [OUTPUT]
     name        stdout
     match       *
@@ -78,7 +78,7 @@ The following Fluent Bit configuration file will configure a pipeline to consume
 
 note that if for some reason the JSON parser failed or is missing in the `tail` input \(line 9\), the `expect` filter will trigger the `exit` action. As a test, go ahead and comment out or remove line 9.
 
-As a second step, we will extend our pipeline and we will add a grep filter to match records that map  `label` contains a key called `name` with value `abc`, then an expect filter to re-validate that condition:
+As a second step, we will extend our pipeline and we will add a grep filter to match records that map `label` contains a key called `name` with value `abc`, then an expect filter to re-validate that condition:
 
 ```python
 [SERVICE]
@@ -91,7 +91,7 @@ As a second step, we will extend our pipeline and we will add a grep filter to m
     path         ./data.log
     parser       json
     exit_on_eof  on
-    
+
 # First 'expect' filter to validate that our data was structured properly
 [FILTER]
     name       expect
@@ -118,20 +118,20 @@ As a second step, we will extend our pipeline and we will add a grep filter to m
     name       record_modifier
     match      *
     record     hostname ${HOSTNAME}
-   
+
 # Check that every record contains 'hostname' key
 [FILTER]
     name       expect
     match      *
     key_exists hostname
     action     exit
-     
+
 [OUTPUT]
     name       stdout
     match      *
 ```
 
-### Deploying in Production
+## Deploying in Production
 
-When deploying your configuration in production, you might want to remove the expect filters from your configuration since it's an unnecessary _extra work_ unless you want to have a 100% coverage of checks at runtime. 
+When deploying your configuration in production, you might want to remove the expect filters from your configuration since it's an unnecessary _extra work_ unless you want to have a 100% coverage of checks at runtime.
 
