@@ -114,6 +114,7 @@
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Azure](pipeline/outputs/azure.md)
+  * [Azure Blob](pipeline/outputs/azure_blob.md)
   * [BigQuery](pipeline/outputs/bigquery.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
