@@ -1,3 +1,7 @@
+---
+description: Official and Microsoft Certified Azure Storage Append Blob connector
+---
+
 # Azure Blob
 
 The Azure Blob output plugin allows to ingest your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the newest Append Blob API.
