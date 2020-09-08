@@ -8,7 +8,7 @@ A simplified view of our data processing pipeline is as follows:
 
 ![](../.gitbook/assets/flb_pipeline_simplified.png)
 
-In a normal production environment, many Inputs, Filters, and Outputs are defined in the configuration, so integrating a continuous validation of your configuration against expected results is a must. For this requirement, Fluent Bit provides a specific Filter called **Expect** which can be used to validate expected Keys and Values from your records and takes some action when an exception is found.
+In a normal production environment, many Inputs, Filters, and Outputs are defined in the configuration, so integrating a continuous validation of your configuration against expected results is a must. For this requirement, Fluent Bit provides a specific Filter called [**expect**](../pipeline/filters/expect.md) which can be used to validate expected Keys and Values from your records and takes some action when an exception is found.
 
 ### How it Works
 
@@ -16,7 +16,7 @@ As an example, consider the following pipeline where your source of data is a no
 
 ![](../.gitbook/assets/flb_pipeline_simplified_example_01.png)
 
-Ideally you want to add checkpoints of validation of your data between each step so you can know if your data structure is correct, we do this by using **expect** filter.
+Ideally you want to add checkpoints of validation of your data between each step so you can know if your data structure is correct, we do this by using the [expect](../pipeline/filters/expect.md) filter.
 
 ![](../.gitbook/assets/flb_pipeline_simplified_expect.png)
 
