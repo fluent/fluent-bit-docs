@@ -1,10 +1,10 @@
 ---
-description: Official and Microsoft Certified Azure Storage Append Blob connector
+description: Official and Microsoft Certified Azure Storage Blob connector
 ---
 
 # Azure Blob
 
-The Azure Blob output plugin allows to ingest your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the newest Append Blob API.
+The Azure Blob output plugin allows ingesting your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the Append Blob and Block Blob API.
 
 Our plugin works with the official Azure Service and also can be configured to be used also with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
 
@@ -23,6 +23,7 @@ We expose different configuration properties, the following table list all the o
 | account\_name | Azure Storage account name. This configuration property is mandatory |  |
 | shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory. |  |
 | container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
+| blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`.  | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
 | path | Optional path to store your blobs. If your blob name is `myblob`, you can specify sub-directories where to store it using path, so setting path to `/logs/kubernetes` will store your blob in `/logs/kubernetes/myblob`. |  |
 | emulator\_mode | If you desire to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
