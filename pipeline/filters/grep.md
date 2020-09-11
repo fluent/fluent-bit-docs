@@ -1,6 +1,10 @@
+---
+description: Select or exclude records per patterns
+---
+
 # Grep
 
-The _Grep Filter_ plugin allows you to match or exclude specific records based on regular expression patterns.
+The _Grep Filter_ plugin allows you to match or exclude specific records based on regular expression patterns for values or nested values.
 
 ## Configuration Parameters
 
@@ -8,8 +12,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Value Format | Description |
 | :--- | :--- | :--- |
-| Regex | FIELD REGEX | Keep records which field matches the regular expression. |
-| Exclude | FIELD REGEX | Exclude records which field matches the regular expression. |
+| Regex | KEY  REGEX | Keep records in which the content of KEY matches the regular expression. |
+| Exclude | KEY REGEX | Exclude records in which the content of KEY matches the regular expression. |
+
+#### Record Accessor Enabled
+
+This plugin enables the [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) feature to specify the KEY. Using the _record accessor_ is suggested if you want to match values against nested values.
 
 ## Getting Started
 
@@ -30,7 +38,7 @@ ggg
 
 > Note: using the command line mode need special attention to quote the regular expressions properly. It's suggested to use a configuration file.
 
-The following command will load the _tail_ plugin and read the content of _lines.txt_ file. Then the _grep_ filter will apply a regular expression rule over the _log_ field \(created by tail plugin\) and only _pass_ the records which field value starts with _aa_:
+The following command will load the _tail_ plugin and read the content of `lines.txt` file. Then the _grep_ filter will apply a regular expression rule over the _log_ field \(created by tail plugin\) and only _pass_ the records which field value starts with _aa_:
 
 ```text
 $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
@@ -57,10 +65,11 @@ The filter allows to use multiple rules which are applied in order, you can have
 
 ### Nested fields example
 
-Currently, nested fields are not supported. If you have records in the following format
+If you want to match or exclude records based on nested values, you can use a [Record Accessor ](../../administration/configuring-fluent-bit/record-accessor.md)format as the KEY name. Consider the following record example:
 
 ```javascript
 {
+    "log": "something",
     "kubernetes": {
         "pod_name": "myapp-0",
         "namespace_name": "default",
@@ -70,29 +79,17 @@ Currently, nested fields are not supported. If you have records in the following
         },
         "host": "minikube",
         "container_name": "myapp",
-        "docker_id": "370face382c7603fdd309d8c6aaaf434fd98b92421ce7c7c8aafe7697d4aa362"
+        "docker_id": "370face382c7603fdd309d8c6aaaf434fd98b92421ce"
     }
 }
 ```
 
-and if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you could use a combination of [nest](https://docs.fluentbit.io/manual/v/1.0/filter/nest) and grep filters. Here is an example that will exclude records that match `kubernetes.labels.app: myapp`:
+if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you can use the following rule:
 
 ```python
 [FILTER]
-    Name         nest
-    Match        *
-    Operation    lift
-    Nested_under kubernetes
-
-[FILTER]
-    Name         nest
-    Match        *
-    Operation    lift
-    Nested_under labels
-
-[FILTER]
     Name    grep
     Match   *
-    Exclude app myapp
+    Exclude $kubernetes['labels']['app'] myapp
 ```
 
