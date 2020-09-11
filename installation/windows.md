@@ -1,22 +1,22 @@
-# Windows
+1# Windows
 
 Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive \(for quick testing\) and an EXE installer \(for system installation\).
 
 ## Installation Packages
 
-The latest stable version is 1.5.5:
+The latest stable version is 1.5.6:
 
 | INSTALLERS | SHA256 CHECKSUMS |
 | :--- | :--- |
-| [td-agent-bit-1.5.5-win32.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.5-win32.exe) | 4270c3bd8777a7067ed298f5b6f21ece1d63fd192150b4729f42e05b98413ffa |
-| [td-agent-bit-1.5.5-win32.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.5-win32.zip) | 7a335ac21ee75b9b193867df785e986008f15a270cab1c704bb1f0fd09cf6882 |
-| [td-agent-bit-1.5.5-win64.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.5-win64.exe) | 910825176345d6c43e845e106ef36956067816ee35ca8cc764d6ac02b2574da2 |
-| [td-agent-bit-1.5.5-win64.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.5-win64.zip) | 79944189ae4cf123aff5af3945988fb69df5d276b1eba84c75502bdafb31191b |
+| [td-agent-bit-1.5.6-win32.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.6-win32.exe) | 9a15f095ca842504269a4c948f283c7f085bd09611737d451f5e3f6322c7106f |
+| [td-agent-bit-1.5.6-win32.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.6-win32.zip) | 3ed1e505cfeea0c96a78cd4d59306d60b1c1bf790507061d4f3a956e9ba0bcea |
+| [td-agent-bit-1.5.6-win64.exe](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.6-win64.exe) | 52c52fd319502446c558a98c64928fa7fbd98b2031b2f4e73b4dea5c79361e1b |
+| [td-agent-bit-1.5.6-win64.zip](https://fluentbit.io/releases/1.5/td-agent-bit-1.5.6-win64.zip) | 31bd0a2927ffc3b5f5be09d0eedd997ff511340038e8697ed7bb1a772a81dfeb |
 
 To check the integrity, use `Get-FileHash` commandlet on PowerShell.
 
 ```text
-PS> Get-FileHash td-agent-bit-1.5.5-win32.exe
+PS> Get-FileHash td-agent-bit-1.5.6-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -26,7 +26,7 @@ Download a ZIP archive [from the download page](https://fluentbit.io/). There ar
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
 
 ```text
-PS> Expand-Archive td-agent-bit-1.5.5-win64.zip
+PS> Expand-Archive td-agent-bit-1.5.6-win64.zip
 ```
 
 The ZIP package contains the following set of files.
