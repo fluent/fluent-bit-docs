@@ -21,17 +21,17 @@ This plugin enables the [Record Accessor](../../administration/configuring-fluen
 
 ## Getting Started
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file. The following example assumes that you have a file called _lines.txt_ with the following content
+In order to start filtering records, you can run the filter from the command line or through the configuration file. The following example assumes that you have a file called `lines.txt` with the following content:
 
 ```text
-aaa
-aab
-bbb
-ccc
-ddd
-eee
-fff
-ggg
+{"log": "aaa"}
+{"log": "aab"}
+{"log": "bbb"}
+{"log": "ccc"}
+{"log": "ddd"}
+{"log": "eee"}
+{"log": "fff"}
+{"log": "ggg"}
 ```
 
 ### Command Line
@@ -48,17 +48,18 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
 
 ```python
 [INPUT]
-    Name   tail
-    Path   lines.txt
+    name   tail
+    path   lines.txt
+    parser json
 
 [FILTER]
-    Name   grep
-    Match  *
-    Regex  log aa
+    name   grep
+    match  *
+    regex  log aa
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+    name   stdout
+    match  *
 ```
 
 The filter allows to use multiple rules which are applied in order, you can have many _Regex_ and _Exclude_ entries as required.
