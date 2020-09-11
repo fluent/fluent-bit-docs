@@ -52,6 +52,7 @@
   * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
+  * [Record Accessor](administration/configuring-fluent-bit/record-accessor.md)
 * [Security](administration/security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
