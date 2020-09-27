@@ -7,7 +7,7 @@ Fluent Bit is distributed as **td-agent-bit** package and is available for the l
 The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
 
 ```text
-$ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ## Update your sources lists
