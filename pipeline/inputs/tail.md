@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Buffer\_Chunk\_Size | Set the initial buffer size to read files data. This value is used too to increase buffer size. The value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/00bb8cbd96cc06988ff3e51b4933e16e49206c70/pipeline/configuration/unit_sizes.md) specification. | 32k |
-| Buffer\_Max\_Size | Set the limit of the buffer size per monitored file. When a buffer needs to be increased \(e.g: very long lines\), this value is used to restrict how much the memory buffer can grow. If reading a file exceed this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/00bb8cbd96cc06988ff3e51b4933e16e49206c70/pipeline/configuration/unit_sizes.md) specification. | Buffer\_Chunk\_Size |
+| Buffer\_Chunk\_Size | Set the initial buffer size to read files data. This value is used too to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 32k |
+| Buffer\_Max\_Size | Set the limit of the buffer size per monitored file. When a buffer needs to be increased \(e.g: very long lines\), this value is used to restrict how much the memory buffer can grow. If reading a file exceed this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | Buffer\_Chunk\_Size |
 | Path | Pattern specifying a specific log files or multiple ones through the use of common wildcards. |  |
 | Path\_Key | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |  |
 | Exclude\_Path | Set one or multiple shell patterns separated by commas to exclude files matching a certain criteria, e.g: Exclude\_Path \*.gz,\*.zip |  |
@@ -25,7 +25,7 @@ The plugin supports the following configuration parameters:
 | exit\_on\_eof | exit Fluent Bit when reaching EOF of the monitored files | false |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |  |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
-| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](https://github.com/fluent/fluent-bit-docs/tree/00bb8cbd96cc06988ff3e51b4933e16e49206c70/pipeline/filter/kubernetes.md)\). |  |
+| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md)\). |  |
 | Tag\_Regex | Set a regex to exctract fields from the file. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
 
 Note that if the database parameter _db_ is **not** specified, by default the plugin will start reading each target file from the beginning.
