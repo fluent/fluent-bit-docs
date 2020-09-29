@@ -1,6 +1,6 @@
 # Regular Expression Parser
 
-The **regex** parser allows to define a custom Ruby Regular Expression that will use a named capture feature to define which content belongs to which key name.
+The **regex** parser allows us to define a custom Ruby Regular Expression that will use a named capture feature to define which content belongs to which key name.
 
 Fluent Bit uses [Onigmo](https://github.com/k-takata/Onigmo) regular expression library on Ruby mode, for testing purposes you can use the following web editor to test your expressions:
 
