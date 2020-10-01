@@ -9,25 +9,16 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | imds\_version | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'. | v2 |
+| az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, "us-east-1a". | true |
+| ec2\_instance\_id | The EC2 instance ID. | true |
+| ec2\_instance\_type  | The EC2 instance type. | false |
+| private\_ip | The EC2 instance private ip. | false |
+| ami\_id | The EC2 instance image id. | false |
+| account\_id | The account ID for current EC2 instance. | false |
+| hostname | The hostname for current EC2 instance. | false |
+| vpc\_id | The VPC ID for current EC2 instance. | false |
 
 Note: _If you run Fluent Bit in a container, you may have to use instance metadata v1._ The plugin behaves the same regardless of which version is used.
-
-## Usage
-
-### Metadata Fields
-
-Currently, the plugin support 8 type of EC2 metadata.
-
-| Key | Value |
-| :--- | :--- |
-| az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, "us-east-1a". |
-| ec2\_instance\_id | The EC2 instance ID. |
-| ec2\_instance\_type  | The EC2 instance type. |
-| private\_ip | The EC2 instance private ip. |
-| ami\_id | The EC2 instance image id. |
-| account\_id | The account ID for current EC2 instance. |
-| hostname | The hostname for current EC2 instance. |
-| vpc\_id | The VPC ID for current EC2 instance. |
 
 ### Command Line
 
