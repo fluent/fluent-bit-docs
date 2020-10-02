@@ -25,7 +25,7 @@ When Fluent Bit runs, it will read, parse and filter the logs of every POD and w
 * Labels
 * Annotations
 
-To obtain these information, a built-in filter plugin called _kubernetes_ talks to the Kubernetes API Server to retrieve relevant information such as the _pod\_id_, _labels_ and _annotations_, other fields such as _pod\_name_, _container\_id_ and _container\_name_ are retrieved locally from the log file names. All of this is handled automatically, no intervention is required from a configuration aspect.
+To obtain this information, a built-in filter plugin called _kubernetes_ talks to the Kubernetes API Server to retrieve relevant information such as the _pod\_id_, _labels_ and _annotations_, other fields such as _pod\_name_, _container\_id_ and _container\_name_ are retrieved locally from the log file names. All of this is handled automatically, no intervention is required from a configuration aspect.
 
 > Our Kubernetes Filter plugin is fully inspired on the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
 
@@ -48,9 +48,9 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 
 ### Note for Kubernetes &lt; v1.16
 
-For Kubernetes versions olden than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
+For Kubernetes versions older than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
 
-If you are using and older Kubernetes, grab manually a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
+If you are using and older Kubernetes version, manually grab a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
 
 ```yaml
 apiVersion: apps/v1
