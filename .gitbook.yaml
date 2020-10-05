@@ -59,6 +59,7 @@ redirects:
     output/kafka_rest:     ./pipeline/outputs/kafka-rest-proxy.md
     output/nats:           ./pipeline/outputs/nats.md
     output/null:           ./pipeline/outputs/null.md
+    output/s3:             ./pipeline/outputs/s3.md
     output/slack:          ./pipeline/outputs/slack.md
     output/splunk:         ./pipeline/outputs/splunk.md
     output/stackdriver:    ./pipeline/outputs/stackdriver.md
