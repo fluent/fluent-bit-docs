@@ -17,6 +17,8 @@ This is the documentation for the core Fluent Bit CloudWatch plugin written in C
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
 | endpoint | Specify a custom endpoint for the CloudWatch Logs API. |
+| metric\_namespace | A string representing the CloudWatch namespace for the metric. |
+| metric\_dimensions | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the fluent-bit config, metric_dimensions is a comma and semicolon seperated string. If you have only one list of dimensions, put the values as a comma seperated string. If you want to put list of lists, use the list as semicolon seperated strings. For example, if you set the value as 'dimension_1,dimension_2;dimension_3', we will convert it as [[dimension_1, dimension_2],[dimension_3]] |
 
 ## Getting Started
 
