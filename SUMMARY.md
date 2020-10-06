@@ -114,6 +114,7 @@
   * [Modify](pipeline/filters/modify.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
+  * [Amazon S3](pipeline/outputs/s3.md)
   * [Azure](pipeline/outputs/azure.md)
   * [Azure Blob](pipeline/outputs/azure_blob.md)
   * [BigQuery](pipeline/outputs/bigquery.md)
@@ -156,4 +157,3 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-

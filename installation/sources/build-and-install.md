@@ -175,9 +175,9 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | FLB\_OUT\_PGSQL | Enable PostgreSQL output plugin | On |
 | FLB\_OUT\_PLOT | Enable Plot output plugin | On |
 | FLB\_OUT\_SLACK | Enable Slack output plugin | On |
+| [FLB\_OUT\_S3](../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | On |
 | [FLB\_OUT\_SPLUNK](../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | On |
 | [FLB\_OUT\_STACKDRIVER](../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | On |
 | [FLB\_OUT\_STDOUT](build-and-install.md) | Enable STDOUT output plugin | On |
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
-
