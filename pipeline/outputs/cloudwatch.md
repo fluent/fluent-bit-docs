@@ -79,7 +79,7 @@ For using the `mem` input plugin and sending memory usage metrics to CloudWatch,
     auto_create_group true
 ```
 
-The following config will set two dimesnions to all of our metrics- `ec2_instance_id` and `az`.
+The following config will set two dimensions to all of our metrics- `ec2_instance_id` and `az`.
 
 ```text
 [FILTER]
