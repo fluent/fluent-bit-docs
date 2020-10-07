@@ -17,8 +17,9 @@ This is the documentation for the core Fluent Bit CloudWatch plugin written in C
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
 | endpoint | Specify a custom endpoint for the CloudWatch Logs API. |
-| metric\_namespace | An optional string representing the CloudWatch namespace for the metrics. See `Metrics Tutorial` below for a full configuration.|
+| metric\_namespace | An optional string representing the CloudWatch namespace for the metrics. See `Metrics Tutorial` section below for a full configuration.|
 | metric\_dimensions | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the fluent-bit config, metric_dimensions is a comma and semicolon seperated string. If you have only one list of dimensions, put the values as a comma seperated string. If you want to put list of lists, use the list as semicolon seperated strings. For example, if you set the value as 'dimension_1,dimension_2;dimension_3', we will convert it as [[dimension_1, dimension_2],[dimension_3]] |
+| sts\_endpoint | Specify a custom STS endpoint for the AWS STS API. |
 
 ## Getting Started
 
@@ -72,7 +73,7 @@ For using the `mem` input plugin and sending memory usage metrics to CloudWatch,
     log_stream_name fluent-bit-cloudwatch
     log_group_name fluent-bit-cloudwatch
     region us-west-2
-    log_fromat json/emf
+    log_format json/emf
     metric_namespace fluent-bit-metrics
     metric_dimensions ec2_instance_id
     auto_create_group true
@@ -91,7 +92,7 @@ The following config will set two dimesnions to all of our metrics- `ec2_instanc
     log_stream_name fluent-bit-cloudwatch
     log_group_name fluent-bit-cloudwatch
     region us-west-2
-    log_fromat json/emf
+    log_format json/emf
     metric_namespace fluent-bit-metrics
     metric_dimensions ec2_instance_id,az
     auto_create_group true
