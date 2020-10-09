@@ -1,4 +1,6 @@
-1# Windows
+# Windows
+
+1\# Windows
 
 Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive \(for quick testing\) and an EXE installer \(for system installation\).
 
@@ -128,3 +130,4 @@ To halt the Fluent Bit service, just execute the "stop" command.
 ```text
 % sc.exe stop fluent-bit
 ```
+
