@@ -36,8 +36,7 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
       <td style="text-align:left">
         <p>When enabled, the record keys and values are set in the top level of the
           map instead of under the <em>event</em> key.</p>
-        <p></p>
-        <p><b>note: </b>refer to the Sending Raw Events section below for more details
+        <p><b>note:</b> refer to the Sending Raw Events section below for more details
           to make this option work properly.</p>
       </td>
       <td style="text-align:left">Off</td>

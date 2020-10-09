@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Listen | Listener network interface. | 0.0.0.0 |
 | Port | TCP port to listen for incoming connections. | 24224 |
-| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../administration/configuring-fluent-bit/unit-sizes.md) specification. | _Buffer\_Chunk\_Size_ |
-| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size](../administration/configuring-fluent-bit/unit-sizes.md) specification. | 32KB |
+| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/07822c841d38702ae88b58bf3b3c07c9f1e35434/pipeline/administration/configuring-fluent-bit/unit-sizes.md) specification. | _Buffer\_Chunk\_Size_ |
+| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/07822c841d38702ae88b58bf3b3c07c9f1e35434/pipeline/administration/configuring-fluent-bit/unit-sizes.md) specification. | 32KB |
 
 ## Getting Started
 
@@ -69,3 +69,4 @@ Copyright (C) Treasure Data
 [2016/10/07 21:49:40] [ info] [in_fw] binding 0.0.0.0:24224
 [0] my_tag: [1475898594, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
 ```
+

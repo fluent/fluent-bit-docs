@@ -102,18 +102,18 @@ When deploying Fluent Bit to Kubernetes, there are three log files that you need
 
 `C:\k\kubelet.err.log`
 
- * This is the error log file from kubelet daemon running on host.
- * You will need to retain this file for future troubleshooting (to debug deployment failures etc.)
+* This is the error log file from kubelet daemon running on host.
+* You will need to retain this file for future troubleshooting \(to debug deployment failures etc.\)
 
 `C:\var\log\containers\<pod>_<namespace>_<container>-<docker>.log`
 
- * This is the main log file you need to watch. Configure Fluent Bit to follow this file.
- * It is actually a symlink to the Docker log file in `C:\ProgramData\`, with some additional metadata on its file name.
+* This is the main log file you need to watch. Configure Fluent Bit to follow this file.
+* It is actually a symlink to the Docker log file in `C:\ProgramData\`, with some additional metadata on its file name.
 
 `C:\ProgramData\Docker\containers\<docker>\<docker>.log`
 
- * This is the log file produced by Docker.
- * Normally you don't directly read from this file, but you need to make sure that this file is visible from Fluent Bit.
+* This is the log file produced by Docker.
+* Normally you don't directly read from this file, but you need to make sure that this file is visible from Fluent Bit.
 
 Typically, your deployment yaml contains the following volume configuration.
 
@@ -185,17 +185,18 @@ parsers.conf: |
 
 ### Mitigate unstable network on Windows pods
 
-Windows pods often lack working DNS immediately after boot ([#78479](https://github.com/kubernetes/kubernetes/issues/78479)). To mitigate this issue, `filter_kubernetes` provides a built-in mechanism to wait until the network starts up:
+Windows pods often lack working DNS immediately after boot \([\#78479](https://github.com/kubernetes/kubernetes/issues/78479)\). To mitigate this issue, `filter_kubernetes` provides a built-in mechanism to wait until the network starts up:
 
- * `DNS_Retries` - Retries N times until the network start working (6)
- * `DNS_Wait_Time` - Lookup interval between network status checks (30)
+* `DNS_Retries` - Retries N times until the network start working \(6\)
+* `DNS_Wait_Time` - Lookup interval between network status checks \(30\)
 
-By default, Fluent Bit waits for 3 minutes (30 seconds x 6 times). If it's not enough for you, tweak the configuration as follows.
+By default, Fluent Bit waits for 3 minutes \(30 seconds x 6 times\). If it's not enough for you, tweak the configuration as follows.
 
-```
+```text
 [filter]
     Name kubernetes
     ...
     DNS_Retries 10
     DNS_Wait_Time 30
 ```
+

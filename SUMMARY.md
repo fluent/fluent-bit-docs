@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v1.5 Documentation](README.md)
+* [Fluent Bit v1.6 Documentation](README.md)
 
 ## About
 
@@ -159,3 +159,4 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+

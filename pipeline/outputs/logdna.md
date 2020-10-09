@@ -7,7 +7,7 @@ The Fluent Bit `logdna` output plugin allows you to send your log or events to a
 * [LogDNA](https://logdna.com/)
 * [IBM Log Analysis](https://www.ibm.com/cloud/log-analysis)
 
-Before to get started with the plugin configuration, make sure to obtain the proper account  to get access to the service. You can start with a free trial in the following link:
+Before to get started with the plugin configuration, make sure to obtain the proper account to get access to the service. You can start with a free trial in the following link:
 
 * [LogDNA Sign Up ](https://logdna.com/sign-up/)
 
@@ -83,11 +83,11 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 
 ## Auto Enrichment & Data Discovery
 
-One of the features of Fluent Bit + LogDNA integration is the ability to auto enrich each record with further context. 
+One of the features of Fluent Bit + LogDNA integration is the ability to auto enrich each record with further context.
 
 When the plugin process each record \(or log\), it tries to lookup for specific key names that might contain specific context for the record in question, the following table describe the keys and the discovery logic:
 
-| Key  | Description |
+| Key | Description |
 | :--- | :--- |
 | level | If the record contains a key called `level` or `severity`, it will populate the context `level` key with that value. If not found, the context key is not set. |
 | file | if the record contains a key called `file`, it will populate the context `file` with the value found, otherwise If the plugin configuration provided a `file` property, that value will be used instead \(see table above\). |

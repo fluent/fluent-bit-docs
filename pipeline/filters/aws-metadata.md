@@ -11,7 +11,7 @@ The plugin supports the following configuration parameters:
 | imds\_version | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'. | v2 |
 | az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, "us-east-1a". | true |
 | ec2\_instance\_id | The EC2 instance ID. | true |
-| ec2\_instance\_type  | The EC2 instance type. | false |
+| ec2\_instance\_type | The EC2 instance type. | false |
 | private\_ip | The EC2 instance private ip. | false |
 | ami\_id | The EC2 instance image id. | false |
 | account\_id | The account ID for current EC2 instance. | false |
@@ -54,3 +54,4 @@ $ bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
     Name stdout
     Match *
 ```
+

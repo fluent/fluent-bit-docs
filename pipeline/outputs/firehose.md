@@ -11,7 +11,7 @@ This is the documentation for the core Fluent Bit Firehose plugin written in C. 
 | region | The AWS region. |
 | delivery\_stream | The name of the Kinesis Firehose Delivery stream that you want log records sent to. |
 | time\_key | Add the timestamp to the record under this key. By default the timestamp from Fluent Bit will not be added to records sent to Kinesis. |
-| time\_key\_format | strftime compliant format string for the timestamp; for example, the default is '%Y-%m-%dT%H:%M:%S'. This option is used with time_key. |
+| time\_key\_format | strftime compliant format string for the timestamp; for example, the default is '%Y-%m-%dT%H:%M:%S'. This option is used with time\_key. |
 | log\_key | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. |
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
@@ -63,3 +63,4 @@ aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
 For more see [the AWS for Fluent Bit github repo](https://github.com/aws/aws-for-fluent-bit#public-images).
+

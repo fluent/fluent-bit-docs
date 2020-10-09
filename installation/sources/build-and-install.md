@@ -112,7 +112,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
 | [FLB\_IN\_DOCKER](../docker.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
-| [FLB\_IN\_FORWARD]() | Enable Forward input plugin | On |
+| [FLB\_IN\_FORWARD](build-and-install.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
 | [FLB\_IN\_KMSG](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | On |
@@ -182,3 +182,4 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT](build-and-install.md) | Enable STDOUT output plugin | On |
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
+
