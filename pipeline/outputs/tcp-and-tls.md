@@ -39,7 +39,7 @@ We have specified to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree
 Run the following in a separate terminal, netcat will start listening for messages on TCP port 5170
 
 ```text
-$ nc -l 5170
+$ nc -l -p 5170
 ```
 
 Start Fluent Bit
