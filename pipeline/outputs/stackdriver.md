@@ -19,8 +19,8 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
-| tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option (note the ending dot). | k8s\_container., k8s\_pod., k8s\_node. |
-| severity\_key | Specify the name of the key from the original record that contains the severity information. |   |
+| tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
+| severity\_key | Specify the name of the key from the original record that contains the severity information. |  |
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
 
 ### Configuration File
@@ -41,7 +41,8 @@ Example configuration file for k8s resource type:
 
 local\_resource\_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local\_resource\_id field in the log entey. If there is no field logging.googleapis.com/local\_resource\_id in the log, the plugin will then construct it by using the tag value of the log.
 
-The local_resource_id should be in format:
+The local\_resource\_id should be in format:
+
 * `k8s_container.<namespace_name>.<pod_name>.<container_name>`
 * `k8s_node.<node_name>`
 * `k8s_pod.<namespace_name>.<pod_name>`

@@ -76,7 +76,7 @@
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
   * [Exec](pipeline/inputs/exec.md)
-  * [Forward](pipeline/inputs/forward.md)
+  * [Forward](pipeline/outputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [Health](pipeline/inputs/health.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
@@ -159,3 +159,4 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+

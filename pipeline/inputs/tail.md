@@ -117,3 +117,4 @@ By default SQLite client tool do not format the columns in a human read-way, so 
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
 Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
+

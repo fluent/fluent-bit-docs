@@ -13,7 +13,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
-| AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  | 
+| AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
