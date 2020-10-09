@@ -8,9 +8,9 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.5 | x86\_64, arm64v8, arm32v7 | Latest release of 1.5.x series. |
-| 1.5.0 | x86\_64, arm64v8, arm32v7 | Release [v1.5.0](https://fluentbit.io/announcements/v1.5.0/) |
-| 1.5-debug, 1.5.0-debug | x86\_64 | v1.5.x releases + Busybox |
+| 1.6 | x86\_64, arm64v8, arm32v7 | Latest release of 1.6.x series. |
+| 1.6.0 | x86\_64, arm64v8, arm32v7 | Release [v1.6.0](https://fluentbit.io/announcements/v1.6.0/) |
+| 1.6-debug, 1.6.0-debug | x86\_64 | v1.6.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
@@ -30,22 +30,22 @@ For every architecture we build the layers using the following base images:
 
 ## Getting Started
 
-Download the last stable image from 1.4 series:
+Download the last stable image from 1.6 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.5
+$ docker pull fluent/fluent-bit:1.6
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.5 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:1.6 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
 ```text
-Fluent-Bit v1.5.x
+Fluent-Bit v1.6.x
 Copyright (C) Treasure Data
 
 [2019/10/01 12:29:02] [ info] [engine] started
