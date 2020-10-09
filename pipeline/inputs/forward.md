@@ -9,7 +9,7 @@ This plugin offers two different transports and modes:
 
 ## Configuration Parameters
 
-The following parameters are mandatory for either Forward or Secure Forward modes:
+The following parameters are mandatory for either Forward for Secure Forward modes:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
