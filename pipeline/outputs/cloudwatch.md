@@ -17,6 +17,9 @@ This is the documentation for the core Fluent Bit CloudWatch plugin written in C
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
 | endpoint | Specify a custom endpoint for the CloudWatch Logs API. |
+| metric\_namespace | An optional string representing the CloudWatch namespace for the metrics. See `Metrics Tutorial` section below for a full configuration.|
+| metric\_dimensions | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the fluent-bit config, metric_dimensions is a comma and semicolon seperated string. If you have only one list of dimensions, put the values as a comma seperated string. If you want to put list of lists, use the list as semicolon seperated strings. For example, if you set the value as 'dimension_1,dimension_2;dimension_3', we will convert it as [[dimension_1, dimension_2],[dimension_3]] |
+| sts\_endpoint | Specify a custom STS endpoint for the AWS STS API. |
 
 ## Getting Started
 
@@ -42,6 +45,57 @@ In your main configuration file append the following _Output_ section:
     log_group_name fluent-bit-cloudwatch
     log_stream_prefix from-fluent-bit-
     auto_create_group On
+```
+
+### Metrics Tutorial
+
+Fluent Bit has different input plugins (cpu, mem, disk, netif) to collect host resource usage metrics. `cloudwatch_logs` output plugin can be used to send these host metrics to CloudWatch in Embedded Metric Format (EMF). If data comes from any of the above mentioned input plugins, `cloudwatch_logs` output plugin will convert them to EMF format and sent to CloudWatch as JSON log. Additionally, if we set `json/emf` as the value of `log_format` config option, CloudWatch will extract custom metrics from embedded JSON payload.
+
+Note: Right now, only `cpu` and `mem` metrics can be sent to CloudWatch.
+
+For using the `mem` input plugin and sending memory usage metrics to CloudWatch, we can consider the following example config file. Here, we use the `aws` filter which adds `ec2_instance_id` and `az` (availability zone) to the log records. Later, in the output config section, we set `ec2_instance_id` as our metric dimension.
+
+```text
+[SERVICE]
+    Log_Level info
+
+[INPUT]
+    Name mem
+    Tag mem
+
+[FILTER]
+    Name aws
+    Match *
+
+[OUTPUT]
+    Name cloudwatch_logs
+    Match *
+    log_stream_name fluent-bit-cloudwatch
+    log_group_name fluent-bit-cloudwatch
+    region us-west-2
+    log_format json/emf
+    metric_namespace fluent-bit-metrics
+    metric_dimensions ec2_instance_id
+    auto_create_group true
+```
+
+The following config will set two dimensions to all of our metrics- `ec2_instance_id` and `az`.
+
+```text
+[FILTER]
+    Name aws
+    Match *
+
+[OUTPUT]
+    Name cloudwatch_logs
+    Match *
+    log_stream_name fluent-bit-cloudwatch
+    log_group_name fluent-bit-cloudwatch
+    region us-west-2
+    log_format json/emf
+    metric_namespace fluent-bit-metrics
+    metric_dimensions ec2_instance_id,az
+    auto_create_group true
 ```
 
 ### AWS for Fluent Bit

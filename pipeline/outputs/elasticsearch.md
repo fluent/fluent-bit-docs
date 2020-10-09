@@ -13,6 +13,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
+| AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  | 
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
@@ -24,6 +25,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Logstash\_DateFormat | Time format \(based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)\) to generate the second part of the Index name. | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field. | @timestamp |
 | Time\_Key\_Format | When Logstash\_Format is enabled, this property defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
+| Time\_Key\_Nanos | When Logstash\_Format is enabled, enabling this property sends nanosecond precision timestamps. | Off |
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |

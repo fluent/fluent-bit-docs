@@ -29,6 +29,10 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
+| Grace | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
+| :--- | :--- | :--- |
+
+
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
 | :--- | :--- | :--- |
 

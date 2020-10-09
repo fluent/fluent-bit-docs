@@ -1,37 +1,38 @@
 ---
-description: Official and Microsoft Certified Azure Storage Append Blob connector
+description: Official and Microsoft Certified Azure Storage Blob connector
 ---
 
 # Azure Blob
 
-The Azure Blob output plugin allows to ingest your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the newest Append Blob API.
+The Azure Blob output plugin allows ingesting your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the Append Blob and Block Blob API.
 
-Our plugin works with the official Azure Service and also can be configured to be used also with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
+Our plugin works with the official Azure Service and also can be configured to be used with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
 
 ## Azure Storage Account
 
-Before getting started, make sure you already have an Azure Storage account. As a reference you can follow the following link which explains step-by-step how to set up your account:
+Before getting started, make sure you already have an Azure Storage account. As a reference, the following link explains step-by-step how to set up your account:
 
 * [Azure Blob Storage Tutorial \(Video\)](https://www.youtube.com/watch?v=-sCKnOm8G_g)
 
 ## Configuration Parameters
 
-We expose different configuration properties, the following table list all the options available, read the next section for specific details for different configurations for the official service or the emulator.
+We expose different configuration properties. The following table lists all the options available, and the next section has specific configuration details for the official service or the emulator.
 
 | Key | Description | default |
 | :--- | :--- | :--- |
 | account\_name | Azure Storage account name. This configuration property is mandatory |  |
 | shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory. |  |
 | container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
+| blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`.  | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
 | path | Optional path to store your blobs. If your blob name is `myblob`, you can specify sub-directories where to store it using path, so setting path to `/logs/kubernetes` will store your blob in `/logs/kubernetes/myblob`. |  |
-| emulator\_mode | If you desire to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
+| emulator\_mode | If you want to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
 | endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
 | tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
 
 ## Getting Started
 
-As mentioned above, you can either deliver records to the official service or an emulator. Below we have two examples for each use case.
+As mentioned above, you can either deliver records to the official service or an emulator. Below we have an example for each use case.
 
 ### Configuration for Azure Storage Service
 
@@ -59,7 +60,7 @@ The following configuration example generates a random message with a custom tag
     tls                   on
 ```
 
-After you run the configuration file above, you will be able to query the data using the Azure Storage Explorer, the example above will generate the following content in the explorer:
+After you run the configuration file above, you will be able to query the data using the Azure Storage Explorer. The example above will generate the following content in the explorer:
 
 ![](../../.gitbook/assets/azure_blob.png)
 
@@ -85,7 +86,7 @@ Azurite Queue service is successfully listening at http://127.0.0.1:10001
 
 #### Configuring Fluent Bit for Azurite
 
-[Azurite](https://github.com/Azure/Azurite) comes with a default `account_name` and `shared_key`, make sure to use the specific values provided in the example below \(do an exact copy/paste\):
+[Azurite](https://github.com/Azure/Azurite) comes with a default `account_name` and `shared_key`, so make sure to use the specific values provided in the example below \(do an exact copy/paste\):
 
 ```python
 [SERVICE]
@@ -111,7 +112,7 @@ Azurite Queue service is successfully listening at http://127.0.0.1:10001
     endpoint              http://127.0.0.1:10000
 ```
 
-after running that Fluent Bit configuration you will see the data flowing in into Azurite:
+after running that Fluent Bit configuration you will see the data flowing into Azurite:
 
 ```text
 $ azurite

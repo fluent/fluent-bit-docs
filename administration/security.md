@@ -21,6 +21,8 @@ The listed properties can be enabled in the configuration file, specifically on 
 The following **output** plugins can take advantage of the TLS feature:
 
 * [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
+* [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md)
+* [Amazon S3](../pipeline/outputs/s3.md)
 * [Azure](../pipeline/outputs/azure.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
 * [Datadog](../pipeline/outputs/datadog.md)
@@ -91,4 +93,3 @@ Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/S
     tls.ca_file /etc/certs/fluent.crt
     tls.vhost   fluent.example.com
 ```
-
