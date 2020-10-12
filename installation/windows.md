@@ -13,7 +13,7 @@ The latest stable version is 1.4.1.
 | [td-agent-bit-1.4.2-win64.exe](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win64.exe) | f022ae48797e905ced9f9fe52b9b395605bf20ad4cad22aa216d359927468ace |
 | [td-agent-bit-1.4.2-win64.zip](https://fluentbit.io/releases/1.4/td-agent-bit-1.4.2-win64.zip) | 3c8b171bfea8aeeced71a85195d83acac21af13f1a049ae7a596b7ee9fa97edc |
 
-To check the integrity, use `Get-FileHash` commandlet on PowerShell.
+To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```text
 PS> Get-FileHash td-agent-bit-1.4.2-win32.exe
@@ -23,7 +23,7 @@ PS> Get-FileHash td-agent-bit-1.4.2-win32.exe
 
 Download a ZIP archive [from the download page](https://fluentbit.io/). There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
 
-Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
+Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```text
 PS> Expand-Archive td-agent-bit-1.4.2-win64.zip
