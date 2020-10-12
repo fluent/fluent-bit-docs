@@ -136,6 +136,7 @@
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
+  * [Slack](pipeline/outputs/slack.md)
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Splunk](pipeline/outputs/splunk.md)
@@ -159,4 +160,3 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-
