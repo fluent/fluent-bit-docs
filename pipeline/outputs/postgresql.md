@@ -99,7 +99,7 @@ For more information on the `JSONB` data type in PostgreSQL, please refer to the
 
 ## Scalability
 
-PostgreSQL 10 introduces support for declarative partitioning. In order to improve vertical scalability of the database, you can decide to partition your tables on _time ranges_ \(for example on a monthly basis\). PostgreSQL supports also subpartitions, allowing you to even partition by _hash_ your records \(version 11+\), and default partitions \(version 11+\).
+PostgreSQL 10 introduces support for declarative partitioning. In order to improve vertical scalability of the database, you can decide to partition your tables on _time ranges_ \(for example on a monthly basis\). PostgreSQL supports also sub-partitions, allowing you to even partition by _hash_ your records \(version 11+\), and default partitions \(version 11+\).
 
 For more information on horizontal partitioning in PostgreSQL, please refer to the [Table partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html) page in the official documentation.
 
