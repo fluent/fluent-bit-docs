@@ -21,7 +21,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 | gelf\_timestamp\_key | Specify the key to use for `timestamp` in _gelf_ format |  |
 | gelf\_host\_key | Specify the key to use for the `host` in _gelf_ format |  |
-| gelf\_short\_messge\_key | Specify the key to use as the `short` message in _gelf_ format |  |
+| gelf\_short\_message\_key | Specify the key to use as the `short` message in _gelf_ format |  |
 | gelf\_full\_message\_key | Specify the key to use for the `full` message in _gelf_ format |  |
 | gelf\_level\_key | Specify the key to use for the `level` in _gelf_ format |  |
 
@@ -68,7 +68,7 @@ By default, the URI becomes tag of the message, the original tag is ignored. To 
 
 Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example.
 
-To configure this behaviour, add this config:
+To configure this behavior, add this config:
 
 ```text
 [OUTPUT]
