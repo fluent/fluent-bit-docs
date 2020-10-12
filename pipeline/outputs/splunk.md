@@ -142,7 +142,7 @@ This will create a payload that looks like:
 }
 ```
 
-For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
+For more information on the Splunk HEC payload format and all event metadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
 
 ### Sending Raw Events
 
