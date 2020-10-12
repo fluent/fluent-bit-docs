@@ -13,7 +13,7 @@ Currently, we also support some special fields in fluent-bit:
 | timestamp | timestamp | An object including the seconds and nanos fields that represents the time |
 | timestampSecond & timestampNanos | timestamp | The seconds and nanos that represents the time |
 
-## Operaiton
+## Operation
 Operation field contains additional information about a potentially long-running operation with which a log entry is associated.
 
 The JSON representation is as followed:
@@ -55,7 +55,7 @@ the stackdriver output plugin will extract the operation field and remove it fro
 ```
 
 ### Use Cases
-**1. If the subfields are emtpy or in incorrect type, stackdriver output plugin will set these subfields empty.** For example:
+**1. If the subfields are empty or in incorrect type, stackdriver output plugin will set these subfields empty.** For example:
 ```text
 jsonPayload {
     "logging.googleapis.com/operation": {
