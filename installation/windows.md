@@ -125,5 +125,70 @@ SERVICE_NAME: fluent-bit
 
 To halt the Fluent Bit service, just execute the "stop" command.
 
-``` % sc.exe stop fluent-bit``
+```
+% sc.exe stop fluent-bit
+```
 
+## Compile from Source
+
+If you need to create a custom exectable, you can use the following procedure to compile Fluent Bit by yourself.
+
+### Preparation
+
+First, you need Microsoft Visual C++ to compile Fluent Bit. You can install the minimum toolkit by the following command:
+
+```powershell
+PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
+PS> start vs.exe
+```
+
+When asked which packages to install, choose "C++ Build Tools" (make sure that "C++ CMake tools for Windows" is selected too) and wait until the process finishes.
+
+Also you need to install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
+
+```powershell
+PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
+PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
+PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
+PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
+PS> setx /M PATH "%PATH%;C:\WinFlexBison"
+```
+
+Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
+
+```powershell
+PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
+PS> start git.exe
+```
+
+### Compilation
+
+Open the start menu on Windows and type "Developer Command Prompt".
+
+Clone the source code of Fluent Bit.
+
+```
+% git clone https://github.com/fluent/fluent-bit
+% cd fluent-bit/build
+```
+
+Compile the source code.
+
+```
+% cmake .. -G "NMake Makefiles"
+% cmake --build .
+```
+
+Now you should be able to run Fluent Bit:
+
+```
+% .\bin\debug\fluent-bit.exe -i dummy -o stdout
+```
+
+### Packaging
+
+To create a ZIP package, call `cpack` as follows:
+
+```
+% cpack -G ZIP
+```
