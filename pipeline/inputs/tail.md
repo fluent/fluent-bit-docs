@@ -28,6 +28,7 @@ The plugin supports the following configuration parameters:
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
 | Tag\_Regex | Set a regex to exctract fields from the file. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
+| Encoding | Specify input character set (if not UTF-8). [more](#encoding) | |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning.
 
@@ -118,4 +119,44 @@ By default SQLite client tool do not format the columns in a human read-way, so 
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
 Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
+
+
+## Encoding
+
+Tail input plugin supports also common 8-bit character encodings: 
+
+```
+  windows-1250, windows-1251, windows-1252,
+  windows-1253, windows-1254, windows-1255,
+  windows-1256, windows-1257, windows-1258,
+  
+  iso-8859-1, iso-8859-2, iso-8859-3, iso-8859-4,
+  iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8,
+  iso-8859-9, iso-8859-10, iso-8859-11, iso-8859-13,
+  iso-8859-14, iso-8859-15, iso-8859-16
+```
+
+By default encoding fails if there are invalid characters in input .  With //... postfix character behaviour can be changed. 
+
+| Encoding | Description  |
+| :--- | :--- |
+| _ENCODING_ | fail if bad characters |
+| _ENCODING_//IGNORE | skip bad characters |
+| _ENCODING_//REPLACEMENT | replace bad characters with unicode 0xFFFD (REPLACEMENT CHARACTER) |
+| _ENCODING_//QUESTION    | replace bad characters with '?' |
+| _ENCODING_///**customstr**  | replace bad characters with **customstr**
+
+
+Example:
+
+```python
+[INPUT]
+	Name  tail
+	...
+	Encoding windows-1252//REPLACEMENT
+
+```
+
+
+
 
