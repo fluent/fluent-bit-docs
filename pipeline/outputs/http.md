@@ -10,7 +10,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | http\_User | Basic Auth Username |  |
 | http\_Passwd | Basic Auth Password. Requires HTTP\_User to be set |  |
 | port | TCP port of the target HTTP Server | 80 |
-| Proxy | Specify an HTTP Proxy. The expected format of this value is [http://host:port](http://host:port). Note that _https_ is **not** supported yet. |  |
+| Proxy | Specify an HTTP Proxy. The expected format of this value is [http://host:port](http://host:port). Note that _https_ is **not** supported yet. Please consider not setting this and use `HTTP_PROXY` environment variable instead, which supports both http and https. |  |
 | uri | Specify an optional HTTP URI for the target web server, e.g: /something | / |
 | compress | Set payload compression mechanism. Option available is 'gzip' |  |
 | format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
@@ -138,4 +138,3 @@ _sourcecategory="my_fluent_bit"
 | timeslice 1m
 | max(cpu) as cpu group by _timeslice
 ```
-
