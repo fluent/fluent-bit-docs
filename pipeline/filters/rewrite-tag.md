@@ -10,7 +10,7 @@ The `rewrite_tag` filter, allows to re-emit a record under a new Tag. Once a rec
 
 ## How it Works
 
-The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, a new record with the defined Tag will be emitted. Multiple rules can be specified and they are processed in order until one of them matches.
+The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, a new record with the defined Tag will be emitted and go through the beginning of the pipeline. Multiple rules can be specified and they are processed in order until one of them matches.
 
 The new Tag to define can be composed by:
 
