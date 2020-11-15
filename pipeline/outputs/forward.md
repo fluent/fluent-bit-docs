@@ -20,6 +20,7 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 | Tag | Overwrite the tag as we transmit. This allows the receiving pipeline start fresh, or to attribute source. |  |
 | Send\_options | Always send options \(with "size"=count of messages\) | False |
 | Require\_ack\_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. \(Requires Fluentd v0.14.0+ server\) | False |
+| Compress | Set to "gzip" to enable gzip compression.  Incompatible with Time\_as\_Integer=True and tags set dynamically using the [Rewrite Tag](../filters/rewrite-tag.md) filter. \(Requires Fluentd v0.14.7+ server\) |  |
 
 ## Secure Forward Mode Configuration Parameters
 
