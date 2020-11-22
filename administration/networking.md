@@ -32,6 +32,10 @@ If a TCP connection is keepalive enabled, there might be scenarios where the con
 
 In order to control how long a keepalive connection can be idle, we expose the configuration property called `net.keepalive_idle_timeout`.
 
+### TCP Keepalive Recycling
+
+If a TCP connection is keepalive enabled and has very high traffic, the connection may _never_ be killed. In a situation where the remote endpoint is load-balanced in some way, this may lead to an unequal distribution of traffic. Setting `net.keepalive_max_recycle` causes keepalive connections to be recycled after a number of messages are sent over that connection. Once this limit is reached, the connection is terminated gracefully, and a new connection will be created for subsequent messages.
+
 ## Configuration Options
 
 For plugins that relies on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
@@ -42,6 +46,7 @@ For plugins that relies on networking I/O, the following section describes the n
 | `net.source_address` | Specify network address \(interface\) to use for connection and data traffic. |  |
 | `net.keepalive` | Enable or disable TCP keepalive support. Accepts a boolean value: on / off. | on |
 | `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection. | 30 |
+| `net.keepalive_max_recycle` | Set the maximum number of times a keepalive connection can be used before it is destroyed. | 0 |
 
 ## Example
 
