@@ -12,9 +12,12 @@ The Fluent Bit `loki` built-in output plugin allows you to send your log or even
 | :--- | :--- | :--- |
 | host | Loki hostname or IP address | 127.0.0.1 |
 | port | Loki TCP port | 3100 |
+| http_user | Set HTTP basic authentication user name |  |
+| http_passwd | Set HTTP basic authentication password |  |
 | tenant_id | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent. |               |
 | labels | Stream labels for API request. It can be multiple comma separated of strings specifying  ```key=value``` pairs. In addition to fixed parameters, it also allows to add custom record keys (similar to ```label_keys``` property). More details in the Labels section. | job=fluentbit |
 | label_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
+| line_format | Format to use when flattening the record to a log line. Valid values are ```json``` or ```key_value```. If set to ```json```,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to ```key_value```, the log line will be each item in the record concatenated together (separated by a single space) in the format. | json |
 | auto_kubernetes_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 
 ## Labels
@@ -118,6 +121,15 @@ job="fluentbit", team="Santiago Wanderers"
 ```
 
 
+
+## Networking and TLS Configuration
+
+This plugin inherit core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
+
+- [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
+- [Security & TLS](../../administration/security.md): all about TLS configuration and certificates
+
+Note that all options mentioned in the articles above must be enabled in the plugin configuration in question.
 
 ## Getting Started
 
