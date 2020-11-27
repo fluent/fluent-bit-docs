@@ -1,14 +1,10 @@
 # Running a Logging Pipeline Locally
 
-You may wish to test a logging pipeline locally to observe how it deals with
-log messages. The following is a walk-through for running Fluent Bit and
-Elasticsearch locally with [Docker Compose](https://docs.docker.com/compose/) which can serve as an example for testing other plugins locally.
+You may wish to test a logging pipeline locally to observe how it deals with log messages. The following is a walk-through for running Fluent Bit and Elasticsearch locally with [Docker Compose](https://docs.docker.com/compose/) which can serve as an example for testing other plugins locally.
 
 ## Create a Configuration File
 
-Refer to the [Configuration File
-section](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file)
-to create a configuration to test.
+Refer to the [Configuration File section](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file) to create a configuration to test.
 
 `fluent-bit.conf`:
 
@@ -25,8 +21,7 @@ to create a configuration to test.
 
 ## Docker Compose
 
-Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit (with
-the configuration file mounted) and Elasticsearch.
+Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit \(with the configuration file mounted\) and Elasticsearch.
 
 `docker-compose.yaml`:
 
@@ -52,7 +47,7 @@ services:
 
 To view indexed logs run:
 
-```sh
+```bash
 curl "localhost:9200/_search?pretty" \
   -H 'Content-Type: application/json' \
   -d'{ "query": { "match_all": {} }}'
@@ -60,6 +55,7 @@ curl "localhost:9200/_search?pretty" \
 
 To "start fresh", delete the index by running:
 
-```sh
+```bash
 curl -X DELETE "localhost:9200/fluent-bit?pretty"
 ```
+

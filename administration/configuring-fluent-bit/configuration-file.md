@@ -29,6 +29,10 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
+| Grace | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
+| :--- | :--- | :--- |
+
+
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
 | :--- | :--- | :--- |
 
@@ -37,7 +41,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
-| Log\_Level | Set the logging verbosity level. Allowed values are: error, warning, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | :--- | :--- | :--- |
 
 
@@ -80,7 +84,9 @@ The _Service_ section defines global properties of the service, the keys availab
     </tr>
   </thead>
   <tbody></tbody>
-</table>The following is an example of a _SERVICE_ section:
+</table>
+
+The following is an example of a _SERVICE_ section:
 
 ```python
 [SERVICE]

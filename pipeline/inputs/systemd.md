@@ -54,3 +54,4 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+

@@ -79,7 +79,9 @@ Before to get started with the plugin configuration, make sure to obtain the pro
       <td style="text-align:left">Fluent Bit</td>
     </tr>
   </tbody>
-</table>## Auto Enrichment & Data Discovery
+</table>
+
+## Auto Enrichment & Data Discovery
 
 One of the features of Fluent Bit + LogDNA integration is the ability to auto enrich each record with further context. 
 

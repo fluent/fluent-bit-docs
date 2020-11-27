@@ -10,7 +10,7 @@ The `rewrite_tag` filter, allows to re-emit a record under a new Tag. Once a rec
 
 ## How it Works
 
-The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, a new record with the defined Tag will be emitted. Multiple rules can be specified and they are processed in order until one of them matches.
+The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, a new record with the defined Tag will be emitted and go through the beginning of the pipeline. Multiple rules can be specified and they are processed in order until one of them matches.
 
 The new Tag to define can be composed by:
 
@@ -28,7 +28,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | :--- | :--- |
 | Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four components: `KEY REGEX NEW_TAG KEEP`. For more specific details of the Rule format and it composition read the next section. |
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
-| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values ```memory``` (default) or ```filesystem```. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommend enabling the ```filesystem``` mode. |
+| Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values `memory` \(default\) or `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommend enabling the `filesystem` mode. |
 | Emitter\_Mem\_Buf\_Limit | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure.  The default for this limit is `10M`.  The pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`.  The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
 
 ## Rules

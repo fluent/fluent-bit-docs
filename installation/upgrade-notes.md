@@ -4,13 +4,38 @@ The following article cover the relevant notes for users upgrading from previous
 
 For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
 
+
+
+## Fluent Bit v1.6
+
+If you are migrating from previous version of Fluent Bit please review the following important changes:
+
+#### Tail Input Plugin
+
+Now by default the plugin follows a file from the end once the service starts (old behavior was always read from the beginning). For every file found at start, its followed from it last position, for new files discovered at runtime or rotated, they are read from the beginning.
+
+If you desire to keep the old behavior you can set the option ```read_from_head``` to true. 
+
+### Stackdriver Output Plugin
+
+The project_id of [resource](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) in [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) sent to Google Cloud Logging would be set to the project ID rather than the project number. To learn the difference between Project ID and project number, see [this](https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin) for more details.
+
+If you have any existing queries based on the resource's project_id, please update your query accordingly.
+
+## Fluent Bit v1.5
+
+The migration from v1.4 to v1.5 is pretty straightforward.
+
+* If you enabled `keepalive` mode in your configuration, note that this configuration property has been renamed to `net.keepalive`. Now all Network I/O keepalive is enabled by default, to learn more about this and other associated configuration properties read the [Networking Administration](https://docs.fluentbit.io/manual/administration/networking#tcp-keepalive) section.
+* If you use the Elasticsearch output plugin, note the default value of `type` [changed from `flb_type` to `_doc`](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196). Many versions of Elasticsearch will tolerate this, but ES v5.6 through v6.1 require a type _without_ a leading underscore. See the [Elasticsearch output plugin documentation FAQ entry](https://docs.fluentbit.io/manual/pipeline/outputs/elasticsearch#faq-underscore) for more.
+
 ## Fluent Bit v1.4
 
-If you are migrating from Fluent Bit v1.3, there are not breaking changes. Just new exciting features to enjoy :\)
+If you are migrating from Fluent Bit v1.3, there are no breaking changes. Just new exciting features to enjoy :\)
 
 ## Fluent Bit v1.3
 
-If you are migrating from Fluent Bit v1.2 to v1.3, there are not breaking changes. If you are upgrading from an older version please review the incremental changes below.
+If you are migrating from Fluent Bit v1.2 to v1.3, there are no breaking changes. If you are upgrading from an older version please review the incremental changes below.
 
 ## Fluent Bit v1.2
 

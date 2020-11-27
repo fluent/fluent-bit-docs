@@ -32,7 +32,7 @@ Select all keys from records coming from a stream called _apache_:
 SELECT * FROM STREAM:apache;
 ```
 
-Select all keys from records which Tag starts with _apache._:
+Select code key from records which Tag starts with _apache._:
 
 ```sql
 SELECT code AS http_status FROM TAG:'apache.*';

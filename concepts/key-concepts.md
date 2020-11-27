@@ -53,7 +53,7 @@ Every Event that gets into Fluent Bit gets assigned a Tag. This tag is an intern
 Most of the tags are assigned manually in the configuration. If a tag is not specified, Fluent Bit will assign the name of the Input plugin instance from where that Event was generated from.
 
 {% hint style="info" %}
-The only input plugin that **don't** assign Tags is [Forward](../pipeline/inputs/forward.md) input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
+The only input plugin that **don't** assign Tags is [Forward](../pipeline/outputs/forward.md) input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
 {% endhint %}
 
 A Tagged record must always have a Matching rule. To learn more about Tags and Matches check the [Routing](data-pipeline/router.md) section.
@@ -103,7 +103,7 @@ Source events can have or not have a structure. A structure defines a set of _ke
 At a low level both are just an array of bytes, but the Structured message defines _keys_ and _values_, having a structure helps to implement faster operations on data modifications.
 
 {% hint style="info" %}
-Fluent Bit **always** handle every Event message as a structured message. For performance reasons, we use a binary serialization data format called [MessagePack](https://msgpack.org/).
+Fluent Bit **always** handles every Event message as a structured message. For performance reasons, we use a binary serialization data format called [MessagePack](https://msgpack.org/).
 
 Consider [MessagePack](https://msgpack.org/) as a binary version of JSON on steroids.
 {% endhint %}

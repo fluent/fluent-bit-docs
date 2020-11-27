@@ -8,6 +8,8 @@ Fluent Bit comes with a built-in HTTP Server that can be used to query internal 
 
 The monitoring interface can be easily integrated with Prometheus since we support it native format.
 
+NOTE: The Windows version does not support the HTTP monitoring feature yet as of v1.6.0.
+
 ## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
@@ -81,6 +83,7 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 | /api/v1/uptime | Get uptime information in seconds and human readable format | JSON |
 | /api/v1/metrics | Internal metrics per loaded plugin | JSON |
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
+| /api/v1/storage | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section the property `storage.metrics` has been enabled | JSON |
 
 ## Uptime Example
 
@@ -129,7 +132,7 @@ it should print a similar output like this:
 }
 ```
 
-#### Metrics in Prometheus format
+### Metrics in Prometheus format
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
@@ -149,7 +152,7 @@ fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
 
-### Configuring Aliases
+## Configuring Aliases
 
 By default configured plugins on runtime get an internal name in the format _plugin\_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
@@ -192,4 +195,18 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
   }
 }
 ```
+
+## Dashboard and Alerts
+
+Fluent Bit's exposed [prometheus style metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be leveraged to create dashboards and alerts.
+
+### Grafana Dashboard
+
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com/)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key differences such as the use of the `instance` label \(see [why here](https://www.robustperception.io/controlling-the-instance-label)\), stacked graphs and a focus on Fluent Bit metrics.
+
+![dashboard](../.gitbook/assets/dashboard.png)
+
+### Alerts
+
+Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/alerts.yaml).
 

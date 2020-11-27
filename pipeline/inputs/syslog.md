@@ -158,3 +158,4 @@ $OMUxSockSocket /tmp/fluent-bit.sock
 ```
 
 Make sure that the socket file is readable by rsyslog \(tweak the `Unix_Perm` option shown above\).
+

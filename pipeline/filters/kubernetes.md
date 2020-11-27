@@ -22,7 +22,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/b6af8ea32759e6e8250d853b3d21e44b4a5427f8/pipeline/configuration/unit_sizes.md) specification. A value of `0` results in no limit, and the buffer will expand as-needed. Note that if pod specifications exceed the buffer limit, the API response will be discarded when retrieving metadata, and some kubernetes metadata will fail to be injected to the logs.  | 32k |
+| Buffer\_Size | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. A value of `0` results in no limit, and the buffer will expand as-needed. Note that if pod specifications exceed the buffer limit, the API response will be discarded when retrieving metadata, and some kubernetes metadata will fail to be injected to the logs. | 32k |
 | Kube\_URL | API Server end-point | [https://kubernetes.default.svc:443](https://kubernetes.default.svc:443) |
 | Kube\_CA\_File | CA certificate file | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt |
 | Kube\_CA\_Path | Absolute path to scan for certificate files |  |
@@ -127,7 +127,7 @@ Note that the annotation value is boolean which can take a _true_ or _false_ and
 
 ## Workflow of Tail + Kubernetes Filter
 
-Kubernetes Filter depends on either [Tail](https://github.com/fluent/fluent-bit-docs/tree/b6af8ea32759e6e8250d853b3d21e44b4a5427f8/pipeline/input/tail.md) or [Systemd](https://github.com/fluent/fluent-bit-docs/tree/b6af8ea32759e6e8250d853b3d21e44b4a5427f8/pipeline/input/systemd.md) input plugins to process and enrich records with Kubernetes metadata. Here we will explain the workflow of Tail and how it configuration is correlated with Kubernetes filter. Consider the following configuration example \(just for demo purposes, not production\):
+Kubernetes Filter depends on either [Tail](../inputs/tail.md) or [Systemd](../inputs/systemd.md) input plugins to process and enrich records with Kubernetes metadata. Here we will explain the workflow of Tail and how it configuration is correlated with Kubernetes filter. Consider the following configuration example \(just for demo purposes, not production\):
 
 ```text
 [INPUT]
@@ -147,7 +147,7 @@ Kubernetes Filter depends on either [Tail](https://github.com/fluent/fluent-bit-
     Merge_Log_Key    log_processed
 ```
 
-In the input section, the [Tail](https://github.com/fluent/fluent-bit-docs/tree/b6af8ea32759e6e8250d853b3d21e44b4a5427f8/pipeline/input/tail.md) plugin will monitor all files ending in _.log_ in path _/var/log/containers/_. For every file it will read every line and apply the docker parser. Then the records are emitted to the next step with an expanded tag.
+In the input section, the [Tail](../inputs/tail.md) plugin will monitor all files ending in _.log_ in path _/var/log/containers/_. For every file it will read every line and apply the docker parser. Then the records are emitted to the next step with an expanded tag.
 
 Tail support Tags expansion, which means that if a tag have a star character \(\*\), it will replace the value with the absolute path of the monitored file, so if you file name and path is:
 
@@ -167,7 +167,7 @@ When [Kubernetes Filter](kubernetes.md) runs, it will try to match all records t
 
 Kubernetes Filter do not care from where the logs comes from, but it cares about the absolute name of the monitored file, because that information contains the pod name and namespace name that are used to retrieve associated metadata to the running Pod from the Kubernetes Master/API Server.
 
-> If you have large pod specifications (can be caused by large numbers of environment variables, etc.), be sure to increase the `Buffer_Size` parameter of the kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
+> If you have large pod specifications \(can be caused by large numbers of environment variables, etc.\), be sure to increase the `Buffer_Size` parameter of the kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
 If the configuration property **Kube\_Tag\_Prefix** was configured \(available on Fluent Bit &gt;= 1.1.x\), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to \_kube.\_var.logs.containers. , so the previous Tag content will be transformed from:
 

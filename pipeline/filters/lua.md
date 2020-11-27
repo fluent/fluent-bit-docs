@@ -13,10 +13,11 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Script | Path to the Lua script that will be used. |
-| Call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
-| Type\_int\_key | If these keys are matched, the fields are converted to integer. If more than one key, delimit by space |
-| Protected\_mode| If enabled, Lua script will be executed in protected mode. It prevents to crash when invalid Lua script is executed. Default is true.|
+| script | Path to the Lua script that will be used. |
+| call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the Script defined above. |
+| type\_int\_key | If these keys are matched, the fields are converted to integer. If more than one key, delimit by space. Note that starting from Fluent Bit v1.6 integer data types are preserved and not converted to double as in previous versions. |
+| protected\_mode | If enabled, Lua script will be executed in protected mode. It prevents to crash when invalid Lua script is executed. Default is true. |
+| time_as_table | By default when the Lua script is invoked, the record timestamp is passed as a Floating number which might lead to loss precision when the data is converted back. If you desire timestamp precision enabling this option will pass the timestamp as a Lua table with keys ```sec``` for seconds since epoch and ```nsec``` for nanoseconds. |
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -82,7 +83,7 @@ Each callback **must** return three values:
 
 | name | data type | description |
 | :--- | :--- | :--- |
-| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter\_lua must drop the record. If _code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp and record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). If _code_ equals 2, means the original timestamp is not modified and the record has been modified so it must be replaced by the returned values from _record_ \(third return value\). The _code_ 2 is supported from v1.4.3.|
+| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that filter\_lua must drop the record. If _code_ equals 0 the record will not be modified, otherwise if _code_ equals 1, means the original timestamp and record have been modified so it must be replaced by the returned values from _timestamp_ \(second return value\) and _record_ \(third return value\). If _code_ equals 2, means the original timestamp is not modified and the record has been modified so it must be replaced by the returned values from _record_ \(third return value\). The _code_ 2 is supported from v1.4.3. |
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | if code equals 1, the original record information will be replaced with this new value. Note that the format of this value **must** be a valid Lua table. |
 
@@ -96,7 +97,7 @@ For functional examples of this interface, please refer to the code samples prov
 
 In Lua, Fluent Bit treats number as double. It means an integer field \(e.g. IDs, log levels\) will be converted double. To avoid type conversion, **Type\_int\_key** property is available.
 
-
 ### Protected Mode
 
 Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
+

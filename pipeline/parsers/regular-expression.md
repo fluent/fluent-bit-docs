@@ -23,6 +23,7 @@ The following parser configuration example aims to provide rules that can be app
     Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
     Time_Key time
     Time_Format %d/%b/%Y:%H:%M:%S %z
+    Types code:integer size:integer
 ```
 
 As an example, takes the following Apache HTTP Server log entry:

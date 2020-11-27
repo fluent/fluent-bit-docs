@@ -8,13 +8,9 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.4 | x86\_64, arm64v8, arm32v7 | Latest release of 1.4.x series. |
-| 1.4.2 | x86\_64, arm64v8, arm32v7 | Release [v1.4.2](https://fluentbit.io/announcements/v1.4.2/) |
-| 1.4-debug, 1.4.1-debug | x86\_64 | v1.4.x releases + Busybox |
-| 1.4.1 | x86\_64, arm64v8, arm32v7 | Release [v1.4.1](https://fluentbit.io/announcements/v1.4.1/) |
-| 1.4-debug, 1.4.1-debug | x86\_64 | v1.4.x releases + Busybox |
-| 1.4.0 | x86\_64, arm64v8, arm32v7 | Release [v1.4.0](https://fluentbit.io/announcements/v1.4.0) |
-| 1.4-debug, 1.4.0-debug | x86\_64 | v1.4.x releases + Busybox |
+| 1.5 | x86\_64, arm64v8, arm32v7 | Latest release of 1.5.x series. |
+| 1.5.0 | x86\_64, arm64v8, arm32v7 | Release [v1.5.0](https://fluentbit.io/announcements/v1.5.0/) |
+| 1.5-debug, 1.5.0-debug | x86\_64 | v1.5.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
@@ -37,19 +33,19 @@ For every architecture we build the layers using the following base images:
 Download the last stable image from 1.4 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.4
+$ docker pull fluent/fluent-bit:1.5
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:1.5 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
 ```text
-Fluent-Bit v1.4.x
+Fluent-Bit v1.5.x
 Copyright (C) Treasure Data
 
 [2019/10/01 12:29:02] [ info] [engine] started
@@ -71,5 +67,5 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
-
 The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
+
