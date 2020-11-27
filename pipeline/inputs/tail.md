@@ -39,7 +39,7 @@ Additionally the following options exists to configure the handling of multi-lin
 | :--- | :--- | :--- |
 | Multiline | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. Note that when this option is enabled the Parser option is not used. | Off |
 | Multiline\_Flush | Wait period time in seconds to process queued multiline messages | 4 |
-| Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name \(named capture\) |  |
+| Parser\_Firstline | Name of the parser that matchs the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name \(named capture\), and the value of the last match group must be a string |  |
 | Parser\_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. |  |
 
 ### Docker Mode Configuration Parameters <a id="docker_mode"></a>
