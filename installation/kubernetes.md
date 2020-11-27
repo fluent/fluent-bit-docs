@@ -46,6 +46,9 @@ The next step is to create a ConfigMap that will be used by our Fluent Bit Daemo
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
+The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112)
+should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+
 ### Note for Kubernetes &lt; v1.16
 
 For Kubernetes versions older than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
