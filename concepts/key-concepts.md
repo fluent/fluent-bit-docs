@@ -28,7 +28,7 @@ Jan 18 12:52:16 flb systemd[2222]: Started GNOME Terminal Server.
 Jan 18 12:52:16 flb gsd-media-keys[2640]: # watch_fast: "/org/gnome/terminal/legacy/" (establishing: 0, active: 0)
 ```
 
-It contains four lines and all of them represents **four** independent Events.
+It contains four lines and each of them represents an independent Event, for a total of **four** Events.
 
 Internally, an Event always has two components \(in an array form\):
 
@@ -38,7 +38,7 @@ Internally, an Event always has two components \(in an array form\):
 
 ## Filtering
 
-In some cases is required to perform modifications on the Events content, the process to alter, enrich or drop Events is called Filtering.
+Some cases require modifications on the Events content. Modifying events by altering, enriching or dropping Events is called Filtering.
 
 There are many use cases when Filtering is required like:
 
@@ -53,7 +53,7 @@ Every Event that gets into Fluent Bit gets assigned a Tag. This tag is an intern
 Most of the tags are assigned manually in the configuration. If a tag is not specified, Fluent Bit will assign the name of the Input plugin instance from where that Event was generated from.
 
 {% hint style="info" %}
-The only input plugin that **don't** assign Tags is [Forward]() input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
+The only input plugin that **doesn't** assign Tags is [Forward](../pipeline/outputs/forward.md) input. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
 {% endhint %}
 
 A Tagged record must always have a Matching rule. To learn more about Tags and Matches check the [Routing](data-pipeline/router.md) section.
