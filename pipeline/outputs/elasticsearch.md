@@ -9,8 +9,8 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Host | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port | TCP port of the target Elasticsearch instance | 9200 |
 | Path | Elasticsearch accepts new data on HTTP query path "/\_bulk". But it is also possible to serve Elasticsearch behind a reverse proxy on a subpath. This option defines such path on the fluent-bit side. It simply adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/unit_sizes.md) specification. | 4KB |
-| Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
+| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 4KB |
+| Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons it is strongly suggested to do parsing and filtering on the Fluent Bit side to avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
 | AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
@@ -31,6 +31,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
+| Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported \(if desired, you can use the nest filter plugin to remove nesting\) |  |
 
@@ -38,7 +39,9 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+
 
 ## Getting Started
 

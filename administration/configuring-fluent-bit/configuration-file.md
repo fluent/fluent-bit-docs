@@ -37,11 +37,11 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
-| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
+| Log\_File | Absolute path for an optional log file. By default all logs are redirected to standard error \(stderr\). |  |
 | :--- | :--- | :--- |
 
 
-| Log\_Level | Set the logging verbosity level. Allowed values are: error, warning, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | :--- | :--- | :--- |
 
 

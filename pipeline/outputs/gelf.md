@@ -24,7 +24,7 @@ According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pag
 
 ### TLS / SSL
 
-GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
 
 ## Notes
 
@@ -32,10 +32,10 @@ GELF output plugin supports TLS/SSL, for more details about the properties avail
 * The order of looking up the timestamp in this plugin is as follows:
   1. Value of `Gelf_Timestamp_Key` provided in configuration
   2. Value of `timestamp` key
-  3. If you're using [Docker JSON parser](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/parser/json.md), this parser can parse time and use it as timestamp of message. If all above fail, Fluent Bit tries to get timestamp extracted by your parser.
+  3. If you're using [Docker JSON parser](../parsers/json.md), this parser can parse time and use it as timestamp of message. If all above fail, Fluent Bit tries to get timestamp extracted by your parser.
   4. Timestamp does not set by Fluent Bit. In this case, your Graylog server will set it to the current timestamp \(now\).
 * Your log timestamp has to be in [UNIX Epoch Timestamp](https://en.wikipedia.org/wiki/Unix_time) format. If the `Gelf_Timestamp_Key` value of your log is not in this format, your Graylog server will ignore it.
-* If you're using Fluent Bit in Kubernetes and you're using [Kubernetes Filter Plugin](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/filter/kubernetes.md), this plugin adds `host` value to your log by default, and you don't need to add it by your own.
+* If you're using Fluent Bit in Kubernetes and you're using [Kubernetes Filter Plugin](../filters/kubernetes.md), this plugin adds `host` value to your log by default, and you don't need to add it by your own.
 * The `version` of GELF message is also mandatory and Fluent Bit sets it to 1.1 which is the current latest version of GELF.
 * If you use `udp` as transport protocol and set `Compress` to `true`, Fluent Bit compresses your packets in GZIP format, which is the default compression that Graylog offers. This can be used to trade more CPU load for saving network bandwidth.
 
@@ -90,7 +90,7 @@ By default, GELF tcp uses port 12201 and Docker places your logs in `/var/log/co
 {"log":"{\"data\": \"This is an example.\"}","stream":"stderr","time":"2019-07-21T12:45:11.273315023Z"}
 ```
 
-If you use [Tail Input](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/outputs/input/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` \(and any other present\) field. This is how this log in [stdout](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/outputs/stdout.md) looks like after decoding:
+If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` \(and any other present\) field. This is how this log in [stdout](standard-output.md) looks like after decoding:
 
 ```text
 [0] kube.log: [1565770310.000198491, {"log"=>{"data"=>"This is an example."}, "stream"=>"stderr", "time"=>"2019-07-21T12:45:11.273315023Z"}]
@@ -99,9 +99,9 @@ If you use [Tail Input](https://github.com/fluent/fluent-bit-docs/tree/16f30161d
 Now, this is what happens to this log:
 
 1. Fluent Bit GELF plugin adds `"version": "1.1"` to it.
-2. The [Nest Filter](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/outputs/filter/nest.md), unnests fields inside `log` key. In our example, it puts `data` alongside `stream` and `time`.
+2. The [Nest Filter](../filters/nest.md), unnests fields inside `log` key. In our example, it puts `data` alongside `stream` and `time`.
 3. We used this `data` key as `Gelf_Short_Message_Key`; so GELF plugin changes it to `short_message`.
-4. [Kubernetes Filter](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/outputs/filter/kubernetes.md) adds `host` name.
+4. [Kubernetes Filter](../filters/kubernetes.md) adds `host` name.
 5. Timestamp is generated.
 6. Any custom field \(not present in [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification)\) is prefixed by an underline.
 
