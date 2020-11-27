@@ -142,4 +142,4 @@ The following example create records with CPU usage samples in the filesystem an
     storage.total_limit_size  5M
 ```
 
-If for some reason Fluent Bit get's offline because of a network issue, it will continuing buffering CPU samples but just keeping a maximum of 5M of the newest data.
+If for some reason Fluent Bit goes offline because of a network issue, it will continuing buffering CPU samples; keeping a maximum of 5M of the newest data.
