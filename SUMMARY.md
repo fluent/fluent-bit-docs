@@ -52,6 +52,7 @@
   * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
+  * [Record Accessor](administration/configuring-fluent-bit/record-accessor.md)
 * [Security](administration/security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
@@ -63,6 +64,7 @@
 
 ## Local Testing
 
+* [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
 * [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
 
 ## Data Pipeline <a id="pipeline"></a>
@@ -99,6 +101,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [Expect](pipeline/filters/expect.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Lua](pipeline/filters/lua.md)
@@ -132,6 +135,7 @@
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Splunk](pipeline/outputs/splunk.md)
+  * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
 
@@ -151,3 +155,4 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+
