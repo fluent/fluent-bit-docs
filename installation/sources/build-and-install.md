@@ -110,7 +110,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_COLLECTD](../../pipeline/inputs/collectd.md) | Enable Collectd input plugin | On |
 | [FLB\_IN\_CPU](../../pipeline/inputs/cpu-metrics.md) | Enable CPU input plugin | On |
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
-| [FLB\_IN\_DOCKER](../docker.md) | Enable Docker metrics input plugin | On |
+| [FLB\_IN\_DOCKER](../../pipeline/inputs/docker.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
 | [FLB\_IN\_FORWARD](build-and-install.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
