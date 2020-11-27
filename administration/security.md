@@ -21,11 +21,13 @@ The listed properties can be enabled in the configuration file, specifically on 
 The following **output** plugins can take advantage of the TLS feature:
 
 * [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
+* [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md)
+* [Amazon S3](../pipeline/outputs/s3.md)
 * [Azure](../pipeline/outputs/azure.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
 * [Datadog](../pipeline/outputs/datadog.md)
 * [Elasticsearch](../pipeline/outputs/elasticsearch.md)
-* [Forward]()
+* [Forward](security.md)
 * [GELF](../pipeline/outputs/gelf.md)
 * [HTTP](../pipeline/outputs/http.md)
 * [InfluxDB](../pipeline/outputs/influxdb.md)

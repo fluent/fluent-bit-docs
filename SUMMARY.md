@@ -52,6 +52,7 @@
   * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
+  * [Record Accessor](administration/configuring-fluent-bit/record-accessor.md)
 * [Security](administration/security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
@@ -63,6 +64,7 @@
 
 ## Local Testing
 
+* [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
 * [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
 
 ## Data Pipeline <a id="pipeline"></a>
@@ -73,8 +75,9 @@
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
+  * [Docker](pipeline/inputs/docker.md)
   * [Exec](pipeline/inputs/exec.md)
-  * [Forward](pipeline/inputs/forward.md)
+  * [Forward](pipeline/outputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [Health](pipeline/inputs/health.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
@@ -99,6 +102,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [Expect](pipeline/filters/expect.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Lua](pipeline/filters/lua.md)
@@ -109,9 +113,13 @@
   * [Throttle](pipeline/filters/throttle.md)
   * [Nest](pipeline/filters/nest.md)
   * [Modify](pipeline/filters/modify.md)
+  * [Tensorflow](pipeline/filters/tensorflow.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
+  * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
+  * [Amazon S3](pipeline/outputs/s3.md)
   * [Azure](pipeline/outputs/azure.md)
+  * [Azure Blob](pipeline/outputs/azure_blob.md)
   * [BigQuery](pipeline/outputs/bigquery.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -125,13 +133,16 @@
   * [Kafka](pipeline/outputs/kafka.md)
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
+  * [Loki](pipeline/outputs/loki.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
+  * [Slack](pipeline/outputs/slack.md)
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Splunk](pipeline/outputs/splunk.md)
+  * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
 
@@ -151,4 +162,3 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-

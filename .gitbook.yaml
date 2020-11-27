@@ -7,7 +7,7 @@ redirects:
     input/collectd:        ./pipeline/inputs/
     input/cpu:             ./pipeline/inputs/cpu-metrics.md
     input/disk:            ./pipeline/inputs/disk-io-metrics.md
-    #inputs/docker:          ./pipeline/inputs/
+    inputs/docker:         ./pipeline/inputs/docker.md
     input/dummy:           ./pipeline/inputs/dummy.md
     input/exec:            ./pipeline/inputs/exec.md
     input/forward:         ./pipeline/inputs/forward.md
@@ -50,6 +50,7 @@ redirects:
     output/datadog:        ./pipeline/outputs/datadog.md
     output/es:             ./pipeline/outputs/elasticsearch.md
     output/file:           ./pipeline/outputs/file.md
+    output/firehose:       ./pipeline/outputs/firehose.md
     output/flowcounter:    ./pipeline/outputs/flowcounter.md
     output/forward:        ./pipeline/outputs/forward.md
     output/gelf:           ./pipeline/outputs/gelf.md
@@ -59,6 +60,7 @@ redirects:
     output/kafka_rest:     ./pipeline/outputs/kafka-rest-proxy.md
     output/nats:           ./pipeline/outputs/nats.md
     output/null:           ./pipeline/outputs/null.md
+    output/s3:             ./pipeline/outputs/s3.md
     output/slack:          ./pipeline/outputs/slack.md
     output/splunk:         ./pipeline/outputs/splunk.md
     output/stackdriver:    ./pipeline/outputs/stackdriver.md

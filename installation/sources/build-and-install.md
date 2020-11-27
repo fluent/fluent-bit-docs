@@ -110,9 +110,9 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_COLLECTD](../../pipeline/inputs/collectd.md) | Enable Collectd input plugin | On |
 | [FLB\_IN\_CPU](../../pipeline/inputs/cpu-metrics.md) | Enable CPU input plugin | On |
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
-| [FLB\_IN\_DOCKER](../docker.md) | Enable Docker metrics input plugin | On |
+| [FLB\_IN\_DOCKER](../../pipeline/inputs/docker.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
-| [FLB\_IN\_FORWARD]() | Enable Forward input plugin | On |
+| [FLB\_IN\_FORWARD](build-and-install.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
 | [FLB\_IN\_KMSG](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | On |
@@ -162,6 +162,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_DATADOG](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | On |
 | [FLB\_OUT\_ES](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
 | [FLB\_OUT\_FILE](../../pipeline/outputs/file.md) | Enable File output plugin | On |
+| [FLB\_OUT\_KINESIS\_FIREHOSE](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | On |
 | [FLB\_OUT\_FLOWCOUNTER](../../pipeline/outputs/flowcounter.md) | Enable Flowcounter output plugin | On |
 | [FLB\_OUT\_FORWARD](build-and-install.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
 | [FLB\_OUT\_GELF](../../pipeline/outputs/gelf.md) | Enable Gelf output plugin | On |
@@ -175,6 +176,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | FLB\_OUT\_PGSQL | Enable PostgreSQL output plugin | On |
 | FLB\_OUT\_PLOT | Enable Plot output plugin | On |
 | FLB\_OUT\_SLACK | Enable Slack output plugin | On |
+| [FLB\_OUT\_S3](../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | On |
 | [FLB\_OUT\_SPLUNK](../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | On |
 | [FLB\_OUT\_STACKDRIVER](../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | On |
 | [FLB\_OUT\_STDOUT](build-and-install.md) | Enable STDOUT output plugin | On |

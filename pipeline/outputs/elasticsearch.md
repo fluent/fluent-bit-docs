@@ -9,10 +9,11 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Host | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port | TCP port of the target Elasticsearch instance | 9200 |
 | Path | Elasticsearch accepts new data on HTTP query path "/\_bulk". But it is also possible to serve Elasticsearch behind a reverse proxy on a subpath. This option defines such path on the fluent-bit side. It simply adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/unit_sizes.md) specification. | 4KB |
-| Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
+| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 4KB |
+| Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons it is strongly suggested to do parsing and filtering on the Fluent Bit side to avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
+| AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
@@ -24,6 +25,7 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Logstash\_DateFormat | Time format \(based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)\) to generate the second part of the Index name. | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field. | @timestamp |
 | Time\_Key\_Format | When Logstash\_Format is enabled, this property defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
+| Time\_Key\_Nanos | When Logstash\_Format is enabled, enabling this property sends nanosecond precision timestamps. | Off |
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
@@ -36,7 +38,9 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+
+Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+
 
 ## Getting Started
 
@@ -124,7 +128,7 @@ For details, please read [the official blog post on that issue](https://www.elas
 
 ### Elasticsearch rejects requests saying "Document mapping type name can't start with '\_'" <a id="faq-underscore"></a>
 
-Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, which matches the recommendation from Elasticsearch from version 6.2 forwards \([see commit with rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)\). This doesn't work in Elasticsearch versions 5.6 through 6.1 \([see Elasticsearch discussion and fix](https://discuss.elastic.co/t/cant-use-doc-as-type-despite-it-being-declared-the-preferred-method/113837/9)\). Ensure you set an explicit map (such as `doc` or `flb_type`) in the configuration, as seen on the last line:
+Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, which matches the recommendation from Elasticsearch from version 6.2 forwards \([see commit with rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)\). This doesn't work in Elasticsearch versions 5.6 through 6.1 \([see Elasticsearch discussion and fix](https://discuss.elastic.co/t/cant-use-doc-as-type-despite-it-being-declared-the-preferred-method/113837/9)\). Ensure you set an explicit map \(such as `doc` or `flb_type`\) in the configuration, as seen on the last line:
 
 ```text
 [OUTPUT]

@@ -7,8 +7,8 @@ The **stdout** output plugin allows to print to the standard output the data rec
 | Key | Description | default |
 | :--- | :--- | :--- |
 | Format | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json\_lines_ and _json\_stream_. | msgpack |
-| json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_,  _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) and _epoch_. | double |
+| json\_date\_key | Specify the name of the time key in the output record. To disable the time key just set the value to `false`. | date |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 
 ### Command Line
 
@@ -16,7 +16,7 @@ The **stdout** output plugin allows to print to the standard output the data rec
 $ bin/fluent-bit -i cpu -o stdout -v
 ```
 
-We have specified to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree/ddc1cf3d996966b9db39f8784596c8b7132b4d5b/pipeline/input/cpu.md) usage metrics and print them out to the standard output in a human readable way:
+We have specified to gather [CPU](../inputs/cpu-metrics.md) usage metrics and print them out to the standard output in a human readable way:
 
 ```bash
 $ bin/fluent-bit -i cpu -o stdout -p format=msgpack -v
