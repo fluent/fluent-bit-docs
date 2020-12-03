@@ -46,6 +46,9 @@ The next step is to create a ConfigMap that will be used by our Fluent Bit Daemo
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
+The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112)
+should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+
 ### Note for Kubernetes &lt; v1.16
 
 For Kubernetes versions older than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
@@ -89,7 +92,7 @@ The default configuration of Fluent Bit makes sure of the following:
 * Consume all containers logs from the running Node.
 * The [Tail input plugin](https://docs.fluentbit.io/manual/v/1.0/input/tail) will not append more than **5MB**  into the engine until they are flushed to the Elasticsearch backend. This limit aims to provide a workaround for [backpressure](https://docs.fluentbit.io/manual/v/1.0/configuration/backpressure) scenarios.
 * The Kubernetes filter will enrich the logs with Kubernetes metadata, specifically _labels_ and _annotations_. The filter only goes to the API Server when it cannot find the cached info, otherwise it uses the cache.
-* The default backend in the configuration is Elasticsearch set by the [Elasticsearch Ouput Plugin](https://docs.fluentbit.io/manual/v/1.0/output/elasticsearch). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
+* The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](https://docs.fluentbit.io/manual/v/1.0/output/elasticsearch). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
 * There is an option called **Retry\_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
 
 ## Windows Deployment

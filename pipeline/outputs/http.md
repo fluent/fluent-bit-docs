@@ -21,13 +21,13 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
 | gelf\_timestamp\_key | Specify the key to use for `timestamp` in _gelf_ format |  |
 | gelf\_host\_key | Specify the key to use for the `host` in _gelf_ format |  |
-| gelf\_short\_messge\_key | Specify the key to use as the `short` message in _gelf_ format |  |
+| gelf\_short\_message\_key | Specify the key to use as the `short` message in _gelf_ format |  |
 | gelf\_full\_message\_key | Specify the key to use for the `full` message in _gelf_ format |  |
 | gelf\_level\_key | Specify the key to use for the `level` in _gelf_ format |  |
 
 ### TLS / SSL
 
-HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
 
 ## Getting Started
 
@@ -68,7 +68,7 @@ By default, the URI becomes tag of the message, the original tag is ignored. To 
 
 Another approach we also support is the sending the original message tag in a configurable header. It's up to the receiver to do what it wants with that header field: parse it and use it as the tag for example.
 
-To configure this behaviour, add this config:
+To configure this behavior, add this config:
 
 ```text
 [OUTPUT]
@@ -130,7 +130,7 @@ Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timesta
     Json_date_format iso8601
 ```
 
-A sample Sumo Logic query for the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input. \(Requires `json_lines` format with `iso8601` date format for the `timestamp` field\).
+A sample Sumo Logic query for the [CPU](../inputs/cpu-metrics.md) input. \(Requires `json_lines` format with `iso8601` date format for the `timestamp` field\).
 
 ```text
 _sourcecategory="my_fluent_bit"

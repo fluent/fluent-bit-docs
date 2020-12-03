@@ -57,7 +57,7 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 ### TLS / SSL
 
-Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
 
 ## Getting Started
 
@@ -142,7 +142,7 @@ This will create a payload that looks like:
 }
 ```
 
-For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
+For more information on the Splunk HEC payload format and all event metadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
 
 ### Sending Raw Events
 

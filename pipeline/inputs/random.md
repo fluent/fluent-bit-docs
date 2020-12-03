@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Samples | If set, it will only generate a specific number of samples. By default this value is set to _-1_, which will generate unlimited samples. |
 | Interval\_Sec | Interval in seconds between samples generation. Default value is _1_. |
-| Internal\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Internal\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
 
 ## Getting Started
 

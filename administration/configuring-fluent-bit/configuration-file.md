@@ -37,7 +37,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
-| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
+| Log\_File | Absolute path for an optional log file. By default all logs are redirected to standard error \(stderr\). |  |
 | :--- | :--- | :--- |
 
 
@@ -102,7 +102,7 @@ An _INPUT_ section defines a source \(related to an input plugin\), here we will
 | Key | Description |
 | :--- | :--- |
 | Name | Name of the input plugin. |
-| Tag | Tag name associated to all records comming from this plugin. |
+| Tag | Tag name associated to all records coming from this plugin. |
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin \(as it provides dynamic tags\).
 
