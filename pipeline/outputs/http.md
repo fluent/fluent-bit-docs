@@ -138,3 +138,4 @@ _sourcecategory="my_fluent_bit"
 | timeslice 1m
 | max(cpu) as cpu group by _timeslice
 ```
+

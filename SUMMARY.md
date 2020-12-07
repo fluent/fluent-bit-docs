@@ -161,3 +161,4 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+

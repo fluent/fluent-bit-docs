@@ -4,7 +4,7 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](../.gitbook/assets/fluentbit_kube_logging%20%281%29.png)
+![](../.gitbook/assets/fluentbit_kube_logging%20%283%29.png)
 
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
 
@@ -91,6 +91,33 @@ The default configuration of Fluent Bit makes sure of the following:
 * The Kubernetes filter will enrich the logs with Kubernetes metadata, specifically _labels_ and _annotations_. The filter only goes to the API Server when it cannot find the cached info, otherwise it uses the cache.
 * The default backend in the configuration is Elasticsearch set by the [Elasticsearch Ouput Plugin](https://docs.fluentbit.io/manual/v/1.0/output/elasticsearch). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
 * There is an option called **Retry\_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
+
+## Container Runtime Interface \(CRI\) parser
+
+Fluent Bit by default assumes that logs are formatted by the Docker interface standard. However, when using CRI you can run into issues with malformed JSON if you do not modify the parser used. Fluent Bit includes a CRI log parser that can be used instead. An example of the parser is seen below:
+
+```text
+# CRI Parser
+[PARSER]
+    # http://rubular.com/r/tjUt3Awgg4
+    Name cri
+    Format regex
+    Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
+    Time_Key    time
+    Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+```
+
+To use this parser change the Input section for your configuration from `docker` to `cri`
+
+```text
+[INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Parser cri
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+```
 
 ## Windows Deployment
 
