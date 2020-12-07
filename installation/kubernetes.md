@@ -111,12 +111,12 @@ To use this parser change the Input section for your configuration from `docker`
 
 ```text
 [INPUT]
-        Name tail
-        Path /var/log/containers/*.log
-        Parser cri
-        Tag kube.*
-        Mem_Buf_Limit 5MB
-        Skip_Long_Lines On
+    Name tail
+    Path /var/log/containers/*.log
+    Parser cri
+    Tag kube.*
+    Mem_Buf_Limit 5MB
+    Skip_Long_Lines On
 ```
 
 ## Windows Deployment
