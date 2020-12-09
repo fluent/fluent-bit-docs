@@ -1,6 +1,6 @@
 # Elasticsearch
 
-The **es** output plugin, allows to ingest your records into a [Elasticsearch](http://www.elastic.co) database. The following instructions assumes that you have a fully operational Elasticsearch service running in your environment.
+The **es** output plugin, allows to ingest your records into an [Elasticsearch](http://www.elastic.co) database. The following instructions assumes that you have a fully operational Elasticsearch service running in your environment.
 
 ## Configuration Parameters
 
@@ -16,6 +16,8 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
+| Cloud\_ID | Specify cloud_id of the cluster running on Elastic Cloud |  |
+| Cloud\_Auth | Specify credentials to use so as to connect to the cluster running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | Index | Index name | fluent-bit |
@@ -167,3 +169,20 @@ Example configuration:
 
 Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.
 
+
+### Fluent Bit + Elastic Cloud
+
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) providing just the `cloud_id` and the `cloud_auth` settings.
+
+Example configuration:
+
+```text
+[OUTPUT]
+    Name es
+    Include_Tag_Key true
+    Tag_Key tags
+    tls On
+    tls.verify Off
+    cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
+    cloud_auth elastic:2vxxxxxxxxYV
+```
