@@ -44,7 +44,7 @@ In your main configuration file append the following _Output_ section:
     region us-east-1
     log_group_name fluent-bit-cloudwatch
     log_stream_prefix from-fluent-bit-
-    auto_create_group On
+    auto_create_group true
 ```
 
 ### Metrics Tutorial
