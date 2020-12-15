@@ -82,6 +82,26 @@ If you are using Minikube for testing purposes, use the following alternative Da
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
 ```
 
+## Installing with Helm Chart
+
+[Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo:  [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts). 
+
+To add the Fluent Helm Charts repo use the following command
+
+```text
+helm repo add fluent https://fluent.github.io/helm-charts
+```
+
+To validate that the repo was added you can run `helm search repo fluent` to ensure the charts were added. The default chart can then be installed by running the following
+
+```text
+helm install fluent-bit fluent/fluent-bit
+```
+
+### Default Values
+
+The default chart values include configuration to read container logs, with Docker parsing, systemd logs apply Kubernetes metadata enrichment and finally output to an Elasticsearch cluster. You can modify the values file included [https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
+
 ## Details
 
 The default configuration of Fluent Bit makes sure of the following:
