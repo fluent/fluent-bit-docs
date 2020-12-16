@@ -69,6 +69,13 @@ The _Service_ section defines global properties of the service, the keys availab
 | :--- | :--- | :--- |
 
 
+| Backoff\_Base | Minimum wait time in integer `seconds` between retries (using full jitter algorithm) | 5 |
+| :--- | :--- | :--- |
+
+
+| Backoff\_Cap | Maximum wait time in integer `seconds` between retries (using full jitter algorithm) | 2000 |
+| :--- | :--- | :--- |
+
 <table>
   <thead>
     <tr>
