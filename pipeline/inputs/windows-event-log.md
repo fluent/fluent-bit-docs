@@ -8,7 +8,8 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Channels | A comma-separated list of channels to read from. |  |
+| Tag |  Specify tag for message routing | winlog.N |
+| Channels | A comma-separated list of channels to read from. | Application |
 | Interval\_Sec | Set the polling interval for each channel. \(optional\) | 1 |
 | DB | Set the path to save the read offsets. \(optional\) |  |
 
@@ -23,6 +24,7 @@ Here is a minimum configuration example.
 ```python
 [INPUT]
     Name         winlog
+    Tag          myapp.winlog
     Channels     Setup,Windows PowerShell
     Interval_Sec 1
     DB           winlog.sqlite
