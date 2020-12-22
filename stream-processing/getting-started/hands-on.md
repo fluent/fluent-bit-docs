@@ -6,7 +6,7 @@ This article goes through very specific and simple steps to learn how Stream Pro
 
 The following tutorial requires the following software components:
 
-* [Fluent Bit](https://fluentbit.io) &gt;= v1.2.0
+* [Fluent Bit](https://fluentbit.io) &gt;= v1.6.0
 * [Docker Engine](https://www.docker.com/products/docker-engine) \(not mandatory if you already have Fluent Bit binary installed in your system\)
 
 In addition download the following data sample file \(130KB\):
@@ -20,8 +20,8 @@ For all next steps we will run Fluent Bit from the command line, and for simplic
 ### 1. Fluent Bit version:
 
 ```bash
-$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
-Fluent Bit v1.4.0
+$ docker run -ti fluent/fluent-bit:1.6 /fluent-bit/bin/fluent-bit --version
+Fluent Bit v1.6.0
 ```
 
 ### 2. Parse sample files
@@ -30,17 +30,18 @@ The samples file contains JSON records. On this command, we are appending the Pa
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.4                                          \
+     fluent/fluent-bit:1.6                                          \
      /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
                                 -i tail -p path=/sp-samples-1k.log  \
                                         -p parser=json              \
+                                        -p read_from_head=on        \
                                 -o stdout -f 1
 ```
 
 The command above will simply print the parsed content to the standard output interface. The content will print the _Tag_ associated to each record and an array with two fields: record timestamp and record map:
 
 ```text
-Fluent Bit v1.4.0
+Fluent Bit v1.6.0
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
@@ -67,12 +68,11 @@ This command introduces a Stream Processor \(SP\) query through the **-T** optio
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
-     fluent/fluent-bit:1.2                                               \
-     /fluent-bit/bin/fluent-bit                                          \
-         -R /fluent-bit/etc/parsers.conf                                 \
-         -i tail                                                         \
-             -p path=/sp-samples-1k.log                                  \
-             -p parser=json                                              \
+     fluent/fluent-bit:1.6                                               \
+     /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf          \
+                                -i tail -p path=/sp-samples-1k.log       \
+                                        -p parser=json                   \
+                                        -p read_from_head=on             \
          -T "SELECT word, num FROM STREAM:tail.0 WHERE country='Chile';" \
          -o null -f 1
 ```
@@ -93,12 +93,11 @@ The following query is similar to the one in the previous step, but this time we
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
-     fluent/fluent-bit:1.2                                               \
-     /fluent-bit/bin/fluent-bit                                          \
-         -R /fluent-bit/etc/parsers.conf                                 \
-         -i tail                                                         \
-             -p path=/sp-samples-1k.log                                  \
-             -p parser=json                                              \
+     fluent/fluent-bit:1.6                                               \
+     /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf          \
+                                -i tail -p path=/sp-samples-1k.log       \
+                                        -p parser=json                   \
+                                        -p read_from_head=on             \
          -T "SELECT AVG(num) FROM STREAM:tail.0 WHERE country='Chile';"  \
          -o null -f 1
 ```
@@ -121,12 +120,11 @@ Grouping results aims to simplify data processing and when used in a defined win
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.2                                          \
-     /fluent-bit/bin/fluent-bit                                     \
-         -R /fluent-bit/etc/parsers.conf                            \
-         -i tail                                                    \
-             -p path=/sp-samples-1k.log                             \
-             -p parser=json                                         \
+     fluent/fluent-bit:1.6                                          \
+     /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
+                                -i tail -p path=/sp-samples-1k.log  \
+                                        -p parser=json              \
+                                        -p read_from_head=on        \
          -T "SELECT country, AVG(num) FROM STREAM:tail.0            \
              WINDOW TUMBLING (1 SECOND)                             \
              WHERE country='Chile'                                  \
@@ -148,12 +146,11 @@ This can be done using the **CREATE STREAM** statement that will also tag result
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.2                                          \
-     /fluent-bit/bin/fluent-bit                                     \
-         -R /fluent-bit/etc/parsers.conf                            \
-         -i tail                                                    \
-             -p path=/sp-samples-1k.log                             \
-             -p parser=json                                         \
+     fluent/fluent-bit:1.6                                          \
+     /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
+                                -i tail -p path=/sp-samples-1k.log  \
+                                        -p parser=json              \
+                                        -p read_from_head=on        \
          -T "CREATE STREAM results WITH (tag='sp-results')          \
              AS                                                     \
                SELECT country, AVG(num) FROM STREAM:tail.0          \
@@ -177,13 +174,12 @@ Fluent Bit have the notion of streams, and every input plugin instance gets a de
 
 ```bash
 $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
-     fluent/fluent-bit:1.4                                          \
-     /fluent-bit/bin/fluent-bit                                     \
-         -R /fluent-bit/etc/parsers.conf                            \
-         -i tail                                                    \
-             -p path=/sp-samples-1k.log                             \
-             -p parser=json                                         \
-             -p alias=samples                                       \
+     fluent/fluent-bit:1.6                                          \
+     /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
+                                -i tail -p path=/sp-samples-1k.log  \
+                                        -p parser=json              \
+                                        -p read_from_head=on        \
+                                        -p alias=samples            \
          -T "CREATE STREAM results WITH (tag='sp-results')          \
              AS                                                     \
                SELECT country, AVG(num) FROM STREAM:samples         \
@@ -192,4 +188,3 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
                GROUP BY country;"                                   \
          -o stdout -m 'sp-results' -f 1
 ```
-
