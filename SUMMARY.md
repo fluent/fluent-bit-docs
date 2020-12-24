@@ -106,6 +106,7 @@
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Lua](pipeline/filters/lua.md)
+  * [GeoIP2](pipeline/filters/geoip2.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
