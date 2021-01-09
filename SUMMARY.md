@@ -87,6 +87,7 @@
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
+  * [StatsD](pipeline/inputs/statsd.md)
   * [Syslog](pipeline/inputs/syslog.md)
   * [Systemd](pipeline/inputs/systemd.md)
   * [Tail](pipeline/inputs/tail.md)
