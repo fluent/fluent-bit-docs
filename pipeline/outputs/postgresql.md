@@ -48,21 +48,19 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 
 ## Configuration Parameters
 
-
-| Key             | Description                                                     | Default            |
-| :---            | :---                                                            | :---               |
-| `Host`          | Hostname/IP address of the PostgreSQL instance                  | - \(127.0.0.1\)    |
-| `Port`          | PostgreSQL port                                                 | - \(5432\)         |
-| `User`          | PostgreSQL username                                             | - \(current user\) |
-| `Password`      | Password of PostgreSQL username                                 | -                  |
-| `Database`      | Database name to connect to                                     | - \(current user\) |
-| `Table`         | Table name where to store data                                  | -                  |
-| `Timestamp_Key` | Key in the JSON object containing the record timestamp          | date               |
-| `Async`         | Define if we will use async or sync connections                 | false              |
-| `min_pool_size` | Minimum number of connection in async mode                      | 1                  |
-| `max_pool_size` | Maximum amount of connections in async mode                     | 4                  |
-| `cockroachdb`   | Set to `true` if you will connect the plugin with a CockroachDB | false              |
-
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `Host` | Hostname/IP address of the PostgreSQL instance | - \(127.0.0.1\) |
+| `Port` | PostgreSQL port | - \(5432\) |
+| `User` | PostgreSQL username | - \(current user\) |
+| `Password` | Password of PostgreSQL username | - |
+| `Database` | Database name to connect to | - \(current user\) |
+| `Table` | Table name where to store data | - |
+| `Timestamp_Key` | Key in the JSON object containing the record timestamp | date |
+| `Async` | Define if we will use async or sync connections | false |
+| `min_pool_size` | Minimum number of connection in async mode | 1 |
+| `max_pool_size` | Maximum amount of connections in async mode | 4 |
+| `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB | false |
 
 ### Libpq
 

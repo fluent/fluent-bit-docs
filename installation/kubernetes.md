@@ -4,7 +4,7 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](../.gitbook/assets/fluentbit_kube_logging%20%281%29.png)
+![](../.gitbook/assets/fluentbit_kube_logging.png)
 
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
 
@@ -46,8 +46,7 @@ The next step is to create a ConfigMap that will be used by our Fluent Bit Daemo
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
 ```
 
-The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112)
-should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112) should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
 
 ### Note for Kubernetes &lt; v1.16
 

@@ -7,16 +7,16 @@ Content:
 * [Configuration Parameters](statsd.md#config)
 * [Configuration Examples](statsd.md#config_example)
 
-## Configuration Parameters {#config}
+## Configuration Parameters <a id="config"></a>
 
 The plugin supports the following configuration parameters:
 
-| Key      | Description                              | Default |
-| :------- | :--------------------------------------- | :------ |
-| Listen   | Listener network interface.              | 0.0.0.0 |
-| Port     | UDP port where listening for connections | 8125    |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Listen | Listener network interface. | 0.0.0.0 |
+| Port | UDP port where listening for connections | 8125 |
 
-## Configuration Examples {#config_example}
+## Configuration Examples <a id="config_example"></a>
 
 Here is a configuration example.
 
@@ -40,5 +40,8 @@ echo "active:99|g"     | nc -q0 -u 127.0.0.1 8125
 
 Fluent Bit will produce the following records:
 
-    [0] statsd.0: [1574905088.971380537, {"type"=>"counter", "bucket"=>"click", "value"=>10.000000, "sample_rate"=>0.100000}]
-    [0] statsd.0: [1574905141.863344517, {"type"=>"gauge", "bucket"=>"active", "value"=>99.000000, "incremental"=>0}]
+```text
+[0] statsd.0: [1574905088.971380537, {"type"=>"counter", "bucket"=>"click", "value"=>10.000000, "sample_rate"=>0.100000}]
+[0] statsd.0: [1574905141.863344517, {"type"=>"gauge", "bucket"=>"active", "value"=>99.000000, "incremental"=>0}]
+```
+

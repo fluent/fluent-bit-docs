@@ -4,27 +4,27 @@ description: A full feature set to access content of your records
 
 # Record Accessor
 
-Fluent Bit works internally with structured records and it can be composed of an unlimited number of keys and values. Values can be anything like a number, string, array, or a map. 
+Fluent Bit works internally with structured records and it can be composed of an unlimited number of keys and values. Values can be anything like a number, string, array, or a map.
 
-Having a way to select a specific part of the record is critical for certain core functionalities or plugins, this feature is called _Record Accessor._ 
+Having a way to select a specific part of the record is critical for certain core functionalities or plugins, this feature is called _Record Accessor._
 
 > consider Record Accessor a simple grammar to specify record content and other miscellaneous values.
 
-### Format
+## Format
 
 A _record accessor_ rule starts with the character `$`. Using the structured content above as an example the following table describes how to access a record:
 
 ```javascript
 {
-	"log": "some message",
-	"stream": "stdout",
-	"labels": {
-		"color": "blue",
-		"unset": null,
-		"project": {
-			"env": "production"
-		}
-	}
+    "log": "some message",
+    "stream": "stdout",
+    "labels": {
+        "color": "blue",
+        "unset": null,
+        "project": {
+            "env": "production"
+        }
+    }
 }
 ```
 
@@ -38,9 +38,9 @@ The following table describe some accessing rules and the expected returned valu
 | $labels\['unset'\] | null |
 | $labels\['undefined'\] |  |
 
-If the accessor key does not exist in the record like the last example `$labels['undefined']` , the operation is simply omitted, no exception will occur.  
+If the accessor key does not exist in the record like the last example `$labels['undefined']` , the operation is simply omitted, no exception will occur.
 
-### Usage Example
+## Usage Example
 
 The feature is enabled on a per plugin basis, not all plugins enable this feature. As an example consider a configuration that aims to filter records using [grep](../../pipeline/filters/grep.md) that only matches where labels have a color blue:
 

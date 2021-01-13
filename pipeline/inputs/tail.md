@@ -15,13 +15,13 @@ The plugin supports the following configuration parameters:
 | Path | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Multiple patterns separated by commas are also allowed. |  |
 | Path\_Key | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |  |
 | Exclude\_Path | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, e.g: `Exclude_Path *.gz,*.zip` |  |
-| Read_from_Head | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail. | Off |
+| Read\_from\_Head | For new discovered files on start \(without a database offset/position\), read the content from the head of the file, not tail. | Off |
 | Refresh\_Interval | The interval of refreshing the list of watched files in seconds. | 60 |
 | Rotate\_Wait | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | 5 |
 | Ignore\_Older | Ignores records which are older than this time in seconds. Supports m,h,d \(minutes, hours, days\) syntax. Default behavior is to read all records from specified files. Only available when a Parser is specified and it can parse the time of a record. |  |
 | Skip\_Long\_Lines | When a monitored file reach it buffer capacity due to a very long line \(Buffer\_Max\_Size\), the default behavior is to stop monitoring that file. Skip\_Long\_Lines alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fits into the buffer size. | Off |
 | DB | Specify the database file to keep track of monitored files and offsets. |  |
-| DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous).<br /><br />Most of workload scenarios will be fine with ```normal``` mode, but if you really need full synchronization after every write operation you should set ```full``` mode. Note that ```full``` has a high I/O performance cost. | normal |
+| DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous).  Most of workload scenarios will be fine with `normal` mode, but if you really need full synchronization after every write operation you should set `full` mode. Note that `full` has a high I/O performance cost. | normal |
 | DB.locking | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps to increase performance when accessing the database but it restrict any external tool to query the content. | false |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | exit\_on\_eof | Exit Fluent Bit when reaching EOF of the monitored files. | false |
@@ -29,8 +29,7 @@ The plugin supports the following configuration parameters:
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
 | Tag\_Regex | Set a regex to extract fields from the file. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
-| Exit\_on\_eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests | false
-
+| Exit\_on\_eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests | false |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning.
 
