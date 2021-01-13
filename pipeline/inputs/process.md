@@ -1,6 +1,6 @@
 # Process
 
-_Process_ input plugin allows you to check how healthy a process is. It does the check by periodically issuing messages  with a few metrics related to the process.
+_Process_ input plugin allows you to check how healthy a process is. It does the check by periodically issuing messages with a few metrics related to the process.
 
 ## Configuration Parameters
 
