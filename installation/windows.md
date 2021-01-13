@@ -128,3 +128,4 @@ To halt the Fluent Bit service, just execute the "stop" command.
 ```text
 % sc.exe stop fluent-bit
 ```
+

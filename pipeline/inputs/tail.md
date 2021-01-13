@@ -81,7 +81,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ### Multi-line example
 
-When using multi-line configuration you need to first specify `Multiline On` in the configuration and use the `Parser_Firstline` and additional parser parameters `Parser_N` if needed. If we are trying to read the following Java Stacktrace as a single event 
+When using multi-line configuration you need to first specify `Multiline On` in the configuration and use the `Parser_Firstline` and additional parser parameters `Parser_N` if needed. If we are trying to read the following Java Stacktrace as a single event
 
 ```text
 Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
@@ -92,7 +92,7 @@ Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something
     at com.myproject.module.MyProject.main(MyProject.java:6)
 ```
 
-We need to specify a `Parser_Firstline` parameter that matches the first line of a multi-line event. Once a match is made Fluent Bit will read all future lines until another match with `Parser_Firstline` is made . 
+We need to specify a `Parser_Firstline` parameter that matches the first line of a multi-line event. Once a match is made Fluent Bit will read all future lines until another match with `Parser_Firstline` is made .
 
 In the case above we can use the following parser, that extracts the Time as `time` and the remaining portion of the multiline as `log`
 
@@ -115,7 +115,7 @@ If we want to further parse the entire event we can add additional parsers with 
     Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
     Time_Key  time
     Time_Format %b %d %H:%M:%S
-    
+
 [INPUT]
     Name             tail
     Multiline        On
@@ -127,14 +127,14 @@ If we want to further parse the entire event we can add additional parsers with 
     Match            *
 ```
 
-Our output will be as follows. 
+Our output will be as follows.
 
 ```text
 [0] tail.0: [1607928428.466041977, {"message"=>"Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
-	at com.myproject.module.MyProject.badMethod(MyProject.java:22)
-	at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
-	at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
-	at com.myproject.module.MyProject.someMethod(MyProject.java:10)", "message"=>"at com.myproject.module.MyProject.main(MyProject.java:6)"}]
+    at com.myproject.module.MyProject.badMethod(MyProject.java:22)
+    at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
+    at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
+    at com.myproject.module.MyProject.someMethod(MyProject.java:10)", "message"=>"at com.myproject.module.MyProject.main(MyProject.java:6)"}]
 ```
 
 ## Tailing files keeping state <a id="keep_state"></a>

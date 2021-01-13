@@ -177,6 +177,12 @@ The following configuration file example demonstrates how to collect CPU metrics
     Match my*cpu
 ```
 
+## Visualize <a id="config_include_file"></a>
+
+You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://config.calyptia.com](https://config.calyptia.com)
+
+![](../../.gitbook/assets/image.png)
+
 ## Include File <a id="config_include_file"></a>
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them \(include\) from one main file.
