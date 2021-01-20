@@ -27,8 +27,9 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
     </tr>
     <tr>
       <td style="text-align:left">Compress</td>
-      <td style="text-align:left">Set payload compression mechanism. Option available is 'gzip'.</td>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Set payload compression mechanism. Option available is &apos;gzip&apos;.</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left">Splunk_Token</td>
