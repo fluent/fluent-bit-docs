@@ -1,3 +1,7 @@
+---
+description: Send logs to Datadog
+---
+
 # Datadog
 
 The Datadog output plugin allows to ingest your logs into [Datadog](https://app.datadoghq.com/signup).

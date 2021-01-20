@@ -1,4 +1,10 @@
+---
+description: Send logs to Amazon Kinesis Firehose
+---
+
 # Amazon Kinesis Data Firehose
+
+![](../../.gitbook/assets/image%20%288%29.png)
 
 The Amazon Kinesis Data Firehose output plugin allows to ingest your records into the [Firehose](https://aws.amazon.com/kinesis/data-firehose/) service.
 

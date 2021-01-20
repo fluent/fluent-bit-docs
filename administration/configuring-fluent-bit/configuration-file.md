@@ -34,7 +34,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | HTTP\_Server | Enable built-in HTTP Server | Off |
 | HTTP\_Listen | Set listening interface for HTTP Server when it's enabled | 0.0.0.0 |
 | HTTP\_Port | Set TCP Port for the HTTP Server | 2020 |
-| Coro\_Stack\_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value (say 4096), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing. | 24576 |
+| Coro\_Stack\_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value \(say 4096\), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing. | 24576 |
 
 The following is an example of a _SERVICE_ section:
 
