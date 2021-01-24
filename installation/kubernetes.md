@@ -190,7 +190,7 @@ spec:
 
 ### Configure Fluent Bit
 
-Assuming the basic volume configuration described above, you can apply the following config to start logging.
+Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here](https://link.calyptia.com/gzc)
 
 ```yaml
 fluent-bit.conf: |

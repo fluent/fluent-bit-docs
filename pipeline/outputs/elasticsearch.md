@@ -72,7 +72,7 @@ $ fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following _Input_ & _Output_ sections. You can visualize this configuration [here](https://link.calyptia.com/qhq)
 
 ```python
 [INPUT]
@@ -87,6 +87,8 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Index my_index
     Type  my_type
 ```
+
+![example configuration visualization from config.calyptia.com](../../.gitbook/assets/image%20%282%29.png)
 
 ## About Elasticsearch field names
 
