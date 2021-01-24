@@ -1,4 +1,4 @@
-# WEBSOCKET
+# WebSocket
 
 The **websocket** output plugin allows to flush your records into a WebSocket endpoint. For now the functionality is pretty basic and it issues a HTTP GET request to do the handshake, and then use TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) \(or JSON\) format.
 
@@ -53,11 +53,11 @@ In your main configuration file, append the following _Input_ & _Output_ section
 
 Suggested configuration for Idle Interval is 20. Websocket plugin is working with tcp keepalive mode, please refer to [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) section for details.
 
-By default, if there is no traffic for about 30 seconds, fluent-bit would abort the tcp connection. As a result, if websocket would like to send data to the same server again, it has to reconnect. This parameter is to help to determine if websocket need to reconnect or not.  
+By default, if there is no traffic for about 30 seconds, fluent-bit would abort the tcp connection. As a result, if websocket would like to send data to the same server again, it has to reconnect. This parameter is to help to determine if websocket need to reconnect or not.
 
 ## Testing
 
-### Configuration File 
+### Configuration File
 
 ```text
 [INPUT]
@@ -72,7 +72,7 @@ By default, if there is no traffic for about 30 seconds, fluent-bit would abort 
     Port           9000
     URI            /
     Format         json
-    Idle_interval  21    
+    Idle_interval  21
 ```
 
 Once Fluent Bit is running, you can send some messages using the _netcat_:
@@ -107,3 +107,4 @@ Fluent Bit v1.5.0
 ### Scenario Description
 
 From the output of fluent-bit log, we see that once data has been ingested into fluent bit, plugin would perform handshake. After a while, no data or traffic is undergoing, tcp connection has been abort. And then another piece of data arrived, a try fro websocket plugin has been triggered, following with another handshake and data flush.
+

@@ -56,19 +56,19 @@ Amazon distributes a container image with Fluent Bit and these plugins.
 
 Our images are available in Amazon ECR Public Gallery. You can download images with different tags by following command:
 
-```
+```text
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:<tag>
 ```
 
 For example, you can pull the image with latest version by:
 
-```
+```text
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
 ```
 
 If you see errors for image pull limits, try log into public ECR with your AWS credentials:
 
-```
+```text
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
