@@ -77,6 +77,7 @@
   * [Dummy](pipeline/inputs/dummy.md)
   * [Docker](pipeline/inputs/docker.md)
   * [Exec](pipeline/inputs/exec.md)
+  * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [Health](pipeline/inputs/health.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
