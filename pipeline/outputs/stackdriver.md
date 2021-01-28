@@ -15,7 +15,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
 | service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
-| metadata\_server\_url | URL to a metadata server. Can also set environment variable _$METADATA\_SERVER\_URL_  | http://metadata.google.internal |
+| metadata\_server | Prefix for a metadata server. Can also set environment variable _$METADATA\_SERVER_  | http://metadata.google.internal |
 | resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_ and _gce\_instance_. | global, gce\_instance |
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
