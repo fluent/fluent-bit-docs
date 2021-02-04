@@ -2,6 +2,8 @@
 
 _Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
+{% hint style="info" %} The Forward input is the only input plugin that **doesn't** assign Tags. It speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client. For example the [fluentd logging driver](https://docs.docker.com/config/containers/logging/fluentd) for docker will use the container id as Tag. {% endhint %}
+
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
