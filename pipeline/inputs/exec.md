@@ -12,7 +12,7 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |
 | Interval\_Sec | Polling interval \(seconds\). |
 | Interval\_NSec | Polling interval \(nanosecond\). |
-| Buf\_Size | Size of the buffer \(check [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values\) |
+| Buf\_Size | Size of the buffer \(check [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values\) |
 
 ## Getting Started
 
