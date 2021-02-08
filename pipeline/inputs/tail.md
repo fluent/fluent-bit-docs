@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Path | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Multiple patterns separated by commas are also allowed. |  |
 | Path\_Key | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |  |
 | Exclude\_Path | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, e.g: `Exclude_Path *.gz,*.zip` |  |
+| Offset\_Key | If enabled, it appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. |  |
 | Read\_from\_Head | For new discovered files on start \(without a database offset/position\), read the content from the head of the file, not tail. | Off |
 | Refresh\_Interval | The interval of refreshing the list of watched files in seconds. | 60 |
 | Rotate\_Wait | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | 5 |
