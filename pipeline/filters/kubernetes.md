@@ -45,6 +45,8 @@ The plugin supports the following configuration parameters:
 | Dummy\_Meta | If set, use dummy-meta data \(for test/dev purposes\) | Off |
 | DNS\_Retries | DNS lookup retries N times until the network start working | 6 |
 | DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
+| Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](#optional-feature-using-kubelet-to-get-metadata). | Off |
+| Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
 
 ## Processing the 'log' value
 
@@ -203,3 +205,147 @@ Under certain and not common conditions, a user would want to alter that hard-co
 
 So at this point the filter is able to gather the values of _pod\_name_ and _namespace_, with that information it will check in the local cache \(internal hash table\) if some metadata for that key pair exists, if so, it will enrich the record with the metadata value, otherwise it will connect to the Kubernetes Master/API Server and retrieve that information.
 
+## Optional Feature: Using Kubelet to Get Metadata
+There is an [issue](https://github.com/fluent/fluent-bit/issues/1948) reported about kube-apiserver fall over and become unresponsive when cluster is too large and too many requests are sent to it.
+For this feature, fluent bit Kubernetes filter will send the request to kubelet /pods endpoint instead of kube-apiserver to retrieve the pods information and use it to enrich the log. Since Kubelet is running locally in nodes, the request would be responded faster and each node would only get one request one time. This could save kube-apiserver power to handle other requests.
+When this feature is enabled, you should see no difference in the kubernetes metadata added to logs, but the Kube-apiserver bottleneck should be avoided when cluster is large.
+### Configuration Setup
+There are some configuration setup needed for this feature.
+ 
+Role Configuration for Fluent Bit DaemonSet Example:
+```
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluentbitds
+  namespace: fluentbit-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: fluentbit
+rules:
+  - apiGroups: [""]
+    resources:
+      - namespaces
+      - pods
+      - nodes
+      - nodes/proxy
+    verbs: 
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: fluentbit
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: fluentbit
+subjects:
+  - kind: ServiceAccount
+    name: fluentbitds
+    namespace: fluentbit-system
+```
+The difference is that kubelet need a special permission for resource `nodes/proxy` to get HTTP request in. When creating the `role` or `clusterRole`, you need to add `nodes/proxy` into the rule for resource.
+
+Fluent Bit Configuration Example:
+```
+    [INPUT]
+        Name              tail
+        Tag               kube.*
+        Path              /var/log/containers/*.log
+        DB                /var/log/flb_kube.db
+        Parser            docker
+        Docker_Mode       On
+        Mem_Buf_Limit     50MB
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+
+    [FILTER]
+        Name                kubernetes
+        Match               kube.*
+        Kube_URL            https://kubernetes.default.svc.cluster.local:443
+        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+        Merge_Log           On
+        Buffer_Size         0
+        Use_Kubelet         true
+        Kubelet_Port        10250
+```
+So for fluent bit configuration, you need to set the `Use_Kubelet` to true to enable this feature.
+
+DaemonSet config Example:
+```
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentbit
+  namespace: fluentbit-system
+  labels:
+    app.kubernetes.io/name: fluentbit
+spec:
+  selector:
+    matchLabels:
+      name: fluentbit
+  template:
+    metadata:
+      labels:
+        name: fluentbit
+    spec:
+      serviceAccountName: fluentbitds
+      containers:
+        - name: fluent-bit
+          imagePullPolicy: Always
+          image: fluent/fluent-bit:latest
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: fluentbit-config
+              mountPath: /fluent-bit/etc/
+          resources:
+            limits:
+              memory: 1500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: fluentbit-config
+          configMap:
+            name: fluentbit-config
+```
+The key point is to set `hostNetwork` to `true` and `dnsPolicy` to `ClusterFirstWithHostNet` that fluent bit DaemonSet could call Kubelet locally. Otherwise it could not resolve the dns for kubelet.
+
+Now you are good to use this new feature!
+
+### Verify that the Use_Kubelet option is working
+Basically you should see no difference about your experience for enriching your log files with Kubernetes metadata. 
+
+To check if Fluent Bit is using the kubelet, you can check fluent bit logs and there should be a log like this:
+```
+[ info] [filter:kubernetes:kubernetes.0] testing connectivity with Kubelet...
+```
+And if you are in debug mode, you could see more:
+
+```
+[debug] [filter:kubernetes:kubernetes.0] Send out request to Kubelet for pods information.
+[debug] [filter:kubernetes:kubernetes.0] Request (ns=<namespace>, pod=node name) http_do=0, HTTP Status: 200
+[ info] [filter:kubernetes:kubernetes.0] connectivity OK
+[2021/02/05 10:33:35] [debug] [filter:kubernetes:kubernetes.0] Request (ns=<Namespace>, pod=<podName>) http_do=0, HTTP Status: 200
+[2021/02/05 10:33:35] [debug] [filter:kubernetes:kubernetes.0] kubelet find pod: <podName> and ns: <Namespace> match
+```
