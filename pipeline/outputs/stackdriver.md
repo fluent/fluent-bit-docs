@@ -17,8 +17,8 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
 | metadata\_server | Prefix for a metadata server. Can also set environment variable _$METADATA\_SERVER_.  | http://metadata.google.internal |
 | resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
-| location | The GCP or AWS region in which to store data about the resource. If the resource type is one of the  _generic\_node_ and _generic\_task_, then this field is required. |  |
-| namespace | A namespace identifier, such as a cluster name or environment. If the resource type is one of the  _generic\_node_ and _generic\_task_, then this field is required. |  |
+| location | The GCP or AWS region in which to store data about the resource. If the resource type is one of the  _generic\_node_ or _generic\_task_, then this field is required. |  |
+| namespace | A namespace identifier, such as a cluster name or environment. If the resource type is one of the  _generic\_node_ or _generic\_task_, then this field is required. |  |
 | node_id | A unique identifier for the node within the namespace, such as hostname or IP address. If the resource type is _generic\_node_, then this field is required. |  |
 | job | An identifier for a grouping of related task, such as the name of a microservice or distributed batch. If the resource type is _generic\_task_, then this field is required. |  |
 | task_id | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is _generic\_task_, then this field is required. |  |
