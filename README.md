@@ -2,7 +2,7 @@
 description: High Performance Logs Processor
 ---
 
-# Fluent Bit v1.5 Documentation
+# Fluent Bit v1.7 Documentation
 
 ![](.gitbook/assets/logo_documentation_1.5.png)
 
