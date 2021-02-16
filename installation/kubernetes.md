@@ -84,7 +84,7 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 
 ## Installing with Helm Chart
 
-[Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo:  [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts). 
+[Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo: [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts).
 
 To add the Fluent Helm Charts repo use the following command
 

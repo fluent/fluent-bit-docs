@@ -40,7 +40,7 @@ By default, the engine allows to have 128 Chunks `up` in memory in total \(consi
 
 If the input plugin has enabled `mem_buf_limit` and `storage.type` as `filesystem`, when reaching the `mem_buf_limit` threshold, instead of the plugin being paused, all new data will go to Chunks that are `down` in the filesystem. This allows to control the memory usage by the service but also providing a a guarantee that the service won't lose any data.
 
-**Limiting Filesystem  space for Chunks**
+**Limiting Filesystem space for Chunks**
 
 Fluent Bit implements the concept of logical queues: a Chunk based on its Tag, can be routed to multiple destinations, so internally we keep a reference from where a Chunk was created and where it needs to go.
 
