@@ -4,7 +4,7 @@ description: Send logs and metrics to Amazon CloudWatch
 
 # Amazon CloudWatch
 
-![](../../.gitbook/assets/image%20%283%29.png)
+![](../../.gitbook/assets/image%20%283%29%20%282%29%20%282%29%20%284%29.png)
 
 The Amazon CloudWatch output plugin allows to ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided via [EMF](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
 
@@ -22,7 +22,7 @@ This is the documentation for the core Fluent Bit CloudWatch plugin written in C
 | log\_format | An optional parameter that can be used to tell CloudWatch the format of the data. A value of json/emf enables CloudWatch to extract custom metrics embedded in a JSON payload. See the [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html). |
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
-| log\_retention\_days | If set to a number greater than zero, and newly create log group's retention policy is set to this many days. Valid values are: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653] |
+| log\_retention\_days | If set to a number greater than zero, and newly create log group's retention policy is set to this many days. Valid values are: \[1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653\] |
 | endpoint | Specify a custom endpoint for the CloudWatch Logs API. |
 | metric\_namespace | An optional string representing the CloudWatch namespace for the metrics. See `Metrics Tutorial` section below for a full configuration. |
 | metric\_dimensions | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the fluent-bit config, metric\_dimensions is a comma and semicolon seperated string. If you have only one list of dimensions, put the values as a comma seperated string. If you want to put list of lists, use the list as semicolon seperated strings. For example, if you set the value as 'dimension\_1,dimension\_2;dimension\_3', we will convert it as \[\[dimension\_1, dimension\_2\],\[dimension\_3\]\] |
