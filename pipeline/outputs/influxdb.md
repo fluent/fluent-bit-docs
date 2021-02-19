@@ -9,9 +9,12 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | Host | IP address or hostname of the target InfluxDB service | 127.0.0.1 |
 | Port | TCP port of the target InfluxDB service | 8086 |
 | Database | InfluxDB database name where records will be inserted | fluentbit |
+| Bucket | InfluxDB bucket name where records will be inserted - if specified, `database` is ignored and v2 of API is used |  |
+| Org | InfluxDB organization name where the bucket is (v2 only) | fluent |
 | Sequence\_Tag | The name of the tag whose value is incremented for the consecutive simultaneous events. | \_seq |
 | HTTP\_User | Optional username for HTTP Basic Authentication |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
+| HTTP\_Token | Authentication token used with InfluDB v2 - if specified, both HTTP\_User and HTTP\_Passwd are ignored |  |
 | Tag\_Keys | Space separated list of keys that needs to be tagged |  |
 | Auto\_Tags | Automatically tag keys where value is _string_. This option takes a boolean value: True/False, On/Off. | Off |
 
