@@ -47,6 +47,23 @@ In your main configuration file append the following _Output_ section:
     delivery_stream my-stream
 ```
 
+### Worker support
+
+Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `kinesis_firehose` plugin fully supports workers.
+
+Example:
+
+```text
+[OUTPUT]
+    Name  kinesis_firehose
+    Match *
+    region us-east-1
+    delivery_stream my-stream
+    workers 2
+```
+
+If you enable a single worker, you are enabling a dedicated thread for your Firehose output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient. 
+
 ### AWS for Fluent Bit
 
 Amazon distributes a container image with Fluent Bit and these plugins.
