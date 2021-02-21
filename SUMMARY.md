@@ -119,6 +119,7 @@
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
+  * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Azure Blob](pipeline/outputs/azure_blob.md)
