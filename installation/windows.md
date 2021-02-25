@@ -13,7 +13,7 @@ The latest stable version is 1.6.10:
 | [td-agent-bit-1.6.10-win64.exe](https://fluentbit.io/releases/1.6/td-agent-bit-1.6.10-win64.exe) | 28260ec7c8bc057a014eb526193cc1b66a1d6f231a9d68859edaff660918a84a |
 | [td-agent-bit-1.6.10-win64.zip](https://fluentbit.io/releases/1.6/td-agent-bit-1.6.10-win64.zip) | f6984908a7dca3c0e01d638a58a6eb86e1e14aca7d2b43c187e4633daf4895e5 |
 
-To check the integrity, use `Get-FileHash` commandlet on PowerShell.
+To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```text
 PS> Get-FileHash td-agent-bit-1.6.10-win32.exe
@@ -23,7 +23,7 @@ PS> Get-FileHash td-agent-bit-1.6.10-win32.exe
 
 Download a ZIP archive [from the download page](https://fluentbit.io/). There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
 
-Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` commandlet.
+Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```text
 PS> Expand-Archive td-agent-bit-1.6.10-win64.zip
@@ -127,5 +127,69 @@ To halt the Fluent Bit service, just execute the "stop" command.
 
 ```text
 % sc.exe stop fluent-bit
+```
+
+## Compile from Source
+
+If you need to create a custom exectable, you can use the following procedure to compile Fluent Bit by yourself.
+
+### Preparation
+
+First, you need Microsoft Visual C++ to compile Fluent Bit. You can install the minimum toolkit by the following command:
+
+```text
+PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
+PS> start vs.exe
+```
+
+When asked which packages to install, choose "C++ Build Tools" \(make sure that "C++ CMake tools for Windows" is selected too\) and wait until the process finishes.
+
+Also you need to install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
+
+```text
+PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
+PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
+PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
+PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
+PS> setx /M PATH "%PATH%;C:\WinFlexBison"
+```
+
+Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
+
+```text
+PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
+PS> start git.exe
+```
+
+### Compilation
+
+Open the start menu on Windows and type "Developer Command Prompt".
+
+Clone the source code of Fluent Bit.
+
+```text
+% git clone https://github.com/fluent/fluent-bit
+% cd fluent-bit/build
+```
+
+Compile the source code.
+
+```text
+% cmake .. -G "NMake Makefiles"
+% cmake --build .
+```
+
+Now you should be able to run Fluent Bit:
+
+```text
+% .\bin\debug\fluent-bit.exe -i dummy -o stdout
+```
+
+### Packaging
+
+To create a ZIP package, call `cpack` as follows:
+
+```text
+% cpack -G ZIP
 ```
 
