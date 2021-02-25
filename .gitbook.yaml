@@ -58,6 +58,7 @@ redirects:
     output/influxdb:       ./pipeline/outputs/influxdb.md
     output/kafka:          ./pipeline/outputs/kafka.md
     output/kafka_rest:     ./pipeline/outputs/kafka-rest-proxy.md
+    output/kinesis:        ./pipeline/outputs/kinesis.md
     output/nats:           ./pipeline/outputs/nats.md
     output/null:           ./pipeline/outputs/null.md
     output/s3:             ./pipeline/outputs/s3.md
