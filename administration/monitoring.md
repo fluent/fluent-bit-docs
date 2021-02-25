@@ -8,6 +8,8 @@ Fluent Bit comes with a built-in HTTP Server that can be used to query internal 
 
 The monitoring interface can be easily integrated with Prometheus since we support it native format.
 
+**NOTE:** The Windows version does not support the HTTP monitoring feature yet as of v1.7.0
+
 ## Getting Started <a id="getting_started"></a>
 
 To get started, the first step is to enable the HTTP Server from the configuration file:

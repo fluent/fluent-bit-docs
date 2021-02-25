@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Proc\_Name | Name of the target Process to check. |
 | Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
-| Interval\_Nsec | Specify a nanoseconds interval for service checks, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Interval\_Nsec | Specify a nanoseconds interval for service checks, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
 | Alert | If enabled, it will only generate messages if the target process is down. By default this option is disabled. |
 | Fd | If enabled, a number of fd is appended to each records. Default value is true. |
 | Mem | If enabled, memory usage of the process is appended to each records. Default value is true. |

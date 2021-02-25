@@ -8,7 +8,7 @@ Fluent Bit works internally with structured records and it can be composed of an
 
 Having a way to select a specific part of the record is critical for certain core functionalities or plugins, this feature is called _Record Accessor._
 
-> consider Record Accessor a simple grammar to specify record content and other miscellaneus values.
+> consider Record Accessor a simple grammar to specify record content and other miscellaneous values.
 
 ## Format
 
@@ -16,15 +16,15 @@ A _record accessor_ rule starts with the character `$`. Using the structured con
 
 ```javascript
 {
-    "log": "some message",
-    "stream": "stdout",
-    "labels": {
-        "color": "blue",
-        "unset": null,
-        "project": {
-            "env": "production"
-        }
-    }
+  "log": "some message",
+  "stream": "stdout",
+  "labels": {
+     "color": "blue", 
+     "unset": null,
+     "project": {
+         "env": "production"
+      }
+  }
 }
 ```
 

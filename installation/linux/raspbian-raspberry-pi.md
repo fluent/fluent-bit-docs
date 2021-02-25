@@ -11,12 +11,12 @@ Fluent Bit is distributed as **td-agent-bit** package and is available for the R
 The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
 
 ```text
-$ wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ## Update your sources lists
 
-On Debian and derivated systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
 
 #### Raspbian 10 \(Buster\)
 

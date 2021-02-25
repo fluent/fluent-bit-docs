@@ -50,9 +50,13 @@ If TCP keepalive is used, `net.tcp_keepalive_interval` allows to override the OS
 
 If TCP keepalive is used, `net.tcp_keepalive_probes` allows to override the OS default configuration with the desired number of unacknowledged probes before deeming a connection dead.
 
+### TCP Keepalive Recycling
+
+If a TCP connection is keepalive enabled and has very high traffic, the connection may _never_ be killed. In a situation where the remote endpoint is load-balanced in some way, this may lead to an unequal distribution of traffic. Setting `net.keepalive_max_recycle` causes keepalive connections to be recycled after a number of messages are sent over that connection. Once this limit is reached, the connection is terminated gracefully, and a new connection will be created for subsequent messages.
+
 ## Configuration Options
 
-For plugins that relies on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
+For plugins that rely on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
 
 | Property | Description | Default |
 | :--- | :--- | :--- |
@@ -64,6 +68,8 @@ For plugins that relies on networking I/O, the following section describes the n
 | `net.tcp_keepalive_time` | Interval between the last data packet sent and the first TCP keepalive probe. |  |
 | `net.tcp_keepalive_interval` | Interval between TCP keepalive probes when no response is received on a keepidle probe. |  |
 | `net.tcp_keepalive_probes` | Number of unacknowledged probes to consider a connection dead. |  |
+| `net.keepalive_max_recycle` | Set the maximum number of times a keepalive connection can be used before it is destroyed. | 0 |
+
 ## Example
 
 As an example, we will send 5 random messages through a TCP output connection, in the remote side we will use `nc` \(netcat\) utility to see the data.
