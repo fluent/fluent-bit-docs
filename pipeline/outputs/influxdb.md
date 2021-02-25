@@ -10,7 +10,7 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | Port | TCP port of the target InfluxDB service | 8086 |
 | Database | InfluxDB database name where records will be inserted | fluentbit |
 | Bucket | InfluxDB bucket name where records will be inserted - if specified, `database` is ignored and v2 of API is used |  |
-| Org | InfluxDB organization name where the bucket is (v2 only) | fluent |
+| Org | InfluxDB organization name where the bucket is \(v2 only\) | fluent |
 | Sequence\_Tag | The name of the tag whose value is incremented for the consecutive simultaneous events. | \_seq |
 | HTTP\_User | Optional username for HTTP Basic Authentication |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |

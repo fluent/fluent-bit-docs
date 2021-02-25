@@ -148,6 +148,7 @@
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
+  * [WebSocket](pipeline/outputs/websocket.md)
 
 ## Stream Processing
 

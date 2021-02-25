@@ -34,7 +34,7 @@ In order to control how long a keepalive connection can be idle, we expose the c
 
 ### TCP Keepalive
 
-An open TCP connection to a remote server is subject to be _silently  dropped_ by intermediate equipment in the network (e.g., routers) if it's quiet for too long. What _too long_ means depends on manufacturers and configurations outside of the control of fluentbit.
+An open TCP connection to a remote server is subject to be _silently dropped_ by intermediate equipment in the network \(e.g., routers\) if it's quiet for too long. What _too long_ means depends on manufacturers and configurations outside of the control of fluentbit.
 
 If you're using the _Connection Keepalive_ feature, but not achieving the desired connectivity rates, you might want to try setting `net.tcp_keepalive` to `on`. This will configure the socket to periodically send _keepalive probes_ if the connection is silent. These probes will be sent all the way to the server, making the equipment in between consider the connection as active. Is then expected that the server will acknowledge the probe, allowing fluentbit to detect a broken connection right away.
 

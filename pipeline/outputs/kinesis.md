@@ -29,7 +29,7 @@ In order to send records into Amazon Kinesis Data Streams, you can run the plugi
 
 ### Command Line
 
-The **kinesis_streams** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
+The **kinesis\_streams** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
 
 ```text
 $ fluent-bit -i cpu -o kinesis_streams -p stream=my-stream -p region=us-west-2 -m '*' -f 1
@@ -62,7 +62,7 @@ Example:
     workers 2
 ```
 
-If you enable a single worker, you are enabling a dedicated thread for your Kinesis output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient. 
+If you enable a single worker, you are enabling a dedicated thread for your Kinesis output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient.
 
 ### AWS for Fluent Bit
 
