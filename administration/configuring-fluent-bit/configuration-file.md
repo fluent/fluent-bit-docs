@@ -26,7 +26,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | Flush | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins. | 5 |
 | Grace | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
-| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
+| Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard error interface \(stderr\). |  |
 | Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | Parsers\_File | Path for a `parsers` configuration file. Multiple Parsers\_File entries can be defined within the section. |  |
 | Plugins\_File | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). |  |
@@ -52,7 +52,7 @@ An _INPUT_ section defines a source \(related to an input plugin\), here we will
 | Key | Description |
 | :--- | :--- |
 | Name | Name of the input plugin. |
-| Tag | Tag name associated to all records comming from this plugin. |
+| Tag | Tag name associated to all records coming from this plugin. |
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin \(as it provides dynamic tags\).
 
