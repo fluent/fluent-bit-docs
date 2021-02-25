@@ -121,7 +121,7 @@ If we want to further parse the entire event we can add additional parsers with 
 [INPUT]
     Name             tail
     Multiline        On
-    Parser_Multiline multiline
+    Parser_Firstline multiline
     Path             /var/log/java.log
 
 [OUTPUT]
