@@ -73,7 +73,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | :--- | :--- | :--- |
 | FLB\_ALL | Enable all features available | No |
 | FLB\_JEMALLOC | Use Jemalloc as default memory allocator | No |
-| FLB\_TLS | Build with SSL/TLS support | No |
+| FLB\_TLS | Build with SSL/TLS support | Yes |
 | FLB\_BINARY | Build executable | Yes |
 | FLB\_EXAMPLES | Build examples | Yes |
 | FLB\_SHARED\_LIB | Build shared library | Yes |
@@ -110,9 +110,9 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_COLLECTD](../../pipeline/inputs/collectd.md) | Enable Collectd input plugin | On |
 | [FLB\_IN\_CPU](../../pipeline/inputs/cpu-metrics.md) | Enable CPU input plugin | On |
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
-| [FLB\_IN\_DOCKER](../docker.md) | Enable Docker metrics input plugin | On |
+| [FLB\_IN\_DOCKER](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
-| [FLB\_IN\_FORWARD](build-and-install.md) | Enable Forward input plugin | On |
+| [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
 | [FLB\_IN\_KMSG](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | On |
