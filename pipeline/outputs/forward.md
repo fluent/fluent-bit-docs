@@ -103,9 +103,9 @@ Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to 
 bin/fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
-If the **TAG** parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
+If the **TAG** parameter is not set, the plugin will retain the tag. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
 
-Using the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
+Using the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org) with tag _fluent\_bit_:
 
 ```bash
 $ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
