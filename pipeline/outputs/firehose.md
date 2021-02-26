@@ -20,7 +20,6 @@ This is the documentation for the core Fluent Bit Firehose plugin written in C. 
 | time\_key\_format | strftime compliant format string for the timestamp; for example, the default is '%Y-%m-%dT%H:%M:%S'. This option is used with time\_key. |
 | log\_key | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. |
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
-| auto\_create\_group | Automatically create the log group. Valid values are "true" or "false" \(case insensitive\). Defaults to false. |
 | endpoint | Specify a custom endpoint for the Firehose API. |
 | sts\_endpoint | Custom endpoint for the STS API. |
 
@@ -47,6 +46,23 @@ In your main configuration file append the following _Output_ section:
     region us-east-1
     delivery_stream my-stream
 ```
+
+### Worker support
+
+Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `kinesis_firehose` plugin fully supports workers.
+
+Example:
+
+```text
+[OUTPUT]
+    Name  kinesis_firehose
+    Match *
+    region us-east-1
+    delivery_stream my-stream
+    workers 2
+```
+
+If you enable a single worker, you are enabling a dedicated thread for your Firehose output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient. 
 
 ### AWS for Fluent Bit
 

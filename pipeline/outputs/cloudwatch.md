@@ -54,6 +54,25 @@ In your main configuration file append the following _Output_ section:
     auto_create_group On
 ```
 
+### Worker support
+
+Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers. **The plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
+
+Example:
+
+```text
+[OUTPUT]
+    Name cloudwatch_logs
+    Match   *
+    region us-east-1
+    log_group_name fluent-bit-cloudwatch
+    log_stream_prefix from-fluent-bit-
+    auto_create_group On
+    workers 1
+```
+
+If you enable a single worker, you are enabling a dedicated thread for your CloudWatch output. We recommend starting without workers, evaluating the performance, and then enabling a worker if needed. For most users, the plugin can provide sufficient throughput without workers.
+
 ### Metrics Tutorial
 
 Fluent Bit has different input plugins \(cpu, mem, disk, netif\) to collect host resource usage metrics. `cloudwatch_logs` output plugin can be used to send these host metrics to CloudWatch in Embedded Metric Format \(EMF\). If data comes from any of the above mentioned input plugins, `cloudwatch_logs` output plugin will convert them to EMF format and sent to CloudWatch as JSON log. Additionally, if we set `json/emf` as the value of `log_format` config option, CloudWatch will extract custom metrics from embedded JSON payload.
