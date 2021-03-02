@@ -8,27 +8,11 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.6 | x86\_64, arm64v8, arm32v7 | Latest release of 1.6.x series. |
-| 1.6.10 | x86\_64, arm64v8, arm32v7 | Release [v1.6.10](https://fluentbit.io/announcements/v1.6.10/) |
-| 1.6-debug, 1.6.10-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.9 | x86\_64, arm64v8, arm32v7 | Release [v1.6.9](https://fluentbit.io/announcements/v1.6.9/) |
-| 1.6-debug, 1.6.9-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.8 | x86\_64, arm64v8, arm32v7 | Release [v1.6.8](https://fluentbit.io/announcements/v1.6.8/) |
-| 1.6-debug, 1.6.8-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.6 | x86\_64, arm64v8, arm32v7 | Release [v1.6.6](https://fluentbit.io/announcements/v1.6.6/) |
-| 1.6-debug, 1.6.6-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.5 | x86\_64, arm64v8, arm32v7 | Release [v1.6.5](https://fluentbit.io/announcements/v1.6.5/) |
-| 1.6-debug, 1.6.5-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.4 | x86\_64, arm64v8, arm32v7 | Release [v1.6.4](https://fluentbit.io/announcements/v1.6.4/) |
-| 1.6-debug, 1.6.4-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.3 | x86\_64, arm64v8, arm32v7 | Release [v1.6.3](https://fluentbit.io/announcements/v1.6.3/) |
-| 1.6-debug, 1.6.3-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.2 | x86\_64, arm64v8, arm32v7 | Release [v1.6.2](https://fluentbit.io/announcements/v1.6.2/) |
-| 1.6-debug, 1.6.2-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.1 | x86\_64, arm64v8, arm32v7 | Release [v1.6.1](https://fluentbit.io/announcements/v1.6.1/) |
-| 1.6-debug, 1.6.1-debug | x86\_64 | v1.6.x releases + Busybox |
-| 1.6.0 | x86\_64, arm64v8, arm32v7 | Release [v1.6.0](https://fluentbit.io/announcements/v1.6.0/) |
-| 1.6-debug, 1.6.0-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.7 | x86\_64, arm64v8, arm32v7 | Latest release of 1.7.x series. |
+| 1.7.1 | x86\_64, arm64v8, arm32v7 | Release [v1.7.1](https://fluentbit.io/announcements/v1.7.1/) |
+| 1.7-debug, 1.7.1-debug | x86\_64 | v1.7.x releases + Busybox |
+| 1.7.0 | x86\_64, arm64v8, arm32v7 | Release [v1.7.0](https://fluentbit.io/announcements/v1.7.0/) |
+| 1.7-debug, 1.7.0-debug | x86\_64 | v1.7.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
@@ -48,22 +32,22 @@ For every architecture we build the layers using the following base images:
 
 ## Getting Started
 
-Download the last stable image from 1.6 series:
+Download the last stable image from 1.7 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.6
+$ docker pull fluent/fluent-bit:1.7
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.6 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:1.7 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
 ```text
-Fluent-Bit v1.6.x
+Fluent-Bit v1.7.x
 Copyright (C) Treasure Data
 
 [2019/10/01 12:29:02] [ info] [engine] started
@@ -86,4 +70,3 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
 The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
-
