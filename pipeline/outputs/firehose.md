@@ -62,7 +62,7 @@ Example:
     workers 2
 ```
 
-If you enable a single worker, you are enabling a dedicated thread for your Firehose output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient. 
+If you enable a single worker, you are enabling a dedicated thread for your Firehose output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient.
 
 ### AWS for Fluent Bit
 
