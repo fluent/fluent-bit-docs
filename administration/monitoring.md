@@ -156,7 +156,7 @@ fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 
 By default configured plugins on runtime get an internal name in the format _plugin\_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
-The following example set an alias to the INPUT section which is using the [CPU](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/input/cpu.md) input plugin:
+The following example set an alias to the INPUT section which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
 
 ```text
 [SERVICE]
