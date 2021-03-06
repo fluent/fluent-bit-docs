@@ -4,13 +4,14 @@ The _Record Modifier Filter_ plugin allows to append fields or to exclude specif
 
 ## Configuration Parameters
 
-The plugin supports the following configuration parameters: _Remove\_key_ and _Whitelist\_key_ are exclusive.
+The plugin supports the following configuration parameters: _Remove\_key_ and _Allowlist\_key_ are exclusive.
 
 | Key | Description |
 | :--- | :--- |
 | Record | Append fields. This parameter needs key and value pair. |
 | Remove\_key | If the key is matched, that field is removed. |
-| Whitelist\_key | If the key is **not** matched, that field is removed. |
+| Allowlist\_key | If the key is **not** matched, that field is removed. |
+| Whitelist\_key | An alias of `Allowlist_key` for backwards compatibility. |
 
 ## Getting Started
 
@@ -87,7 +88,7 @@ The output will be
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```
 
-### Remove fields with Whitelist\_key
+### Remove fields with Allowlist\_key
 
 The following configuration file is to remain 'Mem.\*' fields.
 
@@ -103,15 +104,15 @@ The following configuration file is to remain 'Mem.\*' fields.
 [FILTER]
     Name record_modifier
     Match *
-    Whitelist_key Mem.total
-    Whitelist_key Mem.used
-    Whitelist_key Mem.free
+    Allowlist_key Mem.total
+    Allowlist_key Mem.used
+    Allowlist_key Mem.free
 ```
 
 You can also run the filter from command line.
 
 ```text
-$ fluent-bit -i mem -o stdout -F  record_modifier -p 'Whitelist_key=Mem.total' -p 'Whitelist_key=Mem.free' -p 'Whitelist_key=Mem.used' -m '*'
+$ fluent-bit -i mem -o stdout -F  record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
 ```
 
 The output will be
