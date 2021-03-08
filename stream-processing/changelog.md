@@ -45,7 +45,7 @@ We currently support different data types such as _strings_, _integers_, _floats
 SELECT * FROM STREAM:test WHERE key3['sub1'] IS NOT NULL;
 ```
 
-For more details please review the section [Check Keys and NULL values](https://github.com/fluent/fluent-bit-docs/tree/6bc4af039821d9e8bc1636797a25ad23b52a511f/getting_started/is_null_is_not_null_record_contains/README.md)
+For more details please review the section [Check Keys and NULL values](getting-started/check-keys-null-values.md)
 
 ## Fluent Bit v1.1
 
