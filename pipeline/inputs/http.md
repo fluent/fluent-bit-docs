@@ -15,7 +15,7 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 
 ## Getting Started
 
-The in\_http plugin all 
+This page is still a draft and needs to be updated.
 
 ### Configuration File
 
