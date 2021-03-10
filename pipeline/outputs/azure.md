@@ -1,4 +1,10 @@
-# Azure
+---
+description: 'Send logs, metrics to Azure Log Analytics'
+---
+
+# Azure Log Analytics
+
+![](../../.gitbook/assets/image%20%287%29.png)
 
 Azure output plugin allows to ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
 

@@ -15,12 +15,13 @@ The plugin supports the following configuration parameters:
 | Path | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Multiple patterns separated by commas are also allowed. |  |
 | Path\_Key | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. |  |
 | Exclude\_Path | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, e.g: `Exclude_Path *.gz,*.zip` |  |
+| Read\_from\_Head | For new discovered files on start \(without a database offset/position\), read the content from the head of the file, not tail. | Off |
 | Refresh\_Interval | The interval of refreshing the list of watched files in seconds. | 60 |
 | Rotate\_Wait | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | 5 |
 | Ignore\_Older | Ignores records which are older than this time in seconds. Supports m,h,d \(minutes, hours, days\) syntax. Default behavior is to read all records from specified files. Only available when a Parser is specificied and it can parse the time of a record. |  |
 | Skip\_Long\_Lines | When a monitored file reach it buffer capacity due to a very long line \(Buffer\_Max\_Size\), the default behavior is to stop monitoring that file. Skip\_Long\_Lines alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fits into the buffer size. | Off |
 | DB | Specify the database file to keep track of monitored files and offsets. |  |
-| DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous).<br /><br />Most of workload scenarios will be fine with ```normal``` mode, but if you really need full synchronization after every write operation you should set ```full``` mode. Note that ```full``` has a high I/O performance cost. | normal |
+| DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous).  Most of workload scenarios will be fine with `normal` mode, but if you really need full synchronization after every write operation you should set `full` mode. Note that `full` has a high I/O performance cost. | normal |
 | DB.locking | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps to increase performance when accessing the database but it restrict any external tool to query the content. | false |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | exit\_on\_eof | Exit Fluent Bit when reaching EOF of the monitored files. | false |
@@ -29,7 +30,7 @@ The plugin supports the following configuration parameters:
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
 | Tag\_Regex | Set a regex to exctract fields from the file. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
 
-Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning.
+Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behaviour, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning each `Refresh_Interval` until the file is rotated.
 
 ### Multiline Configuration Parameters <a id="multiline"></a>
 
@@ -66,7 +67,7 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following _Input_ & _Output_ sections. An example visualization can be found [here](https://link.calyptia.com/vg2)
 
 ```python
 [INPUT]
@@ -76,6 +77,66 @@ In your main configuration file append the following _Input_ & _Output_ sections
 [OUTPUT]
     Name   stdout
     Match  *
+```
+
+![](../../.gitbook/assets/image%20%286%29.png)
+
+### Multi-line example
+
+When using multi-line configuration you need to first specify `Multiline On` in the configuration and use the `Parser_Firstline` and additional parser parameters `Parser_N` if needed. If we are trying to read the following Java Stacktrace as a single event
+
+```text
+Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+    at com.myproject.module.MyProject.badMethod(MyProject.java:22)
+    at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
+    at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
+    at com.myproject.module.MyProject.someMethod(MyProject.java:10)
+    at com.myproject.module.MyProject.main(MyProject.java:6)
+```
+
+We need to specify a `Parser_Firstline` parameter that matches the first line of a multi-line event. Once a match is made Fluent Bit will read all future lines until another match with `Parser_Firstline` is made .
+
+In the case above we can use the following parser, that extracts the Time as `time` and the remaining portion of the multiline as `log`
+
+```text
+[PARSER]
+    Name multiline
+    Format regex
+    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Time_Key  time
+    Time_Format %b %d %H:%M:%S
+```
+
+If we want to further parse the entire event we can add additional parsers with `Parser_N` where N is an integer. The final Fluent Bit configuration looks like the following:
+
+```text
+# Note this is generally added to parsers.conf and referenced in [SERVICE]
+[PARSER]
+    Name multiline
+    Format regex
+    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Time_Key  time
+    Time_Format %b %d %H:%M:%S
+
+[INPUT]
+    Name             tail
+    Multiline        On
+    Parser_Multiline multiline
+    Path             /var/log/java.log
+
+[OUTPUT]
+    Name             stdout
+    Match            *
+```
+
+Our output will be as follows.
+
+```text
+[0] tail.0: [1607928428.466041977, {"message"=>"Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+    at com.myproject.module.MyProject.badMethod(MyProject.java:22)
+    at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
+    at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
+    at com.myproject.module.MyProject.someMethod(MyProject.java:10)", "message"=>"at com.myproject.module.MyProject.main(MyProject.java:6)"}]
 ```
 
 ## Tailing files keeping state <a id="keep_state"></a>

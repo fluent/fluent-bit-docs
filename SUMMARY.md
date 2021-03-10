@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v1.6 Documentation](README.md)
+* [Fluent Bit v1.7 Documentation](README.md)
 
 ## About
 
@@ -61,6 +61,7 @@
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
 * [Dump Internals / Signal](administration/dump-internals-signal.md)
+* [HTTP Proxy](administration/http-proxy.md)
 
 ## Local Testing
 
@@ -87,6 +88,7 @@
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
+  * [StatsD](pipeline/inputs/statsd.md)
   * [Syslog](pipeline/inputs/syslog.md)
   * [Systemd](pipeline/inputs/systemd.md)
   * [Tail](pipeline/inputs/tail.md)
@@ -117,9 +119,9 @@
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon S3](pipeline/outputs/s3.md)
-  * [Azure](pipeline/outputs/azure.md)
+  * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Azure Blob](pipeline/outputs/azure_blob.md)
-  * [BigQuery](pipeline/outputs/bigquery.md)
+  * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
@@ -161,3 +163,4 @@
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+

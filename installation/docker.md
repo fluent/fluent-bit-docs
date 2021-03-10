@@ -9,6 +9,20 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
 | 1.6 | x86\_64, arm64v8, arm32v7 | Latest release of 1.6.x series. |
+| 1.6.10 | x86\_64, arm64v8, arm32v7 | Release [v1.6.10](https://fluentbit.io/announcements/v1.6.10/) |
+| 1.6-debug, 1.6.10-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.9 | x86\_64, arm64v8, arm32v7 | Release [v1.6.9](https://fluentbit.io/announcements/v1.6.9/) |
+| 1.6-debug, 1.6.9-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.8 | x86\_64, arm64v8, arm32v7 | Release [v1.6.8](https://fluentbit.io/announcements/v1.6.8/) |
+| 1.6-debug, 1.6.8-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.6 | x86\_64, arm64v8, arm32v7 | Release [v1.6.6](https://fluentbit.io/announcements/v1.6.6/) |
+| 1.6-debug, 1.6.6-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.5 | x86\_64, arm64v8, arm32v7 | Release [v1.6.5](https://fluentbit.io/announcements/v1.6.5/) |
+| 1.6-debug, 1.6.5-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.4 | x86\_64, arm64v8, arm32v7 | Release [v1.6.4](https://fluentbit.io/announcements/v1.6.4/) |
+| 1.6-debug, 1.6.4-debug | x86\_64 | v1.6.x releases + Busybox |
+| 1.6.3 | x86\_64, arm64v8, arm32v7 | Release [v1.6.3](https://fluentbit.io/announcements/v1.6.3/) |
+| 1.6-debug, 1.6.3-debug | x86\_64 | v1.6.x releases + Busybox |
 | 1.6.2 | x86\_64, arm64v8, arm32v7 | Release [v1.6.2](https://fluentbit.io/announcements/v1.6.2/) |
 | 1.6-debug, 1.6.2-debug | x86\_64 | v1.6.x releases + Busybox |
 | 1.6.1 | x86\_64, arm64v8, arm32v7 | Release [v1.6.1](https://fluentbit.io/announcements/v1.6.1/) |
@@ -72,3 +86,4 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
 The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
+

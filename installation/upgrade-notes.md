@@ -4,23 +4,21 @@ The following article cover the relevant notes for users upgrading from previous
 
 For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
 
-
-
 ## Fluent Bit v1.6
 
 If you are migrating from previous version of Fluent Bit please review the following important changes:
 
 #### Tail Input Plugin
 
-Now by default the plugin follows a file from the end once the service starts (old behavior was always read from the beginning). For every file found at start, its followed from it last position, for new files discovered at runtime or rotated, they are read from the beginning.
+Now by default the plugin follows a file from the end once the service starts \(old behavior was always read from the beginning\). For every file found at start, its followed from it last position, for new files discovered at runtime or rotated, they are read from the beginning.
 
-If you desire to keep the old behavior you can set the option ```read_from_head``` to true. 
+If you desire to keep the old behavior you can set the option `read_from_head` to true.
 
 ### Stackdriver Output Plugin
 
-The project_id of [resource](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) in [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) sent to Google Cloud Logging would be set to the project ID rather than the project number. To learn the difference between Project ID and project number, see [this](https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin) for more details.
+The project\_id of [resource](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) in [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) sent to Google Cloud Logging would be set to the project ID rather than the project number. To learn the difference between Project ID and project number, see [this](https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin) for more details.
 
-If you have any existing queries based on the resource's project_id, please update your query accordingly.
+If you have any existing queries based on the resource's project\_id, please update your query accordingly.
 
 ## Fluent Bit v1.5
 

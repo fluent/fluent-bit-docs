@@ -4,7 +4,7 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](../.gitbook/assets/fluentbit_kube_logging%20%281%29.png)
+![](../.gitbook/assets/fluentbit_kube_logging%20%283%29.png)
 
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
 
@@ -82,6 +82,26 @@ If you are using Minikube for testing purposes, use the following alternative Da
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
 ```
 
+## Installing with Helm Chart
+
+[Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo: [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts).
+
+To add the Fluent Helm Charts repo use the following command
+
+```text
+helm repo add fluent https://fluent.github.io/helm-charts
+```
+
+To validate that the repo was added you can run `helm search repo fluent` to ensure the charts were added. The default chart can then be installed by running the following
+
+```text
+helm install fluent-bit fluent/fluent-bit
+```
+
+### Default Values
+
+The default chart values include configuration to read container logs, with Docker parsing, systemd logs apply Kubernetes metadata enrichment and finally output to an Elasticsearch cluster. You can modify the values file included [https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
+
 ## Details
 
 The default configuration of Fluent Bit makes sure of the following:
@@ -91,6 +111,33 @@ The default configuration of Fluent Bit makes sure of the following:
 * The Kubernetes filter will enrich the logs with Kubernetes metadata, specifically _labels_ and _annotations_. The filter only goes to the API Server when it cannot find the cached info, otherwise it uses the cache.
 * The default backend in the configuration is Elasticsearch set by the [Elasticsearch Ouput Plugin](https://docs.fluentbit.io/manual/v/1.0/output/elasticsearch). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
 * There is an option called **Retry\_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
+
+## Container Runtime Interface \(CRI\) parser
+
+Fluent Bit by default assumes that logs are formatted by the Docker interface standard. However, when using CRI you can run into issues with malformed JSON if you do not modify the parser used. Fluent Bit includes a CRI log parser that can be used instead. An example of the parser is seen below:
+
+```text
+# CRI Parser
+[PARSER]
+    # http://rubular.com/r/tjUt3Awgg4
+    Name cri
+    Format regex
+    Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
+    Time_Key    time
+    Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+```
+
+To use this parser change the Input section for your configuration from `docker` to `cri`
+
+```text
+[INPUT]
+    Name tail
+    Path /var/log/containers/*.log
+    Parser cri
+    Tag kube.*
+    Mem_Buf_Limit 5MB
+    Skip_Long_Lines On
+```
 
 ## Windows Deployment
 
@@ -143,7 +190,7 @@ spec:
 
 ### Configure Fluent Bit
 
-Assuming the basic volume configuration described above, you can apply the following config to start logging.
+Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here](https://link.calyptia.com/gzc)
 
 ```yaml
 fluent-bit.conf: |

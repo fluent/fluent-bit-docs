@@ -1,4 +1,10 @@
+---
+description: Send logs to Amazon Kinesis Firehose
+---
+
 # Amazon Kinesis Data Firehose
+
+![](../../.gitbook/assets/image%20%288%29.png)
 
 The Amazon Kinesis Data Firehose output plugin allows to ingest your records into the [Firehose](https://aws.amazon.com/kinesis/data-firehose/) service.
 
@@ -49,6 +55,30 @@ Amazon distributes a container image with Fluent Bit and these plugins.
 #### GitHub
 
 [github.com/aws/aws-for-fluent-bit](https://github.com/aws/aws-for-fluent-bit)
+
+#### Amazon ECR Public Gallery
+
+[aws-for-fluent-bit](https://gallery.ecr.aws/aws-observability/aws-for-fluent-bit)
+
+Our images are available in Amazon ECR Public Gallery. You can download images with different tags by following command:
+
+```text
+docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:<tag>
+```
+
+For example, you can pull the image with latest version by:
+
+```text
+docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
+```
+
+If you see errors for image pull limits, try log into public ECR with your AWS credentials:
+
+```text
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+```
+
+You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/get-set-up-for-amazon-ecr.html) for more details.
 
 #### Docker Hub
 

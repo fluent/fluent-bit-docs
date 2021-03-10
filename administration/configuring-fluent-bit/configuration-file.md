@@ -23,68 +23,18 @@ The _Service_ section defines global properties of the service, the keys availab
 
 | Key | Description | Default Value |
 | :--- | :--- | :--- |
-
-
 | Flush | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins. | 5 |
-| :--- | :--- | :--- |
-
-
 | Grace | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
-| :--- | :--- | :--- |
-
-
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
-| :--- | :--- | :--- |
-
-
 | Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard output interface \(stdout\). |  |
-| :--- | :--- | :--- |
-
-
-| Log\_Level | Set the logging verbosity level. Allowed values are: error, warning, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
-| :--- | :--- | :--- |
-
-
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | Parsers\_File | Path for a `parsers` configuration file. Multiple Parsers\_File entries can be defined within the section. |  |
-| :--- | :--- | :--- |
-
-
 | Plugins\_File | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). |  |
-| :--- | :--- | :--- |
-
-
 | Streams\_File | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../stream-processing/introduction.md). |  |
-| :--- | :--- | :--- |
-
-
 | HTTP\_Server | Enable built-in HTTP Server | Off |
-| :--- | :--- | :--- |
-
-
 | HTTP\_Listen | Set listening interface for HTTP Server when it's enabled | 0.0.0.0 |
-| :--- | :--- | :--- |
-
-
 | HTTP\_Port | Set TCP Port for the HTTP Server | 2020 |
-| :--- | :--- | :--- |
-
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:left">Coro_Stack_Size</th>
-      <th style="text-align:left">
-        <p>Set the coroutines stack size in bytes. The value must be greater than
-          the page size of the running system. Don&apos;t set too small value (say
-          4096), or coroutine threads can overrun the stack buffer.</p>
-        <p>Do not change the default value of this parameter unless you know what
-          you are doing.</p>
-      </th>
-      <th style="text-align:left">24576</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+| Coro\_Stack\_Size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value \(say 4096\), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing. | 24576 |
 
 The following is an example of a _SERVICE_ section:
 
@@ -176,6 +126,12 @@ The following configuration file example demonstrates how to collect CPU metrics
     Name  stdout
     Match my*cpu
 ```
+
+## Visualize <a id="config_include_file"></a>
+
+You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://config.calyptia.com](https://config.calyptia.com)
+
+![](../../.gitbook/assets/image.png)
 
 ## Include File <a id="config_include_file"></a>
 
