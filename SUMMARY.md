@@ -79,6 +79,7 @@
   * [Exec](pipeline/inputs/exec.md)
   * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)
+  * [HTTP](pipeline/inputs/http.md)
   * [Health](pipeline/inputs/health.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
