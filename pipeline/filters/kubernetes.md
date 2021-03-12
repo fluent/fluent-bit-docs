@@ -361,3 +361,33 @@ And if you are in debug mode, you could see more:
 [2021/02/05 10:33:35] [debug] [filter:kubernetes:kubernetes.0] kubelet find pod: <podName> and ns: <Namespace> match
 ```
 
+## Troubleshooting
+
+The following section goes over specific log messages you may run into and how to solve them to ensure that Fluent Bit's Kubernetes filter is operating properly
+
+### I can't see metadata appended to my pod or other Kubernetes objects
+
+If you are not seeing metadata added to your kubernetes logs and see the following in your log message, then you may be facing connectivity issues with the Kubernetes API server. 
+
+```text
+[2020/10/15 03:48:57] [ info] [filter_kube] testing connectivity with API server...
+[2020/10/15 03:48:57] [error] [filter_kube] upstream connection error
+[2020/10/15 03:48:57] [ warn] [filter_kube] could not get meta for POD
+```
+
+**Potential fix \#1: Check Kubernetes roles**
+
+When Fluent Bit is deployed as a DaemonSet it generally runs with specific roles that allow the application to talk to the Kubernetes API server. If you are deployed in a more restricted environment check that all the Kubernetes roles are set correctly.
+
+**Potential fix \#2: Check Kubernetes IPv6**
+
+There may be cases where you have IPv6 on in the environment and you need to enable this within Fluent Bit. Under the service tag please set the following option `ipv6` to `on` .
+
+**Potential fix \#3: Check connectivity to Kube\_URL**
+
+By default the Kube\_URL is set to `https://kubernetes.default.svc:443` . Ensure that you have connectivity to this endpoint from within the cluster and that there are no special permission interfering with the connection.
+
+### I can't see new objects getting metadata
+
+ In some cases, you may only see some objects being appended with metadata while other objects are not enriched.  This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
+
