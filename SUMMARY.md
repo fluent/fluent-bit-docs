@@ -74,6 +74,7 @@
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU Metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
+  * [Docker Metrics](pipeline/inputs/docker-metrics.md)
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
   * [Exec](pipeline/inputs/exec.md)
