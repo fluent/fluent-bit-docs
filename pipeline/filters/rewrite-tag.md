@@ -10,7 +10,7 @@ The `rewrite_tag` filter, allows to re-emit a record under a new Tag. Once a rec
 
 ## How it Works
 
-The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, a new record with the defined Tag will be emitted and go through the beginning of the pipeline. Multiple rules can be specified and they are processed in order until one of them matches.
+The way it works is defining rules that matches specific record key content against a regular expression, if a match exists, **a new record with the defined Tag will be emitted, entering from the beginning of the pipeline.** Multiple rules can be specified and they are processed in order until one of them matches.
 
 The new Tag to define can be composed by:
 
@@ -109,7 +109,7 @@ We make use of placeholders, record content and environment variables.
 
 ### Keep
 
-If a rule matches the criteria the filter will emit a copy of the record with the new defined Tag. The property keep takes a boolean value to define if the original record with the old Tag must be preserved and continue in the pipeline or just be discarded.
+If a rule matches a rule the filter will emit a copy of the record with the new defined Tag. The property keep takes a boolean value to define if the original record with the old Tag must be preserved and continue in the pipeline or just be discarded.
 
 You can use `true` or `false` to decide the expected behavior. There is no default value and this is a mandatory field in the rule.
 
