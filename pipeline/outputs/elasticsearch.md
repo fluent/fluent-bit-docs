@@ -4,7 +4,7 @@ description: Send logs to Elasticsearch (including Amazon Elasticsearch Service)
 
 # Elasticsearch
 
-The **es** output plugin, allows to ingest your records into a [Elasticsearch](http://www.elastic.co) database. The following instructions assumes that you have a fully operational Elasticsearch service running in your environment.
+The **es** output plugin, allows to ingest your records into an [Elasticsearch](http://www.elastic.co) database. The following instructions assumes that you have a fully operational Elasticsearch service running in your environment.
 
 ## Configuration Parameters
 
@@ -13,13 +13,15 @@ The **es** output plugin, allows to ingest your records into a [Elasticsearch](h
 | Host | IP address or hostname of the target Elasticsearch instance | 127.0.0.1 |
 | Port | TCP port of the target Elasticsearch instance | 9200 |
 | Path | Elasticsearch accepts new data on HTTP query path "/\_bulk". But it is also possible to serve Elasticsearch behind a reverse proxy on a subpath. This option defines such path on the fluent-bit side. It simply adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/unit_sizes.md) specification. | 4KB |
+| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 4KB |
 | Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon ElasticSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon ElasticSearch Service |  |
 | AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
+| Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running  |  |
+| Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | Index | Index name | fluent-bit |
@@ -171,4 +173,21 @@ Example configuration:
 ```
 
 Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.
+
+### Fluent Bit + Elastic Cloud
+
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) providing just the `cloud_id` and the `cloud_auth` settings.
+
+Example configuration:
+
+```text
+[OUTPUT]
+    Name es
+    Include_Tag_Key true
+    Tag_Key tags
+    tls On
+    tls.verify Off
+    cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
+    cloud_auth elastic:2vxxxxxxxxYV
+```
 
