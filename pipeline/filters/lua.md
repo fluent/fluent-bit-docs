@@ -21,7 +21,7 @@ The plugin supports the following configuration parameters:
 
 ## Getting Started <a id="getting_started"></a>
 
-In order to test the filter, you can run the plugin from the command line or through the configuration file. The following examples uses the [dummy](https://github.com/fluent/fluent-bit-docs/tree/2a0c790c69100939636c7ed50bebe2fa06a3a57f/pipeline/input/dummy.md) input plugin for data ingestion, invoke Lua filter using the [test.lua](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua) script and calls the [cb\_print\(\)](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua#L29) function which only print the same information to the standard output:
+In order to test the filter, you can run the plugin from the command line or through the configuration file. The following examples uses the [dummy](../inputs/dummy.md) input plugin for data ingestion, invoke Lua filter using the [test.lua](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua) script and calls the [cb\_print\(\)](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua#L29) function which only print the same information to the standard output:
 
 ### Command Line
 
