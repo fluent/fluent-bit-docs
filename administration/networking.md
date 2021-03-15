@@ -60,6 +60,7 @@ The following table describes the network configuration properties available and
 |:--------------------------------|:-------------------------------------------------------------------------------------------------------------------|:--------|
 | `net.connect_timeout`           | Set maximum time allowed to establish a connection, this time includes the TLS handshake.                          | `10s`   |
 | `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | `true`  |
+| `net.initial_backoff`           | Backoff period in seconds after the first connection failure.                                                      | `0`     |
 | `net.io_timeout`                | Set maximum time a connection can stay idle while assigned.                                                        | `0s`    |
 | `net.keepalive`                 | Enable or disable connection keepalive support.                                                                    | `true`  |
 | `net.keepalive_idle_timeout`    | Set maximum time expressed in seconds for an idle keepalive connection.                                            | `30s`   |
@@ -68,6 +69,7 @@ The following table describes the network configuration properties available and
 | `net.dns.prefer_ipv6`           | Prioritize IPv6 DNS results when trying to establish a connection.                                                 | `false` |
 | `net.dns.resolver`              | Select the primary DNS resolver type (`LEGACY` or `ASYNC`).                                                        | _none_  |
 | `net.keepalive_max_recycle`     | Set maximum number of times a keepalive connection can be used before it's retired.                                | `2000`  |
+| `net.max_backoff`               | Maximum connection backoff period in seconds.                                                                      | `0`     |
 | `net.max_worker_connections`    | Set maximum number of TCP connections that can be established per worker.                                          | `0`     |
 | `net.proxy_env_ignore`          | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                              | `false` |
 | `net.tcp_keepalive`             | Enable or disable Keepalive support.                                                                               | `off`   |
@@ -155,7 +157,7 @@ $ nc -l 9090
 {"date":1587769735.572419,"rand_value":17086151440182975160}
 {"date":1587769736.572277,"rand_value":527581343064950185}
 ```
-
 If the `net.keepalive` option isn't enabled, Fluent Bit closes the TCP connection and netcat quits.
 
 After the five records arrive, the connection idles. After 10 seconds, the connection closes due to `net.keepalive_idle_timeout`.
+
