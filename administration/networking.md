@@ -54,6 +54,10 @@ If TCP keepalive is used, `net.tcp_keepalive_probes` allows to override the OS d
 
 If a TCP connection is keepalive enabled and has very high traffic, the connection may _never_ be killed. In a situation where the remote endpoint is load-balanced in some way, this may lead to an unequal distribution of traffic. Setting `net.keepalive_max_recycle` causes keepalive connections to be recycled after a number of messages are sent over that connection. Once this limit is reached, the connection is terminated gracefully, and a new connection will be created for subsequent messages.
 
+### Connection backoff
+
+This set of options is designed for large-scale fluent-bit deployments, which may need to limit number of TCP SYN packets in case an output destination is unreachable. By default, fluent-bit will retry connecting to an output target on each chunk flush. But if, for example, `net.initial_backoff=8` and `net.max_backoff=60` options are set, then an output plugin will try to reconnect to a failing output only after a delay of 8, 16, 32 and 60 seconds. Each fluent-bit thread will keep trying only once every 60 seconds, until connection is healthy again.
+
 ## Configuration Options
 
 For plugins that rely on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
@@ -69,6 +73,8 @@ For plugins that rely on networking I/O, the following section describes the net
 | `net.tcp_keepalive_interval` | Interval between TCP keepalive probes when no response is received on a keepidle probe. |  |
 | `net.tcp_keepalive_probes` | Number of unacknowledged probes to consider a connection dead. |  |
 | `net.keepalive_max_recycle` | Set the maximum number of times a keepalive connection can be used before it is destroyed. | 0 |
+| `net.initial_backoff` | Backoff period in seconds after the first connection failure. | 0 |
+| `net.max_backoff` | Maximum connection backoff period in seconds. | 0 |
 
 ## Example
 
@@ -118,4 +124,3 @@ $ nc -l 9090
 If the `net.keepalive` option is not enabled, Fluent Bit will close the TCP connection and netcat will quit, here we can see how the keepalive connection works.
 
 After the 5 records arrive, the connection will keep idle and after 10 seconds it will be closed due to `net.keepalive_idle_timeout`.
-
