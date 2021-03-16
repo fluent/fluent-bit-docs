@@ -200,7 +200,7 @@ Those two files aims to support the ```WAL``` mechanism that helps to improve pe
 
 The ```WAL``` mechanism give us higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually is not relevant unless you want your memory metrics back to normal.
 
-Starting from Fluent Bit v1.7.3 we introduced the new option ```db.wal``` mode that allows to disable this feature, by default is turned ```on```.
+Starting from Fluent Bit v1.7.3 we introduced the new option ```db.wal``` mode that allows to disable this feature, by default is turned ```on```, currently allowed configurations for ```db.wal``` are ```DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF``` .
 
 ## File Rotation
 
