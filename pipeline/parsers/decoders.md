@@ -58,7 +58,7 @@ By default if a decoder fails to decode the field or want to try a next decoder,
 
 Note that actions are affected by some restrictions:
 
-* on Decode\_Field\_As, if succeeded, another decoder of the same type in the same field can be applied only if the data continue being a unstructed message \(raw text\).
+* on Decode\_Field\_As, if succeeded, another decoder of the same type in the same field can be applied only if the data continues being an unstructured message \(raw text\).
 * on Decode\_Field, if succeeded, can only be applied once for the same field. By nature Decode\_Field aims to decode a structured message.
 
 ### Examples
