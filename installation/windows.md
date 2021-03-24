@@ -131,7 +131,7 @@ To halt the Fluent Bit service, just execute the "stop" command.
 
 ## Compile from Source
 
-If you need to create a custom exectable, you can use the following procedure to compile Fluent Bit by yourself.
+If you need to create a custom executable, you can use the following procedure to compile Fluent Bit by yourself.
 
 ### Preparation
 

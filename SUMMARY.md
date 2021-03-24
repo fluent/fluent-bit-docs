@@ -23,6 +23,7 @@
 
 ## Installation
 
+* [Getting Started with Fluent Bit](installation/getting-started-with-fluent-bit.md)
 * [Upgrade Notes](installation/upgrade-notes.md)
 * [Supported Platforms](installation/supported-platforms.md)
 * [Requirements](installation/requirements.md)
