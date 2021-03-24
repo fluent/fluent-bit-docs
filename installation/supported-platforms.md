@@ -22,5 +22,5 @@ The following operating systems and architectures are supported in Fluent Bit.
 
 From an architecture support perspective, Fluent Bit is fully functional on x86\_64, Arm64v8 and Arm32v7 based processors.
 
-Fluent Bit can work also on OSX and \*BSD systems, but not all plugins will be available on all platforms. Official support will be expanding based on community demand.
+Fluent Bit can work also on OSX and \*BSD systems, but not all plugins will be available on all platforms. Official support will be expanding based on community demand. Fluent Bit may run on older operating systems though will need to be built from source, or use custom packages from [enterprise providers](https://fluentbit.io/enterprise)
 
