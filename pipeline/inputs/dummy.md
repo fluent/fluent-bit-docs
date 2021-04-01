@@ -16,6 +16,7 @@ You can run the plugin from the command line or through the configuration file:
 | Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
 | Rate | Events number generated per second. Default: 1 |
+| Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
 
 ### Command Line
 
