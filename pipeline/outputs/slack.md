@@ -6,7 +6,7 @@ This connector uses the Slack _Incoming Webhooks_ feature to post messages to Sl
 
 ## Slack Webhook
 
-Before to configure this plugin, make sure to setup your Incoming Webhook, for a detailed step-by-step instruction review the following official document:
+Before configuring this plugin, make sure to setup your Incoming Webhook. For detailed step-by-step instructions, review the following official documentation:
 
 * [https://api.slack.com/messaging/webhooks\#getting\_started](https://api.slack.com/messaging/webhooks#getting_started)
 
