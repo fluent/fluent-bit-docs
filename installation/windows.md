@@ -8,10 +8,10 @@ The latest stable version is 1.7.3:
 
 | INSTALLERS | SHA256 CHECKSUMS |
 | :--- | :--- |
-| [td-agent-bit-1.7.3-win32.exe](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win32.exe) | 07a63feff31f9dff672834548605917b2f855e85299836dab66039ac67035886 |
-| [td-agent-bit-1.7.3-win32.zip](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win32.zip) | 2645ca61edaa3de7618b372f040dfc642faa22ddbd021aa7fa954ef3529b24fe |
-| [td-agent-bit-1.7.3-win64.exe](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win64.exe) | c7df8e3205be514a9c81588177327fac84797e487705068e345cf002c0f7b865 |
-| [td-agent-bit-1.7.3-win64.zip](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win64.zip) | 3531a0b6d7e3ee8dc07f28ec9343916ee19a88826981e68bb0bc12798516dfa8 |
+| [td-agent-bit-1.7.3-win32.exe](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win32.exe) | cc4c891fce79bdeedc40f0273cbafa793d15d815524eb33caf5c893d1caacc33 |
+| [td-agent-bit-1.7.3-win32.zip](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win32.zip) | 2bcfb2d362d828df343202ac3d0215e3b437ad331616016414f3a11526832ef8 |
+| [td-agent-bit-1.7.3-win64.exe](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win64.exe) | fe0f81c7d199d440668ee0d8ea316a81c5108fcccd9dba96212baa6d01d54cc9 |
+| [td-agent-bit-1.7.3-win64.zip](https://fluentbit.io/releases/1.7/td-agent-bit-1.7.3-win64.zip) | 606548a76338f37a9c1aa11d979388fea575d632c6eef5098a6fe924ea126a1d |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
