@@ -181,7 +181,7 @@ Sending to a Splunk Metric index requires the use of `Splunk_send_raw` option be
 
 ### Example Configuration
 
-The following configuration gathers CPU metrics, nests the appropiate field, adds the required idenitifers and then sends to Splunk.
+The following configuration gathers CPU metrics, nests the appropriate field, adds the required identifiers and then sends to Splunk.
 
 ```text
 [INPUT]
@@ -190,7 +190,7 @@ The following configuration gathers CPU metrics, nests the appropiate field, add
 
 # Move CPU metrics to be nested under "fields" and 
 # add the prefix "metric_name:" to all metrics
-# NOTE: you can change Wilcard field to only select metric fields    
+# NOTE: you can change Wildcard field to only select metric fields    
 [FILTER]
     Name nest
     Match cpu

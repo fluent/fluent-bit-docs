@@ -23,7 +23,7 @@ In order to start inserting records into [Treasure Data](https://www.treasuredat
 $ fluent-bit -i cpu -o td -p API="abc" -p Database="fluentbit" -p Table="cpu_samples"
 ```
 
-Ideally you don't want to expose your API key from the command line, using a configuration file is higly desired.
+Ideally you don't want to expose your API key from the command line, using a configuration file is highly desired.
 
 ### Configuration File
 

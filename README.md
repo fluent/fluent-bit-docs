@@ -20,7 +20,7 @@ description: High Performance Logs Processor
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
 * Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
-  * More than 50 built-in plugins available
+  * More than 80 built-in plugins available
   * Extensibility
     * Write any input, filter or output plugin in C language
     * Bonus: write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)

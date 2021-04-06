@@ -24,13 +24,13 @@ The plugin supports the following configuration parameters:
 | DB | Specify the database file to keep track of monitored files and offsets. |  |
 | DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). Most of workload scenarios will be fine with `normal` mode, but if you really need full synchronization after every write operation you should set `full` mode. Note that `full` has a high I/O performance cost. | normal |
 | DB.locking | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps to increase performance when accessing the database but it restrict any external tool to query the content. | false |
-| DB.wal | Enable or Disable Work Ahead Logging mechanism (WAL). Enabling WAL provides higher performance. Note that WAL is not compatible with shared network file systems. | on |
+| DB.wal | Enable or Disable Work Ahead Logging mechanism \(WAL\). Enabling WAL provides higher performance. Note that WAL is not compatible with shared network file systems. | on |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | exit\_on\_eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests | false |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |  |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
-| Tag\_Regex | Set a regex to exctract fields from the file name. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
+| Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behaviour, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning each `Refresh_Interval` until the file is rotated.
 
@@ -178,34 +178,32 @@ By default SQLite client tool do not format the columns in a human read-way, so 
 
 ## SQLite and Write Ahead Logging
 
-Fluent Bit keep the state or checkpoint of each file through using a SQLite database file, so if the service is restarted, it can continue consuming files from it last checkpoint position (offset). The default options set are enabled for high performance and corruption-safe. 
+Fluent Bit keep the state or checkpoint of each file through using a SQLite database file, so if the service is restarted, it can continue consuming files from it last checkpoint position \(offset\). The default options set are enabled for high performance and corruption-safe.
 
-The SQLite journaling mode enabled is ```Write Ahead Log``` or ```WAL```.  This allows to improve performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
+The SQLite journaling mode enabled is `Write Ahead Log` or `WAL`. This allows to improve performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
 
-```
+```text
 [INPUT]
     name    tail
     path    /var/log/containers/*.log
     db      test.db
 ```
 
-The above configuration enables a database file called ```test.db``` and in the same path for that file SQLite will create two additional files:
+The above configuration enables a database file called `test.db` and in the same path for that file SQLite will create two additional files:
 
-- test.db-shm
-- test.db-wal
+* test.db-shm
+* test.db-wal
 
-Those two files aims to support the ```WAL``` mechanism that helps to improve performance and reduce the number system calls required. The ```-wal``` file refers to the file that stores the new changes to be committed, at some point the ```WAL``` file transactions are moved back to the real database file. The ```-shm``` file is a shared-memory type to allow concurrent-users to the ```WAL``` file.
+Those two files aims to support the `WAL` mechanism that helps to improve performance and reduce the number system calls required. The `-wal` file refers to the file that stores the new changes to be committed, at some point the `WAL` file transactions are moved back to the real database file. The `-shm` file is a shared-memory type to allow concurrent-users to the `WAL` file.
 
 ### WAL and Memory Usage
 
-The ```WAL``` mechanism give us higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually is not relevant unless you want your memory metrics back to normal.
+The `WAL` mechanism give us higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually is not relevant unless you want your memory metrics back to normal.
+Starting from Fluent Bit v1.7.3 we introduced the new option ```db.journal_mode``` mode that sets the journal mode for databases, by default it will be ```WAL (Write-Ahead Logging)```, currently allowed configurations for ```db.journal_mode``` are ```DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF``` .
 
-Starting from Fluent Bit v1.7.3 we introduced the new option ```db.wal``` mode that allows to disable this feature, by default is turned ```on```, currently allowed configurations for ```db.wal``` are ```DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF``` .
 
 ## File Rotation
 
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
 Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
-
-`

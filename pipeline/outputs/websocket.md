@@ -12,7 +12,7 @@ The **websocket** output plugin allows to flush your records into a WebSocket en
 | Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
 | json\_date\_key | Specify the name of the date field in output | date |
 | json\_date\_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
-| idle\_interval | The interval that websocket output plugin would keep to decide if it is OK to reconnet to Websocket Server | 20 |
+| idle\_interval | The interval that websocket output plugin would keep to decide if it is OK to reconnect to Websocket Server | 20 |
 
 ## Getting Started
 
