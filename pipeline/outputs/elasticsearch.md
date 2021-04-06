@@ -35,6 +35,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
+| Id\_Key | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. ||
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
 | Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error \(for diag only\) | Off |
