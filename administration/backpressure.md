@@ -44,5 +44,5 @@ After some seconds if the scheduler was able to flush the initial 700KB of data 
 
 Each plugin is independent and not all of them implements the **pause** and **resume** callbacks. As said, these callbacks are just a notification mechanism for the plugin.
 
-The plugin who implements and keep a good state is the [Tail Input](https://github.com/fluent/fluent-bit-docs/tree/b78cfe98123e74e165f2b6669229da009258f34e/input/tail.md) plugin. When the **pause** callback is triggered, it stop their collectors and stop appending data. Upon **resume**, it re-enable the collectors.
+The plugin who implements and keep a good state is the [Tail Input](../pipeline/inputs/tail.md) plugin. When the **pause** callback is triggered, it stop their collectors and stop appending data. Upon **resume**, it re-enable the collectors.
 
