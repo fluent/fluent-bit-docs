@@ -24,7 +24,7 @@ The plugin supports the following configuration parameters:
 | DB | Specify the database file to keep track of monitored files and offsets. |  |
 | DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). Most of workload scenarios will be fine with `normal` mode, but if you really need full synchronization after every write operation you should set `full` mode. Note that `full` has a high I/O performance cost. | normal |
 | DB.locking | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps to increase performance when accessing the database but it restrict any external tool to query the content. | false |
-| DB.wal | Enable or Disable Work Ahead Logging mechanism \(WAL\). Enabling WAL provides higher performance. Note that WAL is not compatible with shared network file systems. | on |
+| DB.journal_mode | sets the journal mode for databases \(WAL\). Enabling WAL provides higher performance. Note that WAL is not compatible with shared network file systems. | WAL |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes. |  |
 | exit\_on\_eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests | false |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |  |
@@ -199,14 +199,11 @@ Those two files aims to support the `WAL` mechanism that helps to improve perfor
 ### WAL and Memory Usage
 
 The `WAL` mechanism give us higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually is not relevant unless you want your memory metrics back to normal.
+Starting from Fluent Bit v1.7.3 we introduced the new option ```db.journal_mode``` mode that sets the journal mode for databases, by default it will be ```WAL (Write-Ahead Logging)```, currently allowed configurations for ```db.journal_mode``` are ```DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF``` .
 
-Starting from Fluent Bit v1.7.3 we introduced the new option `db.wal` mode that allows to disable this feature, by default is turned `on`.
 
 ## File Rotation
 
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
 Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
-
-\`
-
