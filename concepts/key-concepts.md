@@ -38,7 +38,7 @@ Internally, an Event always has two components \(in an array form\):
 
 ## Filtering
 
-In some cases is required to perform modifications on the Events content, the process to alter, enrich or drop Events is called Filtering.
+In some cases it is required to perform modifications on the Events content, the process to alter, enrich or drop Events is called Filtering.
 
 There are many use cases when Filtering is required like:
 
