@@ -55,6 +55,11 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
       <td style="text-align:left">Password for user defined in HTTP_User</td>
       <td style="text-align:left"></td>
     </tr>
+    <tr>
+      <td style="text-align:left">Channel</td>
+      <td style="text-align:left">Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface.</td>
+      <td style="text-align:left"></td>
+    </tr>
   </tbody>
 </table>
 
