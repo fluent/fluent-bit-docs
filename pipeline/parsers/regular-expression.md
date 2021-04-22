@@ -6,7 +6,7 @@ Fluent Bit uses [Onigmo](https://github.com/k-takata/Onigmo) regular expression 
 
 [http://rubular.com/](http://rubular.com/)
 
-Important: do not attempt to add multiline support in your regular expressions if you are using [Tail](https://github.com/fluent/fluent-bit-docs/tree/1787fd8bfb2035bf10faf8cb7b14c4521e1265b3/pipeline/input/tail.md) input plugin since each line is handled as a separated entity. Instead use Tail [Multiline](https://github.com/fluent/fluent-bit-docs/tree/1787fd8bfb2035bf10faf8cb7b14c4521e1265b3/pipeline/input/tail.md#multiline) support configuration feature.
+Important: do not attempt to add multiline support in your regular expressions if you are using [Tail](../inputs/tail.md) input plugin since each line is handled as a separated entity. Instead use Tail [Multiline](../inputs/tail.md#multiline) support configuration feature.
 
 Security Warning: Onigmo is a _backtracking_ regex engine. You need to be careful not to use expensive regex patterns, or Onigmo can take very long time to perform pattern matching. For details, please read the article ["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) on OWASP.
 
