@@ -20,7 +20,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon ElasticSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon ES cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
-| Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running  |  |
+| Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running |  |
 | Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
@@ -35,7 +35,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Include\_Tag\_Key | When enabled, it append the Tag name to the record. | Off |
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
-| Id\_Key | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. ||
+| Id\_Key | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. |  |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
 | Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error \(for diag only\) | Off |

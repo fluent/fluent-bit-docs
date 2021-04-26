@@ -90,7 +90,7 @@ By default, GELF tcp uses port 12201 and Docker places your logs in `/var/log/co
 {"log":"{\"data\": \"This is an example.\"}","stream":"stderr","time":"2019-07-21T12:45:11.273315023Z"}
 ```
 
-If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` \(and any other present\) field. This is how this log in [stdout](../outputs/standard-output.md) looks like after decoding:
+If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` \(and any other present\) field. This is how this log in [stdout](standard-output.md) looks like after decoding:
 
 ```text
 [0] kube.log: [1565770310.000198491, {"log"=>{"data"=>"This is an example."}, "stream"=>"stderr", "time"=>"2019-07-21T12:45:11.273315023Z"}]
