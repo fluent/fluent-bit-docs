@@ -38,7 +38,7 @@ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:888
     port 8888
 
 [OUTPUT]
-    type stdout
+    name stdout
     match *
 ```
 
