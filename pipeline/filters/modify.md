@@ -75,7 +75,7 @@ The plugin supports the following conditions:
 
 ## Example \#1 - Add and Rename
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/input/mem.html), which outputs the following \(example\),
+In order to start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](../inputs/memory-metrics.md), which outputs the following \(example\),
 
 ```text
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
