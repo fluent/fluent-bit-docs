@@ -119,6 +119,7 @@
   * [Nest](pipeline/filters/nest.md)
   * [Modify](pipeline/filters/modify.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
+  * [Watermark](pipeline/filters/watermark.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
