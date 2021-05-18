@@ -208,8 +208,9 @@ PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/d
 PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
 PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
 PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
-PS> setx /M PATH "%PATH%;C:\WinFlexBison"
 ```
+
+Add the path `C:\WinFlexBison` to your systems environment variable "Path". [Here's how to do that](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
 Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
 
