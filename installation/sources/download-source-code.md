@@ -4,7 +4,7 @@
 
 For production systems, we strongly suggest that you always get the latest stable release from our web site, you can get the official tarballs \(.tar.gz\) from using the following link pattern:
 
-https://fluentbit.io/release/1.7/fluent-bit-&lt;release version&gt;. For example for version 1.7.4 the link is the following: [https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz](https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz)
+[https://fluentbit.io/release/1.7/fluent-bit-&lt;release](https://fluentbit.io/release/1.7/fluent-bit-<release) version&gt;. For example for version 1.7.4 the link is the following: [https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz](https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz)
 
 ## Development
 

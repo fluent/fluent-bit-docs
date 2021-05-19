@@ -8,7 +8,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Interval\_Sec | Polling interval \(seconds\).  | 1 |
+| Interval\_Sec | Polling interval \(seconds\). | 1 |
 | Interval\_NSec | Polling interval \(nanosecond\). | 0 |
 | Dev\_Name | Device name to limit the target. \(e.g. sda\). If not set, _in\_disk_ gathers information from all of disks and partitions. | all disks |
 

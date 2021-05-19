@@ -11,7 +11,7 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 | host | The address to listen on | 0.0.0.0 |
 | port | The port for Fluent Bit to listen on | 9880 |
 | buffer\_max\_size | Specify the maximum buffer size in KB to receive a JSON message. | 4M |
-| buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer\_max\_size.  | 512K |
+| buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer\_max\_size. | 512K |
 
 ## Getting Started
 
@@ -47,6 +47,4 @@ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:888
 ```text
 $> fluent-bit -i http -p port=8888 -o stdout
 ```
-
-#### 
 

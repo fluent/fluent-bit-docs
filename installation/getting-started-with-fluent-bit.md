@@ -16,7 +16,7 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 
 | Operating System | Installation Instructions |
 | :--- | :--- |
-| CentOS / Red Hat  | [CentOS 7](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](linux/redhat-centos.md#install-on-redhat-centos) |
+| CentOS / Red Hat | [CentOS 7](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](linux/redhat-centos.md#install-on-redhat-centos) |
 | Ubuntu | [Ubuntu 16.04 LTS](linux/ubuntu.md#ubuntu-16-04-lts-xenial-xerus), [Ubuntu 18.04 LTS](linux/ubuntu.md#ubuntu-18-04-lts-bionic-beaver), [Ubuntu 20.04 LTS](linux/ubuntu.md#ubuntu-20-04-lts-focal-fossa) |
 | Debian | [Debian 9](linux/debian.md#debian-9-stretch), [Debian 10](linux/debian.md#debian-10-buster) |
 | Amazon Linux | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2) |

@@ -8,10 +8,10 @@ description: >-
 
 Content:
 
-* [Configuration Parameters](docker.md#configuration-parameters)
-* [Configuration File](docker.md#configuration-file)
+* [Configuration Parameters](https://github.com/fluent/fluent-bit-docs/tree/4961938ae3018e520208ebdfa1b2181f6332d2ca/pipeline/inputs/docker.md#configuration-parameters)
+* [Configuration File](https://github.com/fluent/fluent-bit-docs/tree/4961938ae3018e520208ebdfa1b2181f6332d2ca/pipeline/inputs/docker.md#configuration-file)
 
-### Configuration Parameters
+## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 
 If you set neither `Include` nor `Exclude`, the plugin will try to get metrics from _all_ the running containers.
 
-### Configuration File
+## Configuration File
 
 Here is an example configuration that collects metrics from two docker instances \(`6bab19c3a0f9` and `14159be4ca2c`\).
 

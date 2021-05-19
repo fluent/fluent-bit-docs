@@ -29,6 +29,7 @@ We expose different configuration properties. The following table lists all the 
 | emulator\_mode | If you want to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
 | endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
 | tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
+| compress | Compression type for Azure blob objects. 'gzip' is currently the only supported value. The Content-Encoding HTTP Header will be set to 'gzip'. | none |
 
 ## Getting Started
 

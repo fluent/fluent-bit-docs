@@ -367,7 +367,7 @@ The following section goes over specific log messages you may run into and how t
 
 ### I can't see metadata appended to my pod or other Kubernetes objects
 
-If you are not seeing metadata added to your kubernetes logs and see the following in your log message, then you may be facing connectivity issues with the Kubernetes API server. 
+If you are not seeing metadata added to your kubernetes logs and see the following in your log message, then you may be facing connectivity issues with the Kubernetes API server.
 
 ```text
 [2020/10/15 03:48:57] [ info] [filter_kube] testing connectivity with API server...
@@ -389,5 +389,5 @@ By default the Kube\_URL is set to `https://kubernetes.default.svc:443` . Ensure
 
 ### I can't see new objects getting metadata
 
- In some cases, you may only see some objects being appended with metadata while other objects are not enriched.  This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
+In some cases, you may only see some objects being appended with metadata while other objects are not enriched. This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
 
