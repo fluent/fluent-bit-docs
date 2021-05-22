@@ -9,6 +9,10 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
 | 1.7 | x86\_64, arm64v8, arm32v7 | Latest release of 1.7.x series. |
+| 1.7.6 | x86\_64, arm64v8, arm32v7 | Release [v1.7.6](https://fluentbit.io/announcements/v1.7.6/) |
+| 1.7-debug, 1.7.6-debug | x86\_64 | v1.7.x releases + Busybox |
+| 1.7.5 | x86\_64, arm64v8, arm32v7 | Release [v1.7.5](https://fluentbit.io/announcements/v1.7.5/) |
+| 1.7-debug, 1.7.5-debug | x86\_64 | v1.7.x releases + Busybox |
 | 1.7.4 | x86\_64, arm64v8, arm32v7 | Release [v1.7.4](https://fluentbit.io/announcements/v1.7.4/) |
 | 1.7-debug, 1.7.4-debug | x86\_64 | v1.7.x releases + Busybox |
 | 1.7.3 | x86\_64, arm64v8, arm32v7 | Release [v1.7.3](https://fluentbit.io/announcements/v1.7.3/) |
@@ -54,7 +58,10 @@ That command will let Fluent Bit measure CPU usage every second and flush the re
 
 ```text
 Fluent-Bit v1.7.x
-Copyright (C) Treasure Data
+* Copyright (C) 2019-2021 The Fluent Bit Authors
+* Copyright (C) 2015-2018 Treasure Data
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
 
 [2019/10/01 12:29:02] [ info] [engine] started
 [0] cpu.0: [1504290543.000487750, {"cpu_p"=>0.750000, "user_p"=>0.250000, "system_p"=>0.500000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>1.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>1.000000, "cpu2.p_cpu"=>1.000000, "cpu2.p_user"=>1.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>0.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>0.000000}]
@@ -76,4 +83,3 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
 The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
-
