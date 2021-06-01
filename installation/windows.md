@@ -129,6 +129,63 @@ To halt the Fluent Bit service, just execute the "stop" command.
 % sc.exe stop fluent-bit
 ```
 
+To start Fluent Bit automatically on boot, execute the following:
+
+```text
+% sc.exe config fluent-bit start= auto
+```
+
+### [FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
+
+Quotations are required if file paths contain spaces. Here is an example:
+
+```text
+% sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
+```
+
+### [FAQ] How can I manage Fluent Bit service via PowerShell?
+
+Instead of `sc.exe`, PowerShell can be used to manage Windows services.
+
+Create a Fluent Bit service:
+
+```powershell
+PS> New-Service fluent-bit -BinaryPathName "C:\fluent-bit\bin\fluent-bit.exe -c C:\fluent-bit\conf\fluent-bit.conf" -StartupType Automatic
+```
+
+Start the service:
+
+```powershell
+PS> Start-Service fluent-bit
+```
+
+Query the service status:
+
+```powershell
+PS> get-Service fluent-bit | format-list
+Name                : fluent-bit
+DisplayName         : fluent-bit
+Status              : Running
+DependentServices   : {}
+ServicesDependedOn  : {}
+CanPauseAndContinue : False
+CanShutdown         : False
+CanStop             : True
+ServiceType         : Win32OwnProcess
+```
+
+Stop the service:
+
+```powershell
+PS> Stop-Service fluent-bit
+```
+
+Remove the service (requires PowerShell 6.0 or later)
+
+```powershell
+PS> Remove-Service fluent-bit
+```
+
 ## Compile from Source
 
 If you need to create a custom executable, you can use the following procedure to compile Fluent Bit by yourself.
