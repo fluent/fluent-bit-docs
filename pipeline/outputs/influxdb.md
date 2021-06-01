@@ -17,6 +17,8 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | HTTP\_Token | Authentication token used with InfluDB v2 - if specified, both HTTP\_User and HTTP\_Passwd are ignored |  |
 | Tag\_Keys | Space separated list of keys that needs to be tagged |  |
 | Auto\_Tags | Automatically tag keys where value is _string_. This option takes a boolean value: True/False, On/Off. | Off |
+| Tags\_List\_Enabled | Dynamically tag keys which are in the _string array_ at Tags\_List\_Key key. This option takes a boolean value: True/False, On/Off. | Off |
+| Tags\_List\_Key | Key of the _string array_ optionally contained within each log record that contains tag keys for that record | tags |
 
 ### TLS / SSL
 
@@ -81,6 +83,27 @@ Basic example of `Tag_Keys` usage:
 ```
 
 With **Auto\_Tags=On** in this example cause error, because every parsed field value type is _string_. Best usage of this option in metrics like record where one ore more field value is not _string_ typed.
+
+Basic example of `Tags_List_Key` usage:
+
+```python
+[INPUT]
+Name              dummy
+Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
+
+[OUTPUT]
+Name          influxdb
+Match         *
+Host          127.0.0.1
+Port          8086
+Bucket        logs
+Org           influx
+Sequence_Tag  _seq
+HTTP_Token    TOKEN_HERE
+Tags_List_Enabled True
+Tags_List_Key tags
+Tag_Keys level status
+```
 
 ### Testing
 
