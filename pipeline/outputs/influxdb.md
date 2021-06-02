@@ -88,21 +88,21 @@ Basic example of `Tags_List_Key` usage:
 
 ```python
 [INPUT]
-Name              dummy
-Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
+    Name              dummy
+    Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
 
 [OUTPUT]
-Name          influxdb
-Match         *
-Host          127.0.0.1
-Port          8086
-Bucket        logs
-Org           influx
-Sequence_Tag  _seq
-HTTP_Token    TOKEN_HERE
-Tags_List_Enabled True
-Tags_List_Key tags
-Tag_Keys level status
+    Name          influxdb
+    Match         *
+    Host          127.0.0.1
+    Port          8086
+    Bucket        logs
+    Org           influx
+    Sequence_Tag  _seq
+    HTTP_Token    TOKEN_HERE
+    Tags_List_Enabled True
+    Tags_List_Key tags
+    Tag_Keys level status
 ```
 
 ### Testing
