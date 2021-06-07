@@ -89,6 +89,7 @@ Basic example of `Tags_List_Key` usage:
 ```python
 [INPUT]
     Name              dummy
+    # tagged fields: level, ID, businessObjectID, status
     Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
 
 [OUTPUT]
@@ -96,12 +97,14 @@ Basic example of `Tags_List_Key` usage:
     Match         *
     Host          127.0.0.1
     Port          8086
-    Bucket        logs
-    Org           influx
+    Bucket        My_Bucket
+    Org           My_Org
     Sequence_Tag  _seq
-    HTTP_Token    TOKEN_HERE
+    HTTP_Token    My_Token
+    # tag all fields inside tags string array
     Tags_List_Enabled True
     Tags_List_Key tags
+    # tag level, status fields
     Tag_Keys level status
 ```
 
