@@ -7,7 +7,7 @@ We distribute two main recipes, one for testing/dev purposes and other with the 
 | Version | Recipe | Description |
 | :--- | :--- | :--- |
 | devel | [fluent-bit\_git.bb](https://github.com/fluent/fluent-bit/blob/master/fluent-bit_git.bb) | Build Fluent Bit from GIT master. This recipe aims to be used for development and testing purposes only. |
-| v1.7.7 | [fluent-bit\_1.7.7.bb](https://github.com/fluent/fluent-bit/blob/v1.7.7/fluent-bit_1.7.7.bb) | Build latest stable version of Fluent Bit. |
+| v1.7.8 | [fluent-bit\_1.7.8.bb](https://github.com/fluent/fluent-bit/blob/v1.7.8/fluent-bit_1.7.8.bb) | Build latest stable version of Fluent Bit. |
 
 It's strongly recommended to always use the stable release of Fluent Bit recipe and not the one from GIT master for production deployments.
 
