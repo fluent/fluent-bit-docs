@@ -9,6 +9,8 @@ The following table describe the tags are available on Docker Hub [fluent/fluent
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
 | 1.7 | x86\_64, arm64v8, arm32v7 | Latest release of 1.7.x series. |
+| 1.7.8 | x86\_64, arm64v8, arm32v7 | Release [v1.7.8](https://fluentbit.io/announcements/v1.7.8/) |
+| 1.7-debug, 1.7.8-debug | x86\_64 | v1.7.x releases + Busybox |
 | 1.7.7 | x86\_64, arm64v8, arm32v7 | Release [v1.7.7](https://fluentbit.io/announcements/v1.7.7/) |
 | 1.7-debug, 1.7.7-debug | x86\_64 | v1.7.x releases + Busybox |
 | 1.7.6 | x86\_64, arm64v8, arm32v7 | Release [v1.7.6](https://fluentbit.io/announcements/v1.7.6/) |
