@@ -25,7 +25,7 @@ In order to start performing the checks, you can run the plugin from the command
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```bash
-$ fluent-bit -i health://127.0.0.1:80 -o stdout
+$ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
 ```
 
 ### Configuration File
@@ -50,17 +50,21 @@ In your main configuration file append the following _Input_ & _Output_ sections
 Once Fluent Bit is running, you will see some random values in the output interface similar to this:
 
 ```bash
-$ fluent-bit -i health://127.0.0.1:80 -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
+$ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
+Fluent Bit v1.8.0
+* Copyright (C) 2019-2021 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2016/10/07 21:37:51] [ info] [engine] started
-[0] health.0: [1475897871, {"alive"=>true}]
-[1] health.0: [1475897872, {"alive"=>true}]
-[2] health.0: [1475897873, {"alive"=>true}]
-[3] health.0: [1475897874, {"alive"=>true}]
+[2021/06/20 08:39:47] [ info] [engine] started (pid=4621)
+[2021/06/20 08:39:47] [ info] [storage] version=1.1.1, initializing...
+[2021/06/20 08:39:47] [ info] [storage] in-memory
+[2021/06/20 08:39:47] [ info] [storage] normal synchronization mode, checksum disabled, max_chunks_up=128
+[2021/06/20 08:39:47] [ info] [sp] stream processor started
+[0] health.0: [1624145988.305640385, {"alive"=>true}]
+[1] health.0: [1624145989.305575360, {"alive"=>true}]
+[2] health.0: [1624145990.306498573, {"alive"=>true}]
+[3] health.0: [1624145991.305595498, {"alive"=>true}]
 ```
 
