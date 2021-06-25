@@ -12,6 +12,7 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 | port | The port for Fluent Bit to listen on | 9880 |
 | buffer\_max\_size | Specify the maximum buffer size in KB to receive a JSON message. | 4M |
 | buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer\_max\_size.  | 512K |
+|successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
 
 ## Getting Started
 
