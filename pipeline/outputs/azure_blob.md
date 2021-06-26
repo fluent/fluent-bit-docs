@@ -21,7 +21,7 @@ We expose different configuration properties. The following table lists all the 
 | Key | Description | default |
 | :--- | :--- | :--- |
 | account\_name | Azure Storage account name. This configuration property is mandatory |  |
-| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory. |  |
+| shared\_key | Specify the Azure Storage Access Key to authenticate against the service. This configuration property is mandatory. |  |
 | container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
 | blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`. | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
@@ -54,7 +54,7 @@ The following configuration example generates a random message with a custom tag
     name                  azure_blob
     match                 *
     account_name          YOUR_ACCOUNT_NAME
-    shared_key            YOUR_SHARED_KEY
+    shared_key            YOUR_ACCESS_KEY
     path                  kubernetes
     container_name        logs
     auto_create_container on
