@@ -10,53 +10,33 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 ## Configuration Parameters
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:left">Key</th>
-      <th style="text-align:left">Description</th>
-      <th style="text-align:left">default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:left">Host</td>
-      <td style="text-align:left">IP address or hostname of the target Splunk service.</td>
-      <td style="text-align:left">127.0.0.1</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Port</td>
-      <td style="text-align:left">TCP port of the target Splunk service.</td>
-      <td style="text-align:left">8088</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Splunk_Token</td>
-      <td style="text-align:left">Specify the Authentication <a href="http://dev.splunk.com/view/event-collector/SP-CAAAE7C">Token</a> for
-        the HTTP Event Collector interface.</td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Splunk_Send_Raw</td>
-      <td style="text-align:left">
-        <p>When enabled, the record keys and values are set in the top level of the
-          map instead of under the <em>event</em> key.</p>
-        <p><b>note:</b> refer to the Sending Raw Events section below for more details
-          to make this option work properly.</p>
-      </td>
-      <td style="text-align:left">Off</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">HTTP_User</td>
-      <td style="text-align:left">Optional username for Basic Authentication on HEC</td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">HTTP_Passwd</td>
-      <td style="text-align:left">Password for user defined in HTTP_User</td>
-      <td style="text-align:left"></td>
-    </tr>
-  </tbody>
-</table>
+Connectivity, transport and authentication configuration properties:
+
+| Key              | Description                                                  | default   |
+| ---------------- | ------------------------------------------------------------ | --------- |
+| host             | IP address or hostname of the target Splunk service.         | 127.0.0.1 |
+| port             | TCP port of the target Splunk service.                       | 8088      |
+| splunk_token     | Specify the Authentication Token for the HTTP Event Collector interface. |           |
+| http_user        | Optional username for Basic Authentication on HEC            |           |
+| http_passwd      | Password for user defined in HTTP_User                       |           |
+| http_buffer_size | Buffer size used to receive Splunk HTTP responses            | 2M        |
+| compress         | Set payload compression mechanism. The only available option is ```gzip```. |           |
+
+Content and Splunk metadata (fields) handling configuration properties:
+
+| Key                  | Description                                                  | default |
+| -------------------- | ------------------------------------------------------------ | ------- |
+| splunk_send_raw      | When enabled, the record keys and values are set in the top level of the map instead of under the event key. Refer to the _Sending Raw Events_ section from the docs for more details to make this option work properly. | off     |
+| event_key            | Specify the key name that will be used to send a single value as part of the record. |         |
+| event_host           | Specify the key name that contains the host value. This option allows a record accessors pattern. |         |
+| event_source         | Set the source value to assign to the event data.            |         |
+| event_sourcetype     | Set the sourcetype value to assign to the event data.        |         |
+| event_sourcetype_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in ```event_sourcetype```. |         |
+| event_index          | The name of the index by which the event data is to be indexed. |         |
+| event_index_key      | Set a record key that will populate the ```index``` field. If the key is found, it will have precedence over the value set in ```event_index```. |         |
+| event_field          | Set event fields for the record. This option can be set multiple times and the format is ```key_name record_accessor_pattern```. |         |
+
+
 
 ### TLS / SSL
 

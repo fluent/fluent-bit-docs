@@ -6,13 +6,14 @@ description: High Performance Logs Processor
 
 ![](.gitbook/assets/logo_documentation_1.8.png)
 
-[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Log Processor, Stream Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
+[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Logs and Metrics Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
 
 ## Features
 
 * High Performance
 * Data Parsing
   * Convert your unstructured messages using our parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+* Metrics Collection (Prometheus compatible)
 * Reliability and Data Integrity
   * [Backpressure](administration/backpressure.md) Handling
   * [Data Buffering](administration/buffering-and-storage.md) in memory and file system
