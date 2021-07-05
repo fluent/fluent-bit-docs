@@ -212,22 +212,20 @@ The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/
 Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/alerts.yaml).
 
 ## Health Check for Fluent Bit
+
 Fluent bit now suppose four new config to setup health check.
 
 | Config Name | Description | Default Value |
 | :--- | :--- | :--- |
-| Health_Check | enable Health check feature | Off |
-| HC_Errors_Count | the error count to meet the unhealthy requirement  | 5 |
-| HC_Retry_Failure_Count | the retry failure count to meet the unhealthy requirement  | 5 |
-| HC_Period | The time period by second to count the error and retry failure data point | 60 |
+| Health\_Check | enable Health check feature | Off |
+| HC\_Errors\_Count | the error count to meet the unhealthy requirement | 5 |
+| HC\_Retry\_Failure\_Count | the retry failure count to meet the unhealthy requirement | 5 |
+| HC\_Period | The time period by second to count the error and retry failure data point | 60 |
 
-So the feature works as:
-Based on the HC_Period customer setup, if the real error number is over `HC_Errors_Count` or 
-retry failure is over `HC_Retry_Failure_Count`, fluent bit will be considered as unhealthy.
-The health endpoint will return HTTP status 500 and String `error`.
-Otherwise it's healthy, will return HTTP status 200 and string `ok`
- 
+So the feature works as: Based on the HC\_Period customer setup, if the real error number is over `HC_Errors_Count` or retry failure is over `HC_Retry_Failure_Count`, fluent bit will be considered as unhealthy. The health endpoint will return HTTP status 500 and String `error`. Otherwise it's healthy, will return HTTP status 200 and string `ok`
+
 See the config example:
+
 ```text
 [SERVICE]
     HTTP_Server  On
@@ -247,10 +245,13 @@ See the config example:
 ```
 
 The command to call health endpoint
+
 ```bash
 $ curl -s http://127.0.0.1:2020/api/v1/health
 ```
 
 Based on the fluent bit status, the result will be:
+
 * HTTP status 200 and "ok" in response for healthy status
 * HTTP status 500 and "error" in response for unhealthy status
+

@@ -13,7 +13,7 @@ description: High Performance Logs Processor
 * High Performance
 * Data Parsing
   * Convert your unstructured messages using our parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
-* Metrics Collection (Prometheus compatible)
+* Metrics Collection \(Prometheus compatible\)
 * Reliability and Data Integrity
   * [Backpressure](administration/backpressure.md) Handling
   * [Data Buffering](administration/buffering-and-storage.md) in memory and file system
@@ -34,6 +34,5 @@ description: High Performance Logs Processor
 
 ## Fluent Bit, Fluentd and CNCF
 
-[Fluent Bit](http://fluentbit.io) is a sub-component of the [Fluentd](http://fluentd.org) project ecosystem, it's licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). This project was created by [Treasure Data](https://www.treasuredata.com) and is its current primary sponsor.
+[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) sub-project under the umbrella of [Fluentd](http://fluentd.org), it's licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). This project was originally created by [Treasure Data](https://www.treasuredata.com) and is currently a **vendor neutral** and community driven project.
 
-Nowadays Fluent Bit get contributions from several companies and individuals and same as [Fluentd](https://www.fluentd.org), it's hosted as a [CNCF](https://cncf.io) subproject.
