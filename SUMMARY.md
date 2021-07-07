@@ -87,7 +87,7 @@
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Metrics](pipeline/inputs/network-io-metrics.md)
-  * [Process](pipeline/inputs/process.md)
+  * [Process Metrics](pipeline/inputs/process.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
