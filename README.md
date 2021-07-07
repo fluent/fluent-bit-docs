@@ -1,5 +1,5 @@
 ---
-description: High Performance Logs Processor
+description: High Performance Log and Metrics Processor
 ---
 
 # Fluent Bit v1.8 Documentation
