@@ -6,7 +6,7 @@
 * Enrich logs with Kubernetes metadata.
 * Deliver logs to third party storage services like Elasticsearch, InfluxDB, HTTP, etc.
 
-![](../.gitbook/assets/fluentbit_kube_logging%20%286%29.png)
+![](../.gitbook/assets/fluentbit_kube_logging%20%287%29.png)
 
 Content:
 
