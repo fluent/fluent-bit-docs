@@ -2,7 +2,7 @@
 
 Dealing with raw strings is a constant pain; having a structure is highly desired. Ideally we want to set a structure to the incoming data by the Input Plugins as soon as they are collected:
 
-![](../.gitbook/assets/logging_pipeline_parser%20%281%29%20%281%29%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29%20%283%29%20%283%29%20%283%29%20%281%29.png)
+![](../.gitbook/assets/logging_pipeline_parser%20%281%29%20%281%29%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29%20%283%29%20%283%29%20%283%29%20%283%29%20%283%29%20%282%29.png)
 
 The Parser allows you to convert from unstructured to structured data. As a demonstrative example consider the following Apache \(HTTP Server\) log entry:
 
