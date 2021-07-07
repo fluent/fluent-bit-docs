@@ -2,7 +2,7 @@
 
 Routing is a core feature that allows to **route** your data through Filters and finally to one or multiple destinations.
 
-![](../.gitbook/assets/logging_pipeline_routing%20%281%29%20%281%29%20%281%29.png)
+![](../.gitbook/assets/logging_pipeline_routing%20%281%29%20%281%29%20%282%29%20%282%29.png)
 
 There are two important concepts in Routing:
 
