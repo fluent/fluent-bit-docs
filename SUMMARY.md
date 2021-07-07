@@ -72,6 +72,7 @@
 ## Data Pipeline <a id="pipeline"></a>
 
 * [Inputs](pipeline/inputs/README.md)
+  * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU Metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
