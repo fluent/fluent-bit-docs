@@ -26,12 +26,6 @@ deb https://packages.fluentbit.io/debian/buster buster main
 deb https://packages.fluentbit.io/debian/stretch stretch main
 ```
 
-#### Debian 8 \(Jessie\)
-
-```text
-deb https://packages.fluentbit.io/debian/jessie jessie main
-```
-
 ### Update your repositories database
 
 Now let your system update the _apt_ database:
