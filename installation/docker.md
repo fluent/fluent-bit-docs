@@ -4,11 +4,13 @@ Fluent Bit container images are available on Docker Hub ready for production usa
 
 ## Tags and Versions
 
-The following table describe the tags are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
+The following table describes the tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.8.0 | x86\_64, arm64v8, arm32v7 | Release [v1.8.0](https://fluentbit.io/announcements/v1.8.0/) |
+| 1.8.1 | x86\_64, arm64v8, arm32v7 | Release [v1.8](https://fluentbit.io/announcements/v1.8.0/) |
+| 1.8-debug, 1.8.1-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.0 | x86\_64, arm64v8, arm32v7 | Release [v1.8](https://fluentbit.io/announcements/v1.8.0/) |
 | 1.8-debug, 1.8.0-debug | x86\_64 | v1.8.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
@@ -17,7 +19,7 @@ It's strongly suggested that you always use the latest image of Fluent Bit.
 
 Our x86\_64 stable image is based in [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. Optionally, we provide **debug** images for x86\_64 which contains Busybox that can be used to troubleshoot or testing purposes.
 
-In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
+In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
 For every architecture we build the layers using the following base images:
 
