@@ -68,7 +68,7 @@ The following is an example of an _INPUT_ section:
 
 ## Filter <a id="config_filter"></a>
 
-A _FILTER_ section defines a filter \(related to an filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
+A _FILTER_ section defines a filter \(related to a filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
 
 | Key | Description |  |
 | :--- | :--- | :--- |
@@ -80,7 +80,7 @@ The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be
 
 ### Example
 
-The following is an example of an _FILTER_ section:
+The following is an example of a _FILTER_ section:
 
 ```python
 [FILTER]
