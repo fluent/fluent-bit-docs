@@ -32,11 +32,50 @@ The plugin supports the following configuration parameters:
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
 | Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
 
-Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behaviour, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning each `Refresh_Interval` until the file is rotated.
+Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
 
-### Multiline Configuration Parameters <a id="multiline"></a>
+## Multiline Support
 
-Additionally the following options exists to configure the handling of multi-lines files:
+Starting from Fluent Bit v1.8 we have introduced a new Multiline core functionality. For Tail input plugin, it means that now it supports the **old** configuration mechanism but also the **new** one. In order to avoid breaking changes, we will keep both but encourage our users to use the latest one. We will call the two mechanisms as:
+
+* Multiline Core
+* Old Multiline
+
+### Multiline Core \(v1.8\)
+
+The new multiline core is exposed by the following configuration:
+
+| Key  | Description |
+| :--- | :--- |
+| multiline.parser | Specify one or [Multiline Parser definition](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. |
+
+As stated in the [Multiline Parser documentation](../../administration/configuring-fluent-bit/multiline-parsing.md), now we provide built-in configuration modes. Note that when using a new `multiline.parser` definition, you must **disable** the old configuration from your tail section like:
+
+* parser
+* parser\_firstline
+* parser\_N
+* multiline
+* multiline\_flush
+* docker\_mode
+
+### Multiline and Containers \(v1.8\)
+
+If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the new built-in modes for such purposes. This will help to reassembly multiline messages originally split by Docker or CRI:
+
+```text
+[INPUT]
+    name              tail
+    path              /var/log/containers/*.log
+    multiline.parser  docker, cri
+```
+
+The two options separated by a comma means multi-format: try `docker` and `cri` multiline formats. 
+
+We are **still working** on extending support to do multiline for nested stack traces and such. Over the Fluent Bit v1.8.x release cycle we will be updating the documentation.
+
+### Old Multiline Configuration Parameters <a id="multiline"></a>
+
+For the old multiline configuration, the following options exist to configure the handling of multilines logs:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
@@ -45,7 +84,7 @@ Additionally the following options exists to configure the handling of multi-lin
 | Parser\_Firstline | Name of the parser that matches the beginning of a multiline message. Note that the regular expression defined in the parser must include a group name \(named capture\), and the value of the last match group must be a string |  |
 | Parser\_N | Optional-extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers, e.g: Parser\_1 ab1,  Parser\_2 ab2, Parser\_N abN. |  |
 
-### Docker Mode Configuration Parameters <a id="docker_mode"></a>
+### Old Docker Mode Configuration Parameters <a id="docker_mode"></a>
 
 Docker mode exists to recombine JSON log lines split by the Docker daemon due to its line length limit. To use this feature, configure the tail plugin with the corresponding parser and then enable Docker mode:
 
@@ -83,7 +122,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ![](../../.gitbook/assets/image%20%286%29.png)
 
-### Multi-line example
+### Old Multi-line example
 
 When using multi-line configuration you need to first specify `Multiline On` in the configuration and use the `Parser_Firstline` and additional parser parameters `Parser_N` if needed. If we are trying to read the following Java Stacktrace as a single event
 
