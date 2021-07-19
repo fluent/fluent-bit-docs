@@ -156,7 +156,7 @@ Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, whic
 
 The Amazon ElasticSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon ElasticSearch Service with IAM Authentication.
 
-Fluent Bit supports sourcing AWS credentials from any of the standard sources \(for example, an [Amazon EKS IAM Role for a Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)\).
+See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
 
 Example configuration:
 
