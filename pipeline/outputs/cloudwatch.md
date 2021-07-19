@@ -10,6 +10,8 @@ The Amazon CloudWatch output plugin allows to ingest your records into the [Clou
 
 This is the documentation for the core Fluent Bit CloudWatch plugin written in C. It can replace the [aws/amazon-cloudwatch-logs-for-fluent-bit](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit) Golang Fluent Bit plugin released last year. The Golang plugin was named `cloudwatch`; this new high performance CloudWatch plugin is called `cloudwatch_logs` to prevent conflicts/confusion. Check the amazon repo for the Golang plugin for details on the deprecation/migration plan for the original plugin.
 
+See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+
 ## Configuration Parameters
 
 | Key | Description |
