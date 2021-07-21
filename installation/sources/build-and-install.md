@@ -165,7 +165,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_KINESIS\_FIREHOSE](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | On |
 | [FLB\_OUT\_KINESIS\_STREAMS](../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | On |
 | [FLB\_OUT\_FLOWCOUNTER](../../pipeline/outputs/flowcounter.md) | Enable Flowcounter output plugin | On |
-| [FLB\_OUT\_FORWARD](build-and-install.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
+| [FLB\_OUT\_FORWARD](../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
 | [FLB\_OUT\_GELF](../../pipeline/outputs/gelf.md) | Enable Gelf output plugin | On |
 | [FLB\_OUT\_HTTP](../../pipeline/outputs/http.md) | Enable HTTP output plugin | On |
 | [FLB\_OUT\_INFLUXDB](../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | On |
