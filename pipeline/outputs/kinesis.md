@@ -10,7 +10,7 @@ The Amazon Kinesis Data Streams output plugin allows to ingest your records into
 
 This is the documentation for the core Fluent Bit Kinesis plugin written in C. It has all the core features of the [aws/amazon-kinesis-streams-for-fluent-bit](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit) Golang Fluent Bit plugin released in 2019. The Golang plugin was named `kinesis`; this new high performance and highly efficient kinesis plugin is called `kinesis_streams` to prevent conflicts/confusion.
 
-See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) for details on how AWS credentials are fetched.
 
 ## Configuration Parameters
 

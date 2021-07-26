@@ -21,7 +21,7 @@ PS> Get-FileHash td-agent-bit-1.8.2-win32.exe
 
 ## Installing from ZIP archive
 
-Download a ZIP archive [from the download page](https://fluentbit.io/). There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
+Download a ZIP archive from above. There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
 
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
@@ -192,3 +192,4 @@ To create a ZIP package, call `cpack` as follows:
 ```text
 % cpack -G ZIP
 ```
+
