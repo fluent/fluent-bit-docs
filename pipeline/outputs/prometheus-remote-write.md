@@ -17,6 +17,7 @@ Important Note: The prometheus exporter only works with metric plugins, such as 
 | proxy | Specify an HTTP Proxy. The expected format of this value is [http://host:port](http://host:port). Note that _https_ is **not** supported yet. Please consider not setting this and use `HTTP_PROXY` environment variable instead, which supports both http and https. |  |
 | uri | Specify an optional HTTP URI for the target web server, e.g: /something | / |
 | header | Add a HTTP header key/value pair. Multiple headers can be set. |  |
+| log\_response\_payload | Log the response payload within the Fluent Bit log | false |
 
 ## Getting Started
 
@@ -50,5 +51,58 @@ The Prometheus remote write plugin only works with metrics collected by one of t
 
 # Note : it would be necessary to replace both YOUR_DATA_SOURCE_NAME and YOUR_LICENSE_KEY
 # with real values for this example to work.
+```
+
+## Examples
+
+The following are examples of using Prometheus remote write with hosted services below
+
+### Grafana Cloud
+
+With [Grafana Cloud](https://grafana.com/products/cloud/) hosted metrics you will need to use the specific host that is mentioned as well as specify the HTTP username and password given within the Grafana Cloud page.
+
+```text
+[OUTPUT]
+    name prometheus_remote_write
+    host prometheus-us-central1.grafana.net
+    match *
+    uri /api/prom/push
+    port 443
+    tls on
+    tls.verify on
+    http_user <GRAFANA Username>
+    http_passwd <GRAFANA Password>
+```
+
+### Logz.io Infrastructure Monitoring
+
+With Logz.io [hosted prometheus](https://logz.io/solutions/infrastructure-monitoring/) you will need to make use of the header option and add the Authorization Bearer with the proper key. The host and port may also differ within your specific hosted instance.
+
+```text
+[OUTPUT]
+    name prometheus_remote_write
+    host listener.logz.io
+    port 8053 
+    match *
+    header Authorization Bearer <LOGZIO Key>
+    tls on
+    tls.verify on
+    log_response_payload true
+```
+
+### Coralogix
+
+With [Coralogix Metrics](https://coralogix.com/platform/metrics/) you may need to customize the URI. Additionally, you will make use of the header key with Coralogix private key.
+
+```text
+[OUTPUT]
+    name prometheus_remote_write
+    host metrics-api.coralogix.com
+    uri prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity 
+    match *
+    port 443
+    tls on
+    tls.verify on
+    header Authorization Bearer <CORALOGIX Key>
 ```
 
