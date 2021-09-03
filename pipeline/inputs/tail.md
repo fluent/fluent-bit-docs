@@ -46,7 +46,7 @@ Starting from Fluent Bit v1.8 we have introduced a new Multiline core functional
 
 The new multiline core is exposed by the following configuration:
 
-| Key  | Description |
+| Key | Description |
 | :--- | :--- |
 | multiline.parser | Specify one or [Multiline Parser definition](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. |
 

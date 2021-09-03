@@ -4,13 +4,13 @@ description: Send logs and metrics to Amazon CloudWatch
 
 # Amazon CloudWatch
 
-![](../../.gitbook/assets/image%20%283%29%20%282%29%20%282%29%20%284%29%20%284%29%20%283%29%20%288%29.png)
+![](../../.gitbook/assets/image%20%283%29%20%282%29%20%282%29%20%284%29%20%284%29%20%283%29%20%283%29.png)
 
 The Amazon CloudWatch output plugin allows to ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided via [EMF](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
 
 This is the documentation for the core Fluent Bit CloudWatch plugin written in C. It can replace the [aws/amazon-cloudwatch-logs-for-fluent-bit](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit) Golang Fluent Bit plugin released last year. The Golang plugin was named `cloudwatch`; this new high performance CloudWatch plugin is called `cloudwatch_logs` to prevent conflicts/confusion. Check the amazon repo for the Golang plugin for details on the deprecation/migration plan for the original plugin.
 
-See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) for details on how AWS credentials are fetched.
 
 ## Configuration Parameters
 

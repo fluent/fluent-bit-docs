@@ -10,7 +10,7 @@ The Amazon Kinesis Data Firehose output plugin allows to ingest your records int
 
 This is the documentation for the core Fluent Bit Firehose plugin written in C. It can replace the [aws/amazon-kinesis-firehose-for-fluent-bit](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit) Golang Fluent Bit plugin released last year. The Golang plugin was named `firehose`; this new high performance and highly efficient firehose plugin is called `kinesis_firehose` to prevent conflicts/confusion.
 
-See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) for details on how AWS credentials are fetched.
 
 ## Configuration Parameters
 
