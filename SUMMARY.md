@@ -107,6 +107,7 @@
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
+  * [CheckList](pipeline/filters/checklist.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [Expect](pipeline/filters/expect.md)
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)

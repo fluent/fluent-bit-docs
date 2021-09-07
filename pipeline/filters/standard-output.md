@@ -4,15 +4,15 @@ The stdout filter plugin allows printing to the standard output the data flowed 
 
 The plugin has no configuration parameters, is very simple to use.
 
-### Command Line
+## Command Line
 
-```
+```text
 $ fluent-bit -i cpu -F stdout -m '*' -o null
 ```
 
 We have specified to gather [CPU](../inputs/cpu-metrics.md) usage metrics and print them out in a human-readable way when they flow through the stdout plugin.
 
-```
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2021 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -33,3 +33,4 @@ Fluent Bit v1.x.x
 [2021/06/04 14:54:04] [ warn] [engine] service will stop in 5 seconds
 [2021/06/04 14:54:08] [ info] [engine] service stopped
 ```
+
