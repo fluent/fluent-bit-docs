@@ -8,7 +8,7 @@ Previously defined in the [Buffering](../buffering.md) concept section, the `buf
 
 The `buffer` phase already contains the data in an immutable state, meaning, no other filter can be applied.
 
-![](../../.gitbook/assets/logging_pipeline_buffer%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29%20%282%29.png)
+![](../../.gitbook/assets/logging_pipeline_buffer%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29%20%282%29%20%282%29%20%282%29%20%282%29.png)
 
 {% hint style="info" %}
 Note that buffered data is not longer a raw text, instead it's in Fluent Bit internal binary representation.
