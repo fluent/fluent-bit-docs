@@ -2,7 +2,7 @@
 
 When the data or logs are ready to be routed to some destination, by default they are buffered in memory.
 
-![](../.gitbook/assets/logging_pipeline_buffer%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29.png)
+![](../.gitbook/assets/logging_pipeline_buffer%20%281%29%20%281%29%20%282%29%20%282%29%20%282%29%20%282%29%20%282%29%20%282%29.png)
 
 > Note that buffered data is not longer a raw text, instead it's in Fluent Bit internal binary representation.
 
