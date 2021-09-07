@@ -1,7 +1,8 @@
 ---
 description: >-
   The following plugin looks up if a value in a specified list exists and then
-  allows addition of a record to indicate if found.
+  allows the addition of a record to indicate if found. Introduced in version
+  1.8.4
 ---
 
 # CheckList
