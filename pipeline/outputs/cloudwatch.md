@@ -29,6 +29,7 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | metric\_namespace | An optional string representing the CloudWatch namespace for the metrics. See `Metrics Tutorial` section below for a full configuration. |
 | metric\_dimensions | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the fluent-bit config, metric\_dimensions is a comma and semicolon separated string. If you have only one list of dimensions, put the values as a comma separated string. If you want to put list of lists, use the list as semicolon separated strings. For example, if you set the value as 'dimension\_1,dimension\_2;dimension\_3', we will convert it as \[\[dimension\_1, dimension\_2\],\[dimension\_3\]\] |
 | sts\_endpoint | Specify a custom STS endpoint for the AWS STS API. |
+| auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. |
 
 ## Getting Started
 
