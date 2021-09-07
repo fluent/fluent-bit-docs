@@ -24,6 +24,7 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | endpoint | Specify a custom endpoint for the Kinesis API. |
 | sts\_endpoint | Custom endpoint for the STS API. |
+| auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. |
 
 ## Getting Started
 
