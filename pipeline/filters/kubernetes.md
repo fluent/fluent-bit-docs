@@ -381,6 +381,26 @@ If you are not seeing metadata added to your kubernetes logs and see the followi
 
 When Fluent Bit is deployed as a DaemonSet it generally runs with specific roles that allow the application to talk to the Kubernetes API server. If you are deployed in a more restricted environment check that all the Kubernetes roles are set correctly.
 
+You can test this by running the following command (replace `fluentbit-system` with the namespace where your fluentbit is installed)
+```text
+kubectl auth can-i list pods --as=system:serviceaccount:fluentbit-system:fluentbit
+```
+If set roles are configured correctly, it should simply respond with `yes`. 
+
+For instance, using Azure AKS, running the above command may respond with: 
+```text
+no - Azure does not have opinion for this user.
+```
+
+If you have connectivity to the API server, but still "could not get meta for POD" - debug logging might give you a message with `Azure does not have opinion for this user`. Then the following `subject` may need to be included in the `fluentbit` `ClusterRoleBinding`: 
+
+appended to `subjects` array:
+```yaml
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+```
+
 **Potential fix \#2: Check Kubernetes IPv6**
 
 There may be cases where you have IPv6 on in the environment and you need to enable this within Fluent Bit. Under the service tag please set the following option `ipv6` to `on` .
