@@ -48,10 +48,6 @@ It's common to find cases that if we have multiple destinations for a Chunk, one
 
 Starting from Fluent Bit v1.6, we introduced the new configuration property for output plugins called `storage.total_limit_size` which limits the number of Chunks that exists in the file system for a certain logical output destination. If one destinations reaches the `storage.total_limit_size` limit, the oldest Chunk from it queue for that logical output destination will be discarded.
 
-**Puasing on Storage Limit**
-
-Using the boolean service property `storage.max_chunks_pause` inputs will pause once their chunks match or exceed the number of storage chunks they can have in the up stage, `storage.max_chunks_up`.
-
 ## Configuration
 
 The storage layer configuration takes place in three areas:
@@ -96,6 +92,7 @@ Optionally, any Input plugin can configure their storage preference, the followi
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | storage.type | Specify the buffering mechanism to use. It can be _memory_ or _filesystem_. | memory |
+| storage.max_chunks_pause | Specify if file storage is to be paused when reaching the chunk limit. | off |
 
 The following example configure a service that offers filesystem buffering capabilities and two Input plugins being the first based in filesystem and the second with memory only.
 
