@@ -33,11 +33,22 @@ To obtain this information, a built-in filter plugin called _kubernetes_ talks t
 
 [Fluent Bit](http://fluentbit.io) must be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster. To get started run the following commands to create the namespace, service account and role setup:
 
+For Kubernetes v1.21 and below
+
 ```text
 $ kubectl create namespace logging
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role.yaml
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding.yaml
+```
+
+For Kubernetes v1.22
+
+```text
+$ kubectl create namespace logging
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml
 ```
 
 The next step is to create a ConfigMap that will be used by our Fluent Bit DaemonSet:
@@ -47,6 +58,14 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 ```
 
 The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112) should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+
+### Note for OpenShift
+
+If you are using Red Hat OpenShift you will also need to run the following
+
+```text
+$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-openshift-security-context-constraints.yaml
+```
 
 ### Note for Kubernetes &lt; v1.16
 
@@ -170,7 +189,7 @@ Typically, your deployment yaml contains the following volume configuration.
 spec:
   containers:
   - name: fluent-bit
-    image: my-repo/fluent-bit:1.5.0
+    image: my-repo/fluent-bit:1.8.4
     volumeMounts:
     - mountPath: C:\k
       name: k
