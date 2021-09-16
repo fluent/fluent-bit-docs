@@ -4,7 +4,7 @@ description: This page describes the main configuration file used by Fluent Bit
 
 # Configuration File
 
-One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows to use one configuration file which works at a global scope and uses the [Format and Schema](format-schema.md) defined previously.
+One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows the use of one configuration file which works at a global scope and uses the [Format and Schema](format-schema.md) defined previously.
 
 The main configuration file supports four types of sections:
 
@@ -13,7 +13,7 @@ The main configuration file supports four types of sections:
 * Filter
 * Output
 
-In addition, it's also possible to split the main configuration file in multiple files using the feature to include external files:
+In addition, it's also possible to split the main configuration file into multiple files using the feature to include external files:
 
 * Include File
 
@@ -24,10 +24,10 @@ The _Service_ section defines global properties of the service, the keys availab
 | Key | Description | Default Value |
 | :--- | :--- | :--- |
 | Flush | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins. | 5 |
-| Grace | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
+| Grace | Set the grace time in `seconds` as an Integer value. The engine loop uses a Grace timeout to define wait time on exit | 5 |
 | Daemon | Boolean value to set if Fluent Bit should run as a Daemon \(background\) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option. | Off |
 | Log\_File | Absolute path for an optional log file. By default all logs are redirected to the standard error interface \(stderr\). |  |
-| Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
+| Log\_Level | Set the logging verbosity level. Allowed values are: error, warn, info, debug and trace. Values are cumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info |
 | Parsers\_File | Path for a `parsers` configuration file. Multiple Parsers\_File entries can be defined within the section. |  |
 | Plugins\_File | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). |  |
 | Streams\_File | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../stream-processing/introduction.md). |  |
@@ -47,14 +47,14 @@ The following is an example of a _SERVICE_ section:
 
 ## Input <a id="config_input"></a>
 
-An _INPUT_ section defines a source \(related to an input plugin\), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
+An _INPUT_ section defines a source \(related to an input plugin\), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add its own configuration keys:
 
 | Key | Description |
 | :--- | :--- |
 | Name | Name of the input plugin. |
 | Tag | Tag name associated to all records coming from this plugin. |
 
-The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin \(as it provides dynamic tags\).
+The _Name_ is mandatory and it lets Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin \(as it provides dynamic tags\).
 
 ### Example
 
@@ -68,15 +68,15 @@ The following is an example of an _INPUT_ section:
 
 ## Filter <a id="config_filter"></a>
 
-A _FILTER_ section defines a filter \(related to an filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
+A _FILTER_ section defines a filter \(related to a filter plugin\), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add its own configuration keys:
 
 | Key | Description |  |
 | :--- | :--- | :--- |
 | Name | Name of the filter plugin. |  |
-| Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
+| Match | A pattern to match against the tags of incoming records. It's case sensitive and supports the star \(\*\) character as a wildcard. |  |
 | Match\_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
-The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match\_Regex_ is mandatory for all plugins. If both are specified, _Match\_Regex_ takes precedence.
+The _Name_ is mandatory and it lets Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match\_Regex_ is mandatory for all plugins. If both are specified, _Match\_Regex_ takes precedence.
 
 ### Example
 
@@ -90,12 +90,12 @@ The following is an example of an _FILTER_ section:
 
 ## Output <a id="config_output"></a>
 
-The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
+The _OUTPUT_ section specifies a destination that certain records should go to after a Tag match. The configuration supports the following keys:
 
 | Key | Description |  |
 | :--- | :--- | :--- |
 | Name | Name of the output plugin. |  |
-| Match | A pattern to match against the tags of incoming records. It's case sensitive and support the star \(\*\) character as a wildcard. |  |
+| Match | A pattern to match against the tags of incoming records. It's case sensitive and supports the star \(\*\) character as a wildcard. |  |
 | Match\_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |  |
 
 ### Example
@@ -135,7 +135,7 @@ You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [h
 
 ## Include File <a id="config_include_file"></a>
 
-To avoid complicated long configuration files is better to split specific parts in different files and call them \(include\) from one main file.
+To avoid complicated long configuration files, it is better to split specific parts into different files and call \(include\) them from one main file.
 
 Starting from Fluent Bit 0.12 the new configuration command _@INCLUDE_ has been added and can be used in the following way:
 
@@ -149,9 +149,9 @@ The configuration reader will try to open the path _somefile.conf_, if not found
 * Included file: somefile.conf
 * Fluent Bit will try to open somefile.conf, if it fails it will try /tmp/somefile.conf.
 
-The _@INCLUDE_ command only works at top-left level of the configuration line, it cannot be used inside sections.
+The _@INCLUDE_ command only works at the top-left level of the configuration line, it cannot be used inside sections.
 
-Wildcard character \(\*\) is supported to include multiple files, e.g:
+The wildcard character \(\*\) is supported to include multiple files, e.g:
 
 ```text
 @INCLUDE input_*.conf
