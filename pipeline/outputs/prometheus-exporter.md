@@ -10,7 +10,7 @@ Important Note: The prometheus exporter only works with metric  plugins, such as
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| listen | This is address Fluent Bit will bind to when hosting prometheus metrics | 0.0.0.0 |
+| host | This is address Fluent Bit will bind to when hosting prometheus metrics. Note: `listen` parameter is deprecated from v1.9.0. | 0.0.0.0 |
 | port | This is the port Fluent Bit will bind to when hosting prometheus metrics | 2021 |
 | add\_label | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields |  |
 
@@ -40,7 +40,7 @@ The Prometheus exporter only works with metrics captured from metric plugins. In
 [OUTPUT]
     name            prometheus_exporter
     match           node_metrics
-    listen          0.0.0.0
+    host            0.0.0.0
     port            2021
     # add user-defined labels
     add_label       app fluent-bit
