@@ -92,6 +92,7 @@ Optionally, any Input plugin can configure their storage preference, the followi
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | storage.type | Specify the buffering mechanism to use. It can be _memory_ or _filesystem_. | memory |
+| storage.max_chunks_pause | Specify if file storage is to be paused when reaching the chunk limit. | off |
 
 The following example configure a service that offers filesystem buffering capabilities and two Input plugins being the first based in filesystem and the second with memory only.
 
