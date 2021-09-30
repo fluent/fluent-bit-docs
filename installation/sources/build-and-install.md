@@ -183,4 +183,3 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_STDOUT](build-and-install.md) | Enable STDOUT output plugin | On |
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
-
