@@ -103,7 +103,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | option | description | default |
 | :--- | :--- | :--- |
 | FLB\_DEBUG | Build with debug mode (-g) | Yes |
-| FLB\_BACKTRACE | Enable stacktrace support | Yes |
+| FLB\_BACKTRACE | Enable stacktrace support | Yes  |
 | FLB\_VALGRIND | Enable Valgrind support | No |
 | FLB\_TRACE | Enable trace mode | No |
 | FLB\_RELEASE | Build with release mode (-O2 -g -DNDEBUG) | No |
