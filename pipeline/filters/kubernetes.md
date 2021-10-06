@@ -174,7 +174,7 @@ Kubernetes Filter do not care from where the logs comes from, but it cares about
 
 > If you have large pod specifications \(can be caused by large numbers of environment variables, etc.\), be sure to increase the `Buffer_Size` parameter of the kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
-If the configuration property **Kube\_Tag\_Prefix** was configured \(available on Fluent Bit &gt;= 1.1.x\), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to \_kube.\_var.logs.containers. , so the previous Tag content will be transformed from:
+If the configuration property **Kube\_Tag\_Prefix** was configured \(available on Fluent Bit &gt;= 1.1.x\), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to _kube.var.logs.containers._ , so the previous Tag content will be transformed from:
 
 ```text
 kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
