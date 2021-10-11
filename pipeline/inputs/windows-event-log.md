@@ -10,7 +10,10 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Channels | A comma-separated list of channels to read from. |  |
 | Interval\_Sec | Set the polling interval for each channel. \(optional\) | 1 |
+| Interval\_NSec | Set the polling interval for each channel (sub seconds. \(optional\) | 0 |
 | DB | Set the path to save the read offsets. \(optional\) |  |
+| String\_Inserts | Whether to include StringInserts in output records. \(optional\) | False  |
+| Use\_ANSI | Use ANSI encoding on eventlog messages. \(optional\) | False  |
 
 Note that if you do not set _db_, the plugin will read channels from the beginning on each startup.
 
