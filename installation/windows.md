@@ -1,13 +1,13 @@
 # Windows
 
-Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive \(for quick testing\) and an EXE installer \(for system installation\).
+Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
 
 ## Installation Packages
 
 The latest stable version is 1.8.8:
 
-| INSTALLERS | SHA256 CHECKSUMS |
-| :--- | :--- |
+| INSTALLERS                                                                                     | SHA256 CHECKSUMS                                                 |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | [td-agent-bit-1.8.8-win32.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.8-win32.exe) | 793acdec613f72d4c279eb6e8a829ae340b1f7e74bc434d3a68814fec82be25e |
 | [td-agent-bit-1.8.8-win32.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.8-win32.zip) | 9f75647ef1f793b923824df1be636125abd111704cf2ede8da51cd5f61b82653 |
 | [td-agent-bit-1.8.8-win64.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.8-win64.exe) | d26819648c6353b5d980ea840a87606dd1c5308f814cd7dc49f3e14e03ce201e |
@@ -15,7 +15,7 @@ The latest stable version is 1.8.8:
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
-```text
+```
 PS> Get-FileHash td-agent-bit-1.8.8-win32.exe
 ```
 
@@ -25,13 +25,13 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
-```text
+```
 PS> Expand-Archive td-agent-bit-1.8.8-win64.zip
 ```
 
 The ZIP package contains the following set of files.
 
-```text
+```
 td-agent-bit
 ├── bin
 │   ├── fluent-bit.dll
@@ -49,13 +49,13 @@ td-agent-bit
 
 Now, launch cmd.exe or PowerShell on your machine, and execute `fluent-bit.exe` as follows.
 
-```text
+```
 PS> .\bin\fluent-bit.exe -i dummy -o stdout
 ```
 
 If you see the following output, it's working fine!
 
-```text
+```
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
 Fluent Bit v1.8.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
@@ -82,21 +82,21 @@ Download an EXE installer from the [download page](https://fluentbit.io/download
 
 Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
 
-![](../.gitbook/assets/windows_installer%20%281%29.png)
+![](<../.gitbook/assets/windows_installer (1) (1).png>)
 
 Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\td-agent-bit\`, so you should be able to launch fluent-bit as follow after installation.
 
-```text
+```
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
 
 ## Windows Service Support
 
-Windows services are equivalent to "daemons" in UNIX \(i.e. long-running background processes\). Since v1.5.0, Fluent Bit has the native support for Windows Service.
+Windows services are equivalent to "daemons" in UNIX (i.e. long-running background processes). Since v1.5.0, Fluent Bit has the native support for Windows Service.
 
 Suppose you have the following installation layout:
 
-```text
+```
 C:\fluent-bit\
 ├── conf
 │   ├── fluent-bit.conf
@@ -108,13 +108,13 @@ C:\fluent-bit\
 
 To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
 
-```text
+```
 % sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
 ```
 
 Now Fluent Bit can be started and managed as a normal Windows service.
 
-```text
+```
 % sc.exe start fluent-bit
 % sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
@@ -125,7 +125,7 @@ SERVICE_NAME: fluent-bit
 
 To halt the Fluent Bit service, just execute the "stop" command.
 
-```text
+```
 % sc.exe stop fluent-bit
 ```
 
@@ -137,16 +137,16 @@ If you need to create a custom executable, you can use the following procedure t
 
 First, you need Microsoft Visual C++ to compile Fluent Bit. You can install the minimum toolkit by the following command:
 
-```text
+```
 PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
 PS> start vs.exe
 ```
 
-When asked which packages to install, choose "C++ Build Tools" \(make sure that "C++ CMake tools for Windows" is selected too\) and wait until the process finishes.
+When asked which packages to install, choose "C++ Build Tools" (make sure that "C++ CMake tools for Windows" is selected too) and wait until the process finishes.
 
 Also you need to install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
 
-```text
+```
 PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
 PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
 PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
@@ -156,7 +156,7 @@ PS> setx /M PATH "%PATH%;C:\WinFlexBison"
 
 Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
 
-```text
+```
 PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
 PS> start git.exe
 ```
@@ -167,21 +167,21 @@ Open the start menu on Windows and type "Developer Command Prompt".
 
 Clone the source code of Fluent Bit.
 
-```text
+```
 % git clone https://github.com/fluent/fluent-bit
 % cd fluent-bit/build
 ```
 
 Compile the source code.
 
-```text
+```
 % cmake .. -G "NMake Makefiles"
 % cmake --build .
 ```
 
 Now you should be able to run Fluent Bit:
 
-```text
+```
 % .\bin\debug\fluent-bit.exe -i dummy -o stdout
 ```
 
@@ -189,6 +189,6 @@ Now you should be able to run Fluent Bit:
 
 To create a ZIP package, call `cpack` as follows:
 
-```text
+```
 % cpack -G ZIP
 ```
