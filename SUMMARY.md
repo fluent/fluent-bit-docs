@@ -101,6 +101,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
+  * [Windows Event Log (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
 * [Parsers](pipeline/parsers/README.md)
   * [JSON](pipeline/parsers/json.md)
   * [Regular Expression](pipeline/parsers/regular-expression.md)

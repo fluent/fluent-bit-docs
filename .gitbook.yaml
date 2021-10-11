@@ -28,6 +28,7 @@ redirects:
     input/tcp:             ./pipeline/inputs/tcp.md
     input/thermal:         ./pipeline/inputs/thermal.md
     input/winlog:          ./pipeline/inputs/windows-event-log.md
+    input/winevtlog:       ./pipeline/inputs/windows-event-log-winevtlog.md
 
     # Filters
     filter/aws:             ./pipeline/filters/aws-metadata.md
