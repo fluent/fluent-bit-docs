@@ -36,3 +36,4 @@ See https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html.
 
 Fetches credentials for the EC2 instance profile's role.
 See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html.
+As of Fluent Bit version 1.8.8, IMDSv2 is used by default and IMDSv1 may be disabled. Prior versions of Fluent Bit require enabling IMDSv1 on EC2.
