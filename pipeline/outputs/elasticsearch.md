@@ -192,3 +192,16 @@ Example configuration:
     cloud_auth elastic:2vxxxxxxxxYV
 ```
 
+### Validation Failed: 1: an id must be provided if version type or value are set
+
+Since v1.8.2, Fluent Bit started using `create` method (instead of `index`) for data submission. This makes Flunt Bit compatible with Datastream introduced in Elasticsearch 7.9.
+
+If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit >= v1.8.2, you can fix it up by turning on `Generate_ID` as follows:
+
+```text
+[OUTPUT]
+    Name es
+    Match *
+    Host  192.168.12.1
+    Generate_ID on
+```
