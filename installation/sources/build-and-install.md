@@ -172,7 +172,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_KAFKA](../../pipeline/outputs/kafka.md) | Enable Kafka output | Off |
 | [FLB\_OUT\_KAFKA\_REST](../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | On |
 | FLB\_OUT\_LIB | Enable Lib output plugin | On |
-| [FLB\_OUT\_NATS](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
+| [FLB\_OUT\_NATS](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | On |
 | FLB\_OUT\_NULL | Enable NULL output plugin | On |
 | FLB\_OUT\_PGSQL | Enable PostgreSQL output plugin | On |
 | FLB\_OUT\_PLOT | Enable Plot output plugin | On |
