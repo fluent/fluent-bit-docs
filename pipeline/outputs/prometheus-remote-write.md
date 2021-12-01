@@ -44,7 +44,7 @@ The Prometheus remote write plugin only works with metrics collected by one of t
     Host                 metric-api.newrelic.com
     Port                 443
     Uri                  /prometheus/v1/write?prometheus_server=YOUR_DATA_SOURCE_NAME
-    Header               bearer_token YOUR_LICENSE_KEY
+    Header               Authorization Bearer YOUR_LICENSE_KEY
     Log_response_payload True
     Tls                  On
     Tls.verify           On
