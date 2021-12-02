@@ -32,32 +32,77 @@ server {
 }
 ```
 
+### Configuration with NGINX Plus REST API
 
+A much more powerful and flexible metrics API is available with NGINX Plus. A path needs to be configured 
+in NGINX Plus first.
+
+```
+server {
+	listen       80;
+	listen  [::]:80;
+	server_name  localhost;
+
+	# enable /api/ location with appropriate access control in order
+	# to make use of NGINX Plus API
+	#
+	location /api/ {
+		api write=on;
+		# configure to allow requests from the server running fluent-bit
+		allow 192.168.1.*;
+		deny all;
+	}
+}
+```
 
 ### Command Line
 
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```bash
-$ fluent-bit -i health://127.0.0.1:80 -o stdout
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -o stdout
 ```
+
+To gather metrics from the command line with the NGINX Plus REST API we need to turn on the
+nginx_plus property, like so:
+
+```bash
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p nginx_plus=on -p status_url=/api -o stdout
+```
+
 
 ### Configuration File
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```python
+```ini
 [INPUT]
-    Name          health
+    Name          nginx_metrics
     Host          127.0.0.1
     Port          80
-    Interval_Sec  1
-    Interval_NSec 0
+    Status_URL    /status
 
 [OUTPUT]
     Name   stdout
     Match  *
 ```
+
+And for NGINX Plus API:
+
+```ini
+[INPUT]
+    Name          nginx_metrics
+    Nginx_Plus    on
+    Host          127.0.0.1
+    Port          80
+    Status_URL    /api
+
+[OUTPUT]
+    Name   stdout
+    Match  *
+```
+
+
 
 ## Testing
 
