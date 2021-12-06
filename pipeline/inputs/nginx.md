@@ -125,3 +125,115 @@ Fluent Bit v1.x.x
 2021-10-14T19:37:37.228691854Z nginx_connections_waiting = 2008
 2021-10-14T19:37:35.229919621Z nginx_up = 1
 ```
+
+## Exported Metrics
+
+This documentation is copied from the nginx prometheus exporter metrics documentation: 
+[https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/README.md].
+
+### Common metrics:
+Name | Type | Description | Labels
+----|----|----|----|
+`nginx_up` | Gauge | Shows the status of the last metric scrape: `1` for a successful scrape and `0` for a failed one | [] |
+
+### Metrics for NGINX OSS:
+#### [Stub status metrics](https://nginx.org/en/docs/http/ngx_http_stub_status_module.html)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginx_connections_accepted` | Counter | Accepted client connections. | [] |
+`nginx_connections_active` | Gauge | Active client connections. | [] |
+`nginx_connections_handled` | Counter | Handled client connections. | [] |
+`nginx_connections_reading` | Gauge | Connections where NGINX is reading the request header. | [] |
+`nginx_connections_waiting` | Gauge | Idle client connections. | [] |
+`nginx_connections_writing` | Gauge | Connections where NGINX is writing the response back to the client. | [] |
+`nginx_http_requests_total` | Counter | Total http requests. | [] |
+
+### Metrics for NGINX Plus:
+#### [Connections](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_connections)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_connections_accepted` | Counter | Accepted client connections | [] |
+`nginxplus_connections_active` | Gauge | Active client connections | [] |
+`nginxplus_connections_dropped` | Counter | Dropped client connections dropped | [] |
+`nginxplus_connections_idle` | Gauge | Idle client connections | [] |
+
+#### [HTTP](https://nginx.org/en/docs/http/ngx_http_api_module.html#http_)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_http_requests_total` | Counter | Total http requests | [] |
+`nginxplus_http_requests_current` | Gauge | Current http requests | [] |
+
+#### [SSL](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_ssl_object)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_ssl_handshakes` | Counter | Successful SSL handshakes | [] |
+`nginxplus_ssl_handshakes_failed` | Counter | Failed SSL handshakes | [] |
+`nginxplus_ssl_session_reuses` | Counter | Session reuses during SSL handshake | [] |
+
+#### [HTTP Server Zones](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_http_server_zone)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_server_zone_processing` | Gauge | Client requests that are currently being processed | `server_zone` |
+`nginxplus_server_zone_requests` | Counter | Total client requests | `server_zone` |
+`nginxplus_server_zone_responses` | Counter | Total responses sent to clients | `code` (the response status code. The values are: `1xx`, `2xx`, `3xx`, `4xx` and `5xx`), `server_zone` |
+`nginxplus_server_zone_discarded` | Counter | Requests completed without sending a response | `server_zone` |
+`nginxplus_server_zone_received` | Counter | Bytes received from clients | `server_zone` |
+`nginxplus_server_zone_sent` | Counter | Bytes sent to clients | `server_zone` |
+
+#### [Stream Server Zones](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_stream_server_zone)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_stream_server_zone_processing` | Gauge | Client connections that are currently being processed | `server_zone` |
+`nginxplus_stream_server_zone_connections` | Counter | Total connections | `server_zone` |
+`nginxplus_stream_server_zone_sessions` | Counter | Total sessions completed | `code` (the response status code. The values are: `2xx`, `4xx`, and `5xx`), `server_zone` |
+`nginxplus_stream_server_zone_discarded` | Counter | Connections completed without creating a session | `server_zone` |
+`nginxplus_stream_server_zone_received` | Counter | Bytes received from clients | `server_zone` |
+`nginxplus_stream_server_zone_sent` | Counter | Bytes sent to clients | `server_zone` |
+
+#### [HTTP Upstreams](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_http_upstream)
+
+> Note: for the `state` metric, the string values are converted to float64 using the following rule: `"up"` -> `1.0`, `"draining"` -> `2.0`, `"down"` -> `3.0`, `"unavail"` –> `4.0`, `"checking"` –> `5.0`, `"unhealthy"` -> `6.0`.
+
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_upstream_server_state` | Gauge | Current state | `server`, `upstream` |
+`nginxplus_upstream_server_active` | Gauge | Active connections | `server`, `upstream` |
+`nginxplus_upstream_server_limit` | Gauge | Limit for connections which corresponds to the max_conns parameter of the upstream server. Zero value means there is no limit | `server`, `upstream` |
+`nginxplus_upstream_server_requests` | Counter | Total client requests | `server`, `upstream` |
+`nginxplus_upstream_server_responses` | Counter | Total responses sent to clients | `code` (the response status code. The values are: `1xx`, `2xx`, `3xx`, `4xx` and `5xx`), `server`, `upstream` |
+`nginxplus_upstream_server_sent` | Counter | Bytes sent to this server | `server`, `upstream` |
+`nginxplus_upstream_server_received` | Counter | Bytes received to this server | `server`, `upstream` |
+`nginxplus_upstream_server_fails` | Counter | Number of unsuccessful attempts to communicate with the server | `server`, `upstream` |
+`nginxplus_upstream_server_unavail` | Counter | How many times the server became unavailable for client requests (state 'unavail') due to the number of unsuccessful attempts reaching the max_fails threshold | `server`, `upstream` |
+`nginxplus_upstream_server_header_time` | Gauge | Average time to get the response header from the server | `server`, `upstream` |
+`nginxplus_upstream_server_response_time` | Gauge | Average time to get the full response from the server | `server`, `upstream` |
+`nginxplus_upstream_keepalives` | Gauge | Idle keepalive connections | `upstream` |
+`nginxplus_upstream_zombies` | Gauge | Servers removed from the group but still processing active client requests | `upstream` |
+
+#### [Stream Upstreams](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_stream_upstream)
+
+> Note: for the `state` metric, the string values are converted to float64 using the following rule: `"up"` -> `1.0`, `"down"` -> `3.0`, `"unavail"` –> `4.0`, `"checking"` –> `5.0`, `"unhealthy"` -> `6.0`.
+
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_stream_upstream_server_state` | Gauge | Current state | `server`, `upstream` |
+`nginxplus_stream_upstream_server_active` | Gauge | Active connections | `server` , `upstream` |
+`nginxplus_stream_upstream_server_limit` | Gauge | Limit for connections which corresponds to the max_conns parameter of the upstream server. Zero value means there is no limit | `server` , `upstream` |
+`nginxplus_stream_upstream_server_connections` | Counter | Total number of client connections forwarded to this server | `server`, `upstream` |
+`nginxplus_stream_upstream_server_connect_time` | Gauge | Average time to connect to the upstream server | `server`, `upstream`
+`nginxplus_stream_upstream_server_first_byte_time` | Gauge | Average time to receive the first byte of data | `server`, `upstream` |
+`nginxplus_stream_upstream_server_response_time` | Gauge | Average time to receive the last byte of data | `server`, `upstream` |
+`nginxplus_stream_upstream_server_sent` | Counter | Bytes sent to this server | `server`, `upstream` |
+`nginxplus_stream_upstream_server_received` | Counter | Bytes received from this server | `server`, `upstream` |
+`nginxplus_stream_upstream_server_fails` | Counter | Number of unsuccessful attempts to communicate with the server | `server`, `upstream` |
+`nginxplus_stream_upstream_server_unavail` | Counter | How many times the server became unavailable for client connections (state 'unavail') due to the number of unsuccessful attempts reaching the max_fails threshold | `server`, `upstream` |
+`nginxplus_stream_upstream_zombies` | Gauge | Servers removed from the group but still processing active client connections | `upstream`|
+
+#### [Location Zones](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_http_location_zone)
+Name | Type | Description | Labels
+----|----|----|----|
+`nginxplus_location_zone_requests` | Counter | Total client requests | `location_zone` |
+`nginxplus_location_zone_responses` | Counter | Total responses sent to clients | `code` (the response status code. The values are: `1xx`, `2xx`, `3xx`, `4xx` and `5xx`), `location_zone` |
+`nginxplus_location_zone_discarded` | Counter | Requests completed without sending a response | `location_zone` |
+`nginxplus_location_zone_received` | Counter | Bytes received from clients | `location_zone` |
+`nginxplus_location_zone_sent` | Counter | Bytes sent to clients | `location_zone` |
