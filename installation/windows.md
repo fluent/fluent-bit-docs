@@ -4,19 +4,19 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Installation Packages
 
-The latest stable version is 1.8.10:
+The latest stable version is 1.8.11:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [td-agent-bit-1.8.10-win32.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.10-win32.exe) | 3505e6086be311ab32a705d87eb4673497038e3818812d100dc26bb1d3754b46 |
-| [td-agent-bit-1.8.10-win32.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.10-win32.zip) | e4029303b30234bb69614bc3dc2c8e58487d9efd0bd33513f408042548bed48c |
-| [td-agent-bit-1.8.10-win64.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.10-win64.exe) | c50999149c2428a9115900b0b7432b1fefc61e9e5efdf991e2db098d328e2f46 |
-| [td-agent-bit-1.8.10-win64.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.10-win64.zip) | dd67fc4e8d7382177a4586cfc0c11f3394584fc1a965ac5cd12ff6a7ab3d8921 |
+| [td-agent-bit-1.8.11-win32.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win32.exe) | 3505e6086be311ab32a705d87eb4673497038e3818812d100dc26bb1d3754b46 |
+| [td-agent-bit-1.8.11-win32.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win32.zip) | e20ab8be35091bfa061f126d186380670e656d8d675d3680df6fab9888788c8b |
+| [td-agent-bit-1.8.11-win64.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win64.exe) | 2c0de0f776928de6a76877ef077ce2b3b5e7d0646b912266baadcfdb843be400 |
+| [td-agent-bit-1.8.11-win64.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win64.zip) | 9e589d8ec7a24d8faa95d0eb6c0aac721c4b26e0a2a1c36a36f2559ebea1e404 |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```
-PS> Get-FileHash td-agent-bit-1.8.10-win32.exe
+PS> Get-FileHash td-agent-bit-1.8.11-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -26,7 +26,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```
-PS> Expand-Archive td-agent-bit-1.8.10-win64.zip
+PS> Expand-Archive td-agent-bit-1.8.11-win64.zip
 ```
 
 The ZIP package contains the following set of files.
