@@ -12,35 +12,33 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 Connectivity, transport and authentication configuration properties:
 
-| Key              | Description                                                  | default   |
-| ---------------- | ------------------------------------------------------------ | --------- |
-| host             | IP address or hostname of the target Splunk service.         | 127.0.0.1 |
-| port             | TCP port of the target Splunk service.                       | 8088      |
-| splunk_token     | Specify the Authentication Token for the HTTP Event Collector interface. |           |
-| http_user        | Optional username for Basic Authentication on HEC            |           |
-| http_passwd      | Password for user defined in HTTP_User                       |           |
-| http_buffer_size | Buffer size used to receive Splunk HTTP responses            | 2M        |
-| compress         | Set payload compression mechanism. The only available option is ```gzip```. |           |
+| Key | Description | default |
+| :--- | :--- | :--- |
+| host | IP address or hostname of the target Splunk service. | 127.0.0.1 |
+| port | TCP port of the target Splunk service. | 8088 |
+| splunk\_token | Specify the Authentication Token for the HTTP Event Collector interface. |  |
+| http\_user | Optional username for Basic Authentication on HEC |  |
+| http\_passwd | Password for user defined in HTTP\_User |  |
+| http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
+| compress | Set payload compression mechanism. The only available option is `gzip`. |  |
 
-Content and Splunk metadata (fields) handling configuration properties:
+Content and Splunk metadata \(fields\) handling configuration properties:
 
-| Key                  | Description                                                  | default |
-| -------------------- | ------------------------------------------------------------ | ------- |
-| splunk_send_raw      | When enabled, the record keys and values are set in the top level of the map instead of under the event key. Refer to the _Sending Raw Events_ section from the docs for more details to make this option work properly. | off     |
-| event_key            | Specify the key name that will be used to send a single value as part of the record. |         |
-| event_host           | Specify the key name that contains the host value. This option allows a record accessors pattern. |         |
-| event_source         | Set the source value to assign to the event data.            |         |
-| event_sourcetype     | Set the sourcetype value to assign to the event data.        |         |
-| event_sourcetype_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in ```event_sourcetype```. |         |
-| event_index          | The name of the index by which the event data is to be indexed. |         |
-| event_index_key      | Set a record key that will populate the ```index``` field. If the key is found, it will have precedence over the value set in ```event_index```. |         |
-| event_field          | Set event fields for the record. This option can be set multiple times and the format is ```key_name record_accessor_pattern```. |         |
-
-
+| Key | Description | default |
+| :--- | :--- | :--- |
+| splunk\_send\_raw | When enabled, the record keys and values are set in the top level of the map instead of under the event key. Refer to the _Sending Raw Events_ section from the docs for more details to make this option work properly. | off |
+| event\_key | Specify the key name that will be used to send a single value as part of the record. |  |
+| event\_host | Specify the key name that contains the host value. This option allows a record accessors pattern. |  |
+| event\_source | Set the source value to assign to the event data. |  |
+| event\_sourcetype | Set the sourcetype value to assign to the event data. |  |
+| event\_sourcetype\_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in `event_sourcetype`. |  |
+| event\_index | The name of the index by which the event data is to be indexed. |  |
+| event\_index\_key | Set a record key that will populate the `index` field. If the key is found, it will have precedence over the value set in `event_index`. |  |
+| event\_field | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`. |  |
 
 ### TLS / SSL
 
-Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
 
 ## Getting Started
 

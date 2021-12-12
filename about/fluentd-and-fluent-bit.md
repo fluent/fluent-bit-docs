@@ -4,7 +4,7 @@ description: The Production Grade Ecosystem
 
 # Fluentd & Fluent Bit
 
-Logging and data processing in general can be complex, and at scale a bit more, that's why [Fluentd](https://www.fluentd.org) was born. But now is more than a simple tool, it's a full ecosystem that contains SDKs for different languages and sub projects like [Fluent Bit](https://fluentbit.io).
+Logging and data processing in general can be complex, and at scale a bit more, that's why [Fluentd](https://www.fluentd.org) was born. Fluentd has become more than a simple tool, it has grown into a fullscale ecosystem that contains SDKs for different languages and sub-projects like [Fluent Bit](https://fluentbit.io).
 
 On this page, we will describe the relationship between the [Fluentd](http://fluentd.org) and [Fluent Bit](http://fluentbit.io) open source projects, as a summary we can say both are:
 
