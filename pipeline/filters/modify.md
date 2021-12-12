@@ -57,7 +57,7 @@ The plugin supports the following conditions:
 | Condition | Parameter | Parameter 2 | Description |
 | :--- | :--- | :--- | :--- |
 | Key\_exists | STRING:KEY | NONE | Is `true` if `KEY` exists |
-| Key\_does\_not\_exist | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
+| Key\_does\_not\_exist | STRING:KEY | NONE | Is `true` if `KEY` does not exist |
 | A\_key\_matches | REGEXP:KEY | NONE | Is `true` if a key matches regex `KEY` |
 | No\_key\_matches | REGEXP:KEY | NONE | Is `true` if no key matches regex `KEY` |
 | Key\_value\_equals | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |

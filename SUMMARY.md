@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v1.7 Documentation](README.md)
+* [Fluent Bit v1.8 Documentation](README.md)
 
 ## About
 
@@ -53,6 +53,7 @@
   * [Commands](administration/configuring-fluent-bit/commands.md)
   * [Upstream Servers](administration/configuring-fluent-bit/upstream-servers.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
+  * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
   * [Record Accessor](administration/configuring-fluent-bit/record-accessor.md)
 * [Security](administration/security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
@@ -71,7 +72,9 @@
 
 ## Data Pipeline <a id="pipeline"></a>
 
+* [Pipeline Monitoring](pipeline/pipeline-monitoring.md)
 * [Inputs](pipeline/inputs/README.md)
+  * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU Metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O Metrics](pipeline/inputs/disk-io-metrics.md)
@@ -87,7 +90,7 @@
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Metrics](pipeline/inputs/network-io-metrics.md)
-  * [Process](pipeline/inputs/process.md)
+  * [Process Metrics](pipeline/inputs/process.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
@@ -106,6 +109,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [CheckList](pipeline/filters/checklist.md)
   * [Expect](pipeline/filters/expect.md)
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)
   * [Grep](pipeline/filters/grep.md)
@@ -113,13 +117,16 @@
   * [Lua](pipeline/filters/lua.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
+  * [Modify](pipeline/filters/modify.md)
+  * [Multiline](pipeline/filters/multiline-stacktrace.md)
+  * [Nest](pipeline/filters/nest.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
-  * [Nest](pipeline/filters/nest.md)
-  * [Modify](pipeline/filters/modify.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
 * [Outputs](pipeline/outputs/README.md)
+  * [Prometheus Exporter](pipeline/outputs/prometheus-exporter.md)
+  * [Prometheus Remote Write](pipeline/outputs/prometheus-remote-write.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
