@@ -14,6 +14,14 @@ Security Warning: Onigmo is a _backtracking_ regex engine. You need to be carefu
 
 From a configuration perspective, when the format is set to **regex**, is mandatory and expected that a _Regex_ configuration key exists.
 
+## Configuration Parameters
+
+The regex parser supports the following configuration parameters.
+
+|Key|Description|Default Value|
+|-------|------------|--------|
+|`Skip_Empty_Values`|If enabled, the parser ignores empty value of the record.| True|
+
 The following parser configuration example aims to provide rules that can be applied to an Apache HTTP Server log entry:
 
 ```python
