@@ -80,7 +80,7 @@ Basic example of `Tag_Keys` usage:
     Tag_Keys      method path
 ```
 
-With **Auto\_Tags=On** in this example cause error, because every parsed field value type is _string_. Best usage of this option in metrics like record where one ore more field value is not _string_ typed.
+With **Auto\_Tags=On** in this example cause error, because every parsed field value type is _string_. Best usage of this option in metrics like record where one or more field value is not _string_ typed.
 
 ### Testing
 

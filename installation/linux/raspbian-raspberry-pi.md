@@ -24,18 +24,6 @@ On Debian and derivative systems such as Raspbian, you need to add our APT serve
 deb https://packages.fluentbit.io/raspbian/buster buster main
 ```
 
-#### Raspbian 9 \(Stretch\)
-
-```text
-deb https://packages.fluentbit.io/raspbian/stretch stretch main
-```
-
-#### Raspbian 8 \(Jessie\)
-
-```text
-deb https://packages.fluentbit.io/raspbian/jessie jessie main
-```
-
 ### Update your repositories database
 
 Now let your system update the _apt_ database:

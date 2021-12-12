@@ -48,3 +48,11 @@ Fluent Bit v1.x.x
 [4] stdin.0: [1475898290, {"key"=>"some value"}]
 ```
 
+## Configuration Parameters <a id="config"></a>
+
+The plugin supports the following configuration parameters:
+
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Buffer\_Size | Set the buffer size to read data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 16k |
+

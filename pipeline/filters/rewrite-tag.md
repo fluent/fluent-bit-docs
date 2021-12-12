@@ -154,7 +154,7 @@ Fluent Bit v1.x.x
 
 ## Monitoring
 
-As described in the [Monitoring](https://github.com/fluent/fluent-bit-docs/tree/d0cf0e2ce3020b2d5d7fcd2781b2e2510b8e4e9e/administration/monitoring/README.md) section, every component of the pipeline of Fluent Bit exposes metrics. The basic metrics exposed by this filter are `drop_records` and `add_records`, they summarize the total of dropped records from the incoming data chunk or the new records added.
+As described in the [Monitoring](../../administration/monitoring.md) section, every component of the pipeline of Fluent Bit exposes metrics. The basic metrics exposed by this filter are `drop_records` and `add_records`, they summarize the total of dropped records from the incoming data chunk or the new records added.
 
 Since `rewrite_tag` emit new records that goes through the beginning of the pipeline, it exposes an additional metric called `emit_records` that summarize the total number of emitted records.
 
