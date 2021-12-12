@@ -10,6 +10,16 @@ Currently, the [AWS for Fluent Bit](https://github.com/aws/aws-for-fluent-bit) i
 * [Amazon Kinesis Firehose](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit)
 * [Amazon Kinesis Streams](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit)
 
+Fluent Bit includes Amazon CloudWatch Logs plugin named `cloudwatch_logs`, Amazon Kinesis Firehose plugin named `kinesis_firehose` and Amazon Kinesis Data Streams plugin named `kinesis_streams` which are higher performance than Go plugins.
+
+* [Amazon CloudWatch](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch)
+* [Amazon Kinesis Data Firehose](https://docs.fluentbit.io/manual/pipeline/outputs/firehose)
+* [Amazon Kinesis Data Streams](https://docs.fluentbit.io/manual/pipeline/outputs/kinesis)
+
+Also, Fluent Bit includes S3 output plugin named `s3`.
+
+* [Amazon S3](https://docs.fluentbit.io/manual/pipeline/outputs/s3)
+
 ## Versions and Regional Repositories
 
 AWS vends their container image via [Docker Hub](https://hub.docker.com/r/amazon/aws-for-fluent-bit), and a set of highly available regional Amazon ECR repositories. For more information, see the [AWS for Fluent Bit GitHub repo](https://github.com/aws/aws-for-fluent-bit#public-images).

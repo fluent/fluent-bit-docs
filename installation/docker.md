@@ -4,21 +4,32 @@ Fluent Bit container images are available on Docker Hub ready for production usa
 
 ## Tags and Versions
 
-The following table describe the tags are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
+The following table describes the tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.7 | x86\_64, arm64v8, arm32v7 | Latest release of 1.7.x series. |
-| 1.7.4 | x86\_64, arm64v8, arm32v7 | Release [v1.7.4](https://fluentbit.io/announcements/v1.7.4/) |
-| 1.7-debug, 1.7.4-debug | x86\_64 | v1.7.x releases + Busybox |
-| 1.7.3 | x86\_64, arm64v8, arm32v7 | Release [v1.7.3](https://fluentbit.io/announcements/v1.7.3/) |
-| 1.7-debug, 1.7.3-debug | x86\_64 | v1.7.x releases + Busybox |
-| 1.7.2 | x86\_64, arm64v8, arm32v7 | Release [v1.7.2](https://fluentbit.io/announcements/v1.7.2/) |
-| 1.7-debug, 1.7.2-debug | x86\_64 | v1.7.x releases + Busybox |
-| 1.7.1 | x86\_64, arm64v8, arm32v7 | Release [v1.7.1](https://fluentbit.io/announcements/v1.7.1/) |
-| 1.7-debug, 1.7.1-debug | x86\_64 | v1.7.x releases + Busybox |
-| 1.7.0 | x86\_64, arm64v8, arm32v7 | Release [v1.7.0](https://fluentbit.io/announcements/v1.7.0/) |
-| 1.7-debug, 1.7.0-debug | x86\_64 | v1.7.x releases + Busybox |
+| 1.8.11 | x86\_64, arm64v8, arm32v7 | Release [v1.8.11](https://fluentbit.io/announcements/v1.8.11/) |
+| 1.8-debug, 1.8.11-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.10 | x86\_64, arm64v8, arm32v7 | Release [v1.8.10](https://fluentbit.io/announcements/v1.8.10/) |
+| 1.8-debug, 1.8.10-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.9 | x86\_64, arm64v8, arm32v7 | Release [v1.8.9](https://fluentbit.io/announcements/v1.8.9/) |
+| 1.8-debug, 1.8.9-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.8 | x86\_64, arm64v8, arm32v7 | Release [v1.8.8](https://fluentbit.io/announcements/v1.8.8/) |
+| 1.8-debug, 1.8.8-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.7 | x86\_64, arm64v8, arm32v7 | Release [v1.8.7](https://fluentbit.io/announcements/v1.8.7/) |
+| 1.8-debug, 1.8.7-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.6 | x86\_64, arm64v8, arm32v7 | Release [v1.8.6](https://fluentbit.io/announcements/v1.8.6/) |
+| 1.8-debug, 1.8.6-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.5 | x86\_64, arm64v8, arm32v7 | Release [v1.8.5](https://fluentbit.io/announcements/v1.8.5/) |
+| 1.8-debug, 1.8.5-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.4 | x86\_64, arm64v8, arm32v7 | Release [v1.8.4](https://fluentbit.io/announcements/v1.8.4/) |
+| 1.8-debug, 1.8.4-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.3 | x86\_64, arm64v8, arm32v7 | Release [v1.8.3](https://fluentbit.io/announcements/v1.8.3/) |
+| 1.8-debug, 1.8.3-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.2 | x86\_64, arm64v8, arm32v7 | Release [v1.8.2](https://fluentbit.io/announcements/v1.8.2/) |
+| 1.8-debug, 1.8.2-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.1 | x86\_64, arm64v8, arm32v7 | Release [v1.8.1](https://fluentbit.io/announcements/v1.8.1/) |
+| 1.8-debug, 1.8.1-debug | x86\_64 | v1.8.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
@@ -26,7 +37,7 @@ It's strongly suggested that you always use the latest image of Fluent Bit.
 
 Our x86\_64 stable image is based in [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. Optionally, we provide **debug** images for x86\_64 which contains Busybox that can be used to troubleshoot or testing purposes.
 
-In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
+In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
 For every architecture we build the layers using the following base images:
 
@@ -38,22 +49,22 @@ For every architecture we build the layers using the following base images:
 
 ## Getting Started
 
-Download the last stable image from 1.7 series:
+Download the last stable image from 1.8 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.7
+$ docker pull fluent/fluent-bit:1.8
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.7 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
+$ docker run -ti fluent/fluent-bit:1.8 /fluent-bit/bin/fluent-bit -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
 ```text
-Fluent-Bit v1.7.x
+Fluent-Bit v1.8.x
 Copyright (C) Treasure Data
 
 [2019/10/01 12:29:02] [ info] [engine] started

@@ -1,26 +1,26 @@
 # GELF
 
-**GELF** is [Graylog](https://www.graylog.org/) Extended Log Format. The GELF output plugin allows to send logs in GELF format directly to a Graylog input using TLS, TCP or UDP protocols.
+**GELF** is [Graylog](https://www.graylog.org) Extended Log Format. The GELF output plugin allows to send logs in GELF format directly to a Graylog input using TLS, TCP or UDP protocols.
 
 The following instructions assumes that you have a fully operational Graylog server running in your environment.
 
 ## Configuration Parameters
 
-According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\_\*\_Key\_ key in this plugin.
+According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| Match | Pattern to match which tags of logs to be outputted by this plugin |  |
-| Host | IP address or hostname of the target Graylog server | 127.0.0.1 |
-| Port | The port that your Graylog GELF input is listening on | 12201 |
-| Mode | The protocol to use \(`tls`, `tcp` or `udp`\) | udp |
-| Gelf\_Short\_Message\_Key | A short descriptive message \(**MUST be set in GELF**\) | short\_message |
-| Gelf\_Timestamp\_Key | Your log timestamp \(_SHOULD be set in GELF_\) | timestamp |
-| Gelf\_Host\_Key | Key which its value is used as the name of the host, source or application that sent this message. \(**MUST be set in GELF**\) | host |
-| Gelf\_Full\_Message\_Key | Key to use as the long message that can i.e. contain a backtrace. \(_Optional in GELF_\) | full\_message |
-| Gelf\_Level\_Key | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) \(between 0 and 7\). \(_Optional in GELF_\) | level |
-| Packet\_Size | If transport protocol is `udp`, you can set the size of packets to be sent. | 1420 |
-| Compress | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed. | true |
+| Key                    | Description                                                                                                                                                                 | default       |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Match                  | Pattern to match which tags of logs to be outputted by this plugin                                                                                                          |               |
+| Host                   | IP address or hostname of the target Graylog server                                                                                                                         | 127.0.0.1     |
+| Port                   | The port that your Graylog GELF input is listening on                                                                                                                       | 12201         |
+| Mode                   | The protocol to use (`tls`, `tcp` or `udp`)                                                                                                                                 | udp           |
+| Gelf_Short_Message_Key | A short descriptive message (**MUST be set in GELF**)                                                                                                                       | short_message |
+| Gelf_Timestamp_Key     | Your log timestamp (_SHOULD be set in GELF_)                                                                                                                                | timestamp     |
+| Gelf_Host_Key          | Key which its value is used as the name of the host, source or application that sent this message. (**MUST be set in GELF**)                                                | host          |
+| Gelf_Full_Message_Key  | Key to use as the long message that can i.e. contain a backtrace. (_Optional in GELF_)                                                                                      | full_message  |
+| Gelf_Level_Key         | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between 0 and 7). (_Optional in GELF_) | level         |
+| Packet_Size            | If transport protocol is `udp`, you can set the size of packets to be sent.                                                                                                 | 1420          |
+| Compress               | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed.                                                                             | true          |
 
 ### TLS / SSL
 
@@ -33,7 +33,7 @@ GELF output plugin supports TLS/SSL, for more details about the properties avail
   1. Value of `Gelf_Timestamp_Key` provided in configuration
   2. Value of `timestamp` key
   3. If you're using [Docker JSON parser](../parsers/json.md), this parser can parse time and use it as timestamp of message. If all above fail, Fluent Bit tries to get timestamp extracted by your parser.
-  4. Timestamp does not set by Fluent Bit. In this case, your Graylog server will set it to the current timestamp \(now\).
+  4. Timestamp does not set by Fluent Bit. In this case, your Graylog server will set it to the current timestamp (now).
 * Your log timestamp has to be in [UNIX Epoch Timestamp](https://en.wikipedia.org/wiki/Unix_time) format. If the `Gelf_Timestamp_Key` value of your log is not in this format, your Graylog server will ignore it.
 * If you're using Fluent Bit in Kubernetes and you're using [Kubernetes Filter Plugin](../filters/kubernetes.md), this plugin adds `host` value to your log by default, and you don't need to add it by your own.
 * The `version` of GELF message is also mandatory and Fluent Bit sets it to 1.1 which is the current latest version of GELF.
@@ -43,7 +43,7 @@ GELF output plugin supports TLS/SSL, for more details about the properties avail
 
 If you're using Fluent Bit for shipping Kubernetes logs, you can use something like this as your configuration file:
 
-```text
+```
 [INPUT]
     Name                    tail
     Tag                     kube.*
@@ -90,9 +90,9 @@ By default, GELF tcp uses port 12201 and Docker places your logs in `/var/log/co
 {"log":"{\"data\": \"This is an example.\"}","stream":"stderr","time":"2019-07-21T12:45:11.273315023Z"}
 ```
 
-If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` \(and any other present\) field. This is how this log in [stdout](../outputs/standard-output.md) looks like after decoding:
+If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` (and any other present) field. This is how this log in [stdout](standard-output.md) looks like after decoding:
 
-```text
+```
 [0] kube.log: [1565770310.000198491, {"log"=>{"data"=>"This is an example."}, "stream"=>"stderr", "time"=>"2019-07-21T12:45:11.273315023Z"}]
 ```
 
@@ -103,11 +103,10 @@ Now, this is what happens to this log:
 3. We used this `data` key as `Gelf_Short_Message_Key`; so GELF plugin changes it to `short_message`.
 4. [Kubernetes Filter](../filters/kubernetes.md) adds `host` name.
 5. Timestamp is generated.
-6. Any custom field \(not present in [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification)\) is prefixed by an underline.
+6. Any custom field (not present in [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification)) is prefixed by an underline.
 
 Finally, this is what our Graylog server input sees:
 
 ```javascript
 {"version":"1.1", "short_message":"This is an example.", "host": "<Your Node Name>", "_stream":"stderr", "timestamp":1565770310.000199}
 ```
-

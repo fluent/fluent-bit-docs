@@ -37,7 +37,7 @@ deb https://packages.fluentbit.io/ubuntu/xenial xenial main
 Now let your system update the _apt_ database:
 
 ```bash
-$ sudo apt-get update
+sudo apt-get update
 ```
 
 ## Install TD-Agent Bit
@@ -45,13 +45,13 @@ $ sudo apt-get update
 Using the following _apt-get_ command you are able now to install the latest _td-agent-bit_:
 
 ```text
-$ sudo apt-get install td-agent-bit
+sudo apt-get install td-agent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-$ sudo service td-agent-bit start
+sudo service td-agent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:

@@ -9,8 +9,8 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Mode | Defines transport protocol mode: unix\_udp \(UDP over Unix socket\), unix\_tcp \(TCP over Unix socket\), tcp or udp | unix\_udp |
-| Listen | If _Mode_ is set to _tcp_, specify the network interface to bind. | 0.0.0.0 |
-| Port | If _Mode_ is set to _tcp_, specify the TCP port to listen for incoming connections. | 5140 |
+| Listen | If _Mode_ is set to _tcp_ or _udp_, specify the network interface to bind. | 0.0.0.0 |
+| Port | If _Mode_ is set to _tcp_ or _udp_, specify the TCP port to listen for incoming connections. | 5140 |
 | Path | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the absolute path to the Unix socket file. |  |
 | Unix\_Perm | If _Mode_ is set to _unix\_tcp_ or _unix\_udp_, set the permission of the Unix socket file. | 0644 |
 | Parser | Specify an alternative parser for the message. If _Mode_ is set to _tcp_ or _udp_ then the default parser is _syslog-rfc5424_ otherwise _syslog-rfc3164-local_ is used. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
