@@ -40,6 +40,10 @@ Fluent Bit BigQuery output plugin uses a JSON credentials file for authenticatio
 | project\_id | The project id containing the BigQuery dataset to stream into. | The value of the `project_id` in the credentials file |
 | dataset\_id | The dataset id of the BigQuery dataset to write into. This dataset must exist in your project. |  |
 | table\_id | The table id of the BigQuery table to write into. This table must exist in the specified dataset and the schema must match the output. |  |
+| skip_invalid_rows | Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. | Off |
+| ignore_unknown_values | Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors. | Off |
+
+See Google's [official documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
 ## Configuration File
 
