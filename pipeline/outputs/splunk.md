@@ -21,6 +21,7 @@ Connectivity, transport and authentication configuration properties:
 | http\_passwd | Password for user defined in HTTP\_User |  |
 | http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
+| channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
 
