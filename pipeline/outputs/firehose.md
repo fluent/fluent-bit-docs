@@ -10,7 +10,7 @@ The Amazon Kinesis Data Firehose output plugin allows to ingest your records int
 
 This is the documentation for the core Fluent Bit Firehose plugin written in C. It can replace the [aws/amazon-kinesis-firehose-for-fluent-bit](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit) Golang Fluent Bit plugin released last year. The Golang plugin was named `firehose`; this new high performance and highly efficient firehose plugin is called `kinesis_firehose` to prevent conflicts/confusion.
 
-See [here](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) for details on how AWS credentials are fetched.
 
 ## Configuration Parameters
 
@@ -24,6 +24,7 @@ See [here](../../administration/aws-credentials.md) for details on how AWS crede
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | endpoint | Specify a custom endpoint for the Firehose API. |
 | sts\_endpoint | Custom endpoint for the STS API. |
+| auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. |
 
 ## Getting Started
 

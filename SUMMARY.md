@@ -72,6 +72,7 @@
 
 ## Data Pipeline <a id="pipeline"></a>
 
+* [Pipeline Monitoring](pipeline/pipeline-monitoring.md)
 * [Inputs](pipeline/inputs/README.md)
   * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
   * [Collectd](pipeline/inputs/collectd.md)
@@ -108,6 +109,7 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
+  * [CheckList](pipeline/filters/checklist.md)
   * [Expect](pipeline/filters/expect.md)
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)
   * [Grep](pipeline/filters/grep.md)
@@ -124,6 +126,7 @@
   * [Tensorflow](pipeline/filters/tensorflow.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Prometheus Exporter](pipeline/outputs/prometheus-exporter.md)
+  * [Prometheus Remote Write](pipeline/outputs/prometheus-remote-write.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)

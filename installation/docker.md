@@ -8,9 +8,27 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.8.2 | x86\_64, arm64v8, arm32v7 | Release [v1.8](https://fluentbit.io/announcements/v1.8.2/) |
+| 1.8.11 | x86\_64, arm64v8, arm32v7 | Release [v1.8.11](https://fluentbit.io/announcements/v1.8.11/) |
+| 1.8-debug, 1.8.11-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.10 | x86\_64, arm64v8, arm32v7 | Release [v1.8.10](https://fluentbit.io/announcements/v1.8.10/) |
+| 1.8-debug, 1.8.10-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.9 | x86\_64, arm64v8, arm32v7 | Release [v1.8.9](https://fluentbit.io/announcements/v1.8.9/) |
+| 1.8-debug, 1.8.9-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.8 | x86\_64, arm64v8, arm32v7 | Release [v1.8.8](https://fluentbit.io/announcements/v1.8.8/) |
+| 1.8-debug, 1.8.8-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.7 | x86\_64, arm64v8, arm32v7 | Release [v1.8.7](https://fluentbit.io/announcements/v1.8.7/) |
+| 1.8-debug, 1.8.7-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.6 | x86\_64, arm64v8, arm32v7 | Release [v1.8.6](https://fluentbit.io/announcements/v1.8.6/) |
+| 1.8-debug, 1.8.6-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.5 | x86\_64, arm64v8, arm32v7 | Release [v1.8.5](https://fluentbit.io/announcements/v1.8.5/) |
+| 1.8-debug, 1.8.5-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.4 | x86\_64, arm64v8, arm32v7 | Release [v1.8.4](https://fluentbit.io/announcements/v1.8.4/) |
+| 1.8-debug, 1.8.4-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.3 | x86\_64, arm64v8, arm32v7 | Release [v1.8.3](https://fluentbit.io/announcements/v1.8.3/) |
+| 1.8-debug, 1.8.3-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.2 | x86\_64, arm64v8, arm32v7 | Release [v1.8.2](https://fluentbit.io/announcements/v1.8.2/) |
 | 1.8-debug, 1.8.2-debug | x86\_64 | v1.8.x releases + Busybox |
-| 1.8.1 | x86\_64, arm64v8, arm32v7 | Release [v1.8](https://fluentbit.io/announcements/v1.8.1/) |
+| 1.8.1 | x86\_64, arm64v8, arm32v7 | Release [v1.8.1](https://fluentbit.io/announcements/v1.8.1/) |
 | 1.8-debug, 1.8.1-debug | x86\_64 | v1.8.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.

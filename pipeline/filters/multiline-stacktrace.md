@@ -13,30 +13,36 @@ As part of the built-in functionality, without major configuration effort, you c
 * go
 * python
 * ruby
-* java \(Google Cloud Platform Java stacktrace format\)
+* java (Google Cloud Platform Java stacktrace format)
 
 Some comments about this filter:
 
 * The usage of this filter depends on a previous configuration of a [Multiline Parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition. 
 * If you aim to concatenate messages split originally by Docker or CRI container engines, we recommend doing the concatenation on [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support),  this same functionality exists there.
 
+{% hint style="warning" %}
+This filter does not perform buffering that persists across different Chunks. This filter **process one Chunk at a time** and is not suitable for sources that might send multiline messages in separated chunks. 
+
+For cases where Multiline mode is required and the source plugin does not support it, please file a Github Enhancement with such requirement and specific details of the use case.
+{% endhint %}
+
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Property | Description |
-| :--- | :--- |
-| multiline.parser | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma.  |
-| multiline.key\_content | Key name that holds the content to process. Note that a Multiline Parser definition can already specify the `key_content` to use, but this option allows to overwrite that value for the purpose of the filter. |
+| Property              | Description                                                                                                                                                                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| multiline.parser      | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma.  |
+| multiline.key_content | Key name that holds the content to process. Note that a Multiline Parser definition can already specify the `key_content` to use, but this option allows to overwrite that value for the purpose of the filter.                                            |
 
 ## Configuration Example
 
 The following example aims to parse a log file called `test.log` that contains some full lines, a custom Java stacktrace and a Go stacktrace. 
 
 {% hint style="info" %}
-The following example files can be located at:  
-  
-[https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter\_multiline](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline)
+The following example files can be located at:\
+\
+[https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline)
 {% endhint %}
 
 Example files content:
@@ -45,7 +51,7 @@ Example files content:
 {% tab title="fluent-bit.conf" %}
 This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parsers `multiline-regex-test` and `go`. Then it sends the processing to the standard output. 
 
-```text
+```
 [SERVICE]
     flush                 1
     log_level             info
@@ -69,10 +75,10 @@ This is the primary Fluent Bit configuration file. It includes the `parsers_mult
 ```
 {% endtab %}
 
-{% tab title="parsers\_multiline.conf" %}
+{% tab title="parsers_multiline.conf" %}
 This second file defines a multiline parser for the example. Note that a second multiline parser called `go` is used in **fluent-bit.conf**, but this one is a built-in parser.
 
-```text
+```
 [MULTILINE_PARSER]
     name          multiline-regex-test
     type          regex
@@ -97,7 +103,7 @@ This second file defines a multiline parser for the example. Note that a second 
 {% tab title="test.log" %}
 An example file with multiline and multiformat content:
 
-```text
+```
 single line...
 Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
     at com.myproject.module.MyProject.badMethod(MyProject.java:22)
@@ -165,7 +171,7 @@ one more line, no multiline
 
 By running Fluent Bit with the given configuration file you will obtain:
 
-```text
+```
 $ fluent-bit -c fluent-bit.conf 
 
 [0] tail.0: [1626736433.143567481, {"log"=>"single line..."}]
@@ -232,4 +238,3 @@ created by runtime.gcenable
 ```
 
 The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
-

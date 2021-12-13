@@ -1,20 +1,27 @@
 ---
-description: Gather Metrics from Fluent Bit pipeline
+description: Learn how to monitor your Fluent Bit data pipelines
 ---
 
 # Monitoring
+
+Fluent Bit comes with built-it features to allow you to monitor the internals of your pipeline, connect to Prometheus and Grafana, Health checks  and also connectors to use external services for such purposes:
+
+* [HTTP Server: JSON and Prometheus Exporter-style metrics](monitoring.md#http-server)
+* [Grafana Dashboards and Alerts](monitoring.md#grafana-dashboard-and-alerts)
+* [Health Checks](monitoring.md#health-check-for-fluent-bit)
+* [Calyptia Cloud: hosted service to monitor and visualize your pipelines](monitoring.md#calyptia-cloud)
+
+## HTTP Server
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
 
 The monitoring interface can be easily integrated with Prometheus since we support it native format.
 
-**NOTE:** The Windows version does not support the HTTP monitoring feature yet as of v1.7.0
-
-## Getting Started <a id="getting_started"></a>
+### Getting Started
 
 To get started, the first step is to enable the HTTP Server from the configuration file:
 
-```text
+```
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -30,7 +37,7 @@ To get started, the first step is to enable the HTTP Server from the configurati
 
 the above configuration snippet will instruct Fluent Bit to start it HTTP Server on TCP Port 2020 and listening on all network interfaces:
 
-```text
+```
 $ bin/fluent-bit -c fluent-bit.conf
 Fluent Bit v1.4.0
 * Copyright (C) 2019-2020 The Fluent Bit Authors
@@ -44,7 +51,7 @@ Fluent Bit v1.4.0
 
 now with a simple **curl** command is enough to gather some information:
 
-```text
+```
 $ curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
@@ -73,24 +80,24 @@ $ curl -s http://127.0.0.1:2020 | jq
 
 Note that we are sending the _curl_ command output to the _jq_ program which helps to make the JSON data easy to read from the terminal. Fluent Bit don't aim to do JSON pretty-printing.
 
-## REST API Interface <a id="rest_api"></a>
+### REST API Interface
 
 Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.14 the following end points are available:
 
-| URI | Description | Data Format |
-| :--- | :--- | :--- |
-| / | Fluent Bit build information | JSON |
-| /api/v1/uptime | Get uptime information in seconds and human readable format | JSON |
-| /api/v1/metrics | Internal metrics per loaded plugin | JSON |
-| /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server | Prometheus Text 0.0.4 |
-| /api/v1/storage | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section the property `storage.metrics` has been enabled | JSON |
-| /api/v1/health | Fluent Bit health check result | String |
+| URI                        | Description                                                                                                                                                        | Data Format           |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- |
+| /                          | Fluent Bit build information                                                                                                                                       | JSON                  |
+| /api/v1/uptime             | Get uptime information in seconds and human readable format                                                                                                        | JSON                  |
+| /api/v1/metrics            | Internal metrics per loaded plugin                                                                                                                                 | JSON                  |
+| /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server                                                                                     | Prometheus Text 0.0.4 |
+| /api/v1/storage            | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section the property `storage.metrics` has been enabled | JSON                  |
+| /api/v1/health             | Fluent Bit health check result                                                                                                                                     | String                |
 
-## Uptime Example
+### Uptime Example
 
 Query the service uptime with the following command:
 
-```text
+```
 $ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
@@ -103,7 +110,7 @@ it should print a similar output like this:
 }
 ```
 
-## Metrics Examples
+### Metrics Examples
 
 Query internal metrics in JSON format with the following command:
 
@@ -143,7 +150,7 @@ $ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 
 this time the same metrics will be in Prometheus format instead of JSON:
 
-```text
+```
 fluentbit_input_records_total{name="cpu.0"} 57 1509150350542
 fluentbit_input_bytes_total{name="cpu.0"} 18069 1509150350542
 fluentbit_output_proc_records_total{name="stdout.0"} 54 1509150350542
@@ -153,13 +160,13 @@ fluentbit_output_retries_total{name="stdout.0"} 0 1509150350542
 fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 ```
 
-## Configuring Aliases
+### Configuring Aliases
 
-By default configured plugins on runtime get an internal name in the format _plugin\_name.ID_. For monitoring purposes this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
+By default configured plugins on runtime get an internal name in the format _plugin_name.ID_. For monitoring purposes, this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
 The following example set an alias to the INPUT section which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
 
-```text
+```
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -197,13 +204,11 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
 }
 ```
 
-## Dashboard and Alerts
+## Grafana Dashboard and Alerts
 
 Fluent Bit's exposed [prometheus style metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be leveraged to create dashboards and alerts.
 
-### Grafana Dashboard
-
-The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com/)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key differences such as the use of the `instance` label \(see [why here](https://www.robustperception.io/controlling-the-instance-label)\), stacked graphs and a focus on Fluent Bit metrics.
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key differences such as the use of the `instance` label (see [why here](https://www.robustperception.io/controlling-the-instance-label)), stacked graphs and a focus on Fluent Bit metrics.
 
 ![dashboard](../.gitbook/assets/dashboard.png)
 
@@ -213,20 +218,20 @@ Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tre
 
 ## Health Check for Fluent Bit
 
-Fluent bit now suppose four new config to setup health check.
+Fluent bit now supports four new configs to set up the health check.
 
-| Config Name | Description | Default Value |
-| :--- | :--- | :--- |
-| Health\_Check | enable Health check feature | Off |
-| HC\_Errors\_Count | the error count to meet the unhealthy requirement | 5 |
-| HC\_Retry\_Failure\_Count | the retry failure count to meet the unhealthy requirement | 5 |
-| HC\_Period | The time period by second to count the error and retry failure data point | 60 |
+| Config Name            | Description                                                               | Default Value |
+| ---------------------- | ------------------------------------------------------------------------- | ------------- |
+| Health_Check           | enable Health check feature                                               | Off           |
+| HC_Errors_Count        | the error count to meet the unhealthy requirement                         | 5             |
+| HC_Retry_Failure_Count | the retry failure count to meet the unhealthy requirement                 | 5             |
+| HC_Period              | The time period by second to count the error and retry failure data point | 60            |
 
-So the feature works as: Based on the HC\_Period customer setup, if the real error number is over `HC_Errors_Count` or retry failure is over `HC_Retry_Failure_Count`, fluent bit will be considered as unhealthy. The health endpoint will return HTTP status 500 and String `error`. Otherwise it's healthy, will return HTTP status 200 and string `ok`
+So the feature works as: Based on the HC_Period customer setup, if the real error number is over `HC_Errors_Count` or retry failure is over `HC_Retry_Failure_Count`, fluent bit will be considered as unhealthy. The health endpoint will return HTTP status 500 and String `error`. Otherwise it's healthy, will return HTTP status 200 and string `ok`
 
 See the config example:
 
-```text
+```
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -252,6 +257,36 @@ $ curl -s http://127.0.0.1:2020/api/v1/health
 
 Based on the fluent bit status, the result will be:
 
-* HTTP status 200 and "ok" in response for healthy status
+* HTTP status 200 and "ok" in response to healthy status
 * HTTP status 500 and "error" in response for unhealthy status
 
+## Calyptia Cloud
+
+[Calyptia Cloud](https://cloud.calyptia.com) is a hosted service that allows you to monitor your Fluent Bit agents including data flow, metrics and configurations.
+
+![](../.gitbook/assets/image-19-.png)
+
+### Get Started with Calyptia Cloud
+
+Register your Fluent Bit agent will take **less than one minute**, steps:
+
+* Go to [cloud.calyptia.com](https://cloud.calyptia.com) and sign-in
+* On the left menu click on [Settings](https://cloud.calyptia.com/settings) and generate/copy your API key
+
+In your Fluent Bit configuration file, append the following configuration section:
+
+```
+[CUSTOM]
+    name     calyptia
+    api_key  <YOUR_API_KEY>
+```
+
+Make sure to replace your API key in the configuration.\
+\
+After a few seconds upon restart your Fluent Bit agent, the Calyptia Cloud Dashboard will list your agent. Metrics will take around 30 seconds to shows up.
+
+![](../.gitbook/assets/agent.png)
+
+###  Contact Calyptia
+
+If  want to get in touch with Calyptia team, just send an email to [hello@calyptia.com](mailto:hello@calyptia.com)

@@ -33,6 +33,7 @@ The following **output** plugins can take advantage of the TLS feature:
 * [HTTP](../pipeline/outputs/http.md)
 * [InfluxDB](../pipeline/outputs/influxdb.md)
 * [Kafka REST Proxy](../pipeline/outputs/kafka-rest-proxy.md)
+* [Loki](../pipeline/outputs/loki.md)
 * [Slack](../pipeline/outputs/slack.md)
 * [Splunk](../pipeline/outputs/splunk.md)
 * [Stackdriver](../pipeline/outputs/stackdriver.md)

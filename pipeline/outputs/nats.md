@@ -1,6 +1,6 @@
 # NATS
 
-The **nats** output plugin, allows to flush your records into a [NATS Server](http://nats.io/documentation/server/gnatsd-intro/) end point. The following instructions assumes that you have a fully operational NATS Server in place.
+The **nats** output plugin, allows to flush your records into a [NATS Server](https://docs.nats.io/nats-concepts/intro) end point. The following instructions assumes that you have a fully operational NATS Server in place.
 
 In order to flush records, the **nats** plugin requires to know two parameters:
 
