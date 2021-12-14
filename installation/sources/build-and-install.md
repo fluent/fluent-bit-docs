@@ -1,6 +1,6 @@
 # Build and Install
 
-[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists on the following steps:
+[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists of the following steps:
 
 ## Prepare environment
 
