@@ -54,6 +54,10 @@ If TCP keepalive is used, `net.tcp_keepalive_probes` allows to override the OS d
 
 If a TCP connection is keepalive enabled and has very high traffic, the connection may _never_ be killed. In a situation where the remote endpoint is load-balanced in some way, this may lead to an unequal distribution of traffic. Setting `net.keepalive_max_recycle` causes keepalive connections to be recycled after a number of messages are sent over that connection. Once this limit is reached, the connection is terminated gracefully, and a new connection will be created for subsequent messages.
 
+### DNS mode
+
+If a transport layer protocol is specified, the plugin whose configuration section the `net.dns.mode` setting is specified on overrides the global `dns.mode` value and issues DNS requests using the specified protocol which can be either TCP or UDP
+
 ## Configuration Options
 
 For plugins that rely on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
@@ -69,6 +73,7 @@ For plugins that rely on networking I/O, the following section describes the net
 | `net.tcp_keepalive_interval` | Interval between TCP keepalive probes when no response is received on a keepidle probe. |  |
 | `net.tcp_keepalive_probes` | Number of unacknowledged probes to consider a connection dead. |  |
 | `net.keepalive_max_recycle` | Set the maximum number of times a keepalive connection can be used before it is destroyed. | 0 |
+| `net.dns.mode` | Set the primary transport layer protocol used by the asynchronous DNS resolver for connections established in the plugin where this configuration value is used | UDP |
 
 ## Example
 
@@ -92,6 +97,7 @@ Put the following configuration snippet in a file called `fluent-bit.conf`:
     port      9090
     format    json_lines
     # Networking Setup
+    net.dns.mode                TCP
     net.connect_timeout         5
     net.source_address          127.0.0.1
     net.keepalive               on
