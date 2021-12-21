@@ -10,6 +10,7 @@ Currently, we also support some special fields in fluent-bit:
 | logging.googleapis.com/insertId | insertId | A unique identifier for the log entry. It is used to order logEntries |
 | logging.googleapis.com/sourceLocation | sourceLocation | Additional information about the source code location that produced the log entry. |
 | logging.googleapis.com/http_request | httpRequest | A common proto for logging HTTP requests. |
+| logging.googleapis.com/trace | trace | Resource name of the trace associated with the log entry |
 | timestamp | timestamp | An object including the seconds and nanos fields that represents the time |
 | timestampSecond & timestampNanos | timestamp | The seconds and nanos that represents the time |
 
@@ -309,6 +310,35 @@ the logEntry will be:
         "cacheFillBytes":"12", 
         "protocol":"HTTP/1.2"
     }
+    ...
+}
+```
+
+## Trace
+
+TraceId is resource name of the trace associated with the log entry.
+If enable autoformat_stackdriver_trace flag in config the entry will automatically get the projectID from the Google Metadata server and add it.
+
+The JSON representation is as followed:
+```text
+"trace": string
+```
+
+### Use Cases
+Set the input log as followed:
+```text
+jsonPayload {
+    "logging.googleapis.com/trace": "0123456789abcdef0123456789abcdef"
+    ...
+}
+```
+the logEntry will be:
+```text
+{
+    "jsonPayload": {
+        ...
+    }
+    "trace": "projects/your-project-name/traces/0123456789abcdef0123456789abcdef"
     ...
 }
 ```
