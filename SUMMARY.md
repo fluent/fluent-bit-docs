@@ -102,6 +102,7 @@
   * [Thermal](pipeline/inputs/thermal.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
 * [Parsers](pipeline/parsers/README.md)
+  * [Configuring Parser](pipeline/parsers/configuring-parser.md)
   * [JSON](pipeline/parsers/json.md)
   * [Regular Expression](pipeline/parsers/regular-expression.md)
   * [LTSV](pipeline/parsers/ltsv.md)
