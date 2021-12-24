@@ -48,7 +48,7 @@ The new multiline core is exposed by the following configuration:
 
 | Key | Description |
 | :--- | :--- |
-| multiline.parser | Specify one or [Multiline Parser definition](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. |
+| multiline.parser | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. |
 
 As stated in the [Multiline Parser documentation](../../administration/configuring-fluent-bit/multiline-parsing.md), now we provide built-in configuration modes. Note that when using a new `multiline.parser` definition, you must **disable** the old configuration from your tail section like:
 
