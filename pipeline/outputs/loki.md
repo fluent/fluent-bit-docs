@@ -15,6 +15,8 @@ The Fluent Bit `loki` built-in output plugin allows you to send your log or even
 | tenant\_id | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent. |  |
 | labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluentbit |
 | label\_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
+| remove\_keys | Optional list of keys to remove. | |
+| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. | off |
 | line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
 | auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 | tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
