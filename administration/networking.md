@@ -12,6 +12,8 @@ Most of the time creating a new TCP connection to a remote server is straightfor
 
 The `net.connect_timeout` allows to configure the maximum time to wait for a connection to be established, note that this value already considers the TLS handshake process.
 
+The `net.connect_timeout_log_error` indicates if an error should be logged in case of connect timeout. If disabled, the timeout is logged as debug level message instead.
+
 ### TCP Source Address
 
 On environments with multiple network interfaces, might be desired to choose which interface to use for our data that will flow through the network.
@@ -43,6 +45,7 @@ For plugins that rely on networking I/O, the following section describes the net
 | Property | Description | Default |
 | :--- | :--- | :--- |
 | `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | 10 |
+| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message | true
 | `net.source_address` | Specify network address \(interface\) to use for connection and data traffic. |  |
 | `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off. | on |
 | `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection. | 30 |
