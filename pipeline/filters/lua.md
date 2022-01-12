@@ -95,6 +95,52 @@ For functional examples of this interface, please refer to the code samples prov
 
 [https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
 
+#### Environment variable processing
+
+As an example that combines a bit of LUA processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with LUA regex and substitutions.
+
+Kubernetes pods generally have various environment variables set by the infrastructure automatically which may contain useful information.
+
+In this example, we want to extract part of the Kubernetes cluster API name.
+
+The environment variable is set like so:
+`KUBERNETES_SERVICE_HOST: api.sandboxbsh-a.project.domain.com`
+
+We want to extract the `sandboxbsh` name and add it to our record as a special key.
+
+```
+      [FILTER]
+          Name                lua
+          Alias               filter-iots-lua
+          Match               iots_thread.*
+          Script              filters.lua
+          Call                set_landscape_deployment
+
+  filters.lua: |
+    -- Use a Lua function to create some additional entries based
+    -- on substrings from the kubernetes properties.
+    function set_landscape_deployment(tag, timestamp, record)
+        local landscape = os.getenv("KUBERNETES_SERVICE_HOST")
+        if landscape then
+            -- Strip the landscape name from this field, KUBERNETES_SERVICE_HOST
+            -- Should be of this format
+            -- api.sandboxbsh-a.project.domain.com
+            -- Take off the leading "api."
+            -- sandboxbsh-a.project.domain.com
+            --print("landscape1:" .. landscape)
+            landscape = landscape:gsub("^[^.]+.", "")
+            --print("landscape2:" .. landscape)
+            -- Take off everything including and after the - in the cluster name
+            -- sandboxbsh
+            landscape = landscape:gsub("-.*$", "")
+            -- print("landscape3:" .. landscape)
+            record["iot_landscape"] = landscape
+        end
+        -- 2 - replace existing record with this update
+        return 2, timestamp, record
+    end
+```
+
 ### Number Type
 
 +Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
