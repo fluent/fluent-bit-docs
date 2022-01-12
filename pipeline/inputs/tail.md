@@ -30,6 +30,7 @@ The plugin supports the following configuration parameters:
 | Exit\_On\_Eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests | false |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |  |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key. | log |
+| Inotify_Watcher | Set to false to use file stat watcher instead of inotify. | true |
 | Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\). |  |
 | Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-` |  |
 
