@@ -1,10 +1,10 @@
 # Table of contents
 
-* [Fluent Bit v1.8 Documentation](README.md)
+* [Fluent Bit v1.9 Documentation](README.md)
 
 ## About
 
-* [What is Fluent Bit ?](about/what-is-fluent-bit.md)
+* [What is Fluent Bit?](about/what-is-fluent-bit.md)
 * [A Brief History of Fluent Bit](about/history.md)
 * [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
