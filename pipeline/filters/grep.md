@@ -94,3 +94,23 @@ if you want to exclude records that match given nested field \(for example `kube
     Exclude $kubernetes['labels']['app'] myapp
 ```
 
+### Excluding records missing/invalid fields
+
+It may be that in your processing pipeline you want to drop records that are missing certain keys.
+
+A simple way to do this is just to `exclude` with a regex that matches anything, a missing key will fail this check.
+
+Here is an example that checks for a specific valid value for the key as well:
+
+```
+# Use Grep to verify the contents of the iot_timestamp value.
+# If the iot_timestamp key does not exist, this will fail
+# and exclude the row.
+[FILTER]
+    Name                     grep
+    Alias                    filter-iots-grep
+    Match                    iots_thread.*
+    Regex                    iot_timestamp ^\d{4}-\d{2}-\d{2}
+```
+
+The specified key `iot_timestamp` must match the expected expression - if it does not or is missing/empty then it will be excluded.
