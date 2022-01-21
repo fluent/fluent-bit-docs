@@ -2,6 +2,76 @@
 
 Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
 
+## Configuration
+
+Currently the default configuration is intended for Linux only so will not function on Windows.
+Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
+
+```
+[SERVICE]
+    # Flush
+    # =====
+    # set an interval of seconds before to flush records to a destination
+    flush        5
+
+    # Daemon
+    # ======
+    # instruct Fluent Bit to run in foreground or background mode.
+    daemon       Off
+
+    # Log_Level
+    # =========
+    # Set the verbosity level of the service, values can be:
+    #
+    # - error
+    # - warning
+    # - info
+    # - debug
+    # - trace
+    #
+    # by default 'info' is set, that means it includes 'error' and 'warning'.
+    log_level    info
+
+    # Parsers File
+    # ============
+    # specify an optional 'Parsers' configuration file
+    parsers_file parsers.conf
+
+    # Plugins File
+    # ============
+    # specify an optional 'Plugins' configuration file to load external plugins.
+    plugins_file plugins.conf
+
+    # HTTP Server
+    # ===========
+    # Enable/Disable the built-in HTTP Server for metrics
+    http_server  Off
+    http_listen  0.0.0.0
+    http_port    2020
+
+    # Storage
+    # =======
+    # Fluent Bit can use memory and filesystem buffering based mechanisms
+    #
+    # - https://docs.fluentbit.io/manual/administration/buffering-and-storage
+    #
+    # storage metrics
+    # ---------------
+    # publish storage pipeline metrics in '/api/v1/storage'. The metrics are
+    # exported only if the 'http_server' option is enabled.
+    #
+    storage.metrics on
+
+[INPUT]
+    Name         winlog
+    Channels     Setup,Windows PowerShell
+    Interval_Sec 1
+
+[OUTPUT]
+    name  stdout
+    match *
+```
+
 ## Installation Packages
 
 The latest stable version is 1.8.11:
