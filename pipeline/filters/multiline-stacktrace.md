@@ -18,12 +18,13 @@ As part of the built-in functionality, without major configuration effort, you c
 Some comments about this filter:
 
 * The usage of this filter depends on a previous configuration of a [Multiline Parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition. 
-* If you aim to concatenate messages split originally by Docker or CRI container engines, we recommend doing the concatenation on [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support),  this same functionality exists there.
+* If you wish to concatenate messages read from a log file, it is highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages originally split by Docker or CRI container engines, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support).
 
 {% hint style="warning" %}
-This filter does not perform buffering that persists across different Chunks. This filter **process one Chunk at a time** and is not suitable for sources that might send multiline messages in separated chunks. 
+This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter will *process one Chunk at a time* and is not suitable for most inputs which might send multiline messages in separate chunks. 
 
-For cases where Multiline mode is required and the source plugin does not support it, please file a Github Enhancement with such requirement and specific details of the use case.
+When buffering is enabled, the filter does not immediately emit messages it receives. It uses the in_emitter plugin, same as the [Rewrite Tag Filter](pipeline/filters/rewrite-tag.md), and emits messages once they are fully concatenated, or a timeout is reached. 
+
 {% endhint %}
 
 ## Configuration Parameters
@@ -34,6 +35,12 @@ The plugin supports the following configuration parameters:
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | multiline.parser      | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma.  |
 | multiline.key_content | Key name that holds the content to process. Note that a Multiline Parser definition can already specify the `key_content` to use, but this option allows to overwrite that value for the purpose of the filter.                                            |
+| buffer | Enable buffered mode. In buffered mode, the filter can concatenate multilines from inputs that ingest records one by one (ex: Forward), rather than in chunks, re-emitting them into the beggining of the pipeline (with the same tag) using the in_emitter instance. With buffer off, this filter will not work with most inputs, except tail. |
+| flush_ms | Flush time for pending multiline records. Defaults to 2000. |
+| emitter_name | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
+| emitter_storage.type | The storage type for the emitter input instance. This option supports the values `memory` \(default\) and `filesystem`. |
+| emitter\_mem\_buf\_limit | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure.  The default for this limit is `10M`.  The pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`.  The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+
 
 ## Configuration Example
 
