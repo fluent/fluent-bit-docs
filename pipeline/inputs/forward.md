@@ -6,13 +6,15 @@ _Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Listen | Listener network interface. | 0.0.0.0 |
-| Port | TCP port to listen for incoming connections. | 24224 |
-| Unix_Path |Specify the path to unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored. | |
-| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 6144000 |
+| Key                 | Description                                                                                                                                                                                                                                                                                                                                 | Default |
+|:--------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| :--- |
+| Listen              | Listener network interface.                                                                                                                                                                                                                                                                                                                 | 0.0.0.0 |
+| Port                | TCP port to listen for incoming connections.                                                                                                                                                                                                                                                                                                | 24224 |
+| Unix_Path           | Specify the path to unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored.                                                                                                                                                                                                                                      | |
+| Buffer\_Max\_Size   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification.                                                                                                                                          | 6144000 |
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | 1024000 |
+| Tag_Prefix          | Prefix incoming tag with the defined value.|  |
+
 
 ## Getting Started
 
