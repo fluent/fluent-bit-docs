@@ -70,7 +70,6 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Port        8088
     TLS         On
     TLS.Verify  Off
-    Message_Key my_key
 ```
 
 ### Data format
