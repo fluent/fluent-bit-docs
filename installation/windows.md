@@ -160,6 +160,19 @@ Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Fil
 PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
 
+### Installer options
+
+The Windows installer is built by [`CPack` using NSIS(https://cmake.org/cmake/help/latest/cpack_gen/nsis.html) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
+
+To silently install to `C:\fluent-bit` directory here is an example:
+
+```
+PS> <installer exe> /S /D=C:\fluent-bit
+```
+
+The uninstaller automatically provided also supports a silent un-install using the same `/S` flag.
+This may be useful for provisioning with automation like Ansible, Puppet, etc.
+
 ## Windows Service Support
 
 Windows services are equivalent to "daemons" in UNIX (i.e. long-running background processes). Since v1.5.0, Fluent Bit has the native support for Windows Service.
