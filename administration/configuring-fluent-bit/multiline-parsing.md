@@ -38,7 +38,7 @@ To understand which Multiline parser type is required for your use case you have
 | parser        | <p>Name of a pre-defined parser that must be applied to the incoming content before applying the regex rule. If no parser is defined, it's assumed that's a raw text and not a structured message. </p><p></p><p>Note: when a parser is applied to a raw text, then the regex is applied against a specific key of the structured message by using the  <code>key_content</code>  configuration property (see below).</p> |         |
 | key_content   | For an incoming structured message, specify the key that contains the data that should be processed by the regular expression and possibly concatenated.                                                                                                                                                                                                                                                                  |         |
 | flush_timeout | Timeout in milliseconds to flush a non-terminated multiline buffer. Default is set to 5 seconds.                                                                                                                                                                                                                                                                                                                          | 5s      |
-| rule          | Configure a rule to match a multiline pattern. The rule has a specific format described above, multiple rules can be defined.                                                                                                                                                                                                                                                                                             |         |
+| rule          | Configure a rule to match a multiline pattern. The rule has a specific format described below. Multiple rules can be defined.                                                                                                                                                                                                                                                                                             |         |
 
 #### Lines and States
 
@@ -68,9 +68,9 @@ rule         "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
 
-In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must** **be **inside double quotes. 
+In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
 
-The first rule of state name **must **always be **start_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
+The first rule of state name **must always** be **start_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
 
 {% hint style="info" %}
 To simplify the configuration of regular expressions, you can use the Rubular web site. We have posted an example by using the regex described above plus a log line that matches the pattern:\
