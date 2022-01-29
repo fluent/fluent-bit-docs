@@ -36,7 +36,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Tag\_Key | When Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
 | Generate\_ID | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | Off |
 | Id\_Key | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. |  |
-| Write\_Operation | The write\_operation can be any of: index (default), create, update, upsert. | index |
+| Write\_Operation | The write\_operation can be any of: create (default), index, update, upsert. | create |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
 | Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
 | Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error \(for diag only\) | Off |
@@ -56,12 +56,12 @@ The write\_operation can be any of:
 
 | Operation | Description          |
 | ------------- | ----------- |
-| index (default)      | new data is added while existing data (based on its id) is replaced (reindexed).|
-| create      | adds new data - if the data already exists (based on its id), the op is skipped.|
-| update      | updates existing data (based on its id). If no data is found, the op is skipped.|
-| upsert      | known as merge or insert if the data does not exist, updates if the data exists (based on its id).|
+| create (default) | adds new data - if the data already exists (based on its id), the op is skipped.|
+| index            | new data is added while existing data (based on its id) is replaced (reindexed).|
+| update           | updates existing data (based on its id). If no data is found, the op is skipped.|
+| upsert           | known as merge or insert if the data does not exist, updates if the data exists (based on its id).|
 
-**Please note, id is required in create, update, and upsert scenario. Without id, the message will be dropped.**
+**Please note, `Id_Key` or `Generate_ID` is required in update, and upsert scenario.**
 
 ## Getting Started
 
