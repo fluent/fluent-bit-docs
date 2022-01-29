@@ -1,6 +1,6 @@
 # Build and Install
 
-[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists on the following steps:
+[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists of the following steps:
 
 ## Prepare environment
 
@@ -112,6 +112,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
 | [FLB\_IN\_DOCKER](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
+| [FLB_IN_FLUENTBIT_METRICS](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | On |
 | [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
@@ -165,14 +166,14 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_KINESIS\_FIREHOSE](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | On |
 | [FLB\_OUT\_KINESIS\_STREAMS](../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | On |
 | [FLB\_OUT\_FLOWCOUNTER](../../pipeline/outputs/flowcounter.md) | Enable Flowcounter output plugin | On |
-| [FLB\_OUT\_FORWARD](build-and-install.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
+| [FLB\_OUT\_FORWARD](../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | On |
 | [FLB\_OUT\_GELF](../../pipeline/outputs/gelf.md) | Enable Gelf output plugin | On |
 | [FLB\_OUT\_HTTP](../../pipeline/outputs/http.md) | Enable HTTP output plugin | On |
 | [FLB\_OUT\_INFLUXDB](../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | On |
 | [FLB\_OUT\_KAFKA](../../pipeline/outputs/kafka.md) | Enable Kafka output | Off |
 | [FLB\_OUT\_KAFKA\_REST](../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | On |
 | FLB\_OUT\_LIB | Enable Lib output plugin | On |
-| [FLB\_OUT\_NATS](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | Off |
+| [FLB\_OUT\_NATS](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | On |
 | FLB\_OUT\_NULL | Enable NULL output plugin | On |
 | FLB\_OUT\_PGSQL | Enable PostgreSQL output plugin | On |
 | FLB\_OUT\_PLOT | Enable Plot output plugin | On |

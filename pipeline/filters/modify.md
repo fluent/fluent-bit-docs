@@ -57,7 +57,7 @@ The plugin supports the following conditions:
 | Condition | Parameter | Parameter 2 | Description |
 | :--- | :--- | :--- | :--- |
 | Key\_exists | STRING:KEY | NONE | Is `true` if `KEY` exists |
-| Key\_does\_not\_exist | STRING:KEY | STRING:VALUE | Is `true` if `KEY` does not exist |
+| Key\_does\_not\_exist | STRING:KEY | NONE | Is `true` if `KEY` does not exist |
 | A\_key\_matches | REGEXP:KEY | NONE | Is `true` if a key matches regex `KEY` |
 | No\_key\_matches | REGEXP:KEY | NONE | Is `true` if no key matches regex `KEY` |
 | Key\_value\_equals | STRING:KEY | STRING:VALUE | Is `true` if `KEY` exists and its value is `VALUE` |
@@ -71,10 +71,11 @@ The plugin supports the following conditions:
 * Any number of conditions can be set.
 * Conditions apply to the whole filter instance and all its rules. _Not_ to individual rules.
 * All conditions have to be `true` for the rules to be applied.
+* You can set [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) as `STRING:KEY` for nested key.
 
 ## Example \#1 - Add and Rename
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](https://github.com/fluent/fluent-bit-docs/tree/ad9d80e5490bd5d79c86955c5689db1cb4cf89db/input/mem.html), which outputs the following \(example\),
+In order to start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](../inputs/memory-metrics.md), which outputs the following \(example\),
 
 ```text
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]

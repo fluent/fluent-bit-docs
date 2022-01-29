@@ -6,12 +6,15 @@ _Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Listen | Listener network interface. | 0.0.0.0 |
-| Port | TCP port to listen for incoming connections. | 24224 |
-| Buffer\_Max\_Size | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | _Buffer\_Chunk\_Size_ |
-| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | 32KB |
+| Key                 | Description                                                                                                                                                                                                                                                                                                                                 | Default |
+|:--------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| :--- |
+| Listen              | Listener network interface.                                                                                                                                                                                                                                                                                                                 | 0.0.0.0 |
+| Port                | TCP port to listen for incoming connections.                                                                                                                                                                                                                                                                                                | 24224 |
+| Unix_Path           | Specify the path to unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored.                                                                                                                                                                                                                                      | |
+| Buffer\_Max\_Size   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification.                                                                                                                                          | 6144000 |
+| Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | 1024000 |
+| Tag_Prefix          | Prefix incoming tag with the defined value.|  |
+
 
 ## Getting Started
 
@@ -28,7 +31,7 @@ $ fluent-bit -i forward -o stdout
 By default the service will listen an all interfaces \(0.0.0.0\) through TCP port 24224, optionally you can change this directly, e.g:
 
 ```bash
-$ fluent-bit -i forward://192.168.3.2:9090 -o stdout
+$ fluent-bit -i forward -p listen="192.168.3.2" -p port=9090 -o stdout
 ```
 
 In the example the Forward messages will only arrive through network interface under 192.168.3.2 address and TCP Port 9090.

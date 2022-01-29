@@ -10,6 +10,7 @@ redirects:
     #inputs/docker:          ./pipeline/inputs/
     input/dummy:           ./pipeline/inputs/dummy.md
     input/exec:            ./pipeline/inputs/exec.md
+    input/fluentbit:       ./pipeline/inputs/fluentbit-metrics.md
     input/forward:         ./pipeline/inputs/forward.md
     input/head:            ./pipeline/inputs/head.md
     input/health:          ./pipeline/inputs/health.md

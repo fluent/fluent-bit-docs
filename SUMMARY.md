@@ -1,10 +1,10 @@
 # Table of contents
 
-* [Fluent Bit v1.8 Documentation](README.md)
+* [Fluent Bit v1.9 Documentation](README.md)
 
 ## About
 
-* [What is Fluent Bit ?](about/what-is-fluent-bit.md)
+* [What is Fluent Bit?](about/what-is-fluent-bit.md)
 * [A Brief History of Fluent Bit](about/history.md)
 * [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
@@ -82,6 +82,7 @@
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
   * [Exec](pipeline/inputs/exec.md)
+  * [Fluent Bit Metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [HTTP](pipeline/inputs/http.md)
@@ -102,6 +103,7 @@
   * [Thermal](pipeline/inputs/thermal.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
 * [Parsers](pipeline/parsers/README.md)
+  * [Configuring Parser](pipeline/parsers/configuring-parser.md)
   * [JSON](pipeline/parsers/json.md)
   * [Regular Expression](pipeline/parsers/regular-expression.md)
   * [LTSV](pipeline/parsers/ltsv.md)

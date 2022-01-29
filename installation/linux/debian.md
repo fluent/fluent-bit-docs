@@ -34,6 +34,11 @@ Now let your system update the _apt_ database:
 $ sudo apt-get update
 ```
 
+{% hint style="info" %}
+We recommend upgrading your system (```sudo apt-get upgrade```). This could avoid potential issues with expired certificates.
+{% endhint %}
+
+
 ## Install TD Agent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _td-agent-bit_:

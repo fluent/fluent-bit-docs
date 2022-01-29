@@ -28,13 +28,13 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
 | severity\_key | Specify the name of the key from the original record that contains the severity information. |  |
-| tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option. | k8s\_container., k8s\_pod., k8s\_node. |
+| autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
 
 ### Configuration File
 
 If you are using a _Google Cloud Credentials File_, the following configuration is enough to get started:
 
-```text
+```
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -46,17 +46,17 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 
 Example configuration file for k8s resource type:
 
-local\_resource\_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local\_resource\_id field in the log entry. If there is no field logging.googleapis.com/local\_resource\_id in the log, the plugin will then construct it by using the tag value of the log.
+local_resource_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entry. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
 
-The local\_resource\_id should be in format:
+The local_resource_id should be in format:
 
 * `k8s_container.<namespace_name>.<pod_name>.<container_name>`
 * `k8s_node.<node_name>`
 * `k8s_pod.<namespace_name>.<pod_name>`
 
-This implies that if there is no local\_resource\_id in the log entry then the tag of logs should match this format. Note that we have an option tag\_prefix so it is not mandatory to use k8s\_container\(node/pod\) as the prefix for tag.
+This implies that if there is no local_resource_id in the log entry then the tag of logs should match this format. Note that we have an option tag_prefix so it is not mandatory to use k8s_container(node/pod) as the prefix for tag.
 
-```text
+```
 [INPUT]
     Name               tail
     Tag_Regex          var.log.containers.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
@@ -78,35 +78,34 @@ This implies that if there is no local\_resource\_id in the log entry then the t
 
 ### Upstream connection error
 
-> Github reference: [\#761](https://github.com/fluent/fluent-bit/issues/761)
+> Github reference: [#761](https://github.com/fluent/fluent-bit/issues/761)
 
 An upstream connection error means Fluent Bit was not able to reach Google services, the error looks like this:
 
-```text
+```
 [2019/01/07 23:24:09] [error] [oauth2] could not get an upstream connection
 ```
 
 This belongs to a network issue by the environment where Fluent Bit is running, make sure that from the Host, Container or Pod you can reach the following Google end-points:
 
-* [https://www.googleapis.com](https://www.googleapis.com/)
-* [https://logging.googleapis.com](https://logging.googleapis.com/)
+* [https://www.googleapis.com](https://www.googleapis.com)
+* [https://logging.googleapis.com](https://logging.googleapis.com)
 
-### Fail to process local\_resource\_id
+### Fail to process local_resource_id
 
 The error looks like this:
 
-```text
+```
 [2020/08/04 14:43:03] [error] [output:stackdriver:stackdriver.0] fail to process local_resource_id from log entry for k8s_container
 ```
 
 Do following check:
 
-* If the log entry does not contain the local\_resource\_id field, does the tag of the log match for format?
-* If tag\_prefix is configured, does the prefix of tag specified in the input plugin match the tag\_prefix?
+* If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
+*   If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
 
-  **Other implementations**
+    **Other implementations**
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
-We plan to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). Use cases of special fields is [here](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md).
-
+We plan to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). Use cases of special fields is [here](./stackdriver_special_fields.md).

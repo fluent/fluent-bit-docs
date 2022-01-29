@@ -12,6 +12,8 @@ Most of the time creating a new TCP connection to a remote server is straightfor
 
 The `net.connect_timeout` allows to configure the maximum time to wait for a connection to be established, note that this value already considers the TLS handshake process.
 
+The `net.connect_timeout_log_error` indicates if an error should be logged in case of connect timeout. If disabled, the timeout is logged as debug level message instead.
+
 ### TCP Source Address
 
 On environments with multiple network interfaces, might be desired to choose which interface to use for our data that will flow through the network.
@@ -32,27 +34,9 @@ If a connection is keepalive enabled, there might be scenarios where the connect
 
 In order to control how long a keepalive connection can be idle, we expose the configuration property called `net.keepalive_idle_timeout`.
 
-### TCP Keepalive
+### DNS mode
 
-An open TCP connection to a remote server is subject to be _silently dropped_ by intermediate equipment in the network \(e.g., routers\) if it's quiet for too long. What _too long_ means depends on manufacturers and configurations outside of the control of fluentbit.
-
-If you're using the _Connection Keepalive_ feature, but not achieving the desired connectivity rates, you might want to try setting `net.tcp_keepalive` to `on`. This will configure the socket to periodically send _keepalive probes_ if the connection is silent. These probes will be sent all the way to the server, making the equipment in between consider the connection as active. Is then expected that the server will acknowledge the probe, allowing fluentbit to detect a broken connection right away.
-
-### TCP Keepalive Time
-
-If TCP keepalive is used, `net.tcp_keepalive_time` allows to override the OS default configuration with the desired period to wait between the last data packet is sent and TCP keepalive probing starts.
-
-### TCP Keepalive Interval
-
-If TCP keepalive is used, `net.tcp_keepalive_interval` allows to override the OS default configuration with the desired period between probes if the first one fails to be acknowledged.
-
-### TCP Keepalive Probes
-
-If TCP keepalive is used, `net.tcp_keepalive_probes` allows to override the OS default configuration with the desired number of unacknowledged probes before deeming a connection dead.
-
-### TCP Keepalive Recycling
-
-If a TCP connection is keepalive enabled and has very high traffic, the connection may _never_ be killed. In a situation where the remote endpoint is load-balanced in some way, this may lead to an unequal distribution of traffic. Setting `net.keepalive_max_recycle` causes keepalive connections to be recycled after a number of messages are sent over that connection. Once this limit is reached, the connection is terminated gracefully, and a new connection will be created for subsequent messages.
+If a transport layer protocol is specified, the plugin whose configuration section the `net.dns.mode` setting is specified on overrides the global `dns.mode` value and issues DNS requests using the specified protocol which can be either TCP or UDP
 
 ## Configuration Options
 
@@ -61,14 +45,12 @@ For plugins that rely on networking I/O, the following section describes the net
 | Property | Description | Default |
 | :--- | :--- | :--- |
 | `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | 10 |
+| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message | true
 | `net.source_address` | Specify network address \(interface\) to use for connection and data traffic. |  |
 | `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off. | on |
 | `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection. | 30 |
-| `net.tcp_keepalive` | Enable or disable TCP keepalive support. Accepts a boolean value: on / off. | off |
-| `net.tcp_keepalive_time` | Interval between the last data packet sent and the first TCP keepalive probe. |  |
-| `net.tcp_keepalive_interval` | Interval between TCP keepalive probes when no response is received on a keepidle probe. |  |
-| `net.tcp_keepalive_probes` | Number of unacknowledged probes to consider a connection dead. |  |
 | `net.keepalive_max_recycle` | Set the maximum number of times a keepalive connection can be used before it is destroyed. | 0 |
+| `net.dns.mode` | Set the primary transport layer protocol used by the asynchronous DNS resolver for connections established in the plugin where this configuration value is used | UDP |
 
 ## Example
 
@@ -92,6 +74,7 @@ Put the following configuration snippet in a file called `fluent-bit.conf`:
     port      9090
     format    json_lines
     # Networking Setup
+    net.dns.mode                TCP
     net.connect_timeout         5
     net.source_address          127.0.0.1
     net.keepalive               on

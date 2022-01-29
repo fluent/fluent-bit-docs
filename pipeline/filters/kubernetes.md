@@ -174,7 +174,7 @@ Kubernetes Filter do not care from where the logs comes from, but it cares about
 
 > If you have large pod specifications \(can be caused by large numbers of environment variables, etc.\), be sure to increase the `Buffer_Size` parameter of the kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
-If the configuration property **Kube\_Tag\_Prefix** was configured \(available on Fluent Bit &gt;= 1.1.x\), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to \_kube.\_var.logs.containers. , so the previous Tag content will be transformed from:
+If the configuration property **Kube\_Tag\_Prefix** was configured \(available on Fluent Bit &gt;= 1.1.x\), it will use that value to remove the prefix that was appended to the Tag in the previous Input section. Note that the configuration property defaults to _kube.var.logs.containers._ , so the previous Tag content will be transformed from:
 
 ```text
 kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
@@ -380,6 +380,26 @@ If you are not seeing metadata added to your kubernetes logs and see the followi
 **Potential fix \#1: Check Kubernetes roles**
 
 When Fluent Bit is deployed as a DaemonSet it generally runs with specific roles that allow the application to talk to the Kubernetes API server. If you are deployed in a more restricted environment check that all the Kubernetes roles are set correctly.
+
+You can test this by running the following command (replace `fluentbit-system` with the namespace where your fluentbit is installed)
+```text
+kubectl auth can-i list pods --as=system:serviceaccount:fluentbit-system:fluentbit
+```
+If set roles are configured correctly, it should simply respond with `yes`. 
+
+For instance, using Azure AKS, running the above command may respond with: 
+```text
+no - Azure does not have opinion for this user.
+```
+
+If you have connectivity to the API server, but still "could not get meta for POD" - debug logging might give you a message with `Azure does not have opinion for this user`. Then the following `subject` may need to be included in the `fluentbit` `ClusterRoleBinding`: 
+
+appended to `subjects` array:
+```yaml
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+```
 
 **Potential fix \#2: Check Kubernetes IPv6**
 

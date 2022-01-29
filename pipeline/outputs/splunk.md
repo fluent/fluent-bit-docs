@@ -21,6 +21,7 @@ Connectivity, transport and authentication configuration properties:
 | http\_passwd | Password for user defined in HTTP\_User |  |
 | http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
+| channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
 
@@ -69,7 +70,6 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Port        8088
     TLS         On
     TLS.Verify  Off
-    Message_Key my_key
 ```
 
 ### Data format
