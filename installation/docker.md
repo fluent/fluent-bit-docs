@@ -8,6 +8,8 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
+| 1.8.12 | x86\_64, arm64v8, arm32v7 | Release [v1.8.12](https://fluentbit.io/announcements/v1.8.12/) |
+| 1.8-debug, 1.8.12-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.11 | x86\_64, arm64v8, arm32v7 | Release [v1.8.11](https://fluentbit.io/announcements/v1.8.11/) |
 | 1.8-debug, 1.8.11-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.10 | x86\_64, arm64v8, arm32v7 | Release [v1.8.10](https://fluentbit.io/announcements/v1.8.10/) |
@@ -35,17 +37,19 @@ It's strongly suggested that you always use the latest image of Fluent Bit.
 
 ## Multi Architecture Images
 
-Our x86\_64 stable image is based in [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. Optionally, we provide **debug** images for x86\_64 which contains Busybox that can be used to troubleshoot or testing purposes.
+Our x86\_64 stable image is based on [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration.
+Optionally, we provide **debug** images for x86\_64 which contain a full shell and package manager that can be used to troubleshoot or for testing purposes.
 
-In addition, the main manifest provides images for arm64v8 and arm32v7 architectures. From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
+In addition, the main manifest provides images for arm64v8 and arm32v7 architectures.
+From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
 For every architecture we build the layers using the following base images:
 
 | Architecture | Base Image |
 | :--- | :--- |
 | x86\_64 | [Distroless](https://github.com/GoogleContainerTools/distroless) |
-| arm64v8 | arm64v8/debian:buster-slim |
-| arm32v7 | arm32v7/debian:buster-slim |
+| arm64v8 | arm64v8/debian:bullseye-slim |
+| arm32v7 | arm32v7/debian:bullseye-slim |
 
 ## Getting Started
 
