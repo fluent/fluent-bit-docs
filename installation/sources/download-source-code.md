@@ -2,9 +2,19 @@
 
 ## Stable
 
-For production systems, we strongly suggest that you always get the latest stable release from our web site, you can get the official tarballs \(.tar.gz\) from using the following link pattern:
+For production systems, we strongly suggest that you always get the latest stable release from our website.
+The official tarballs \(.tar.gz\) are available using the following link pattern:
 
-https://fluentbit.io/release/1.7/fluent-bit-&lt;release version&gt;. For example for version 1.7.4 the link is the following: [https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz](https://fluentbit.io/releases/1.7/fluent-bit-1.7.4.tar.gz)
+https://fluentbit.io/release/1.8/fluent-bit-&lt;release version&gt;.
+
+For version 1.8.11 the link is the following: [https://fluentbit.io/releases/1.8/fluent-bit-1.8.11.tar.gz](https://fluentbit.io/releases/1.8/fluent-bit-1.8.11.tar.gz)
+
+You can also get an archive of the source code in either zip or tarball format from Github using the following link pattern:
+
+https://github.com/fluent/fluent-bit/archive/refs/tags/v&lt;release version&gt.tar.gz
+https://github.com/fluent/fluent-bit/archive/refs/tags/v&lt;release version&gt.zip
+
+For example for version 1.8.11 the link is the following: [https://github.com/fluent/fluent-bit/archive/refs/tags/v1.8.11.tar.gz](https://github.com/fluent/fluent-bit/archive/refs/tags/v1.8.11.tar.gz)
 
 ## Development
 
