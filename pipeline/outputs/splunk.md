@@ -4,7 +4,7 @@ description: Send logs to Splunk HTTP Event Collector
 
 # Splunk
 
-Splunk output plugin allows to ingest your records into a [Splunk Enterprise](https://www.splunk.com/en_us/products/splunk-enterprise.html) service through the HTTP Event Collector \(HEC\) interface.
+Splunk output plugin allows to ingest your records into a [Splunk Enterprise](https://www.splunk.com/en\_us/products/splunk-enterprise.html) service through the HTTP Event Collector (HEC) interface.
 
 To get more details about how to setup the HEC in Splunk please refer to the following documentation: [Splunk / Use the HTTP Event Collector](http://docs.splunk.com/Documentation/Splunk/7.0.3/Data/UsetheHTTPEventCollector)
 
@@ -12,30 +12,31 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 Connectivity, transport and authentication configuration properties:
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| host | IP address or hostname of the target Splunk service. | 127.0.0.1 |
-| port | TCP port of the target Splunk service. | 8088 |
-| splunk\_token | Specify the Authentication Token for the HTTP Event Collector interface. |  |
-| http\_user | Optional username for Basic Authentication on HEC |  |
-| http\_passwd | Password for user defined in HTTP\_User |  |
-| http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
-| compress | Set payload compression mechanism. The only available option is `gzip`. |  |
-| channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
+| Key                       | Description                                                                                                             | default   |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
+| host                      | IP address or hostname of the target Splunk service.                                                                    | 127.0.0.1 |
+| port                      | TCP port of the target Splunk service.                                                                                  | 8088      |
+| splunk\_token             | Specify the Authentication Token for the HTTP Event Collector interface.                                                |           |
+| http\_user                | Optional username for Basic Authentication on HEC                                                                       |           |
+| http\_passwd              | Password for user defined in HTTP\_User                                                                                 |           |
+| http\_debug\_bad\_request | Added in 1.8.12, if Splunk returns a bad format error allows you to print out the message as part of the log            | off       |
+| http\_buffer\_size        | Buffer size used to receive Splunk HTTP responses. In 1.8.12 this size is auto-adjustable depending on the payload size | 2M        |
+| compress                  | Set payload compression mechanism. The only available option is `gzip`.                                                 |           |
+| channel                   | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface.                                         |           |
 
-Content and Splunk metadata \(fields\) handling configuration properties:
+Content and Splunk metadata (fields) handling configuration properties:
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| splunk\_send\_raw | When enabled, the record keys and values are set in the top level of the map instead of under the event key. Refer to the _Sending Raw Events_ section from the docs for more details to make this option work properly. | off |
-| event\_key | Specify the key name that will be used to send a single value as part of the record. |  |
-| event\_host | Specify the key name that contains the host value. This option allows a record accessors pattern. |  |
-| event\_source | Set the source value to assign to the event data. |  |
-| event\_sourcetype | Set the sourcetype value to assign to the event data. |  |
-| event\_sourcetype\_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in `event_sourcetype`. |  |
-| event\_index | The name of the index by which the event data is to be indexed. |  |
-| event\_index\_key | Set a record key that will populate the `index` field. If the key is found, it will have precedence over the value set in `event_index`. |  |
-| event\_field | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`. |  |
+| Key                    | Description                                                                                                                                                                                                              | default |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| splunk\_send\_raw      | When enabled, the record keys and values are set in the top level of the map instead of under the event key. Refer to the _Sending Raw Events_ section from the docs for more details to make this option work properly. | off     |
+| event\_key             | Specify the key name that will be used to send a single value as part of the record.                                                                                                                                     |         |
+| event\_host            | Specify the key name that contains the host value. This option allows a record accessors pattern.                                                                                                                        |         |
+| event\_source          | Set the source value to assign to the event data.                                                                                                                                                                        |         |
+| event\_sourcetype      | Set the sourcetype value to assign to the event data.                                                                                                                                                                    |         |
+| event\_sourcetype\_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in `event_sourcetype`.                                                                                 |         |
+| event\_index           | The name of the index by which the event data is to be indexed.                                                                                                                                                          |         |
+| event\_index\_key      | Set a record key that will populate the `index` field. If the key is found, it will have precedence over the value set in `event_index`.                                                                                 |         |
+| event\_field           | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`.                                                                                             |         |
 
 ### TLS / SSL
 
@@ -47,9 +48,9 @@ In order to insert records into a Splunk service, you can run the plugin from th
 
 ### Command Line
 
-The **splunk** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
+The **splunk** plugin, can read the parameters from the command line in two ways, through the **-p** argument (property), e.g:
 
-```text
+```
 $ fluent-bit -i cpu -t cpu -o splunk -p host=127.0.0.1 -p port=8088 \
   -p tls=on -p tls.verify=off -m '*'
 ```
@@ -58,7 +59,7 @@ $ fluent-bit -i cpu -t cpu -o splunk -p host=127.0.0.1 -p port=8088 \
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```text
+```
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -80,7 +81,7 @@ If you would like to customize any of the Splunk event metadata, such as the hos
 
 For example, to add a custom index and hostname:
 
-```text
+```
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -139,7 +140,7 @@ Consider the following example:
 
 **splunk\_send\_raw on**
 
-```text
+```
 {"time": .., "k1": "foo", "k2": "bar", "index": "applogs"}
 ```
 
@@ -149,19 +150,19 @@ For up to date information about the valid keys in the top level object, refer t
 
 ## Splunk Metric Index
 
-With Splunk version 8.0&gt; you can also use the Fluent Bit Splunk output plugin to send data to metric indices. This allows you to perform visualizations, metric queries, and analysis with other metrics you may be collecting. This is based off of Splunk 8.0 support of multi metric support via single JSON payload, more details can be found on [Splunk's documentation page](https://docs.splunk.com/Documentation/Splunk/8.1.2/Metrics/GetMetricsInOther#The_multiple-metric_JSON_format)
+With Splunk version 8.0> you can also use the Fluent Bit Splunk output plugin to send data to metric indices. This allows you to perform visualizations, metric queries, and analysis with other metrics you may be collecting. This is based off of Splunk 8.0 support of multi metric support via single JSON payload, more details can be found on [Splunk's documentation page](https://docs.splunk.com/Documentation/Splunk/8.1.2/Metrics/GetMetricsInOther#The\_multiple-metric\_JSON\_format)
 
 Sending to a Splunk Metric index requires the use of `Splunk_send_raw` option being enabled and formatting the message properly. This includes three specific operations
 
 * Nest metric events under a "fields" property
-* Add `metric_name:`  to all metrics
+* Add `metric_name:` to all metrics
 * Add index, source, sourcetype as fields in the message
 
 ### Example Configuration
 
 The following configuration gathers CPU metrics, nests the appropriate field, adds the required identifiers and then sends to Splunk.
 
-```text
+```
 [INPUT]
     name cpu
     tag cpu
@@ -196,4 +197,3 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
     tls on
     tls.verify off
 ```
-
