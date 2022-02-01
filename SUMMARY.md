@@ -82,6 +82,7 @@
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
   * [Exec](pipeline/inputs/exec.md)
+  * [Fluent Bit Metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)
   * [HTTP](pipeline/inputs/http.md)
