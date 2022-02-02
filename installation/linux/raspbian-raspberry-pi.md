@@ -1,10 +1,9 @@
 # Raspbian / Raspberry Pi
 
-Fluent Bit is distributed as **td-agent-bit** package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution, the following versions are supported:
+Fluent Bit is distributed as **fluent-bit** package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution, the following versions are supported:
 
+* Raspbian Bullseye \(11\)
 * Raspbian Buster \(10\)
-* Raspbian Stretch \(9\)
-* Raspbian Jessie \(8\)
 
 ## Server GPG key
 
@@ -17,6 +16,12 @@ curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ## Update your sources lists
 
 On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+
+#### Raspbian 11 \(Bullseye\)
+
+```text
+deb https://packages.fluentbit.io/raspbian/bullseye bullseye main
+```
 
 #### Raspbian 10 \(Buster\)
 
@@ -37,35 +42,35 @@ We recommend upgrading your system (```sudo apt-get upgrade```). This could avoi
 {% endhint %}
 
 
-## Install TD-Agent Bit
+## Install fluent Bit
 
-Using the following _apt-get_ command you are able now to install the latest _td-agent-bit_:
+Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
 
 ```text
-$ sudo apt-get install td-agent-bit
+$ sudo apt-get install fluent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-$ sudo service td-agent-bit start
+$ sudo service fluent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:
 
 ```bash
-sudo service td-agent-bit status
-● td-agent-bit.service - TD Agent Bit
-   Loaded: loaded (/lib/systemd/system/td-agent-bit.service; disabled; vendor preset: enabled)
+sudo service fluent-bit status
+● fluent-bit.service - Fluent Bit
+   Loaded: loaded (/lib/systemd/system/fluent-bit.service; disabled; vendor preset: enabled)
    Active: active (running) since mié 2016-07-06 16:58:25 CST; 2h 45min ago
- Main PID: 6739 (td-agent-bit)
+ Main PID: 6739 (fluent-bit)
     Tasks: 1
    Memory: 656.0K
       CPU: 1.393s
-   CGroup: /system.slice/td-agent-bit.service
-           └─6739 /opt/td-agent-bit/bin/td-agent-bit -c /etc/td-agent-bit/td-agent-bit.conf
+   CGroup: /system.slice/fluent-bit.service
+           └─6739 /opt/fluent-bit/bin/fluent-bit -c /etc/fluent-bit/fluent-bit.conf
 ...
 ```
 
-The default configuration of **td-agent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+The default configuration of **fluent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
 

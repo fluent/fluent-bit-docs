@@ -2,11 +2,7 @@
 
 If you use any Linux distribution [supported by](https://snapcraft.io/docs/installing-snapd) Snapcraft, you can get Fluent Bit as a Snap in your system.
 
-
-
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/fluent-bit)
-
-
 
 ## Getting Started
 
