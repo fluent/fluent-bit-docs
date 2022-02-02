@@ -15,7 +15,7 @@ curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 
 ## Update your sources lists
 
-On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file:
+On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file.
 
 #### Raspbian 11 \(Bullseye\)
 
