@@ -42,7 +42,7 @@ We recommend upgrading your system (```sudo apt-get upgrade```). This could avoi
 {% endhint %}
 
 
-## Install fluent Bit
+## Install Fluent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
 
