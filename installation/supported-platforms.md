@@ -14,6 +14,7 @@ The following operating systems and architectures are supported in Fluent Bit.
 |  | [Ubuntu 18.04 \(Bionic Beaver\)](linux/ubuntu.md) | x86\_64, Arm64v8 |
 |  | [Ubuntu 16.04 \(Xenial Xerus\)](linux/ubuntu.md) | x86\_64 |
 |  | [Raspbian 10 \(Buster\)](linux/raspbian-raspberry-pi.md) | Arm32v7 |
+| macOS | * | x86_64, Apple M1 |
 | Windows | [Windows Server 2019](windows.md) | x86\_64, x86 |
 |  | [Windows 10 1903](windows.md) | x86\_64, x86 |
 

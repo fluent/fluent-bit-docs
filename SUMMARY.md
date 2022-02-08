@@ -41,8 +41,9 @@
 * [Containers on AWS](installation/aws-container.md)
 * [Amazon EC2](installation/amazon-ec2.md)
 * [Kubernetes](installation/kubernetes.md)
-* [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
+* [macOS](installation/macos.md)
 * [Windows](installation/windows.md)
+* [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
 
 ## Administration
 
