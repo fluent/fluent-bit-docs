@@ -18,7 +18,7 @@
   * [Parser](concepts/data-pipeline/parser.md)
   * [Filter](concepts/data-pipeline/filter.md)
   * [Buffer](concepts/data-pipeline/buffer.md)
-  * [Router](concepts/data-pipeline/router.md)
+  * [Router](concepts/data-pipeline/router.md)3
   * [Output](concepts/data-pipeline/output.md)
 
 ## Installation
@@ -128,6 +128,7 @@
   * [Throttle](pipeline/filters/throttle.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
 * [Outputs](pipeline/outputs/README.md)
+  * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [Prometheus Exporter](pipeline/outputs/prometheus-exporter.md)
   * [Prometheus Remote Write](pipeline/outputs/prometheus-remote-write.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
