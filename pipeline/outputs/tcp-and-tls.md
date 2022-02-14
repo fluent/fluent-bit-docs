@@ -31,7 +31,7 @@ The following parameters are available to configure a secure channel connection 
 #### JSON format
 
 ```bash
-$ docker run --rm -it --network=host fluent/fluent-bit /fluent-bit/bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v
+$ bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v
 ```
 
 We have specified to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) usage metrics and send them in JSON lines mode to a remote end-point using netcat service.
@@ -49,7 +49,7 @@ $ nc -l 5170
 Repeat the JSON approach but using the `msgpack` output format.
 
 ```bash
-$ docker run --rm -it --network=host fluent/fluent-bit /fluent-bit/bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=msgpack -v
+$ bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=msgpack -v
 
 ```
 
