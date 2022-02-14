@@ -103,7 +103,8 @@ Source events can have or not have a structure. A structure defines a set of _ke
 At a low level both are just an array of bytes, but the Structured message defines _keys_ and _values_, having a structure helps to implement faster operations on data modifications.
 
 {% hint style="info" %}
-Fluent Bit **always** handles every Event message as a structured message. For performance reasons, we use a binary serialization data format called [MessagePack](https://msgpack.org/).
+Fluent Bit **always** handles every Event message as a structured message.
+For performance reasons, we use a binary serialization data format called [MessagePack](https://msgpack.org/).
 
 Consider [MessagePack](https://msgpack.org/) as a binary version of JSON on steroids.
 {% endhint %}
