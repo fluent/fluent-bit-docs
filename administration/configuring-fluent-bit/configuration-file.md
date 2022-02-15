@@ -132,7 +132,7 @@ The following configuration file example demonstrates how to collect CPU metrics
 
 ## Visualize <a href="config_include_file" id="config_include_file"></a>
 
-You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://config.calyptia.com](https://config.calyptia.com)
+You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://cloud.calyptia.com](https://cloud.calyptia.com/visualizer)
 
 ![](../../.gitbook/assets/image.png)
 
