@@ -104,6 +104,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
+  * [Windows Event Log (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
 * [Parsers](pipeline/parsers/README.md)
   * [Configuring Parser](pipeline/parsers/configuring-parser.md)
   * [JSON](pipeline/parsers/json.md)
