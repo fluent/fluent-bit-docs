@@ -7,7 +7,7 @@ description: >-
 
 Fluent Bit exposes its [own metrics](../../administration/monitoring.md) to allow you to monitor the internals of your pipeline.
 The collected metrics can be processed similarly to those from the [Prometheus Node Exporter input plugin](node-exporter-metrics.md).
-They can be sent to output plugins including [Prometheus Exporter](../outputs/prometheus-exporter.md) or [Prometheus Remote Write](../outputs/prometheus-remote-write.md).
+They can be sent to output plugins including [Prometheus Exporter](../outputs/prometheus-exporter.md), [Prometheus Remote Write](../outputs/prometheus-remote-write.md) or  [OpenTelemetry](../outputs/opentelemetry.md)..
 
 **Important note:** Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
