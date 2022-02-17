@@ -4,8 +4,7 @@ Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit ha
 
 ## Configuration
 
-Currently the default configuration is intended for Linux only so will not function on Windows.
-Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
+Currently the default configuration is intended for Linux only so will not function on Windows. Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
 
 ```
 [SERVICE]
@@ -76,12 +75,12 @@ Make sure to provide a valid Windows configuration with the installation, a samp
 
 The latest stable version is 1.8.12:
 
-| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [td-agent-bit-1.8.12-win32.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.12-win32.exe) | 45ed1ff2ae22654b1cd814dfb26e507e59dd5e2ca67ef6d71f27fd0c692cb1c0 |
-| [td-agent-bit-1.8.12-win32.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.12-win32.zip) | 825312ceed2355eec47a0519233922218d860bafa9aafcf827a8532df6923854 |
-| [td-agent-bit-1.8.12-win64.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.12-win64.exe) | 8621d301d1cc7ecbf33a61f42b571759d1fe4c715fc62ffb9e2e20a01202cef2 |
-| [td-agent-bit-1.8.12-win64.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.12-win64.zip) | b6527ceadcfbeca3e9a033fd12e678cc955d08beaeb4d02d9f449f7e1d8efeea |
+| INSTALLERS                                                                                                                                | SHA256 CHECKSUMS                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [td-agent-bit-1.8.12-win32.exe](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win32.exe)             | 45ed1ff2ae22654b1cd814dfb26e507e59dd5e2ca67ef6d71f27fd0c692cb1c0 |
+| [td-agent-bit-1.8.12-win32.zip](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win32.zip)             | 825312ceed2355eec47a0519233922218d860bafa9aafcf827a8532df6923854 |
+| [td-agent-bit-1.8.12-win64.exe](https://github.com/fluent/fluent-bit/releases/tag/v1.8.12#:\~:text=td%2Dagent%2Dbit%2D1.8.12%2Dwin64.exe) | 8621d301d1cc7ecbf33a61f42b571759d1fe4c715fc62ffb9e2e20a01202cef2 |
+| [td-agent-bit-1.8.12-win64.zip](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win64.zip)             | b6527ceadcfbeca3e9a033fd12e678cc955d08beaeb4d02d9f449f7e1d8efeea |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
@@ -152,7 +151,7 @@ Download an EXE installer from the [download page](https://fluentbit.io/download
 
 Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
 
-![](<../.gitbook/assets/windows_installer (1) (1).png>)
+![](<../.gitbook/assets/windows\_installer (1) (1).png>)
 
 Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\td-agent-bit\`, so you should be able to launch fluent-bit as follow after installation.
 
@@ -162,7 +161,7 @@ PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
 
 ### Installer options
 
-The Windows installer is built by [`CPack` using NSIS(https://cmake.org/cmake/help/latest/cpack_gen/nsis.html) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
+The Windows installer is built by \[`CPack` using NSIS(https://cmake.org/cmake/help/latest/cpack\_gen/nsis.html) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
 
 To silently install to `C:\fluent-bit` directory here is an example:
 
@@ -170,8 +169,7 @@ To silently install to `C:\fluent-bit` directory here is an example:
 PS> <installer exe> /S /D=C:\fluent-bit
 ```
 
-The uninstaller automatically provided also supports a silent un-install using the same `/S` flag.
-This may be useful for provisioning with automation like Ansible, Puppet, etc.
+The uninstaller automatically provided also supports a silent un-install using the same `/S` flag. This may be useful for provisioning with automation like Ansible, Puppet, etc.
 
 ## Windows Service Support
 
@@ -214,19 +212,19 @@ To halt the Fluent Bit service, just execute the "stop" command.
 
 To start Fluent Bit automatically on boot, execute the following:
 
-```text
+```
 % sc.exe config fluent-bit start= auto
 ```
 
-### [FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
+### \[FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
 
 Quotations are required if file paths contain spaces. Here is an example:
 
-```text
+```
 % sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
 ```
 
-### [FAQ] How can I manage Fluent Bit service via PowerShell?
+### \[FAQ] How can I manage Fluent Bit service via PowerShell?
 
 Instead of `sc.exe`, PowerShell can be used to manage Windows services.
 
