@@ -18,7 +18,8 @@ Important Note: The prometheus exporter only works with metric plugins, such as 
 | uri                 | Specify an optional HTTP URI for the target web server, e.g: /something                                                                                                                                                                                                | /         |
 | header              | Add a HTTP header key/value pair. Multiple headers can be set.                                                                                                                                                                                                         |           |
 | log_response_payload | Log the response payload within the Fluent Bit log                                                                                                                                                                                                                     | false     |
-| add_label | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields |  |
+| add_label            | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields                                                                                                                                     |           |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
 
 ## Getting Started
 

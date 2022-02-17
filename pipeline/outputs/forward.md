@@ -21,6 +21,7 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 | Send_options         | Always send options (with "size"=count of messages)                                                                                                                                                                                                                                                 | False     |
 | Require_ack_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. (Requires Fluentd v0.14.0+ server)                                                                                                                             | False     |
 | Compress             | Set to "gzip" to enable gzip compression. Incompatible with Time_as_Integer=True and tags set dynamically using the [Rewrite Tag](https://app.gitbook.com/s/-LKKSx-3LBTCtaHbg0gl-887967055/pipeline/filters/rewrite-tag.md) filter. (Requires Fluentd v0.14.7+ server)                              |           |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
 
 ## Secure Forward Mode Configuration Parameters
 
