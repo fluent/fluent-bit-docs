@@ -22,6 +22,7 @@ Connectivity, transport and authentication configuration properties:
 | http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
 | channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
 
