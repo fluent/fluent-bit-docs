@@ -26,6 +26,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | gelf\_full\_message\_key   | Specify the key to use for the `full` message in _gelf_ format                                                                                                                                                                                                                                                                     |           |
 | gelf\_level\_key           | Specify the key to use for the `level` in _gelf_ format                                                                                                                                                                                                                                                                            |           |
 | successful\_response\_code | Specify what a successful HTTP response code is in case you need to retry for other HTTP codes (E.g. 204 where)                                                                                                                                                                                                                    |           |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
 
 ### TLS / SSL
 
