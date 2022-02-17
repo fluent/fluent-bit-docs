@@ -12,17 +12,17 @@ To get more details about how to setup the HEC in Splunk please refer to the fol
 
 Connectivity, transport and authentication configuration properties:
 
-| Key                       | Description                                                                                                             | default   |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------- |
-| host                      | IP address or hostname of the target Splunk service.                                                                    | 127.0.0.1 |
-| port                      | TCP port of the target Splunk service.                                                                                  | 8088      |
-| splunk\_token             | Specify the Authentication Token for the HTTP Event Collector interface.                                                |           |
-| http\_user                | Optional username for Basic Authentication on HEC                                                                       |           |
-| http\_passwd              | Password for user defined in HTTP\_User                                                                                 |           |
-| http\_debug\_bad\_request | Added in 1.8.12, if Splunk returns a bad format error allows you to print out the message as part of the log            | off       |
-| http\_buffer\_size        | Buffer size used to receive Splunk HTTP responses. In 1.8.12 this size is auto-adjustable depending on the payload size | 2M        |
-| compress                  | Set payload compression mechanism. The only available option is `gzip`.                                                 |           |
-| channel                   | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface.                                         |           |
+| Key | Description | default |
+| :--- | :--- | :--- |
+| host | IP address or hostname of the target Splunk service. | 127.0.0.1 |
+| port | TCP port of the target Splunk service. | 8088 |
+| splunk\_token | Specify the Authentication Token for the HTTP Event Collector interface. |  |
+| http\_user | Optional username for Basic Authentication on HEC |  |
+| http\_passwd | Password for user defined in HTTP\_User |  |
+| http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
+| compress | Set payload compression mechanism. The only available option is `gzip`. |  |
+| channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
 
 Content and Splunk metadata (fields) handling configuration properties:
 
