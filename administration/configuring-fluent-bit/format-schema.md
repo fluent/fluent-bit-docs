@@ -1,6 +1,8 @@
-# Format and Schema
+# Formats and Schema
 
-Fluent Bit might optionally use a configuration file to define how the service will behave, and before proceeding we need to understand how the configuration schema works.
+Fluent Bit might optionally use a configuration file to define how the service will behave. Starting in Fluent Bit 1.9, it supports yaml format plus the usual plain text.
+
+Before proceeding we need to understand how the configuration schema works.
 
 The schema is defined by three concepts:
 
@@ -24,6 +26,7 @@ A simple example of a configuration file is as follows:
 {% tab title="fluent-bit.yaml" %}
 ```yaml
 service:
+    # This is a commented line
     daemon: off
     log_level: debug
 ```
@@ -54,6 +57,8 @@ Also commented lines are set prefixing the **\#** character, those lines are not
 
 Fluent Bit configuration files are based in a strict **Indented Mode**, that means that each configuration file must follow the same pattern of alignment from left to right when writing text. By default an indentation level of four spaces from left to right is suggested. Example:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [FIRST_SECTION]
     # This is a commented line
@@ -64,6 +69,21 @@ Fluent Bit configuration files are based in a strict **Indented Mode**, that mea
 [SECOND_SECTION]
     KeyN  3.14
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml %"}
+```yaml
+first_section:
+    # This is a commented line
+    Key1: some value
+    Key2: another value
+    # more comments
+
+second_section:
+    KeyN: 3.14
+```
+{% endtab %}
+{% endtabs %}
 
 As you can see there are two sections with multiple entries and comments, note also that empty lines are allowed and they do not need to be indented.
 
