@@ -70,7 +70,7 @@ Fluent Bit configuration files are based in a strict **Indented Mode**, that mea
     KeyN  3.14
 ```
 {% endtab %}
-{% tab title="fluent-bit.yaml %"}
+{% tab title="fluent-bit.yaml" %}
 ```yaml
 first_section:
     # This is a commented line
