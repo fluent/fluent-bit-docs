@@ -10,12 +10,25 @@ The schema is defined by three concepts:
 
 A simple example of a configuration file is as follows:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+
 ```python
 [SERVICE]
     # This is a commented line
     Daemon    off
     log_level debug
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    daemon: off
+    log_level: debug
+```
+{% endtab %}
+{% endtabs %}
 
 ## Sections <a id="sections"></a>
 
