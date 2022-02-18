@@ -1,6 +1,7 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
+_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers.
+This plugin implements the input service to listen for Forward messages.
 
 ## Configuration Parameters
 
@@ -18,7 +19,7 @@ The plugin supports the following configuration parameters:
 
 ## Getting Started
 
-In order to receive Forward messages, you can run the plugin from the command line or through the configuration file:
+In order to receive Forward messages, you can run the plugin from the command line or through the configuration file as shown in the following examples.
 
 ### Command Line
 
