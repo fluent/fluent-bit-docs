@@ -1,6 +1,7 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The **forward** output plugin allows to provide interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org). There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be in the local host or a in a remote machine.
+_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The **forward** output plugin provides interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org).
+There are no configuration steps required besides specifying where [Fluentd](http://fluentd.org) is located, which can be a local or a remote destination.
 
 This plugin offers two different transports and modes:
 
@@ -44,7 +45,7 @@ When using Secure Forward mode, the [TLS](../../administration/security.md) mode
 
 ## Forward Setup
 
-Before proceeding, make sure that [Fluentd](http://fluentd.org) is installed in your system, if it's not the case please refer to the following [Fluentd Installation](http://docs.fluentd.org/v0.12/categories/installation) document and go ahead with that.
+Before proceeding, make sure that [Fluentd](http://fluentd.org) is installed, if it's not the case please refer to the following [Fluentd Installation](http://docs.fluentd.org/v0.12/categories/installation) document and go ahead with that.
 
 Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
 
@@ -60,9 +61,10 @@ Once [Fluentd](http://fluentd.org) is installed, create the following configurat
 </match>
 ```
 
-That configuration file specifies that it will listen for _TCP_ connections on the port _24224_ through the **forward** input type. Then for every message with a _fluent_bit_ **TAG**, will print the message to the standard output.
+That configuration file specifies that it will listen for _TCP_ connections on the port _24224_ through the **forward** input type.
+Then for every message with a _fluent_bit_ **TAG**, will print the message to the standard output.
 
-In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created (in_fluent-bit.conf):
+In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created:
 
 ```bash
 $ fluentd -c test.conf
@@ -105,7 +107,8 @@ Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to 
 bin/fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
-If the **TAG** parameter is not set, the plugin will retain the tag. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
+If the **TAG** parameter is not set, the plugin will retain the tag.
+Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
 
 Using the [CPU](../inputs/cpu-metrics.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org) with tag _fluent_bit_:
 
@@ -126,9 +129,9 @@ So we gathered [CPU](../inputs/cpu-metrics.md) metrics and flushed them out to [
 
 ## Fluent Bit + Secure Forward Setup <a href="secure_forward_setup" id="secure_forward_setup"></a>
 
-> DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
+> DISCLAIMER: the following example does not consider the generation of certificates for best practice on production environments.
 
-Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](tcp-and-tls.md). Above there is a minimalist configuration for testing purposes.
+Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](tcp-and-tls.md).
 
 ### Fluent Bit
 
@@ -207,7 +210,8 @@ Start Fluent Bit:
 $ fluent-bit -c flb.conf
 ```
 
-After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd output you will see a message like this:
+After five seconds, Fluent Bit will write records to Fluentd.
+In Fluentd output you will see a message like this:
 
 ```
 2017-03-23 13:34:40 -0600 [info]: using configuration file: <ROOT>
