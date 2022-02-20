@@ -29,7 +29,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
 | severity\_key | Specify the name of the key from the original record that contains the severity information. |  |
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.12. For previous versions is 0. | 2 |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 
 ### Configuration File
 
