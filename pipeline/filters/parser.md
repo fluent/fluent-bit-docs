@@ -12,7 +12,6 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
 | Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
 | Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
-| Unescape\_Key | If the key is an escaped string \(e.g: stringify JSON\), unescape the string before applying the parser. | False |
 
 ## Getting Started
 
