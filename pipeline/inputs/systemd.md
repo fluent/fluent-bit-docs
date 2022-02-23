@@ -17,6 +17,7 @@ The plugin supports the following configuration parameters:
 | DB | Specify the absolute path of a database file to keep track of Journald cursor. |  |
 | DB.Sync | Set a default synchronization \(I/O\) method. values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). note: this option was introduced on Fluent Bit v1.4.6. | Full |
 | Read\_From\_Tail | Start reading new entries. Skip entries already stored in Journald. | Off |
+| Lowercase | Lowercase the Journald field \(key\). | Off |
 | Strip\_Underscores | Remove the leading underscore of the Journald field \(key\). For example the Journald field _\_PID_ becomes the key _PID_. | Off |
 
 ## Getting Started
