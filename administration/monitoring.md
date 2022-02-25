@@ -220,14 +220,22 @@ Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tre
 
 Fluent bit now supports four new configs to set up the health check.
 
-| Config Name            | Description                                                               | Default Value |
-| ---------------------- | ------------------------------------------------------------------------- | ------------- |
-| Health_Check           | enable Health check feature                                               | Off           |
-| HC_Errors_Count        | the error count to meet the unhealthy requirement                         | 5             |
-| HC_Retry_Failure_Count | the retry failure count to meet the unhealthy requirement                 | 5             |
-| HC_Period              | The time period by second to count the error and retry failure data point | 60            |
+| Config Name            | Description                                                                                                                                                                                                                                                                                                                             | Default Value |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- |
+| Health_Check           | enable Health check feature                                                                                                                                                                                                                                                                                                             | Off           |
+| HC_Errors_Count        | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for output error: ` [2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)`            | 5             |
+| HC_Retry_Failure_Count | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1 `                                    | 5             |
+| HC_Period              | The time period by second to count the error and retry failure data point                                                                                                                                                                                                                                                               | 60            |
+
+*Note: Not every error log means an error nor be counted, the errors retry failures count only on specific errors which is the example in config table description*
 
 So the feature works as: Based on the HC_Period customer setup, if the real error number is over `HC_Errors_Count` or retry failure is over `HC_Retry_Failure_Count`, fluent bit will be considered as unhealthy. The health endpoint will return HTTP status 500 and String `error`. Otherwise it's healthy, will return HTTP status 200 and string `ok`
+
+The equation is: 
+```
+health status = (HC_Errors_Count > HC_Errors_Count config value) OR (HC_Retry_Failure_Count > HC_Retry_Failure_Count config value) IN the HC_Period interval
+```
+*Note: the HC_Errors_Count and HC_Retry_Failure_Count only count for output plugins and count a sum for errors and retry failures from all output plugins which is running.*
 
 See the config example:
 
@@ -259,6 +267,15 @@ Based on the fluent bit status, the result will be:
 
 * HTTP status 200 and "ok" in response to healthy status
 * HTTP status 500 and "error" in response for unhealthy status
+
+With the example config, the health status is determined by following equation:
+```
+Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds
+```
+If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is TRUE, then it's unhealthy.
+
+If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is FALSE, then it's healthy.
+
 
 ## Calyptia Cloud
 
