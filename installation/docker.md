@@ -8,6 +8,8 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
+| 1.8.13 | x86\_64, arm64v8, arm32v7 | Release [v1.8.13](https://fluentbit.io/announcements/v1.8.13/) |
+| 1.8-debug, 1.8.13-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.12 | x86\_64, arm64v8, arm32v7 | Release [v1.8.12](https://fluentbit.io/announcements/v1.8.12/) |
 | 1.8-debug, 1.8.12-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.11 | x86\_64, arm64v8, arm32v7 | Release [v1.8.11](https://fluentbit.io/announcements/v1.8.11/) |
@@ -90,4 +92,6 @@ Alpine Linux uses Musl C library instead of Glibc. Musl is not fully compatible 
 
 Our Docker containers images are deployed thousands of times per day, we take security and stability very seriously.
 
-The _latest_ tag _most of the time_ points to the latest stable image. When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release. That give us extra time to verify with our community that everything works as expected.
+The _latest_ tag _most of the time_ points to the latest stable image.
+When we release a major update to Fluent Bit like for example from v1.3.x to v1.4.0, we don't move _latest_ tag until 2 weeks after the release.
+That give us extra time to verify with our community that everything works as expected.
