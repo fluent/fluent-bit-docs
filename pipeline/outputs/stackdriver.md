@@ -12,7 +12,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
+| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_APPLICATION\_CREDENTIALS_ |
 | service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
 | service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
 | metadata\_server | Prefix for a metadata server. Can also set environment variable _$METADATA\_SERVER_. | [http://metadata.google.internal](http://metadata.google.internal) |
