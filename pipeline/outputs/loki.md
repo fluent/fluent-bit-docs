@@ -1,14 +1,18 @@
 # Loki
 
-[Loki](https://grafana.com/oss/loki/) is multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost effective and easy to operate.
+[Loki](https://grafana.com/oss/loki/) is multi-tenant log aggregation system inspired by Prometheus.
+It is designed to be very cost effective and easy to operate.
 
-The Fluent Bit `loki` built-in output plugin allows you to send your log or events to a Loki service. It support data enrichment with Kubernetes labels, custom label keys and Tenant ID within others.
+The Fluent Bit `loki` built-in output plugin allows you to send your log or events to a Loki service.
+It supports data enrichment with Kubernetes labels, custom label keys and Tenant ID within others.
+
+Be aware there is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
 
 ## Configuration Parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| host | Loki hostname or IP address | 127.0.0.1 |
+| host | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.  | 127.0.0.1 |
 | port | Loki TCP port | 3100 |
 | http\_user | Set HTTP basic authentication user name |  |
 | http\_passwd | Set HTTP basic authentication password |  |
@@ -25,7 +29,8 @@ The Fluent Bit `loki` built-in output plugin allows you to send your log or even
 
 Loki store the record logs inside Streams, a stream is defined by a set of labels, at least one label is required.
 
-Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text but also allowing to set as labels certain keys that exists as part of the records that are being processed. Consider the following JSON record \(pretty printed for readability\):
+Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text but also allowing to set as labels certain keys that exists as part of the records that are being processed.
+Consider the following JSON record \(pretty printed for readability\):
 
 ```javascript
 {
@@ -51,7 +56,8 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
     labels job=fluentbit, $sub['stream']
 ```
 
-As you can see the label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` . Note that the second label name **must** starts with a `$`, that means that's a [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) pattern so it provide you the ability to retrieve values from nested maps by using the key names.
+As you can see the label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` .
+Note that the second label name **must** starts with a `$`, that means that's a [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) pattern so it provide you the ability to retrieve values from nested maps by using the key names.
 
 When processing above's configuration, internally the ending labels for the stream in question becomes:
 
@@ -61,7 +67,7 @@ job="fluentbit", stream="stdout"
 
 Another feature of Labels management is the ability to provide custom key names, using the same record accessor pattern we can specify the key name manually and let the value to be populated automatically at runtime, e.g:
 
-```python
+```text
 [OUTPUT]
     name   loki
     match  *
@@ -76,7 +82,8 @@ job="fluentbit", mystream="stdout"
 
 ### Using the `label_keys` property
 
-The additional configuration property called `label_keys` allow to specify multiple record keys that needs to be placed as part of the outgoing Stream Labels, yes, this is a similar feature than the one explained above in the `labels` property. Consider this as another way to set a record key in the Stream, but with the limitation that you cannot use a custom name for the key value.
+The additional configuration property called `label_keys` allow to specify multiple record keys that needs to be placed as part of the outgoing Stream Labels, yes, this is a similar feature than the one explained above in the `labels` property.
+Consider this as another way to set a record key in the Stream, but with the limitation that you cannot use a custom name for the key value.
 
 The following configuration examples generate the same Stream Labels:
 
@@ -130,11 +137,30 @@ This plugin inherit core Fluent Bit features to customize the network behavior a
 
 Note that all options mentioned in the articles above must be enabled in the plugin configuration in question.
 
+### Fluent Bit + Grafana Cloud
+
+Fluent Bit supports sending logs (and metrics) to [Grafana Cloud](https://grafana.com/products/cloud/) by providing the appropriate URL and ensuring TLS is enabled.
+
+An example configuration - make sure to set the credentials and ensure the host URL matches the correct one for your deployment:
+
+```text
+    [OUTPUT]
+        Name        loki
+        Match       *
+        Host        logs-prod-eu-west-0.grafana.net
+        port        443
+        tls         on
+        tls.verify  on
+        http_user   XXX
+        http_passwd XXX
+```
+
 ## Getting Started
 
-The following configuration example, will emit a dummy example record and ingest it on Loki . Copy and paste the following content in a file called `out_loki.conf`:
+The following configuration example, will emit a dummy example record and ingest it on Loki .
+Copy and paste the following content into a file called `out_loki.conf`:
 
-```python
+```text
 [SERVICE]
     flush     1
     log_level info
@@ -149,7 +175,7 @@ The following configuration example, will emit a dummy example record and ingest
     match                  *
     host                   127.0.0.1
     port                   3100
-    labels                 job=fluentbit    
+    labels                 job=fluentbit
     label_keys             $sub['stream']
     auto_kubernetes_labels on
 ```
@@ -178,4 +204,3 @@ Fluent Bit v1.7.0
 [2020/10/14 20:57:46] [debug] [http] request payload (272 bytes)
 [2020/10/14 20:57:46] [ info] [output:loki:loki.0] 127.0.0.1:3100, HTTP status=204
 ```
-
