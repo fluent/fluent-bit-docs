@@ -32,16 +32,33 @@ Fluent Bit BigQuery output plugin uses a JSON credentials file for authenticatio
 
 * [Creating and Managing Service Account Keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
+### Workload Identity Federation
+
+Using identity federation, you can grant on-premises or multi-cloud workloads access to Google Cloud resources, without using a service account key. It can be used as a more secure alternative to service account credentials. Google Cloud's workload identity federation supports several identity providers (see documentation) but Fluent Bit BigQuery plugin currently supports Amazon Web Services (AWS) only.
+
+* [Workload Identity Federation overview](https://cloud.google.com/iam/docs/workload-identity-federation)
+
+You must configure workload identity federation in GCP before using it with Fluent Bit.
+
+* [Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#aws)
+* [Obtaining short-lived credentials with identity federation](https://cloud.google.com/iam/docs/using-workload-identity-federation)
+
 ## Configurations Parameters
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of the environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
+| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
 | project\_id | The project id containing the BigQuery dataset to stream into. | The value of the `project_id` in the credentials file |
 | dataset\_id | The dataset id of the BigQuery dataset to write into. This dataset must exist in your project. |  |
 | table\_id | The table id of the BigQuery table to write into. This table must exist in the specified dataset and the schema must match the output. |  |
-| skip_invalid_rows | Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. | Off |
-| ignore_unknown_values | Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors. | Off |
+| skip\_invalid\_rows | Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. | Off |
+| ignore\_unknown\_values | Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors. | Off |
+| enable\_workload\_identity\_federation | Enables workload identity federation as an alternative authentication method. Cannot be used with service account credentials file or environment variable. AWS is the only identity provider currently supported. | Off |
+| aws\_region | Used to construct a regional endpoint for AWS STS to verify AWS credentials obtained by Fluent Bit. Regional endpoints are recommended by AWS. |  |
+| project\_number | GCP project number where the identity provider was created. Used to construct the full resource name of the identity provider. |  |
+| pool\_id | GCP workload identity pool where the identity provider was created. Used to construct the full resource name of the identity provider. |  |
+| provider\_id | GCP workload identity provider. Used to construct the full resource name of the identity provider. Currently only AWS accounts are supported. |  |
+| google\_service\_account | Email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources (e.g. `write` access to tables) |  |
 
 See Google's [official documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
