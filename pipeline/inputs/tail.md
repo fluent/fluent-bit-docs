@@ -247,15 +247,3 @@ The `WAL` mechanism give us higher performance but also might increase the memor
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
 Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
-
-## Monitoring
-
-Fluent Bit offers several ways to monitor your data pipelines:
-
-* [HTTP Server: JSON and Prometheus Exporter-style metrics](../../administration/monitoring.md#http-server)
-* [Grafana Dashboards and Alerts](../../administration/monitoring.md#grafana-dashboard-and-alerts)
-* [Health Checks](../../administration/monitoring.md#health-check-for-fluent-bit)
-* [Calyptia Cloud: hosted service to monitor and visualize your pipelines](../../administration/monitoring.md#calyptia-cloud)
-
-
-
