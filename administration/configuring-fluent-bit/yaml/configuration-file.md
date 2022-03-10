@@ -15,7 +15,7 @@ The yaml configuration file supports these sections:
   * Filters
   * Outputs
 
-## Env <a href="config_env" id="config_env" />
+## Env <a href="config_env" id="config_env"><a/>
 
 The _env_ section allows to configure variables that will be used later on this configuration file.
 
@@ -64,7 +64,7 @@ service:
     log_level: debug
 ```
 
-## Pipeline <a href="config_pipeline" id="config_pipeline" />
+## Pipeline <a href="config_pipeline" id="config_pipeline"><a/>
 
 A _pipeline_ section will define a complete pipeline configuration, including _inputs_, _filters_ and _outputs_ subsections.
 
