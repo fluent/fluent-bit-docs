@@ -17,7 +17,7 @@ The plugin supports the following configuration parameters:
 
 #### Record Accessor Enabled
 
-This plugin enables the [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) feature to specify the KEY. Using the _record accessor_ is suggested if you want to match values against nested values.
+This plugin enables the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the KEY. Using the _record accessor_ is suggested if you want to match values against nested values.
 
 ## Getting Started
 
@@ -66,7 +66,7 @@ The filter allows to use multiple rules which are applied in order, you can have
 
 ### Nested fields example
 
-If you want to match or exclude records based on nested values, you can use a [Record Accessor ](../../administration/configuring-fluent-bit/record-accessor.md)format as the KEY name. Consider the following record example:
+If you want to match or exclude records based on nested values, you can use a [Record Accessor ](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md)format as the KEY name. Consider the following record example:
 
 ```javascript
 {

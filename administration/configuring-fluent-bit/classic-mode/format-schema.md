@@ -1,6 +1,6 @@
 # Formats and Schema
 
-Fluent Bit might optionally use a configuration file to define how the service will behave. Starting in Fluent Bit 1.9, it supports yaml format plus the usual plain text.
+Fluent Bit might optionally use a configuration file to define how the service will behave.
 
 Before proceeding we need to understand how the configuration schema works.
 

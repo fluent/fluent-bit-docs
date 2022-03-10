@@ -57,7 +57,7 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
 ```
 
 As you can see the label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` .
-Note that the second label name **must** starts with a `$`, that means that's a [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) pattern so it provide you the ability to retrieve values from nested maps by using the key names.
+Note that the second label name **must** starts with a `$`, that means that's a [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern so it provide you the ability to retrieve values from nested maps by using the key names.
 
 When processing above's configuration, internally the ending labels for the stream in question becomes:
 

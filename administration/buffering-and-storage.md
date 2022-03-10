@@ -60,7 +60,7 @@ The known Service section configure a global environment for the storage layer, 
 
 ### Service Section Configuration
 
-The Service section refers to the section defined in the main [configuration file](configuring-fluent-bit/configuration-file.md):
+The Service section refers to the section defined in the main [configuration file](configuring-fluent-bit/classic-mode/configuration-file.md):
 
 | Key | Description | Default |
 | :--- | :--- | :--- |

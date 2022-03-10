@@ -1,10 +1,10 @@
 # Upstream Servers
 
-It's common that Fluent Bit [output plugins](../../pipeline/outputs/) aims to connect to external services to deliver the logs over the network, this is the case of [HTTP](../../pipeline/outputs/http.md), [Elasticsearch](../../pipeline/outputs/elasticsearch.md) and [Forward](../../pipeline/outputs/forward.md) within others. Being able to connect to one node \(host\) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The _Upstream_ feature provides such capability.
+It's common that Fluent Bit [output plugins](../../pipeline/outputs/) aims to connect to external services to deliver the logs over the network, this is the case of [HTTP](../../../pipeline/outputs/http.md), [Elasticsearch](../../../pipeline/outputs/elasticsearch.md) and [Forward](../../../pipeline/outputs/forward.md) within others. Being able to connect to one node \(host\) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The _Upstream_ feature provides such capability.
 
 An _Upstream_ defines a set of nodes that will be targeted by an output plugin, by the nature of the implementation an output plugin **must** support the _Upstream_ feature. The following plugin\(s\) have _Upstream_ support:
 
-* [Forward](../../pipeline/outputs/forward.md)
+* [Forward](../../../pipeline/outputs/forward.md)
 
 The current balancing mode implemented is _round-robin_.
 
@@ -27,7 +27,7 @@ A _Node_ might contain additional configuration keys required by the plugin, on 
 
 In addition to the properties defined in the table above, the network operations against a defined node can optionally be done through the use of TLS for further encryption and certificates use.
 
-The TLS options available are described in the [TLS/SSL](../security.md) section and can be added to the any _Node_ section.
+The TLS options available are described in the [TLS/SSL](../../security.md) section and can be added to the any _Node_ section.
 
 ### Configuration File Example
 

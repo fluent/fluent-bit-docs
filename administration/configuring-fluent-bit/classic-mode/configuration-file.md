@@ -31,7 +31,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
 | parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
 | plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                                                     |               |
-| streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../stream-processing/introduction.md).                                                                                                                                               |               |
+| streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../../stream-processing/introduction.md).                                                                                                                                               |               |
 | http_server     | Enable built-in HTTP Server                                                                                                                                                                                                                                                                             | Off           |
 | http_listen     | Set listening interface for HTTP Server when it's enabled                                                                                                                                                                                                                                               | 0.0.0.0       |
 | http_port       | Set TCP Port for the HTTP Server                                                                                                                                                                                                                                                                        | 2020          |
@@ -204,7 +204,7 @@ pipeline:
 
 You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://cloud.calyptia.com](https://cloud.calyptia.com/visualizer)
 
-![](../../.gitbook/assets/image.png)
+![](../../../.gitbook/assets/image.png)
 
 ## Include File <a href="config_include_file" id="config_include_file"></a>
 
