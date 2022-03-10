@@ -11,7 +11,7 @@ The **websocket** output plugin allows to flush your records into a WebSocket en
 | URI | Specify an optional HTTP URI for the target websocket server, e.g: /something | / |
 | Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
 | json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_ and _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) | double |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_, _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _java_sql_timestamp_ (eg: _2018-05-30 09:39:52.000681_) | double |
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ In your main configuration file, append the following _Input_ & _Output_ section
     Format json
 ```
 
-Websocket plugin is working with tcp keepalive mode, please refer to [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) section for details. Since websocket is a stateful plugin, it will decide when to send out handshake to server side, for example when plugin just begins to work or after connection with server has been dropped. In general, the interval to init a new websocket handshake would be less than the keepalive interval. With that stratgy, it could detect and resume websocket connetions. 
+Websocket plugin is working with tcp keepalive mode, please refer to [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) section for details. Since websocket is a stateful plugin, it will decide when to send out handshake to server side, for example when plugin just begins to work or after connection with server has been dropped. In general, the interval to init a new websocket handshake would be less than the keepalive interval. With that stratgy, it could detect and resume websocket connetions.
 
 
 ## Testing
