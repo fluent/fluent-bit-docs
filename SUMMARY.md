@@ -56,6 +56,7 @@
     * [Upstream Servers](administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
     * [Record Accessor](administration/configuring-fluent-bit/classic-mode/record-accessor.md)
   * [Config with YAML](administration/configuring-fluent-bit/yaml/README.md)
+    * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
 * [Security](administration/security.md)
