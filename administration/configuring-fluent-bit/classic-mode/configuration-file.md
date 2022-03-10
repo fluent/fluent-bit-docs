@@ -41,24 +41,12 @@ The _Service_ section defines global properties of the service, the keys availab
 
 The following is an example of a _SERVICE_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
 ```python
 [SERVICE]
     Flush           5
     Daemon          off
     Log_Level       debug
 ```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-```yaml
-service:
-    flush: 5
-    daemon: off
-    log_level: debug
-```
-{% endtab %}
-{% endtabs %}
 
 ## Input <a href="config_input" id="config_input"></a>
 
@@ -75,23 +63,11 @@ The _Name_ is mandatory and it let Fluent Bit know which input plugin should be 
 
 The following is an example of an _INPUT_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name cpu
     Tag  my_cpu
 ```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-    inputs:
-        cpu:
-            tag: my_cpu
-```
-{% endtab %}
-{% endtabs %}
 
 ## Filter <a href="config_filter" id="config_filter"></a>
 
@@ -109,25 +85,12 @@ The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be
 
 The following is an example of an _FILTER_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
 ```python
 [FILTER]
     Name  grep
     Match *
     Regex log aa
 ```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-    filters:
-        regex:
-            match: *
-            regex: log aa
-```
-{% endtab %}
-{% endtabs %}
 
 ## Output <a href="config_output" id="config_output"></a>
 
@@ -143,30 +106,16 @@ The _OUTPUT_ section specify a destination that certain records should follow af
 
 The following is an example of an _OUTPUT_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
 ```python
 [OUTPUT]
     Name  stdout
     Match my*cpu
 ```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-    outputs:
-        stdout:
-            match: my*cpu
-```
-{% endtab %}
-{% endtabs %}
 
 ### Example: collecting CPU metrics
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
 ```python
 [SERVICE]
     Flush     5
@@ -181,24 +130,6 @@ The following configuration file example demonstrates how to collect CPU metrics
     Name  stdout
     Match my*cpu
 ```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-```yaml
-service:
-    flush: 5
-    daemon: off
-    log_level: debug
-
-pipeline:
-    inputs:
-        cpu:
-            tag: my_cpu
-    outputs:
-        stdout:
-            match: my*cpu
-```
-{% endtab %}
-{% endtabs %}
 
 ## Visualize <a href="config_include_file" id="config_include_file"></a>
 
