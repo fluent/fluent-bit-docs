@@ -8,12 +8,30 @@ One of the ways to configure Fluent Bit is using a YAML configuration file that 
 
 The yaml configuration file supports these sections:
 
+* Env
 * Service
 * Pipeline
   * Inputs
   * Filters
   * Outputs
-* Env
+
+## Env <a href="config_env" id="config_env" />
+
+The _env_ section allows to configure variables that will be used later on this configuration file.
+
+Example:
+
+```yaml
+# setting up a local environment variable
+env:
+    flush_interval: 1
+
+# service configuration
+service:
+    flush:       ${flush_interval}
+    log_level:   info
+    http_server: on
+```
 
 ## Service <a href="config_section" id="config_section"></a>
 
