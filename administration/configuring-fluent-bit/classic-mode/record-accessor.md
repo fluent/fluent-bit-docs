@@ -42,7 +42,7 @@ If the accessor key does not exist in the record like the last example `$labels[
 
 ## Usage Example
 
-The feature is enabled on a per plugin basis, not all plugins enable this feature. As an example consider a configuration that aims to filter records using [grep](../../pipeline/filters/grep.md) that only matches where labels have a color blue:
+The feature is enabled on a per plugin basis, not all plugins enable this feature. As an example consider a configuration that aims to filter records using [grep](../../../pipeline/filters/grep.md) that only matches where labels have a color blue:
 
 ```text
 [SERVICE]

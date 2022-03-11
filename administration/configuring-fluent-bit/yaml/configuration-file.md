@@ -1,25 +1,41 @@
 ---
-description: This page describes the main configuration file used by Fluent Bit
+description: This page describes the yaml configuration file used by Fluent Bit
 ---
 
-# Configuration File
+# YAML Configuration File
 
-One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows to use one configuration file which works at a global scope and uses the [Format and Schema](format-schema.md) defined previously.
+One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope.
 
-The main configuration file supports four types of sections:
+The yaml configuration file supports the following sections:
 
+* Env
 * Service
-* Input
-* Filter
-* Output
+* Pipeline
+  * Inputs
+  * Filters
+  * Outputs
 
-In addition, it's also possible to split the main configuration file in multiple files using the feature to include external files:
+## Env <a href="config_env" id="config_env"></a>
 
-* Include File
+The _env_ section allows to configure variables that will be used later on this configuration file.
+
+Example:
+
+```yaml
+# setting up a local environment variable
+env:
+    flush_interval: 1
+
+# service configuration
+service:
+    flush:       ${flush_interval}
+    log_level:   info
+    http_server: on
+```
 
 ## Service <a href="config_section" id="config_section"></a>
 
-The _Service_ section defines global properties of the service, the keys available as of this version are described in the following table:
+The _service_ section defines global properties of the service, the keys available as of this version are described in the following table:
 
 | Key             | Description                                                                                                                                                                                                                                                                                             | Default Value |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -31,7 +47,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
 | parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
 | plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                                                     |               |
-| streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../stream-processing/introduction.md).                                                                                                                                               |               |
+| streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../../stream-processing/introduction.md).                                                                                                                                               |               |
 | http_server     | Enable built-in HTTP Server                                                                                                                                                                                                                                                                             | Off           |
 | http_listen     | Set listening interface for HTTP Server when it's enabled                                                                                                                                                                                                                                               | 0.0.0.0       |
 | http_port       | Set TCP Port for the HTTP Server                                                                                                                                                                                                                                                                        | 2020          |
@@ -39,150 +55,100 @@ The _Service_ section defines global properties of the service, the keys availab
 | scheduler.cap   | Set a maximum retry time in second. The property is supported from v1.8.7.                                                                                                                                                                                                                              | 2000          |
 | scheduler.base  | Set a base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                               | 5             |
 
-The following is an example of a _SERVICE_ section:
+The following is an example of a _service_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[SERVICE]
-    Flush           5
-    Daemon          off
-    Log_Level       debug
-```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
 ```yaml
 service:
     flush: 5
     daemon: off
     log_level: debug
 ```
-{% endtab %}
-{% endtabs %}
 
-## Input <a href="config_input" id="config_input"></a>
+## Pipeline <a href="config_pipeline" id="config_pipeline"></a>
 
-An _INPUT_ section defines a source (related to an input plugin), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
+A _pipeline_ section will define a complete pipeline configuration, including _inputs_, _filters_ and _outputs_ subsections.
 
-| Key  | Description                                                 |
-| ---- | ----------------------------------------------------------- |
-| Name | Name of the input plugin.                                   |
-| Tag  | Tag name associated to all records coming from this plugin. |
+```yaml
+pipeline:
+    inputs:
+        ...
+    filters:
+        ...
+    outputs:
+        ...
+```
+
+### Input <a href="config_input" id="config_input"></a>
+
+An _input_ section defines a source (related to an input plugin). Here we will describe the base configuration for each _input_ section. Note that each input plugin may add it own configuration keys:
+
+| Key  | Description                                                              |
+| ---- |--------------------------------------------------------------------------|
+| Name | Name of the input plugin. Defined as subsection of the _inputs_ section. |
+| Tag  | Tag name associated to all records coming from this plugin.              |
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
 
-### Example
+#### Example
 
-The following is an example of an _INPUT_ section:
+The following is an example of an _input_ section for the _cpu_ plugin.
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[INPUT]
-    Name cpu
-    Tag  my_cpu
-```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
 ```yaml
 pipeline:
     inputs:
         cpu:
             tag: my_cpu
 ```
-{% endtab %}
-{% endtabs %}
 
-## Filter <a href="config_filter" id="config_filter"></a>
+### Filter <a href="config_filter" id="config_filter"></a>
 
-A _FILTER_ section defines a filter (related to an filter plugin), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
+A _filter_ section defines a filter (related to an filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add it own configuration keys:
 
-| Key         | Description                                                                                                                     |   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | - |
-| Name        | Name of the filter plugin.                                                                                                      |   |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |   |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |   |
+| Key | Description                                                                                                                     |
+|--- |---------------------------------------------------------------------------------------------------------------------------------|
+| Name        | Name of the filter plugin. Defined as a subsection of the _filters_ section.                                                    |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
-### Example
+#### Example
 
-The following is an example of an _FILTER_ section:
+The following is an example of a _filter_ section for the grep plugin:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[FILTER]
-    Name  grep
-    Match *
-    Regex log aa
-```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
 ```yaml
 pipeline:
     filters:
-        regex:
+        grep:
             match: *
             regex: log aa
 ```
-{% endtab %}
-{% endtabs %}
 
-## Output <a href="config_output" id="config_output"></a>
+### Output <a href="config_output" id="config_output"></a>
 
-The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
+The _outputs_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
 
-| Key         | Description                                                                                                                     |   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | - |
-| Name        | Name of the output plugin.                                                                                                      |   |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |   |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |   |
+| Key         | Description                                                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the output plugin. Defined as a subsection of the _outputs_ section.                                                                                                      |   |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |
 
-### Example
+#### Example
 
-The following is an example of an _OUTPUT_ section:
+The following is an example of an _output_ section:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[OUTPUT]
-    Name  stdout
-    Match my*cpu
-```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
 ```yaml
 pipeline:
     outputs:
         stdout:
             match: my*cpu
 ```
-{% endtab %}
-{% endtabs %}
 
-### Example: collecting CPU metrics
+#### Example: collecting CPU metrics
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[SERVICE]
-    Flush     5
-    Daemon    off
-    Log_Level debug
-
-[INPUT]
-    Name  cpu
-    Tag   my_cpu
-
-[OUTPUT]
-    Name  stdout
-    Match my*cpu
-```
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
 ```yaml
 service:
     flush: 5
@@ -196,36 +162,4 @@ pipeline:
     outputs:
         stdout:
             match: my*cpu
-```
-{% endtab %}
-{% endtabs %}
-
-## Visualize <a href="config_include_file" id="config_include_file"></a>
-
-You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://cloud.calyptia.com](https://cloud.calyptia.com/visualizer)
-
-![](../../.gitbook/assets/image.png)
-
-## Include File <a href="config_include_file" id="config_include_file"></a>
-
-To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file.
-
-Starting from Fluent Bit 0.12 the new configuration command _@INCLUDE_ has been added and can be used in the following way:
-
-```
-@INCLUDE somefile.conf
-```
-
-The configuration reader will try to open the path _somefile.conf_, if not found, it will assume it's a relative path based on the path of the base configuration file, e.g:
-
-* Main configuration file path: /tmp/main.conf
-* Included file: somefile.conf
-* Fluent Bit will try to open somefile.conf, if it fails it will try /tmp/somefile.conf.
-
-The _@INCLUDE_ command only works at top-left level of the configuration line, it cannot be used inside sections.
-
-Wildcard character (\*) is supported to include multiple files, e.g:
-
-```
-@INCLUDE input_*.conf
 ```

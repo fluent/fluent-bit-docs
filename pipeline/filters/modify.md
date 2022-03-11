@@ -71,7 +71,7 @@ The plugin supports the following conditions:
 * Any number of conditions can be set.
 * Conditions apply to the whole filter instance and all its rules. _Not_ to individual rules.
 * All conditions have to be `true` for the rules to be applied.
-* You can set [Record Accessor](../../administration/configuring-fluent-bit/record-accessor.md) as `STRING:KEY` for nested key.
+* You can set [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) as `STRING:KEY` for nested key.
 
 ## Example \#1 - Add and Rename
 
