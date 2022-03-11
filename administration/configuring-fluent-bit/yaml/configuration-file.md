@@ -6,7 +6,7 @@ description: This page describes the yaml configuration file used by Fluent Bit
 
 One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope.
 
-The yaml configuration file supports these sections:
+The yaml configuration file supports the following sections:
 
 * Env
 * Service
