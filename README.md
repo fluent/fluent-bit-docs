@@ -26,7 +26,7 @@ description: High Performance Log and Metrics Processor
     * Write any input, filter or output plugin in C language
     * Bonus: write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
 * [Monitoring](administration/monitoring.md): expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
-* [Stream Processing](https://github.com/fluent/fluent-bit-docs/tree/cfd3e4baa1d76a0778f5fd62bdf8de1e48360b72/stream-processing/README.md): Perform data selection and transformation using simple SQL queries
+* [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using simple SQL queries
   * Create new streams of data using query results
   * Aggregation Windows
   * Data analysis and prediction: Timeseries forecasting
