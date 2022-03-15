@@ -7,6 +7,17 @@ Fluent Bit is distributed as **fluent-bit** package and is available for the lat
 * x86\_64
 * aarch64 / arm64v8
 
+## CentOS 8
+CentOS 8 is now EOL so the default Yum repositories are unavailable.
+
+Make sure to configure to use an appropriate mirror, for example:
+```
+$ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+  sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+```
+
+An alternative is to use Rocky or Alma Linux which *should* be equivalent.
+
 ## Configure Yum
 
 We provide **fluent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
