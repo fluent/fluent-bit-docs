@@ -9,6 +9,11 @@ curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 
 If this fails or for more details on the installation then please refer to the specific section for your OS.
 
+## GPG key updates
+
+From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
+The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
+
 ## Migration to Fluent Bit
 
 From version 1.9, `td-agent-bit` is a deprecated package and will be removed in the future.

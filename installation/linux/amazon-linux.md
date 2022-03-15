@@ -22,7 +22,10 @@ enabled=1
 
 note: we encourage you always enable the _gpgcheck_ for security reasons. All our packages are signed.
 
-The GPG Key fingerprint is `F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A`
+### Updated key for 1.9 release onwards
+
+From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
+The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
 
 ### Install
 

@@ -10,6 +10,12 @@ Follow the official Debian wiki guidance: https://wiki.debian.org/DebianReposito
 ```bash
 curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg
 ```
+
+### Updated key for 1.9 release onwards
+
+From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
+The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
+
 ## Update your sources lists
 
 On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `focal` for Ubuntu 20.04):

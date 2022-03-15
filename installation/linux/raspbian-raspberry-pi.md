@@ -13,6 +13,11 @@ The first step is to add our server GPG key to your keyring, on that way you can
 curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
+### Updated key for 1.9 release onwards
+
+From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
+The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
+
 ## Update your sources lists
 
 On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file.

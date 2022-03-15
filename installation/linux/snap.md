@@ -19,11 +19,3 @@ $ sudo snap services fluent-bit
 Service             Startup  Current  Notes
 fluent-bit.service  enabled  active   -
 ```
-
-### Service Configuration
-
-To get the exact path of the configuration file, start a Snap shell and dig into the environment variables:
-
-
-
-The default configuration file for the running service is located at

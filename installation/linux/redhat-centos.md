@@ -23,6 +23,11 @@ enabled=1
 It is best practice to always enable the _gpgcheck_ for security reasons.
 All our packages are signed.
 
+### GPG key updates
+
+From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
+The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
+
 ### Install
 
 Once your repository is configured, run the following command to install it:
