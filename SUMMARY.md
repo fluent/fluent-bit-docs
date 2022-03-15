@@ -128,6 +128,7 @@
   * [Modify](pipeline/filters/modify.md)
   * [Multiline](pipeline/filters/multiline-stacktrace.md)
   * [Nest](pipeline/filters/nest.md)
+  * [Nightfall](pipeline/filters/nightfall.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
