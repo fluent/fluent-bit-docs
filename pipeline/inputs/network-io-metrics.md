@@ -8,12 +8,13 @@ The Network I/O Metrics plugin creates metrics that are log-based \(I.e. JSON pa
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Interface | Specify the network interface to monitor. e.g. eth0 |
-| Interval\_Sec | Polling interval \(seconds\).  default: 1 |
-| Interval\_NSec | Polling interval \(nanosecond\). default: 0 |
-| Verbose | If true, gather metrics precisely. default: false |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Interface | Specify the network interface to monitor. e.g. eth0 | |
+| Interval\_Sec | Polling interval \(seconds\). | 1 |
+| Interval\_NSec | Polling interval \(nanosecond\). | 0 |
+| Verbose | If true, gather metrics precisely. | false |
+| Test\_At\_Init | If true, testing if the network interface is valid at initialization. | false |
 
 ## Getting Started
 
