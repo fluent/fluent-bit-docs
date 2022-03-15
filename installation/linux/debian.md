@@ -13,8 +13,7 @@ curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/ke
 
 ### Updated key for 1.9 release onwards
 
-From the 1.9 release please note that the GPG key has been updated at https://packages.fluentbit.io/fluentbit.key so ensure the new one is added.
-The previous key is still available at https://packages.fluentbit.io/fluentbit-legacy.key and may be required to install previous versions.
+From the 1.9 release please note that the GPG key has been updated at [https://packages.fluentbit.io/fluentbit.key](https://packages.fluentbit.io/fluentbit.key) so ensure this new one is added.
 
 The GPG Key fingerprint of the new key is:
 ```
@@ -22,14 +21,17 @@ C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
 
-Note that if the platform is not supported in 1.9 you should include the https://packages.fluentbit.io/fluentbit-legacy.key key.
+The previous key is still available at [https://packages.fluentbit.io/fluentbit-legacy.key](https://packages.fluentbit.io/fluentbit-legacy.key) and may be required to install previous versions.
+If the platform is not supported in 1.9 you should include the old key.
 
-The GPG Key fingerprint of the old key is: `F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A`
-
+The GPG Key fingerprint of the old key is:
+```
+F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
+```
 Refer to the [supported platform documentation](./../supported-platforms.md) to see which platforms are supported in each release.
 ## Update your sources lists
 
-On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `focal` for Ubuntu 20.04):
+On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production_Releases) (e.g. `bullseye` for Debian 11):
 
 ```bash
 deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/debian/${CODENAME} ${CODENAME} main
