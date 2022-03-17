@@ -155,13 +155,17 @@ To halt the process, press CTRL-C in the terminal.
 
 ## Installing from EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/). It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
+Download an EXE installer from the [download page](https://fluentbit.io/download/).
+It has both 32-bit and 64-bit builds.
+Choose one which is suitable for you.
 
-Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
+Double-click the EXE installer you've downloaded.
+The installation wizard will automatically start.
 
 ![](<../.gitbook/assets/windows_installer (1) (1).png>)
 
-Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follow after installation.
+Click Next and proceed.
+By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
 
 ```
 PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
@@ -191,9 +195,11 @@ C:\fluent-bit\
 ├── conf
 │   ├── fluent-bit.conf
 │   └── parsers.conf
+│   └── plugins.conf
 └── bin
     ├── fluent-bit.dll
     └── fluent-bit.exe
+    └── fluent-bit.pdb
 ```
 
 To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
@@ -227,7 +233,8 @@ To start Fluent Bit automatically on boot, execute the following:
 
 ### [FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
 
-Quotations are required if file paths contain spaces. Here is an example:
+Quotations are required if file paths contain spaces.
+Here is an example:
 
 ```text
 % sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
