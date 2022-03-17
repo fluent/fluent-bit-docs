@@ -157,6 +157,7 @@
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
+  * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
   * [Prometheus Exporter](pipeline/outputs/prometheus-exporter.md)
