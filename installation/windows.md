@@ -164,8 +164,7 @@ The installation wizard will automatically start.
 
 ![](<../.gitbook/assets/windows_installer (1) (1).png>)
 
-Click Next and proceed.
-By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
+Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follow after installation.
 
 ```
 PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
