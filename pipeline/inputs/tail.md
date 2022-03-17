@@ -65,12 +65,26 @@ As stated in the [Multiline Parser documentation](../../administration/configuri
 
 If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the new built-in modes for such purposes. This will help to reassembly multiline messages originally split by Docker or CRI:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
     name              tail
     path              /var/log/containers/*.log
     multiline.parser  docker, cri
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - tail:
+      path: /var/log/containers/*.log
+      multiline.parser: docker, cri
+```
+{% endtab %}
+{% endtabs %}
 
 The two options separated by a comma means multi-format: try `docker` and `cri` multiline formats.
 
@@ -113,6 +127,8 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 In your main configuration file append the following _Input_ & _Output_ sections. An example visualization can be found [here](https://link.calyptia.com/vg2)
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name        tail
@@ -122,6 +138,21 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - tail:
+      path: /var/log/syslog
+      
+  outputs:
+    - stdout:
+      match: *
+```
+{% endtab %}
+{% endtabs %}
 
 ![](../../.gitbook/assets/image%20%286%29.png)
 
