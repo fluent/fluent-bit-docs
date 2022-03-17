@@ -1,10 +1,10 @@
 # Windows
 
-Fluent Bit is distributed as **td-agent-bit** package for Windows. Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
+Fluent Bit is distributed as **fluent-bit** package for Windows.
+Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
 
 ## Configuration
 
-Currently the default configuration is intended for Linux only so will not function on Windows.
 Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
 
 ```
@@ -72,21 +72,27 @@ Make sure to provide a valid Windows configuration with the installation, a samp
     match *
 ```
 
+## Migration to Fluent Bit
+
+From version 1.9.0, `td-agent-bit` is a deprecated package and will be removed in the future.
+The correct package name to use now is `fluent-bit`.
+Both are currently provided to allow migration.
+
 ## Installation Packages
 
-The latest stable version is 1.8.11:
+The latest stable version is 1.9.0, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [td-agent-bit-1.8.11-win32.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win32.exe) | 3505e6086be311ab32a705d87eb4673497038e3818812d100dc26bb1d3754b46 |
-| [td-agent-bit-1.8.11-win32.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win32.zip) | e20ab8be35091bfa061f126d186380670e656d8d675d3680df6fab9888788c8b |
-| [td-agent-bit-1.8.11-win64.exe](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win64.exe) | 2c0de0f776928de6a76877ef077ce2b3b5e7d0646b912266baadcfdb843be400 |
-| [td-agent-bit-1.8.11-win64.zip](https://fluentbit.io/releases/1.8/td-agent-bit-1.8.11-win64.zip) | 9e589d8ec7a24d8faa95d0eb6c0aac721c4b26e0a2a1c36a36f2559ebea1e404 |
+| [fluent-bit-1.9.0-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win32.exe) | [f6d690c8b123d6211398feb2acc1c9aae6d3d7539ddfeedd4460f170e5af35ab](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win32.exe.sha256) |
+| [fluent-bit-1.9.0-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win32.zip) | [8fddb14e68ada0b31214f41a21dcea2b217f00ab43eafcf10d711189278f0a8d](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win32.zip.sha256) |
+| [fluent-bit-1.9.0-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win64.exe) | [a1563bafc177bd7ea174646eb1dcd7951c681a84d63174b9b58c22b3a5ccd962](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win64.exe.sha256) |
+| [fluent-bit-1.9.0-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win64.zip) | [1ebec279178fb3d44aa067fd0dd1420833ae501849b1d77b7abe060ca18f162a](https://fluentbit.io/releases/1.9/fluent-bit-1.9.0-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```
-PS> Get-FileHash td-agent-bit-1.8.11-win32.exe
+PS> Get-FileHash fluent-bit-1.9.0-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -96,16 +102,17 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```
-PS> Expand-Archive td-agent-bit-1.8.11-win64.zip
+PS> Expand-Archive fluent-bit-1.9.0-win64.zip
 ```
 
 The ZIP package contains the following set of files.
 
 ```
-td-agent-bit
+fluent-bit
 ├── bin
 │   ├── fluent-bit.dll
 │   └── fluent-bit.exe
+│   └── fluent-bit.pdb
 ├── conf
 │   ├── fluent-bit.conf
 │   ├── parsers.conf
@@ -127,7 +134,7 @@ If you see the following output, it's working fine!
 
 ```
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v1.8.x
+Fluent Bit v1.9.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
@@ -148,16 +155,20 @@ To halt the process, press CTRL-C in the terminal.
 
 ## Installing from EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/). It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
+Download an EXE installer from the [download page](https://fluentbit.io/download/).
+It has both 32-bit and 64-bit builds.
+Choose one which is suitable for you.
 
-Then, double-click the EXE installer you've downloaded. Installation wizard will automatically start.
+Double-click the EXE installer you've downloaded.
+The installation wizard will automatically start.
 
 ![](<../.gitbook/assets/windows_installer (1) (1).png>)
 
-Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\td-agent-bit\`, so you should be able to launch fluent-bit as follow after installation.
+Click Next and proceed.
+By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
 
 ```
-PS> C:\Program Files\td-agent-bit\bin\fluent-bit.exe -i dummy -o stdout
+PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
 
 ### Installer options
@@ -184,9 +195,11 @@ C:\fluent-bit\
 ├── conf
 │   ├── fluent-bit.conf
 │   └── parsers.conf
+│   └── plugins.conf
 └── bin
     ├── fluent-bit.dll
     └── fluent-bit.exe
+    └── fluent-bit.pdb
 ```
 
 To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
@@ -220,7 +233,8 @@ To start Fluent Bit automatically on boot, execute the following:
 
 ### [FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
 
-Quotations are required if file paths contain spaces. Here is an example:
+Quotations are required if file paths contain spaces.
+Here is an example:
 
 ```text
 % sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
