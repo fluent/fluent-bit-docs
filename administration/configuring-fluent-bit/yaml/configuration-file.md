@@ -96,7 +96,7 @@ The following is an example of an _input_ section for the _cpu_ plugin.
 ```yaml
 pipeline:
     inputs:
-        cpu:
+        - cpu:
             tag: my_cpu
 ```
 
@@ -119,7 +119,7 @@ The following is an example of a _filter_ section for the grep plugin:
 ```yaml
 pipeline:
     filters:
-        grep:
+        - grep:
             match: *
             regex: log aa
 ```
@@ -141,7 +141,7 @@ The following is an example of an _output_ section:
 ```yaml
 pipeline:
     outputs:
-        stdout:
+        - stdout:
             match: my*cpu
 ```
 
@@ -157,9 +157,9 @@ service:
 
 pipeline:
     inputs:
-        cpu:
+        - cpu:
             tag: my_cpu
     outputs:
-        stdout:
+        - stdout:
             match: my*cpu
 ```
