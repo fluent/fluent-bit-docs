@@ -112,6 +112,7 @@ fluent-bit
 ├── bin
 │   ├── fluent-bit.dll
 │   └── fluent-bit.exe
+│   └── fluent-bit.pdb
 ├── conf
 │   ├── fluent-bit.conf
 │   ├── parsers.conf
