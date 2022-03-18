@@ -28,11 +28,12 @@ name = Fluent Bit
 baseurl = https://packages.fluentbit.io/centos/7/$basearch/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
+repo_gpgcheck=1
 enabled=1
 ```
 
-It is best practice to always enable the _gpgcheck_ for security reasons.
-All our packages are signed.
+It is best practice to always enable the _gpgcheck_ and _repo_gpgcheck_ for security reasons.
+We sign our repository metadata as well as all ofour packages.
 
 ### GPG key updates
 
