@@ -4,6 +4,7 @@ The Nightfall filter scans logs for sensitive data and redacts the sensitive por
 various sensitive information, ranging from API keys and personally identifiable information(PII) to custom regexes you
 define. You can configure what to scan for in the [Nightfall Dashboard](https://app.nightfall.ai).
 
+> This filter is not enabled by default in 1.9.0 due to a typo. It must be enabled by setting flag ```-DFLB_FILTER_NIGHTFALL=ON``` when building. In 1.9.1 and above this is fixed.
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
