@@ -205,13 +205,15 @@ Example configuration:
     Tag_Key tags
     tls On
     tls.verify Off
+    Suppress_Type_Name On
     cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
     cloud_auth elastic:2vxxxxxxxxYV
 ```
 
 ### Validation Failed: 1: an id must be provided if version type or value are set
 
-Since v1.8.2, Fluent Bit started using `create` method (instead of `index`) for data submission. This makes Flunt Bit compatible with Datastream introduced in Elasticsearch 7.9.
+Since v1.8.2, Fluent Bit started using `create` method (instead of `index`) for data submission.
+This makes Fluent Bit compatible with Datastream introduced in Elasticsearch 7.9.
 
 If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit >= v1.8.2, you can fix it up by turning on `Generate_ID` as follows:
 
@@ -221,4 +223,13 @@ If you see `action_request_validation_exception` errors on your pipeline with Fl
     Match *
     Host  192.168.12.1
     Generate_ID on
+```
+
+### Action/metadata contains an unknown parameter type
+
+Elastic Cloud is now on version 8 so the type option must be removed by setting `Suppress_Type_Name On` as indicated above.
+
+Without this you will see errors like:
+```
+{"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
 ```
