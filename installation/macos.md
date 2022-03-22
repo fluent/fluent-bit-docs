@@ -40,6 +40,12 @@ export OPENSSL_ROOT_DIR=`brew --prefix openssl`
 export PATH=`brew --prefix bison`/bin:$PATH
 ```
 
+Change to the _build/_ directory inside the Fluent Bit sources:
+
+```bash
+$ cd build/
+```
+
 Build Fluent Bit. Note that we are indicating to the build system "where" the final binaries and config files should be installed:
 
 ```bash
