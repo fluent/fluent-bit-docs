@@ -18,7 +18,7 @@
   * [Parser](concepts/data-pipeline/parser.md)
   * [Filter](concepts/data-pipeline/filter.md)
   * [Buffer](concepts/data-pipeline/buffer.md)
-  * [Router](concepts/data-pipeline/router.md)3
+  * [Router](concepts/data-pipeline/router.md)
   * [Output](concepts/data-pipeline/output.md)
 
 ## Installation
@@ -74,7 +74,7 @@
 * [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
 * [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
 
-## Data Pipeline <a id="pipeline"></a>
+## Data Pipeline <a href="#pipeline" id="pipeline"></a>
 
 * [Pipeline Monitoring](pipeline/pipeline-monitoring.md)
 * [Inputs](pipeline/inputs/README.md)
@@ -138,7 +138,7 @@
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
-  * [Azure Blob](pipeline/outputs/azure_blob.md)
+  * [Azure Blob](pipeline/outputs/azure\_blob.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -182,10 +182,9 @@
   * [Check Keys and NULL values](stream-processing/getting-started/check-keys-null-values.md)
   * [Hands On! 101](stream-processing/getting-started/hands-on.md)
 
-## Fluent Bit for Developers <a id="development"></a>
+## Fluent Bit for Developers <a href="#development" id="development"></a>
 
-* [C Library API](development/library_api.md)
+* [C Library API](development/library\_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
-
