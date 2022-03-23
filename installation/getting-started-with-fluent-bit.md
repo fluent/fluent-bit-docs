@@ -32,10 +32,11 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 
 ## Compile from Source (Linux, Windows, FreeBSD, MacOS)
 
-| Operating System      | Installation Instructions                              |
-| --------------------- | ------------------------------------------------------ |
-| Linux, FreeBSD, MacOS | [Compile from source](sources/download-source-code.md) |
-| Windows               | [Compile from Source](windows.md#compile-from-source)  |
+| Operating System | Installation Instructions |
+| :--- | :--- |
+| Linux, FreeBSD | [Compile from source](sources/build-and-install.md) |
+| MacOS | [Compile from source](macos.md#get-the-source-and-build-it) |
+| Windows | [Compile from Source](windows.md#compile-from-source) |
 
 ## Enterprise Packages
 
