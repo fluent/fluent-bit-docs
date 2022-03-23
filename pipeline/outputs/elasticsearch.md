@@ -20,7 +20,8 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | AWS\_STS\_Endpoint | Specify the custom sts endpoint to be used with STS API for Amazon OpenSearch Service |  |
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
-| Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running |  |
+| Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running. The Cloud ID string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`.
+ |  |
 | Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
@@ -193,6 +194,7 @@ Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is se
 ### Fluent Bit + Elastic Cloud
 
 Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) providing just the `cloud_id` and the `cloud_auth` settings.
+`cloud_auth` uses the `elastic` user and password provided when the cluster was created, for details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
 
 Example configuration:
 
@@ -203,13 +205,15 @@ Example configuration:
     Tag_Key tags
     tls On
     tls.verify Off
+    Suppress_Type_Name On
     cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
     cloud_auth elastic:2vxxxxxxxxYV
 ```
 
 ### Validation Failed: 1: an id must be provided if version type or value are set
 
-Since v1.8.2, Fluent Bit started using `create` method (instead of `index`) for data submission. This makes Flunt Bit compatible with Datastream introduced in Elasticsearch 7.9.
+Since v1.8.2, Fluent Bit started using `create` method (instead of `index`) for data submission.
+This makes Fluent Bit compatible with Datastream introduced in Elasticsearch 7.9.
 
 If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit >= v1.8.2, you can fix it up by turning on `Generate_ID` as follows:
 
@@ -219,4 +223,13 @@ If you see `action_request_validation_exception` errors on your pipeline with Fl
     Match *
     Host  192.168.12.1
     Generate_ID on
+```
+
+### Action/metadata contains an unknown parameter type
+
+Elastic Cloud is now on version 8 so the type option must be removed by setting `Suppress_Type_Name On` as indicated above.
+
+Without this you will see errors like:
+```
+{"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
 ```
