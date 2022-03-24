@@ -13,9 +13,9 @@ The first step is to add our server GPG key to your keyring, on that way you can
 curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
-### Updated key for 1.9 release onwards
+### Updated key from March 2022
 
-From the 1.9 release please note that the GPG key has been updated at [https://packages.fluentbit.io/fluentbit.key](https://packages.fluentbit.io/fluentbit.key) so ensure this new one is added.
+From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated at [https://packages.fluentbit.io/fluentbit.key](https://packages.fluentbit.io/fluentbit.key) so ensure this new one is added.
 
 The GPG Key fingerprint of the new key is:
 ```
@@ -24,7 +24,6 @@ Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
 
 The previous key is still available at [https://packages.fluentbit.io/fluentbit-legacy.key](https://packages.fluentbit.io/fluentbit-legacy.key) and may be required to install previous versions.
-If the platform is not supported in 1.9 you should include the old key.
 
 The GPG Key fingerprint of the old key is:
 ```
