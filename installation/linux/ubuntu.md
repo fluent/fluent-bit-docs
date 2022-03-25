@@ -32,7 +32,7 @@ Refer to the [supported platform documentation](./../supported-platforms.md) to 
 On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `focal` for Ubuntu 20.04):
 
 ```bash
-deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/debian/${CODENAME} ${CODENAME} main
+deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main
 ```
 
 ### Update your repositories database
