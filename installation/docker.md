@@ -57,13 +57,13 @@ From a deployment perspective, there is no need to specify an architecture, the 
 Download the last stable image from 1.9 series:
 
 ```text
-docker pull fluent/fluent-bit:1.9
+docker pull fluent/fluent-bit:1.9.0
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-docker run -ti fluent/fluent-bit:1.9 -i cpu -o stdout -f 1
+docker run -ti fluent/fluent-bit:1.9.0 -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
