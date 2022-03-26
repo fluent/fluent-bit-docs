@@ -73,19 +73,22 @@ Currently the default configuration is intended for Linux only so will not funct
 
 ## Installation Packages
 
-The latest stable version is 1.8.12:
+The latest stable version is 1.8.15, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
 
-| INSTALLERS                                                                                                                                | SHA256 CHECKSUMS                                                 |
-| ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [td-agent-bit-1.8.12-win32.exe](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win32.exe)             | 45ed1ff2ae22654b1cd814dfb26e507e59dd5e2ca67ef6d71f27fd0c692cb1c0 |
-| [td-agent-bit-1.8.12-win32.zip](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win32.zip)             | 825312ceed2355eec47a0519233922218d860bafa9aafcf827a8532df6923854 |
-| [td-agent-bit-1.8.12-win64.exe](https://github.com/fluent/fluent-bit/releases/tag/v1.8.12#:\~:text=td%2Dagent%2Dbit%2D1.8.12%2Dwin64.exe) | 8621d301d1cc7ecbf33a61f42b571759d1fe4c715fc62ffb9e2e20a01202cef2 |
-| [td-agent-bit-1.8.12-win64.zip](https://github.com/fluent/fluent-bit/releases/download/v1.8.12/td-agent-bit-1.8.12-win64.zip)             | b6527ceadcfbeca3e9a033fd12e678cc955d08beaeb4d02d9f449f7e1d8efeea |
+| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [fluent-bit-1.8.15-win32.exe](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win32.exe) | [dd72b525b9a9a5b053bdb7cf67c9d4efe3fcde47dba2fcbf88b33b13687eddf5](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win32.exe.sha256) |
+| [fluent-bit-1.8.15-win32.zip](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win32.zip) | [4646f0c7f5ed91d264f756ccfc144cd58b47d6c17f5bc6f96057bac68ead8613](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win32.zip.sha256) |
+| [fluent-bit-1.8.15-win64.exe](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win64.exe) | [b625f4bf56dc63836f996f802c55e36b7748c4876f95c07fe0a086f735ec9a7e](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win64.exe.sha256) |
+| [fluent-bit-1.8.15-win64.zip](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win64.zip) | [af799fc8c33d07f467e839b26936a24e20d527ff99fb7f97ecaad1b7782349c8](https://fluentbit.io/releases/1.8/fluent-bit-1.8.15-win64.zip.sha256) |
+
+
+Legacy `td-agent-bit` packages are also available, just substitute `fluent-bit` with `td-agent-bit` in the URLs above.
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```
-PS> Get-FileHash td-agent-bit-1.8.12-win32.exe
+PS> Get-FileHash fluent-bit-1.8.15-win32.exe
 ```
 
 ## Installing from ZIP archive
