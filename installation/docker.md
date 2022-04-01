@@ -8,8 +8,14 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.9.0 | x86\_64, arm64v8, arm32v7 | Release [v1.9.9](https://fluentbit.io/announcements/v1.9.0/) |
+| 1.9.1 | x86\_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.1/) |
+| 1.9.1-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug) |
+| 1.9.0 | x86\_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.0/) |
 | 1.9.0-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug) |
+| 1.8.15 | x86\_64, arm64v8, arm32v7 | Release [v1.8.15](https://fluentbit.io/announcements/v1.8.15/) |
+| 1.8-debug, 1.8.15-debug | x86\_64 | v1.8.x releases (production + debug) |
+| 1.8.14 | x86\_64, arm64v8, arm32v7 | Release [v1.8.14](https://fluentbit.io/announcements/v1.8.14/) |
+| 1.8-debug, 1.8.14-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.13 | x86\_64, arm64v8, arm32v7 | Release [v1.8.13](https://fluentbit.io/announcements/v1.8.13/) |
 | 1.8-debug, 1.8.13-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.12 | x86\_64, arm64v8, arm32v7 | Release [v1.8.12](https://fluentbit.io/announcements/v1.8.12/) |
