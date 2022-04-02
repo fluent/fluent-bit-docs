@@ -17,6 +17,7 @@ The plugin supports the following configuration parameters:
 | Interval\_Sec | Polling interval \(seconds\). |
 | Interval\_NSec | Polling interval \(nanosecond\). |
 | Buf\_Size | Size of the buffer \(check [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values\) |
+| Oneshot | Only run once at startup. This allows collection of data precedent to fluent-bit's startup (bool, default: false) |
 
 ## Getting Started
 
@@ -56,6 +57,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Interval_Sec  1
     Interval_NSec 0
     Buf_Size      8mb
+    Oneshot       false
 
 [OUTPUT]
     Name   stdout
