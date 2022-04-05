@@ -27,6 +27,12 @@ When buffering is enabled, the filter does not immediately emit messages it rece
 
 {% endhint %}
 
+{% hint style="warning" %}
+
+Since concatenated records are re-emitted to the head of the Fluent Bit log pipeline, you can not configure multiple multiline filter definitions that match the same tags. This will cause an infinite loop in the Fluent Bit pipeline; to use multiple parsers on the same logs, configure a single filter definitions with a comma separated list of parsers for `multiline.parser`. For more, see issue [#5235](https://github.com/fluent/fluent-bit/issues/5235).
+
+{% endhint %}
+
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
