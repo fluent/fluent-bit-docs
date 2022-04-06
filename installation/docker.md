@@ -8,40 +8,40 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag\(s\) | Manifest Architectures | Description |
 | :--- | :--- | :--- |
-| 1.9.1 | x86\_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.1/) |
+| 1.9.1 | x86\_64, arm64v8, arm32v7 | Release [v1.9.1](https://fluentbit.io/announcements/v1.9.1/) |
 | 1.9.1-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug) |
 | 1.9.0 | x86\_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.0/) |
 | 1.9.0-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug) |
-| 1.8.15 | x86\_64, arm64v8, arm32v7 | Release [v1.8.15](https://fluentbit.io/announcements/v1.8.15/) |
+| 1.8, 1.8.15 | x86\_64, arm64v8, arm32v7 | Release [v1.8.15](https://fluentbit.io/announcements/v1.8.15/) |
 | 1.8-debug, 1.8.15-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.14 | x86\_64, arm64v8, arm32v7 | Release [v1.8.14](https://fluentbit.io/announcements/v1.8.14/) |
-| 1.8-debug, 1.8.14-debug | x86\_64 | v1.8.x releases (production + debug) |
+| 1.8.14-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.13 | x86\_64, arm64v8, arm32v7 | Release [v1.8.13](https://fluentbit.io/announcements/v1.8.13/) |
-| 1.8-debug, 1.8.13-debug | x86\_64 | v1.8.x releases (production + debug) |
+| 1.8.13-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.12 | x86\_64, arm64v8, arm32v7 | Release [v1.8.12](https://fluentbit.io/announcements/v1.8.12/) |
-| 1.8-debug, 1.8.12-debug | x86\_64 | v1.8.x releases (production + debug) |
+| 1.8.12-debug | x86\_64 | v1.8.x releases (production + debug) |
 | 1.8.11 | x86\_64, arm64v8, arm32v7 | Release [v1.8.11](https://fluentbit.io/announcements/v1.8.11/) |
-| 1.8-debug, 1.8.11-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.11-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.10 | x86\_64, arm64v8, arm32v7 | Release [v1.8.10](https://fluentbit.io/announcements/v1.8.10/) |
-| 1.8-debug, 1.8.10-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.10-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.9 | x86\_64, arm64v8, arm32v7 | Release [v1.8.9](https://fluentbit.io/announcements/v1.8.9/) |
-| 1.8-debug, 1.8.9-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.9-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.8 | x86\_64, arm64v8, arm32v7 | Release [v1.8.8](https://fluentbit.io/announcements/v1.8.8/) |
-| 1.8-debug, 1.8.8-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.8-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.7 | x86\_64, arm64v8, arm32v7 | Release [v1.8.7](https://fluentbit.io/announcements/v1.8.7/) |
-| 1.8-debug, 1.8.7-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.7-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.6 | x86\_64, arm64v8, arm32v7 | Release [v1.8.6](https://fluentbit.io/announcements/v1.8.6/) |
-| 1.8-debug, 1.8.6-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.6-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.5 | x86\_64, arm64v8, arm32v7 | Release [v1.8.5](https://fluentbit.io/announcements/v1.8.5/) |
-| 1.8-debug, 1.8.5-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.5-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.4 | x86\_64, arm64v8, arm32v7 | Release [v1.8.4](https://fluentbit.io/announcements/v1.8.4/) |
-| 1.8-debug, 1.8.4-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.4-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.3 | x86\_64, arm64v8, arm32v7 | Release [v1.8.3](https://fluentbit.io/announcements/v1.8.3/) |
-| 1.8-debug, 1.8.3-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.3-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.2 | x86\_64, arm64v8, arm32v7 | Release [v1.8.2](https://fluentbit.io/announcements/v1.8.2/) |
-| 1.8-debug, 1.8.2-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.2-debug | x86\_64 | v1.8.x releases + Busybox |
 | 1.8.1 | x86\_64, arm64v8, arm32v7 | Release [v1.8.1](https://fluentbit.io/announcements/v1.8.1/) |
-| 1.8-debug, 1.8.1-debug | x86\_64 | v1.8.x releases + Busybox |
+| 1.8.1-debug | x86\_64 | v1.8.x releases + Busybox |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
@@ -57,13 +57,13 @@ From a deployment perspective, there is no need to specify an architecture, the 
 Download the last stable image from 1.9 series:
 
 ```text
-$ docker pull fluent/fluent-bit:1.9
+docker pull fluent/fluent-bit:1.9.0
 ```
 
 Once the image is in place, now run the following \(useless\) test which makes Fluent Bit measure CPU usage by the container:
 
 ```text
-$ docker run -ti fluent/fluent-bit:1.9 -i cpu -o stdout -f 1
+docker run -ti fluent/fluent-bit:1.9.0 -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
