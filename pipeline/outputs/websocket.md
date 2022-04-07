@@ -11,7 +11,7 @@ The **websocket** output plugin allows to flush your records into a WebSocket en
 | URI | Specify an optional HTTP URI for the target websocket server, e.g: /something | / |
 | Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
 | json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_, _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _java_sql_timestamp_ (eg: _2018-05-30 09:39:52.000681_) | double |
+| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_, _epoch_ms_, _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _java_sql_timestamp_ (eg: _2018-05-30 09:39:52.000681_) | double |
 
 ## Getting Started
 
