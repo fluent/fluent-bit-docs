@@ -38,7 +38,7 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | MacOS            | [Compile from source](macos.md#get-the-source-and-build-it) |
 | Windows          | [Compile from Source](windows.md#compile-from-source)       |
 
-## Sanbox Environment
+## Sandbox Environment
 
 If you are interested in learning about Fluent Bit you can try out the sandbox environment
 
