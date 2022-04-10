@@ -10,7 +10,7 @@ The initial release of the Prometheus Scrape metric allows you to collect metric
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | host            | The host of the prometheus metric endpoint that you want to scrape                                                                                   |          |
 | port            | The port of the promethes metric endpoint that you want to scrape                                                                                    |          |
-| scrape interval | The interval to scrape metrics                                                                                                                       | 10s      |
+| scrape\_interval | The interval to scrape metrics                                                                                                                       | 10s      |
 | metrics\_path   | <p>The metrics URI endpoint, that must start with a forward slash.<br><br>Note: Parameters can also be added to the path by using <code>?</code></p> | /metrics |
 
 ## Example
