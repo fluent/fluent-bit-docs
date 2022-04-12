@@ -37,7 +37,7 @@ We provide **fluent-bit** through a Yum repository. In order to add the reposito
 ```
 [fluent-bit]
 name = Fluent Bit
-baseurl = https://packages.fluentbit.io/centos/7/$basearch/
+baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 repo_gpgcheck=1
