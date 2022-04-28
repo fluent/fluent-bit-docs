@@ -17,6 +17,8 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Customer\_ID | Customer ID or WorkspaceID string. |  |
 | Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
 | Log\_Type | The name of the event type. | fluentbit |
+| Time\_Key | Optional parameter to specify the key name where the timestamp will be stored. | @timestamp |
+| Time\_Generated | If enabled, the HTTP request header 'time-generated-field' will be included so Azure can override the timestamp with the key specified by 'time_key' option. | off |
 
 ## Getting Started
 
