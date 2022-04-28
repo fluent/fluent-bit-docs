@@ -71,7 +71,7 @@ In the following configuration file, the input plugin _node_exporter_metrics col
 [OUTPUT]
     name            prometheus_exporter
     match           node_metrics
-    listen          0.0.0.0
+    host            0.0.0.0
     port            2021
 
         
