@@ -258,7 +258,7 @@ The lines that did not match a pattern are not considered as part of the multili
 
 ## Docker Partial Message Use Case
 
-When Fluent Bit is consuming logs from a container runtime, such as docker, these logs will be split above a certain limit, usually 32KB. If your application emits a 500K log line, it will be split into 16 partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
+When Fluent Bit is consuming logs from a container runtime, such as docker, these logs will be split above a certain limit, usually 16KB. If your application emits a 100K log line, it will be split into 7 partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
 
 ```
 {"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]
