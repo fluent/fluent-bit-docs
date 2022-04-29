@@ -43,6 +43,7 @@ The plugin supports the following configuration parameters:
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | multiline.parser      | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma.  |
 | multiline.key_content | Key name that holds the content to process. Note that a Multiline Parser definition can already specify the `key_content` to use, but this option allows to overwrite that value for the purpose of the filter.                                            |
+| mode | Mode can be `parser` for regex concat, or `partial_message` to concat split docker logs. |
 | buffer | Enable buffered mode. In buffered mode, the filter can concatenate multilines from inputs that ingest records one by one (ex: Forward), rather than in chunks, re-emitting them into the beggining of the pipeline (with the same tag) using the in_emitter instance. With buffer off, this filter will not work with most inputs, except tail. |
 | flush_ms | Flush time for pending multiline records. Defaults to 2000. |
 | emitter_name | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
@@ -253,3 +254,24 @@ created by runtime.gcenable
 ```
 
 The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
+
+
+## Docker Partial Message Use Case
+
+When Fluent Bit is consuming logs from a container runtime, such as docker, these logs will be split above a certain limit, usually 32KB. If your application emits a 500K log line, it will be split into 16 partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
+
+```
+{"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]
+```
+
+Fluent Bit can re-combine these logs that were split by the runtime and remove the partial message fields. The filter example below is for this use case. 
+
+```
+[FILTER]
+     name                  multiline
+     match                 *
+     multiline.key_content log
+     mode                  partial_message
+```
+
+The two options for `mode` are mutually exclusive in the filter. If you set the `mode` to `partial_message` then the `multiline.parser` option is not allowed. 
