@@ -42,7 +42,9 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 
 If you are interested in learning about Fluent Bit you can try out the sandbox environment
 
-[https://play.instruqt.com/Fluent/tracks/fluent-bit-getting-started-101](https://play.instruqt.com/embed/Fluent/tracks/fluent-bit-getting-started-101)
+{% embed url="https://play.instruqt.com/Fluent/tracks/fluent-bit-getting-started-101" %}
+Fluent Bit Sandbox Environment
+{% endembed %}
 
 ## Enterprise Packages
 
