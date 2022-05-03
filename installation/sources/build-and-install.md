@@ -101,6 +101,13 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_TESTS | Enable tests | No |
 | FLB\_BACKTRACE | Enable backtrace/stacktrace support | Yes |
 
+### Optimization Options
+
+| option | description | default |
+| :--- | :--- | :--- |
+| FLB\_MSGPACK\_TO\_JSON\_INIT\_BUFFER\_SIZE | Determine initial buffer size for msgpack to json conversion in terms of memory used by payload. | 2.0 |
+| FLB\_MSGPACK\_TO\_JSON\_REALLOC\_BUFFER\_SIZE | Determine percentage of reallocation size when msgpack to json conversion buffer runs out of memory. | 0.1 |
+
 ### Input Plugins
 
 The _input plugins_ provides certain features to gather information from a specific source type which can be a network interface, some built-in metric or through a specific input device, the following input plugins are available:
