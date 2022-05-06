@@ -96,3 +96,29 @@ Redirecting to /bin/systemctl status  fluent-bit.service
 ```
 
 The default configuration of **fluent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/messages_ file.
+
+##FAQ
+
+### Yum install fails with a "404 - Page not found" error for the package mirror
+The fluent-bit.repo file for the latest installations of Fluent-Bit uses a $releasever variable to determine the correct version of the package to install to your system:
+
+```
+[fluent-bit]
+name = Fluent Bit
+baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
+...
+```
+
+Depending on your Red Hat distribution version, this variable may return a value other than the OS major release version (e.g., RHEL7 Server distributions return "7Server" instead of just "7"). The Fluent-Bit package url uses just the major OS release version, so any other value here will cause a 404.
+
+In order to resolve this issue, you can replace the $releasever variable with your system's OS major release version. For example:
+
+```
+[fluent-bit]
+name = Fluent Bit
+baseurl = https://packages.fluentbit.io/centos/7/$basearch/
+gpgcheck=1
+gpgkey=https://packages.fluentbit.io/fluentbit.key
+repo_gpgcheck=1
+enabled=1
+```
