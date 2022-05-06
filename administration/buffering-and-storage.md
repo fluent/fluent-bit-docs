@@ -26,6 +26,23 @@ The workaround of `mem_buf_limit` is good for certain scenarios and environments
 
 For full data safety guarantee, use filesystem buffering.
 
+Here is an example input definition:
+
+```
+[INPUT]
+    Name          tcp
+    Listen        0.0.0.0
+    Port          5170
+    Format        none
+    Tag           tcp-logs
+    Mem_Buf_Limit 50MB
+```
+
+If this input uses more than 50MB memory to buffer logs, you will get a warning like this in the Fluent Bit logs:
+```
+[input] tcp.1 paused (mem buf overlimit)
+```
+
 #### Filesystem buffering to the rescue
 
 Filesystem buffering enabled helps with backpressure and overall memory control.
