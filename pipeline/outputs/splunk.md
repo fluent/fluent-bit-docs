@@ -22,6 +22,7 @@ Connectivity, transport and authentication configuration properties:
 | http\_buffer\_size | Buffer size used to receive Splunk HTTP responses | 2M |
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
 | channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
+| http_debug_bad_request | If the HTTP server response code is 400 (bad request) and this flag is enabled, it will print the full HTTP request and response to the stdout interface. This feature is available for debugging purposes. | |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
