@@ -16,6 +16,9 @@ The plugin supports the following configuration parameters
 | file | The single value file that Fluent Bit will use as a lookup table to determine if the specified `lookup_key` exists |
 | lookup\_key | The specific key to look up and determine if it exists, supports record accessor |
 | record | The record to add if the `lookup_key` is found in the specified `file`. Note you may add multiple record parameters. |
+| mode | Set the check mode. `exact` and `partial` are supported. Default : `exact`.|
+| print_query_time | Print to stdout the elapseed query time for every matched record. Default: false|
+| ignore_case | Compare strings by ignoring case. Default: false |
 
 ## Example Configuration
 
