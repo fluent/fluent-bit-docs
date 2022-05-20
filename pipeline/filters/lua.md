@@ -19,6 +19,7 @@ The plugin supports the following configuration parameters:
 | type\_array\_key| If these keys are matched, the fields are handled as array. If more than one key, delimit by space. It is useful the array can be empty. |
 | protected\_mode | If enabled, Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when invalid Lua script is executed or the triggered Lua function throws exceptions. Default is true. |
 | time\_as\_table | By default when the Lua script is invoked, the record timestamp is passed as a *floating number* which might lead to precision loss when it is converted back. If you desire timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
+| code | Inline LUA code instead of loading from a path via `script`. |
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -94,6 +95,62 @@ Each callback **must** return three values:
 For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
 
 [https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
+
+#### Inline configuration
+
+The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
+
+```yaml
+service:
+    flush:           1
+    daemon:          off
+    log_level:       info
+
+pipeline:
+    inputs:
+        - random:
+            tag:           test
+            samples:       10
+
+    filters:
+        - lua:
+            match:         "*"
+            call:          append_tag
+            code:          |
+                function append_tag(tag, timestamp, record)
+                   new_record = record
+                   new_record["tag"] = tag
+                   return 1, timestamp, new_record
+                end
+
+    outputs:
+        - stdout:
+            match:         "*"
+```
+
+In classic mode:
+
+```
+[SERVICE]
+	flush 1
+	daemon off
+	log_level debug
+
+[INPUT]
+	Name random
+	Tag test
+	Samples 10
+
+[FILTER]
+	Name Lua
+	Match *
+	call append_tag
+	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+
+[OUTPUT]
+	Name stdout
+	Match *
+```
 
 #### Environment variable processing
 

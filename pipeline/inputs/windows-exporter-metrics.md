@@ -57,7 +57,7 @@ In the following configuration file, the input plugin _windows_exporter_metrics 
 [OUTPUT]
     name            prometheus_exporter
     match           node_metrics
-    listen          0.0.0.0
+    host            0.0.0.0
     port            2021
 
         
