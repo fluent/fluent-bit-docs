@@ -119,7 +119,7 @@ The output of both the command line and configuration invocations should be iden
 [0] mem.local: [1522978514.007359767, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "Memstats"=>{"total"=>4050908, "used"=>714984, "free"=>3335924}}]
 ```
 
-## Example \#1 - nest and lift undo
+## Example \#2 - nest and lift undo
 
 This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then reverses these actions with a `lift` operation. The output appears unchanged.
 
@@ -158,7 +158,7 @@ This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then
 [0] mem.local: [1529566958.000940636, {"Mem.total"=>8053656, "Mem.used"=>6940380, "Mem.free"=>1113276, "Swap.total"=>16532988, "Swap.used"=>1286772, "Swap.free"=>15246216}]
 ```
 
-## Example \#2 - nest 3 levels deep
+## Example \#3 - nest 3 levels deep
 
 This example takes the keys starting with `Mem.*` and nests them under `LAYER1`, which itself is then nested under `LAYER2`, which is nested under `LAYER3`.
 
@@ -217,7 +217,7 @@ This example takes the keys starting with `Mem.*` and nests them under `LAYER1`,
 }
 ```
 
-## Example \#3 - multiple nest and lift filters with prefix
+## Example \#4 - multiple nest and lift filters with prefix
 
 This example starts with the 3-level deep nesting of _Example 2_ and applies the `lift` filter three times to reverse the operations. The end result is that all records are at the top level, without nesting, again. One prefix is added for each level that is lifted.
 
