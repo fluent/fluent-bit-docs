@@ -230,6 +230,7 @@ If you see `action_request_validation_exception` errors on your pipeline with Fl
 Elastic Cloud is now on version 8 so the type option must be removed by setting `Suppress_Type_Name On` as indicated above.
 
 Without this you will see errors like:
-```
+
+```text
 {"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
 ```

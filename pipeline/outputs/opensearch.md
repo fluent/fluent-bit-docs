@@ -146,3 +146,13 @@ Example configuration:
 ```
 
 Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.
+
+### Action/metadata contains an unknown parameter type
+
+Similarly to Elastic Cloud, OpenSearch in version 2.0 and above needs to have type option being removed by setting `Suppress_Type_Name On`.
+
+Without this you will see errors like:
+
+```text
+{"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
+```
