@@ -87,6 +87,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_SIGNV4 | Enable AWS Signv4 support | Yes |
 | FLB\_STATIC\_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
 | FLB\_STREAM\_PROCESSOR | Enable Stream Processor | Yes |
+| FLB\_CONFIG\_YAML | Enable YAML configuration support | Yes |
 
 ### Development Options
 
