@@ -126,7 +126,7 @@ pipeline:
 
 ### Output <a href="config_output" id="config_output"></a>
 
-The _outputs_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
+The _outputs_ section specify a destination that certain records should follow after a Tag match. Currently, Fluent Bit can route up to 256 _OUTPUT_ plugins. The configuration support the following keys:
 
 | Key         | Description                                                                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
