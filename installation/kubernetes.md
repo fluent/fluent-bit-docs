@@ -31,33 +31,7 @@ To obtain this information, a built-in filter plugin called _kubernetes_ talks t
 
 ## Installation <a href="installation" id="installation"></a>
 
-[Fluent Bit](http://fluentbit.io) must be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster. To get started run the following commands to create the namespace, service account and role setup:
-
-For Kubernetes v1.21 and below
-
-```
-$ kubectl create namespace logging
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding.yaml
-```
-
-For Kubernetes v1.22
-
-```
-$ kubectl create namespace logging
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml
-```
-
-The next step is to create a ConfigMap that will be used by our Fluent Bit DaemonSet:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
-```
-
-The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112) should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+[Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster.
 
 ### Note for OpenShift
 
@@ -67,43 +41,7 @@ If you are using Red Hat OpenShift you will also need to run the following
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-openshift-security-context-constraints.yaml
 ```
 
-### Note for Kubernetes < v1.16
-
-For Kubernetes versions older than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
-
-If you are using and older Kubernetes version, manually grab a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
-
-```yaml
-apiVersion: apps/v1
-```
-
-to
-
-```yaml
-apiVersion: extensions/v1beta1
-```
-
-You can read more about this deprecation on Kubernetes v1.14 Changelog here:
-
-[https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#deprecations](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#deprecations)
-
-### Fluent Bit to Elasticsearch
-
-Fluent Bit DaemonSet ready to be used with Elasticsearch on a normal Kubernetes Cluster:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml
-```
-
-### Fluent Bit to Elasticsearch on Minikube
-
-If you are using Minikube for testing purposes, use the following alternative DaemonSet manifest:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
-```
-
-## Installing with Helm Chart
+### Installing with Helm Chart
 
 [Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo: [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts).
 
@@ -116,7 +54,7 @@ helm repo add fluent https://fluent.github.io/helm-charts
 To validate that the repo was added you can run `helm search repo fluent` to ensure the charts were added. The default chart can then be installed by running the following
 
 ```
-helm install fluent-bit fluent/fluent-bit
+helm upgrade --install fluent-bit fluent/fluent-bit
 ```
 
 ### Default Values
