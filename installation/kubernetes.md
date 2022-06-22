@@ -33,9 +33,11 @@ To obtain this information, a built-in filter plugin called _kubernetes_ talks t
 
 [Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster.
 
+The recommended way to deploy Fluent Bit is with the official Helm Chart: https://github.com/fluent/helm-chart
+
 ### Note for OpenShift
 
-If you are using Red Hat OpenShift you will also need to run the following
+If you are using Red Hat OpenShift you will also need to set up security context constraints (SCC):
 
 ```
 $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-openshift-security-context-constraints.yaml
