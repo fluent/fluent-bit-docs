@@ -57,6 +57,25 @@ In your main configuration file append the following _Output_ section:
     auto_create_group On
 ```
 
+### Permissions
+
+The following AWS IAM permissions are required to use this plugin:
+
+```
+{
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Effect": "Allow",
+		"Action": [
+			"logs:CreateLogStream",
+			"logs:CreateLogGroup",
+			"logs:PutLogEvents"
+		],
+		"Resource": "*"
+	}]
+}
+```
+
 ### Worker support
 
 Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers. **The plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**

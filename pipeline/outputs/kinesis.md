@@ -50,6 +50,23 @@ In your main configuration file append the following _Output_ section:
     stream my-stream
 ```
 
+### Permissions
+
+The following AWS IAM permissions are required to use this plugin:
+
+```
+{
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Effect": "Allow",
+		"Action": [
+			"kinesis:PutRecords"
+		],
+		"Resource": "*"
+	}]
+}
+```
+
 ### Worker support
 
 Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `kinesis_streams` plugin fully supports workers.
