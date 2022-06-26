@@ -160,3 +160,5 @@ Wildcard character (\*) is supported to include multiple files, e.g:
 ```
 @INCLUDE input_*.conf
 ```
+
+Note files matching the wildcard character are included unsorted. If plugins ordering between files need to be preserved, the files should be incldued explicitly.
