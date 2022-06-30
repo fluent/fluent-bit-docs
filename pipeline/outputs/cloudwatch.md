@@ -18,8 +18,10 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | region              | The AWS region.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | log_group_name      | The name of the CloudWatch Log Group that you want log records sent to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| log_group_template   | Template for Log Group name using Fluent Bit [record_accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. This field is optional and if configured it overrides the `log_group_name`. If the template translation fails, an error is logged and the `log_group_name` (which is still required) is used instead. See the tutorial below for an example.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | log_stream_name     | The name of the CloudWatch Log Stream that you want log records sent to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | log_stream_prefix   | Prefix for the Log Stream name. The tag is appended to the prefix to construct the full log stream name. Not compatible with the log_stream_name option.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| log_stream_template   | Template for Log Stream name using Fluent Bit [record_accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. This field is optional and if configured it overrides the other log stream options. If the template translation fails, an error is logged and the log_stream_name or log_stream_prefix are used instead (and thus one of those fields is still required to be configured). See the tutorial below for an example.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | log_key             | By default, the whole log record will be sent to CloudWatch. If you specify a key name with this option, then only the value of that key will be sent to CloudWatch. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to CloudWatch.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | log_format          | An optional parameter that can be used to tell CloudWatch the format of the data. A value of json/emf enables CloudWatch to extract custom metrics embedded in a JSON payload. See the [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | role_arn            | ARN of an IAM role to assume (for cross account access).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -94,6 +96,57 @@ Example:
 ```
 
 If you enable a single worker, you are enabling a dedicated thread for your CloudWatch output. We recommend starting without workers, evaluating the performance, and then enabling a worker if needed. For most users, the plugin can provide sufficient throughput without workers.
+
+### Log Stream and Group Name templating using record_accessor syntax
+
+Sometimes, you may want the log group or stream name to be based on the contents of the log record itself. This plugin supports templating log group and stream names using Fluent Bit [record_accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. 
+
+Here is an example usage, for a common use case- templating log group and stream names based on Kubernetes metadata. 
+
+Recall that the kubernetes filter can add metadata which will look like the following:
+
+```
+kubernetes: {
+    annotations: {
+        "kubernetes.io/psp": "eks.privileged"
+    },
+    container_hash: "<some hash>",
+    container_name: "myapp",
+    docker_id: "<some id>",
+    host: "ip-10-1-128-166.us-east-2.compute.internal",
+    labels: {
+        app: "myapp",
+        "pod-template-hash": "<some hash>"
+    },
+    namespace_name: "my-namespace",
+    pod_id: "198f7dd2-2270-11ea-be47-0a5d932f5920",
+    pod_name: "myapp-5468c5d4d7-n2swr"
+}
+```
+
+Using record_accessor, we can build a template based on this object.
+
+Here is our output configuration:
+
+```
+[OUTPUT]
+    Name cloudwatch_logs
+    Match   *
+    region us-east-1
+    log_group_name fallback-group
+    log_stream_prefix fallback-stream
+    auto_create_group On
+    log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+    log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
+```
+
+With the above kubernetes metadata, the log group name will be `application-logs-ip-10-1-128-166.us-east-2.compute.internal.my-namespace`. And the log stream name will be `myapp-5468c5d4d7-n2swr.myapp`. 
+
+If the kubernetes structure is not found in the log record, then the `log_group_name` and `log_stream_prefix` will be used instead, and Fluent Bit will log an error like:
+
+```
+[2022/06/30 06:09:29] [ warn] [record accessor] translation failed, root key=kubernetes
+```
 
 ### Metrics Tutorial
 
