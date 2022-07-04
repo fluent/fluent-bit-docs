@@ -160,3 +160,5 @@ Wildcard character (\*) is supported to include multiple files, e.g:
 ```
 @INCLUDE input_*.conf
 ```
+
+Note that starting from Fluent Bit 1.9.6, files matching the wildcard characters are included in ascending ASCII order. In previous versions the files are unsorted.
