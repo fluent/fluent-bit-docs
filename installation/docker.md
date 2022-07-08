@@ -16,6 +16,12 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag(s)      | Manifest Architectures    | Description                                                  |
 | ----------- | ------------------------- | ------------------------------------------------------------ |
+| 1.9.6       | x86\_64, arm64v8, arm32v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.6/) |
+| 1.9.6-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
+| 1.9.5       | x86\_64, arm64v8, arm32v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.5/) |
+| 1.9.5-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
+| 1.9.4       | x86\_64, arm64v8, arm32v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.4/) |
+| 1.9.4-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 | 1.9.3       | x86\_64, arm64v8, arm32v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.3/) |
 | 1.9.3-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 | 1.9.2       | x86\_64, arm64v8, arm32v7 | Release [v1.9.2](https://fluentbit.io/announcements/v1.9.2/) |
@@ -25,7 +31,7 @@ The following table describes the tags that are available on Docker Hub [fluent/
 | 1.9.0       | x86\_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.0/) |
 | 1.9.0-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 
-It's strongly suggested that you always use the latest image of Fluent Bit.
+It is strongly suggested that you always use the latest image of Fluent Bit.
 
 ## Multi Architecture Images
 
