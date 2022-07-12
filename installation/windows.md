@@ -84,10 +84,10 @@ The latest stable version is 1.9.6, each version is available on the Github rele
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-1.9.6-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe) | [2d095db193a2eda09b24d2621dd2037c2bad34f0c513d497883dd66f5cf3f7e5](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe.sha256) |
-| [fluent-bit-1.9.6-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip) | [5b0aa32b95f07352f19d8f223800b0db3153bcd5e0481a7efffd59e533bf74b6](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip.sha256) |
-| [fluent-bit-1.9.6-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe) | [d8a3d19032fdd87a5aa10b1da9f04055054a701105a313bcf5df1424e9d9768c](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe.sha256) |
-| [fluent-bit-1.9.6-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip) | [484d62be28f8039aa8888cbf0dbc1d97eb98865ccf59feb0d10e91933c4d2a50](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip.sha256) |
+| [fluent-bit-1.9.6-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe) | [13eb8c823990b3dd2df1990baea795a779b4de4a8bcc2275a011776fc5effa3d](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe.sha256) |
+| [fluent-bit-1.9.6-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip) | [a81b29279f0da125f54ddc4f93b9d8ecb47f9e366c0d054b3baca39b4d7c846b](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip.sha256) |
+| [fluent-bit-1.9.6-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe) | [4c4e7291862909338f8605ef68bda0cade0ad90d01cadfafb76478aae23f9829](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe.sha256) |
+| [fluent-bit-1.9.6-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip) | [d652816212697845f915b53e09bbf526158b0ca3e1e707623e6d8c05d1a9a6ba](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
