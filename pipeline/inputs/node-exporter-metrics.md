@@ -12,7 +12,7 @@ The initial release of Node Exporter Metrics contains a subset of collectors and
 
 **Important note:** Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
-This plugin is currently only supported on Linux based operating systems\
+This plugin is currently only supported on Linux based operating systems.
 
 
 ## Configuration 
