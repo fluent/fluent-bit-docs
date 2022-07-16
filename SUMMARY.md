@@ -95,6 +95,7 @@
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Log Based Metrics](pipeline/inputs/network-io-metrics.md)
   * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
+  * [Podman Metrics](pipeline/inputs/podman-metrics.md)
   * [Process Log Based Metrics](pipeline/inputs/process.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
   * [Random](pipeline/inputs/random.md)
