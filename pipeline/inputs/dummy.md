@@ -6,10 +6,6 @@ The **dummy** input plugin, generates dummy events. It is useful for testing, de
 
 The plugin supports the following configuration parameters:
 
-## Getting Started
-
-You can run the plugin from the command line or through the configuration file:
-
 | Key | Description |
 | :--- | :--- |
 | Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
@@ -17,6 +13,10 @@ You can run the plugin from the command line or through the configuration file:
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
 | Rate | Events number generated per second. Default: 1 |
 | Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
+
+## Getting Started
+
+You can run the plugin from the command line or through the configuration file:
 
 ### Command Line
 
