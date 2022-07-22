@@ -218,14 +218,19 @@ Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tre
 
 ## Health Check for Fluent Bit
 
-Fluent bit now supports four new configs to set up the health check.
+Fluent bit supports nine configs to set up the health check.
 
-| Config Name            | Description                                                                                                                                                                                                                                                                                                                             | Default Value |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- |
-| Health_Check           | enable Health check feature                                                                                                                                                                                                                                                                                                             | Off           |
-| HC_Errors_Count        | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for output error: ` [2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)`            | 5             |
-| HC_Retry_Failure_Count | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1 `                                    | 5             |
-| HC_Period              | The time period by second to count the error and retry failure data point                                                                                                                                                                                                                                                               | 60            |
+| Config Name                    | Description                                                                                                                                                                                                                                                                                                                             | Default Value |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- |
+| Health_Check                   | enable Health check feature                                                                                                                                                                                                                                                                                                             | Off           |
+| HC_Errors_Count                | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for output error: ` [2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)`            | 5             |
+| HC_Retry_Failure_Count         | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1 `                                    | 5             |
+| HC_Period                      | The time period by second to count the error and retry failure data point                                                                                                                                                                                                                                                               | 60            |
+| HC_Throughput                  | Enable throughput health checking (more details below). In this context, throughput means `OUTPUT_RATE/INPUT_RATE` ratio, and the check happens in accordance to `Hc_Period`. If this is "On", then all other related options must be set since there are no default values.                                                            | Off           |
+| HC_Throughput_Input_Plugins    | Comma separated list of input plugins used for the purposes of calculating input rate.                                                                                                                                                                                                                                                  | -             |
+| HC_Throughput_Output_Plugins   | Comma separated list of output plugins used for the purposes of calculating output rate.                                                                                                                                                                                                                                                | -             |
+| HC_Throughput_Ratio_Threshold  | OUTPUT_RATE/INPUT_RATE ratio threshold at which we consider a failure. If the ratio is below this number, then the current check fails. Note that a single check is not enough to trigger a health error, see `Hc_Throughput_Min_Failures` below for details.                                                                           | -             |
+| HC_Throughput_Min_Failures     | Minimum amount of consecutive ratio check failures required before the health endpoint will return an error. For example, if this is 60 and the default Hc_Period, the ratio must be below threshold for 1 minute before an error is returned.                                                                                          | -             |
 
 *Note: Not every error log means an error nor be counted, the errors retry failures count only on specific errors which is the example in config table description*
 
@@ -275,6 +280,21 @@ Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 secon
 If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is TRUE, then it's unhealthy.
 
 If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is FALSE, then it's healthy.
+
+
+### Throughput health check
+
+If `Hc_Throughput` and other related options are set, fluent-bit will monitor output/input ratio, and the health endpoint will return error if ratio is below the configured threshold. For example:
+
+```
+hc_throughput                 On
+hc_throughput_input_plugins   tail.0
+hc_throughput_output_plugins  http.0
+hc_throughput_ratio_threshold 0.1
+hc_throughput_min_failures    60
+```
+
+In the above example, if the http output rate is below 1/10 of the tail input rate for 1 consecutive minute, then the `/api/v1/health` endpoint will return `error`. Note that if the ratio goes above threshold, it will restore the `OK` status until another minute of consecutive failed checks.
 
 
 ## Calyptia Cloud
