@@ -265,7 +265,7 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Responde code filtering
 
-In this example, we want to filter istio logs to exclude lines with reponse codes between 1 and 399.
+In this example, we want to filter istio logs to exclude lines with response codes between 1 and 399.
 
 #### Lua script
 
@@ -286,7 +286,7 @@ end
 
 #### Configuration
 
-Configuration to get istio logs and apply response code filter to it.
+Configuration to get istio logs and apply response code filter to them.
 
 ```python
     [INPUT]
