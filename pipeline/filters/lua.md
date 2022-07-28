@@ -262,3 +262,48 @@ end
 ```
 
 See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
+
+### Responde code filtering
+
+In this example, we want to filter istio logs to exclude lines with reponse codes between 1 and 399.
+
+#### Lua script
+
+Script `response_code_filter.lua`
+
+```lua
+function cb_response_code_filter(tag, timestamp, record)
+  response_code = record["response_code"]
+  if (response_code == nil or response_code == '') then
+    return 0,0,0
+  elseif (response_code ~= 0 and response_code < 400) then
+    return -1,0,0
+  else
+    return 0,0,0
+  end
+end
+```
+
+#### Configuration
+
+Configuration to get istio logs and apply response code filter to it.
+
+```python
+    [INPUT]
+        Name                tail
+        Path                /var/log/containers/*_istio-proxy-*.log
+        multiline.parser    docker, cri
+        Tag                 istio.*
+        Mem_Buf_Limit       64MB
+        Skip_Long_Lines     Off
+
+    [FILTER]
+        Name                lua
+        Match               istio.*
+        Script              response_code_filter.lua
+        call                cb_response_code_filter
+
+    [Output]
+        Name                stdout
+        Match               *
+```
