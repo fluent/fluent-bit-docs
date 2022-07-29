@@ -48,6 +48,7 @@ The plugin supports the following configuration parameters:
 | DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
 | Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). | Off |
 | Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
+| Kubelet\_Host | kubelet host using for HTTP request, this only works when `Use_Kubelet`  set to On. | 127.0.0.1 |
 | Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
 | Kube\_Token\_Command | Command to get Kubernetes authorization token. By default, it will be `NULL` and we will use token file to get token. If you want to manually choose a command to get it, you can set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. |  |
 
