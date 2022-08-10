@@ -80,19 +80,19 @@ Both are currently provided to allow migration.
 
 ## Installation Packages
 
-The latest stable version is 1.9.6, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
+The latest stable version is 1.9.7, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-1.9.6-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe) | [13eb8c823990b3dd2df1990baea795a779b4de4a8bcc2275a011776fc5effa3d](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.exe.sha256) |
-| [fluent-bit-1.9.6-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip) | [a81b29279f0da125f54ddc4f93b9d8ecb47f9e366c0d054b3baca39b4d7c846b](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win32.zip.sha256) |
-| [fluent-bit-1.9.6-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe) | [4c4e7291862909338f8605ef68bda0cade0ad90d01cadfafb76478aae23f9829](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.exe.sha256) |
-| [fluent-bit-1.9.6-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip) | [d652816212697845f915b53e09bbf526158b0ca3e1e707623e6d8c05d1a9a6ba](https://fluentbit.io/releases/1.9/fluent-bit-1.9.6-win64.zip.sha256) |
+| [fluent-bit-1.9.7-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win32.exe) | [2dc08d6cc076767ae69cc8229e4d2bcdca8d7a0b21b8859152c2bb46587beda0](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win32.exe.sha256) |
+| [fluent-bit-1.9.7-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win32.zip) | [603c3d173a5cc09ccf399ff4ba325ca1e3a308c89f503e91eecc598612b78b70](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win32.zip.sha256) |
+| [fluent-bit-1.9.7-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win64.exe) | [5319a0beaa61539c0d125761fafd36c33dcfcb46e2081b8650b40fa09fce8048](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win64.exe.sha256) |
+| [fluent-bit-1.9.7-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win64.zip) | [4927f3c6e324ea8d9579e46a848b86b95b4a4376db60ae9a88253098b08219e8](https://fluentbit.io/releases/1.9/fluent-bit-1.9.7-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```
-PS> Get-FileHash fluent-bit-1.9.6-win32.exe
+PS> Get-FileHash fluent-bit-1.9.7-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -102,7 +102,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```
-PS> Expand-Archive fluent-bit-1.9.6-win64.zip
+PS> Expand-Archive fluent-bit-1.9.7-win64.zip
 ```
 
 The ZIP package contains the following set of files.
