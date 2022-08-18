@@ -50,6 +50,7 @@ The plugin supports the following configuration parameters:
 | Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
 | Kubelet\_Host | kubelet host using for HTTP request, this only works when `Use_Kubelet`  set to On. | 127.0.0.1 |
 | Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
+| Kube\_Token\_TTL | configurable 'time to live' for the K8s token. By default, it is set to 600 seconds. After this time, the token is reloaded from Kube_Token_File or the Kube_Token_Command.| 600 |
 | Kube\_Token\_Command | Command to get Kubernetes authorization token. By default, it will be `NULL` and we will use token file to get token. If you want to manually choose a command to get it, you can set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. |  |
 
 ## Processing the 'log' value
