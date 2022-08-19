@@ -33,6 +33,9 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
+| final_service_account_email | Service account email to assume via delegation chain. If defined, the credentials for `service_account_email` are used to retrieve credentials for `final_service_account_email`. |  |
+| delegation_chain | JSON array of service account emails that make up the delegation chain. |  |
+| token_lifetime | Lifetime of token pulled for `final_service_account_email`. Token will be refreshed automatically once it expires. | 3600s |
 
 ### Configuration File
 
@@ -77,6 +80,28 @@ This implies that if there is no local_resource_id in the log entry then the tag
     k8s_cluster_location  test_cluster_location
     tag_prefix  custom_tag.
 ```
+
+#### Delegation Chain
+
+If the service account required for writing to Cloud Logging is not available
+on the virtual machine on which FluentBit is running, [delegated
+permissions](https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials#sa-credentials-delegated)
+may be necessary. In such a scenario, a final service account to assume and a delegation chain may be defined as follows:
+
+```
+[OUTPUT]
+    Name                         stackdriver
+    Match                        *
+    export_to_project_id         project-id-abc-123
+    service_account_email        1001234567890-compute@developer.gserviceaccount.com
+    final_service_account_email  finale@project-id-abc-123.iam.gserviceaccount.com 
+    delegation_chain             ["second@project-id-abc-123.iam.gserviceaccount.com", "third@project-id-abc-123.iam.gserviceaccount.com"]
+```
+
+FluentBit will use the token fetched by `service_account_email` (possibly from
+the internal metadata service) to access the IAM Credentials API. The API will
+be queried for a new token that will allow FluentBit to write to Cloud Logging
+as `final_service_account_email`.
 
 ## Troubleshooting Notes
 
