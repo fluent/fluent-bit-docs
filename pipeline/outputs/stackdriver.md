@@ -33,6 +33,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
+| resource_labels | An optional list of comma separated strings specifying resource labels plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
 
 ### Configuration File
 
@@ -78,6 +79,80 @@ This implies that if there is no local_resource_id in the log entry then the tag
     tag_prefix  custom_tag.
 ```
 
+## Resource Labels
+
+Currently, there are four ways which fluent-bit uses to assign fields into the resource/labels section.
+
+1. Resource Labels API
+2. Monitored Resource API
+3. Local Resource Id
+4. Credentials / Config Parameters
+
+If `resource_labels` is correctly configured, then fluent-bit will attempt to populate all resource/labels using the entries specified. Otherwise, fluent-bit will attempt to use the monitored resource API. Similarly, if the monitored resource API cannot be used, then fluent-bit will attempt to populate resource/labels using configuration parameters and/or credentials specific to the resource type. As mentioned in the [Configuration File](#configuration-file) section, fluent-bit will attempt to use or construct a local resource ID for a K8s resource type which does not use the resource labels or monitored resource API.
+
+Note that the `project_id` resource label will always be set from the service credentials or fetched from the metadata server and cannot be overridden.
+
+### Using the resource_labels parameter
+
+The `resource_labels` configuration parameter offers an alternative API for assigning the resource labels. To use, input a list of comma separated strings specifying resource labels plaintext assignments (`new=value`), mappings from an original field in the log entry to a destination field (`destination=$original`) and/or environment variable assignments (`new=${var}`).
+
+For instance, consider the following log entry:
+```
+{
+  "keyA": "valA",
+  "toplevel": {
+    "keyB": "valB"
+  }
+}
+```
+
+Combined with the following Stackdriver configuration:
+```
+[OUTPUT]
+    Name stackdriver
+    Match *
+    Resource_Labels  keyC=$keyA,keyD=$toplevel['keyB'],keyE=valC
+```
+
+This will produce the following log:
+```
+{
+  "resource": {
+    "type": "global",
+    "labels": {
+      "project_id": "fluent-bit",
+      "keyC": "valA",
+      "keyD": "valB"
+      "keyE": "valC"
+    }
+  },
+  "entries": [
+    {
+      "jsonPayload": {
+        "keyA": "valA",
+        "toplevel": {
+           "keyB": "valB"
+        }
+      },
+    }
+  ]
+}
+```
+
+This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime. 
+
+For instance, for a K8s resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) to pack all six resource labels. Below is an example of what this could look like for a `k8s_container` resource:
+
+
+```
+[OUTPUT]
+    Name            stackdriver
+    Match           *
+    Resource        k8s_container
+    Resource_Labels cluster_name=my-cluster,location=us-central1-c,container_name=$kubernetes['container_name'],namespace_name=$kubernetes['namespace_name'],pod_name=$kubernetes['pod_name']
+```
+
+`resource_labels` also supports validation for required labels based on the input resource type. This allows fluent-bit to check if all specified labels are present for a given configuration before runtime. If validation is not currently supported for a resource type that you would like to use this API with, we encourage you to open a pull request for it. Adding validation for a new resource type is simple - all that is needed is to specify the resources associated with the type alongside the required labels [here](https://github.com/fluent/fluent-bit/blob/resource-labels/plugins/out_stackdriver/stackdriver_resource_types.h).
 ## Troubleshooting Notes
 
 ### Upstream connection error
