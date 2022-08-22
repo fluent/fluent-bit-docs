@@ -2,6 +2,12 @@
 
 The **kmsg** input plugin reads the Linux Kernel log buffer since the beginning, it gets every record and parse it field as priority, sequence, seconds, useconds, and message.
 
+## Configuration Parameters
+
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Prio_Level | The log level to filter. The kernel log is dropped if its priority is more than prio_level. Allowed values are 0-8. Default is 8. 8 means all logs are saved. | 8 |
+
 ## Getting Started
 
 In order to start getting the Linux Kernel messages, you can run the plugin from the command line or through the configuration file:
