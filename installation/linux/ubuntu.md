@@ -1,6 +1,6 @@
 # Ubuntu
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Focal Fossa.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Jelly Jellyfish.
 
 ## Single line install
 
@@ -43,7 +43,7 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 ## Update your sources lists
 
-On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `focal` for Ubuntu 20.04):
+On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `jammy` for Ubuntu 22.04):
 
 ```bash
 deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main
