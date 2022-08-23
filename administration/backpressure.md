@@ -1,6 +1,6 @@
 # Backpressure
 
-Under certain scenarios it is possible to for logs or data to be ingested or created faster than the ability to flush it to some destinations. One such common scenario is when reading from big log files, especially with a large backlog, and dispatching the logs to a backend over the network, which takes time to respond. This generates backpressure leading to high memory consumption in the service.
+Under certain scenarios it is possible for logs or data to be ingested or created faster than the ability to flush it to some destinations. One such common scenario is when reading from big log files, especially with a large backlog, and dispatching the logs to a backend over the network, which takes time to respond. This generates backpressure leading to high memory consumption in the service.
 
 In order to avoid backpressure, Fluent Bit implements a mechanism in the engine that restrict the amount of data than an input plugin can ingest, this is done through the configuration parameter **Mem\_Buf\_Limit**.
 
@@ -22,14 +22,14 @@ This option is disabled by default and can be applied to all input plugins. Let'
 * engine scheduler will retry the flush after 10 seconds
 * input plugin tries to append 500KB
 
-At this exact point, the engine will **allow** appending those 500KB of data into the memory: in total it will have 1.2MB of data buffered. The limit is permissive and will allow a single write past the limit, butonce the limit is **exceeded** the following actions are taken:
+At this exact point, the engine will **allow** appending those 500KB of data into the memory: in total it will have 1.2MB of data buffered. The limit is permissive and will allow a single write past the limit, but once the limit is **exceeded** the following actions are taken:
 
 * block local buffers for the input plugin \(cannot append more data\)
 * notify the input plugin invoking a **pause** callback
 
-The engine will protect it self and will not append more data coming from the input plugin in question; Note that it is the responsibility of the plugin to keep state and decide what to do in that _paused_ state.
+The engine will protect itself and will not append more data coming from the input plugin in question; Note that it is the responsibility of the plugin to keep state and decide what to do in that _paused_ state.
 
-After some time, usually measure in seconds, if the scheduler was able to flush the initial 700KB of data or it has given up after retrying, that amount of memory is released and the following actions will occur:
+After some time, usually measured in seconds, if the scheduler was able to flush the initial 700KB of data or it has given up after retrying, that amount of memory is released and the following actions will occur:
 
 * Upon data buffer release \(700KB\), the internal counters get updated
 * Counters now are set at 500KB
