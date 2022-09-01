@@ -25,6 +25,7 @@ The following are the specfic HTTP parameters to employ:
 
 In your main configuration file, append the following _Input_ & _Output_ sections:
 
+```text
 [OUTPUT]
     name         http
     match        *
