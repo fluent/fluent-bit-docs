@@ -135,6 +135,7 @@
   * [Standard Output](pipeline/filters/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
+  * [Wasm](pipeline/filters/wasm.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
