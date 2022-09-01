@@ -1,4 +1,4 @@
-# Health
+# NGINX Exporter Metrics
 
 _NGINX Exporter Metrics_ input plugin scrapes metrics from the NGINX stub status handler.
 
@@ -6,11 +6,12 @@ _NGINX Exporter Metrics_ input plugin scrapes metrics from the NGINX stub status
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Host | Name of the target host or IP address to check. |
-| Host | Port of the target nginx service to connect to. |
-| Status_URL | The URL of the Stub Status Handler. |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Host | Name of the target host or IP address to check. | localhost |
+| Port | Port of the target nginx service to connect to. | 80 |
+| Status_URL | The URL of the Stub Status Handler. | /status |
+| Nginx_Plus | Turn on NGINX plus mode. | true |
 
 ## Getting Started
 
