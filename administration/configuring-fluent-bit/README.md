@@ -95,6 +95,7 @@ Filters
 Outputs
   azure                   Send events to Azure HTTP Event Collector
   azure_blob              Azure Blob Storage
+  azure_kusto             Send events to Kusto (Azure Data Explorer)
   bigquery                Send events to BigQuery via streaming insert
   counter                 Records counter
   datadog                 Send events to DataDog HTTP Event Collector
