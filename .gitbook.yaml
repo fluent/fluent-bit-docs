@@ -46,6 +46,7 @@ redirects:
 
     # Outputs
     output/azure:          ./pipeline/outputs/azure.md
+    output/azure_kusto:    ./pipeline/outputs/azure_kusto.md
     output/bigquery:       ./pipeline/outputs/bigquery.md
     output/counter:        ./pipeline/outputs/counter.md
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
