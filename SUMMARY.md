@@ -140,6 +140,7 @@
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Azure Blob](pipeline/outputs/azure\_blob.md)
+  * [Azure Data Explorer](pipeline/outputs/azure\_kusto.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
