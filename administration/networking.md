@@ -56,6 +56,7 @@ For plugins that rely on networking I/O, the following section describes the net
 | `net.source_address` | Specify network address to bind for data traffic |  |
 | `resource_labels` | Set the resource labels |  |
 
+
 ## Example
 
 As an example, we will send 5 random messages through a TCP output connection, in the remote side we will use `nc` \(netcat\) utility to see the data.
