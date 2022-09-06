@@ -2,11 +2,11 @@
 
 Fluent Bit container images are available on Docker Hub ready for production usage. Current available images can be deployed in multiple architectures.
 
-### Quick Start
+## Quick Start
 
 Get started by simply typing the following command:
 
-```
+```shell
 docker run -ti cr.fluentbit.io/fluent/fluent-bit
 ```
 
@@ -16,6 +16,8 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag(s)      | Manifest Architectures    | Description                                                  |
 | ----------- | ------------------------- | ------------------------------------------------------------ |
+| 1.9.8       | x86\_64, arm64v8, arm32v7 | Release [v1.9.8](https://fluentbit.io/announcements/v1.9.8/) |
+| 1.9.8-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 | 1.9.7       | x86\_64, arm64v8, arm32v7 | Release [v1.9.7](https://fluentbit.io/announcements/v1.9.7/) |
 | 1.9.7-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 | 1.9.6       | x86\_64, arm64v8, arm32v7 | Release [v1.9.6](https://fluentbit.io/announcements/v1.9.6/) |
@@ -45,20 +47,20 @@ From a deployment perspective, there is no need to specify an architecture, the 
 
 Download the last stable image from 1.9 series:
 
-```
+```shell
 docker pull cr.fluentbit.io/fluent/fluent-bit:1.9
 ```
 
 Once the image is in place, now run the following (useless) test which makes Fluent Bit measure CPU usage by the container:
 
-```
+```shell
 docker run -ti cr.fluentbit.io/fluent/fluent-bit:1.9 \
   -i cpu -o stdout -f 1
 ```
 
 That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
 
-```
+```shell
 [2019/10/01 12:29:02] [ info] [engine] started
 [0] cpu.0: [1504290543.000487750, {"cpu_p"=>0.750000, "user_p"=>0.250000, "system_p"=>0.500000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>1.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>1.000000, "cpu2.p_cpu"=>1.000000, "cpu2.p_user"=>1.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>0.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>0.000000}]
 ```
