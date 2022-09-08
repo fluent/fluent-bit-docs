@@ -47,7 +47,7 @@ For plugins that rely on networking I/O, the following section describes the net
 | `custom_k8s_regex` | Set a custom kubernetes regex filter | (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$, type: string |
 | `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | 10 |
 | `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message | true |
-| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP) |  |
+| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired |  |
 | `net.dns.prefer_ipv4` |  Prioritize IPv4 DNS results when trying to establish a connection | false |
 |`net.dns.resolver`| Select the primary DNS resolver type (LEGACY or ASYNC)| |
 | `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off. | on |
