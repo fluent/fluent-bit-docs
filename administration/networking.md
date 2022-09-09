@@ -44,18 +44,15 @@ For plugins that rely on networking I/O, the following section describes the net
 
 | Property | Description | Default |
 | :--- | :--- | :--- |
-| `custom_k8s_regex` | Set a custom kubernetes regex filter | (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$, type: string |
 | `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | 10 |
-| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message | true |
-| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired |  |
-| `net.dns.prefer_ipv4` |  Prioritize IPv4 DNS results when trying to establish a connection | false |
-|`net.dns.resolver`| Select the primary DNS resolver type (LEGACY or ASYNC)| |
+| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | true |
+| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired. |  |
+| `net.dns.prefer_ipv4` |  Prioritize IPv4 DNS results when trying to establish a connection. | false |
+| `net.dns.resolver`| Select the primary DNS resolver type (LEGACY or ASYNC). | |
 | `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off. | on |
 | `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection. | 30 |
 | `net.keepalive_max_recycle` | Set maximum number of times a keepalive connection can be used before it is retired. | 2000 |
-| `net.source_address` | Specify network address to bind for data traffic |  |
-| `resource_labels` | Set the resource labels |  |
-
+| `net.source_address` | Specify network address to bind for data traffic. |  |
 
 ## Example
 
@@ -106,4 +103,3 @@ $ nc -l 9090
 If the `net.keepalive` option is not enabled, Fluent Bit will close the TCP connection and netcat will quit, here we can see how the keepalive connection works.
 
 After the 5 records arrive, the connection will keep idle and after 10 seconds it will be closed due to `net.keepalive_idle_timeout`.
-
