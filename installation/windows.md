@@ -155,7 +155,7 @@ To halt the process, press CTRL-C in the terminal.
 
 ## Installing from EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/).
+Download an EXE installer from the [downloads section](https://docs.fluentbit.io/manual/installation/windows#installation-packages).
 It has both 32-bit and 64-bit builds.
 Choose one which is suitable for you.
 
