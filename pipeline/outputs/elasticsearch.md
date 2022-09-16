@@ -39,8 +39,8 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Id\_Key | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. |  |
 | Write\_Operation | The write\_operation can be any of: create (default), index, update, upsert. | create |
 | Replace\_Dots | When enabled, replace field name dots with underscore, required by Elasticsearch 2.0-2.3. | Off |
-| Trace\_Output | When enabled print the elasticsearch API calls to stdout \(for diag only\) | Off |
-| Trace\_Error | When enabled print the elasticsearch API calls to stdout when elasticsearch returns an error \(for diag only\) | Off |
+| Trace\_Output | Print all elasticsearch API request payloads to stdout \(for diag only\) | Off |
+| Trace\_Error | If elasticsearch return an error, print the elasticsearch API request and response \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported \(if desired, you can use the nest filter plugin to remove nesting\) |  |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. Types are deprecated in APIs in [v7.0](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html). This options is for v7.0 or later. | Off |
