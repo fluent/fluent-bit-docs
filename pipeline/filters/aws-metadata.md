@@ -17,6 +17,7 @@ The plugin supports the following configuration parameters:
 | account\_id | The account ID for current EC2 instance. | false |
 | hostname | The hostname for current EC2 instance. | false |
 | vpc\_id | The VPC ID for current EC2 instance. | false |
+| tags_enabled | Specifies if should attach EC2 instance tags. EC2 instance must have the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled (which is disabled by default). | false |
 
 Note: _If you run Fluent Bit in a container, you may have to use instance metadata v1._ The plugin behaves the same regardless of which version is used.
 
@@ -49,6 +50,7 @@ $ bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
     account_id true
     hostname true
     vpc_id true
+    tags_enabled true
 
 [OUTPUT]
     Name stdout
