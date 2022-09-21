@@ -314,32 +314,33 @@ Configuration to get istio logs and apply response code filter to them.
 ```json
 {
     "log": {
-        "response_code":200,
-        "bytes_sent":111328341,
-        "authority":"randomservice.randomservice",
-        "duration":14493,"request_id":"2e9d38f8-36a9-40a6-bdb2-47c8eb7d399d",
-        "upstream_local_address":"10.11.82.178:42738",
-        "downstream_local_address":"10.10.21.17:80",
-        "upstream_cluster":"outbound|80||randomservice.svc.cluster.local",
-        "x_forwarded_for":null,
-        "route_name":"default",
-        "upstream_host":"10.11.6.90:80",
-        "user_agent":"RandomUserAgent",
-        "response_code_details":"via_upstream",
-        "downstream_remote_address":"10.11.82.178:51096",
-        "bytes_received":1148,
-        "path":"/?parameter=random",
-        "response_flags":"-",
-        "start_time":"2022-07-28T11:16:51.663Z",
-        "upstream_transport_failure_reason":null,
-        "method":"POST",
-        "connection_termination_details":null,
-        "protocol":"HTTP/1.1",
-        "requested_server_name":null,
-        "upstream_service_time":"6161"
+        "response_code": 200,
+        "bytes_sent": 111328341,
+        "authority": "randomservice.randomservice",
+        "duration": 14493,
+        "request_id": "2e9d38f8-36a9-40a6-bdb2-47c8eb7d399d",
+        "upstream_local_address": "10.11.82.178:42738",
+        "downstream_local_address": "10.10.21.17:80",
+        "upstream_cluster": "outbound|80||randomservice.svc.cluster.local",
+        "x_forwarded_for": null,
+        "route_name": "default",
+        "upstream_host": "10.11.6.90:80",
+        "user_agent": "RandomUserAgent",
+        "response_code_details": "via_upstream",
+        "downstream_remote_address": "10.11.82.178:51096",
+        "bytes_received": 1148,
+        "path": "/?parameter=random",
+        "response_flags": "-",
+        "start_time": "2022-07-28T11:16:51.663Z",
+        "upstream_transport_failure_reason": null,
+        "method": "POST",
+        "connection_termination_details": null,
+        "protocol": "HTTP/1.1",
+        "requested_server_name": null,
+        "upstream_service_time": "6161"
     },
-    "stream":"stdout",
-    "time":"2022-07-28T11:17:06.704109897Z"
+    "stream": "stdout",
+    "time": "2022-07-28T11:17:06.704109897Z"
 }
 ```
 
