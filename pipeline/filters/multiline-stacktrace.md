@@ -12,7 +12,6 @@ As part of the built-in functionality, without major configuration effort, you c
 
 * go
 * python
-* ruby
 * java (Google Cloud Platform Java stacktrace format)
 
 Some comments about this filter:
