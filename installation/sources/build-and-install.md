@@ -174,6 +174,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | option | description | default |
 | :--- | :--- | :--- |
 | [FLB\_OUT\_AZURE](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | On |
+| [FLB\_OUT\_AZURE\_KUSTO](../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | On |
 | [FLB\_OUT\_BIGQUERY](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | On |
 | [FLB\_OUT\_COUNTER](../../pipeline/outputs/counter.md) | Enable Counter output plugin | On |
 | [FLB\_OUT\_CLOUDWATCH\_LOGS](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | On |
