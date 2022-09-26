@@ -16,7 +16,7 @@ Our buffering strategies are designed to solve problems associated with backpres
 
 Fluent Bit as buffering strategies go, offers a primary buffering mechanism in **memory** and an optional secondary one using the **file system**. With this hybrid solution you can accomodate any use case safely and keep a high performance while processing your data.
 
-Both mechanisms are not mutally exclusive and when the data is ready to be processed or delivered it will always be **in memory**, while other data in the queue might be in the file system until is ready to be processed and moved up to memory.
+Both mechanisms are not mutually exclusive and when the data is ready to be processed or delivered it will always be **in memory**, while other data in the queue might be in the file system until is ready to be processed and moved up to memory.
 
 To learn more about the buffering configuration in Fluent Bit, please jump to the [Buffering & Storage](../administration/buffering-and-storage.md) section.
 
