@@ -152,7 +152,7 @@ For instance, for a K8s resource type, `resource_labels` can be used in tandem w
     Resource_Labels cluster_name=my-cluster,location=us-central1-c,container_name=$kubernetes['container_name'],namespace_name=$kubernetes['namespace_name'],pod_name=$kubernetes['pod_name']
 ```
 
-`resource_labels` also supports validation for required labels based on the input resource type. This allows fluent-bit to check if all specified labels are present for a given configuration before runtime. If validation is not currently supported for a resource type that you would like to use this API with, we encourage you to open a pull request for it. Adding validation for a new resource type is simple - all that is needed is to specify the resources associated with the type alongside the required labels [here](https://github.com/fluent/fluent-bit/blob/resource-labels/plugins/out_stackdriver/stackdriver_resource_types.h).
+`resource_labels` also supports validation for required labels based on the input resource type. This allows fluent-bit to check if all specified labels are present for a given configuration before runtime. If validation is not currently supported for a resource type that you would like to use this API with, we encourage you to open a pull request for it. Adding validation for a new resource type is simple - all that is needed is to specify the resources associated with the type alongside the required labels [here](https://github.com/fluent/fluent-bit/blob/master/plugins/out_stackdriver/stackdriver_resource_types.c#L27).
 ## Troubleshooting Notes
 
 ### Upstream connection error
