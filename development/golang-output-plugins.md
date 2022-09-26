@@ -94,3 +94,54 @@ $ ldd out_gstdout.so
 $ bin/fluent-bit -e /path/to/out_gstdout.so -i cpu -o gstdout
 ```
 
+## Configuration file
+
+Fluent Bit can load / run Golang plugin using two configuration file.
+
+- Plugins configuration file
+- [Main configuration file](../administration/configuring-fluent-bit/classic-mode/configuration-file.md)
+
+### Plugins configuration file
+
+| Key  | Description | Default Value|
+| ---- | ----------- | ------------ |
+| Path | A path for a Golang plugin. | |
+
+#### Example
+
+```python
+[PLUGINS]
+    Path /path/to/out_gstdout.so
+```
+
+### Main configuration file
+
+The keys for Golang plugin available as of this version are described in the following table:
+
+| Key  | Description | Default Value|
+| ---- | ----------- | ------------ |
+| Plugins_file    | Path for a plugins configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                                                     |               |
+
+#### Example
+
+The following is an example of a main configuration file.
+
+```python
+[SERVICE]
+    plugins_file /path/to/plugins.conf
+
+[INPUT]
+    Name dummy
+
+[OUTPUT]
+    Name gstdout
+```
+
+### Run using a configuration file
+
+We can load a main configuration file using `-c` option.
+Note: No need to specify a plugins configuration file from command line.
+
+```text
+fluent-bit -c fluent-bit.conf
+```
