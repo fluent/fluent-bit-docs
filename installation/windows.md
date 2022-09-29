@@ -7,7 +7,7 @@ Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick test
 
 Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
 
-```text
+```python
 [SERVICE]
     # Flush
     # =====
@@ -80,19 +80,19 @@ Both are currently provided to allow migration.
 
 ## Installation Packages
 
-The latest stable version is 1.9.8, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
+The latest stable version is 1.9.9, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-1.9.8-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win32.exe) | [1831f65a8b73f3faee704998cbc84208ee8904f3bd7b4fa198fa8cd8d40273ef](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win32.exe.sha256) |
-| [fluent-bit-1.9.8-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win32.zip) | [8076808019545e9fa0811754f6fcd80f4371766a5e8ce1dbe92454e14f1e5119](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win32.zip.sha256) |
-| [fluent-bit-1.9.8-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win64.exe) | [b1f34e64f551be5a9c9150425b7ca62fa913a227072684b0de84b808bf7cc18e](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win64.exe.sha256) |
-| [fluent-bit-1.9.8-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win64.zip) | [8160292c85eb01568149ea7828bff9a9c747ee6c274dc532639f9a69efef5662](https://fluentbit.io/releases/1.9/fluent-bit-1.9.8-win64.zip.sha256) |
+| [fluent-bit-1.9.9-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.exe) | [a9877bb8d51a06e16e249a7bb90f73dcd0a256be91f1dc2fa926aea5aad607d7](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.exe.sha256) |
+| [fluent-bit-1.9.9-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.zip) | [3672e8b3d0dd9276f728490038d1a775beebef1740d73102269de305f85aa94f](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.zip.sha256) |
+| [fluent-bit-1.9.9-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.exe) | [916bb3ac9591070d8f24ca371c67c0cd6909ea2da280a8c134fe1734837ed4e9](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.exe.sha256) |
+| [fluent-bit-1.9.9-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.zip) | [8423ece1cb8694f741d6a4007f1cb9829447d816d5c76805386103e5cc12835b](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-1.9.8-win32.exe
+PS> Get-FileHash fluent-bit-1.9.9-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -102,12 +102,12 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-1.9.8-win64.zip
+PS> Expand-Archive fluent-bit-1.9.9-win64.zip
 ```
 
 The ZIP package contains the following set of files.
 
-```powershell
+```text
 fluent-bit
 ├── bin
 │   ├── fluent-bit.dll
@@ -162,7 +162,7 @@ Choose one which is suitable for you.
 Double-click the EXE installer you've downloaded.
 The installation wizard will automatically start.
 
-![](<../.gitbook/assets/windows_installer (1) (1).png>)
+![Installation wizard screenshot](<../.gitbook/assets/windows_installer (1) (1).png>)
 
 Click Next and proceed.
 By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
@@ -173,7 +173,7 @@ PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
 
 ### Installer options
 
-The Windows installer is built by [`CPack` using NSIS(https://cmake.org/cmake/help/latest/cpack_gen/nsis.html) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
+The Windows installer is built by [`CPack` using NSIS(<https://cmake.org/cmake/help/latest/cpack_gen/nsis.html>) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
 
 To silently install to `C:\fluent-bit` directory here is an example:
 
@@ -190,7 +190,7 @@ Windows services are equivalent to "daemons" in UNIX (i.e. long-running backgrou
 
 Suppose you have the following installation layout:
 
-```powershell
+```text
 C:\fluent-bit\
 ├── conf
 │   ├── fluent-bit.conf
@@ -204,13 +204,13 @@ C:\fluent-bit\
 
 To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
 
-```shell
+```powershell
 % sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
 ```
 
 Now Fluent Bit can be started and managed as a normal Windows service.
 
-```shell
+```powershell
 % sc.exe start fluent-bit
 % sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
@@ -221,13 +221,13 @@ SERVICE_NAME: fluent-bit
 
 To halt the Fluent Bit service, just execute the "stop" command.
 
-```shell
+```powershell
 % sc.exe stop fluent-bit
 ```
 
 To start Fluent Bit automatically on boot, execute the following:
 
-```shell
+```text
 % sc.exe config fluent-bit start= auto
 ```
 
@@ -322,21 +322,21 @@ Open the start menu on Windows and type "Developer Command Prompt".
 
 Clone the source code of Fluent Bit.
 
-```shell
+```powershell
 % git clone https://github.com/fluent/fluent-bit
 % cd fluent-bit/build
 ```
 
 Compile the source code.
 
-```shell
+```powershell
 % cmake .. -G "NMake Makefiles"
 % cmake --build .
 ```
 
 Now you should be able to run Fluent Bit:
 
-```shell
+```powershell
 % .\bin\debug\fluent-bit.exe -i dummy -o stdout
 ```
 
@@ -344,6 +344,6 @@ Now you should be able to run Fluent Bit:
 
 To create a ZIP package, call `cpack` as follows:
 
-```shell
+```powershell
 % cpack -G ZIP
 ```
