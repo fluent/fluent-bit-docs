@@ -47,5 +47,5 @@ If you want to do a quick test, you can run this plugin from the command line.
 $ fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
 ```
 
-Note that `winevtlog` plugin will tail channles on each startup.
+Note that `winevtlog` plugin will tail channels on each startup.
 If you want to confirm whether this plugin is working or not, you should specify `-p 'Read_Existing_Events=true'` parameter.
