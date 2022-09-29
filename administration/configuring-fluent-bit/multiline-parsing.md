@@ -173,3 +173,11 @@ $ fluent-bit -c fluent-bit.conf
 ```
 
 The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
+
+## Limitations
+
+The multiline parser is a very powerful feature, but it has some limitations that you should be aware of:
+
+* The multiline parser is not affected by the `buffer_max_size` configuration option, allowing the composed log record to grow beyond this size.
+Hence, the `skip_long_lines` option will not be applied to multiline messages. 
+* It is not possible to get the time key from the body of the multiline message. However, it can be extracted and set as a new key by using a filter. 
