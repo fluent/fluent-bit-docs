@@ -8,7 +8,7 @@ The CPU metrics plugin creates metrics that are log-based \(I.e. JSON payload\).
 
 | key | description |
 | :--- | :--- |
-| cpu\_p | CPU usage of the overall system, this value is the summatory of time spent on user and kernel space. The result takes in consideration the numbers of CPU cores in the system. |
+| cpu\_p | CPU usage of the overall system, this value is the summation of time spent on user and kernel space. The result takes in consideration the numbers of CPU cores in the system. |
 | user\_p | CPU usage in User mode, for short it means the CPU usage by user space programs. The result of this value takes in consideration the numbers of CPU cores in the system. |
 | system\_p | CPU usage in Kernel mode, for short it means the CPU usage by the Kernel. The result of this value takes in consideration the numbers of CPU cores in the system. |
 
