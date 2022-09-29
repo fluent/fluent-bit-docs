@@ -83,7 +83,7 @@ export OPENSSL_ROOT_DIR=`brew --prefix openssl`
 export PATH=`brew --prefix bison`/bin:$PATH
 ```
 
-And then, creating the specific macOS SDK target (For example, sepcifying macOS Big Sur (11.3) SDK environment):
+And then, creating the specific macOS SDK target (For example, specifying macOS Big Sur (11.3) SDK environment):
 
 ```bash
 export MACOSX_DEPLOYMENT_TARGET=11.3

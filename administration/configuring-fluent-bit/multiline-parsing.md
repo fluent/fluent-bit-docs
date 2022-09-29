@@ -68,7 +68,7 @@ rule         "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
 
-In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
+In the example above, we have defined two rules, each one has its own state name, regex patterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
 
 The first rule of state name **must always** be **start_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
 

@@ -4,7 +4,7 @@ Observe employs the **http** output plugin, allowing you to flush your records [
 
 For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.  
 
-The following are the specfic HTTP parameters to employ:
+The following are the specific HTTP parameters to employ:
 
 ## Configuration Parameters
 
