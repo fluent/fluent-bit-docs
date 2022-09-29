@@ -18,7 +18,7 @@ The Scheduler provides a simple configuration option called **Retry\_Limit** whi
 | :--- | :--- | :--- |
 | Retry\_Limit | N | Integer value to set the maximum number of retries allowed. N must be &gt;= 1 \(default: 1\) |
 | Retry\_Limit | `no_limits` or `False` | When Retry\_Limit is set to `no_limits` or`False`, means that there is not limit for the number of retries that the Scheduler can do. |
-| Retry\_Limit | no\_retries | When Retry\_Limit is set to no\_retries, means that reries are disabled and Scheduler would not try to send data to the destination if it failed the first time. |
+| Retry\_Limit | no\_retries | When Retry\_Limit is set to no\_retries, means that retries are disabled and Scheduler would not try to send data to the destination if it failed the first time. |
 
 ### Example
 
