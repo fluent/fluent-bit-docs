@@ -20,11 +20,9 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | Ubuntu                 | [Ubuntu 16.04 LTS](linux/ubuntu.md#ubuntu-16-04-lts-xenial-xerus), [Ubuntu 18.04 LTS](linux/ubuntu.md#ubuntu-18-04-lts-bionic-beaver), [Ubuntu 20.04 LTS](linux/ubuntu.md#ubuntu-20-04-lts-focal-fossa), [Ubuntu 22.04 LTS](linux/ubuntu.md) |
 | Debian                 | [Debian 9](linux/debian.md#debian-9-stretch), [Debian 10](linux/debian.md#debian-10-buster)                                                                                                             |
 | Amazon Linux           | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2)                                                                                                                                       |
-<<<<<<< HEAD
 | Raspbian / Rasberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster)                                                                                                                                        |
 =======
 | Raspbian / Raspberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](linux/raspbian-raspberry-pi.md#raspbian-11-bullseye)                                                                   |
->>>>>>> f0cab4f (installation:getting-started-with-fluent-bit fix typo in link for raspbian-11 in the installation instructions list (#921))
 | Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures)                                                                                                                    |
 
 ## Install on Windows (Packages)
