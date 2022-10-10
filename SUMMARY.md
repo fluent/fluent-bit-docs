@@ -120,6 +120,7 @@
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
+  * [ECS Metadata](pipeline/filters/ecs-metadata.md)
   * [Expect](pipeline/filters/expect.md)
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)
   * [Grep](pipeline/filters/grep.md)

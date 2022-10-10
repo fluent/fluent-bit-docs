@@ -33,6 +33,7 @@ redirects:
 
     # Filters
     filter/aws:             ./pipeline/filters/aws-metadata.md
+    filter/ecs:             ./pipeline/filters/ecs-metadata.md
     filter/grep:            ./pipeline/filters/grep.md
     filter/kubernetes:      ./pipeline/filters/kubernetes.md
     filter/lua:             ./pipeline/filters/lua.md

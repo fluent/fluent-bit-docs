@@ -155,6 +155,7 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | option | description | default |
 | :--- | :--- | :--- |
 | [FLB\_FILTER\_AWS](../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | On |
+| [FLB\_FILTER\_ECS](../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | On |
 | FLB\_FILTER\_EXPECT | Enable Expect data test filter | On |
 | [FLB\_FILTER\_GREP](../../pipeline/filters/grep.md) | Enable Grep filter | On |
 | [FLB\_FILTER\_KUBERNETES](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | On |
