@@ -10,6 +10,7 @@ Fluent Bit comes with built-it features to allow you to monitor the internals of
 * [Grafana Dashboards and Alerts](monitoring.md#grafana-dashboard-and-alerts)
 * [Health Checks](monitoring.md#health-check-for-fluent-bit)
 * [Calyptia Cloud: hosted service to monitor and visualize your pipelines](monitoring.md#calyptia-cloud)
+* [Tap Functionality: generate events or records](monitoring.md#tap-functionality)
 
 ## HTTP Server
 
@@ -348,6 +349,12 @@ Make sure to replace your API key in the configuration.\
 After a few seconds upon restart your Fluent Bit agent, the Calyptia Cloud Dashboard will list your agent. Metrics will take around 30 seconds to shows up.
 
 ![](../.gitbook/assets/agent.png)
+
+
+## Tap Functionality
+
+Tracing can be used to generate events or records detailing what messages pass through fluent-bit, at what time and what filters affect them. Examples on tap usage are available [here](tap-functinality.md).
+
 
 ###  Contact Calyptia
 
