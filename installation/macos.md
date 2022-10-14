@@ -89,6 +89,12 @@ And then, creating the specific macOS SDK target (For example, sepcifying macOS 
 export MACOSX_DEPLOYMENT_TARGET=11.3
 ```
 
+Change to the _build/_ directory inside the Fluent Bit sources:
+
+```bash
+$ cd build/
+```
+
 Build Fluent Bit macOS installer.
 
 ```bash
