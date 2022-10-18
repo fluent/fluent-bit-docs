@@ -5,6 +5,7 @@
 * Compiler: GCC or clang
 * CMake
 * Flex & Bison: only if you enable the Stream Processor or Record Accessor feature \(both enabled by default\)
+* Libyaml development headers and libraries
 
 In the core there are not other dependencies, For certain features that depends on third party components like output plugins with special backend libraries \(e.g: kafka\), those are included in the main source code repository.
 

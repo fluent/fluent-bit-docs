@@ -95,6 +95,7 @@
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Log Based Metrics](pipeline/inputs/network-io-metrics.md)
+  * [NGINX Exporter Metrics](pipeline/inputs/nginx.md)
   * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
   * [Process Log Based Metrics](pipeline/inputs/process.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
