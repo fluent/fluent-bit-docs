@@ -20,6 +20,7 @@ Important Note: At the moment only HTTP endpoints are supported.
 | header               | Add a HTTP header key/value pair. Multiple headers can be set. |           |
 | log_response_payload | Log the response payload within the Fluent Bit log           | false     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields |           |
+| compress            | Set payload compression mechanism. Option available is 'gzip' |           |
 
 ## Getting Started
 
