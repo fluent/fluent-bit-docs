@@ -68,7 +68,8 @@
 * [Monitoring](administration/monitoring.md)
 * [Dump Internals / Signal](administration/dump-internals-signal.md)
 * [HTTP Proxy](administration/http-proxy.md)
-
+* [Troubleshooting](administration/trouble-shooting.md)
+  
 ## Local Testing
 
 * [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
