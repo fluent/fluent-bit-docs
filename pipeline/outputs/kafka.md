@@ -83,7 +83,7 @@ The binary should now build successfully in build/bin/Debug/fluent-bit.exe
 Test with
 
 ```
-C:\fluent-bit.exe -i dummy -o kafka
+C:\./<repo>/build/bin/fluent-bit.exe -i dummy -o kafka
 ```
 
 ### Avro Support
