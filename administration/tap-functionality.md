@@ -5,7 +5,7 @@ Here is a simple readme documenting how to use trace using the fluent-bit image 
 Tracing can be used to generate events or records detailing what messages
 pass through fluent-bit, at what time and what filters affect them.
 
-To test out tracing we will be using a publicly accesible docker container: `ghcr.io/calyptia/core/calyptia-fluent-bit:main`.
+To test out tracing we will be using a publicly accessible docker container: `ghcr.io/calyptia/core/calyptia-fluent-bit:main`.
 
 ## Simple example
 
