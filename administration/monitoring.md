@@ -353,7 +353,7 @@ After a few seconds upon restart your Fluent Bit agent, the Calyptia Cloud Dashb
 
 ## Tap Functionality
 
-Tracing can be used to generate events or records detailing what messages pass through fluent-bit, at what time and what filters affect them. Examples on tap usage are available [here](tap-functinality.md).
+Tracing can be used to generate events or records detailing what messages pass through fluent-bit, at what time and what filters affect them. Examples on tap usage are available [here](tap-functionality.md).
 
 
 ###  Contact Calyptia
