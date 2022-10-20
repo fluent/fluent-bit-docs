@@ -11,7 +11,6 @@ Fluent Bit comes with built-it features to allow you to monitor the internals of
 * [Health Checks](monitoring.md#health-check-for-fluent-bit)
 * [Calyptia Cloud: hosted service to monitor and visualize your pipelines](monitoring.md#calyptia-cloud)
 
-
 ## HTTP Server
 
 Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin.
