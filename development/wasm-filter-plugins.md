@@ -1,14 +1,17 @@
 # WASM Filter Plugins
 
-Fluent Bit currently supports integration of wasm plugins built as wasm/wasi objects for input and filter plugins only. The interface for the WASM filter plugins is currently under development but is functional.
+Fluent Bit currently supports integration of wasm plugins built as wasm/wasi objects for input and filter plugins only.
+The interface for the WASM filter plugins is currently under development but is functional.
 
 ## Prerequisites
 
-### For Build fluent-bit
+### Building Fluent Bit
 
-For only execution of WASM input and filter plugins, there is no additional requirement.
+There are no additional requirements to execute WASM plugins.
 
 #### Building flb-wamrc (optional)
+
+`flb-wamrc` is just `flb-` prefixed AOT (Ahead Of Time) compiler that is provided from [wasm-micro-runtime](https://github.com/bytecodealliance/wasm-micro-runtime).
 
 For `flb-wamrc` support, users have to install llvm infrastructure, e.g:
 
@@ -18,7 +21,7 @@ For `flb-wamrc` support, users have to install llvm infrastructure, e.g:
 
 ### For Build WASM programs
 
-Currently, fluent-bit supports the following WASM toolchains:
+Currently, Fluent Bit supports the following WASM toolchains:
 
 * Rust on `wasm32-unknown-unknown`.
   * rustc 1.62.1 (e092d0b6b 2022-07-16) or later
@@ -36,7 +39,7 @@ $ cmake .. [-DFLB_WAMRC=On]
 $ make
 ```
 
-To support AOT compiled WASM execution as filter plugins, users have to built fluent-bit with `-DFLB_WAMRC=On`.
+To support AOT compiled WASM execution as filter plugins, users have to built Fluent Bit with `-DFLB_WAMRC=On`.
 
 Once compiled, we can see new plugins in which handles _wasm_, e.g:
 
@@ -54,7 +57,7 @@ Filters
 
 ## Build a WASM Filter for Filter Plugin
 
-Currently, fluent-bit's WASM filter assumes C ABI that is also known as `wasm32-unknown-unknown` on Rust target and `wasm32-wasi` on TinyGo target.
+Currently, Fluent Bit's WASM filter assumes C ABI that is also known as `wasm32-unknown-unknown` on Rust target and `wasm32-wasi` on TinyGo target.
 
 ### To Install Additional Components
 
@@ -95,17 +98,9 @@ pub extern “C” fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u3
 
 Note that `//export XXX` on TinyGo and `#[no_mangle]` attributes on Rust are required. This is because TinyGo and Rust will mangle their function names if they are not specified.
 
-Once built, a WASM program will be available. Then, that built program can be executed with the following fluent-bit configuration:
+Once built, a WASM program will be available. Then, that built program can be executed with the following Fluent Bit configuration:
 
 ```text
-[SERVICE]
-    Flush        1
-    Daemon       Off
-    Log_Level    info
-    HTTP_Server  Off
-    HTTP_Listen  0.0.0.0
-    HTTP_Port    2020
-
 [INPUT]
     Name dummy
     Tag dummy.local
@@ -124,20 +119,21 @@ Once built, a WASM program will be available. Then, that built program can be ex
 
 ### Optimize execution of WASM programs
 
-To optimize WASM program execution, users can use `flb-wamrc` for this purpose.
+To optimize WASM program execution, there is the option of using `flb-wamrc`.
+`flb-wamrc` will reduce runtime footprint and to be best perforemance for filtering operations.
 This tool will be built when `-DFLB_WAMRC=On` cmake option is specififed and llvm infrastructure is installed on the building box.
 
-```text
+```shell
 $ flb-wamrc -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
 ```
 
-For more optimizing the specific CPU such as Cortex-A57 series, e.g:
+For further optimizations to the specific CPU such as Cortex-A57 series, e.g:
 
 ```text
 $ flb-wamrc --size-level=3 --target=aarch64v8 --cpu=cortex-a57 -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
 ```
 
-Then, when AOT compiling is succeeded:
+Then, when AOT (Ahead Of Time) compiling is succeeded:
 
 ```text
 Create AoT compiler with:

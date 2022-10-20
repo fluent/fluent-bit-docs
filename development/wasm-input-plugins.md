@@ -1,12 +1,13 @@
 # WASM Input Plugins
 
-Fluent Bit currently supports integration of wasm plugins built as wasm/wasi objects for input and filter plugins only. The interface for the WASM filter plugins is currently under development but is functional.
+Fluent Bit currently supports integration of wasm plugins built as wasm/wasi objects for input and filter plugins only.
+The interface for the WASM filter plugins is currently under development but is functional.
 
 ## Prerequisites
 
-### For Build fluent-bit
+### Building Fluent Bit
 
-For only execution of WASM input and filter plugins, there is no additional requirement.
+There are no additional requirements to execute WASM plugins.
 
 ### For Build WASM programs
 
@@ -44,7 +45,7 @@ Filters
 
 ## Build a WASM Input for Input Plugin
 
-Currently, fluent-bit's WASM input assumes WASI ABI that is also known as `wasm32-wasi` on Rust target and `wasm32-wasi` on TinyGo target.
+Currently, Fluent Bit's WASM input assumes WASI ABI that is also known as `wasm32-wasi` on Rust target and `wasm32-wasi` on TinyGo target.
 
 ### To Install Additional Components
 
@@ -58,22 +59,14 @@ $ rustup target add wasm32-wasi
 ### Requirements of WASM/WASI programs
 
 WASM input plugins execute the function that has wasi main function entrypoint.
-And fluent-bit's WASM input plugin communicates via stdout on WASM programs.
+And Fluent Bit's WASM input plugin communicates via stdout on WASM programs.
 
-WASM programs should handle stdout for ingesting logs into fluent-bit.
+WASM programs should handle stdout for ingesting logs into Fluent Bit.
 
 
-Once built, a WASM/WASI program will be available. Then, that built program can be executed with the following fluent-bit configuration:
+Once built, a WASM/WASI program will be available. Then, that built program can be executed with the following Fluent Bit configuration:
 
 ```text
-[SERVICE]
-    Flush        1
-    Daemon       Off
-    Log_Level    info
-    HTTP_Server  Off
-    HTTP_Listen  0.0.0.0
-    HTTP_Port    2020
-
 [INPUT]
     Name exec_wasi
     Tag  exec.wasi.local
