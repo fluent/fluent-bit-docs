@@ -13,10 +13,10 @@ To test out Fluent Bit Tap we will be using a publicly accessible docker contain
 
 ### Simple example
 
-First we will make sure that the container we are going to use actually supports Fluent Bit Tap (available in Fluent Bit 2.0+):
+First, we will make sure that the container image we are going to use actually supports Fluent Bit Tap (available in Fluent Bit 2.0+):
 
 ```shell
-$ docker run --rm -ti ghcr.io/calyptia/core/calyptia-fluent-bit:main --help | grep -Z
+$ docker run --rm -ti fluent/fluent-bit:latest --help | grep -Z
   -Z, --enable-chunk-trace     enable chunk tracing. activating it requires using the HTTP Server API.
 ```
 
@@ -25,7 +25,7 @@ If the `--enable-chunk-trace` option is present it means Fluent Bit has support 
 Tap support is enabled and disabled via the embedded web server, so enable it like so (or the equivalent option in the configuration file):
 
 ```shell
-$ docker run --rm -ti -p 2020:2020 ghcr.io/calyptia/core/calyptia-fluent-bit:main -Z -H -i dummy -p alias=input_dummy -o stdout -f 1
+$ docker run --rm -ti -p 2020:2020 fluent/fluent-bit:latest -Z -H -i dummy -p alias=input_dummy -o stdout -f 1
 Calyptia Fluent Bit v22.8, patch_level=1
 * Enterprise Fluent Bit by Calyptia
 * https://calyptia.com
@@ -80,13 +80,13 @@ In this example we will follow a single input of many which passes through sever
 
 ```
 $ docker run --rm -ti -p 2020:2020 \
-	ghcr.io/calyptia/core/calyptia-fluent-bit:main \
+	fluent/fluent-bit:latest \
 	-Z -H \
 		-i dummy -p alias=dummy_0 -p \
 			dummy='{"dummy": "dummy_0", "key_name": "foo", "key_cnt": "1"}' \
 		-i dummy -p alias=dummy_1 -p dummy='{"dummy": "dummy_1"}' \
 		-i dummy -p alias=dummy_2 -p dummy='{"dummy": "dummy_2"}' \
-		-F record_modifier -m 'dummy.0' -p record="powered_by calyptia" \
+		-F record_modifier -m 'dummy.0' -p record="powered_by fluent" \
 		-F record_modifier -m 'dummy.1' -p record="powered_by fluent-bit" \
 		-F nest -m 'dummy.0' \
 			-p operation=nest -p wildcard='key_*' -p nest_under=data \
