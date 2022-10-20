@@ -130,6 +130,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
 | [FLB\_IN\_DOCKER](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
+| [FLB\_IN\_EXEC\_WASI](../../pipeline/inputs/exec_wasi.md) | Enable Exec WASI input plugin | On |
 | [FLB_IN_FLUENTBIT_METRICS](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | On |
 | [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
@@ -168,6 +169,7 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | [FLB\_FILTER\_REWRITE\_TAG](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | On |
 | [FLB\_FILTER\_STDOUT](../../pipeline/filters/standard-output.md) | Enable Stdout filter | On |
 | [FLB\_FILTER\_THROTTLE](../../pipeline/filters/throttle.md) | Enable Throttle filter | On |
+| [FLB\_FILTER\_WASM](../../pipeline/filters/wasm.md) | Enable WASM filter | On |
 
 ### Output Plugins
 
