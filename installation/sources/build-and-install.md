@@ -130,7 +130,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
 | [FLB\_IN\_DOCKER](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
-| [FLB\_IN\_EXEC\_WASI](../../pipeline/inputs/exec_wasi.md) | Enable Exec WASI input plugin | On |
+| [FLB\_IN\_EXEC\_WASI](../../pipeline/inputs/exec-wasi.md) | Enable Exec WASI input plugin | On |
 | [FLB_IN_FLUENTBIT_METRICS](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | On |
 | [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
