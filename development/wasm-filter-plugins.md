@@ -31,6 +31,8 @@ Currently, Fluent Bit supports the following WASM toolchains:
 
 ## Getting Started
 
+As described in general options in [source installation](../installation/sources/build-and-install.md),
+WASM support is enabled by default.
 Compile Fluent Bit with WASM support, e.g:
 
 ```text
