@@ -117,6 +117,14 @@ Once built, a WASM program will be available. Then, that built program can be ex
     Match *
 ```
 
+For example, one of the examples of [Rust WASM filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_rust) should generate its filtered logs as follows:
+
+```text
+[0] dummy.local: [1666270588.271704000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:28.271704000 +0000"}]
+[0] dummy.local: [1666270589.270348000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:29.270348000 +0000"}]
+[0] dummy.local: [1666270590.271107000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:30.271107000 +0000"}]
+```
+
 ### Optimize execution of WASM programs
 
 To optimize WASM program execution, there is the option of using `flb-wamrc`.
