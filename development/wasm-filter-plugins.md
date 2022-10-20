@@ -1,5 +1,7 @@
 # WASM Filter Plugins
 
+[WebAssembly](https://webassembly.org/) is binary instruction format for stack based virtual machine.
+
 Fluent Bit currently supports integration of wasm plugins built as wasm/wasi objects for input and filter plugins only.
 The interface for the WASM filter plugins is currently under development but is functional.
 
