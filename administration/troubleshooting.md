@@ -1,14 +1,15 @@
 # Troubleshooting
 
 * [Tap Functionality: generate events or records](troubleshooting.md#tap-functionality)
-* [Dump Internals Signal](troubleshooting.md#dump-internals-signal)
+* [Dump Internals Signal](troubleshooting.md#dump-internals--signal)
 
 ## Tap Functionality
 
 Tracing can be used to generate events or records detailing what messages
 pass through fluent-bit, at what time and what filters affect them.
 
-To test out tracing we will be using a publicly accessible docker container: `ghcr.io/calyptia/core/calyptia-fluent-bit:main`.
+To test out tracing we will be using a publicly accessible docker container: 'fluent/fluent-bit:latest
+'.
 
 ### Simple example
 
