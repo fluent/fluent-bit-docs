@@ -24,6 +24,7 @@ description: High Performance Log and Metrics Processor
   * More than 80 built-in plugins available
   * Extensibility
     * Write any input, filter or output plugin in C language
+    * WASM: write [WASM Filter Plugins](development/wasm-filter-plugin.md) or [WASM Input Plugins](development/wasm-input-plugins.md)
     * Bonus: write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
 * [Monitoring](administration/monitoring.md): expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
 * [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using simple SQL queries

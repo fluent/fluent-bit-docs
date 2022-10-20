@@ -193,4 +193,6 @@
 * [C Library API](development/library\_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
+* [WASM Filter Plugins](development/wasm-filter-plugins.md)
+* [WASM Input Plugins](development/wasm-input-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
