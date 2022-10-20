@@ -3,8 +3,9 @@
 The **exec** input plugin, allows to execute external program and collects event logs.
 
 ## Container support
+
 This plugin will not function in the distroless production images (AMD64 currently) as it needs a functional `/bin/sh` which is not present.
-It will function in the 1.8.12 and later `-debug` images though as well as the ARM production images as these include a full shell.
+The debug images use the same binaries so even though they have a shell, there is no support for this plugin as it is compiled out.
 
 ## Configuration Parameters
 
@@ -63,4 +64,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
-
