@@ -1,8 +1,9 @@
+
 # Security
 
 Fluent Bit provides integrated support for _Transport Layer Security_ \(TLS\) and it predecessor _Secure Sockets Layer_ \(SSL\) respectively. In this section we will refer as TLS only for both implementations.
 
-Each output plugin that requires to perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
+Both input and output plugins that perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
 | Property | Description | Default |
 | :--- | :--- | :--- |
@@ -15,6 +16,8 @@ Each output plugin that requires to perform Network I/O can optionally enable TL
 | tls.key\_file | absolute path to private Key file |  |
 | tls.key\_passwd | optional password for tls.key\_file file |  |
 | tls.vhost | hostname to be used for TLS SNI extension |  |
+
+*Note : in order to use TLS on input plugins the user is expected to provide both a certificate and private key*
 
 The listed properties can be enabled in the configuration file, specifically on each output plugin section or directly through the command line.
 
@@ -40,9 +43,48 @@ The following **output** plugins can take advantage of the TLS feature:
 * [TCP & TLS](../pipeline/outputs/tcp-and-tls.md)
 * [Treasure Data](../pipeline/outputs/treasure-data.md)
 
+The following **input** plugins can take advantage of the TLS feature:
+
+* [MQTT](../pipeline/input/mqtt.md)
+* [TCP](../pipeline/input/tcp.md)
+* [HTTP](../pipeline/input/http.md)
+* [OpenTelemetry](../pipeline/input/opentelemetry.md)
+
 In addition, other plugins implements a sub-set of TLS support, meaning, with restricted configuration:
 
 * [Kubernetes Filter](../pipeline/filters/kubernetes.md)
+
+## Example: enable TLS on HTTP input
+By default HTTP input plugin uses plain TCP, enabling TLS from the command line can be done with:
+
+```text
+./bin/fluent-bit -i http \
+           -p port=9999 \
+           -p tls=on \
+           -p tls.verify=off \
+           -p tls.crt_file=self_signed.crt \
+           -p tls.key_file=self_signed.key \
+           -o stdout \
+           -m '*'
+```
+
+In the command line above, the two properties _tls_ and _tls.verify_ where enabled for demonstration purposes \(we strongly suggest always keep verification ON\).
+
+The same behavior can be accomplished using a configuration file:
+
+```text
+[INPUT]
+    name http
+    port 9999
+    tls on
+    tls.verify off
+    tls.crt_file self_signed.crt
+    tls.key_file self_signed.key
+
+[OUTPUT]
+    Name       stdout
+    Match      *
+```
 
 ## Example: enable TLS on HTTP output
 
@@ -76,6 +118,20 @@ The same behavior can be accomplished using a configuration file:
 
 ## Tips and Tricks
 
+### Generate your own self signed certificates for testing purposes.
+
+This will generate a 4096 bit RSA key pair and a certificate that is signed using SHA-256 with the expiration date set to 30 days in the future, `test.host.net` set as common name and since we opted out of `DES` the private key will be stored in plain text.
+
+```
+openssl req -x509 \
+            -newkey rsa:4096 \
+            -sha256 \
+            -nodes \
+            -keyout self_signed.key \
+            -out self_signed.crt \
+            -subj "/CN=test.host.net"
+```
+
 ### Connect to virtual servers using TLS
 
 Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/Server_Name_Indication). If you are serving multiple hostnames on a single IP address \(a.k.a. virtual hosting\), you can make use of `tls.vhost` to connect to a specific hostname.
@@ -95,4 +151,3 @@ Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/S
     tls.ca_file /etc/certs/fluent.crt
     tls.vhost   fluent.example.com
 ```
-
