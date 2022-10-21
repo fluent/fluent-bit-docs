@@ -66,9 +66,9 @@
 * [Networking](administration/networking.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
-* [Dump Internals / Signal](administration/dump-internals-signal.md)
 * [HTTP Proxy](administration/http-proxy.md)
-
+* [Troubleshooting](administration/troubleshooting.md)
+  
 ## Local Testing
 
 * [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
