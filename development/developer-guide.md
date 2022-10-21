@@ -116,25 +116,25 @@ An `flb_upstream` structure represents a host/endpoint that you want to call. No
 
 ### Linked Lists
 
-Fluent Bit contains a library for constructing linked lists- [mk\_list](https://github.com/fluent/fluent-bit/blob/master/lib/monkey/include/monkey/mk_core/mk_list.h). The type stores data as a circular linked list.
+Fluent Bit contains a library for constructing linked lists- [cfl\_list](https://github.com/fluent/fluent-bit/blob/master/lib/cfl/include/cfl/cfl_list.h). The type stores data as a circular linked list.
 
-The [`mk_list.h`](https://github.com/fluent/fluent-bit/blob/master/lib/monkey/include/monkey/mk_core/mk_list.h) header file contains several macros and functions for use with the lists. The example below shows how to create a list, iterate through it, and delete an element.
+The [`cfl_list.h`](https://github.com/fluent/fluent-bit/blob/master/lib/cfl/include/cfl/cfl_list.h) header file contains several macros and functions for use with the lists. The example below shows how to create a list, iterate through it, and delete an element.
 
 ```c
-#include <monkey/mk_core/mk_list.h>
+#include <cfl/cfl.h>
 #include <fluent-bit/flb_info.h>
 
 struct item {
     char some_data;
 
-    struct mk_list _head;
+    struct cfl_list _head;
 };
 
 static int example()
 {
-    struct mk_list *tmp;
-    struct mk_list *head;
-    struct mk_list items;
+    struct cfl_list *tmp;
+    struct cfl_list *head;
+    struct cfl_list items;
     int i;
     int len;
     char characters[] = "abcdefghijk";
@@ -143,7 +143,7 @@ static int example()
     len = strlen(characters);
 
     /* construct a list */
-    mk_list_init(&items);
+    cfl_list_init(&items);
 
     for (i = 0; i < len; i++) {
         an_item = flb_malloc(sizeof(struct item));
@@ -152,21 +152,21 @@ static int example()
             return -1;
         }
         an_item->some_data = characters[i];
-        mk_list_add(&an_item->_head, &items);
+        cfl_list_add(&an_item->_head, &items);
     }
 
     /* iterate through the list */
     flb_info("Iterating through list");
-    mk_list_foreach_safe(head, tmp, &items) {
-        an_item = mk_list_entry(head, struct item, _head);
+    cfl_list_foreach_safe(head, tmp, &items) {
+        an_item = cfl_list_entry(head, struct item, _head);
         flb_info("list item data value: %c", an_item->some_data);
     }
 
     /* remove an item */
-    mk_list_foreach_safe(head, tmp, &items) {
-        an_item = mk_list_entry(head, struct item, _head);
+    cfl_list_foreach_safe(head, tmp, &items) {
+        an_item = cfl_list_entry(head, struct item, _head);
         if (an_item->some_data == 'b') {
-            mk_list_del(&an_item->_head);
+            cfl_list_del(&an_item->_head);
             flb_free(an_item);
         }
     }
