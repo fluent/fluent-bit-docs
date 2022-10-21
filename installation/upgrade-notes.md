@@ -9,6 +9,11 @@ Note: release notes will be prepared in advance of a Git tag for a release so an
 The tag drives the overall binary release process so release binaries (containers/packages) will appear after a tag and its associated release note.
 This allows users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v1.9.9
+
+The `td-agent-bit` package is no longer provided after this release.
+Users should switch to the `fluent-bit` package.
+
 ## Fluent Bit v1.6
 
 If you are migrating from previous version of Fluent Bit please review the following important changes:
