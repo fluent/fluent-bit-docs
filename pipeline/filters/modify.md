@@ -45,6 +45,8 @@ The plugin supports the following rules:
 | Hard\_rename | STRING:KEY | STRING:RENAMED\_KEY | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists. If `RENAMED_KEY` already exists, _this field is overwritten_ |
 | Copy | STRING:KEY | STRING:COPIED\_KEY | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists AND `COPIED_KEY` _does not exist_ |
 | Hard\_copy | STRING:KEY | STRING:COPIED\_KEY | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists. If `COPIED_KEY` already exists, _this field is overwritten_ |
+| Move\_to\_start | WILDCARD:KEY | NONE | Move key/value pairs with keys matching KEY to the start of the message |
+| Move\_to\_end | WILDCARD:KEY | NONE | Move key/value pairs with keys matching KEY to the end of the message |
 
 * Rules are case insensitive, parameters are not
 * Any number of rules can be set in a filter instance.
