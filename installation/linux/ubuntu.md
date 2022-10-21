@@ -1,20 +1,23 @@
 # Ubuntu
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Jammy Jellyfish.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Focal Fossa.
 
 ## Single line install
 
-A simple installation script is provided to be used for most Linux targets. This will always install the most recent version released.
+A simple installation script is provided to be used for most Linux targets.
+This will always install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-If this fails or for more details on the installation then please refer to the specific sections below.
+This is purely a convenience helper and should always be validated prior to use.
+The recommended secure deployment approach is to follow the instructions below.
 
 ## Server GPG key
 
-The first step is to add our server GPG key to your keyring to ensure you can get our signed packages. Follow the official Debian wiki guidance: https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP\_Key\_distribution
+The first step is to add our server GPG key to your keyring to ensure you can get our signed packages.
+Follow the official Debian wiki guidance: <https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP\_Key\_distribution>
 
 ```bash
 curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg
@@ -26,7 +29,7 @@ From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated
 
 The GPG Key fingerprint of the new key is:
 
-```
+```text
 C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
@@ -35,7 +38,7 @@ The previous key is still available at [https://packages.fluentbit.io/fluentbit-
 
 The GPG Key fingerprint of the old key is:
 
-```
+```text
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
@@ -43,7 +46,7 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 ## Update your sources lists
 
-On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `jammy` for Ubuntu 22.04):
+On Ubuntu, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases) (e.g. `focal` for Ubuntu 20.04):
 
 ```bash
 deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main
@@ -65,14 +68,14 @@ We recommend upgrading your system (`sudo apt-get upgrade`). This could avoid po
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
 
-```
+```text
 sudo apt-get install fluent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-sudo service fluent-bit start
+sudo systemctl fluent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:
