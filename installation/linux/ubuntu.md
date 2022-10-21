@@ -1,6 +1,6 @@
 # Ubuntu
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Focal Fossa.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable Ubuntu system: Jammy Jellyfish.
 
 ## Single line install
 
