@@ -274,7 +274,7 @@ The input plugin structure is defined in [flb\_input.h](https://github.com/fluen
 The [`"dummy"` input plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/in_dummy) is very simple and is an excellent example to review to understand more.
 
 Note that input plugins can use threaded mode if the flag `FLB_INPUT_THREADED` is provided.
-If your plugin needs to use thread to work, add the `FLB_INPUT_THREADED` in flags member on registering:
+To enable threading in your plugin, add the `FLB_INPUT_THREADED` to the set of `flags` when registering:
 
 ```c
 struct flb_input_plugin in_your_example_plugin = {
