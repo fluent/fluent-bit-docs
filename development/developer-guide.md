@@ -8,7 +8,8 @@ Most external libraries are embedded in the project in the [/lib](https://github
 
 The external library you are mostly likely to interact with is [msgpack](https://github.com/msgpack/msgpack-c).
 
-For crypto, Fluent Bit uses system's OpenSSL. Please make sure to install openssl libraries and headers before building Fluent Bit.
+For cryptographic support, Fluent Bit uses the system installed version of OpenSSL. 
+Please make sure to install openssl libraries and headers before building Fluent Bit.
 
 ### Memory Management
 
