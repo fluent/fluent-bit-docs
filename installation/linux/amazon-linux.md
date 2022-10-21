@@ -2,7 +2,9 @@
 
 ## Install on Amazon Linux
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2 and Amazon Linux 2022. The following architectures are supported
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2. 
+
+The following architectures are supported
 
 * x86\_64
 * aarch64 / arm64v8
@@ -21,7 +23,8 @@ The recommended secure deployment approach is to follow the instructions below.
 
 ## Configure Yum
 
-We provide **fluent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
+We provide **fluent-bit** through a Yum repository. 
+In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
 
 ### Amazon Linux 2
 
@@ -29,17 +32,6 @@ We provide **fluent-bit** through a Yum repository. In order to add the reposito
 [fluent-bit]
 name = Fluent Bit
 baseurl = https://packages.fluentbit.io/amazonlinux/2/$basearch/
-gpgcheck=1
-gpgkey=https://packages.fluentbit.io/fluentbit.key
-enabled=1
-```
-
-### Amazon Linux 2022
-
-```config
-[fluent-bit]
-name = Fluent Bit
-baseurl = https://packages.fluentbit.io/amazonlinux/2022/$basearch/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
