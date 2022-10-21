@@ -1,6 +1,10 @@
 # Debian
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and old) stable Debian systems: Buster, Stretch and Jessie.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and legacy) stable Debian systems: Bullseye and Buster.
+The following architectures are supported
+
+* x86\_64
+* aarch64 / arm64v8
 
 ## Single line install
 
