@@ -4,11 +4,21 @@ The following article cover the relevant notes for users upgrading from previous
 
 For more details about changes on each release please refer to the [Official Release Notes](https://fluentbit.io/announcements/).
 
+Note: release notes will be prepared in advance of a Git tag for a release so an official release should provide both a tag and a release note together to allow users to verify and understand the release contents.
+
+The tag drives the overall binary release process so release binaries (containers/packages) will appear after a tag and its associated release note.
+This allows users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
+
+## Fluent Bit v1.9.9
+
+The `td-agent-bit` package is no longer provided after this release.
+Users should switch to the `fluent-bit` package.
+
 ## Fluent Bit v1.6
 
 If you are migrating from previous version of Fluent Bit please review the following important changes:
 
-#### Tail Input Plugin
+### Tail Input Plugin
 
 Now by default the plugin follows a file from the end once the service starts \(old behavior was always read from the beginning\). For every file found at start, its followed from it last position, for new files discovered at runtime or rotated, they are read from the beginning.
 
@@ -133,4 +143,3 @@ This behavior switch in Tail input plugin affects how Filter Kubernetes operates
 ```
 
 So the proper for _Kube\_Tag\_Prefix_ value must be composed by Tag prefix set in Tail input plugin plus the converted monitored directory replacing slashes with dots.
-
