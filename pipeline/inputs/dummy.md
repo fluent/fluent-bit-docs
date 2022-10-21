@@ -11,8 +11,9 @@ The plugin supports the following configuration parameters:
 | Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
 | Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
-| Rate | Events number generated per second. Default: 1 |
+| Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
 | Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
+| Copies | Number of messages to generate each time they are generated. Defaults to 1. |
 
 ## Getting Started
 
