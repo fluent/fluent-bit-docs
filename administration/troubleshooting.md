@@ -26,21 +26,23 @@ Tap support is enabled and disabled via the embedded web server, so enable it li
 
 ```shell
 $ docker run --rm -ti -p 2020:2020 fluent/fluent-bit:latest -Z -H -i dummy -p alias=input_dummy -o stdout -f 1
-Calyptia Fluent Bit v22.8, patch_level=1
-* Enterprise Fluent Bit by Calyptia
-* https://calyptia.com
+Fluent Bit v2.0.0
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2022/07/27 20:02:04] [ info] [calyptia fluent bit] version=22.8 patch=1 pid=1
-[2022/07/27 20:02:04] [ info] [storage] version=1.2.0, type=memory-only, sync=normal, checksum=disabled, max_chunks_up=128
-[2022/07/27 20:02:04] [ info] [cmetrics] version=0.3.5
-[2022/07/27 20:02:04] [ info] [output:stdout:stdout.0] worker #0 started
-[2022/07/27 20:02:04] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
-[2022/07/27 20:02:04] [ info] [sp] stream processor started
-[0] dummy.0: [1658952125.096215620, {"message"=>"dummy"}]
-[0] dummy.0: [1658952126.096222898, {"message"=>"dummy"}]
-[0] dummy.0: [1658952127.096220305, {"message"=>"dummy"}]
+[2022/10/21 10:03:16] [ info] [fluent bit] version=2.0.0, commit=3000f699f2, pid=1
+[2022/10/21 10:03:16] [ info] [output:stdout:stdout.0] worker #0 started
+[2022/10/21 10:03:16] [ info] [storage] ver=1.3.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2022/10/21 10:03:16] [ info] [cmetrics] version=0.5.2
+[2022/10/21 10:03:16] [ info] [input:dummy:input_dummy] initializing
+[2022/10/21 10:03:16] [ info] [input:dummy:input_dummy] storage_strategy='memory' (memory only)
+[2022/10/21 10:03:16] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
+[2022/10/21 10:03:16] [ info] [sp] stream processor started
+[0] dummy.0: [1666346597.203307010, {"message"=>"dummy"}]
+[0] dummy.0: [1666346598.204103793, {"message"=>"dummy"}]
 ...
+
 ```
 
 In another window we can activate Tap by either using the instance id of the input; `dummy.0` or its alias. 
@@ -56,19 +58,22 @@ $ curl 127.0.0.1:2020/api/v1/trace/input_dummy
 This response means we have activated Tap, the window with Fluent Bit running should now look like this:
 
 ```shell
-[0] dummy.0: [1658952148.096212481, {"message"=>"dummy"}]
-[2022/07/27 20:02:29] [ info] [calyptia fluent bit] version=22.8 patch=1 pid=1
-[2022/07/27 20:02:29] [ info] [storage] version=1.2.0, type=memory-only, sync=normal, checksum=disabled, max_chunks_up=128
-[2022/07/27 20:02:29] [ info] [cmetrics] version=0.3.5
-[2022/07/27 20:02:29] [ info] [sp] stream processor started
-[2022/07/27 20:02:29] [ info] [output:stdout:stdout.0] worker #0 started
-[0] dummy.0: [1658952149.096214459, {"message"=>"dummy"}]
-[0] dummy.0: [1658952150.096211929, {"message"=>"dummy"}]
-[0] trace: [1658952150.096228881, {"type"=>1, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1658952150, "record"=>{"message"=>"dummy"}}], "start_time"=>1658952150, "end_time"=>1658952150}]
-[0] trace: [1658952150.096242907, {"type"=>3, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1658952150, "record"=>{"message"=>"dummy"}}], "start_time"=>1658952150, "end_time"=>1658952150}]
-[0] dummy.0: [1658952151.096210939, [0] trace: [1658952151.096230847, {"type"=>1, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>{1658952151"message"=>, "dummy"}"record"=>]
-{"message"=>"dummy"}}], "start_time"=>1658952151, "end_time"=>1658952151}]
-[0] trace: [1658952151.096258529, {"type"=>3, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1658952151, "record"=>{"message"=>"dummy"}}], "start_time"=>1658952151, "end_time"=>1658952151}]
+[0] dummy.0: [1666346615.203253156, {"message"=>"dummy"}]
+[2022/10/21 10:03:36] [ info] [fluent bit] version=2.0.0, commit=3000f699f2, pid=1
+[2022/10/21 10:03:36] [ info] [storage] ver=1.3.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2022/10/21 10:03:36] [ info] [cmetrics] version=0.5.2
+[2022/10/21 10:03:36] [ info] [input:emitter:trace-emitter] initializing
+[2022/10/21 10:03:36] [ info] [input:emitter:trace-emitter] storage_strategy='memory' (memory only)
+[2022/10/21 10:03:36] [ info] [sp] stream processor started
+[2022/10/21 10:03:36] [ info] [output:stdout:stdout.0] worker #0 started
+[0] dummy.0: [1666346616.203551736, {"message"=>"dummy"}]
+[0] trace: [1666346617.205221952, {"type"=>1, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1666346617, "record"=>{"message"=>"dummy"}}], "start_time"=>1666346617, "end_time"=>1666346617}]
+[0] dummy.0: [1666346617.205131790, {"message"=>"dummy"}]
+[0] trace: [1666346617.205419358, {"type"=>3, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1666346617, "record"=>{"message"=>"dummy"}}], "start_time"=>1666346617, "end_time"=>1666346617}]
+[0] trace: [1666346618.204110867, {"type"=>1, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1666346618, "record"=>{[0] dummy.0: [1666346618.204049246, {"message"=>"dummy"}]
+"message"=>"dummy"}}], "start_time"=>1666346618, "end_time"=>1666346618}]
+[0] trace: [1666346618.204198654, {"type"=>3, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"input_dummy", "records"=>[{"timestamp"=>1666346618, "record"=>{"message"=>"dummy"}}], "start_time"=>1666346618, "end_time"=>1666346618}]
+
 ```
 
 All the records that now appear are those emitted by the activities of the dummy plugin.
@@ -105,37 +110,37 @@ $ curl 127.0.0.1:2020/api/v1/trace/dummy_0
 Now we should start seeing output similar to the following:
 
 ```shell
-[0] trace: [1658953434.096232706, {"type"=>1, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953434, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953434, "end_time"=>1658953434}]
-[0] trace: [1658953434.096249838, {"type"=>2, "start_time"=>1658953434, "end_time"=>1658953434, "trace_id"=>"trace.0", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953434, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953434.096258635, {"type"=>2, "start_time"=>1658953434, "end_time"=>1658953434, "trace_id"=>"trace.0", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953434, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953434.096409933, {"type"=>3, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953434, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953434, "end_time"=>1658953434}]
-[0] trace: [1658953435.096254716, {"type"=>1, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953435, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953435, "end_time"=>1658953435}]
-[0] trace: [1658953435.096280876, {"type"=>2, "start_time"=>1658953435, "end_time"=>1658953435, "trace_id"=>"trace.1", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953435, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953435.096295504, {"type"=>2, "start_time"=>1658953435, "end_time"=>1658953435, "trace_id"=>"trace.1", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953435, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953435.096306885, {"type"=>3, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953435, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953435, "end_time"=>1658953435}]
-[0] trace: [1658953436.096241854, {"type"=>1, "trace_id"=>"trace.2", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953436, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953436, "end_time"=>1658953436}]
-[0] trace: [1658953436.096264848, {"type"=>2, "start_time"=>1658953436, "end_time"=>1658953436, "trace_id"=>"trace.2", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953436, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953436.096276891, {"type"=>2, "start_time"=>1658953436, "end_time"=>1658953436, "trace_id"=>"trace.2", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953436, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953436.096284025, {"type"=>3, "trace_id"=>"trace.2", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953436, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953436, "end_time"=>1658953436}]
-[0] trace: [1658953437.096244654, {"type"=>1, "trace_id"=>"trace.3", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953437, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953437, "end_time"=>1658953437}]
-[0] trace: [1658953437.096267448, {"type"=>2, "start_time"=>1658953437, "end_time"=>1658953437, "trace_id"=>"trace.3", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953437, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953437.096278499, {"type"=>2, "start_time"=>1658953437, "end_time"=>1658953437, "trace_id"=>"trace.3", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953437, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953437.096285833, {"type"=>3, "trace_id"=>"trace.3", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953437, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953437, "end_time"=>1658953437}]
-[0] trace: [1658953438.096256516, {"type"=>1, "trace_id"=>"trace.4", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953438, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953438, "end_time"=>1658953438}]
-[0] trace: [1658953438.096283607, {"type"=>2, "start_time"=>1658953438, "end_time"=>1658953438, "trace_id"=>"trace.4", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953438, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953438.096297874, {"type"=>2, "start_time"=>1658953438, "end_time"=>1658953438, "trace_id"=>"trace.4", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953438, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953438.096307082, {"type"=>3, "trace_id"=>"trace.4", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953438, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953438, "end_time"=>1658953438}]
-[0] trace: [1658953439.096256447, {"type"=>1, "trace_id"=>"trace.5", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953439, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953439, "end_time"=>1658953439}]
-[0] trace: [1658953439.096277177, {"type"=>2, "start_time"=>1658953439, "end_time"=>1658953439, "trace_id"=>"trace.5", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953439, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953439.096291774, {"type"=>2, "start_time"=>1658953439, "end_time"=>1658953439, "trace_id"=>"trace.5", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953439, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953439.096298678, {"type"=>3, "trace_id"=>"trace.5", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953439, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953439, "end_time"=>1658953439}]
-^C[2022/07/27 20:24:00] [engine] caught signal (SIGINT)
-[2022/07/27 20:24:00] [ warn] [engine] service will shutdown in max 5 seconds
-[0] trace: [1658953440.096253908, {"type"=>1, "trace_id"=>"trace.6", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953440, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1658953440, "end_time"=>1658953440}]
-[2022/07/27 20:24:01] [ info] [engine] service has stopped (0 pending tasks)
-[0] trace: [1658953440.096277973, {"type"=>2, "start_time"=>1658953440, "end_time"=>1658953440, "trace_id"=>"trace.6", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1658953440, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"calyptia"}}]}]
-[0] trace: [1658953440.096291459, {"type"=>2, "start_time"=>1658953440, "end_time"=>1658953440, "trace_id"=>"trace.6", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1658953440, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
-[0] trace: [1658953440.096298913, {"type"=>3, "trace_id"=>"trace.6", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1658953440, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"calyptia", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1658953440, "end_time"=>1658953440}]
+[0] trace: [1666349359.325597543, {"type"=>1, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349359, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1666349359, "end_time"=>1666349359}]
+[0] trace: [1666349359.325723747, {"type"=>2, "start_time"=>1666349359, "end_time"=>1666349359, "trace_id"=>"trace.0", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1666349359, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"fluent"}}]}]
+[0] trace: [1666349359.325783954, {"type"=>2, "start_time"=>1666349359, "end_time"=>1666349359, "trace_id"=>"trace.0", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1666349359, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
+[0] trace: [1666349359.325913783, {"type"=>3, "trace_id"=>"trace.0", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349359, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1666349359, "end_time"=>1666349359}]
+[0] trace: [1666349360.323826619, {"type"=>1, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349360, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1666349360, "end_time"=>1666349360}]
+[0] trace: [1666349360.323859618, {"type"=>2, "start_time"=>1666349360, "end_time"=>1666349360, "trace_id"=>"trace.1", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1666349360, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"fluent"}}]}]
+[0] trace: [1666349360.323900784, {"type"=>2, "start_time"=>1666349360, "end_time"=>1666349360, "trace_id"=>"trace.1", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1666349360, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
+[0] trace: [1666349360.323926366, {"type"=>3, "trace_id"=>"trace.1", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349360, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1666349360, "end_time"=>1666349360}]
+[0] trace: [1666349361.324223752, {"type"=>1, "trace_id"=>"trace.2", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349361, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1666349361, "end_time"=>1666349361}]
+[0] trace: [1666349361.324263959, {"type"=>2, "start_time"=>1666349361, "end_time"=>1666349361, "trace_id"=>"trace.2", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1666349361, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"fluent"}}]}]
+[0] trace: [1666349361.324283250, {"type"=>2, "start_time"=>1666349361, "end_time"=>1666349361, "trace_id"=>"trace.2", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1666349361, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
+[0] trace: [1666349361.324294291, {"type"=>3, "trace_id"=>"trace.2", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349361, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1666349361, "end_time"=>1666349361}]
+^C[2022/10/21 10:49:23] [engine] caught signal (SIGINT)
+[2022/10/21 10:49:23] [ warn] [engine] service will shutdown in max 5 seconds
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_0
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_1
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_2
+[2022/10/21 10:49:23] [ info] [engine] service has stopped (0 pending tasks)
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_0
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_1
+[2022/10/21 10:49:23] [ info] [input] pausing dummy_2
+[0] trace: [1666349362.323272011, {"type"=>1, "trace_id"=>"trace.3", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349362, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1"}}], "start_time"=>1666349362, "end_time"=>1666349362}]
+[0] trace: [1666349362.323306843, {"type"=>2, "start_time"=>1666349362, "end_time"=>1666349362, "trace_id"=>"trace.3", "plugin_instance"=>"record_modifier.0", "records"=>[{"timestamp"=>1666349362, "record"=>{"dummy"=>"dummy_0", "key_name"=>"foo", "key_cnt"=>"1", "powered_by"=>"fluent"}}]}]
+[0] trace: [1666349362.323323884, {"type"=>2, "start_time"=>1666349362, "end_time"=>1666349362, "trace_id"=>"trace.3", "plugin_instance"=>"nest.2", "records"=>[{"timestamp"=>1666349362, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}]}]
+[0] trace: [1666349362.323334509, {"type"=>3, "trace_id"=>"trace.3", "plugin_instance"=>"dummy.0", "plugin_alias"=>"dummy_0", "records"=>[{"timestamp"=>1666349362, "record"=>{"dummy"=>"dummy_0", "powered_by"=>"fluent", "data"=>{"key_name"=>"foo", "key_cnt"=>"1"}}}], "start_time"=>1666349362, "end_time"=>1666349362}]
+[2022/10/21 10:49:24] [ warn] [engine] service will shutdown in max 1 seconds
+[2022/10/21 10:49:25] [ info] [engine] service has stopped (0 pending tasks)
+[2022/10/21 10:49:25] [ info] [output:stdout:stdout.0] thread worker #0 stopping...
+[2022/10/21 10:49:25] [ info] [output:stdout:stdout.0] thread worker #0 stopped
+[2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopping...
+[2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopped
 ```
 ### Analysis of a single Tap record
 
@@ -145,15 +150,15 @@ We chose a filter record since it includes the most details of all the record ty
 ```json
 {
 	"type": 2,
-	"start_time": 1658953439,
-	"end_time": 1658953439,
-	"trace_id": "trace.5",
+	"start_time": 1666349231,
+	"end_time": 1666349231,
+	"trace_id": "trace.1",
 	"plugin_instance": "nest.2", 
 	"records": [{
-		"timestamp": 1658953439,
+		"timestamp": 1666349231,
 		"record": {
 			"dummy": "dummy_0",
-			"powered_by": "calyptia",
+			"powered_by": "fluent",
 			"data": {
 				"key_name": "foo", 
 				"key_cnt": "1"
