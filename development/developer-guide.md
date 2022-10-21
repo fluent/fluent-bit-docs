@@ -274,6 +274,25 @@ The input plugin structure is defined in [flb\_input.h](https://github.com/fluen
 
 The [`"dummy"` input plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/in_dummy) is very simple and is an excellent example to review to understand more.
 
+Note that input plugins can use threaded mode if the flag `FLB_INPUT_THREADED` is provided.
+To enable threading in your plugin, add the `FLB_INPUT_THREADED` to the set of `flags` when registering:
+
+```c
+struct flb_input_plugin in_your_example_plugin = {
+    .name         = "your example",
+    .description  = "Ingest example data",
+    .cb_init      = in_your_example_init,
+    .cb_pre_run   = NULL,
+    .cb_collect   = in_your_example_collect,
+    .cb_flush_buf = NULL,
+    .config_map   = config_map,
+    .cb_pause     = in_your_example_pause,
+    .cb_resume    = in_example_resume,
+    .cb_exit      = in_example_exit,
+    .flags        = FLB_INPUT_THREADED
+};
+```
+
 ### Filter
 
 The structure for filter plugins is defined in [flb\_filter.h](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_filter.h#L44). Each plugin must implement `cb_init`, `cb_filter`, and `cb_exit`.
