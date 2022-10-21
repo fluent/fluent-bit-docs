@@ -9,13 +9,15 @@ Fluent Bit is distributed as **fluent-bit** package and is available for the lat
 
 ## Single line install
 
-A simple installation script is provided to be used for most Linux targets. This will always install the most recent version released.
+A simple installation script is provided to be used for most Linux targets.
+This will always install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-If this fails or for more details on the installation then please refer to the specific sections below.
+This is purely a convenience helper and should always be validated prior to use.
+The recommended secure deployment approach is to follow the instructions below.
 
 ## Configure Yum
 

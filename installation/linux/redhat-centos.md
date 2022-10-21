@@ -9,13 +9,15 @@ Fluent Bit is distributed as **fluent-bit** package and is available for the lat
 
 ## Single line install
 
-A simple installation script is provided to be used for most Linux targets. This will always install the most recent version released.
+A simple installation script is provided to be used for most Linux targets.
+This will always install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-If this fails or for more details on the installation then please refer to the specific sections below.
+This is purely a convenience helper and should always be validated prior to use.
+The recommended secure deployment approach is to follow the instructions below.
 
 ## CentOS 8
 
@@ -23,7 +25,7 @@ CentOS 8 is now EOL so the default Yum repositories are unavailable.
 
 Make sure to configure to use an appropriate mirror, for example:
 
-```
+```shell
 $ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
   sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 ```
@@ -34,7 +36,7 @@ An alternative is to use Rocky or Alma Linux which _should_ be equivalent.
 
 We provide **fluent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
 
-```
+```shell
 [fluent-bit]
 name = Fluent Bit
 baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
@@ -52,7 +54,7 @@ From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated
 
 The GPG Key fingerprint of the new key is:
 
-```
+```text
 C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
@@ -61,7 +63,7 @@ The previous key is still available at [https://packages.fluentbit.io/fluentbit-
 
 The GPG Key fingerprint of the old key is:
 
-```
+```text
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
@@ -72,13 +74,13 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 Once your repository is configured, run the following command to install it:
 
 ```bash
-$ yum install fluent-bit
+yum install fluent-bit
 ```
 
 Now the following step is to instruct _Systemd_ to enable the service:
 
 ```bash
-$ sudo service fluent-bit start
+sudo service fluent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:
@@ -100,9 +102,10 @@ The default configuration of **fluent-bit** is collecting metrics of CPU usage a
 ## FAQ
 
 ### Yum install fails with a "404 - Page not found" error for the package mirror
+
 The fluent-bit.repo file for the latest installations of Fluent-Bit uses a $releasever variable to determine the correct version of the package to install to your system:
 
-```
+```text
 [fluent-bit]
 name = Fluent Bit
 baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
@@ -113,7 +116,7 @@ Depending on your Red Hat distribution version, this variable may return a value
 
 In order to resolve this issue, you can replace the $releasever variable with your system's OS major release version. For example:
 
-```
+```text
 [fluent-bit]
 name = Fluent Bit
 baseurl = https://packages.fluentbit.io/centos/7/$basearch/
