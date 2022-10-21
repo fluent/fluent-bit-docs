@@ -1,20 +1,27 @@
 # Debian
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and old) stable Debian systems: Buster, Stretch and Jessie.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and legacy) stable Debian systems: Bullseye and Buster.
+The following architectures are supported
+
+* x86\_64
+* aarch64 / arm64v8
 
 ## Single line install
 
-A simple installation script is provided to be used for most Linux targets. This will always install the most recent version released.
+A simple installation script is provided to be used for most Linux targets.
+This will always install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-If this fails or for more details on the installation then please refer to the specific sections below.
+This is purely a convenience helper and should always be validated prior to use.
+The recommended secure deployment approach is to follow the instructions below.
 
 ## Server GPG key
 
-The first step is to add our server GPG key to your keyring, on that way you can get our signed packages. Follow the official Debian wiki guidance: https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP\_Key\_distribution
+The first step is to add our server GPG key to your keyring, on that way you can get our signed packages.
+Follow the official Debian wiki guidance: <https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP\_Key\_distribution>
 
 ```bash
 curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg
@@ -26,7 +33,7 @@ From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated
 
 The GPG Key fingerprint of the new key is:
 
-```
+```text
 C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
@@ -35,7 +42,7 @@ The previous key is still available at [https://packages.fluentbit.io/fluentbit-
 
 The GPG Key fingerprint of the old key is:
 
-```
+```text
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
@@ -54,7 +61,7 @@ deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluen
 Now let your system update the _apt_ database:
 
 ```bash
-$ sudo apt-get update
+sudo apt-get update
 ```
 
 {% hint style="info" %}
@@ -65,14 +72,14 @@ We recommend upgrading your system (`sudo apt-get upgrade`). This could avoid po
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
 
-```
-$ sudo apt-get install fluent-bit
+```bash
+sudo apt-get install fluent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-$ sudo service fluent-bit start
+sudo systemctl fluent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:

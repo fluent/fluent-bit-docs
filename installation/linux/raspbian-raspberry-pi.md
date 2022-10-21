@@ -18,7 +18,8 @@ curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated at [https://packages.fluentbit.io/fluentbit.key](https://packages.fluentbit.io/fluentbit.key) so ensure this new one is added.
 
 The GPG Key fingerprint of the new key is:
-```
+
+```text
 C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
@@ -26,21 +27,24 @@ Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 The previous key is still available at [https://packages.fluentbit.io/fluentbit-legacy.key](https://packages.fluentbit.io/fluentbit-legacy.key) and may be required to install previous versions.
 
 The GPG Key fingerprint of the old key is:
-```
+
+```text
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
+
 Refer to the [supported platform documentation](./../supported-platforms.md) to see which platforms are supported in each release.
+
 ## Update your sources lists
 
 On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file.
 
-#### Raspbian 11 \(Bullseye\)
+### Raspbian 11 \(Bullseye\)
 
 ```text
 deb https://packages.fluentbit.io/raspbian/bullseye bullseye main
 ```
 
-#### Raspbian 10 \(Buster\)
+### Raspbian 10 \(Buster\)
 
 ```text
 deb https://packages.fluentbit.io/raspbian/buster buster main
@@ -51,26 +55,25 @@ deb https://packages.fluentbit.io/raspbian/buster buster main
 Now let your system update the _apt_ database:
 
 ```bash
-$ sudo apt-get update
+sudo apt-get update
 ```
 
 {% hint style="info" %}
 We recommend upgrading your system (```sudo apt-get upgrade```). This could avoid potential issues with expired certificates.
 {% endhint %}
 
-
 ## Install Fluent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
 
 ```text
-$ sudo apt-get install fluent-bit
+sudo apt-get install fluent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-$ sudo service fluent-bit start
+sudo service fluent-bit start
 ```
 
 If you do a status check, you should see a similar output like this:
@@ -90,4 +93,3 @@ sudo service fluent-bit status
 ```
 
 The default configuration of **fluent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
-
