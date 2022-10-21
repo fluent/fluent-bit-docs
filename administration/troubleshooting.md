@@ -8,8 +8,6 @@
 Tap can be used to generate events or records detailing what messages
 pass through Fluent Bit, at what time and what filters affect them.
 
-To test out Fluent Bit Tap we will be using a publicly accessible docker container: 'fluent/fluent-bit:latest
-'.
 
 ### Simple example
 
