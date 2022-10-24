@@ -199,3 +199,31 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
     tls.verify off
 ```
 
+## Send Metrics Events of Fluent Bit
+
+With Fluent Bit 2.0, you can also send Fluent Bit's metrics type of events into Splunk via Splunk HEC.
+This allows you to perform visualizations, metric queries, and analysis with directly sent Fluent Bit's metrics type of events.
+This is based off Splunk 8.0 support of multi metric support via single concatenated JSON payload.
+
+Sending Fluent Bit's metrics into Splunk requires the use of collecting Fluent Bit's metrics plugins.
+Note that whether events type of logs or metrics can be distinguished automatically.
+You don't need to pay attentions about the type of events.
+This example includes two specific operations
+
+* Collect node or Fluent Bit's internal metrics
+* Send metrics as single concatenated JSON payload
+
+```text
+[INPUT]
+    name node_exporter_metrics
+    tag node_exporter_metrics
+
+[OUTPUT]
+    name splunk
+    match *
+    host <HOST>
+    port 8088
+    splunk_token ee7edc62-19ad-4d1e-b957-448d3b326fb6
+    tls on
+    tls.verify off
+```
