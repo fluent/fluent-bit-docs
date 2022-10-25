@@ -74,25 +74,25 @@ Make sure to provide a valid Windows configuration with the installation, a samp
 
 ## Migration to Fluent Bit
 
-From version 1.9.0, `td-agent-bit` is a deprecated package and will be removed in the future.
+From version 2.0.0, `td-agent-bit` is a deprecated package and will be removed in the future.
 The correct package name to use now is `fluent-bit`.
 Both are currently provided to allow migration.
 
 ## Installation Packages
 
-The latest stable version is 1.9.9, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
+The latest stable version is 2.0.0, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-1.9.9-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.exe) | [a9877bb8d51a06e16e249a7bb90f73dcd0a256be91f1dc2fa926aea5aad607d7](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.exe.sha256) |
-| [fluent-bit-1.9.9-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.zip) | [3672e8b3d0dd9276f728490038d1a775beebef1740d73102269de305f85aa94f](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win32.zip.sha256) |
-| [fluent-bit-1.9.9-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.exe) | [916bb3ac9591070d8f24ca371c67c0cd6909ea2da280a8c134fe1734837ed4e9](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.exe.sha256) |
-| [fluent-bit-1.9.9-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.zip) | [8423ece1cb8694f741d6a4007f1cb9829447d816d5c76805386103e5cc12835b](https://fluentbit.io/releases/1.9/fluent-bit-1.9.9-win64.zip.sha256) |
+| [fluent-bit-2.0.0-win32.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win32.exe) | [a4eb139bcad75f00a9f0fd3dde8c3849e83268444f6acc7012d1e26d8e7f6d48](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win32.exe.sha256) |
+| [fluent-bit-2.0.0-win32.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win32.zip) | [682dac01d0f85832314a4f9c9682f10da0bb1581c6fc40a49282c70c77a1c892](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win32.zip.sha256) |
+| [fluent-bit-2.0.0-win64.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win64.exe) | [0ee5a1d479b2bc85682aa4b85df9c465d7df52f28d8d61f7e41ec690665870e1](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win64.exe.sha256) |
+| [fluent-bit-2.0.0-win64.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win64.zip) | [d708ac503423c48bf8a310b6976f0f03ad916ffb28d27bd565e3926358d7c62e](https://fluentbit.io/releases/2.0/fluent-bit-2.0.0-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-1.9.9-win32.exe
+PS> Get-FileHash fluent-bit-2.0.0-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -102,7 +102,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-1.9.9-win64.zip
+PS> Expand-Archive fluent-bit-2.0.0-win64.zip
 ```
 
 The ZIP package contains the following set of files.
@@ -134,7 +134,7 @@ If you see the following output, it's working fine!
 
 ```powershell
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v1.9.x
+Fluent Bit v2.0.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
