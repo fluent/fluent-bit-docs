@@ -108,6 +108,7 @@
   * [Tail](pipeline/inputs/tail.md)
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
+  * [OpenTelemetry](pipeline/inputs/opentelemetry.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
   * [Windows Event Log (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows Exporter Metrics](pipeline/inputs/windows-exporter-metrics.md)
