@@ -10,13 +10,12 @@ The following are the specific HTTP parameters to employ:
 
 | Key                        | Description                                                                                                                                                                                                                                                                                                                        | default   |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| host                       | IP address or hostname of Observe's data collection endpoint                                                                                                                                                                                                                                                                       | collect.observeinc.com |
+| host                       | IP address or hostname of Observe's data collection endpoint.  $(OBSERVE_CUSTOMER) is your [Customer ID](https://docs.observeinc.com/en/latest/content/common-topics/HelpfulHints.html?highlight=customer%20id#customer-id)                                                                                                                                                                                                                                                                      | OBSERVE_CUSTOMER.collect.observeinc.com |
 | port                       | TCP port of to employ when sending to Observe                                                                                                                                                                                                                                                                                      | 443      |
 | tls                        | Specify to use tls                                                                                                                                                                                                                                                                                                                 | on       |
-| http_user                  | Basic Auth Username                                                                                                                                                                                                                                                                                                                | ${OBSERVE_CUSTOMER} |
-| http_passwd                | Basic Auth Password. Requires http\_user to be set                                                                                                                                                                                                                                                                                 | ${OBSERVE_TOKEN} |
 | uri                        | Specify the HTTP URI for the Observe's data ingest                                                                                                                                                                                                                                                                                 | /v1/http/fluentbit |
 | format                     | The data format to be used in the HTTP request body                                                                                                                                                                                                                                                                                | msgpack   |
+| header                     | The specific header that provides the Observe token needed to authorize sending data [into a datastream](https://docs.observeinc.com/en/latest/content/data-ingestion/datastreams.html?highlight=ingest%20token#create-a-datastream).                                                                                                                                                                                                                                                              | Authorization     Bearer ${OBSERVE_TOKEN} |
 | header                     | The specific header to instructs Observe how to decode incoming payloads                                                                                                                                                                                                                                                           | X-Observe-Decoder fluent |
 | compress                   | Set payload compression mechanism. Option available is 'gzip'                                                                                                                                                                                                                                                                      | gzip      |
 | tls.ca_file                | **For use with Windows**: provide path to root cert                                                                                                                                                                                                                                                                                |           |
@@ -29,18 +28,18 @@ In your main configuration file, append the following _Input_ & _Output_ section
 [OUTPUT]
     name         http
     match        *
-    host         collect.observeinc.com
+    host         my-observe-customer-id.collect.observeinc.com
     port         443
     tls          on
 
-    # For Windows: provide path to root cert
-    #tls.ca_file  C:\td-agent-bit\isrgrootx1.pem
-
-    http_user    ${OBSERVE_CUSTOMER}
-    http_passwd  ${OBSERVE_TOKEN}
     uri          /v1/http/fluentbit
 
     format       msgpack
+    header       Authorization     Bearer ${OBSERVE_TOKEN}
     header       X-Observe-Decoder fluent
     compress     gzip
+
+    # For Windows: provide path to root cert
+    #tls.ca_file  C:\fluent-bit\isrgrootx1.pem
+    
 ```
