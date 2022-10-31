@@ -16,6 +16,14 @@ The following table describes the tags that are available on Docker Hub [fluent/
 
 | Tag(s)      | Manifest Architectures    | Description                                                  |
 | ----------- | ------------------------- | ------------------------------------------------------------ |
+| 2.0.3       | x86\_64, arm64v8, arm32v7 | Release [v2.0.3](https://fluentbit.io/announcements/v2.0.3/) |
+| 2.0.3-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
+| 2.0.2       | x86\_64, arm64v8, arm32v7 | Release [v2.0.2](https://fluentbit.io/announcements/v2.0.2/) |
+| 2.0.2-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
+| 2.0.1       | x86\_64, arm64v8, arm32v7 | Release [v2.0.1](https://fluentbit.io/announcements/v2.0.1/) |
+| 2.0.1-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
+| 2.0.0       | x86\_64, arm64v8, arm32v7 | Release [v2.0.0](https://fluentbit.io/announcements/v2.0.0/) |
+| 2.0.0-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 1.9.9       | x86\_64, arm64v8, arm32v7 | Release [v1.9.9](https://fluentbit.io/announcements/v1.9.9/) |
 | 1.9.9-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 | 1.9.8       | x86\_64, arm64v8, arm32v7 | Release [v1.9.8](https://fluentbit.io/announcements/v1.9.8/) |
@@ -41,22 +49,23 @@ It is strongly suggested that you always use the latest image of Fluent Bit.
 
 ## Multi Architecture Images
 
-Our production stable images are based on [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. We also provide **debug** images for all architectures (from 1.9.0+) which contain a full (Debian) shell and package manager that can be used to troubleshoot or for testing purposes.
+Our production stable images are based on [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary and minimal system libraries and basic configuration. 
+We also provide **debug** images for all architectures (from 1.9.0+) which contain a full (Debian) shell and package manager that can be used to troubleshoot or for testing purposes.
 
 From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
 ## Getting Started
 
-Download the last stable image from 1.9 series:
+Download the last stable image from 2.0 series:
 
 ```shell
-docker pull cr.fluentbit.io/fluent/fluent-bit:1.9
+docker pull cr.fluentbit.io/fluent/fluent-bit:2.0
 ```
 
 Once the image is in place, now run the following (useless) test which makes Fluent Bit measure CPU usage by the container:
 
 ```shell
-docker run -ti cr.fluentbit.io/fluent/fluent-bit:1.9 \
+docker run -ti cr.fluentbit.io/fluent/fluent-bit:2.0 \
   -i cpu -o stdout -f 1
 ```
 
