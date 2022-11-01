@@ -6,7 +6,7 @@ description: Create flexible routing rules
 
 Routing is a core feature that allows to **route** your data through Filters and finally to one or multiple destinations. The router relies on the concept of [Tags](../key-concepts.md) and [Matching](../key-concepts.md) rules
 
-![](<../../.gitbook/assets/logging_pipeline_routing (1) (1) (2) (2) (2) (2) (2) (2) (2) (1) (2) (1).png>)
+![](<../../.gitbook/assets/logging\_pipeline\_routing (1) (1) (2) (2) (2) (2) (2) (2) (2) (1) (1).png>)
 
 There are two important concepts in Routing:
 
@@ -59,4 +59,4 @@ Routing is flexible enough to support _wildcard_ in the **Match** pattern. The b
     Match  my_*
 ```
 
-The match rule is set to **my_\*** which means it will match any Tag that starts with **my\_**.
+The match rule is set to **my\_\*** which means it will match any Tag that starts with **my\_**.

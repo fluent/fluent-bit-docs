@@ -4,23 +4,23 @@ description: High Performance Log and Metrics Processor
 
 # Fluent Bit v2.0 Documentation
 
-![](.gitbook/assets/logo_documentation_2.0.png)
+![](.gitbook/assets/logo\_documentation\_2.0.png)
 
-[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Logs and Metrics Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.
+[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Logs and Metrics Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
 ## Features
 
 * High Performance
 * Data Parsing
   * Convert your unstructured messages using our parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
-* Metrics Collection \(Prometheus compatible\)
+* Metrics Collection (Prometheus compatible)
 * Reliability and Data Integrity
   * [Backpressure](administration/backpressure.md) Handling
   * [Data Buffering](administration/buffering-and-storage.md) in memory and file system
 * Networking
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
-* Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
+* Pluggable Architecture and [Extensibility](development/library\_api.md): Inputs, Filters and Outputs
   * More than 80 built-in plugins available
   * Extensibility
     * Write any input, filter or output plugin in C language
@@ -36,4 +36,3 @@ description: High Performance Log and Metrics Processor
 ## Fluent Bit, Fluentd and CNCF
 
 [Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) sub-project under the umbrella of [Fluentd](http://fluentd.org), it's licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0). This project was originally created by [Treasure Data](https://www.treasuredata.com) and is currently a **vendor neutral** and community driven project.
-
