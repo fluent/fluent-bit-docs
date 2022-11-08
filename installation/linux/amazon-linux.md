@@ -2,7 +2,7 @@
 
 ## Install on Amazon Linux
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2 and Amazon Linux 2022. 
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2 and Amazon Linux 2022.
 The following architectures are supported
 
 * x86\_64
