@@ -6,6 +6,7 @@ The following operating systems and architectures are supported in Fluent Bit.
 | :--- | :--- | :--- |
 | Linux | [Amazon Linux 2022](linux/amazon-linux.md) | x86\_64, Arm64v8 |
 |  | [Amazon Linux 2](linux/amazon-linux.md) | x86\_64, Arm64v8 |
+|  | [Centos 9 Stream](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Centos 8](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Centos 7](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Rocky Linux 8](linux/redhat-centos.md) | x86\_64, Arm64v8 |
@@ -24,4 +25,6 @@ The following operating systems and architectures are supported in Fluent Bit.
 
 From an architecture support perspective, Fluent Bit is fully functional on x86\_64, Arm64v8 and Arm32v7 based processors.
 
-Fluent Bit can work also on OSX and \*BSD systems, but not all plugins will be available on all platforms. Official support will be expanding based on community demand. Fluent Bit may run on older operating systems though will need to be built from source, or use custom packages from [enterprise providers](https://fluentbit.io/enterprise)
+Fluent Bit can work also on OSX and \*BSD systems, but not all plugins will be available on all platforms.
+Official support will be expanding based on community demand.
+Fluent Bit may run on older operating systems though will need to be built from source, or use custom packages from [enterprise providers](https://fluentbit.io/enterprise).

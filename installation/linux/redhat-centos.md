@@ -2,7 +2,7 @@
 
 ## Install on Redhat / CentOS
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable CentOS system. 
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest stable CentOS system.
 
 The following architectures are supported
 
