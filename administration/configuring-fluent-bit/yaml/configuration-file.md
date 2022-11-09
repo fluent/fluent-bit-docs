@@ -83,10 +83,11 @@ pipeline:
 
 An _input_ section defines a source (related to an input plugin). Here we will describe the base configuration for each _input_ section. Note that each input plugin may add it own configuration keys:
 
-| Key  | Description                                                              |
-| ---- |--------------------------------------------------------------------------|
-| Name | Name of the input plugin. Defined as subsection of the _inputs_ section. |
-| Tag  | Tag name associated to all records coming from this plugin.              |
+| Key         | Description                                                                                                                                             |
+| ----------- |-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the input plugin. Defined as subsection of the _inputs_ section.                                                                                |
+| Tag         | Tag name associated to all records coming from this plugin.                                                                                             |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
 
@@ -105,11 +106,12 @@ pipeline:
 
 A _filter_ section defines a filter (related to an filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add it own configuration keys:
 
-| Key | Description                                                                                                                     |
-|--- |---------------------------------------------------------------------------------------------------------------------------------|
-| Name        | Name of the filter plugin. Defined as a subsection of the _filters_ section.                                                    |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |
+| Key         | Description                                                                                                                                             |
+|------------ |-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the filter plugin. Defined as a subsection of the _filters_ section.                                                                            |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
@@ -129,11 +131,12 @@ pipeline:
 
 The _outputs_ section specify a destination that certain records should follow after a Tag match. Currently, Fluent Bit can route up to 256 _OUTPUT_ plugins. The configuration support the following keys:
 
-| Key         | Description                                                                                                                     |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Name        | Name of the output plugin. Defined as a subsection of the _outputs_ section.                                                                                                      |   |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |
+| Key         | Description                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the output plugin. Defined as a subsection of the _outputs_ section.                                                                            |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 #### Example
 
