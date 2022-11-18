@@ -48,6 +48,7 @@ The following is an example of a _SERVICE_ section:
     Daemon          off
     Log_Level       debug
 ```
+For scheduler and retry details, please check there: [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries)
 
 ## Input <a href="config_input" id="config_input"></a>
 
