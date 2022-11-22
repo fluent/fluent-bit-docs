@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters: _Remove\_key_ and _A
 | Remove\_key | If the key is matched, that field is removed. |
 | Allowlist\_key | If the key is **not** matched, that field is removed. |
 | Whitelist\_key | An alias of `Allowlist_key` for backwards compatibility. |
+| Uuid\_key| If set, the plugin appends uuid to each record.  The value assigned becomes the key in the map.|
 
 ## Getting Started
 
