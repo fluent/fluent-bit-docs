@@ -1,6 +1,7 @@
 # Docker
 
-Fluent Bit container images are available on Docker Hub ready for production usage. Current available images can be deployed in multiple architectures.
+Fluent Bit container images are available on Docker Hub ready for production usage.
+Current available images can be deployed in multiple architectures.
 
 ## Quick Start
 
@@ -12,10 +13,12 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 
 ## Tags and Versions
 
-The following table describes the tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
+The following table describes the Linux container tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tag(s)      | Manifest Architectures    | Description                                                  |
 | ----------- | ------------------------- | ------------------------------------------------------------ |
+| 2.0.6       | x86\_64, arm64v8, arm32v7 | Release [v2.0.6](https://fluentbit.io/announcements/v2.0.6/) |
+| 2.0.6-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 2.0.5       | x86\_64, arm64v8, arm32v7 | Release [v2.0.5](https://fluentbit.io/announcements/v2.0.5/) |
 | 2.0.5-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 2.0.4       | x86\_64, arm64v8, arm32v7 | Release [v2.0.4](https://fluentbit.io/announcements/v2.0.4/) |
@@ -50,6 +53,9 @@ The following table describes the tags that are available on Docker Hub [fluent/
 | 1.9.0-debug | x86\_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
 
 It is strongly suggested that you always use the latest image of Fluent Bit.
+
+Windows container images are provided from v2.0.6 for Windows Server 2019 and Windows Server 2022.
+These can be found as tags on the same Docker Hub registry above.
 
 ## Multi Architecture Images
 

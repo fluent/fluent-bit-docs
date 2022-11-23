@@ -1,6 +1,6 @@
 # Windows
 
-Fluent Bit is distributed as **fluent-bit** package for Windows.
+Fluent Bit is distributed as **fluent-bit** package for Windows and as a [Windows container on Docker Hub](./docker.md).
 Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
 
 ## Configuration
@@ -79,19 +79,19 @@ The correct package name to use now is `fluent-bit`.
 
 ## Installation Packages
 
-The latest stable version is 2.0.5, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/fluent-bit-<Full Version>-win[32|64].exe`:
+The latest stable version is 2.0.6, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/fluent-bit-<Full Version>-win[32|64].exe`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.0.5-win32.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win32.exe) | [627813cdd7d879824cce2ea9d7ec8e3b00a1264de1caf4d11ed7ddba2c3a5f02](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win32.exe.sha256) |
-| [fluent-bit-2.0.5-win32.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win32.zip) | [c77db2c1861f5bf61ee528944f8774b2f9eb034ae43312c80e1a514ca20fddb9](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win32.zip.sha256) |
-| [fluent-bit-2.0.5-win64.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win64.exe) | [fe449ed1480867962d3b354a85375062d5a23ea14867c3609395cb5a4a59ccda](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win64.exe.sha256) |
-| [fluent-bit-2.0.5-win64.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win64.zip) | [0378aa89896625969b638e32413b3d278c18fa2ed2dfbb59e244e9522dfc22d9](https://fluentbit.io/releases/2.0/fluent-bit-2.0.5-win64.zip.sha256) |
+| [fluent-bit-2.0.6-win32.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win32.exe) | [3e12a3aa1f5b44bdb59e01977f29b85379c1422d1dd300e518d09aea000de081](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win32.exe.sha256) |
+| [fluent-bit-2.0.6-win32.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win32.zip) | [c561694389df6f7835419c9d35024b9f2d5e46cf785232fe044efe20c03c390e](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win32.zip.sha256) |
+| [fluent-bit-2.0.6-win64.exe](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win64.exe) | [2d026bea0f2e06ed6f32b21792b52f7072bab9614bcd1631385c2e59b037f9a0](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win64.exe.sha256) |
+| [fluent-bit-2.0.6-win64.zip](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win64.zip) | [da406742f95d872651741fe5b84194770f886fc7e4e67e0157818250603b6ace](https://fluentbit.io/releases/2.0/fluent-bit-2.0.6-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-2.0.5-win32.exe
+PS> Get-FileHash fluent-bit-2.0.6-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -101,7 +101,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-2.0.5-win64.zip
+PS> Expand-Archive fluent-bit-2.0.6-win64.zip
 ```
 
 The ZIP package contains the following set of files.
