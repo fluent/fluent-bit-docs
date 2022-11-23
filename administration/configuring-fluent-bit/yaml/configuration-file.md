@@ -65,6 +65,8 @@ service:
     log_level: debug
 ```
 
+For scheduler and retry details, please check there: [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries)
+
 ## Pipeline <a href="config_pipeline" id="config_pipeline"></a>
 
 A _pipeline_ section will define a complete pipeline configuration, including _inputs_, _filters_ and _outputs_ subsections.

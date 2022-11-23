@@ -10,6 +10,65 @@ Once an output plugin gets called to flush some data, after processing that data
 
 If the return status was **OK**, it means it was successfully able to process and flush the data, if it returned an **Error** status, means that an unrecoverable error happened and the engine should not try to flush that data again. If a **Retry** was requested, the _Engine_ will ask the _Scheduler_ to retry to flush that data, the Scheduler will decide how many seconds to wait before that happens.
 
+## Configuring Wait Time for Retry
+
+The Scheduler provides two configuration options called **scheduler.cap** and **scheduler.base** which can be set in the Service section.
+
+| Key | Description | Default Value | 
+| -- | ------------| --------------| 
+| scheduler.cap | Set a maximum retry time in seconds. The property is supported from v1.8.7. | 2000 | 
+| scheduler.base | Set a base of exponential backoff. The property is supported from v1.8.7. | 5 |
+
+These two configuration options determine the waiting time before a retry will happen. 
+
+Fluent Bit uses an exponential backoff and jitter algorithm to determine the waiting time before a retry.
+
+The waiting time is a random number between a configurable upper and lower bound.
+
+For the Nth retry, the lower bound of the random number will be:
+
+`base`
+
+The upper bound will be:
+
+`min(base * (Nth power of 2), cap)`
+
+Given an example where `base` is set to 3 and `cap` is set to 30. 
+
+1st retry: The lower bound will be 3, the upper bound will be 3 * 2 = 6. So the waiting time will be a random number between (3, 6).
+
+2nd retry: the lower bound will be 3, the upper bound will be 3 * (2 * 2) = 12. So the waiting time will be a random number between (3, 12).
+
+3rd retry: the lower bound will be 3, the upper bound will be 3 * (2 * 2 * 2) = 24. So the waiting time will be a random number between (3, 24).
+
+4th retry: the lower bound will be 3, since 3 * (2 * 2 * 2 * 2) = 48 > 30, the upper bound will be 30. So the waiting time will be a random number between (3, 30).
+
+Basically, the **scheduler.base** determines the lower bound of time between each retry and the **scheduler.cap** determines the upper bound.
+
+For a detailed explanation of the exponential backoff and jitter algorithm, please check this [blog](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/).
+
+### Example
+
+The following example configures the **scheduler.base** as 3 seconds and **scheduler.cap** as 30 seconds. 
+
+```text
+[SERVICE]
+    Flush            5
+    Daemon           off
+    Log_Level        debug
+    scheduler.base   3
+    scheduler.cap    30
+```
+
+The waiting time will be:
+
+| Nth retry | waiting time range (seconds) |
+| --- | --- | 
+| 1 | (3, 6)  |
+| 2 | (3, 12) |
+| 3 | (3, 24) |
+| 4 | (3, 30) |
+
 ## Configuring Retries
 
 The Scheduler provides a simple configuration option called **Retry\_Limit** which can be set independently on each output section. This option allows to disable retries or impose a limit to try N times and then discard the data after reaching that limit:
