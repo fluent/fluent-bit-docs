@@ -11,6 +11,7 @@ The following operating systems and architectures are supported in Fluent Bit.
 |  | [Centos 7](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Rocky Linux 8](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Alma Linux 8](linux/redhat-centos.md) | x86\_64, Arm64v8 |
+|  | [Debian 12 \(Bookworm\)](linux/debian.md) | x86\_64, Arm64v8 |
 |  | [Debian 11 \(Bullseye\)](linux/debian.md) | x86\_64, Arm64v8 |
 |  | [Debian 10 \(Buster\)](linux/debian.md) | x86\_64, Arm64v8 |
 |  | [Ubuntu 22.04 \(Jammy Jellyfish\)](linux/ubuntu.md) | x86\_64, Arm64v8 |

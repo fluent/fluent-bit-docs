@@ -1,6 +1,6 @@
 # Debian
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and legacy) stable Debian systems: Bullseye and Buster.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest (and legacy) stable Debian systems: Bookworm and Bullseye.
 The following architectures are supported
 
 * x86\_64
@@ -50,7 +50,7 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 ## Update your sources lists
 
-On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production\_Releases) (e.g. `bullseye` for Debian 11):
+On Debian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file - ensure to set `CODENAME` to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production\_Releases) (e.g. `bookworm` for Debian 12):
 
 ```bash
 deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/debian/${CODENAME} ${CODENAME} main
