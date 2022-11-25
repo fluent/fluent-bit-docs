@@ -64,6 +64,9 @@ sudo apt-get update
 We recommend upgrading your system (`sudo apt-get upgrade`). This could avoid potential issues with expired certificates.
 {% endhint %}
 
+{% hint style="info" %}
+If you have the following error "Certificate verification failed", you might want to check if the package `ca-certificates` is properly installed (`sudo apt-get install ca-certificates`).
+{% endhint %}
 ## Install Fluent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
