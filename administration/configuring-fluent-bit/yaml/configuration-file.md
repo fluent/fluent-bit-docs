@@ -15,6 +15,10 @@ The yaml configuration file supports the following sections:
   * Filters
   * Outputs
 
+{% hint style="info" %}
+YAML configuration is used in the smoke tests for containers so an always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
+{% endhint %}
+
 ## Env <a href="config_env" id="config_env"></a>
 
 The _env_ section allows to configure variables that will be used later on this configuration file.
@@ -93,7 +97,7 @@ An _input_ section defines a source (related to an input plugin). Here we will d
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
 
-#### Example
+#### Example input
 
 The following is an example of an _input_ section for the _cpu_ plugin.
 
@@ -101,6 +105,7 @@ The following is an example of an _input_ section for the _cpu_ plugin.
 pipeline:
     inputs:
         - cpu:
+          - name: cpu
             tag: my_cpu
 ```
 
@@ -117,7 +122,7 @@ A _filter_ section defines a filter (related to an filter plugin). Here we will 
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
-#### Example
+#### Example filter
 
 The following is an example of a _filter_ section for the grep plugin:
 
@@ -125,6 +130,7 @@ The following is an example of a _filter_ section for the grep plugin:
 pipeline:
     filters:
         - grep:
+          - name: grep
             match: *
             regex: log aa
 ```
@@ -140,7 +146,7 @@ The _outputs_ section specify a destination that certain records should follow a
 | Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
 | Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
-#### Example
+#### Example output
 
 The following is an example of an _output_ section:
 
@@ -148,6 +154,7 @@ The following is an example of an _output_ section:
 pipeline:
     outputs:
         - stdout:
+          - name: stdout
             match: my*cpu
 ```
 
@@ -164,8 +171,10 @@ service:
 pipeline:
     inputs:
         - cpu:
+          - name: cpu
             tag: my_cpu
     outputs:
         - stdout:
+          - name: stdout
             match: my*cpu
 ```
