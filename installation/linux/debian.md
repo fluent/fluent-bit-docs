@@ -79,7 +79,7 @@ sudo apt-get install fluent-bit
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-sudo systemctl fluent-bit start
+sudo systemctl start fluent-bit
 ```
 
 If you do a status check, you should see a similar output like this:
