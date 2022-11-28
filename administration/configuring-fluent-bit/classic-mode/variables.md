@@ -14,7 +14,7 @@ When Fluent Bit is running under systemd (using the official packages), environm
 * `/etc/default/fluent-bit` (Debian based system)
 * `/etc/sysconfig/fluent-bit` (Others)
 
-They are only loaded if exists.
+These files are ignored if they do not exist.
 
 ## Example
 
