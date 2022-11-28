@@ -19,7 +19,7 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | CentOS / Red Hat       | [CentOS 7](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](linux/redhat-centos.md#install-on-redhat-centos) |
 | Ubuntu                 | [Ubuntu 16.04 LTS](linux/ubuntu.md), [Ubuntu 18.04 LTS](linux/ubuntu.md), [Ubuntu 20.04 LTS](linux/ubuntu.md), [Ubuntu 22.04 LTS](linux/ubuntu.md) |
 | Debian                 | [Debian 10](linux/debian.md), [Debian 11](linux/debian.md), [Debian 12](linux/debian.md) |
-| Amazon Linux           | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](linux/amazon-linux.md#[install-on-amazon-linux-2](https://docs.fluentbit.io/manual/installation/linux/amazon-linux#amazon-linux-2022) |
+| Amazon Linux           | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](linux/amazon-linux.md#amazon-linux-2022) |
 | Raspbian / Raspberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
 | Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
 
