@@ -1,10 +1,12 @@
 # macOS
 
-Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon M1 architectures.  At the moment there is no official supported package but you can build it from sources by following the instructions below.
+Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon M1 architectures. 
+At the moment there is no official supported package but you can build it from sources by following the instructions below.
 
 ## Requirements
 
-For the next steps, you will need to have [Homebrew](https://brew.sh/) installed in your system, if is not there, you can install it with the following command:
+For the next steps, you will need to have [Homebrew](https://brew.sh/) installed in your system.
+If is not there, you can install it with the following command:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -27,7 +29,8 @@ git clone https://github.com/fluent/fluent-bit
 cd fluent-bit
 ```
 
-Optionally, if you want to use a specific version, just checkout to the proper tag. If you want to use `v1.8.13` just do:
+Optionally, if you want to use a specific version, just checkout to the proper tag.
+If you want to use `v1.8.13` just do:
 
 ```bash
 git checkout v1.8.13
@@ -43,17 +46,19 @@ export PATH=`brew --prefix bison`/bin:$PATH
 Change to the _build/_ directory inside the Fluent Bit sources:
 
 ```bash
-$ cd build/
+cd build/
 ```
 
-Build Fluent Bit. Note that we are indicating to the build system "where" the final binaries and config files should be installed:
+Build Fluent Bit.
+Note that we are indicating to the build system "where" the final binaries and config files should be installed:
 
 ```bash
 cmake -DFLB_DEV=on -DCMAKE_INSTALL_PREFIX=/opt/fluent-bit ../
 make -j 16
 ```
 
-Install the data. Note that this requires root privileges due to the directory we will write information to:
+Install Fluent Bit to the directory specified above.
+Note that this requires root privileges due to the directory we will write information to:
 
 ```bash
 sudo make install
@@ -92,10 +97,10 @@ export MACOSX_DEPLOYMENT_TARGET=11.3
 Change to the _build/_ directory inside the Fluent Bit sources:
 
 ```bash
-$ cd build/
+cd build/
 ```
 
-Build Fluent Bit macOS installer.
+Build the Fluent Bit macOS installer.
 
 ```bash
 cmake -DCPACK_GENERATOR=productbuild -DCMAKE_INSTALL_PREFIX=/opt/fluent-bit ../
@@ -125,7 +130,6 @@ CPack: - package: /Users/fluent-bit-builder/GitHub/fluent-bit/build/fluent-bit-1
 Finally, fluent-bit-`<fluent-bit version>`-`(intel or apple)`.pkg will be generated.
 
 The created installer will put binaries at `/opt/fluent-bit/`.
-
 
 ## Running Fluent Bit
 
@@ -160,4 +164,3 @@ Fluent Bit v1.9.0
 ```
 
 To halt the process, press `ctrl-c` in the terminal.
-
