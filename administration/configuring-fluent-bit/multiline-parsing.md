@@ -64,7 +64,7 @@ A rule might be defined as follows (comments added to simplify the definition) :
 ```
 # rules   |   state name   | regex pattern                   | next state
 # --------|----------------|---------------------------------------------
-rule         "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
+rule         "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
 
@@ -131,7 +131,7 @@ This second file defines a multiline parser for the example.
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
     rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 {% endtab %}
@@ -237,7 +237,7 @@ This second file defines a multiline parser for the example.
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
     rule      "cont"          "/^\s+at.*/"                     "cont"
 
 [PARSER]
