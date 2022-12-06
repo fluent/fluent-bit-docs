@@ -73,7 +73,7 @@ These signatures can be verified using `cosign` ([install guide](https://docs.si
 COSIGN_EXPERIMENTAL=1 cosign verify fluent/fluent-bit:2.0.6
 ```
 
-Note: COSIGN_EXPERIMENTAL=1 is used to allow verification of images signed in KEYLESS mode.
+Note: `COSIGN_EXPERIMENTAL=1` is used to allow verification of images signed in KEYLESS mode.
 To learn more about keyless signing, please refer to [Keyless Signatures](https://github.com/sigstore/cosign/blob/main/KEYLESS.md#keyless-signatures).
 
 ## Getting Started
