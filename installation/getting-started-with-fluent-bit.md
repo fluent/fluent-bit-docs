@@ -41,7 +41,7 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | Operating System | Installation Instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
 | Linux, FreeBSD   | [Compile from source](sources/build-and-install.md)         |
-| macOS            | [Compile from source](macos.md#get-the-source-and-build-it) |
+| macOS            | [Compile from source](macos.md#compile-from-source) |
 | Windows          | [Compile from Source](windows.md#compile-from-source)       |
 
 ## Sandbox Environment
