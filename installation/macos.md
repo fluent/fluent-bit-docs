@@ -14,7 +14,7 @@ If is not there, you can install it with the following command:
 
 ## Installing from Homebrew
 
-The Fluent Bit package on Homebrew is not officially supported, but should work for basic use cases and testing. It can be installed using.
+The Fluent Bit package on Homebrew is not officially supported, but should work for basic use cases and testing. It can be installed using:
 
 ```bash
 brew install fluent-bit
