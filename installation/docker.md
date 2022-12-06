@@ -64,6 +64,18 @@ We also provide **debug** images for all architectures (from 1.9.0+) which conta
 
 From a deployment perspective, there is no need to specify an architecture, the container client tool that pulls the image gets the proper layer for the running architecture.
 
+## Verify signed container images
+
+2.0 container images are signed using Cosign/Sigstore.
+These signatures can be verified using `cosign` ([install guide](https://docs.sigstore.dev/cosign/installation/)):
+
+```shell
+COSIGN_EXPERIMENTAL=1 cosign verify fluent/fluent-bit:2.0.6
+```
+
+Note: COSIGN_EXPERIMENTAL=1 is used to allow verification of images signed in KEYLESS mode.
+To learn more about keyless signing, please refer to [Keyless Signatures](https://github.com/sigstore/cosign/blob/main/KEYLESS.md#keyless-signatures).
+
 ## Getting Started
 
 Download the last stable image from 2.0 series:
