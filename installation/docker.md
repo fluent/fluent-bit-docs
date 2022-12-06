@@ -66,8 +66,23 @@ From a deployment perspective, there is no need to specify an architecture, the 
 
 ## Verify signed container images
 
-2.0 container images are signed using Cosign/Sigstore.
+1.9 and 2.0 container images are signed using Cosign/Sigstore.
 These signatures can be verified using `cosign` ([install guide](https://docs.sigstore.dev/cosign/installation/)):
+
+```shell
+$ cosign verify --key "https://packages.fluentbit.io/fluentbit-cosign.pub" fluent/fluent-bit:2.0.6
+
+Verification for index.docker.io/fluent/fluent-bit:2.0.6 --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"index.docker.io/fluent/fluent-bit"},"image":{"docker-manifest-digest":"sha256:c740f90b07f42823d4ecf4d5e168f32ffb4b8bcd87bc41df8f5e3d14e8272903"},"type":"cosign container image signature"},"optional":{"release":"2.0.6","repo":"fluent/fluent-bit","workflow":"Release from staging"}}]
+```
+
+Note: replace `cosign` above with the binary installed if it has a different name (e.g. `cosign-linux-amd64`).
+
+Keyless signing is also provided but this is still experimental:
 
 ```shell
 COSIGN_EXPERIMENTAL=1 cosign verify fluent/fluent-bit:2.0.6
