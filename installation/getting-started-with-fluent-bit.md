@@ -30,6 +30,12 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | Windows Server 2019 | [Windows Server EXE](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
 | Windows 10 2019.03  | [Windows EXE](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
 
+## Install on macOS (Packages)
+
+| Operating System    | Installation Instructions                     |
+| ------------------- | --------------------------------------------- |
+| macOS               | [Homebrew](macos.md#installing-from-homebrew) |
+
 ## Compile from Source (Linux, Windows, FreeBSD, macOS)
 
 | Operating System | Installation Instructions                                   |
