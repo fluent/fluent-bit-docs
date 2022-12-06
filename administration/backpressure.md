@@ -4,9 +4,7 @@ Under certain scenarios it is possible for logs or data to be ingested or create
 
 In order to avoid backpressure, Fluent Bit implements a mechanism in the engine that restrict the amount of data than an input plugin can ingest, this is done through the configuration parameter **Mem\_Buf\_Limit**.
 
-{% hint style="info" %}
 As described in the [Buffering](../concepts/buffering.md) concepts section, Fluent Bit offers an hybrid mode for data handling: in-memory and filesystem \(optional\).
-{% endhint %}
 
 In `memory` is always available and can be restricted with **Mem\_Buf\_Limit**. If memory reaches this limit and you reach a backpressure scenario, you will not be able to ingest more data until the data chunks that are in memory can be flushed.
 
