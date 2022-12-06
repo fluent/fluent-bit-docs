@@ -6,6 +6,7 @@ In order to avoid backpressure, Fluent Bit implements a mechanism in the engine 
 
 {% hint style="info" %}
 As described in the [Buffering](../concepts/buffering.md) concepts section, Fluent Bit offers an hybrid mode for data handling: in-memory and filesystem \(optional\).
+{% endhint %}
 
 In `memory` is always available and can be restricted with **Mem\_Buf\_Limit**. If memory reaches this limit and you reach a backpressure scenario, you will not be able to ingest more data until the data chunks that are in memory can be flushed.
 
