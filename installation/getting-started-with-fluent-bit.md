@@ -30,12 +30,12 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | Windows Server 2019 | [Windows Server EXE](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
 | Windows 10 2019.03  | [Windows EXE](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
 
-## Compile from Source (Linux, Windows, FreeBSD, MacOS)
+## Compile from Source (Linux, Windows, FreeBSD, macOS)
 
 | Operating System | Installation Instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
 | Linux, FreeBSD   | [Compile from source](sources/build-and-install.md)         |
-| MacOS            | [Compile from source](macos.md#get-the-source-and-build-it) |
+| macOS            | [Compile from source](macos.md#get-the-source-and-build-it) |
 | Windows          | [Compile from Source](windows.md#compile-from-source)       |
 
 ## Sandbox Environment
