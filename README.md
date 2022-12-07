@@ -31,7 +31,7 @@ description: High Performance Log and Metrics Processor
   * Create new streams of data using query results
   * Aggregation Windows
   * Data analysis and prediction: Timeseries forecasting
-* Portable: runs on Linux, MacOS, Windows and BSD systems
+* Portable: runs on Linux, macOS, Windows and BSD systems
 
 ## Fluent Bit, Fluentd and CNCF
 

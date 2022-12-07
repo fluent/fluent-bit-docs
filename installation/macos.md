@@ -1,6 +1,6 @@
 # macOS
 
-Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon M1 architectures. 
+Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon M1 architectures.
 At the moment there is no official supported package but you can build it from sources by following the instructions below.
 
 ## Requirements
@@ -11,6 +11,16 @@ If is not there, you can install it with the following command:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+
+## Installing from Homebrew
+
+The Fluent Bit package on Homebrew is not officially supported, but should work for basic use cases and testing. It can be installed using:
+
+```bash
+brew install fluent-bit
+```
+
+## Compile from Source
 
 ### Install build dependencies
 
