@@ -10,7 +10,7 @@ The OpenTelemetry plugin allows you to ingest telemetry data as per the OTLP spe
 
 | Key           | Description                                                                                                                                    | default |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| host              | The address to listen on                                                                                                                       | 0.0.0.0 |
+| listen            | The address to listen on                                                                                                                       | 0.0.0.0 |
 | port              | The port for Fluent Bit to listen on                                                                                                           | 4318    |
 | tag_key           | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                            |         |
 | raw_traces        | Route trace data as a log message                                                                                                              | false   |
@@ -35,7 +35,7 @@ A sample config file to get started will look something like the following:
 ```
 [INPUT]
 	name opentelemetry
-	host 127.0.0.1
+	listen 127.0.0.1
 	port 4318
 
 [OUTPUT]
