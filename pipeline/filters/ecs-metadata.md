@@ -150,7 +150,7 @@ This examples shows a use case for the `Cluster_Metadata_Only` option- attaching
 
 ### Limitations of record_accessor templating
 
-Notice in example 2, that the template values are separate by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+Notice in example 2, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
 The following would be invalid templates because the two template variables are not separated by commas or dots:
 
