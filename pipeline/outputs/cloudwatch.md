@@ -149,6 +149,27 @@ If the kubernetes structure is not found in the log record, then the `log_group_
 [2022/06/30 06:09:29] [ warn] [record accessor] translation failed, root key=kubernetes
 ```
 
+#### Limitations of record_accessor syntax
+
+Notice in the example above, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+
+Assume that your log records contain the metadata keys `container_name` and `task`. The following would be invalid templates because the two template variables are not separated by commas or dots:
+
+- `$task-$container_name`
+- `$task/$container_name`
+- `$task_$container_name`
+- `$taskfooo$container_name`
+
+However, the following are valid:
+- `$task.$container_name`
+- `$task.resource.$container_name`
+- `$task.fooo.$container_name`
+
+And the following are valid since they only contain one template variable with nothing after it:
+- `fooo$task`
+- `fooo____$task`
+- `fooo/bar$container_name`
+
 ### Metrics Tutorial
 
 Fluent Bit has different input plugins (cpu, mem, disk, netif) to collect host resource usage metrics. `cloudwatch_logs` output plugin can be used to send these host metrics to CloudWatch in Embedded Metric Format (EMF). If data comes from any of the above mentioned input plugins, `cloudwatch_logs` output plugin will convert them to EMF format and sent to CloudWatch as JSON log. Additionally, if we set `json/emf` as the value of `log_format` config option, CloudWatch will extract custom metrics from embedded JSON payload.
