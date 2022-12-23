@@ -45,10 +45,10 @@ The following **output** plugins can take advantage of the TLS feature:
 
 The following **input** plugins can take advantage of the TLS feature:
 
-* [MQTT](../pipeline/input/mqtt.md)
-* [TCP](../pipeline/input/tcp.md)
-* [HTTP](../pipeline/input/http.md)
-* [OpenTelemetry](../pipeline/input/opentelemetry.md)
+* [MQTT](../pipeline/inputs/mqtt.md)
+* [TCP](../pipeline/inputs/tcp.md)
+* [HTTP](../pipeline/inputs/http.md)
+* [OpenTelemetry](../pipeline/inputs/opentelemetry.md)
 
 In addition, other plugins implements a sub-set of TLS support, meaning, with restricted configuration:
 
