@@ -148,4 +148,5 @@ This examples shows a use case for the `Cluster_Metadata_Only` option- attaching
     Format json_lines
 ```
 
-To learn more about record accessor feature and its limitations check the [Record accessor](administration/configuring-fluent-bit/classic-mode/record-accessor#limitations-of-record_accessor-templating) section.
+To learn more about record accessor feature and its limitations check the [Record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating) section.
+
