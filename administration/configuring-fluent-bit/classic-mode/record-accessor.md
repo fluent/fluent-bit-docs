@@ -95,3 +95,23 @@ Fluent Bit v1.x.x
 {"date":1599862267.483692,"log":"message 4","labels":{"color":"blue"}}
 ```
 
+### Limitations of record_accessor templating
+
+Notice in example 2, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+
+The following would be invalid templates because the two template variables are not separated by commas or dots:
+
+- `$TaskID-$ECSContainerName`
+- `$TaskID/$ECSContainerName`
+- `$TaskID_$ECSContainerName`
+- `$TaskIDfooo$ECSContainerName`
+
+However, the following are valid:
+- `$TaskID.$ECSContainerName`
+- `$TaskID.ecs_resource.$ECSContainerName`
+- `$TaskID.fooo.$ECSContainerName`
+
+And the following are valid since they only contain one template variable with nothing after it:
+- `fooo$TaskID`
+- `fooo____$TaskID`
+- `fooo/bar$TaskID`
