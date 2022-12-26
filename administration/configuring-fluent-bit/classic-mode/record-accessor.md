@@ -97,7 +97,7 @@ Fluent Bit v1.x.x
 
 ### Limitations of record_accessor templating
 
-Notice in example 2, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+Notice in example 2[Link to example2](../../../pipeline/filters/ecs-metadata.md#example-2-attach-customized-resource-name-to-container-logs), that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
 The following would be invalid templates because the two template variables are not separated by commas or dots:
 
