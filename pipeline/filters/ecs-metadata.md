@@ -116,7 +116,7 @@ The output log would be similar to:
 }
 ```
 
-Notice that the template variables in the value for the `resource` key are separated by dot characters. Please see the section below about limitations in which characters can be used to separate template variables. 
+Notice that the template variables in the value for the `resource` key are separated by dot characters. For more information, please check the [Record accessor limitation section](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating).
 
 #### Example 3: Attach cluster metadata to non-container logs
 
@@ -147,6 +147,4 @@ This examples shows a use case for the `Cluster_Metadata_Only` option- attaching
     Match *
     Format json_lines
 ```
-
-To learn more about record accessor feature and its limitations check the [Record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating) section.
 
