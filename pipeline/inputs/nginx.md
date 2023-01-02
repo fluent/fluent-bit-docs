@@ -61,7 +61,7 @@ server {
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```bash
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -o stdout
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -p nginx_plus=off -o stdout
 ```
 
 To gather metrics from the command line with the NGINX Plus REST API we need to turn on the
@@ -82,6 +82,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Host          127.0.0.1
     Port          80
     Status_URL    /status
+    Nginx_Plus    off
 
 [OUTPUT]
     Name   stdout
@@ -110,7 +111,7 @@ And for NGINX Plus API:
 You can quickly test against the NGINX server running on localhost by invoking it directly from the command line:
 
 ```bash
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -o stdout -p match=* -f 1
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p nginx_plus=off -o stdout -p match=* -f 1
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
