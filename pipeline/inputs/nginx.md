@@ -112,7 +112,7 @@ You can quickly test against the NGINX server running on localhost by invoking i
 
 ```bash
 $ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p nginx_plus=off -o stdout -p match=* -f 1
-Fluent Bit v2.x.x
+Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
