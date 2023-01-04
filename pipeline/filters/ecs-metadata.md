@@ -116,8 +116,11 @@ The output log would be similar to:
 }
 ```
 
-Notice that the template variables in the value for the `resource` key are separated by dot characters. For more information, please check the [Record accessor limitation's section](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating).
+Notice that the template variables in the value for the `resource` key are separated by dot characters. The Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas
+ (`.` and `,`) can come after a template variable. For more information, please check the [Record accessor limitation's section](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating).
 
+The Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas
+ (`.` and `,`) can come after a template variable
 #### Example 3: Attach cluster metadata to non-container logs
 
 This examples shows a use case for the `Cluster_Metadata_Only` option- attaching cluster metadata to ECS Agent logs. 
