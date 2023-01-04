@@ -116,7 +116,7 @@ The output log would be similar to:
 }
 ```
 
-Notice that the template variables in the value for the `resource` key are separated by dot charactersi, only dots and commas
+Notice that the template variables in the value for the `resource` key are separated by dot characters, only dots and commas
  (`.` and `,`) can come after a template variable. For more information, please check the [Record accessor limitation's section](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating).
 
 #### Example 3: Attach cluster metadata to non-container logs
