@@ -8,7 +8,7 @@ Once an output plugin gets called to flush some data, after processing that data
 * Retry
 * Error
 
-If the return status was **OK**, it means it was successfully able to process and flush the data, if it returned an **Error** status, means that an unrecoverable error happened and the engine should not try to flush that data again. If a **Retry** was requested, the _Engine_ will ask the _Scheduler_ to retry to flush that data, the Scheduler will decide how many seconds to wait before that happens.
+If the return status was **OK**, it means it was successfully able to process and flush the data. If it returned an **Error** status, it means that an unrecoverable error happened and the engine should not try to flush that data again. If a **Retry** was requested, the _Engine_ will ask the _Scheduler_ to retry to flush that data, the Scheduler will decide how many seconds to wait before that happens.
 
 ## Configuring Wait Time for Retry
 
@@ -71,7 +71,7 @@ The waiting time will be:
 
 ## Configuring Retries
 
-The Scheduler provides a simple configuration option called **Retry\_Limit** which can be set independently on each output section. This option allows to disable retries or impose a limit to try N times and then discard the data after reaching that limit:
+The Scheduler provides a simple configuration option called **Retry\_Limit**, which can be set independently on each output section. This option allows us to disable retries or impose a limit to try N times and then discard the data after reaching that limit:
 
 |  | Value | Description |
 | :--- | :--- | :--- |
