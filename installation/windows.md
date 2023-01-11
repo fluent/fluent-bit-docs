@@ -79,14 +79,14 @@ The correct package name to use now is `fluent-bit`.
 
 ## Installation Packages
 
-The latest stable version is 1.9.10, each version is available on the Github release as well as at `https://fluentbit.io/releases/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].exe`:
+The latest stable version is 1.9.10, each version is available on the Github release as well as at `https://releases.fluentbit.io/<Major Version>/Major>fluent-bit-<Full Version>-win[32|64].[exe|zip]`:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-1.9.10-win32.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win32.exe) | [1c3ad77316aa029d0668e2412e6cccefebb93fae2092407250715e6a2505300d](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win32.exe.sha256) |
-| [fluent-bit-1.9.10-win32.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win32.zip) | [d235d7979e02e26e03764a75da2afcf89c12faf698259a33b1a826ca620ebc6b](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win32.zip.sha256) |
-| [fluent-bit-1.9.10-win64.exe](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win64.exe) | [b2a74382a4f9242085c4c7ef876988176ecafd1260aa41b4d116718f62035927](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win64.exe.sha256) |
-| [fluent-bit-1.9.10-win64.zip](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win64.zip) | [44114002cd93c2b2a9ae93efb4253e146c6aff024b2bb8682ad1d75970c6ba97](https://fluentbit.io/releases/1.9/fluent-bit-1.9.10-win64.zip.sha256) |
+| [fluent-bit-1.9.10-win32.exe](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win32.exe) | [1c3ad77316aa029d0668e2412e6cccefebb93fae2092407250715e6a2505300d](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win32.exe.sha256) |
+| [fluent-bit-1.9.10-win32.zip](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win32.zip) | [d235d7979e02e26e03764a75da2afcf89c12faf698259a33b1a826ca620ebc6b](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win32.zip.sha256) |
+| [fluent-bit-1.9.10-win64.exe](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win64.exe) | [b2a74382a4f9242085c4c7ef876988176ecafd1260aa41b4d116718f62035927](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win64.exe.sha256) |
+| [fluent-bit-1.9.10-win64.zip](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win64.zip) | [44114002cd93c2b2a9ae93efb4253e146c6aff024b2bb8682ad1d75970c6ba97](https://releases.fluentbit.io/1.9/fluent-bit-1.9.10-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
