@@ -20,4 +20,4 @@ jobs:
     name: PR - Markdownlint
     steps:
       - name: Run markdownlint
-        uses: actionshub/markdownlint@2.0.2
+        uses: actionshub/markdownlint@v2.1.2
