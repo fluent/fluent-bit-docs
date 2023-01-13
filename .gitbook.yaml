@@ -9,6 +9,7 @@ redirects:
     input/disk:            ./pipeline/inputs/disk-io-metrics.md
     #inputs/docker:          ./pipeline/inputs/
     input/dummy:           ./pipeline/inputs/dummy.md
+    input/elasticsearch:   ./pipeline/inputs/elasticsearch.md
     input/exec:            ./pipeline/inputs/exec.md
     input/fluentbit:       ./pipeline/inputs/fluentbit-metrics.md
     input/forward:         ./pipeline/inputs/forward.md

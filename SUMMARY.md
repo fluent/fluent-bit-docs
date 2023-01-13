@@ -84,6 +84,7 @@
   * [Docker Log Based Metrics](pipeline/inputs/docker-metrics.md)
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
+  * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Exec Wasi](pipeline/inputs/exec-wasi.md)
   * [Fluent Bit Metrics](pipeline/inputs/fluentbit-metrics.md)
