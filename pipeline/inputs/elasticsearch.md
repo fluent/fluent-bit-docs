@@ -42,7 +42,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 ```
 
 As described above, the plugin will handle ingested Bulk API requests.
-For large bulk ingestions, you may have to increase buffer size with **buffer_max_size** parameter:
+For large bulk ingestions, you may have to increase buffer size with **buffer_max_size** and **buffer_chunk_size** parameters:
 
 ```python
 [INPUT]
@@ -50,6 +50,7 @@ For large bulk ingestions, you may have to increase buffer size with **buffer_ma
     listen 0.0.0.0
     port 9200
     buffer_max_size 20M
+    buffer_chunk_size 5M
 
 [OUTPUT]
     name stdout
