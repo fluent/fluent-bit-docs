@@ -20,6 +20,15 @@ curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 This is purely a convenience helper and should always be validated prior to use.
 The recommended secure deployment approach is to follow the instructions below.
 
+### Amazon Linux 2022
+
+For Amazon Linux 2022, until it is GA, we need to force it to use the 2022 `releasever` in Yum but only for the Fluent Bit repository.
+
+```bash
+export FLUENT_BIT_INSTALL_COMMAND_PREFIX="sed -i 's|\$releasever/|2022/|g' /etc/yum.repos.d/fluent-bit.repo"
+curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
+```
+
 ## Configure Yum
 
 We provide **fluent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:

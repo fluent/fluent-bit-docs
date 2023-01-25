@@ -3,7 +3,7 @@
 The most secure option is to create the repositories acccording to the instructions for your specific OS.
 
 A simple installation script is provided to be used for most Linux targets.
-This will always install the most recent version released.
+This will by default install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
