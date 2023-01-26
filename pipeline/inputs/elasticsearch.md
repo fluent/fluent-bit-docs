@@ -56,3 +56,28 @@ For large bulk ingestions, you may have to increase buffer size with **buffer_ma
     name stdout
     match *
 ```
+
+#### Ingesting from beats series
+
+Ingesting from beats series agents is also supported.
+However, fluent-bit's node information is returning as Elasticsearch 8.0.0 and gzip compression is not supported yet.
+
+So, users have to specify the following configurations on their beats configurations:
+
+```yaml
+output.elasticsearch:
+  allow_older_versions: true
+  compression_level: 0
+  ilm: false
+```
+
+From large log ingestions on their beats,
+users might have to add addtional settings of processors to use rate limit feature on beats
+when fluent-bit complains that exceeding limit size of HTTP requests:
+
+
+```yaml
+processors:
+  - rate_mimit:
+    limit: "200/s"
+```
