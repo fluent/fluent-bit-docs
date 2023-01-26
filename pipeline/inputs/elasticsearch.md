@@ -12,7 +12,7 @@ The plugin supports the following configuration parameters:
 | buffer\_chunk\_size | Set the buffer chunk size. |
 | tag\_key | Specify a key name for extracting as a tag. |
 | meta\_key | Specify a key name for meta information. |
-| hostname | Specify hostname or FQDN. This parameter is affective for sniffering node information. |
+| hostname | Specify hostname or FQDN. This parameter is effective for sniffering node information. |
 
 ## Getting Started
 
