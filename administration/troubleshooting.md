@@ -141,7 +141,9 @@ Now we should start seeing output similar to the following:
 [2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopped
 ```
 ### Parameters for the output in Tap 
-When activating Tap, parameters can be given to modify the output format, name of the time key, format of the date, or even enable dedicated thread(s). In the next example we will use the parameter "format": "json" to demonstrate how Tap outputs can be shown in Json format.
+When activating Tap, any plugin parameter can be given to modify the output format, name of the time key, format of the date, etc.
+
+In the next example we will use the parameter "format": "json" to demonstrate how Tap standard outputs can be shown in Json format, however this could be sent to any output plugin.
 
 First, run Fluent Bit enabling Tap:
 ```shell
@@ -164,7 +166,7 @@ Fluent Bit v2.0.8
 [0] dummy.0: [1674805466.973669512, {"message"=>"dummy"}]
 ...
 ```
-Next, in another window, activate Tap including standard output and the parameters wanted, in this case "format": "json":
+Next, in another window, we activate Tap including the output, in this case standard output, and the parameters wanted, in this case "format": "json":
 
 ```shell
 $ curl 127.0.0.1:2020/api/v1/trace/input_dummy -d '{"output":"stdout", "params": {"format": "json"}}'
@@ -177,8 +179,13 @@ In the first window, we should be seeing the output similar to the following:
 [0] dummy.0: [1674805636.973970215, {"message"=>"dummy"}]
 [{"date":1674805636.974008,"type":1,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636},{"date":1674805636.974034,"type":3,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636}]
 ```
-This parameter shows output in Json format, however, as mentioned before, there are more parameters that could be given when activating Tap. Please visit the following link for more information:
+This parameter shows standard output in Json format, however, as mentioned before, any plugin parameter can be used with the same method. 
+
+Please visit the following link for more information on standard output parameters:
 https://docs.fluentbit.io/manual/pipeline/outputs/standard-output#configuration-parameters
+
+If you wish to use other output parameters please visit:
+https://docs.fluentbit.io/manual/pipeline/outputs
 
 ### Analysis of a single Tap record
 
