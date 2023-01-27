@@ -1,7 +1,7 @@
 # Troubleshooting
 
 * [Tap Functionality: generate events or records](troubleshooting.md#tap-functionality)
-* [Dump Internals Signal](troubleshooting#dump-internals--signal)
+* [Dump Internals Signal](troubleshooting#dump-internals-signal)
 
 ## Tap Functionality
 
