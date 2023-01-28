@@ -15,27 +15,27 @@ The initial release of Node Exporter Metrics contains a subset of collectors and
 This plugin is currently only supported on Linux based operating systems\
 
 
-## Configuration 
+## Configuration
 
 | Key             | Description                                                            | Default   |
 | --------------- | ---------------------------------------------------------------------- | --------- |
 | scrape_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
 | path.procfs     | The mount point used to collect process information and metrics        | /proc/    |
 | path.sysfs      | The path in the filesystem used to collect system metrics              | /sys/     |
-| ne.cpu.scrape\_interval       | The rate at which cpu metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.cpufreq.scrape\_interval   | The rate at which cpufreq metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.meminfo.scrape\_interval   | The rate at which meminfo metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.diskstats.scrape\_interval | The rate at which diskstats metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.uname.scrape\_interval     | The rate at which uname metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.stat.scrape\_interval      | The rate at which stat metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.time.scrape\_interval      | The rate at which time metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.loadavg.scrape\_interval   | The rate at which loadavg metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.vmstat.scrape\_interval   | The rate at which vmstat metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| ne.filefd.scrape\_interval   | The rate at which filefd metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
-| metrics | To specify which metrics are collected from the host operating system | `"cpu,cpufreq,meminfo,diskstats,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
+| collector.cpu.scrape\_interval       | The rate at which cpu metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.cpufreq.scrape\_interval   | The rate at which cpufreq metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.meminfo.scrape\_interval   | The rate at which meminfo metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.diskstats.scrape\_interval | The rate at which diskstats metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.uname.scrape\_interval     | The rate at which uname metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.stat.scrape\_interval      | The rate at which stat metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.time.scrape\_interval      | The rate at which time metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.loadavg.scrape\_interval   | The rate at which loadavg metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.vmstat.scrape\_interval   | The rate at which vmstat metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| collector.filefd.scrape\_interval   | The rate at which filefd metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds |
+| metrics | To specify which metrics are collected from the host operating system | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
 
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
-Each of `ne.xxx.scrape_interval` can specify each of intervals of metrics.
+Each of `collector.xxx.scrape_interval` can specify each of intervals of metrics.
 However, they cannot affect the root collector of metrics to send the latter plugin pipeline.
 
 ## Collectors available
