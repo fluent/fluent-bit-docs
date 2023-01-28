@@ -34,7 +34,7 @@ This plugin is currently only supported on Linux based operating systems\
 | ne.filefd.scrape\_interval   | The rate at which filefd metrics are collected from the host operating system. To enable, specify greater than 0. | 0 seconds (disabled by default) |
 | metrics | To specify which metrics are collected from the host operating system | `"cpu,cpufreq,meminfo,diskstats,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
 
-**Note:** For backward compatibilities of this plugin configurations, `scrape_interval` should behave as a root scraper for node's metrics. This could be affected for scraping intervals.
+**Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
 Each of `ne.xxx.scrape_interval` can specify each of intervals of metrics.
 However, they cannot affect the root collector of metrics to send the latter plugin pipeline.
 
