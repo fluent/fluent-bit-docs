@@ -36,7 +36,6 @@ This plugin is currently only supported on Linux based operating systems\
 
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
 Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and the associated set of metrics provided.
-However, all of node metrics will be collected the interval which is specified with the global `scrape_interval`.
 
 ## Collectors available
 
