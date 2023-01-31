@@ -2,7 +2,7 @@
 
 The **tail** input plugin allows to monitor one or several text files. It has a similar behavior like `tail -f` shell command.
 
-The plugin reads every matched file in the `Path` pattern and for every new line found \(separated by a ```\\n```\), it generates a new record. Optionally a database file can be used so the plugin can have a history of tracked files and a state of offsets, this is very useful to resume a state if the service is restarted.
+The plugin reads every matched file in the `Path` pattern and for every new line found \(separated by a ```\n\n```\), it generates a new record. Optionally a database file can be used so the plugin can have a history of tracked files and a state of offsets, this is very useful to resume a state if the service is restarted.
 
 ## Configuration Parameters <a id="config"></a>
 
