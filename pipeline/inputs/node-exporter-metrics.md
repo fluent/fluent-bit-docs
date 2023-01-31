@@ -22,7 +22,7 @@ This plugin is currently only supported on Linux based operating systems\
 | scrape_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
 | path.procfs     | The mount point used to collect process information and metrics        | /proc/    |
 | path.sysfs      | The path in the filesystem used to collect system metrics              | /sys/     |
-| collector.cpu.scrape\_interval       | The rate at which cpu metrics are collected from the host operating system. To enable for a specific collection interval, specify greater than 0. | 0 seconds |
+| collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.cpufreq.scrape\_interval   | The rate at which cpufreq metrics are collected from the host operating system. To enable for a specific collection interval, specify greater than 0. | 0 seconds |
 | collector.meminfo.scrape\_interval   | The rate at which meminfo metrics are collected from the host operating system. To enable for a specific collection interval, specify greater than 0. | 0 seconds |
 | collector.diskstats.scrape\_interval | The rate at which diskstats metrics are collected from the host operating system. To enable for a specific collection interval, specify greater than 0. | 0 seconds |
