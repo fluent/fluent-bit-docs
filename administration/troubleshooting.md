@@ -43,7 +43,7 @@ Fluent Bit v2.0.0
 
 ```
 
-In another window we can activate Tap by either using the instance id of the input; `dummy.0` or its alias. 
+In another terminal we can activate Tap by either using the instance id of the input; `dummy.0` or its alias. 
 
 Since the alias is more predictable that is what we will use:
 
@@ -53,7 +53,7 @@ $ curl 127.0.0.1:2020/api/v1/trace/input_dummy
 {"status":"ok"}
 ```
 
-This response means we have activated Tap, the window with Fluent Bit running should now look like this:
+This response means we have activated Tap, the terminal with Fluent Bit running should now look like this:
 
 ```shell
 [0] dummy.0: [1666346615.203253156, {"message"=>"dummy"}]
@@ -141,9 +141,9 @@ Now we should start seeing output similar to the following:
 [2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopped
 ```
 ### Parameters for the output in Tap 
-When activating Tap, any plugin parameter can be given to modify the output format, name of the time key, format of the date, etc.
+When activating Tap, any plugin parameter can be given. These can be used to modify, for example, the output format, the name of the time key, the format of the date, etc.
 
-In the next example we will use the parameter "format": "json" to demonstrate how Tap standard outputs can be shown in Json format, however this could be sent to any output plugin.
+In the next example we will use the parameter ```"format": "json"``` to demonstrate how in Tap, stdout can be shown in Json format, however this could be sent to any output plugin.
 
 First, run Fluent Bit enabling Tap:
 ```shell
@@ -166,25 +166,22 @@ Fluent Bit v2.0.8
 [0] dummy.0: [1674805466.973669512, {"message"=>"dummy"}]
 ...
 ```
-Next, in another window, we activate Tap including the output, in this case standard output, and the parameters wanted, in this case "format": "json":
+Next, in another terminal, we activate Tap including the output, in this case stdout, and the parameters wanted, in this case ```"format": "json"```:
 
 ```shell
 $ curl 127.0.0.1:2020/api/v1/trace/input_dummy -d '{"output":"stdout", "params": {"format": "json"}}'
 {"status":"ok"}
 ```
-In the first window, we should be seeing the output similar to the following:
+In the first terminal, we should be seeing the output similar to the following:
 ```shell
 [0] dummy.0: [1674805635.972373840, {"message"=>"dummy"}]
 [{"date":1674805634.974457,"type":1,"trace_id":"0","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805634,"record":{"message":"dummy"}}],"start_time":1674805634,"end_time":1674805634},{"date":1674805634.974605,"type":3,"trace_id":"0","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805634,"record":{"message":"dummy"}}],"start_time":1674805634,"end_time":1674805634},{"date":1674805635.972398,"type":1,"trace_id":"1","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805635,"record":{"message":"dummy"}}],"start_time":1674805635,"end_time":1674805635},{"date":1674805635.972413,"type":3,"trace_id":"1","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805635,"record":{"message":"dummy"}}],"start_time":1674805635,"end_time":1674805635}]
 [0] dummy.0: [1674805636.973970215, {"message"=>"dummy"}]
 [{"date":1674805636.974008,"type":1,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636},{"date":1674805636.974034,"type":3,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636}]
 ```
-This parameter shows standard output in Json format, however, as mentioned before, any plugin parameter can be used with the same method. 
+This parameter shows stdout in Json format, however, as mentioned before, parameters can be passed to any plugin. 
 
-Please visit the following link for more information on standard output parameters:
-https://docs.fluentbit.io/manual/pipeline/outputs/standard-output#configuration-parameters
-
-If you wish to use other output parameters please visit:
+Please visit the following link for more information on other output parameters:
 https://docs.fluentbit.io/manual/pipeline/outputs
 
 ### Analysis of a single Tap record
