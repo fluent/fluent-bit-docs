@@ -143,7 +143,7 @@ Now we should start seeing output similar to the following:
 ### Parameters for the output in Tap 
 When activating Tap, any plugin parameter can be given. These can be used to modify, for example, the output format, the name of the time key, the format of the date, etc.
 
-In the next example we will use the parameter ```"format": "json"``` to demonstrate how in Tap, stdout can be shown in Json format, however this could be sent to any output plugin.
+In the next example we will use the parameter ```"format": "json"``` to demonstrate how in Tap, stdout can be shown in Json format.
 
 First, run Fluent Bit enabling Tap:
 ```shell
@@ -181,7 +181,7 @@ In the first terminal, we should be seeing the output similar to the following:
 ```
 This parameter shows stdout in Json format, however, as mentioned before, parameters can be passed to any plugin. 
 
-Please visit the following link for more information on other output parameters:
+Please visit the following link for more information on other output plugins:
 https://docs.fluentbit.io/manual/pipeline/outputs
 
 ### Analysis of a single Tap record
