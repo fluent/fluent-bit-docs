@@ -60,14 +60,13 @@ For large bulk ingestions, you may have to increase buffer size with **buffer_ma
 #### Ingesting from beats series
 
 Ingesting from beats series agents is also supported.
-However, fluent-bit's node information is returning as Elasticsearch 8.0.0 and gzip compression is not supported yet.
+However, fluent-bit's node information is returning as Elasticsearch 8.0.0.
 
 So, users have to specify the following configurations on their beats configurations:
 
 ```yaml
 output.elasticsearch:
   allow_older_versions: true
-  compression_level: 0
   ilm: false
 ```
 
