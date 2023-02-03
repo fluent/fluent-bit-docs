@@ -1,7 +1,7 @@
 # Troubleshooting
 
 * [Tap Functionality: generate events or records](troubleshooting.md#tap-functionality)
-* [Dump Internals Signal](troubleshooting.md#dump-internals--signal)
+* [Dump Internals Signal](troubleshooting#dump-internals-signal)
 
 ## Tap Functionality
 
@@ -43,7 +43,7 @@ Fluent Bit v2.0.0
 
 ```
 
-In another window we can activate Tap by either using the instance id of the input; `dummy.0` or its alias. 
+In another terminal we can activate Tap by either using the instance id of the input; `dummy.0` or its alias. 
 
 Since the alias is more predictable that is what we will use:
 
@@ -53,7 +53,7 @@ $ curl 127.0.0.1:2020/api/v1/trace/input_dummy
 {"status":"ok"}
 ```
 
-This response means we have activated Tap, the window with Fluent Bit running should now look like this:
+This response means we have activated Tap, the terminal with Fluent Bit running should now look like this:
 
 ```shell
 [0] dummy.0: [1666346615.203253156, {"message"=>"dummy"}]
@@ -140,6 +140,50 @@ Now we should start seeing output similar to the following:
 [2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopping...
 [2022/10/21 10:49:25] [ info] [output:null:null.0] thread worker #0 stopped
 ```
+### Parameters for the output in Tap 
+When activating Tap, any plugin parameter can be given. These can be used to modify, for example, the output format, the name of the time key, the format of the date, etc.
+
+In the next example we will use the parameter ```"format": "json"``` to demonstrate how in Tap, stdout can be shown in Json format.
+
+First, run Fluent Bit enabling Tap:
+```shell
+$ docker run --rm -ti -p 2020:2020 fluent/fluent-bit:latest -Z -H -i dummy -p alias=input_dummy -o stdout -f 1
+Fluent Bit v2.0.8
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+
+[2023/01/27 07:44:25] [ info] [fluent bit] version=2.0.8, commit=9444fdc5ee, pid=1
+[2023/01/27 07:44:25] [ info] [storage] ver=1.4.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/01/27 07:44:25] [ info] [cmetrics] version=0.5.8
+[2023/01/27 07:44:25] [ info] [ctraces ] version=0.2.7
+[2023/01/27 07:44:25] [ info] [input:dummy:input_dummy] initializing
+[2023/01/27 07:44:25] [ info] [input:dummy:input_dummy] storage_strategy='memory' (memory only)
+[2023/01/27 07:44:25] [ info] [output:stdout:stdout.0] worker #0 started
+[2023/01/27 07:44:25] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
+[2023/01/27 07:44:25] [ info] [sp] stream processor started
+[0] dummy.0: [1674805465.976012761, {"message"=>"dummy"}]
+[0] dummy.0: [1674805466.973669512, {"message"=>"dummy"}]
+...
+```
+Next, in another terminal, we activate Tap including the output, in this case stdout, and the parameters wanted, in this case ```"format": "json"```:
+
+```shell
+$ curl 127.0.0.1:2020/api/v1/trace/input_dummy -d '{"output":"stdout", "params": {"format": "json"}}'
+{"status":"ok"}
+```
+In the first terminal, we should be seeing the output similar to the following:
+```shell
+[0] dummy.0: [1674805635.972373840, {"message"=>"dummy"}]
+[{"date":1674805634.974457,"type":1,"trace_id":"0","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805634,"record":{"message":"dummy"}}],"start_time":1674805634,"end_time":1674805634},{"date":1674805634.974605,"type":3,"trace_id":"0","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805634,"record":{"message":"dummy"}}],"start_time":1674805634,"end_time":1674805634},{"date":1674805635.972398,"type":1,"trace_id":"1","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805635,"record":{"message":"dummy"}}],"start_time":1674805635,"end_time":1674805635},{"date":1674805635.972413,"type":3,"trace_id":"1","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805635,"record":{"message":"dummy"}}],"start_time":1674805635,"end_time":1674805635}]
+[0] dummy.0: [1674805636.973970215, {"message"=>"dummy"}]
+[{"date":1674805636.974008,"type":1,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636},{"date":1674805636.974034,"type":3,"trace_id":"2","plugin_instance":"dummy.0","plugin_alias":"input_dummy","records":[{"timestamp":1674805636,"record":{"message":"dummy"}}],"start_time":1674805636,"end_time":1674805636}]
+```
+This parameter shows stdout in Json format, however, as mentioned before, parameters can be passed to any plugin. 
+
+Please visit the following link for more information on other output plugins:
+https://docs.fluentbit.io/manual/pipeline/outputs
+
 ### Analysis of a single Tap record
 
 Here we analyze a single record from a filter event to explain the meaning of each field in detail. 
