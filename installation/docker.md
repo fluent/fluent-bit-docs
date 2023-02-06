@@ -17,6 +17,8 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tag(s)      | Manifest Architectures    | Description                                                  |
 | ----------- | ------------------------- | ------------------------------------------------------------ |
+| 2.0.9       | x86\_64, arm64v8, arm32v7 | Release [v2.0.9](https://fluentbit.io/announcements/v2.0.9/) |
+| 2.0.9-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 2.0.8       | x86\_64, arm64v8, arm32v7 | Release [v2.0.8](https://fluentbit.io/announcements/v2.0.8/) |
 | 2.0.8-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 2.0.6       | x86\_64, arm64v8, arm32v7 | Release [v2.0.6](https://fluentbit.io/announcements/v2.0.6/) |
