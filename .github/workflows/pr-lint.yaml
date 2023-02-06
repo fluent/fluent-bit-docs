@@ -19,5 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     name: PR - Markdownlint
     steps:
+      - uses: actions/checkout@v3
       - name: Run markdownlint
         uses: actionshub/markdownlint@v2.1.2
