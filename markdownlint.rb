@@ -14,3 +14,14 @@ rule 'MD007', :indent => 2
 
 # Bash defaulting confuses this and now way to ignore code blocks
 exclude_rule 'MD029'
+
+# Used for subtitle links
+exclude_rule 'MD033'
+
+# Ignore trailing spaces
+exclude_rule 'MD009'
+
+# Special cases in place
+exclude_rule 'MD041'
+
+exclude_rule 'MD031'

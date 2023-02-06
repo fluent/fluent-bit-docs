@@ -16,7 +16,7 @@ Once a PR is merged, a third-party service called [Gitbook](https://gitbook.com)
 
 Documentation source code structure depends on Fluent Bit source code structure and its versions. In Fluent Bit source code, we  have a stable branch and a development branch; as of now, these are:
 
-- stable branch: [1.8](https://github.com/fluent/fluent-bit/tree/1.8)
+- stable branch: [1.9](https://github.com/fluent/fluent-bit/tree/1.9)
 - development branch: [master](https://github.com/fluent/fluent-bit/tree/master)
 
 For Documentation, we follow the same pattern; we have branches for the stable and development versions.
@@ -29,14 +29,14 @@ All contributions must be made **first** against [master branch](https://github.
 
 Most of the time GIT is not fully configured in your environment, and when cloning the repository and committing changes, the user email might not be set. Make sure your email is properly configured. You can check your current setting with:
 
-```bash
+```shell
 cd fluent-bit-docs/
-git config user.email 
+git config user.email
 ```
 
 If you need to adjust your email, do this:
 
-```
+```shell
 git config user.email something@myemailprovider.com
 ```
 
@@ -52,7 +52,7 @@ Considering that Syslog output plugin documentation resides in this address:
 
 the suggested commit will be:
 
-```
+```text
 pipeline: outputs: syslog: fix grammar in examples
 ```
 
@@ -66,11 +66,10 @@ Your commits must be **sign off**; this certifies who is the author of the commi
 
 The following link explains how to fix DCO error by signing your commits properly:
 
-- https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md
+- <https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md>
 
 For short: always use `-s` when committing your changes, e.g.:
 
-```
+```shell
 git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"
 ```
-
