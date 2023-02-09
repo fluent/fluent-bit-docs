@@ -262,3 +262,88 @@ end
 ```
 
 See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
+
+### Response code filtering
+
+In this example, we want to filter istio logs to exclude lines with response codes between 1 and 399.
+Istio is configured to write the logs in json format.
+
+#### Lua script
+
+Script `response_code_filter.lua`
+
+```lua
+function cb_response_code_filter(tag, timestamp, record)
+  response_code = record["response_code"]
+  if (response_code == nil or response_code == '') then
+    return 0,0,0
+  elseif (response_code ~= 0 and response_code < 400) then
+    return -1,0,0
+  else
+    return 0,0,0
+  end
+end
+```
+
+#### Configuration
+
+Configuration to get istio logs and apply response code filter to them.
+
+```ini
+    [INPUT]
+        Name                tail
+        Path                /var/log/containers/*_istio-proxy-*.log
+        multiline.parser    docker, cri
+        Tag                 istio.*
+        Mem_Buf_Limit       64MB
+        Skip_Long_Lines     Off
+
+    [FILTER]
+        Name                lua
+        Match               istio.*
+        Script              response_code_filter.lua
+        call                cb_response_code_filter
+
+    [Output]
+        Name                stdout
+        Match               *
+```
+
+#### Input
+
+```json
+{
+    "log": {
+        "response_code": 200,
+        "bytes_sent": 111328341,
+        "authority": "randomservice.randomservice",
+        "duration": 14493,
+        "request_id": "2e9d38f8-36a9-40a6-bdb2-47c8eb7d399d",
+        "upstream_local_address": "10.11.82.178:42738",
+        "downstream_local_address": "10.10.21.17:80",
+        "upstream_cluster": "outbound|80||randomservice.svc.cluster.local",
+        "x_forwarded_for": null,
+        "route_name": "default",
+        "upstream_host": "10.11.6.90:80",
+        "user_agent": "RandomUserAgent",
+        "response_code_details": "via_upstream",
+        "downstream_remote_address": "10.11.82.178:51096",
+        "bytes_received": 1148,
+        "path": "/?parameter=random",
+        "response_flags": "-",
+        "start_time": "2022-07-28T11:16:51.663Z",
+        "upstream_transport_failure_reason": null,
+        "method": "POST",
+        "connection_termination_details": null,
+        "protocol": "HTTP/1.1",
+        "requested_server_name": null,
+        "upstream_service_time": "6161"
+    },
+    "stream": "stdout",
+    "time": "2022-07-28T11:17:06.704109897Z"
+}
+```
+
+#### Output
+
+In the output only the messages with response code 0 or greater than 399 are shown.
