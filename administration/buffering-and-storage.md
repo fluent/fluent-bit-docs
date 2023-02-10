@@ -89,6 +89,7 @@ The Service section refers to the section defined in the main [configuration fil
 | storage.max\_chunks\_up | If the input plugin has enabled `filesystem` storage type, this property sets the maximum number of Chunks that can be `up` in memory. This helps to control memory usage. | 128 |
 | storage.backlog.mem\_limit | If _storage.path_ is set, Fluent Bit will look for data chunks that were not delivered and are still in the storage layer, these are called _backlog_ data. This option configures a hint of maximum value of memory to use when processing these records. | 5M |
 | storage.metrics | If `http_server` option has been enabled in the main `[SERVICE]` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | off |
+| storage.delete_irrecoverable_chunks | By enabling this setting, corrupted chunks will be deleted during runtime and when Fluent-Bit starts | Off |
 
 a Service section will look like this:
 
