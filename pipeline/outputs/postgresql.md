@@ -56,6 +56,7 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 | `Password` | Password of PostgreSQL username | - |
 | `Database` | Database name to connect to | - \(current user\) |
 | `Table` | Table name where to store data | - |
+| `Connection_Options` | PostgreSQL connection options | - |
 | `Timestamp_Key` | Key in the JSON object containing the record timestamp | date |
 | `Async` | Define if we will use async or sync connections | false |
 | `min_pool_size` | Minimum number of connection in async mode | 1 |
@@ -74,15 +75,16 @@ In your main configuration file add the following section:
 
 ```text
 [OUTPUT]
-    Name          pgsql
-    Match         *
-    Host          172.17.0.2
-    Port          5432
-    User          fluentbit
-    Password      YourCrazySecurePassword
-    Database      fluentbit
-    Table         fluentbit
-    Timestamp_Key ts
+    Name                pgsql
+    Match               *
+    Host                172.17.0.2
+    Port                5432
+    User                fluentbit
+    Password            YourCrazySecurePassword
+    Database            fluentbit
+    Table               fluentbit
+    Connection_Options  project=fluentbit
+    Timestamp_Key       ts
 ```
 
 ## The output table
