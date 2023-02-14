@@ -40,6 +40,7 @@ The following **output** plugins can take advantage of the TLS feature:
 * [Slack](../pipeline/outputs/slack.md)
 * [Splunk](../pipeline/outputs/splunk.md)
 * [Stackdriver](../pipeline/outputs/stackdriver.md)
+* [Syslog](../pipeline/outputs/syslog.md)
 * [TCP & TLS](../pipeline/outputs/tcp-and-tls.md)
 * [Treasure Data](../pipeline/outputs/treasure-data.md)
 
