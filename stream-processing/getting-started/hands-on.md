@@ -9,13 +9,13 @@ The following tutorial requires the following software components:
 * [Fluent Bit](https://fluentbit.io) &gt;= v1.2.0
 * [Docker Engine](https://www.docker.com/products/docker-engine) \(not mandatory if you already have Fluent Bit binary installed in your system\)
 
-In addition download the following data [sample file](../samples/sp-samples-1k.log) \(130KB\).
+In addition download the following data [sample file](https://raw.githubusercontent.com/fluent/fluent-bit-docs/37b477786d6e28eb223e08611c26ec93671a34ac/stream-processing/samples/sp-samples-1k.log) \(130KB\).
 
 ## Stream Processing using the command line
 
 For all next steps we will run Fluent Bit from the command line, and for simplicity we will use the official Docker image.
 
-### 1. Fluent Bit version:
+### 1. Fluent Bit version
 
 ```bash
 $ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
