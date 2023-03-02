@@ -312,6 +312,16 @@ Output plugins are defined in [flb\_output.h](https://github.com/fluent/fluent-b
 
 The [stdout plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/out_stdout) is very simple; review its code to understand how output plugins work.
 
+## Development Environment
+
+Fluent Bit provides a standalone environment for development. 
+Developers who use different OS or distributions can develop on a simple, common stack. 
+The development environment provides the required libraries and tools for you.
+
+Development environments provided for
+- [Devcontainer](https://github.com/fluent/fluent-bit/blob/master/DEVELOPER_GUIDE.md#devcontainer)
+- [Vagrant](https://github.com/fluent/fluent-bit/blob/master/DEVELOPER_GUIDE.md#vagrant).
+
 ## Testing
 
 During development, you can build Fluent Bit as follows:
