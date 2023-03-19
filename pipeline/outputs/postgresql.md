@@ -83,7 +83,7 @@ In your main configuration file add the following section:
     Password            YourCrazySecurePassword
     Database            fluentbit
     Table               fluentbit
-    Connection_Options  requiressl=0
+    Connection_Options  -c statement_timeout=0
     Timestamp_Key       ts
 ```
 
