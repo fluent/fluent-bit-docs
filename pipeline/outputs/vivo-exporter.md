@@ -104,7 +104,9 @@ To query ranges or starting from specific chunks IDs, remember that they are inc
 
 The following example specifies the range from chunk ID 1 to chunk ID 3 and only 1 chunk:
 
-`curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"` Output:
+`curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"`&#x20;
+
+Output:
 
 ```bash
 HTTP/1.1 200 OK
