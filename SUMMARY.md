@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v2.0 Documentation](README.md)
+* [Fluent Bit v2.1 Documentation](README.md)
 
 ## About
 
@@ -68,7 +68,7 @@
 * [Monitoring](administration/monitoring.md)
 * [HTTP Proxy](administration/http-proxy.md)
 * [Troubleshooting](administration/troubleshooting.md)
-  
+
 ## Local Testing
 
 * [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
@@ -178,6 +178,7 @@
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
+  * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
 
 ## Stream Processing
