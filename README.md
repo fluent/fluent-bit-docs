@@ -2,9 +2,9 @@
 description: High Performance Log and Metrics Processor
 ---
 
-# Fluent Bit v2.0 Documentation
+# Fluent Bit v2.1 Documentation
 
-![](.gitbook/assets/logo\_documentation\_2.0.png)
+![](.gitbook/assets/logo\_documentation\_2.1.png)
 
 [Fluent Bit](http://fluentbit.io) is a Fast and Lightweight Logs and Metrics Processor and Forwarder for Linux, OSX, Windows and BSD family operating systems. It has been made with a strong focus on performance to allow the collection of events from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
