@@ -20,7 +20,7 @@ Important Note: At the moment only HTTP endpoints are supported.
 | traces_uri                  | Specify an optional HTTP URI for the target web server listening for traces, e.g: /v1/traces | /         |
 | header               | Add a HTTP header key/value pair. Multiple headers can be set. |           |
 | log_response_payload | Log the response payload within the Fluent Bit log           | false     |
-| add_label            | This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields |           |
+| add_label            | This allows you to add custom labels to all metrics and logs (resource attributes) exposed through the OpenTelemetry exporter. You may have multiple `add_label` fields for each label you want to add|           |
 | compress            | Set payload compression mechanism. Option available is 'gzip' |           |
 
 ## Getting Started
