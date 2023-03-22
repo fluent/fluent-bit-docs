@@ -14,7 +14,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Regex | KEY  REGEX | Keep records in which the content of KEY matches the regular expression. |
 | Exclude | KEY REGEX | Exclude records in which the content of KEY matches the regular expression. |
-| Logical_Op| Operation | Specify whether to use logical conjuciton or disjunction. `AND` , `OR` and `legacy` are allowed as an Operation. `legacy` is for backward compatibility. Default is `legacy`.|
+| Logical_Op| Operation | Specify which logical operator to use. `AND` , `OR` and `legacy` are allowed as an Operation. Default is `legacy` for backward compatibility. In `legacy` mode the behaviour is either AND or OR depending whether the `grep` is including (uses AND) or excluding (uses OR). Only available from 2.1+. |
 
 #### Record Accessor Enabled
 
