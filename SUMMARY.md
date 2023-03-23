@@ -67,6 +67,7 @@
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
 * [HTTP Proxy](administration/http-proxy.md)
+* [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
 
 ## Local Testing
