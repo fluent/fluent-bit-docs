@@ -137,6 +137,10 @@ The following is an example of a main configuration file.
     Name gstdout
 ```
 
+#### Config key constraint
+
+Some config keys are reserved by Fluent Bit and must not be used by a custom plugin, they are: `alias`,`host`,`ipv6`,`listen`,`log_level`,`log_suppress_interval`,`match`,`match_regex`,`mem_buf_limit`,`port`,`retry_limit`,`routable`,`storage.pause_on_chunks_overlimit`, `storage.total_limit_size`, `storage.type`, `tag`,`threaded`,`tls`,`tls.ca_file`, `tls.ca_path`, `tls.crt_file`, `tls.debug`, `tls.key_file`, `tls.key_passwd`, `tls.verify`, `tls.vhost`, `workers`
+
 ### Run using a configuration file
 
 We can load a main configuration file using `-c` option.
