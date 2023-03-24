@@ -4,12 +4,15 @@ Vivo Exporter is an output plugin that exposes logs, metrics, and traces through
 
 ### Configuration Parameters
 
-| Key                    | Description                                                                                                                            | Default |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
-| `stream_queue_size`    | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
+| Key                      | Description                                                                                                                            | Default |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `empty_stream_on_read`   | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
+| `stream_queue_size`      | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
+| `http_cors_allow_origin` | Specify the value for the HTTP Access-Control-Allow-Origin header (CORS).                                                              |         |
 
 ### Getting Started
+
+Here is a simple configuration of Vivo Exporter, note that this example is not based on defaults.
 
 ```python
 [INPUT]
@@ -18,9 +21,10 @@ Vivo Exporter is an output plugin that exposes logs, metrics, and traces through
     rate  2
 
 [OUTPUT]
-    name                 vivo_exporter
-    empty_stream_on_read off
-    stream_queue_size    20M 
+    name                   vivo_exporter
+    empty_stream_on_read   off
+    stream_queue_size      20M
+     http_cors_allow_origin *
 ```
 
 ### How it works
