@@ -177,7 +177,7 @@ job="fluentbit", team="Santiago Wanderers"
 This plugin inherit core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
 
 * [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
-* [Security & TLS](../../administration/security.md): all about TLS configuration and certificates
+* [Security & TLS](../../administration/transport-security.md): all about TLS configuration and certificates
 
 Note that all options mentioned in the articles above must be enabled in the plugin configuration in question.
 
