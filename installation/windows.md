@@ -156,7 +156,7 @@ Download an EXE installer from the [download page](https://fluentbit.io/download
 
 Double-click the EXE installer you've downloaded. The installation wizard will automatically start.
 
-![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1).png>)
+![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1) (1).png>)
 
 Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
 
