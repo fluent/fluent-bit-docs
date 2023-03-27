@@ -1,5 +1,5 @@
 
-# Security
+# Transport Security
 
 Fluent Bit provides integrated support for _Transport Layer Security_ \(TLS\) and it predecessor _Secure Sockets Layer_ \(SSL\) respectively. In this section we will refer as TLS only for both implementations.
 
