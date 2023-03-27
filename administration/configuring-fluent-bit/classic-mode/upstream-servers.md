@@ -27,7 +27,7 @@ A _Node_ might contain additional configuration keys required by the plugin, on 
 
 In addition to the properties defined in the table above, the network operations against a defined node can optionally be done through the use of TLS for further encryption and certificates use.
 
-The TLS options available are described in the [TLS/SSL](../../security.md) section and can be added to the any _Node_ section.
+The TLS options available are described in the [TLS/SSL](../../transport-security.md) section and can be added to the any _Node_ section.
 
 ### Configuration File Example
 
