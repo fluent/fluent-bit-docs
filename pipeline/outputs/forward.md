@@ -27,7 +27,7 @@ The following parameters are mandatory for either Forward for Secure Forward mod
 
 ## Secure Forward Mode Configuration Parameters
 
-When using Secure Forward mode, the [TLS](../../administration/security.md) mode requires to be enabled. The following additional configuration parameters are available:
+When using Secure Forward mode, the [TLS](../../administration/transport-security.md) mode requires to be enabled. The following additional configuration parameters are available:
 
 | Key              | Description                                                                                                                               | Default   |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------- |

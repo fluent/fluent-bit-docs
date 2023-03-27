@@ -59,7 +59,7 @@
     * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
-* [Security](administration/security.md)
+* [Transport Security](administration/transport-security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
 * [Scheduling and Retries](administration/scheduling-and-retries.md)

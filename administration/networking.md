@@ -26,7 +26,7 @@ TCP is a _connected oriented_ channel, to deliver and receive data from a remote
 
 The concept of `Connection Keepalive` refers to the ability of the client \(Fluent Bit on this case\) to keep the TCP connection open in a persistent way, that means that once the connection is created and used, instead of close it, it can be recycled. This feature offers many benefits in terms of performance since communication channels are always established before hand.
 
-Any component that uses TCP channels like HTTP or [TLS](security.md), can take advantage of this feature. For configuration purposes use the `net.keepalive` property.
+Any component that uses TCP channels like HTTP or [TLS](transport-security.md), can take advantage of this feature. For configuration purposes use the `net.keepalive` property.
 
 ### Connection Keepalive Idle Timeout
 
