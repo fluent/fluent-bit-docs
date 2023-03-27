@@ -1,5 +1,5 @@
 ---
-description: High Performance Log and Metrics Processor
+description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
 # Fluent Bit v2.1 Documentation
