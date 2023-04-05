@@ -57,4 +57,4 @@ Fluent Bit Sandbox Environment
 Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, and additional support and features including aspects like CVE backporting.
 A list provided by fluentbit.io/enterprise is provided below
 
-* [Calyptia Fluent Bit LTS](https://www.calyptia.com/download)
+* [Calyptia Fluent Bit LTS](https://calyptia.com/products/lts-fluentbit/)
