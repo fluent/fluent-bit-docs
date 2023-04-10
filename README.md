@@ -12,22 +12,22 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 * High Performance: High throughput with low resources consumption
 * Data Parsing
-  * Convert your unstructured messages using our parsers: [JSON](broken-reference/), [Regex](broken-reference/), [LTSV](broken-reference/) and [Logfmt](broken-reference/)
+  * Convert your unstructured messages using our parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
 * Metrics Support: Prometheus and OpenTelemetry compatible
 * Reliability and Data Integrity
-  * [Backpressure](broken-reference/) Handling
-  * [Data Buffering](broken-reference/) in memory and file system
+  * [Backpressure](administration/backpressure.md) Handling
+  * [Data Buffering](administration/buffering-and-storage.md) in memory and file system
 * Networking
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
-* Pluggable Architecture and [Extensibility](broken-reference/): Inputs, Filters and Outputs
+* Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
   * More than 100 built-in plugins are available
   * Extensibility
     * Write any input, filter or output plugin in C language
-    * WASM: [WASM Filter Plugins](broken-reference/) or [WASM Input Plugins](broken-reference/)
-    * Bonus: write [Filters in Lua](broken-reference/) or [Output plugins in Golang](broken-reference/)
-* [Monitoring](broken-reference/): expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
-* [Stream Processing](broken-reference/): Perform data selection and transformation using simple SQL queries
+    * WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)
+    * Bonus: write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
+* [Monitoring](administration/monitoring.md): expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
+* [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using simple SQL queries
   * Create new streams of data using query results
   * Aggregation Windows
   * Data analysis and prediction: Timeseries forecasting
