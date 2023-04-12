@@ -10,10 +10,20 @@ The _Grep Filter_ plugin allows you to match or exclude specific records based o
 
 The plugin supports the following configuration parameters:
 
-| Key | Value Format | Description |
-| :--- | :--- | :--- |
-| Regex | KEY  REGEX | Keep records in which the content of KEY matches the regular expression. |
-| Exclude | KEY REGEX | Exclude records in which the content of KEY matches the regular expression. |
+| Key | Value Format | Record Type | Description |
+| :--- | :--- | :--- | :--- |
+| Regex | KEY  REGEX | String | Keep records in which the content of KEY matches the regular expression. |
+| Exclude | KEY REGEX | String |Exclude records in which the content of KEY matches the regular expression. |
+| number_equal | KEY NUMBER | number |Keep records in which the content of KEY is EQUAL to NUMBER. |
+| number_not_equal | KEY NUMBER | number |Keep records in which the content of KEY is NOT EQUAL to NUMBER. |
+| number_less_than | KEY NUMBER | number |Keep records in which the content of KEY is LESS THEN the NUMBER. |
+| number_less_than_or_equal | KEY NUMBER | number |Keep records in which the content of KEY is LESS THEN or EQUAL to NUMBER. |
+| number_greater_than | KEY NUMBER | number |Keep records in which the content of KEY is GREATHER THAN the NUMBER. |
+| number_greater_than_or_equal | KEY NUMBER | number |Keep records in which the content of KEY is GREATHER THAN OR EQUAL to NUMBER. |
+
+
+If you use the number compare parameters with a KEY that does not have a NUMBER as a value, it will be excluded.
+Also, if you use `REGEX` or `EXCLUDE` with a number, it will never match it.
 
 #### Record Accessor Enabled
 
