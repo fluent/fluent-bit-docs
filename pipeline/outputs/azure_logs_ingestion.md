@@ -14,7 +14,7 @@ The Logs ingestion API requires the following components:
 - A Data Collection Rule (DCR) and
 - A Log Analytics Workspace
 
-> Note: According to [this document](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-monitor/logs/logs-ingestion-api-overview.md#components), all resources must be in the same region.
+> Note: According to [this document](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-monitor/logs/logs-ingestion-api-overview.md#components), all resources should be in the same region.
 
 To visualize basic Logs Ingestion operation, see the following image:
 ![](../../.gitbook/assets/azure-logs-ingestion-overview.png)
@@ -26,7 +26,7 @@ To get more details about how to setup these components, please refer to the fol
 
 ## Configuration Parameters
 
-| Key           | Description                | default |
+| Key           | Description                | Default |
 | :------------ | :------------------------- | :------ |
 | tenant\_id    | _Required_ - The tenant ID of the AAD application. ||
 | client\_id    | _Required_ - The client ID of the AAD application. ||
@@ -51,28 +51,26 @@ You can follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-mo
 
 ### Configuration File
 
-The `[INPUT]` and `[FILTER]` configuration will depend on the DCR data transformation.
-Use this configuration to quickly get started::
+Use this configuration to quickly get started:
 
 ```ini
 [INPUT]
-    Name    cpu
+    Name    tail
+    Path    /path/to/your/sample.log
     Tag     sample
-
-# Or use a tail Plugin
-#[INPUT]
-#    Name    tail
-#    Path    /path/to/your/sample.log
-#    Tag     sample
-#    Key     RawData 
+    Key     RawData 
+# Or use other plugins Plugin
+# [INPUT]
+#     Name    cpu
+#     Tag     sample
 
 [FILTER]
     Name modify
     Match sample
-    # Add a json key named "Application":"fb_log" to log output
+    # Add a json key named "Application":"fb_log"
     Add Application fb_log
 
-# Enable this section to see your json-log format from fluentbit
+# Enable this section to see your json-log format
 #[OUTPUT]
 #    Name stdout
 #    Match *
@@ -82,10 +80,12 @@ Use this configuration to quickly get started::
     client_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
     client_secret   some.secret.xxxzzz
     tenant_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-    dce_url         https://log-analytics-dce-XXXX.westus3-1.ingest.monitor.azure.com
+    dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
     dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     table_name      ladcr_CL
     time_generated  true
     time_key        Time
     Compress        true
 ```
+
+Setup your DCR transformation accordingly based on the json output from fluent-bit's pipeline (input, parser, filter, output).
