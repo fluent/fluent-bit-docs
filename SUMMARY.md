@@ -127,6 +127,7 @@
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
+  * [Log to Metrics](pipeline/filters/log_to_metrics.md)
   * [Lua](pipeline/filters/lua.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
