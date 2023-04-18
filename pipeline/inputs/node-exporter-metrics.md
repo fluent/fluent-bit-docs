@@ -15,13 +15,28 @@ The initial release of Node Exporter Metrics contains a subset of collectors and
 This plugin is currently only supported on Linux based operating systems\
 
 
-## Configuration 
+## Configuration
 
 | Key             | Description                                                            | Default   |
 | --------------- | ---------------------------------------------------------------------- | --------- |
 | scrape_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
 | path.procfs     | The mount point used to collect process information and metrics        | /proc/    |
 | path.sysfs      | The path in the filesystem used to collect system metrics              | /sys/     |
+| collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.cpufreq.scrape\_interval   | The rate in seconds at which cpufreq metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.meminfo.scrape\_interval   | The rate in seconds at which meminfo metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.diskstats.scrape\_interval | The rate in seconds at which diskstats metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.filesystem.scrape\_interval | The rate in seconds at which filesystem metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.uname.scrape\_interval     | The rate in seconds at which uname metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used.| 0 seconds |
+| collector.stat.scrape\_interval      | The rate in seconds at which stat metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.time.scrape\_interval      | The rate in seconds at which time metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.loadavg.scrape\_interval   | The rate in seconds at which loadavg metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.vmstat.scrape\_interval   | The rate in seconds at which vmstat metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.filefd.scrape\_interval   | The rate in seconds at which filefd metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| metrics | To specify which metrics are collected from the host operating system. These metrics depend on `/proc` or `/sys` fs. The actual values of metrics will be read from `/proc` or `/sys` when needed. cpu, cpufreq, meminfo, diskstats, filesystem, stat, loadavg, vmstat, netdev, and filefd depend on procfs. cpufreq metrics depend on sysfs. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
+
+**Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
+Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and the associated set of metrics provided.
 
 ## Collectors available
 
