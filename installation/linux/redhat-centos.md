@@ -43,7 +43,7 @@ We provide **fluent-bit** through a Yum repository. In order to add the reposito
 ```shell
 [fluent-bit]
 name = Fluent Bit
-baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
+baseurl = https://packages.fluentbit.io/centos/$releasever/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 repo_gpgcheck=1
@@ -78,20 +78,19 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 Once your repository is configured, run the following command to install it:
 
 ```bash
-yum install fluent-bit
+sudo yum install fluent-bit
 ```
 
 Now the following step is to instruct _Systemd_ to enable the service:
 
 ```bash
-sudo service fluent-bit start
+sudo systemctl start fluent-bit
 ```
 
 If you do a status check, you should see a similar output like this:
 
 ```bash
-$ service fluent-bit status
-Redirecting to /bin/systemctl status  fluent-bit.service
+$ systemctl status fluent-bit
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/usr/lib/systemd/system/fluent-bit.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago
