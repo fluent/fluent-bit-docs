@@ -17,7 +17,17 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 
 | Key             | Description                                                            | Default   |
 | --------------- | ---------------------------------------------------------------------- | --------- |
-| scrape_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
+| scrape\_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
+| collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.logical_disk.scrape\_interval | The rate in seconds at which logical\_disk metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.cs.scrape\_interval | The rate in seconds at which cs metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.os.scrape\_interval | The rate in seconds at which os metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.thermalzone.scrape\_interval | The rate in seconds at which thermalzone metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used.| 0 seconds |
+| collector.cpu\_info.scrape\_interval | The rate in seconds at which cpu\_info metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.logon.scrape\_interval    | The rate in seconds at which logon metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.system.scrape\_interval   | The rate in seconds at which system metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| metrics | To specify which metrics are collected from the host operating system. | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system"` |
 
 ## Collectors available
 
@@ -25,9 +35,17 @@ The following table describes the available collectors as part of this plugin. A
 
 > note: the Version column specifies the Fluent Bit version where the collector is available.
 
-| Name      | Description                                                                                      | OS      | Version |
-| --------- | ------------------------------------------------------------------------------------------------ | ------- | ------- |
-| cpu       | Exposes CPU statistics.                                                                          | Windows | v1.9    |
+| Name          | Description                                                                                      | OS      | Version |
+| ------------- | ------------------------------------------------------------------------------------------------ | ------- | ------- |
+| cpu           | Exposes CPU statistics.                                                                          | Windows | v1.9    |
+| net           | Exposes Network statistics.                                                                      | Windows | v2.0.8  |
+| logical\_disk | Exposes logical\_disk statistics.                                                                | Windows | v2.0.8  |
+| cs            | Exposes cs statistics.                                                                           | Windows | v2.0.8  |
+| os            | Exposes OS statistics.                                                                           | Windows | v2.0.8  |
+| thermalzone   | Exposes thermalzone statistics.                                                                  | Windows | v2.0.8  |
+| cpu\_info     | Exposes cpu\_info statistics.                                                                    | Windows | v2.0.8  |
+| logon         | Exposes logon statistics.                                                                        | Windows | v2.0.8  |
+| system        | Exposes system statistics.                                                                       | Windows | v2.0.8  |
 
 ## Getting Started
 
