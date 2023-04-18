@@ -1,14 +1,14 @@
 ---
-description: Enable hot reload through a command line argument or a HTTP endpoint
+description: Enable hot reload through SIGHUP signal or an HTTP endpoint
 ---
 
 # Hot Reload
 
-FLuent Bit supports hot relaoding feature when enabling via command line with `-Y` or `--enable-hot-reload` option.
+Fluent Bit supports the hot reloading feature when enabled via the command line with `-Y` or `--enable-hot-reload` option.
 
 ## Getting Started
 
-To get started, the first step is to enable the HTTP Server from the configuration file:
+To get started with reloading via HTTP, the first step is to enable the HTTP Server from the configuration file:
 
 ```
 [SERVICE]
@@ -16,30 +16,30 @@ To get started, the first step is to enable the HTTP Server from the configurati
     HTTP_Listen  0.0.0.0
     HTTP_PORT    2020
 
-# Other stuffs of plugin configurations
+# Other stuff of plugin configurations
 ```
 
-The above configuration snippet will enable HTTP endpoint for hot reloading.
+The above configuration snippet will enable the HTTP endpoint for hot reloading.
 
 ## How to reload
 
-### via HTTP
+### Via HTTP
 
 Hot reloading can be kicked via HTTP endpoints that are:
 
 * `PUT /api/v2/reload`
 * `POST /api/v2/reload`
 
-If users don't enable hot reloading feature, hot reloading via these endpoinds does not work.
+If users don't enable the hot reloading feature, hot reloading via these endpoints will not work.
 
-For using curl to reload fluent-bit, users must specify empty request body as:
+For using curl to reload fluent-bit, users must specify an empty request body as:
 
 
 ```text
-$ curl -XPOST -d {} localhost:2020/api/v2/reload
+$ curl -X POST -d {} localhost:2020/api/v2/reload
 ```
 
-### via Signal
+### Via Signal
 
 Hot reloading also can be kicked via `SIGHUP`.
 
@@ -47,4 +47,5 @@ Hot reloading also can be kicked via `SIGHUP`.
 
 ## Limitations
 
-Hot reloading feature is currently working on Linux and macOS. And Windows is not supported yet.
+The hot reloading feature is currently working on Linux and macOS. Windows is not supported yet.
+
