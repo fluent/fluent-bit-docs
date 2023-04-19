@@ -77,16 +77,16 @@ From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1
 
 ## Installation Packages
 
-The latest stable version is 2.0.9, each version is available on the Github release as well as at `https://releases.fluentbit.io/<Major Version>/fluent-bit-<Full Version>-win[32|64].[exe|zip]`:
+The latest stable version is 2.1.0, each version is available on the Github release as well as at :
 
-| INSTALLERS                                                                                 | SHA256 CHECKSUMS                                                                                                                        |
-| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| [fluent-bit-2.0.9-win32.exe](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win32.exe) | [a6c1a74acc00ce6211694f4f0a037b1b6ce3ab8dd4e6d857ea7d0d4cbadec682](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win32.exe.sha256) |
-| [fluent-bit-2.0.9-win32.zip](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win32.zip) | [8c0935a89337d073d4eae3440c65f55781bc097cdefa8819d2475db6c1befc9c](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win32.zip.sha256) |
-| [fluent-bit-2.0.9-win64.exe](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win64.exe) | [7970350f5bd0212be7d87ad51046a6d1600f3516c6209cd69af6d95759d280df](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win64.exe.sha256) |
-| [fluent-bit-2.0.9-win64.zip](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win64.zip) | [94750cf1faf6f5594047f70c585577ee38d8cdd4d6e098eefb3e665c98c3709f](https://releases.fluentbit.io/2.0/fluent-bit-2.0.9-win64.zip.sha256) |
+| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [fluent-bit-2.1.0-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.0-win32.exe) | [a1c4f68060a71b93d8ef459539a9d57043955272a2d93a1c33b4827a5cadc983](https://releases.fluentbit.io/2.0/fluent-bit-2.1.0-win32.exe.sha256) |
+| [fluent-bit-2.1.0-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.0-win32.zip) | [e18d5a27d069c31b9113b16bb0ff514e66360d6ae016472a806e47f1207fe227](https://releases.fluentbit.io/2.0/fluent-bit-2.1.0-win32.zip.sha256) |
+| [fluent-bit-2.1.0-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.0-win64.exe) | [5e79f7ff5ea496811e9b8cafffe3dc7c0fd3a69c150dc77f9d6d19a942d8ee90](https://releases.fluentbit.io/2.0/fluent-bit-2.1.0-win64.exe.sha256) |
+| [fluent-bit-2.1.0-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.0-win64.zip) | [1332e642fffba5866bce6fd3b89bb65dc9dd9436446dc1f38695bc8d01ba0f0e](https://releases.fluentbit.io/2.0/fluent-bit-2.1.0-win64.zip.sha256) |
 
-To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
+To check the integrity, use  cmdlet on PowerShell.
 
 ```powershell
 PS> Get-FileHash fluent-bit-2.0.9-win32.exe
