@@ -50,6 +50,7 @@ redirects:
     output/azure_kusto:    ./pipeline/outputs/azure_kusto.md
     output/bigquery:       ./pipeline/outputs/bigquery.md
     output/counter:        ./pipeline/outputs/counter.md
+    output/chronicle:      ./pipeline/outputs/chronicle.md
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
     output/datadog:        ./pipeline/outputs/datadog.md
     output/es:             ./pipeline/outputs/elasticsearch.md

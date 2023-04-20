@@ -156,6 +156,7 @@
   * [FlowCounter](pipeline/outputs/flowcounter.md)
   * [Forward](pipeline/outputs/forward.md)
   * [GELF](pipeline/outputs/gelf.md)
+  * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
