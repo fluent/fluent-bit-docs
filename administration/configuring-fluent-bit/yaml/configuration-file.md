@@ -47,7 +47,7 @@ The _includes_ section allows the files to be merged into the YAML configuration
 Example:
 
 ```yaml
-# defining a file to include into the current configuration
+# defining file(s) to include into the current configuration
 includes:
     - inclusion-1.yaml
     - subdir/inclusion-2.yaml
