@@ -6,9 +6,10 @@ description: This page describes the yaml configuration file used by Fluent Bit
 
 One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope.
 
-The yaml configuration file supports the following sections:
+The YAML configuration file supports the following sections:
 
 * Env
+* Includes
 * Service
 * Pipeline
   * Inputs
@@ -16,12 +17,12 @@ The yaml configuration file supports the following sections:
   * Outputs
 
 {% hint style="info" %}
-YAML configuration is used in the smoke tests for containers so an always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
+YAML configuration is used in the smoke tests for containers, so an always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
 {% endhint %}
 
 ## Env <a href="config_env" id="config_env"></a>
 
-The _env_ section allows to configure variables that will be used later on this configuration file.
+The _env_ section allows the definition of configuration variables that will be used later in the configuration file.
 
 Example:
 
@@ -37,27 +38,45 @@ service:
     http_server: on
 ```
 
+
+
+## Includes<a href="config_env" id="config_env"></a>
+
+The _includes_ section allows the files to be merged into the YAML configuration to be identified as a list of filenames. If no path is provided, then the file is assumed to be in a folder relative to the file referencing it.
+
+Example:
+
+```yaml
+# defining file(s) to include into the current configuration. This includes illustrating using a relative path reference
+includes:
+    - inclusion-1.yaml
+    - subdir/inclusion-2.yaml
+
+```
+
+
+
 ## Service <a href="config_section" id="config_section"></a>
 
-The _service_ section defines global properties of the service, the keys available as of this version are described in the following table:
+The _service_ section defines the global properties of the service. The Service keys available as of this version are described in the following table:
 
 | Key             | Description                                                                                                                                                                                                                                                                                             | Default Value |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | flush           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins.                                                                                                         | 5             |
-| grace           | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit                                                                                                                                                                                      | 5             |
-| daemon          | Boolean value to set if Fluent Bit should run as a Daemon (background) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option.                                                                 | Off           |
-| dns.mode        | Set the primary transport layer protocol used by the asynchronous DNS resolver which can be overridden on a per plugin basis                                                                                                                                                                             | UDP           |
-| log_file        | Absolute path for an optional log file. By default all logs are redirected to the standard error interface (stderr).                                                                                                                                                                                    |               |
-| log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
+| grace           | Set the grace time in `seconds` as an Integer value. The engine loop uses a Grace timeout to define the wait time on exit                                                                                                                                                                               | 5             |
+| daemon          | Boolean value to set if Fluent Bit should run as a Daemon (background) or not. Allowed values are: yes, no, on, and off.  note: If you are using a Systemd based unit like the one we provide in our packages, do not turn on this option.                                                            | Off           |
+| dns.mode        | Sets the primary transport layer protocol used by the asynchronous DNS resolver, which can be overridden on a per plugin basis                                                                                                                                                                       | UDP           |
+| log_file        | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (stderr).                                                                                                                                                                                   |               |
+| log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g., if 'debug' is set, it will include error, warning, info, and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
 | parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
-| plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                                                     |               |
+| plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows the definition of paths for external plugins; for an example, [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                         |               |
 | streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../../stream-processing/introduction.md).                                                                                                                                               |               |
 | http_server     | Enable built-in HTTP Server                                                                                                                                                                                                                                                                             | Off           |
 | http_listen     | Set listening interface for HTTP Server when it's enabled                                                                                                                                                                                                                                               | 0.0.0.0       |
 | http_port       | Set TCP Port for the HTTP Server                                                                                                                                                                                                                                                                        | 2020          |
-| coro_stack_size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value (say 4096), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing.              | 24576         |
-| scheduler.cap   | Set a maximum retry time in second. The property is supported from v1.8.7.                                                                                                                                                                                                                              | 2000          |
-| scheduler.base  | Set a base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                               | 5             |
+| coro_stack_size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small a value (say 4096), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing.            | 24576         |
+| scheduler.cap   | Set a maximum retry time in seconds. The property is supported from v1.8.7.                                                                                                                                                                                                                             | 2000          |
+| scheduler.base  | Sets the base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                          | 5             |
 | json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
 
 The following is an example of a _service_ section:
@@ -110,13 +129,13 @@ pipeline:
 
 ### Filter <a href="config_filter" id="config_filter"></a>
 
-A _filter_ section defines a filter (related to an filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add it own configuration keys:
+A _filter_ section defines a filter (related to a filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add it own configuration keys:
 
-| Key         | Description                                                                                                                                             |
-|------------ |-------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Name        | Name of the filter plugin. Defined as a subsection of the _filters_ section.                                                                            |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
+| Key         | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| Name        | Name of the filter plugin. Defined as a subsection of the _filters_ section. |
+| Match       | A pattern to match against the tags of incoming records. It's case-sensitive and supports the star (\*) character as a wildcard. |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |
 | Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
@@ -135,14 +154,14 @@ pipeline:
 
 ### Output <a href="config_output" id="config_output"></a>
 
-The _outputs_ section specify a destination that certain records should follow after a Tag match. Currently, Fluent Bit can route up to 256 _OUTPUT_ plugins. The configuration support the following keys:
+The _outputs_ section specify a destination that certain records should follow after a Tag match. Currently, Fluent Bit can route up to 256 _OUTPUT_ plugins. The configuration supports the following keys:
 
-| Key         | Description                                                                                                                                             |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Name        | Name of the output plugin. Defined as a subsection of the _outputs_ section.                                                                            |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
-| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
+| Key         | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| Name        | Name of the output plugin. Defined as a subsection of the _outputs_ section. |
+| Match       | A pattern to match against the tags of incoming records. It's case-sensitive and supports the star (\*) character as a wildcard. |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. The output log level defaults to the _SERVICE_ section's _Log_Level._ |
 
 #### Example output
 
