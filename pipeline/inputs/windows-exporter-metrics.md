@@ -19,7 +19,7 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | --------------- | ---------------------------------------------------------------------- | --------- |
 | scrape\_interval | The rate at which metrics are collected from the host operating system | 5 seconds |
 | we.logical\_disk.allow\_disk\_regex | Specify to be allowed regex for logical disk metrics                   | "/.+/"    |
-| we.logical\_disk.deny\_disk\_regex  | Specify to be denied regex for logical disk metrics                    | `NULL`    |
+| we.logical\_disk.deny\_disk\_regex  | Specify the regex for logical disk metrics to prevent collection of/ignore. Allow all by default. | `NULL`    |
 | we.net.allow\_disk\_regex           | Specify to be allowed regex for net metrics by name of NIC             | "/.+/"    |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
