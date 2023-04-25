@@ -36,7 +36,9 @@ This plugin is currently only supported on Linux based operating systems\
 | metrics | To specify which metrics are collected from the host operating system. These metrics depend on `/proc` or `/sys` fs. The actual values of metrics will be read from `/proc` or `/sys` when needed. cpu, cpufreq, meminfo, diskstats, filesystem, stat, loadavg, vmstat, netdev, and filefd depend on procfs. cpufreq metrics depend on sysfs. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
 
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
-Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and the associated set of metrics provided.
+Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and updates the associated set of provided metrics.
+
+For sending metrics data of the latter data pipeline, it only relies on the `scrape_interval` setting. When specifying some of the `collector.xxx.scrape_interval` options' intervals are less than the top-level interval of the `scrape_interval` settings, metrics are collected from each of the intervals. Although, the collected metrics are pushed into the latter pipeline in every interval that specified in the top-level interval. This feature aims to make a downsampling to collect metrics.
 
 ## Collectors available
 
