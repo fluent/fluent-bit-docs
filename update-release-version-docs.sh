@@ -28,8 +28,8 @@ if [[ -z "$MAJOR_VERSION" ]]; then
     MAJOR_VERSION=${VERSION%.*}
 fi
 
-sed_wrapper -i -e "/| Tag(s).*$/a | $NEW_VERSION-debug | x86\_64, arm64v8, arm32v7 | Release [v$NEW_VERSION](https://fluentbit.io/announcements/v$NEW_VERSION/) |" "$SCRIPT_DIR"/installation/docker.md
-sed_wrapper -i -e "/| Tag(s).*$/a | $NEW_VERSION | x86\_64, arm64v8, arm32v7 | Debug images |" "$SCRIPT_DIR"/installation/docker.md
+sed_wrapper -i -e "/^| -[-| ]+- |$/a | $NEW_VERSION-debug | x86\_64, arm64v8, arm32v7 | Release [v$NEW_VERSION](https://fluentbit.io/announcements/v$NEW_VERSION/) |" "$SCRIPT_DIR"/installation/docker.md
+sed_wrapper -i -e "/^| -[-| ]+- |$/a | $NEW_VERSION | x86\_64, arm64v8, arm32v7 | Debug images |" "$SCRIPT_DIR"/installation/docker.md
 
 WIN_32_EXE_HASH=${WIN_32_EXE_HASH:?}
 WIN_32_ZIP_HASH=${WIN_32_ZIP_HASH:?}
