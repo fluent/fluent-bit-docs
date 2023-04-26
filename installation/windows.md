@@ -79,19 +79,19 @@ From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1
 
 ## Installation Packages
 
-The latest stable version is 2.1.1, each version is available on the Github release as well as at :
+The latest stable version is 2.1.2 each version is available on the Github release as well as at :
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.1.1-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win32.exe) | [dda7d881ab2d828bf1ef6add59dbd1562ece0a96e7c99dd87a139c7b0f9cd3fc](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win32.exe.sha256) |
-| [fluent-bit-2.1.1-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win32.zip) | [5a1e12750d3d78653fbb470983f6eca68bde31fa31466a8d38e5faab49d5453e](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win32.zip.sha256) |
-| [fluent-bit-2.1.1-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win64.exe) | [d8bf46520d61c74030818a77aa2382caf99e8d098f88f0233e366d97d06dc4cc](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win64.exe.sha256) |
-| [fluent-bit-2.1.1-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win64.zip) | [72cbe76133c028bb4f56e28bca0d94d842613c2c2bdd515bedf85a624beffe30](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win64.zip.sha256) |
+| [fluent-bit-2.1.2-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.exe) | [fa1a6c6a1d8dcf3bff34aca35e52b7c9159d63d2d4602c3862407dde7a8ff0d2](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.exe.sha256) |
+| [fluent-bit-2.1.2-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.zip) | [94a1d238163b052ebcfa25708e6d10cef418fed0625afc1014186ca9e5eded7c](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.zip.sha256) |
+| [fluent-bit-2.1.2-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.exe) | [d53b3239dac064b2308590b7a5ccaa54cb277f8201d4283976775b0478253c85](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.exe.sha256) |
+| [fluent-bit-2.1.2-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.zip) | [aca353818b1c06cf51f3080c59d7dce973fc3244dcd09c229206bf9d9cbcb61b](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-2.0.9-win32.exe
+PS> Get-FileHash fluent-bit-2.1.2-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -101,7 +101,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-2.0.9-win64.zip
+PS> Expand-Archive fluent-bit-2.1.2-win64.zip
 ```
 
 The ZIP package contains the following set of files.
