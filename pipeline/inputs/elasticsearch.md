@@ -72,7 +72,7 @@ output.elasticsearch:
   ilm: false
 ```
 
-From large log ingestions on their beats,
+For large log ingestion on these beat plugins,
 users might have to add addtional settings of processors to use rate limit feature on beats
 when Fluent Bit complains that exceeding limit size of HTTP requests:
 
