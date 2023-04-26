@@ -38,7 +38,9 @@ This plugin is currently only supported on Linux based operating systems\
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
 Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and updates the associated set of provided metrics.
 
-For sending metrics data of the latter data pipeline, it only relies on the `scrape_interval` setting. When specifying some of the `collector.xxx.scrape_interval` options' intervals are less than the top-level interval of the `scrape_interval` settings, metrics are collected from each of the intervals. Although, the collected metrics are pushed into the latter pipeline in every interval that specified in the top-level interval. This feature aims to make a downsampling to collect metrics.
+The overridden intervals only change the collection interval, not the interval for publishing the metrics which is taken from the global setting.
+For example, if the global interval is set to 5s and an override interval of 60s is used then the published metrics will be reported every 5s but for the specific collector they will stay the same for 60s until it is collected again.
+This feature aims to help with down-sampling when collecting metrics.
 
 ## Collectors available
 
