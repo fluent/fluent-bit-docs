@@ -1,6 +1,6 @@
 # Elasticsearch (Bulk API)
 
-The **elasticsearch** input plugin, allows the handling of Elasticsearch and also OpenSearch Bulk API requests.
+The **elasticsearch** input plugin handles both Elasticsearch and OpenSearch Bulk API requests.
 
 ## Configuration Parameters
 
