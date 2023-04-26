@@ -60,7 +60,9 @@ For large bulk ingestions, you may have to increase buffer size with **buffer_ma
 #### Ingesting from beats series
 
 Ingesting from beats series agents is also supported.
-However, Fluent Bit's node information is returning as Elasticsearch 8.0.0.
+For example, [Filebeats](https://www.elastic.co/beats/filebeat), [Metricbeat](https://www.elastic.co/beats/metricbeat), and [Winlogbeat](https://www.elastic.co/beats/winlogbeat) are able to ingest their collected data through this plugin.
+
+Note that Fluent Bit's node information is returning as Elasticsearch 8.0.0.
 
 So, users have to specify the following configurations on their beats configurations:
 
