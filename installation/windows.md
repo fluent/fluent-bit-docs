@@ -78,22 +78,6 @@ Make sure to provide a valid Windows configuration with the installation, a samp
 From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1.9.9. The correct package name to use now is `fluent-bit`.
 
 ## Installation Packages
-
-The latest stable version is 2.1.1, each version is available on the Github release as well as at :
-
-| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.1.1-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win32.exe) | [dda7d881ab2d828bf1ef6add59dbd1562ece0a96e7c99dd87a139c7b0f9cd3fc](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win32.exe.sha256) |
-| [fluent-bit-2.1.1-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win32.zip) | [5a1e12750d3d78653fbb470983f6eca68bde31fa31466a8d38e5faab49d5453e](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win32.zip.sha256) |
-| [fluent-bit-2.1.1-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win64.exe) | [d8bf46520d61c74030818a77aa2382caf99e8d098f88f0233e366d97d06dc4cc](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win64.exe.sha256) |
-| [fluent-bit-2.1.1-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.1-win64.zip) | [72cbe76133c028bb4f56e28bca0d94d842613c2c2bdd515bedf85a624beffe30](https://releases.fluentbit.io/2.0/fluent-bit-2.1.1-win64.zip.sha256) |
-
-To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
-
-```powershell
-PS> Get-FileHash fluent-bit-2.0.9-win32.exe
-```
-
 ## Installing from ZIP archive
 
 Download a ZIP archive from above. There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
@@ -340,3 +324,17 @@ To create a ZIP package, call `cpack` as follows:
 ```powershell
 % cpack -G ZIP
 ```
+## Installation Packages
+
+The latest stable version is 2.1.2, each version is available on the Github release as well as at :
+
+| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [fluent-bit-2.1.2-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.exe) | [](https://releases.fluentbit.io/2.0/fluent-bit-2.1.2-win32.exe.sha256) |
+| [fluent-bit-2.1.2-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win32.zip) | [](https://releases.fluentbit.io/2.0/fluent-bit-2.1.2-win32.zip.sha256) |
+| [fluent-bit-2.1.2-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.exe) | [](https://releases.fluentbit.io/2.0/fluent-bit-2.1.2-win64.exe.sha256) |
+| [fluent-bit-2.1.2-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.2-win64.zip) | [](https://releases.fluentbit.io/2.0/fluent-bit-2.1.2-win64.zip.sha256) |
+
+To check the integrity, use  cmdlet on PowerShell.
+
+

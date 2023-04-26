@@ -16,6 +16,8 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 The following table describes the Linux container tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tag(s)       | Manifest Architectures    | Description                                                    |
+| 2.1.2 | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.2-debug | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
 | 2.1.1        | x86\_64, arm64v8, arm32v7 | Release [v2.1.1](https://fluentbit.io/announcements/v2.1.1/)   |
 | 2.1.1-debug  | x86\_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
