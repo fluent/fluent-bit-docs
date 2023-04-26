@@ -73,7 +73,7 @@ output.elasticsearch:
 ```
 
 For large log ingestion on these beat plugins,
-users might have to add addtional settings of processors to use rate limit feature on beats
+users might have to configure rate limiting on those beats plugins
 when Fluent Bit complains that exceeding limit size of HTTP requests:
 
 
