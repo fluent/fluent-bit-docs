@@ -10,7 +10,7 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | message\_key | Optional key to store the message |  |
 | message\_key\_field | If set, the value of Message\_Key\_Field in the record will indicate the message key. If not set nor found in the record, Message\_Key will be used \(if set\). |  |
 | timestamp\_key | Set the key to store the record timestamp | @timestamp |
-| timestamp\_format | 'iso8601' or 'double' | double |
+| timestamp\_format | Specify timestamp format, should be 'double', '[iso8601](https://en.wikipedia.org/wiki/ISO_8601)' (seconds precision) or 'iso8601_ns' (fractional seconds precision) | double |
 | brokers | Single of multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
 | topics | Single entry or list of topics separated by comma \(,\) that Fluent Bit will use to send messages to Kafka. If only one topic is set, that one will be used for all records. Instead if multiple topics exists, the one set in the record by Topic\_Key will be used. | fluent-bit |
 | topic\_key | If multiple Topics exists, the value of Topic\_Key in the record will indicate the topic to use. E.g: if Topic\_Key is _router_ and the record is {"key1": 123, "router": "route\_2"}, Fluent Bit will use topic _route\_2_. Note that if the value of Topic\_Key is not present in Topics, then by default the first topic in the Topics list will indicate the topic to be used. |  |
