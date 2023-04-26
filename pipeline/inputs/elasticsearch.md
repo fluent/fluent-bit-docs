@@ -60,7 +60,7 @@ For large bulk ingestions, you may have to increase buffer size with **buffer_ma
 #### Ingesting from beats series
 
 Ingesting from beats series agents is also supported.
-However, fluent-bit's node information is returning as Elasticsearch 8.0.0.
+However, Fluent Bit's node information is returning as Elasticsearch 8.0.0.
 
 So, users have to specify the following configurations on their beats configurations:
 
@@ -72,7 +72,7 @@ output.elasticsearch:
 
 From large log ingestions on their beats,
 users might have to add addtional settings of processors to use rate limit feature on beats
-when fluent-bit complains that exceeding limit size of HTTP requests:
+when Fluent Bit complains that exceeding limit size of HTTP requests:
 
 
 ```yaml
