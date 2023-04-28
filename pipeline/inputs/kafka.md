@@ -1,6 +1,7 @@
 # Kafka
 
-The Kafka input plugin allows subscribing to one or more Kafka topics to collect messages from an [Apache Kafka](https://kafka.apache.org/) service. This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) \(built-in dependency\)
+The Kafka input plugin allows subscribing to one or more Kafka topics to collect messages from an [Apache Kafka](https://kafka.apache.org/) service.
+This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) \(built-in dependency\).
 
 ## Configuration Parameters
 
@@ -42,8 +43,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 #### Example of using kafka input/output plugins
 
-The fluent-bit source repository contains a full example of using fluent-bit to
-process kafka records: 
+The fluent-bit source repository contains a full example of using fluent-bit to process kafka records: 
 
 ```text
 [INPUT]
@@ -64,12 +64,8 @@ process kafka records:
     topics fb-sink
 ```
 
-The above will connect to the broker listening on `kafka-broker:9092` and
-subscribe to the `fb-source` topic, polling for new messages every 100
-milliseconds.
+The above will connect to the broker listening on `kafka-broker:9092` and subscribe to the `fb-source` topic, polling for new messages every 100 milliseconds.
 
-Every message received is then processed with `kafka.lua` and sent back to the
-`fb-sink` topic of the same broker.
+Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker.
 
-The example can be executed locally with `make start` in the `examples/kafka_filter`
-directory (docker/compose is used).
+The example can be executed locally with `make start` in the `examples/kafka_filter` directory (docker/compose is used).
