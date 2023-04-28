@@ -1,6 +1,6 @@
 # Kafka
 
-Kafka input plugin allows to subscribe to one or more topics and collect messages from an [Apache Kafka](https://kafka.apache.org/) service. This plugin use the official [librdkafka C library](https://github.com/edenhill/librdkafka) \(built-in dependency\)
+The Kafka input plugin allows subscribing to one or more Kafka topics to collect messages from an [Apache Kafka](https://kafka.apache.org/) service. This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) \(built-in dependency\)
 
 ## Configuration Parameters
 
