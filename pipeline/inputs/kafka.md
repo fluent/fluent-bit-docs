@@ -7,7 +7,7 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| brokers | Single of multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
+| brokers | Single or multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
 | topics | Single entry or list of topics separated by comma \(,\) that Fluent Bit will subscribe to. |  |
 | client\_id | Client id passed to librdkafka. | |
 | group\_id | Group id passed to librdkafka. | fluent-bit |
@@ -20,7 +20,7 @@ In order to subscribe/collect messages from Apache Kafka, you can run the plugin
 
 ### Command Line
 
-The **kafka** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
+The **kafka** plugin can read parameters through the **-p** argument \(property\), e.g:
 
 ```text
 $ fluent-bit -i kafka -o stdout -p brokers=192.168.1.3:9092 -p topics=some-topic
