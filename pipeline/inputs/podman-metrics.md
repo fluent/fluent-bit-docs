@@ -32,25 +32,46 @@ fluentbit_input_bytes_total{name="podman_metrics.0"} 0
 fluentbit_input_records_total{name="podman_metrics.0"} 0
 # HELP container_memory_usage_bytes Container memory usage in bytes
 # TYPE container_memory_usage_bytes counter
-container_memory_usage_bytes{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty"} 7806976
-# HELP container_cpu_user_seconds_total Container cpu usage in bytes in user mode
+container_memory_usage_bytes{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 884736
+# HELP container_cpu_user_seconds_total Container cpu usage in seconds in user mode
 # TYPE container_cpu_user_seconds_total counter
-container_cpu_user_seconds_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty"} 13184
-# HELP container_cpu_usage_seconds_total Container cpu usage in bytes
+container_cpu_user_seconds_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 0
+# HELP container_cpu_usage_seconds_total Container cpu usage in seconds
 # TYPE container_cpu_usage_seconds_total counter
-container_cpu_usage_seconds_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty"} 28981
+container_cpu_usage_seconds_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 0
 # HELP container_network_receive_bytes_total Network received bytes
 # TYPE container_network_receive_bytes_total counter
-container_network_receive_bytes_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty",interface="eth0"} 10196
+container_network_receive_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 8515
 # HELP container_network_receive_errors_total Network received errors
 # TYPE container_network_receive_errors_total counter
-container_network_receive_errors_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty",interface="eth0"} 0
+container_network_receive_errors_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 0
 # HELP container_network_transmit_bytes_total Network transmited bytes
 # TYPE container_network_transmit_bytes_total counter
-container_network_transmit_bytes_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty",interface="eth0"} 682
+container_network_transmit_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 962
 # HELP container_network_transmit_errors_total Network transmitedd errors
 # TYPE container_network_transmit_errors_total counter
-container_network_transmit_errors_total{id="8a19d6058bfbe88cd0548eba9047d94c70161f5d74b545c7504b2f27491686d9",name="determined_mcnulty",interface="eth0"} 0
+container_network_transmit_errors_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 0
+# HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
+# TYPE fluentbit_input_storage_overlimit gauge
+fluentbit_input_storage_overlimit{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_memory_bytes Memory bytes used by the chunks.
+# TYPE fluentbit_input_storage_memory_bytes gauge
+fluentbit_input_storage_memory_bytes{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_chunks Total number of chunks.
+# TYPE fluentbit_input_storage_chunks gauge
+fluentbit_input_storage_chunks{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_chunks_up Total number of chunks up in memory.
+# TYPE fluentbit_input_storage_chunks_up gauge
+fluentbit_input_storage_chunks_up{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_chunks_down Total number of chunks down.
+# TYPE fluentbit_input_storage_chunks_down gauge
+fluentbit_input_storage_chunks_down{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_chunks_busy Total number of chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy gauge
+fluentbit_input_storage_chunks_busy{name="podman_metrics.0"} 0
+# HELP fluentbit_input_storage_chunks_busy_bytes Total number of bytes used by chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy_bytes gauge
+fluentbit_input_storage_chunks_busy_bytes{name="podman_metrics.0"} 0
 ```
 
 ### Configuration File
