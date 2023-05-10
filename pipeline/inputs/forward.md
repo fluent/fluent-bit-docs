@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 | Buffer\_Max\_Size   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification.                                                                                                                                          | 6144000 |
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | 1024000 |
 | Tag_Prefix          | Prefix incoming tag with the defined value.|  |
-
+| Tag                 | Override the tag of the forwarded events with the defined value.|  |
 
 ## Getting Started
 
