@@ -21,6 +21,7 @@ redirects:
     input/netif:           ./pipeline/inputs/network-io-metrics.md
     input/proc:            ./pipeline/inputs/process.md
     input/random:          ./pipeline/inputs/random.md
+    input/splunk:          ./pipeline/inputs/splunk.md
     input/serial:          ./pipeline/inputs/serial-interface.md
     #inputs/statsd:          ./pipeline/inputs/
     input/stdin:           ./pipeline/inputs/standard-input.md
