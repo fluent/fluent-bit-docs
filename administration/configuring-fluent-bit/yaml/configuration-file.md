@@ -111,7 +111,6 @@ In recent versions of Fluent-Bit, the input and output plugins can run in separa
 This functionality is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
 
 [Processor example](configuration-file.md#example-using-processors)
-### Filter <a href="config_filter" id="config_filter"></a>
 
 ### Input <a href="config_input" id="config_input"></a>
 
