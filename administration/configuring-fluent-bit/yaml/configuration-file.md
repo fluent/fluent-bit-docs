@@ -201,7 +201,7 @@ pipeline:
           match: 'my*cpu'
 ```
 
-# Example: Using processors.
+#### Example: Using processors.
 
 The following configuration file example demonstrates the use of processors to change the log record in the input plugin section by adding a new key "hostname" with the value "monox", and we use lua to append the tag to the log record. Also in the ouput plugin section we added a new key named "output" with the value "new data". All these without the need of routing the logs further in the pipeline.
 
