@@ -104,6 +104,14 @@ pipeline:
         ...
 ```
 
+## Processors <a href="config_processors" id="config_processors"></a>
+
+In recent versions of Fluent-Bit, the input and output plugins can run in separate threads. In Fluent-Bit 2.1.2, we have implemented a new interface called "processor" to extend the processing capabilities in input and output plugins directly without routing the data. This interface allows users to apply data transformations and filtering to incoming data records before they are processed further in the pipeline.
+
+This functionality is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
+
+[Processor example](configuration-file.md#example-using-processors)
+
 ### Input <a href="config_input" id="config_input"></a>
 
 An _input_ section defines a source (related to an input plugin). Here we will describe the base configuration for each _input_ section. Note that each input plugin may add it own configuration keys:
@@ -191,4 +199,46 @@ pipeline:
     outputs:
         - name: stdout
           match: 'my*cpu'
+```
+
+#### Example: Using processors.
+
+The following configuration file example demonstrates the use of processors to change the log record in the input plugin section by adding a new key "hostname" with the value "monox", and we use lua to append the tag to the log record. Also in the ouput plugin section we added a new key named "output" with the value "new data". All these without the need of routing the logs further in the pipeline.
+
+```yaml
+  service:
+    log_level: info
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2021
+  pipeline:
+    inputs:
+      - name: random
+        tag: test-tag
+        interval_sec: 1
+        processors:
+          logs:
+            - name: modify
+              add: hostname monox
+            - name: lua
+              call: append_tag
+              code: |
+                  function append_tag(tag, timestamp, record)
+                     new_record = record
+                     new_record["tag"] = tag
+                     return 1, timestamp, new_record
+                  end
+    outputs:
+      - name: stdout
+        match: '*'
+        processors:
+          logs:
+            - name: lua
+              call: add_field
+              code: |
+                  function add_field(tag, timestamp, record)
+                     new_record = record
+                     new_record["output"] = "new data"
+                     return 1, timestamp, new_record
+                  end
 ```
