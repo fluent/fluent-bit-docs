@@ -16,7 +16,13 @@ When an input plugin \(source\) emits records, the engine groups the records tog
 
 #### Irrecoverable Chunks
 
-When a chunk has an invalid size or layout, Fluent Bit will no longer attempt to read or write to it. This means that the data in the chunk is effectively lost.
+There are two scenarios where fluent-bit marks chunks as irrecoverable:
+
+* When Fluent Bit encounters a bad layout in a chunk. A bad layout is a chunk that does not conform to the expected format. [Chunk definition](https://github.com/fluent/fluent-bit/blob/master/CHUNKS.md)
+
+* When Fluent Bit encounters an incorrect or invalid chunk header size.
+
+In both scenarios Fluent-Bit will log an error message and then discard the irrecoverable chunks.
 
 #### Buffering and Memory
 
@@ -109,7 +115,7 @@ The Service section refers to the section defined in the main [configuration fil
 | storage.max\_chunks\_up | If the input plugin has enabled `filesystem` storage type, this property sets the maximum number of Chunks that can be `up` in memory. *This is the setting to use to control memory usage when you enable `storage.type filesystem`*. | 128 |
 | storage.backlog.mem\_limit | If _storage.path_ is set, Fluent Bit will look for data chunks that were not delivered and are still in the storage layer, these are called _backlog_ data. _Backlog chunks_ are filesystem chunks that were left over from a previous Fluent Bit run; chunks that could not be sent before exit that Fluent Bit will pick up when restarted. Fluent Bit will check the `storage.backlog.mem_limit` value against the current memory usage from all `up` chunks for the input. If the `up` chunks currently consume less memory than the limit, it will bring the _backlog_ chunks up into memory so they can be sent by outputs. | 5M |
 | storage.metrics | If `http_server` option has been enabled in the main `[SERVICE]` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | off |
-| storage.delete_irrecoverable_chunks | When enabled, irrecoverable chunks will be deleted during runtime, and any other irrecoverable chunk located in the configured storage path direcotry will be deleted when Fluent-Bit starts. | Off |
+| storage.delete_irrecoverable_chunks | When enabled, [irrecoverable chunks](./buffering-and-storage.md#irrecoverable-chunks) will be deleted during runtime, and any other irrecoverable chunk located in the configured storage path direcotry will be deleted when Fluent-Bit starts. | Off |
 
 a Service section will look like this:
 
