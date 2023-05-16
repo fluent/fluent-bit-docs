@@ -12,20 +12,27 @@ Fluent Bit to exit with success (0) after flushing any pending output.
 
 ## Input formats
 
-If no parser is configured for the stdin plugin, it expects *valid json* input input data with one of the following data formats:
+If no parser is configured for the stdin plugin, it expects *valid JSON* input data in one of the following formats:
 
-```bash
-1. { map => val, map => val, map => val }
-2. [ time, { map => val, map => val, map => val } ]
-```
+1. A JSON object with one or more key-value pairs: `{ "key": "value", "key2": "value2" }`
+3. A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#event-or-record) format, which may be:
+  * `[TIMESTAMP, { "key": "value" }]` where TIMESTAMP is a floating point value representing a timestamp in seconds; or
+  * from Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where TIMESTAMP has the same meaning as above and and METADATA is a JSON object.
+
+Multi-line input JSON is supported.
 
 Any input data that is *not* in one of the above formats will cause the plugin to log errors like:
 
 ```
+[debug] [input:stdin:stdin.0] invalid JSON message, skipping
 [error] [input:stdin:stdin.0] invalid record found, it's not a JSON map or array
 ```
 
 To handle inputs in other formats, a parser must be explicitly specified in the configuration for the `stdin` plugin. See [parser input example](#parser-input-example) for sample configuration.
+
+## Log event timestamps
+
+The Fluent Bit event timestamp will be set from the input record if the 2-element event input is used or a custom parser configuration supplies a timestamp. Otherwise the event timestamp will be set to the timestamp at which the record is read by the stdin plugin.
 
 ## Examples
 
@@ -36,35 +43,96 @@ A better example to demonstrate how it works will be through a _Bash_ script tha
 ```bash
 #!/bin/sh
 
-while :; do
+for ((i=0; i<=5; i++)); do
   echo -n "{\"key\": \"some value\"}"
   sleep 1
 done
 ```
 
-Give the script execution permission:
+Now lets start the script and [Fluent Bit](http://fluentbit.io):
 
 ```bash
-$ chmod 755 test.sh
+$ bash test.sh | fluent-bit -q -i stdin -o stdout
+[0] stdin.0: [[1684196745.942883835, {}], {"key"=>"some value"}]
+[0] stdin.0: [[1684196746.938949056, {}], {"key"=>"some value"}]
+[0] stdin.0: [[1684196747.940162493, {}], {"key"=>"some value"}]
+[0] stdin.0: [[1684196748.941392297, {}], {"key"=>"some value"}]
+[0] stdin.0: [[1684196749.942644238, {}], {"key"=>"some value"}]
+[0] stdin.0: [[1684196750.943721442, {}], {"key"=>"some value"}]
 ```
 
-Now lets start the script and [Fluent Bit](http://fluentbit.io) in the following way:
+### Json input with timestamp example
+
+An input event timestamp may also be supplied. Replace `test.sh` with:
 
 ```bash
-$ ./test.sh | fluent-bit -i stdin -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+#!/bin/sh
 
-[2016/10/07 21:44:46] [ info] [engine] started
-[0] stdin.0: [1475898286, {"key"=>"some value"}]
-[1] stdin.0: [1475898287, {"key"=>"some value"}]
-[2] stdin.0: [1475898288, {"key"=>"some value"}]
-[3] stdin.0: [1475898289, {"key"=>"some value"}]
-[4] stdin.0: [1475898290, {"key"=>"some value"}]
+for ((i=0; i<=5; i++)); do
+  echo -n "
+    [
+      $(date '+%s.%N' -d '1 day ago'),
+      {
+        \"realtimestamp\": $(date '+%s.%N')
+      }
+    ]
+  "
+  sleep 1
+done
 ```
+
+Re-run the sample command. Note that the timestamps output by Fluent Bit are now one day old because Fluent Bit used the input message timestamp.
+
+```bash
+$ bash test.sh | fluent-bit -q -i stdin -o stdout
+[0] stdin.0: [[1684110480.028171300, {}], {"realtimestamp"=>1684196880.030070}]
+[0] stdin.0: [[1684110481.033753395, {}], {"realtimestamp"=>1684196881.034741}]
+[0] stdin.0: [[1684110482.036730051, {}], {"realtimestamp"=>1684196882.037704}]
+[0] stdin.0: [[1684110483.039903879, {}], {"realtimestamp"=>1684196883.041081}]
+[0] stdin.0: [[1684110484.044719457, {}], {"realtimestamp"=>1684196884.046404}]
+[0] stdin.0: [[1684110485.048710107, {}], {"realtimestamp"=>1684196885.049651}]
+```
+
+### Json input with metadata example
+
+Additional metadata is also supported on Fluent Bit v2.1.0 and above by replacing the timestamp
+with a 2-element object, e.g.:
+
+```bash
+#!/bin/sh
+for ((i=0; i<=5; i++)); do
+  echo -n "
+    [
+      [
+        $(date '+%s.%N' -d '1 day ago'),
+	{\"metakey\": \"metavalue\"}
+      ],
+      {
+        \"realtimestamp\": $(date '+%s.%N')
+      }
+    ]
+  "
+  sleep 1
+done
+```
+
+```
+$ bash ./test.sh | fluent-bit -q -i stdin -o stdout
+[0] stdin.0: [[1684110513.060139417, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196913.061017}]
+[0] stdin.0: [[1684110514.063085317, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196914.064145}]
+[0] stdin.0: [[1684110515.066210508, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196915.067155}]
+[0] stdin.0: [[1684110516.069149971, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196916.070132}]
+[0] stdin.0: [[1684110517.072484016, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196917.073636}]
+[0] stdin.0: [[1684110518.075428724, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196918.076292}]
+```
+
+On older Fluent Bit versions records in this format will be discarded. Fluent Bit will log:
+
+```
+[ warn] unknown time format 6
+```
+
+if the log level permits.
 
 ### Parser input example <a id="parser-input-example"></a>
 
@@ -118,4 +186,4 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Buffer\_Size | Set the buffer size to read data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 16k |
-| Parser | The name of the parser to invoke instead of the default json input parser | |
+| Parser | The name of the parser to invoke instead of the default JSON input parser | |
