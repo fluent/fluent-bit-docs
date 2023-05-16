@@ -30,11 +30,35 @@ Jan 18 12:52:16 flb gsd-media-keys[2640]: # watch_fast: "/org/gnome/terminal/leg
 
 It contains four lines and all of them represents **four** independent Events.
 
-Internally, an Event always has two components \(in an array form\):
+Internally an Event is comprised of:
+
+* timestamp
+* key/value metadata (since v2.1.0)
+* payload
+
+### Event format
+
+The Fluent Bit wire protocol represents an Event is a 2-element array
+with a nested array as the first element:
+
+```javascript
+[[TIMESTAMP, METADATA], MESSAGE]
+```
+
+where
+
+* TIMESTAMP is a timestamp in seconds as an integer or floating point value (not a string);
+* METADATA is a possibly-empty object containing event metadata; and
+* MESSAGE is an object containing the event body.
+
+Fluent-bit versions prior to v2.1.0 instead used:
 
 ```javascript
 [TIMESTAMP, MESSAGE]
 ```
+
+to represent events. This format is still supported for reading input event
+streams.
 
 ## Filtering
 
