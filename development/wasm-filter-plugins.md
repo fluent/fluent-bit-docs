@@ -111,7 +111,7 @@ Once built, a WASM program will be available. Then, that built program can be ex
 
 [FILTER]
     Name wasm
-    Tag  dummy.*
+    Match dummy.*
     WASM_Path /path/to/built_filter.wasm
     Function_Name super_awesome_filter
     accessible_paths .,/path/to/fluent-bit
