@@ -51,7 +51,7 @@ where
 * METADATA is a possibly-empty object containing event metadata; and
 * MESSAGE is an object containing the event body.
 
-Fluent-bit versions prior to v2.1.0 instead used:
+Fluent Bit versions prior to v2.1.0 instead used:
 
 ```javascript
 [TIMESTAMP, MESSAGE]
