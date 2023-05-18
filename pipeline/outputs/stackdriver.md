@@ -34,6 +34,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
 | resource_labels | An optional list of comma separated strings specifying resource labels plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
+| compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression.|  |
 
 ### Configuration File
 
