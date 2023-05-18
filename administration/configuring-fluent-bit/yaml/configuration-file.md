@@ -54,8 +54,6 @@ includes:
 
 ```
 
-
-
 ## Service <a href="config_section" id="config_section"></a>
 
 The _service_ section defines the global properties of the service. The Service keys available as of this version are described in the following table:
@@ -104,13 +102,40 @@ pipeline:
         ...
 ```
 
-## Processors <a href="config_processors" id="config_processors"></a>
+Each of the subsections for _inputs_, _filters_ and _outputs_ constitutes an array of maps that has the parameters for each. Most properties are either simple strings or numbers so can be define directly, ie:
 
-In recent versions of Fluent-Bit, the input and output plugins can run in separate threads. In Fluent-Bit 2.1.2, we have implemented a new interface called "processor" to extend the processing capabilities in input and output plugins directly without routing the data. This interface allows users to apply data transformations and filtering to incoming data records before they are processed further in the pipeline.
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          tag: syslog
+          path: /var/log/syslog
+        - name: http
+          tag: http_server
+          port: 8080
+```
 
-This functionality is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
+This pipelinme consists of two _inputs_; a tail plugin and an http server plugin. Each plugin has its own map in the array of _inputs_ consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, ie: the _record_ and _allowlist_key_ properties for the _record_modifier_ _filter_:
 
-[Processor example](configuration-file.md#example-using-processors)
+```
+pipeline:
+    inputs:
+        - name: tail
+          tag: syslog
+          path: /var/log/syslog
+    filters:
+        - name: record_modifier
+          match: syslog
+          record:
+              - powered_by calyptia
+        - name: record_modifier
+          match: syslog
+          allowlist_key:
+              - powered_by
+              - message
+```
+
+In the cases where each value in a list requires two values they must be separated by a space, such as in the _record_ property for the _record_modifier_ filter.
 
 ### Input <a href="config_input" id="config_input"></a>
 
@@ -122,7 +147,7 @@ An _input_ section defines a source (related to an input plugin). Here we will d
 | Tag         | Tag name associated to all records coming from this plugin.                                                                                             |
 | Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
-The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
+The _Name_ is mandatory and it lets Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
 
 #### Example input
 
@@ -137,7 +162,7 @@ pipeline:
 
 ### Filter <a href="config_filter" id="config_filter"></a>
 
-A _filter_ section defines a filter (related to a filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add it own configuration keys:
+A _filter_ section defines a filter (related to a filter plugin). Here we will describe the base configuration for each _filter_ section. Note that each filter plugin may add its own configuration keys:
 
 | Key         | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
@@ -146,7 +171,7 @@ A _filter_ section defines a filter (related to a filter plugin). Here we will d
 | Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax. |
 | Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
-The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
+The _Name_ is mandatory and it lets Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
 #### Example filter
 
@@ -201,7 +226,15 @@ pipeline:
           match: 'my*cpu'
 ```
 
-#### Example: Using processors.
+## Processors <a href="config_processors" id="config_processors"></a>
+
+In recent versions of Fluent-Bit, the input and output plugins can run in separate threads. In Fluent-Bit 2.1.2, we have implemented a new interface called "processor" to extend the processing capabilities in input and output plugins directly without routing the data. This interface allows users to apply data transformations and filtering to incoming data records before they are processed further in the pipeline.
+
+This functionality is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
+
+[Processor example](configuration-file.md#example-using-processors)
+
+### Example: Using processors.
 
 The following configuration file example demonstrates the use of processors to change the log record in the input plugin section by adding a new key "hostname" with the value "monox", and we use lua to append the tag to the log record. Also in the ouput plugin section we added a new key named "output" with the value "new data". All these without the need of routing the logs further in the pipeline.
 
