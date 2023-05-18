@@ -38,7 +38,7 @@ Internally an Event is comprised of:
 
 ### Event format
 
-The Fluent Bit wire protocol represents an Event is a 2-element array
+The Fluent Bit wire protocol represents an Event as a 2-element array
 with a nested array as the first element:
 
 ```javascript
