@@ -93,6 +93,7 @@
   * [Head](pipeline/inputs/head.md)
   * [HTTP](pipeline/inputs/http.md)
   * [Health](pipeline/inputs/health.md)
+  * [Kafka](pipeline/inputs/kafka.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
