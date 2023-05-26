@@ -19,13 +19,13 @@ function sed_wrapper() {
 
 NEW_VERSION=${NEW_VERSION:?}
 if [[ -z "$NEW_VERSION" ]]; then
-    echo "Missing VERSION value"
+    echo "Missing NEW_VERSION value"
     exit 1
 fi
 
 MAJOR_VERSION=${MAJOR_VERSION:-}
 if [[ -z "$MAJOR_VERSION" ]]; then
-    MAJOR_VERSION=${VERSION%.*}
+    MAJOR_VERSION=${NEW_VERSION%.*}
 fi
 
 # Add Docker after first line in the table
