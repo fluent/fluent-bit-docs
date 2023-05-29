@@ -9,6 +9,7 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | :--- | :--- | :--- |
 | brokers | Single or multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
 | topics | Single entry or list of topics separated by comma \(,\) that Fluent Bit will subscribe to. |  |
+| data\_format | Serialization format of the messages. If set to "json", the payload will be parsed as json. | none  |
 | client\_id | Client id passed to librdkafka. | |
 | group\_id | Group id passed to librdkafka. | fluent-bit |
 | poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
@@ -51,6 +52,7 @@ The fluent-bit source repository contains a full example of using fluent-bit to 
     brokers kafka-broker:9092
     topics fb-source
     poll_ms 100
+    data_format json
 
 [FILTER]
     Name    lua
@@ -65,6 +67,8 @@ The fluent-bit source repository contains a full example of using fluent-bit to 
 ```
 
 The above will connect to the broker listening on `kafka-broker:9092` and subscribe to the `fb-source` topic, polling for new messages every 100 milliseconds.
+
+Since the payload will be in json format, we ask the plugin to automatically parse the payload with `data_format json`.
 
 Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker.
 
