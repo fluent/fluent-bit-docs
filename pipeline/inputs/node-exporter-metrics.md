@@ -37,6 +37,11 @@ This plugin is currently only supported on Linux based operating systems\
 | filesystem.ignore\_mount\_point\_regex  | Specify the regex for the mount points to prevent collection of/ignore. | `^/(dev|proc|run/credentials/.+|sys|var/lib/docker/.+|var/lib/containers/storage/.+)($|/)`    |
 | filesystem.ignore\_filesystem\_type\_regex  | Specify the regex for the filesystem types to prevent collection of/ignore. | `^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$`    |
 | diskstats.ignore\_device\_regex | Specify the regex for the diskstats to prevent collection of/ignore. | `^(ram|loop|fd|(h|s|v|xv)d[a-z]|nvme\\d+n\\d+p)\\d+$` |
+| systemd_service_restart_metrics | Determines if the collector will include service restart metrics | false |
+| systemd_unit_start_time_metrics | Determines if the collector will include unit start time metrics | false |
+| systemd_include_service_task_metrics | Determines if the collector will include service task metrics | false |
+| systemd_include_pattern | regex to determine which units are included in the metrics produced by the systemd collector | it's not applied unless explicitly set |
+| systemd_exclude_pattern | regex you'd set to determine which units are excluded in the metrics produced by the systemd collector | `.+\\.(automount|device|mount|scope|slice)"`    |
 
 
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
@@ -45,6 +50,7 @@ Each `collector.xxx.scrape_interval` option only overrides the interval for that
 The overridden intervals only change the collection interval, not the interval for publishing the metrics which is taken from the global setting.
 For example, if the global interval is set to 5s and an override interval of 60s is used then the published metrics will be reported every 5s but for the specific collector they will stay the same for 60s until it is collected again.
 This feature aims to help with down-sampling when collecting metrics.
+
 
 ## Collectors available
 
@@ -65,6 +71,7 @@ The following table describes the available collectors as part of this plugin. A
 | time      | Exposes the current system time.                                                                 | Linux  | v1.8    |
 | uname     | Exposes system information as provided by the uname system call.                                 | Linux  | v1.8    |
 | vmstat    | Exposes statistics from `/proc/vmstat`.                                                          | Linux  | v1.8.2  |
+| systemd collector | Exposes statistics fr systemd.                                                           | Linux  | v1.8.2  |
 
 ## Getting Started
 
