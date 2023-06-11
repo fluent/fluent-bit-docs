@@ -9,6 +9,7 @@ The plugin supports the following configuration parameters:
 | Key | Description |
 | :--- | :--- |
 | Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
+| Metadata | Dummy JSON metadata. Default: `{}` |
 | Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
 | Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
@@ -23,17 +24,13 @@ You can run the plugin from the command line or through the configuration file:
 
 ```bash
 $ fluent-bit -i dummy -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
+Fluent Bit v2.x.x
+* Copyright (C) 2015-2022 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2017/07/06 21:55:29] [ info] [engine] started
-[0] dummy.0: [1499345730.015265366, {"message"=>"dummy"}]
-[1] dummy.0: [1499345731.002371371, {"message"=>"dummy"}]
-[2] dummy.0: [1499345732.000267932, {"message"=>"dummy"}]
-[3] dummy.0: [1499345733.000757746, {"message"=>"dummy"}]
+[0] dummy.0: [[1686451466.659962491, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1686451467.659679509, {}], {"message"=>"dummy"}]
 ```
 
 ### Configuration File
