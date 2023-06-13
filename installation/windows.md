@@ -302,6 +302,8 @@ PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
 
 Add the path `C:\WinFlexBison` to your systems environment variable "Path". [Here's how to do that](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
+It is important to have installed OpenSSL binaries, at least the library files and headers.
+
 Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
 
 ```powershell
@@ -311,7 +313,10 @@ PS> start git.exe
 
 ### Compilation
 
-Open the start menu on Windows and type "Developer Command Prompt".
+Open the start menu on Windows and type "Command Prompt for VS". From the result list select the one  that corresponds to your target system ( x86 or x64).
+
+> **Note:** Check that  the  installed OpenSSL library files  match the selected target. You can check the library files by using the **dumpbin** command with the  **/headers** option .
+
 
 Clone the source code of Fluent Bit.
 
