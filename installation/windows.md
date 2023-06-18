@@ -79,7 +79,7 @@ From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1
 
 ## Installation Packages
 
-The latest stable version is 2.1.2 each version is available on the Github release as well as at :
+The latest stable version is 2.1.4. Each version is available on the Github release as well as at:
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
