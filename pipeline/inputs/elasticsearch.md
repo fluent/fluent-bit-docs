@@ -13,6 +13,7 @@ The plugin supports the following configuration parameters:
 | tag\_key | Specify a key name for extracting as a tag. |
 | meta\_key | Specify a key name for meta information. |
 | hostname | Specify hostname or FQDN. This parameter is effective for sniffering node information. |
+| version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. |
 
 ## Getting Started
 
