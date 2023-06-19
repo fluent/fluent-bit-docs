@@ -15,10 +15,10 @@ There are no additional requirements to execute WASM plugins.
 
 `flb-wamrc` is just `flb-` prefixed AOT (Ahead Of Time) compiler that is provided from [wasm-micro-runtime](https://github.com/bytecodealliance/wasm-micro-runtime).
 
-For `flb-wamrc` support, users have to install llvm infrastructure, e.g:
+For `flb-wamrc` support, users have to install llvm infrastructure and some additional libraries (`libmlir`, `libPolly`, `libedit`, and `libpfm`), e.g:
 
 ```text
-# apt install -y llvm
+# apt install -y llvm libmlir-14-dev libclang-common-14-dev libedit-dev libpfm4-dev
 ```
 
 ### For Build WASM programs
