@@ -17,14 +17,14 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tag(s)       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
-| 2.1.5 | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.5-debug | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
-| 2.1.4 | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.4-debug | x86_64, arm64v8, arm32v7 | Release [v2.1.4](https://fluentbit.io/announcements/v2.1.4/) |
-| 2.1.3 | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.3-debug | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
-| 2.1.2 | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.2-debug | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
+| 2.1.5 | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
+| 2.1.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.4 | x86_64, arm64v8, arm32v7 | Release [v2.1.4](https://fluentbit.io/announcements/v2.1.4/) |
+| 2.1.4-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.3 | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
+| 2.1.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.2 | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
+| 2.1.2-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.1        | x86\_64, arm64v8, arm32v7 | Release [v2.1.1](https://fluentbit.io/announcements/v2.1.1/)   |
 | 2.1.1-debug  | x86\_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
 | 2.1.0        | x86\_64, arm64v8, arm32v7 | Release [v2.1.0](https://fluentbit.io/announcements/v2.1.0/)   |
