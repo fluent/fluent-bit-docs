@@ -32,8 +32,8 @@ fi
 if grep -q "$NEW_VERSION" "$SCRIPT_DIR"/installation/docker.md; then
     echo "Found $NEW_VERSION already in the Docker docs so skipping update"
 else
-    sed_wrapper -i -e "/| -.*$/a | $NEW_VERSION-debug | x86\_64, arm64v8, arm32v7 | Release [v$NEW_VERSION](https://fluentbit.io/announcements/v$NEW_VERSION/) |" "$SCRIPT_DIR"/installation/docker.md
-    sed_wrapper -i -e "/| -.*$/a | $NEW_VERSION | x86\_64, arm64v8, arm32v7 | Debug images |" "$SCRIPT_DIR"/installation/docker.md
+    sed_wrapper -i -e "/| -.*$/a | $NEW_VERSION | x86\_64, arm64v8, arm32v7 | Release [v$NEW_VERSION](https://fluentbit.io/announcements/v$NEW_VERSION/) |" "$SCRIPT_DIR"/installation/docker.md
+    sed_wrapper -i -e "/| -.*$/a | $NEW_VERSION-debug | x86\_64, arm64v8, arm32v7 | Debug images |" "$SCRIPT_DIR"/installation/docker.md
 fi
 
 WIN_32_EXE_HASH=${WIN_32_EXE_HASH:?}
