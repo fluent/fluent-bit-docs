@@ -21,6 +21,9 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | we.logical\_disk.allow\_disk\_regex | Specify the regex for logical disk metrics to allow collection of. Collect all by default. | "/.+/"    |
 | we.logical\_disk.deny\_disk\_regex  | Specify the regex for logical disk metrics to prevent collection of/ignore. Allow all by default. | `NULL`    |
 |we.net.allow\_nic\_regex            | Specify the regex for network metrics captured by the name of the NIC, by default captures all NICs but to exclude adjust the regex.  | "/.+/"    |
+| we.service.where           | Specify the where clause for retrieving service metrics.  | `NULL`   |
+| we.service.include         | Specify the key value condition pairs for includeing condition to construct where clause of service metrics. | `NULL`   |
+| we.service.exclude         | Specify the key value condition pairs for excludeing condition to construct where clause of service metrics. | `NULL`   |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.logical_disk.scrape\_interval | The rate in seconds at which logical\_disk metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
@@ -30,7 +33,8 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | collector.cpu\_info.scrape\_interval | The rate in seconds at which cpu\_info metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.logon.scrape\_interval    | The rate in seconds at which logon metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.system.scrape\_interval   | The rate in seconds at which system metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
-| metrics | To specify which metrics are collected from the host operating system. | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system"` |
+| collector.service.scrape\_interval   | The rate in seconds at which service metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| metrics | To specify which metrics are collected from the host operating system. | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system,service"` |
 
 ## Collectors available
 
@@ -49,6 +53,7 @@ The following table describes the available collectors as part of this plugin. A
 | cpu\_info     | Exposes cpu\_info statistics.                                                                    | Windows | v2.0.8  |
 | logon         | Exposes logon statistics.                                                                        | Windows | v2.0.8  |
 | system        | Exposes system statistics.                                                                       | Windows | v2.0.8  |
+| service       | Exposes system statistics.                                                                       | Windows | v2.1.6  |
 
 ## Getting Started
 
@@ -89,6 +94,87 @@ You can test the expose of the metrics by using _curl:_
 ```bash
 curl http://127.0.0.1:2021/metrics
 ```
+
+### Service where clause
+
+Windows service collector will retrieve entire service information in the local box.
+`we.service.where`, `we.service.include`, and `we.service.exclude` can operate to reduce the volume of the service metrics.
+
+To reduce the amount of this metrics, users have to use where clause.
+This syntax is defined in [the WMI Query Language(WQL)](https://learn.microsoft.com/en-us/windows/win32/wmisdk/wql-sql-for-wmi).
+
+Here is how these parameters should work:
+
+#### we.service.where
+
+`we.service.where` is just handled as normal where clause.
+When a user specify the parameter as follows:
+
+```
+we.service.where Status!='OK'
+```
+
+The WMI query should be called as:
+```
+SELECT * FROM Win32_Service WHERE Status!='OK'
+```
+
+Then, WMI mechanism should return the information which has not OK status in this example.
+
+### we.service.include
+
+`we.service.include` is interpreted into where clause.
+If the multiple key-value pairs are specified, the values will be concatenated with `OR`.
+Also, the values contain `%` character, `LIKE` operator should be used in the transrated clause instead of `=` operator.
+When a user specify the parameter as follows:
+
+```python
+we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
+```
+
+The parameter should be interpreted as:
+```
+(Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
+```
+
+The WMI query should be called with the translated parameter as:
+
+```
+SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
+```
+
+### we.service.exclude
+
+`we.service.where` is interpreted into where clause.
+If the multiple key-value pairs are specified, the values will be concatenated with `AND`.
+Also, the values contain `%` character, `LIKE` operator should be used in the translated clause instead of `!=` operator.
+When a user specify the parameter as follows:
+
+```python
+we.service.exclude {"Name":"UdkUserSvc%","Name":"webthreatdefusersvc%","Name":"XboxNetApiSvc"}
+```
+
+The parameter should be interpreted as:
+```
+(NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
+```
+
+The WMI query should be called with the translated parameter as:
+
+```
+SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
+```
+
+### advanced usages
+
+`we.service.where`, `we.service.include`, and `we.service.exclude` can be used in the same time.
+However, these parameters are prioritized as follows:
+
+1. `we.service.include` translated and applied into the where clause in the service collector
+1. `we.service.exclude` translated and applied into the where clause in the service collector
+    1. If the `we.service.include` is applied, translated `we.service.include` and `we.service.exclude` conditions are concatenated with `AND`.
+1. `we.service.where` is just handled as-is into the where clause in the service collector .
+    1. If either of the above parameters is applied, the clause will be applied with `AND (` _the value of `we.service.where`_ `)`.
 
 ## Enhancement Requests
 
