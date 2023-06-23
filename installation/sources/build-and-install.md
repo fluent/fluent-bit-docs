@@ -98,6 +98,7 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_CONFIG\_YAML | Enable YAML configuration support | Yes |
 | FLB\_WASM | Build with WASM runtime support | Yes |
 | FLB\_WAMRC | Build with WASM AOT compiler executable | No |
+| FLB\_GZIP\_LEVEL | Set default gzip compression level: 0-9 are the standard levels, where 0 is no compression, and 9 is best compression. | 6 |
 
 ### Development Options
 
