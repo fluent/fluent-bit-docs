@@ -10,53 +10,62 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 
 This plugin has the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Host` | IP address or hostname of the target Elasticsearch instance | `127.0.0.1` |
-| `Port` | TCP port of the target Elasticsearch instance | `9200` |
-| `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string |
-| `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
-| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` |
-| `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ |
-| `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
-| `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
-| `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service | _none_ |
-| `AWS_Role_ARN` | AWS IAM Role to assume to put records to your Amazon cluster | _none_ |
-| `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn` | _none_ |
-| `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` |
-| `AWS_Profile` | AWS profile name | `default` |
-| `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ |
-| `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ |
-| `HTTP_User` | Optional username credential for Elastic X-Pack access | _none_ |
-| `HTTP_Passwd` | Password for user defined in `HTTP_User` | _none_ |
-| `HTTP_API_Key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `HTTP_User` or `Cloud_Auth` are defined, this parameter is ignored.  | _none_ |
-| `Index` | Index name | `fluent-bit` |
-| `Type` | Type name | `_doc` |
-| `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off` | `Off` |
-| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, e.g: If `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
-| `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
-| `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and date.| `-` |
-| `Logstash_DateFormat` | Time format based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` |
-| `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` |
-| `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
-| `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
-| `Include_Tag_Key` | When enabled, it append the Tag name to the record. | `Off` |
-| `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` |
-| `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` |
-| `Id_Key` | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. | _none_ |
-| `Write_Operation` | `Write_operation` can be any of: `create`, `index`, `update`, `upsert`. | `create` |
-| `Replace_Dots` | When enabled, replace field name dots with underscore. Required by Elasticsearch 2.0-2.3. | `Off` |
-| `Trace_Output` | Print all ElasticSearch API request payloads to `stdout` for diagnostics. | `Off` |
-| `Trace_Error` | If ElasticSearch returns an error, print the ElasticSearch API request and response for diagnostics. | `Off` |
-| `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` |
-| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), and is set to `On`. | `Off` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
+The **Overridable** column indicates if a key can be overridden in the NODE section of an
+[Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
+configuration.
+
+| Key | Description | Default | Overridable |
+| :--- | :--- | :--- | :--- |
+| `Host` | IP address or hostname of the target Elasticsearch instance. | `127.0.0.1` | Yes. Default value isn't applicable for NODE section of Upstream configuration, which requires `Host` to be specified. |
+| `Port` | TCP port of the target Elasticsearch instance. | `9200` | Yes. Default value isn't applicable for NODE section of Upstream configuration, which requires `Port` to be specified. |
+| `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string | Yes |
+| `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ | Yes |
+| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` | Yes |
+| `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ | Yes |
+| `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` | Yes |
+| `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ | Yes |
+| `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service | _none_ | Yes |
+| `AWS_Role_ARN` | AWS IAM Role to assume to put records to your Amazon cluster | _none_ | Yes |
+| `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn` | _none_ | Yes |
+| `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` | Yes |
+| `AWS_Profile` | AWS profile name | `default` | Yes |
+| `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ | No |
+| `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ | Yes |
+| `HTTP_User` | Optional username credential for Elastic X-Pack access | _none_ | Yes |
+| `HTTP_Passwd` | Password for user defined in `HTTP_User` | _none_ | Yes |
+| `HTTP_API_Key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `HTTP_User` or `Cloud_Auth` are defined, this parameter is ignored. | _none_ | Yes |
+| `Index` | Index name | `fluent-bit` | Yes |
+| `Type` | Type name | `_doc` | Yes |
+| `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off` | `Off` | Yes |
+| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, e.g: If `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` | Yes |
+| `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ | Yes |
+| `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and date.| `-` | Yes |
+| `Logstash_DateFormat` | Time format based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` | Yes |
+| `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` | Yes |
+| `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` | Yes |
+| `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` | Yes |
+| `Include_Tag_Key` | When enabled, it append the Tag name to the record. | `Off` | Yes |
+| `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` | Yes |
+| `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` | Yes |
+| `Id_Key` | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. | _none_ | Yes |
+| `Write_Operation` | `Write_operation` can be any of: `create`, `index`, `update`, `upsert`. | `create` | Yes |
+| `Replace_Dots` | When enabled, replace field name dots with underscore. Required by Elasticsearch 2.0-2.3. | `Off` | Yes |
+| `Trace_Output` | Print all ElasticSearch API request payloads to `stdout` for diagnostics. | `Off` | Yes |
+| `Trace_Error` | If ElasticSearch returns an error, print the ElasticSearch API request and response for diagnostics. | `Off` | Yes |
+| `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` | Yes |
+| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), and is set to `On`. | `Off` | Yes |
+| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` | No |
+| `Upstream` | If plugin will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) documentation section. | _none_ | No |
 
 If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
 
 ### TLS / SSL
 
 The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+
+### AWS Sigv4 Authentication and Upstream Servers
+
+The `http_proxy`, `no_proxy`, and `TLS` parameters used for AWS Sigv4 Authentication (for connection of plugin to AWS to generate authentication signature) are never picked from the `NODE` section of the [Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) configuration. However, `TLS` parameters for connection of the plugin to Elasticsearch can be overridden in the `NODE` section of Upstream, even if AWS authentication is used.
 
 ### `write_operation`
 
@@ -148,6 +157,46 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+### Configuration File with Upstream
+
+In your main configuration file append the following _Input_ & _Output_ sections:
+
+```text
+[INPUT]
+    Name     cpu
+    Tag      cpu
+
+[OUTPUT]
+    Name     es
+    Match    *
+    Upstream ./upstream.conf
+    Index    my_index
+    Type     my_type
+```
+
+Your [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
+configuration file can be similar to the following:
+
+```text
+[UPSTREAM]
+    name     es-balancing
+
+[NODE]
+    name     node-1
+    host     localhost
+    port     9201
+
+[NODE]
+    name     node-2
+    host     localhost
+    port     9202
+
+[NODE]
+    name     node-3
+    host     localhost
+    port     9203
+```
 
 ## Elasticsearch field names
 
