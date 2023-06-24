@@ -5,6 +5,7 @@ It's common that Fluent Bit [output plugins](../../pipeline/outputs/) aims to co
 An _Upstream_ defines a set of nodes that will be targeted by an output plugin, by the nature of the implementation an output plugin **must** support the _Upstream_ feature. The following plugin\(s\) have _Upstream_ support:
 
 * [Forward](../../../pipeline/outputs/forward.md)
+* [Elasticsearch](../../../pipeline/outputs/elasticsearch.md)
 
 The current balancing mode implemented is _round-robin_.
 
