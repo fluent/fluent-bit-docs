@@ -13,7 +13,7 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 **Important note:** Metrics collected with Windows Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
 
-## Configuration 
+## Configuration
 
 | Key             | Description                                                            | Default   |
 | --------------- | ---------------------------------------------------------------------- | --------- |
@@ -23,7 +23,7 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 |we.net.allow\_nic\_regex            | Specify the regex for network metrics captured by the name of the NIC, by default captures all NICs but to exclude adjust the regex.  | "/.+/"    |
 | we.service.where           | Specify the where clause for retrieving service metrics.  | `NULL`   |
 | we.service.include         | Specify the key value pairs for the include condition for the WHERE clause of service metrics. | `NULL`   |
-| we.service.exclude         | Specify the key value condition pairs for excludeing condition to construct where clause of service metrics. | `NULL`   |
+| we.service.exclude         | Specify the key value pairs for the exclude condition for the WHERE clause of service metrics. | `NULL`   |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.logical_disk.scrape\_interval | The rate in seconds at which logical\_disk metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
@@ -86,7 +86,7 @@ In the following configuration file, the input plugin _windows_exporter_metrics 
     host            0.0.0.0
     port            2021
 
-        
+
 ```
 
 You can test the expose of the metrics by using _curl:_
@@ -181,4 +181,3 @@ However, these parameters are prioritized as follows:
 Our current plugin implements a sub-set of the available collectors in the original Prometheus Windows Exporter, if you would like that we prioritize a specific collector please open a Github issue by using the following template:\
 \
 \- [in_windows_exporter_metrics](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_windows_exporter_metrics:%20add%20ABC%20collector)
-
