@@ -176,6 +176,21 @@ SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE
 1. `we.service.where` is just handled as-is into the where clause in the service collector .
     1. If either of the above parameters is applied, the clause will be applied with `AND (` _the value of `we.service.where`_ `)`.
 
+For example, when a user specifies the parameter as follows:
+
+```
+we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
+we.service.exclude {"Name":"UdkUserSvc%","Name":"XboxNetApiSvc"}
+we.service.where NOT Name LIKE 'webthreatdefusersvc%'
+```
+
+The WMI query will be called with the translated parameter as:
+
+```
+ SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service') AND (NOT Name LIKE 'UdkUserSvc%' AND Name!='XboxNetApiSvc') AND (NOT Name LIKE 'webthreatdefusersvc%')
+```
+
+
 ## Enhancement Requests
 
 Our current plugin implements a sub-set of the available collectors in the original Prometheus Windows Exporter, if you would like that we prioritize a specific collector please open a Github issue by using the following template:\
