@@ -155,7 +155,7 @@ When a user specifies the parameter as follows:
 we.service.exclude {"Name":"UdkUserSvc%","Name":"webthreatdefusersvc%","Name":"XboxNetApiSvc"}
 ```
 
-The parameter should be interpreted as:
+The parameter will be interpreted as:
 ```
 (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
