@@ -114,7 +114,7 @@ For example, when a user specifies the parameter as follows:
 we.service.where Status!='OK'
 ```
 
-The WMI query should be called as:
+This creates a WMI query like so:
 ```
 SELECT * FROM Win32_Service WHERE Status!='OK'
 ```
