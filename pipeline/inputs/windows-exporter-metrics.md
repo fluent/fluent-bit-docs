@@ -108,7 +108,7 @@ Here is how these parameters should work:
 #### we.service.where
 
 `we.service.where` is handled as a raw WHERE clause.
-When a user specify the parameter as follows:
+For example, when a user specifies the parameter as follows:
 
 ```
 we.service.where Status!='OK'
