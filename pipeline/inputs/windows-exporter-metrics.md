@@ -159,7 +159,7 @@ The parameter should be interpreted as:
 (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
-The WMI query should be called with the translated parameter as:
+The WMI query will be called with the translated parameter as:
 
 ```
 SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
