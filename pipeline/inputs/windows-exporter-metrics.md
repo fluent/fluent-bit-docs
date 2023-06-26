@@ -137,7 +137,7 @@ The parameter should be interpreted as:
 (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
 ```
 
-The WMI query should be called with the translated parameter as:
+The WMI query will be called with the translated parameter as:
 
 ```
 SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
