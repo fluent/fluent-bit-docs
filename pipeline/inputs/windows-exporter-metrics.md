@@ -21,7 +21,7 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | we.logical\_disk.allow\_disk\_regex | Specify the regex for logical disk metrics to allow collection of. Collect all by default. | "/.+/"    |
 | we.logical\_disk.deny\_disk\_regex  | Specify the regex for logical disk metrics to prevent collection of/ignore. Allow all by default. | `NULL`    |
 |we.net.allow\_nic\_regex            | Specify the regex for network metrics captured by the name of the NIC, by default captures all NICs but to exclude adjust the regex.  | "/.+/"    |
-| we.service.where           | Specify the where clause for retrieving service metrics.  | `NULL`   |
+| we.service.where           | Specify the WHERE clause for retrieving service metrics.  | `NULL`   |
 | we.service.include         | Specify the key value pairs for the include condition for the WHERE clause of service metrics. | `NULL`   |
 | we.service.exclude         | Specify the key value pairs for the exclude condition for the WHERE clause of service metrics. | `NULL`   |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
