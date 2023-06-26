@@ -132,7 +132,7 @@ When a user specifies the parameter as follows:
 we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
 ```
 
-The parameter should be interpreted as:
+The parameter will be interpreted as:
 ```
 (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
 ```
