@@ -145,7 +145,7 @@ SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LI
 
 ### we.service.exclude
 
-`we.service.exclude` is interpreted into where clause.
+When defined, the `we.service.exclude` is interpreted into a WHERE clause.
 If the multiple key-value pairs are specified, the values will be concatenated with `AND`.
 Also, the values contain `%` character, `LIKE` operator should be used in the translated clause instead of `!=` operator.
 When a user specifies the parameter as follows:
