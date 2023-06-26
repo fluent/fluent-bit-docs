@@ -98,7 +98,7 @@ curl http://127.0.0.1:2021/metrics
 ### Service where clause
 
 Windows service collector will retrieve entire service information in the local box.
-`we.service.where`, `we.service.include`, and `we.service.exclude` can operate to reduce the volume of the service metrics.
+`we.service.where`, `we.service.include`, and `we.service.exclude` can be used to filter the service metrics.
 
 To reduce the amount of this metrics, users have to use WHERE clause.
 This syntax is defined in [the WMI Query Language(WQL)](https://learn.microsoft.com/en-us/windows/win32/wmisdk/wql-sql-for-wmi).
