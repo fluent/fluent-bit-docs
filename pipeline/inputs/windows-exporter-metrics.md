@@ -119,7 +119,7 @@ This creates a WMI query like so:
 SELECT * FROM Win32_Service WHERE Status!='OK'
 ```
 
-Then, WMI mechanism should return the information which has not OK status in this example.
+The WMI mechanism will then handle it and return the information which has a "not OK" status in this example.
 
 ### we.service.include
 
