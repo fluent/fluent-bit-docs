@@ -124,7 +124,7 @@ The WMI mechanism will then handle it and return the information which has a "no
 ### we.service.include
 
 When defined, the `we.service.include` is interpreted into a WHERE clause.
-If the multiple key-value pairs are specified, the values will be concatenated with `OR`.
+If multiple key-value pairs are specified, the values will be concatenated with `OR`.
 Also, the values contain `%` character, `LIKE` operator should be used in the transrated clause instead of `=` operator.
 When a user specify the parameter as follows:
 
