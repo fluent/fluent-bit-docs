@@ -126,7 +126,7 @@ The WMI mechanism will then handle it and return the information which has a "no
 When defined, the `we.service.include` is interpreted into a WHERE clause.
 If multiple key-value pairs are specified, the values will be concatenated with `OR`.
 Also, if the values contain `%` character then a `LIKE` operator will be used in the clause instead of the `=` operator.
-When a user specify the parameter as follows:
+When a user specifies the parameter as follows:
 
 ```python
 we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
