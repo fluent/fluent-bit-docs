@@ -165,7 +165,7 @@ The WMI query should be called with the translated parameter as:
 SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
-### advanced usages
+### Advanced usage
 
 `we.service.where`, `we.service.include`, and `we.service.exclude` can be used in the same time.
 However, these parameters are prioritized as follows:
