@@ -107,7 +107,7 @@ Here is how these parameters should work:
 
 #### we.service.where
 
-`we.service.where` is just handled as normal where clause.
+`we.service.where` is handled as a raw WHERE clause.
 When a user specify the parameter as follows:
 
 ```
