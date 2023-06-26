@@ -97,7 +97,7 @@ curl http://127.0.0.1:2021/metrics
 
 ### Service where clause
 
-Windows service collector will retrieve entire service information in the local box.
+Windows service collector will retrieve all of the service information for the local node or container.
 `we.service.where`, `we.service.include`, and `we.service.exclude` can be used to filter the service metrics.
 
 To filter these metrics, users should specify a WHERE clause.
