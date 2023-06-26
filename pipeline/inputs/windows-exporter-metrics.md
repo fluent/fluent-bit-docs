@@ -168,7 +168,6 @@ SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE
 ### Advanced usage
 
 `we.service.where`, `we.service.include`, and `we.service.exclude` can be used in the same time.
-However, these parameters are prioritized as follows:
 
 1. `we.service.include` translated and applied into the where clause in the service collector
 1. `we.service.exclude` translated and applied into the where clause in the service collector
