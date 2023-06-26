@@ -6,7 +6,7 @@ description: 'Send logs to Azure Log Analytics using Logs Ingestion API with DCE
 
 ![](../../.gitbook/assets/image%20%287%29.png)
 
-Azure Logs Ingestion plugin allows to ingest your records using [Logs Ingestion API in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview) to supported [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or to [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table) that you create.
+Azure Logs Ingestion plugin allows you ingest your records using [Logs Ingestion API in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview) to supported [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or to [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table) that you create.
 
 The Logs ingestion API requires the following components:
 
@@ -47,7 +47,7 @@ To send records into an Azure Log Analytics using Logs Ingestion API the followi
 - Either an [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table)
 - An app registration with client secrets (for DCR access).
 
-You can follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-porta) to setup the DCE, DCR, app registration and a custom table.
+You can follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal) to setup the DCE, DCR, app registration and a custom table.
 
 ### Configuration File
 
