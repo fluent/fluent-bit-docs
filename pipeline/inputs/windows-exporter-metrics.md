@@ -100,7 +100,7 @@ curl http://127.0.0.1:2021/metrics
 Windows service collector will retrieve entire service information in the local box.
 `we.service.where`, `we.service.include`, and `we.service.exclude` can be used to filter the service metrics.
 
-To reduce the amount of this metrics, users have to use WHERE clause.
+To filter these metrics, users should specify a WHERE clause.
 This syntax is defined in [the WMI Query Language(WQL)](https://learn.microsoft.com/en-us/windows/win32/wmisdk/wql-sql-for-wmi).
 
 Here is how these parameters should work:
