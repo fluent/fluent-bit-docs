@@ -12,8 +12,10 @@ The plugin supports the following configuration parameters:
 | buffer\_chunk\_size | Set the buffer chunk size. | 512K |
 | tag\_key | Specify a key name for extracting as a tag. | `NULL` |
 | meta\_key | Specify a key name for meta information. | "@meta" |
-| hostname | Specify hostname or FQDN. This parameter is effective for sniffering node information. | "localhost" |
+| hostname | Specify hostname or FQDN. This parameter is effective for sniffing node information. | "localhost" |
 | version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
+
+**Note:** Elasticsearch cluster uses sniffing to optimize the connections between its cluster and clients. Elasticsearch can build its cluster and dynamically generating for connection list is called as sniffing. `hostname` will be reflected for sniffing information which is handled by the sniffing endpoint.
 
 ## Getting Started
 
