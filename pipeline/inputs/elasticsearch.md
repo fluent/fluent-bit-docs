@@ -15,7 +15,9 @@ The plugin supports the following configuration parameters:
 | hostname | Specify hostname or FQDN. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost" |
 | version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
 
-**Note:** Elasticsearch cluster uses sniffing to optimize the connections between its cluster and clients. Elasticsearch can build its cluster and dynamically generating for connection list is called as sniffing. `hostname` will be reflected for sniffing information which is handled by the sniffing endpoint.
+**Note:** The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients.
+Elasticsearch can build its cluster and dynamically generate a connection list which is called "sniffing".
+The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
 
 ## Getting Started
 
