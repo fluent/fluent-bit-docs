@@ -28,6 +28,7 @@ The following instructions assumes that you have a fully operational OpenSearch 
 | Type | Type name. This option is ignored if `Suppress_Type_Name` is enabled.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | \_doc |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off                                                                                                                                                                                                                                                                                                                                                                  | Off |
 | Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated.                                                                                                                                                                                          | logstash |
+| Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). |  |
 | Logstash\_Prefix\_Separator | Set a separator between logstash_prefix and date.                                                                                                           | - |
 | Logstash\_DateFormat | Time format \(based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)\) to generate the second part of the Index name.                                                                                                                                                                                                                                                                                                                     | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field.                                                                                                                                                                                                                                                                                                                         | @timestamp |
@@ -42,7 +43,6 @@ The following instructions assumes that you have a fully operational OpenSearch 
 | Trace\_Output | When enabled print the OpenSearch API calls to stdout \(for diag only\)                                                                                                                                                                                                                                                                                                                                                                                      | Off |
 | Trace\_Error | When enabled print the OpenSearch API calls to stdout when OpenSearch returns an error \(for diag only\)                                                                                                                                                                                                                                                                                                                                                     | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record                                                                                                                                                                                                                                                                                                                                                                                              | Off |
-| Logstash\_Prefix\_Key | When included: the value in the record that belongs to the key will be looked up and over-write the Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. Nested keys are not supported \(if desired, you can use the nest filter plugin to remove nesting\)                                                                                                           |  |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored.                                                                                                                                                                                                                        | Off |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.                                                                                                                                                                                                                                                                                                                                          | 2 |
 | Compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression. |  |
@@ -127,6 +127,23 @@ becomes
 ```
 
 ## FAQ
+
+### Logstash_Prefix_Key
+
+The following snippet demonstrates using the namespace name as extracted by the
+`kubernetes` filter as logstash preifix:
+
+```text
+[OUTPUT]
+    Name opensearch
+    Match *
+    # ...
+    Logstash_Prefix logstash
+    Logstash_Prefix_Key $kubernetes["namespace_name"]
+    # ...
+```
+
+For records that do nor have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
 
 ### Fluent Bit + Amazon OpenSearch Service <a id="#aws-es"></a>
 
