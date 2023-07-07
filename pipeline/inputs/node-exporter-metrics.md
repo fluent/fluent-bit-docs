@@ -41,7 +41,7 @@ This plugin is currently only supported on Linux based operating systems\
 | systemd_unit_start_time_metrics | Determines if the collector will include unit start time metrics | false |
 | systemd_include_service_task_metrics | Determines if the collector will include service task metrics | false |
 | systemd_include_pattern | regex to determine which units are included in the metrics produced by the systemd collector | It is not applied unless explicitly set |
-| systemd_exclude_pattern | regex you'd set to determine which units are excluded in the metrics produced by the systemd collector | `.+\\.(automount|device|mount|scope|slice)"`    |
+| systemd_exclude_pattern | regex to determine which units are excluded in the metrics produced by the systemd collector | `.+\\.(automount|device|mount|scope|slice)"`    |
 
 
 **Note:** The plugin top-level `scrape_interval` setting is the global default with any custom settings for individual `scrape_intervals` then overriding just that specific metric scraping interval.
