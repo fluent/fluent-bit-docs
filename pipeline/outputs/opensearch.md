@@ -195,3 +195,43 @@ aoss:UpdateIndex
 aoss:WriteDocument
 ```
 With data access permissions, IAM policies are not needed to access the collection.
+
+### Issues with the OpenSearch cluster
+
+Occasionally you may find that the Fluent-Bit service is generating errors without any additional detail in the logs to explain the source of the issue, even with Debug mode enabled. 
+
+For example, in this scenario the logs show that a connection was successfully established with the OpenSearch domain, and yet an error is still returned:
+```
+[2023/07/10 19:26:00] [debug] [http_client] not using http_proxy for header
+[2023/07/10 19:26:00] [debug] [output:opensearch:opensearch.5] Signing request with AWS Sigv4
+[2023/07/10 19:26:00] [debug] [aws_credentials] Requesting credentials from the EC2 provider..
+[2023/07/10 19:26:00] [debug] [output:opensearch:opensearch.5] HTTP Status=200 URI=/_bulk
+[2023/07/10 19:26:00] [debug] [upstream] KA connection #137 to [MY_OPENSEARCH_DOMAIN]:443 is now available
+[2023/07/10 19:26:00] [debug] [out flush] cb_destroy coro_id=1746
+[2023/07/10 19:26:00] [debug] [task] task_id=2 reached retry-attempts limit 5/5
+[2023/07/10 19:26:00] [error] [engine] chunk '7578-1689017013.184552017.flb' cannot be retried: task_id=2, input=tail.6 > output=opensearch.5
+[2023/07/10 19:26:00] [debug] [task] destroy task=0x7fd1cc4d5ad0 (task_id=2)
+```
+
+When this situation occurs, the fact that there are not any error details in the Fluent-Bit logs could indicate that the error is actually happening at the OpenSearch cluster itself. 
+
+There are many potential issues that could occur after logs reach the cluster, and you should consult the OpenSearch documentation for details on how to troubleshoot. 
+
+**The cluster is out of available index shards**
+
+One hard-to-detect issue could be that you've used up the available index shards in your cluster.
+
+While index shards and disk space are related, they are not directly tied to one another.
+
+OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data. 
+
+In other words, depending on the way you have configured index creation and shard allocation in your OpenSearch domain, you could use up all of the available index shards long before you fill up your nodes' disk space and begin seeing any disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline). 
+
+The primary issue that arises when you've run out of available index shards is that you will no longer be able to create new indexes (though logs can still be added to existing indexes).
+
+When that happens, you may see confusing behavior from the OpenSearch output when debugging in Fluent-Bit. For example:
+- Errors suddenly appear (outputs were previously working and there were no changes to your Fluent-Bit configuration when the errors began)
+- Errors are not consistently occurring (some logs are still reaching the OpenSearch domain)
+- The Fluent-Bit service logs show errors, but without any detail as to the root cause
+
+If any of those symptoms are present, consider following the troubleshooting steps described in [this article](https://repost.aws/knowledge-center/opensearch-rebalance-uneven-shards) to check your OpenSearch domain's shard usage.
