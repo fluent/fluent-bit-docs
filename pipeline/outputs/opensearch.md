@@ -213,15 +213,9 @@ For example, in this scenario the logs show that a connection was successfully e
 [2023/07/10 19:26:00] [debug] [task] destroy task=0x7fd1cc4d5ad0 (task_id=2)
 ```
 
-When this situation occurs, the fact that there are not any error details in the Fluent-Bit logs could indicate that the error is actually happening at the OpenSearch cluster itself. 
+This behavior could be indicative of a hard-to-detect issue with index shard usage in your OpenSearch domain.
 
-There are many potential issues that could occur after logs reach the cluster, and you should consult the OpenSearch documentation for details on how to troubleshoot. 
-
-**The cluster is out of available index shards**
-
-One hard-to-detect issue could be that you've used up the available index shards in your cluster.
-
-While index shards and disk space are related, they are not directly tied to one another.
+While OpenSearch index shards and disk space are related, they are not directly tied to one another.
 
 OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data. 
 
