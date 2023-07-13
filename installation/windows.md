@@ -83,15 +83,15 @@ The latest stable version is 2.1.4. Each version is available on the Github rele
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.1.6-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win32.exe) | [8f7645be80a5f66e1fad888711eb5df2fb1c581d8662835d4602230940120e88](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win32.exe.sha256) |
-| [fluent-bit-2.1.6-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win32.zip) | [61c5f4507e848c4184eeaca24d5aa4ba6b7c3cbb1f61054fbaf62619fcbcca71](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win32.zip.sha256) |
-| [fluent-bit-2.1.6-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win64.exe) | [c804916c9e17319ff062fc53ac8c9a75b0c70d9f516cf99576074a4a4f283849](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win64.exe.sha256) |
-| [fluent-bit-2.1.6-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win64.zip) | [337bff2e2791b668a0175a282b02cb581618c9dc0c8eaa5fb1892b3be1d7dda7](https://releases.fluentbit.io/2.1/fluent-bit-2.1.6-win64.zip.sha256) |
+| [fluent-bit-2.1.7-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win32.exe) | [9fd4e3e76f720b1b6fe3750b0f3fc8fba8ce411f8984dff0081097d5ab5aefb7](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win32.exe.sha256) |
+| [fluent-bit-2.1.7-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win32.zip) | [9a9201dd9ea4991bbecee88754a6f7bdf2058cfa60ebda0feea90388d5d900ff](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win32.zip.sha256) |
+| [fluent-bit-2.1.7-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win64.exe) | [e3e010108acfaeeef4821c97e7415142ab4f865810733dae62b8162227af3b6d](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win64.exe.sha256) |
+| [fluent-bit-2.1.7-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win64.zip) | [8d41d4befe8780cba4b8dd802a833d625cfcf7ab9d1b1f7c6c5527d5da6ac691](https://releases.fluentbit.io/2.1/fluent-bit-2.1.7-win64.zip.sha256) |
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-2.1.6-win32.exe
+PS> Get-FileHash fluent-bit-2.1.7-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -101,7 +101,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-2.1.6-win64.zip
+PS> Expand-Archive fluent-bit-2.1.7-win64.zip
 ```
 
 The ZIP package contains the following set of files.
