@@ -198,7 +198,7 @@ With data access permissions, IAM policies are not needed to access the collecti
 
 ### Issues with the OpenSearch cluster
 
-Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with Debug mode enabled. 
+Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with the service's log_level attribute set to [Debug](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file). 
 
 For example, in this scenario the logs show that a connection was successfully established with the OpenSearch domain, and yet an error is still returned:
 ```
