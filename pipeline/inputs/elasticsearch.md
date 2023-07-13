@@ -6,13 +6,18 @@ The **elasticsearch** input plugin handles both Elasticsearch and OpenSearch Bul
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| buffer\_max\_size | Set the maximum size of buffer. |
-| buffer\_chunk\_size | Set the buffer chunk size. |
-| tag\_key | Specify a key name for extracting as a tag. |
-| meta\_key | Specify a key name for meta information. |
-| hostname | Specify hostname or FQDN. This parameter is effective for sniffering node information. |
+| Key | Description | Default value |
+| :--- | :--- | :--- |
+| buffer\_max\_size | Set the maximum size of buffer. | 4M |
+| buffer\_chunk\_size | Set the buffer chunk size. | 512K |
+| tag\_key | Specify a key name for extracting as a tag. | `NULL` |
+| meta\_key | Specify a key name for meta information. | "@meta" |
+| hostname | Specify hostname or FQDN. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost" |
+| version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
+
+**Note:** The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients.
+Elasticsearch can build its cluster and dynamically generate a connection list which is called "sniffing".
+The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
 
 ## Getting Started
 
