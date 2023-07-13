@@ -198,7 +198,7 @@ With data access permissions, IAM policies are not needed to access the collecti
 
 ### Issues with the OpenSearch cluster
 
-Occasionally you may find that the Fluent-Bit service is generating errors without any additional detail in the logs to explain the source of the issue, even with Debug mode enabled. 
+Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with Debug mode enabled. 
 
 For example, in this scenario the logs show that a connection was successfully established with the OpenSearch domain, and yet an error is still returned:
 ```
@@ -213,19 +213,33 @@ For example, in this scenario the logs show that a connection was successfully e
 [2023/07/10 19:26:00] [debug] [task] destroy task=0x7fd1cc4d5ad0 (task_id=2)
 ```
 
-This behavior could be indicative of a hard-to-detect issue with index shard usage in your OpenSearch domain.
+This behavior could be indicative of a hard-to-detect issue with index shard usage in the OpenSearch domain.
 
 While OpenSearch index shards and disk space are related, they are not directly tied to one another.
 
 OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data. 
 
-In other words, depending on the way you have configured index creation and shard allocation in your OpenSearch domain, you could use up all of the available index shards long before you fill up your nodes' disk space and begin seeing any disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline). 
+In other words, depending on the way index creation and shard allocation are configured in the OpenSearch domain, all of the available index shards could be used long before the data nodes run out of disk space and begin exhibiting disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline). 
 
-The primary issue that arises when you've run out of available index shards is that you will no longer be able to create new indexes (though logs can still be added to existing indexes).
+The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (though logs can still be added to existing indexes).
 
-When that happens, you may see confusing behavior from the OpenSearch output when debugging in Fluent-Bit. For example:
-- Errors suddenly appear (outputs were previously working and there were no changes to your Fluent-Bit configuration when the errors began)
+When that happens, the Fluent Bit OpenSearch output may begin showing confusing behavior. For example:
+- Errors suddenly appear (outputs were previously working and there were no changes to the Fluent Bit configuration when the errors began)
 - Errors are not consistently occurring (some logs are still reaching the OpenSearch domain)
-- The Fluent-Bit service logs show errors, but without any detail as to the root cause
+- The Fluent Bit service logs show errors, but without any detail as to the root cause
 
-If any of those symptoms are present, consider following the troubleshooting steps described in [this article](https://repost.aws/knowledge-center/opensearch-rebalance-uneven-shards) to check your OpenSearch domain's shard usage.
+If any of those symptoms are present, consider using the OpenSearch domain's API endpoints to troubleshoot possible shard issues.
+
+Running this command will show both the shard count and disk usage on all of the nodes in the domain. 
+```
+GET _cat/allocation?v
+```
+
+Index creation issues will begin to appear if any hot data nodes have around 1000 shards OR if the total number of shards spread across hot and ultrawarm data nodes in the cluster is greater than 1000 times the total number of nodes (e.g., in a cluster with 6 nodes, the maximum shard count would be 6000).
+
+Alternatively, running this command to manually create a new index will return an explicit error related to shard count if the maximum has been exceeded.
+```
+PUT <index-name>
+```
+
+There are multiple ways to resolve excessive shard usage in an OpenSearch domain such as deleting or combining indexes, adding more data nodes to the cluster, or updating the domain's index creation and sharding strategy. Consult the OpenSearch documentation for more information on how to use these strategies.
