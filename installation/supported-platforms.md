@@ -4,7 +4,7 @@ The following operating systems and architectures are supported in Fluent Bit.
 
 | Operating System | Distribution | Architectures |
 | :--- | :--- | :--- |
-| Linux | [Amazon Linux 2022](linux/amazon-linux.md) | x86\_64, Arm64v8 |
+| Linux | [Amazon Linux 2023](linux/amazon-linux.md) | x86\_64, Arm64v8 |
 |  | [Amazon Linux 2](linux/amazon-linux.md) | x86\_64, Arm64v8 |
 |  | [Centos 9 Stream](linux/redhat-centos.md) | x86\_64, Arm64v8 |
 |  | [Centos 8](linux/redhat-centos.md) | x86\_64, Arm64v8 |

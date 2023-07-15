@@ -108,24 +108,24 @@ service:
 
 pipeline:
     inputs:
-        - random:
-            tag:           test
-            samples:       10
+        - name:    random
+          tag:     test
+          samples: 10
 
     filters:
-        - lua:
-            match:         "*"
-            call:          append_tag
-            code:          |
-                function append_tag(tag, timestamp, record)
-                   new_record = record
-                   new_record["tag"] = tag
-                   return 1, timestamp, new_record
-                end
+        - name:  lua
+          match: "*"
+          call:  append_tag
+          code:  |
+              function append_tag(tag, timestamp, record)
+                 new_record = record
+                 new_record["tag"] = tag
+                 return 1, timestamp, new_record
+              end
 
     outputs:
-        - stdout:
-            match:         "*"
+        - name:  stdout
+          match: "*"
 ```
 
 In classic mode:

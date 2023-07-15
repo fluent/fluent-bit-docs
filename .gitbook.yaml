@@ -9,6 +9,7 @@ redirects:
     input/disk:            ./pipeline/inputs/disk-io-metrics.md
     #inputs/docker:          ./pipeline/inputs/
     input/dummy:           ./pipeline/inputs/dummy.md
+    input/elasticsearch:   ./pipeline/inputs/elasticsearch.md
     input/exec:            ./pipeline/inputs/exec.md
     input/fluentbit:       ./pipeline/inputs/fluentbit-metrics.md
     input/forward:         ./pipeline/inputs/forward.md
@@ -20,6 +21,7 @@ redirects:
     input/netif:           ./pipeline/inputs/network-io-metrics.md
     input/proc:            ./pipeline/inputs/process.md
     input/random:          ./pipeline/inputs/random.md
+    input/splunk:          ./pipeline/inputs/splunk.md
     input/serial:          ./pipeline/inputs/serial-interface.md
     #inputs/statsd:          ./pipeline/inputs/
     input/stdin:           ./pipeline/inputs/standard-input.md

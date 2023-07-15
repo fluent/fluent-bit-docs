@@ -1,8 +1,6 @@
----
-description: The HTTP input plugin allows you to send custom records to an HTTP endpoint.
----
+# Splunk (HTTP HEC)
 
-# HTTP
+The **splunk** input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) requests.
 
 ## Configuration Parameters
 
@@ -14,51 +12,45 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 | buffer_max_size          | Specify the maximum buffer size in KB to receive a JSON message.                                                                              | 4M      |
 | buffer_chunk_size        | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size. | 512K    |
 | successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.                                                              | 201     |
-| success_header           | Add an HTTP header key/value pair on success. Multiple headers can be set. Example: `X-Custom custom-answer`                                  |         |
+| splunk\_token           | Add an Splunk token for HTTP HEC.`                                  |         |
 
 ## Getting Started
 
-The http input plugin allows Fluent Bit to open up an HTTP port that you can then route data to in a dynamic way. This plugin supports dynamic tags which allow you to send data with different tags through the same input. An example video and curl message can be seen below
-
-[Link to video](https://asciinema.org/a/375571)
+In order to start performing the checks, you can run the plugin from the command line or through the configuration file.
 
 #### How to set tag
 
-The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system. For example, in the following curl message below the tag set is `app.log`**. **If you do not set the tag `http.0` is automatically used. If you have multiple HTTP inputs then they will follow a pattern of `http.N` where N is an integer representing the input.
+The tag for the Splunk input plugin is set by adding the tag to the end of the request URL by default.
+This tag is then used to route the event through the system.
+The default behavior of the splunk input sets the tags for the following endpoints:
 
-#### How to set multiple custom HTTP header on success
+* `/services/collector`
+* `/services/collector/event`
+* `/services/collector/raw`
 
-The `success_header` parameter allows to set multiple HTTP headers on success. The format is:
+The requests for these endpoints are interpreted as `services_collector`, `services_collector_event`, and `services_collector_raw`.
 
-```ini
-[INPUT]
-    name http
-    success_header X-Custom custom-answer
-    success_header X-Another another-answer
-```
+If you want to use the other tags for multiple instantiating input splunk plugin, you have to specify `tag` property on the each of splunk plugin configurations to prevent collisions of data pipeline.
 
+### Command Line
 
-#### Example Curl message
+From the command line you can configure Fluent Bit to handle HTTP HEC requests with the following options:
 
-```
-curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+```bash
+$ fluent-bit -i splunk -p port=8088 -o stdout
 ```
 
 ### Configuration File
 
-```
+In your main configuration file append the following _Input_ & _Output_ sections:
+
+```python
 [INPUT]
-    name http
+    name splunk
     listen 0.0.0.0
-    port 8888
+    port 8088
 
 [OUTPUT]
     name stdout
     match *
-```
-
-### Command Line
-
-```
-$> fluent-bit -i http -p port=8888 -o stdout
 ```

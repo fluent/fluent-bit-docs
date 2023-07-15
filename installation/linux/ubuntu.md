@@ -67,6 +67,7 @@ We recommend upgrading your system (`sudo apt-get upgrade`). This could avoid po
 {% hint style="info" %}
 If you have the following error "Certificate verification failed", you might want to check if the package `ca-certificates` is properly installed (`sudo apt-get install ca-certificates`).
 {% endhint %}
+
 ## Install Fluent Bit
 
 Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
@@ -84,7 +85,7 @@ sudo systemctl start fluent-bit
 If you do a status check, you should see a similar output like this:
 
 ```bash
-sudo service status fluent-bit
+systemctl status fluent-bit
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/lib/systemd/system/fluent-bit.service; disabled; vendor preset: enabled)
    Active: active (running) since mié 2016-07-06 16:58:25 CST; 2h 45min ago

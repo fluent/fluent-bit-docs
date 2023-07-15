@@ -17,6 +17,9 @@ The plugin supports the following configuration parameters:
 | account\_id | The account ID for current EC2 instance. | false |
 | hostname | The hostname for current EC2 instance. | false |
 | vpc\_id | The VPC ID for current EC2 instance. | false |
+| tags\_enabled | Specifies if should attach EC2 instance tags. EC2 instance must have the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled (which is disabled by default). | false |
+| tags\_include | Defines list of specific EC2 tag keys to inject into the logs. Tag keys must be separated by "," character. Tags which are not present in this list will be ignored. Example: `Name,tag1,tag2`. | |
+| tags\_exclude | Defines list of specific EC2 tag keys not to inject into the logs. Tag keys must be separated by "," character. Tags which are not present in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, configuration is invalid and plugin fails. Example: `Name,tag1,tag2` | |
 
 Note: _If you run Fluent Bit in a container, you may have to use instance metadata v1._ The plugin behaves the same regardless of which version is used.
 
@@ -49,9 +52,58 @@ $ bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
     account_id true
     hostname true
     vpc_id true
+    tags_enabled true
 
 [OUTPUT]
     Name stdout
     Match *
 ```
 
+## EC2 Tags
+
+EC2 Tags are a useful feature that enables you to label and organize your EC2 instances by creating custom-defined key-value pairs. These tags are commonly utilized for resource management, cost allocation, and automation. Consequently, including them in the Fluent Bit generated logs is almost essential.
+
+To achieve this, AWS Filter can be configured with `tags_enabled true` to enable the _tagging_ of logs with the relevant EC2 instance tags. This setup ensures that logs are appropriately tagged, making it easier to manage and analyze them based on specific criteria.
+
+### Requirements
+
+To use the `tags_enabled true` functionality in Fluent Bit, the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option must be enabled on the EC2 instance where Fluent Bit is running. Without this option enabled, Fluent Bit will not be able to retrieve the tags associated with the EC2 instance. However, this does not mean that Fluent Bit will fail or stop working altogether. Instead, if [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option is not enabled, Fluent Bit will continue to operate normally and capture other values, such as the EC2 instance ID or availability zone, based on its configuration.
+
+### Example
+
+#### tags_include
+
+Assume that our EC2 instance has many tags, some of which have lengthy values that are irrelevant to the logs we want to collect. Only two tags, `department` and `project`, seem to be valuable for our purpose. Here is a configuration which reflects this requirement:
+
+```
+[FILTER]
+    Name aws
+    Match *
+    tags_enabled true
+    tags_include department,project
+```
+
+If we run Fluent Bit, what will the logs look like? Here is an example of what the logs might contain:
+```
+{"log"=>"fluentbit is awesome", "az"=>"us-east-1a", "ec2_instance_id"=>"i-0e66fc7f9809d7168", "department"=>"it", "project"=>"fluentbit"}
+```
+
+#### tags_exclude
+
+Suppose our EC2 instance has three tags: `Name:fluent-bit-docs-example`, `project:fluentbit`, and `department:it`. In this example, we want to exclude the `department` tag since we consider it redundant. This is because all of our projects belong to the `it` department, and we do not need to waste storage space on redundant labels.
+
+Here is an example configuration that achieves this:
+
+```
+[FILTER]
+    Name aws
+    Match *
+    tags_enabled true
+    tags_exclude department
+```
+
+The resulting logs might look like this:
+
+```
+{"log"=>"aws is awesome", "az"=>"us-east-1a", "ec2_instance_id"=>"i-0e66fc7f9809d7168", "Name"=>"fluent-bit-docs-example", "project"=>"fluentbit"}
+```

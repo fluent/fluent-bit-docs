@@ -35,6 +35,6 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 ## Fluent Bit, Fluentd and CNCF
 
-[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) **graduated** sub-project under the umbrella of [Fluentd](http://fluentd.org), it's licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) **graduated** sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/); as a CNCF-hosted project is a fully **vendor-neutral** and community-driven project.
+Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/). As a CNCF-hosted project, it is a fully **vendor-neutral** and community-driven project.
