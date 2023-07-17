@@ -48,8 +48,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Shared_Key  def
 ```
 
-Another example using the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor)
-which will read the table name (`log_type`) from kubernetes label in the record:
+Another example using the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor), which will read the table name (or event type) dynamically from kubernetes label `app`, instead of `Log_Type`:
 
 ```text
 [INPUT]
