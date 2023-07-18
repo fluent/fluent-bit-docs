@@ -29,6 +29,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | Index | Index name | fluent-bit |
 | Type | Type name | \_doc |
+| Target_index | When included: destination index will be rendered using this record accessor syntax. If any field in the record accessor expression is not found in the record, the value of `Index` setting is used. | 
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off | Off |
 | Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
 | Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). |  |
@@ -46,7 +47,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Trace\_Output | Print all elasticsearch API request payloads to stdout \(for diag only\) | Off |
 | Trace\_Error | If elasticsearch return an error, print the elasticsearch API request and response \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-
+ |  |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. Types are deprecated in APIs in [v7.0](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html). This options is for v7.0 or later. | Off |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 
@@ -255,3 +256,20 @@ The following snippet demonstrates using the namespace name as extracted by the
 ```
 
 For records that do nor have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
+
+### Target_index
+
+The following snippet demonstrates using `destination_index` record value as elasticsearch destination index,
+using `fallback` as default index name if `destination_index` value is not present in record.
+
+```text
+[OUTPUT]
+    Name es
+    Match *
+    # ...
+    Index fallback
+    Target_index fluent-$destination_index
+    # ...
+```
+
+For records that do not have the field `destination__index`, the value of `Index` (`fallback`) will be used.
