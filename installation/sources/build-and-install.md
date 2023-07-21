@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- CMake >= 3.0
+- CMake >= 3.12
 - Flex
 - Bison
 - YAML headers
