@@ -6,7 +6,7 @@
 
 - CMake >= 3.12
 - Flex
-- Bison
+- Bison >= 3
 - YAML headers
 - OpenSSL headers
 
