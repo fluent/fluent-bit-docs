@@ -95,6 +95,7 @@
   * [Health](pipeline/inputs/health.md)
   * [Kafka](pipeline/inputs/kafka.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
+  * [Kubernetes Events](pipeline/inputs/kubernetes-events.md)
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Log Based Metrics](pipeline/inputs/network-io-metrics.md)
