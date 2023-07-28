@@ -16,6 +16,10 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 | successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.                                                              | 201     |
 | success_header           | Add an HTTP header key/value pair on success. Multiple headers can be set. Example: `X-Custom custom-answer`                                  |         |
 
+### TLS / SSL
+
+HTTP input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+
 ## Getting Started
 
 The http input plugin allows Fluent Bit to open up an HTTP port that you can then route data to in a dynamic way. This plugin supports dynamic tags which allow you to send data with different tags through the same input. An example video and curl message can be seen below
