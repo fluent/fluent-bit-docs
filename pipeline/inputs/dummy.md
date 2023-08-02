@@ -37,13 +37,29 @@ Fluent Bit v2.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```python
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
 [INPUT]
     Name   dummy
-    Tag    dummy.log
+    Dummy {"message": "custom dummy"}
 
 [OUTPUT]
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message": "custom dummy"}'
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
