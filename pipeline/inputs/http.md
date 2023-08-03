@@ -18,7 +18,7 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 
 ### TLS / SSL
 
-HTTP input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+HTTP input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](/administration/transport-security) section.
 
 ## Getting Started
 
