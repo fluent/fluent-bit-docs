@@ -11,6 +11,7 @@ The **kafka-rest** output plugin, allows to flush your records into a [Kafka RES
 | Topic | Set the Kafka topic | fluent-bit |
 | Partition | Set the partition number \(optional\) |  |
 | Message\_Key | Set a message key \(optional\) |  |
+| Message\_Key\_Field | If set, the value of Message\_Key\_Field in the record will indicate the message key. If not set nor found in the record, Message\_Key will be used (if set).  |  |
 | Time\_Key | The Time\_Key property defines the name of the field that holds the record timestamp. | @timestamp |
 | Time\_Key\_Format | Defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
 | Include\_Tag\_Key | Append the Tag name to the final record. | Off |
