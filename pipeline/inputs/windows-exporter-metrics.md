@@ -55,7 +55,7 @@ The following table describes the available collectors as part of this plugin. A
 | cpu\_info     | Exposes cpu\_info statistics.                                                                    | Windows | v2.0.8  |
 | logon         | Exposes logon statistics.                                                                        | Windows | v2.0.8  |
 | system        | Exposes system statistics.                                                                       | Windows | v2.0.8  |
-| service       | Exposes system statistics.                                                                       | Windows | v2.1.6  |
+| service       | Exposes service statistics.                                                                       | Windows | v2.1.6  |
 | memory        | Exposes memory statistics.                                                                       | Windows | v2.1.9  |
 | paging\_file   | Exposes paging\_file statistics.                                                                | Windows | v2.1.9  |
 
