@@ -128,36 +128,38 @@ For example, one of the examples of [Rust WASM filter](https://github.com/fluent
 [0] dummy.local: [1666270589.270348000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:29.270348000 +0000"}]
 [0] dummy.local: [1666270590.271107000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:30.271107000 +0000"}]
 ```
-
-Another example of a Rust WASM filter is called [flb_filter_iis](https://github.com/kenriortega/flb_filter_iis), this filter takes the IIS w3c logs (with some custom modifications) and transforms the raw string into a fluentbit json standard.
+Another example of a Rust WASM filter is the [flb_filter_iis](https://github.com/kenriortega/flb_filter_iis) filter.
+This filter takes the [Internet Information Services (IIS)](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis) [w3c logs](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis#select-w3c-fields-to-log) (with some custom modifications) and transforms the raw string into a fluentbit json standard.
 
 ```text
 [INPUT]
-    name              tail
-    path              /dataset/app/*.log
-    Tag               iis.*
+    Name             dummy
+    Dummy            {"log": "2023-08-11 19:56:44 W3SVC1 WIN-PC1 ::1 GET / - 80 ::1 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200 - - localhost 304 142 756 1078 -"}
+    Tag              iis.*
 
 [FILTER]
-    Name   wasm
-    match  iis.*
-    WASM_Path /plugins/flb_filter_iis_wasm.wasm
-    Function_Name flb_filter_log_iis_w3c_custom
+    Name             wasm
+    match            iis.*
+    WASM_Path        /plugins/flb_filter_iis_wasm.wasm
+    Function_Name    flb_filter_log_iis_w3c_custom
     accessible_paths .
 
 [OUTPUT]
-    name stdout
-    match iis.*
+    name             stdout
+    match            iis.*
 ```
 
-The incoming raw string from IIS log contains this structure:
+The incoming raw strings from an IIS logs are composed by the following fields:
 
-`2023-08-11 19:56:44 W3SVC1 WIN-PC1 ::1 GET / - 80 ::1 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200 - - localhost 304 142 756 1078 -`
+`date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port c-ip cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-bytes cs-bytes time-taken c-authorization-header`
 
 The output after the filter logic will be:
 
 ```text
-[0] iis.dataset.app.log: [[1691936378.278677337, {}], {"c_authorization_header"=>"-2023-08-11", "c_ip"=>"::1", "cs_bytes"=>"756", "cs_cookie"=>"-", "cs_host"=>"localhost", "cs_method"=>"GET", "cs_referer"=>"-", "cs_uri_query"=>"-", "cs_uri_stem"=>"/", "cs_user_agent"=>"Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200", "date"=>"2023-08-11 19:56:44", "s_computername"=>"WIN-PC1", "s_ip"=>"::1", "s_port"=>"80", "s_sitename"=>"W3SVC1", "sc_bytes"=>"142", "sc_status"=>"304", "source"=>"LogEntryIIS", "tag"=>"iis.dataset.app.log", "time"=>"2023-08-13T14:19:38.278677337 +0000", "time_taken"=>"1078"}]
+[0] iis.*: [[1692131925.559486675, {}], {"c_authorization_header"=>"-", "c_ip"=>"::1", "cs_bytes"=>756, "cs_cookie"=>"-", "cs_host"=>"localhost", "cs_method"=>"GET", "cs_referer"=>"-", "cs_uri_query"=>"-", "cs_uri_stem"=>"/", "cs_user_agent"=>"Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200", "date"=>"2023-08-11 19:56:44", "s_computername"=>"WIN-PC1", "s_ip"=>"::1", "s_port"=>"80", "s_sitename"=>"W3SVC1", "sc_bytes"=>142, "sc_status"=>"304", "source"=>"LogEntryIIS", "tag"=>"iis.*", "time"=>"2023-08-15T20:38:45.559486675 +0000", "time_taken"=>1078}]
 ```
+This is just an example that can be extended adding type convertion on fileds such as `sc_bytes,cs_bytes,time_taken`. 
+Very useful when we need to apply some complex query in our backend for logs. 
 
 ### Optimize execution of WASM programs
 
