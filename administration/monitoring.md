@@ -322,9 +322,9 @@ If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is TRUE, t
 If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is FALSE, then it's healthy.
 
 
-## Calyptia Cloud
+## Calyptia
 
-[Calyptia Cloud](https://cloud.calyptia.com) is a hosted service that allows you to monitor your Fluent Bit agents including data flow, metrics and configurations.
+[Calyptia](https://calyptia.com/free-trial) is a hosted service that allows you to monitor your Fluent Bit agents including data flow, metrics and configurations.
 
 ![](../.gitbook/assets/image-19-.png)
 
@@ -332,8 +332,8 @@ If (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds is FALSE, 
 
 Register your Fluent Bit agent will take **less than one minute**, steps:
 
-* Go to [cloud.calyptia.com](https://cloud.calyptia.com) and sign-in
-* On the left menu click on [Settings](https://cloud.calyptia.com/settings) and generate/copy your API key
+* Go to the calyptia core console and sign-in
+* On the left menu click on settings and generate/copy your API key
 
 In your Fluent Bit configuration file, append the following configuration section:
 

@@ -126,7 +126,7 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections. An example visualization can be found [here](https://link.calyptia.com/vg2)
+In your main configuration file append the following _Input_ & _Output_ sections. 
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
