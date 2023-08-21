@@ -110,7 +110,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Type  my_type
 ```
 
-![example configuration visualization from config.calyptia.com](../../.gitbook/assets/image%20%282%29.png)
+![example configuration visualization from calyptia](../../.gitbook/assets/image%20%282%29.png)
 
 ## About OpenSearch field names
 
