@@ -40,6 +40,12 @@ Here is a minimum configuration example.
 
 Note that some Windows Event Log channels \(like `Security`\) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
 
+#### Query Languages for Event_Query Parameter
+
+`Event_Query` parameter can handle XML query for filtering Windows EventLog when collecting them.
+This parameter is able to handle both of [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query queries.
+For further description, please refer [the MSDN doc](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
+
 ### Command Line
 
 If you want to do a quick test, you can run this plugin from the command line.
