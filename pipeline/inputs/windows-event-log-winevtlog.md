@@ -44,7 +44,7 @@ Note that some Windows Event Log channels \(like `Security`\) requires an admin 
 
 `Event_Query` parameter can handle XML query for filtering Windows EventLog when collecting them.
 This parameter is able to handle both of [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query queries.
-For further description, please refer [the MSDN doc](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
+For further details, please refer to [the MSDN doc](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
 
 ### Command Line
 
