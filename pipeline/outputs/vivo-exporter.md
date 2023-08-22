@@ -22,6 +22,7 @@ Here is a simple configuration of Vivo Exporter, note that this example is not b
 
 [OUTPUT]
     name                   vivo_exporter
+    match                  *
     empty_stream_on_read   off
     stream_queue_size      20M
      http_cors_allow_origin *
@@ -55,6 +56,7 @@ The example below will generate dummy log events which will be consuming by usin
 
 [OUTPUT]
     name   vivo_exporter
+    match  *
 
 ```
 
