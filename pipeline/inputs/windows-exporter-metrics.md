@@ -24,7 +24,7 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | we.service.where           | Specify the WHERE clause for retrieving service metrics.  | `NULL`   |
 | we.service.include         | Specify the key value pairs for the include condition for the WHERE clause of service metrics. | `NULL`   |
 | we.service.exclude         | Specify the key value pairs for the exclude condition for the WHERE clause of service metrics. | `NULL`   |
-| we.process.allow\_process\_regex | Specify the regex for process metrics to allow collection of. Collect all by default. | "/.+/"    |
+| we.process.allow\_process\_regex | Specify the regex covering the process metrics to  collect. Collect all by default. | "/.+/"    |
 | we.process.deny\_process\_regex  | Specify the regex for process metrics to prevent collection of/ignore. Allow all by default. | `NULL`    |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
