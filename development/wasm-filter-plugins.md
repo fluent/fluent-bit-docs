@@ -149,7 +149,7 @@ This filter takes the [Internet Information Services (IIS)](https://learn.micros
     match            iis.*
 ```
 
-The incoming raw strings from an IIS logs are composed by the following fields:
+The incoming raw strings from an IIS logs are composed of the following fields:
 
 `date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port c-ip cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-bytes cs-bytes time-taken c-authorization-header`
 
@@ -158,8 +158,13 @@ The output after the filter logic will be:
 ```text
 [0] iis.*: [[1692131925.559486675, {}], {"c_authorization_header"=>"-", "c_ip"=>"::1", "cs_bytes"=>756, "cs_cookie"=>"-", "cs_host"=>"localhost", "cs_method"=>"GET", "cs_referer"=>"-", "cs_uri_query"=>"-", "cs_uri_stem"=>"/", "cs_user_agent"=>"Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200", "date"=>"2023-08-11 19:56:44", "s_computername"=>"WIN-PC1", "s_ip"=>"::1", "s_port"=>"80", "s_sitename"=>"W3SVC1", "sc_bytes"=>142, "sc_status"=>"304", "source"=>"LogEntryIIS", "tag"=>"iis.*", "time"=>"2023-08-15T20:38:45.559486675 +0000", "time_taken"=>1078}]
 ```
-This is just an example that can be extended adding type convertion on fileds such as `sc_bytes,cs_bytes,time_taken`. 
-Very useful when we need to apply some complex query in our backend for logs. 
+This filter approach provides us with several powerful advantages inherent to programming languages. For instance, it:
+- Can be extended by adding type conversion to fields such as `sc_bytes, cs_bytes, time_taken`. This is particularly useful when we need to validate our data results.
+- Allows for the use of conditions to apply more descriptive filters, for example, "get only all logs that contain status codes above 4xx or 5xx".
+- Can be used to define a `white/black` list using a data structure array or a file to store predefined IP addresses.
+- Makes it possible to call an external resource such as an API or database to enhance our data.
+- Allows all methods to be thoroughly tested and shared as a binary bundle or library.
+These examples can be applied in our demo and can serve as an ideal starting point to create more complex logic, depending on our requirements.
 
 ### Optimize execution of WASM programs
 
