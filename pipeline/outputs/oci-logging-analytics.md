@@ -1,10 +1,10 @@
 ---
-description: Send logs to OCI Logging Analytics Service
+description: Send logs to Oracle Cloud Infrastructure Logging Analytics Service
 ---
 
-# OCI Logging Analytics
+# Oracle Cloud Infrastructure Logging Analytics
 
-OCI Logging Analytics output plugin allows you to ingest your log records into [OCI Logging Analytics](https://www.oracle.com/manageability/logging-analytics) service.
+Oracle Cloud Infrastructure Logging Analytics output plugin allows you to ingest your log records into [OCI Logging Analytics](https://www.oracle.com/manageability/logging-analytics) service.
 
 Oracle Cloud Infrastructure Logging Analytics is a machine learning-based cloud service that monitors, aggregates, indexes, and analyzes all log data from on-premises and multicloud environments. Enabling users to search, explore, and correlate this data to troubleshoot and resolve problems faster and derive insights to make better operational decisions.
 
