@@ -67,7 +67,7 @@ In your main configuration file append the following Input & Output sections:
     Name dummy
     Tag dummy
 [Output]
-    Name oci_logan
+    Name oracle_log_analytics
     Match *
     Namespace <namespace>
     config_file_location <location>
@@ -92,7 +92,7 @@ In case of multiple inputs, where oci_la_* properties can differ, you can add th
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
 [Output]
-    Name oci_logan
+    Name oracle_log_analytics
     Match *
     config_file_location <oci_file_path>
     profile_name ADMIN
@@ -110,7 +110,7 @@ You can attach certain metadata to the log events collected from various inputs.
     Name dummy
     Tag dummy
 [Output]
-    Name oci_logan
+    Name oracle_log_analytics
     Match *
     Namespace example_namespace
     config_file_location /Users/example_file_location
@@ -174,7 +174,7 @@ With oci_config_in_record option set to true, the metadata key-value pairs will 
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
 [Output]
-    Name oci_logan
+    Name oracle_log_analytics
     Match *
     config_file_location <oci_file_path>
     namespace <oci_tenancy_namespace>
