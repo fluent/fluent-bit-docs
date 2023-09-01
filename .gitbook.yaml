@@ -30,6 +30,7 @@ redirects:
     input/tail:            ./pipeline/inputs/tail.md
     input/tcp:             ./pipeline/inputs/tcp.md
     input/thermal:         ./pipeline/inputs/thermal.md
+    input/udp:             ./pipeline/inputs/udp.md
     input/winlog:          ./pipeline/inputs/windows-event-log.md
     input/winevtlog:       ./pipeline/inputs/windows-event-log-winevtlog.md
 

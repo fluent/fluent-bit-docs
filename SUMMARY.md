@@ -114,6 +114,7 @@
   * [Tail](pipeline/inputs/tail.md)
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
+  * [UDP](pipeline/inputs/udp.md)
   * [OpenTelemetry](pipeline/inputs/opentelemetry.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
   * [Windows Event Log (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
