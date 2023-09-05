@@ -32,21 +32,23 @@ Kubernetes exports it events through the API server. This input plugin allows to
 
 ### Simple Configuration File
 
-In the following configuration file, the input plugin _windows_exporter_metrics collects _metrics every 2 seconds and exposes them through our [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
+In the following configuration file, the input plugin _kubernetes_events collects _metrics every 2 seconds and exposes them through our [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
 ```text
 [SERVICE]
-flush           1
-log_level       info
+    flush           1
+    log_level       info
 
 [INPUT]
-name            kubernetes_events
-tag             k8s_events
-kube_url        https://kubernetes.default.svc
+    name            kubernetes_events
+    tag             k8s_events
+    kube_url        https://kubernetes.default.svc
 
 [OUTPUT]
-name            stdout
-match           *
+    name            prometheus_exporter
+    match           k8s_events
+    host            0.0.0.0
+    port            2021
 
 
 ```
