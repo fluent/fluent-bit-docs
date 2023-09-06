@@ -63,7 +63,7 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
     match  *
 ```
 
-The filter allows to use multiple rules which are applied in order, you can have many _Regex_ and _Exclude_ entries as required.
+The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions).
 
 ### Nested fields example
 
@@ -117,6 +117,11 @@ Here is an example that checks for a specific valid value for the key as well:
 The specified key `iot_timestamp` must match the expected expression - if it does not or is missing/empty then it will be excluded.
 
 ### Multiple conditions
+
+If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
+If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
+After, if there is no `Regex`, the ligne is send to the output.
+if there is a `Regex` and it match, the ligne is send to the output, else, it's blocked.
 
 If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjuction or disjunction.
 
