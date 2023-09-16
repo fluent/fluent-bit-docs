@@ -28,7 +28,8 @@ The http input plugin allows Fluent Bit to open up an HTTP port that you can the
 
 #### How to set tag
 
-The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system. For example, in the following curl message below the tag set is `app.log**. **` because the end end path is `/app_log`:
+The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system.
+For example, in the following curl message below the tag set is `app.log**. **` because the end end path is `/app_log`:
 
 ### Curl request
 
