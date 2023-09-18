@@ -149,6 +149,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_TAIL](../../pipeline/inputs/tail.md) | Enable Tail \(follow files\) input plugin | On |
 | [FLB\_IN\_TCP](../../pipeline/inputs/tcp.md) | Enable TCP input plugin | On |
 | [FLB\_IN\_THERMAL](../../pipeline/inputs/thermal.md) | Enable system temperature\(s\) input plugin | On |
+| [FLB\_IN\_UDP](../../pipeline/inputs/udp.md) | Enable UDP input plugin | On |
 | [FLB\_IN\_WINLOG](../../pipeline/inputs/windows-event-log.md) | Enable Windows Event Log input plugin \(Windows Only\) | On |
 | [FLB\_IN\_WINEVTLOG](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using winevt.h API \(Windows Only\) | On |
 
