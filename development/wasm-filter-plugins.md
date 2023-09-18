@@ -162,7 +162,7 @@ This filter approach provides us with several powerful advantages inherent to pr
 For instance, it:
 - Can be extended by adding type conversion to fields such as `sc_bytes, cs_bytes, time_taken`. This is particularly useful when we need to validate our data results.
 - Allows for the use of conditions to apply more descriptive filters, for example, "get only all logs that contain status codes above 4xx or 5xx".
-- Can be used to define a `white/black` list using a data structure array or a file to store predefined IP addresses.
+- Can be used to define a `allow/deny` list using a data structure array or a file to store predefined IP addresses.
 - Makes it possible to call an external resource such as an API or database to enhance our data.
 - Allows all methods to be thoroughly tested and shared as a binary bundle or library.
 These examples can be applied in our demo and can serve as an ideal starting point to create more complex logic, depending on our requirements.
