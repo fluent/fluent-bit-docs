@@ -15,6 +15,7 @@ The **kafka-rest** output plugin, allows to flush your records into a [Kafka RES
 | Time\_Key\_Format | Defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
 | Include\_Tag\_Key | Append the Tag name to the final record. | Off |
 | Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
+| Url_Path | Add path prefix to the Kafka REST Proxy API endpoint (e.g.: {Host}:{Port}{Url_Path}/topics/{Topic}) \(optional\) |  |
 
 ### TLS / SSL
 
