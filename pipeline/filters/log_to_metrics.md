@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 | metric_name | Sets the name of the metric. | Yes | |
 | metric_description | Sets a help text for the metric. | Yes | |
 | bucket | Defines a bucket for `histogram` | Yes, for mode  `histogram` | e.g. 0.75 |
-| label | Add a custom label NAME and set the value to the value of KEY | | | NAME  KEY |
+| add_label | Add a custom label NAME and set the value to the value of KEY | | | NAME  KEY |
 | label_field | Includes a record field as label dimension in the metric. | | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields.
 | value_field | Specify the record field that holds a numerical value | Yes, for modes [`gauge` and `histogram`] | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields.
 | kubernetes_mode |  If enabled, it will automatically put pod_id, pod_name, namespace_name, docker_id and container_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](./kubernetes.md) filter plugin, which fills those fields. | | 
@@ -87,7 +87,7 @@ The `gauge` mode needs a `value_field` specified, where the current metric value
     value_field        duration
     kubernetes_mode    on
     regex              message .*el.*
-    label              app $kubernetes['labels']['app']
+    add_label          app $kubernetes['labels']['app']
     label_field        color
     label_field        shape
 ```
@@ -109,7 +109,7 @@ If you execute the above `curl` command multiple times, you see, that in this ex
 
 
 #### Metric label_values
-As you can see, the label sets defined by `label` and `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only actually used combinations are displayed here. To see this, you can add a dummy `dummy` input to your configuration.
+As you can see, the label sets defined by `add_label` and `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only actually used combinations are displayed here. To see this, you can add a dummy `dummy` input to your configuration.
 
 The metric output would then look like:
 ```text
@@ -138,7 +138,7 @@ Similar to the `gauge` mode, `histogram` needs a `value_field` specified, where 
     value_field        duration
     kubernetes_mode    on
     regex              message .*el.*
-    label              app $kubernetes['labels']['app']
+    add_label          app $kubernetes['labels']['app']
     label_field        color
     label_field        shape
 ```
