@@ -76,6 +76,7 @@ The _service_ section defines the global properties of the service. The Service 
 | scheduler.cap   | Set a maximum retry time in seconds. The property is supported from v1.8.7.                                                                                                                                                                                                                             | 2000          |
 | scheduler.base  | Sets the base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                          | 5             |
 | json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
+| sp.convert_from_str_to_num | If enabled, Stream processor converts from number string to number type.        | true          |
 
 The following is an example of a _service_ section:
 
