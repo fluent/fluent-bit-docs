@@ -45,7 +45,7 @@ The following example takes records from two dummy inputs and counts all message
 
 [INPUT]
     Name               dummy
-    Dummy              {"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456" "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}
+    Dummy              {"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}
     Tag                dummy.log2
 
 [FILTER]
