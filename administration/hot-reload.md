@@ -39,6 +39,12 @@ For using curl to reload fluent-bit, users must specify an empty request body as
 $ curl -X POST -d {} localhost:2020/api/v2/reload
 ```
 
+For Windows, to represent empty body, users have to use `'{}'` as a body instead of raw `{}`:
+
+```text
+PS> curl -X POST -d '{}' localhost:2020/api/v2/reload
+```
+
 ### Via Signal
 
 Hot reloading also can be kicked via `SIGHUP`.
@@ -47,5 +53,4 @@ Hot reloading also can be kicked via `SIGHUP`.
 
 ## Limitations
 
-The hot reloading feature is currently working on Linux and macOS. Windows is not supported yet.
-
+The hot reloading feature is currently working on Linux, macOS and Windows.
