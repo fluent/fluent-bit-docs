@@ -24,7 +24,8 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | AWS\_Service\_Name | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | es |
 | Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running. The Cloud ID string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`.
  |  |
-| Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
+| Cloud\_Auth | Specify the credentials that would be used to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
+| Cloud\_Apikey | Specify the ApiKey that would be used to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | Index | Index name | fluent-bit |
@@ -197,8 +198,11 @@ Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is se
 
 ### Fluent Bit + Elastic Cloud
 
-Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) providing just the `cloud_id` and the `cloud_auth` settings.
-`cloud_auth` uses the `elastic` user and password provided when the cluster was created, for details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) by providing `cloud_id` setting and the proper credentials. Credentials can be specified by either the `cloud_auth` or `cloud_apikey` setting.
+
+`cloud_auth` uses the `elastic` user and password provided when the cluster was created. For details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
+
+`cloud_apikey` uses the cloud apikey that could be generated in the Elasticsearch Service console. For details, refer to the [Cloud API Keys page](https://www.elastic.co/guide/en/cloud/current/ec-api-keys.html).
 
 Example configuration:
 
@@ -212,6 +216,16 @@ Example configuration:
     Suppress_Type_Name On
     cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
     cloud_auth elastic:2vxxxxxxxxYV
+
+[OUTPUT]
+    Name es
+    Include_Tag_Key true
+    Tag_Key tags
+    tls On
+    tls.verify Off
+    Suppress_Type_Name On
+    cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
+    cloud_apikey VnVhQxxxxxxxxxxxxx==
 ```
 
 ### Validation Failed: 1: an id must be provided if version type or value are set
