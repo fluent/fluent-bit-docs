@@ -30,7 +30,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | Regex | If format is _regex_, this option _must_ be set specifying the Ruby Regular Expression that will be used to parse and compose the structured message. |
 | Time\_Key | If the log entry provides a field with a timestamp, this option specifies the name of that field. |
 | Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. Fluent-bit uses `strptime(3)` to parse time so you can refer to [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. |
-| Time\_Offset | Specify a fixed UTC time offset \(e.g. -0600, +0200, etc.\) for local dates. |
+| Time\_Offset | For local dates, specify a fixed UTC time offset \(e.g. -0600, +0200, etc.\) or set to `System` to use the system timezone. |
 | Time\_Keep | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and it value in the log entry. |
 | Types | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`\(default\), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
 | Decode\_Field | Decode a field value, the only decoder available is `json`. The syntax is: `Decode_Field json <field_name>`. |
