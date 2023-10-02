@@ -70,7 +70,7 @@ The following `docker` command deploys Fluent Bit with a specific mount path for
 These are then exposed over port 2021.
 
 ```
-docker run -ti -v /proc:/host/proc \
+docker run -ti -v /proc:/host/proc:ro \
                -p 2021:2021        \
                fluent/fluent-bit:2.2 \
                /fluent-bit/bin/fluent-bit \
