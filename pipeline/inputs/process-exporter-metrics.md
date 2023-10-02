@@ -24,8 +24,8 @@ macOS does not have procfs. Therefore, this plugin won't work for it.
 | ------------------------- | -------------------------------------------------------------------------------------- | --------- |
 | scrape_interval           | The rate at which metrics are collected.                 | 5 seconds |
 | path.procfs               | The mount point used to collect process information and metrics. Read-only is enough   | /proc/    |
-| process\_include\_pattern | regex to determine which processes are included in the metrics produced by this plugin | It is applied for all process unless explicitly set. Default is `.+`. |
-| process\_exclude\_pattern | regex to determine which units are excluded in the metrics produced by this plugin     | It is not applied unless explicitly set. Default is `NULL`. |
+| process\_include\_pattern | regex to determine which names of processes are included in the metrics produced by this plugin | It is applied for all process unless explicitly set. Default is `.+`. |
+| process\_exclude\_pattern | regex to determine which names of processes are excluded in the metrics produced by this plugin | It is not applied unless explicitly set. Default is `NULL`. |
 
 ## Getting Started
 
