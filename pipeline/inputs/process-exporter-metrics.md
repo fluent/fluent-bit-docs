@@ -6,7 +6,8 @@ description: >-
 
 # Process Exporter Metrics
 
-[Prometheus Node Exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU / Disk / Network / Process statistics. Fluent Bit 2.2 includes process exporter metrics plugin that builds off the Prometheus design to collect process level metrics without having to manage two separate processes or agents.
+[Prometheus Node Exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU / Disk / Network / Process statistics.
+Fluent Bit 2.2 onwards includes a process exporter plugin that builds off the Prometheus design to collect process level metrics without having to manage two separate processes or agents.
 
 The initial release of Process Exporter Metrics refers a process group level collector to collect metrics available from [the 3rd party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and we plan to expand them over time if needed.
 
