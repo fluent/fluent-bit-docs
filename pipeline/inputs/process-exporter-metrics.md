@@ -73,7 +73,7 @@ These are then exposed over port 2021.
 docker run -ti -v /proc:/host/proc \
                -v /sys:/host/sys   \
                -p 2021:2021        \
-               fluent/fluent-bit:2.2.0 \
+               fluent/fluent-bit:2.2 \
                /fluent-bit/bin/fluent-bit \
                          -i process_exporter_metrics -p path.procfs=/host/proc  \
                          -o prometheus_exporter -p "add_label=host $HOSTNAME" \
