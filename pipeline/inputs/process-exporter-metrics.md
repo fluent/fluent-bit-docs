@@ -57,7 +57,7 @@ In the following configuration file, the input plugin _process\_exporter\_metric
     port            2021
 ```
 
-You can test the expose of the metrics by using _curl:_
+You can see the metrics by using _curl:_
 
 ```bash
 curl http://127.0.0.1:2021/metrics
