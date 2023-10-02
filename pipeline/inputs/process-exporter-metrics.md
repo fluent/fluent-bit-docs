@@ -20,7 +20,7 @@ This plugin is only supported on Linux based operating systems.
 
 | Key                       | Description                                                                            | Default   |
 | ------------------------- | -------------------------------------------------------------------------------------- | --------- |
-| scrape_interval           | The rate at which metrics are collected from the host operating system                 | 5 seconds |
+| scrape_interval           | The rate at which metrics are collected.                 | 5 seconds |
 | path.procfs               | The mount point used to collect process information and metrics                        | /proc/    |
 | process\_include\_pattern | regex to determine which processes are included in the metrics produced by this plugin | It is applied for all process unless explicitly set. Default is `.+`. |
 | process\_exclude\_pattern | regex to determine which units are excluded in the metrics produced by this plugin     | It is not applied unless explicitly set. Default is `NULL`. |
