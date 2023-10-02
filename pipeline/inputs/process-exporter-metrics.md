@@ -82,6 +82,6 @@ docker run -ti -v /proc:/host/proc \
 
 ## Enhancement Requests
 
-Our current plugin refers a sub-set of the available collectors in the 3rd party implementation of Prometheus Process Exporter, if you would like that we prioritize a specific metrics please open a Github issue by using the following template:\
+Development prioritises a subset of the available collectors in the [the 3rd party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter), to request others please open a Github issue by using the following template:\
 \
 \- [in_process_exporter_metrics](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_process_exporter_metrics:%20add%20ABC%20collector)
