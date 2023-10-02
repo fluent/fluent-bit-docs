@@ -12,7 +12,8 @@ The initial release of Node Exporter Metrics contains a subset of collectors and
 
 **Important note:** Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
-This plugin is currently supported on Linux based operating systems for the most part and some parts of collecting metrics are offering for macOS.
+This plugin is supported on Linux-based operating systems for the most part with macOS offering a reduced subset of metrics.
+The table below indicates which collector is supported on macOS.
 
 
 ## Configuration
