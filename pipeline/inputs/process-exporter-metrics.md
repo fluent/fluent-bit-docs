@@ -11,7 +11,7 @@ Fluent Bit 2.2 onwards includes a process exporter plugin that builds off the Pr
 
 The Process Exporter Metrics plugin implements collecting of the various metrics available from [the 3rd party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and these will be expanded over time as needed.
 
-**Important note:** Metrics collected with Process Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
+**Important note:** All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
 This plugin is only supported on Linux based operating systems due to heavily relying on proc filesystem.
 
