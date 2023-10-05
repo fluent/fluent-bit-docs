@@ -2,7 +2,7 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit v2.1 Documentation
+# Fluent Bit v2.2 Documentation
 
 <figure><img src=".gitbook/assets/FluentBitV3-02.png" alt=""><figcaption></figcaption></figure>
 
