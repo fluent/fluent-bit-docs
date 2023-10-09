@@ -175,6 +175,7 @@
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [Observe](pipeline/outputs/observe.md)
+  * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
