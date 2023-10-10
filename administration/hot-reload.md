@@ -36,13 +36,7 @@ For using curl to reload fluent-bit, users must specify an empty request body as
 
 
 ```text
-$ curl -X POST -d {} localhost:2020/api/v2/reload
-```
-
-On Windows, use `'{}'` to represent an empty body instead of raw `{}`:
-
-```text
-PS> curl -X POST -d '{}' localhost:2020/api/v2/reload
+$ curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
 ### Via Signal
