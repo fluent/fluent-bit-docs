@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v2.1 Documentation](README.md)
+* [Fluent Bit v2.2 Documentation](README.md)
 
 ## About
 
@@ -155,6 +155,7 @@
   * [Azure Blob](pipeline/outputs/azure\_blob.md)
   * [Azure Data Explorer](pipeline/outputs/azure\_kusto.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
+  * [Azure Logs Ingestion API](pipeline/outputs/azure_logs_ingestion.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
@@ -174,6 +175,7 @@
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [Observe](pipeline/outputs/observe.md)
+  * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
