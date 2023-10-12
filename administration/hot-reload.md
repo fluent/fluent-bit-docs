@@ -34,8 +34,8 @@ If users don't enable the hot reloading feature, hot reloading via these endpoin
 
 For using curl to reload Fluent Bit, users must specify an empty request body as:
 
-```shell
-curl -X POST -d '{}' localhost:2020/api/v2/reload
+```text
+$ curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
 ### Via Signal
@@ -46,4 +46,4 @@ Hot reloading also can be kicked via `SIGHUP`.
 
 ## Limitations
 
-The hot reloading feature is currently working on Linux and macOS. Windows is not supported yet.
+The hot reloading feature is currently working on Linux, macOS and Windows.
