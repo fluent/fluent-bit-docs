@@ -18,6 +18,10 @@ The plugin supports the following configuration parameters:
 | Tag_Prefix          | Prefix incoming tag with the defined value.|  |
 | Tag                 | Override the tag of the forwarded events with the defined value.|  |
 
+### TLS / SSL
+
+Forward input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
+
 ## Getting Started
 
 In order to receive Forward messages, you can run the plugin from the command line or through the configuration file as shown in the following examples.
