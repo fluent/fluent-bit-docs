@@ -1,6 +1,6 @@
 # Syslog
 
-_Syslog_ input plugins allows to collect Syslog messages through a Unix socket server \(UDP or TCP\) or over the network using TCP, UDP.
+_Syslog_ input plugins allows to collect Syslog messages through a Unix socket server \(UDP or TCP\) or over the network using TCP or UDP.
 
 ## Configuration Parameters
 
@@ -26,7 +26,7 @@ The plugin supports the following configuration parameters:
 
 ### TLS / SSL
 
-Syslog input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
+Syslog input plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
 
 ## Getting Started
 

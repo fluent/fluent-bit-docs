@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 
 ### TLS / SSL
 
-Forward input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
+Forward input plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
 
 ## Getting Started
 
