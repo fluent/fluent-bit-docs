@@ -14,7 +14,7 @@ The **Apache SkyWalking** output plugin, allows to flush your records to a [Apac
 
 ### TLS / SSL
 
-Apache SkyWalking output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+Apache SkyWalking output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
 
 ## Getting Started
 
