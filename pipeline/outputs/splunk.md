@@ -41,7 +41,7 @@ Content and Splunk metadata \(fields\) handling configuration properties:
 
 ### TLS / SSL
 
-Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+Splunk output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Getting Started
 

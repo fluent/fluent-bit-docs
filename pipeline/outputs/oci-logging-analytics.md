@@ -36,7 +36,7 @@ The following parameters are to set the Logging Analytics resources that must be
 
 ## TLS/SSL
 
-OCI Logging Analytics output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+OCI Logging Analytics output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Getting Started
 
