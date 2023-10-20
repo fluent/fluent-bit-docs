@@ -23,9 +23,6 @@ The listed properties can be enabled in the configuration file, specifically on 
 
 The following **output** plugins can take advantage of the TLS feature:
 
-* [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md)
-* [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md)
-* [Amazon Kinesis Data Streams](../pipeline/outputs/kinesis.md)
 * [Amazon S3](../pipeline/outputs/s3.md)
 * [Azure](../pipeline/outputs/azure.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
@@ -46,10 +43,19 @@ The following **output** plugins can take advantage of the TLS feature:
 
 The following **input** plugins can take advantage of the TLS feature:
 
-* [MQTT](../pipeline/inputs/mqtt.md)
-* [TCP](../pipeline/inputs/tcp.md)
+* [Docker Events](../pipeline/inputs/docker-events.md)
+* [Elasticsearch (Bulk API)](../pipeline/inputs/elasticsearch.md)
+* [Forward](../pipeline/inputs/forward.md)
+* [Health](../pipeline/inputs/health.md)
 * [HTTP](../pipeline/inputs/http.md)
+* [Kubernetes Events](../pipeline/inputs/kubernetes-events.md)
+* [MQTT](../pipeline/inputs/mqtt.md)
+* [NGINX Exporter Metrics](../pipeline/inputs/nginx.md)
 * [OpenTelemetry](../pipeline/inputs/opentelemetry.md)
+* [Prometheus Scrape Metrics](../pipeline/inputs/prometheus-scrape-metrics.md)
+* [Splunk (HTTP HEC)](../pipeline/inputs/splunk.md)
+* [Syslog](../pipeline/inputs/syslog.md)
+* [TCP](../pipeline/inputs/tcp.md)
 
 In addition, other plugins implements a sub-set of TLS support, meaning, with restricted configuration:
 
