@@ -24,6 +24,7 @@ The listed properties can be enabled in the configuration file, specifically on 
 The following **output** plugins can take advantage of the TLS feature:
 
 * [Amazon S3](../pipeline/outputs/s3.md)
+* [Apache SkyWalking](../pipeline/outputs/skywalking.md)
 * [Azure](../pipeline/outputs/azure.md)
 * [Azure Blob](../pipeline/outputs/azure_blob.md)
 * [Azure Logs Ingestion API](../pipeline/outputs/azure_logs_ingestion.md)
@@ -44,7 +45,6 @@ The following **output** plugins can take advantage of the TLS feature:
 * [OpenTelemetry](../pipeline/outputs/opentelemetry.md)
 * [Oracle Cloud Infrastructure Logging Analytics](../pipeline/outputs/oci-logging-analytics.md)
 * [Prometheus Remote Write](../pipeline/outputs/prometheus-remote-write.md)
-* [Apache SkyWalking](../pipeline/outputs/skywalking.md)
 * [Slack](../pipeline/outputs/slack.md)
 * [Splunk](../pipeline/outputs/splunk.md)
 * [Stackdriver](../pipeline/outputs/stackdriver.md)
