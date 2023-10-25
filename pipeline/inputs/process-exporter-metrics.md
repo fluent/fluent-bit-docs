@@ -22,10 +22,25 @@ macOS does not have procfs. Therefore, this plugin won't work for it.
 
 | Key                       | Description                                                                            | Default   |
 | ------------------------- | -------------------------------------------------------------------------------------- | --------- |
-| scrape_interval           | The rate at which metrics are collected.                 | 5 seconds |
+| scrape\_interval          | The rate at which metrics are collected.                                               | 5 seconds |
 | path.procfs               | The mount point used to collect process information and metrics. Read-only is enough   | /proc/    |
 | process\_include\_pattern | regex to determine which names of processes are included in the metrics produced by this plugin | It is applied for all process unless explicitly set. Default is `.+`. |
 | process\_exclude\_pattern | regex to determine which names of processes are excluded in the metrics produced by this plugin | It is not applied unless explicitly set. Default is `NULL`. |
+| metrics                   | To specify which process level of metrics are collected from the host operating system. These metrics depend on `/proc` fs. The actual values of metrics will be read from `/proc` when needed. cpu, io, memory, state, context\_switches, fd, start\_time, thread\_wchan, thread depend on procfs. | `cpu,io,memory,state,context_switches,fd,start_time,thread_wchan,thread` |
+
+## Metrics Available
+
+| Name              | Description                                                                                      |
+| ----------------- | -------------------------------------------------- |
+| cpu               | Exposes CPU statistics from `/proc`.               |
+| io                | Exposes I/O statistics from `/proc`.               |
+| memory            | Exposes memory statistics from `/proc`.            |
+| state             | Exposes process state statistics from `/proc`.     |
+| context\_switches | Exposes context\_switches statistics from `/proc`. |
+| fd                | Exposes file descriptors statistics from `/proc`.  |
+| start\_time       | Exposes start\_time statistics from `/proc`.       |
+| thread\_wchan     | Exposes thread\_wchan from `/proc`.                |
+| thread            | Exposes thread statistics from `/proc`.            |
 
 ## Getting Started
 
