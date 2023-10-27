@@ -12,8 +12,9 @@ The plugin supports the following configuration parameters:
 | Metadata | Dummy JSON metadata. Default: `{}` |
 | Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
-| Time\_interval | Time interval in seconds to generate logs at the set rate. Default: 1 |
-| Rate | Rate at which messages are generated expressed in how many times per Time_interval. Default: 1 |
+| Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
+| Interval\_sec  | Set seconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. Default: 0 |
+| Interval\_nsec | Set nanoseconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. Default: 0 |
 | Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
 | Copies | Number of messages to generate each time they are generated. Defaults to 1. |
 
