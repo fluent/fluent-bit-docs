@@ -63,7 +63,8 @@ The match rule is set to **my\_\*** which means it will match any Tag that start
 
 ## Routing with Regex
 
-Routing also provides support for _regex_ in the **Match_regex** pattern, allowing for more complex and precise matching criteria. The following example demonstrates how to route data from sources based on a regular expression:
+Routing also provides support for _regex_ with the **Match_Regex** pattern, allowing for more complex and precise matching criteria.
+The following example demonstrates how to route data from sources based on a regular expression:
 
 ```
 [INPUT]
@@ -79,4 +80,5 @@ Routing also provides support for _regex_ in the **Match_regex** pattern, allowi
     Match_regex  .*_sensor_[AB] 
 ```
 
-In this configuration, the **Match_regex** rule is set to `.*_sensor_[AB]`. This regular expression will match any Tag that ends with "_sensor_A" or "_sensor_B", regardless of what precedes it. This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.
+In this configuration, the **Match_regex** rule is set to `.*_sensor_[AB]`. This regular expression will match any Tag that ends with "_sensor_A" or "_sensor_B", regardless of what precedes it.
+This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.
