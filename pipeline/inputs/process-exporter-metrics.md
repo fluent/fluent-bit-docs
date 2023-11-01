@@ -13,7 +13,7 @@ The Process Exporter Metrics plugin implements collecting of the various metrics
 
 **Important note:** All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
-This plugin is only supported on Linux based operating systems due to heavily relying on proc filesystem.
+This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to access the relevant metrics.
 
 macOS does not have procfs. Therefore, this plugin won't work for it.
 
