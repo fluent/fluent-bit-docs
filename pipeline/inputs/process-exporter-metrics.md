@@ -92,7 +92,7 @@ docker run -ti -v /proc:/host/proc:ro \
                fluent/fluent-bit:2.2 \
                /fluent-bit/bin/fluent-bit \
                          -i process_exporter_metrics -p path.procfs=/host/proc  \
-                         -o prometheus_exporter -p "add_label=host $HOSTNAME" \
+                         -o prometheus_exporter \
                          -f 1
 ```
 
