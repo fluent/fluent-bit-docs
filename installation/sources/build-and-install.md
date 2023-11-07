@@ -172,6 +172,7 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | [FLB\_FILTER\_REWRITE\_TAG](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | On |
 | [FLB\_FILTER\_STDOUT](../../pipeline/filters/standard-output.md) | Enable Stdout filter | On |
 | [FLB\_FILTER\_THROTTLE](../../pipeline/filters/throttle.md) | Enable Throttle filter | On |
+| [FLB\_FILTER\_TYPE\_CONVERTER](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | On |
 | [FLB\_FILTER\_WASM](../../pipeline/filters/wasm.md) | Enable WASM filter | On |
 
 ### Output Plugins

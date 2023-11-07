@@ -145,6 +145,7 @@
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
   * [Throttle](pipeline/filters/throttle.md)
+  * [Type Converter](pipeline/filters/type-converter.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
   * [Wasm](pipeline/filters/wasm.md)
 * [Outputs](pipeline/outputs/README.md)
