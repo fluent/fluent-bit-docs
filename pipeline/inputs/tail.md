@@ -178,7 +178,7 @@ In the case above we can use the following parser, that extracts the Time as `ti
 [PARSER]
     Name multiline
     Format regex
-    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 ```
@@ -190,7 +190,7 @@ If we want to further parse the entire event we can add additional parsers with 
 [PARSER]
     Name multiline
     Format regex
-    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 
