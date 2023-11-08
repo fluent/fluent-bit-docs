@@ -30,4 +30,4 @@ Fluent Bit can work also on OSX and \*BSD systems, but not all plugins will be a
 Official support will be expanding based on community demand.
 Fluent Bit may run on older operating systems though will need to be built from source, or use custom packages from [enterprise providers](https://fluentbit.io/enterprise).
 
-Fluent Bit is supported on Linux on IBM Z (s390x) environment without WASM, because building WAMR is not supported as of today on s390x and LuaJIT as well.
+Fluent Bit is supported on Linux on IBM Z (s390x) environment with some restrictions but only container images are provided for these targets officially.
