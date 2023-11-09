@@ -72,6 +72,7 @@ The following table describes the available collectors as part of this plugin. A
 | uname     | Exposes system information as provided by the uname system call.                                 | Linux  | v1.8    |
 | vmstat    | Exposes statistics from `/proc/vmstat`.                                                          | Linux  | v1.8.2  |
 | systemd collector | Exposes statistics from systemd.                                                           | Linux  | v2.1.3  |
+| thermal_zone | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                            | Linux | v2.2+    |
 
 ## Getting Started
 
