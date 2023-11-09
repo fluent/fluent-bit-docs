@@ -8,7 +8,7 @@ command arguments could lead to malicious command execution.
 
 ## Container support
 
-This plugin will not function in the distroless production images (AMD64 currently) as it needs a functional `/bin/sh` which is not present.
+This plugin will not function in all the distroless production images as it needs a functional `/bin/sh` which is not present.
 The debug images use the same binaries so even though they have a shell, there is no support for this plugin as it is compiled out.
 
 ## Configuration Parameters
