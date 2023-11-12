@@ -1,12 +1,10 @@
 # Sysinfo
 
-The _Sysinfo Filter_ plugin allows to append system information.
+The _Sysinfo Filter_ plugin allows to append system information like fluent-bit version or hostname.
 
 ## Configuration Prameters
 
 The plugin supports the following configuration parameters:
-
-Some properties are supported by specific platform.
 
 |Key|Description|Supported platform|
 |---|---|---|
@@ -16,11 +14,11 @@ Some properties are supported by specific platform.
 |os_version_key|Specify the key name for os version. It is not supported on some platforms. | Linux |
 |kernel_version_key|Specify the key name for kernel version. It is not supported on some platforms.| Linux |
 
+Some properties are supported by specific platform.
 
 ## Getting Started
 
 In order to start filtering records, you can run the filter from the command line or through the configuration file.
-
 
 The following configuration file is to append fluent-bit version and OS name.
 
