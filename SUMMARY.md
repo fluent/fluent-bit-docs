@@ -144,6 +144,7 @@
   * [Nightfall](pipeline/filters/nightfall.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
+  * [Sysinfo](pipeline/filters/sysinfo.md)
   * [Throttle](pipeline/filters/throttle.md)
   * [Type Converter](pipeline/filters/type-converter.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
