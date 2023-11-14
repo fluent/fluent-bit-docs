@@ -50,6 +50,8 @@ The following **input** plugins can take advantage of the TLS feature:
 * [TCP](../pipeline/inputs/tcp.md)
 * [HTTP](../pipeline/inputs/http.md)
 * [OpenTelemetry](../pipeline/inputs/opentelemetry.md)
+* [Forward](../pipeline/inputs/forward.md)
+* [Syslog](../pipeline/inputs/syslog.md)
 
 In addition, other plugins implements a sub-set of TLS support, meaning, with restricted configuration:
 

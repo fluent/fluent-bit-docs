@@ -24,6 +24,10 @@ The plugin supports the following configuration parameters:
 * When using Syslog input plugin, Fluent Bit requires access to the _parsers.conf_ file, the path to this file can be specified with the option _-R_ or through the _Parsers\_File_ key on the \[SERVICE\] section \(more details below\).
 * When _udp_ or _unix\_udp_ is used, the buffer size to receive messages is configurable **only** through the _Buffer\_Chunk\_Size_ option which defaults to 32kb.
 
+### TLS / SSL
+
+Syslog input plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
+
 ## Getting Started
 
 In order to receive Syslog messages, you can run the plugin from the command line or through the configuration file:
