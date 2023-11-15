@@ -12,6 +12,8 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | client\_id | Client id passed to librdkafka. | |
 | group\_id | Group id passed to librdkafka. | fluent-bit |
 | poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
+| Chunk\_Size  | Specify the size of buffer to store the incoming kafka messages. When this parameter is specified, do not poll them from brokers at once over the specified size and deferred to consume left messages from there at the next polling cycle. If not set, _Chunk\_Size_ is not effective. | |
+| poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 
 ## Getting Started
