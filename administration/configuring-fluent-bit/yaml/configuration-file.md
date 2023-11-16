@@ -16,6 +16,9 @@ The YAML configuration file supports the following sections:
   * Filters
   * Outputs
 
+The YAML configuration file does not support the following sections yet:
+* Parsers
+
 {% hint style="info" %}
 YAML configuration is used in the smoke tests for containers, so an always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
 {% endhint %}
@@ -66,7 +69,7 @@ The _service_ section defines the global properties of the service. The Service 
 | dns.mode        | Sets the primary transport layer protocol used by the asynchronous DNS resolver, which can be overridden on a per plugin basis                                                                                                                                                                       | UDP           |
 | log_file        | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (stderr).                                                                                                                                                                                   |               |
 | log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g., if 'debug' is set, it will include error, warning, info, and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
-| parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
+| parsers_file    | Path for a `parsers` configuration file. Only a single entry is currently supported.                                                                                                                                                                                               |               |
 | plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows the definition of paths for external plugins; for an example, [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                         |               |
 | streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../../stream-processing/introduction.md).                                                                                                                                               |               |
 | http_server     | Enable built-in HTTP Server                                                                                                                                                                                                                                                                             | Off           |
