@@ -33,6 +33,7 @@ This plugin is currently only supported on Linux based operating systems\
 | collector.loadavg.scrape\_interval   | The rate in seconds at which loadavg metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.vmstat.scrape\_interval   | The rate in seconds at which vmstat metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.filefd.scrape\_interval   | The rate in seconds at which filefd metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.nvme.scrape\_interval | The rate in seconds at which nvme metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | metrics | To specify which metrics are collected from the host operating system. These metrics depend on `/proc` or `/sys` fs. The actual values of metrics will be read from `/proc` or `/sys` when needed. cpu, cpufreq, meminfo, diskstats, filesystem, stat, loadavg, vmstat, netdev, and filefd depend on procfs. cpufreq metrics depend on sysfs. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
 | filesystem.ignore\_mount\_point\_regex  | Specify the regex for the mount points to prevent collection of/ignore. | `^/(dev|proc|run/credentials/.+|sys|var/lib/docker/.+|var/lib/containers/storage/.+)($|/)`    |
 | filesystem.ignore\_filesystem\_type\_regex  | Specify the regex for the filesystem types to prevent collection of/ignore. | `^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$`    |
@@ -72,6 +73,7 @@ The following table describes the available collectors as part of this plugin. A
 | uname     | Exposes system information as provided by the uname system call.                                 | Linux  | v1.8    |
 | vmstat    | Exposes statistics from `/proc/vmstat`.                                                          | Linux  | v1.8.2  |
 | systemd collector | Exposes statistics from systemd.                                                           | Linux  | v2.1.3  |
+| nvme      | Exposes nvme statistics from `/proc`.                                                            | Linux  | v2.2.0  |
 
 ## Getting Started
 
