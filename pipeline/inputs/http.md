@@ -20,6 +20,10 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 
 HTTP input plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [Transport Security](../../administration/transport-security.md) section.
 
+### gzipped content
+
+The HTTP input plugin will accept and automatically handle gzipped content as of v2.2.1 as long as the header `Content-Encoding: gzip` is set on the received data.
+
 ## Getting Started
 
 The http input plugin allows Fluent Bit to open up an HTTP port that you can then route data to in a dynamic way. This plugin supports dynamic tags which allow you to send data with different tags through the same input. An example video and curl message can be seen below
