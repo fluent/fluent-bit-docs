@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
 | Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
 | Copies | Number of messages to generate each time they are generated. Defaults to 1. |
+| Flush\_on\_startup | If set to `true`, the first dummy event is generated at startup. Default: `false` |
 
 ## Getting Started
 
