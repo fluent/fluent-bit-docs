@@ -97,7 +97,9 @@ Example:
     workers 1
 ```
 
-If you enable workers, you are enabling a dedicated threads for your CloudWatch output. We recommend starting with 1 worker, evaluating the performance, and then enabling more workers if needed. For most users, the plugin can provide sufficient throughput with 0 or 1 workers.
+If you enable workers, you are enabling one or more dedicated threads for your CloudWatch output. 
+We recommend starting with 1 worker, evaluating the performance, and then enabling more workers if needed. 
+For most users, the plugin can provide sufficient throughput with 0 or 1 workers.
 
 ### Log Stream and Group Name templating using record\_accessor syntax
 
