@@ -81,7 +81,8 @@ The following AWS IAM permissions are required to use this plugin:
 
 ### Worker support
 
-Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers. **The plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
+Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers in Fluent Bit 2.1.11 and prior. **2.1.11 and prior, the plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
+Starting from Fluent Bit 2.1.12, the `cloudwatch_logs` plugin added full support for workers, meaning that more than one worker can be configured.
 
 Example:
 
@@ -96,7 +97,9 @@ Example:
     workers 1
 ```
 
-If you enable a single worker, you are enabling a dedicated thread for your CloudWatch output. We recommend starting without workers, evaluating the performance, and then enabling a worker if needed. For most users, the plugin can provide sufficient throughput without workers.
+If you enable workers, you are enabling one or more dedicated threads for your CloudWatch output. 
+We recommend starting with 1 worker, evaluating the performance, and then enabling more workers if needed. 
+For most users, the plugin can provide sufficient throughput with 0 or 1 workers.
 
 ### Log Stream and Group Name templating using record\_accessor syntax
 
