@@ -17,6 +17,7 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Customer\_ID | Customer ID or WorkspaceID string. |  |
 | Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
 | Log\_Type | The name of the event type. | fluentbit |
+| Log_Type_Key | If included, the value for this key will be looked upon in the record and if present, will over-write the `log_type`. If not found then the `log_type` value will be used. | |
 | Time\_Key | Optional parameter to specify the key name where the timestamp will be stored. | @timestamp |
 | Time\_Generated | If enabled, the HTTP request header 'time-generated-field' will be included so Azure can override the timestamp with the key specified by 'time_key' option. | off |
 
@@ -43,6 +44,20 @@ In your main configuration file append the following _Input_ & _Output_ sections
 [OUTPUT]
     Name        azure
     Match       *
+    Customer_ID abc
+    Shared_Key  def
+```
+
+Another example using the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor), which will read the table name (or event type) dynamically from kubernetes label `app`, instead of `Log_Type`:
+
+```text
+[INPUT]
+    Name  cpu
+
+[OUTPUT]
+    Name        azure
+    Match       *
+    Log_Type_Key $kubernetes['labels']['app']
     Customer_ID abc
     Shared_Key  def
 ```
