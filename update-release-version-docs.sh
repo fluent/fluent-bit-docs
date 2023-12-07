@@ -29,7 +29,7 @@ if [[ -z "$MAJOR_VERSION" ]]; then
 fi
 
 # Add Docker after first line in the table
-if grep -q "$NEW_VERSION" "$SCRIPT_DIR"/installation/docker.md; then
+if grep -Fq "$NEW_VERSION" "$SCRIPT_DIR"/installation/docker.md; then
     echo "Found $NEW_VERSION already in the Docker docs so skipping update"
 else
     sed_wrapper -i -e "/| -.*$/a | $NEW_VERSION | x86\_64, arm64v8, arm32v7, s390x | Release [v$NEW_VERSION](https://fluentbit.io/announcements/v$NEW_VERSION/) |" "$SCRIPT_DIR"/installation/docker.md
