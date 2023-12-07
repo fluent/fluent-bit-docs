@@ -37,7 +37,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 
 ### TLS / SSL
 
-HTTP output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+HTTP output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Getting Started
 
