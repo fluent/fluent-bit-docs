@@ -40,8 +40,8 @@ WIN_32_EXE_HASH=${WIN_32_EXE_HASH:?}
 WIN_32_ZIP_HASH=${WIN_32_ZIP_HASH:?}
 WIN_64_EXE_HASH=${WIN_64_EXE_HASH:?}
 WIN_64_ZIP_HASH=${WIN_64_ZIP_HASH:?}
-WIN_64_ARM_EXE_HASH=${WIN_64_ARM_EXE_HASH:?}
-WIN_64_ARM_ZIP_HASH=${WIN_64_ARM_ZIP_HASH:?}
+WIN_64_ARM_EXE_HASH=${WIN_64_ARM_EXE_HASH:-}
+WIN_64_ARM_ZIP_HASH=${WIN_64_ARM_ZIP_HASH:-}
 
 sed_wrapper -i -e "s/The latest stable version is .*$/The latest stable version is $NEW_VERSION./g" "$SCRIPT_DIR"/installation/windows.md
 sed_wrapper -i -e "s/fluent-bit-[0-9\.]*-win/fluent-bit-$NEW_VERSION-win/g" "$SCRIPT_DIR"/installation/windows.md
@@ -50,5 +50,10 @@ sed_wrapper -i -e "s/win32.exe) | \[.*\]/win32.exe) | \[$WIN_32_EXE_HASH\]/g" "$
 sed_wrapper -i -e "s/win32.zip) | \[.*\]/win32.zip) | \[$WIN_32_ZIP_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
 sed_wrapper -i -e "s/win64.exe) | \[.*\]/win64.exe) | \[$WIN_64_EXE_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
 sed_wrapper -i -e "s/win64.zip) | \[.*\]/win64.zip) | \[$WIN_64_ZIP_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
-sed_wrapper -i -e "s/winarm64.exe) | \[.*\]/winarm64.exe) | \[$WIN_64_ARM_EXE_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
-sed_wrapper -i -e "s/winarm64.zip) | \[.*\]/winarm64.zip) | \[$WIN_64_ARM_ZIP_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
+if [[ -n "$WIN_64_ARM_EXE_HASH" ]]; then
+  sed_wrapper -i -e "s/winarm64.exe) | \[.*\]/winarm64.exe) | \[$WIN_64_ARM_EXE_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
+fi
+
+if [[ -n "$WIN_64_ARM_ZIP_HASH" ]]; then
+  sed_wrapper -i -e "s/winarm64.zip) | \[.*\]/winarm64.zip) | \[$WIN_64_ARM_ZIP_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
+fi
