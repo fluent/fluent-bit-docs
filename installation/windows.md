@@ -79,14 +79,17 @@ From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1
 
 ## Installation Packages
 
-The latest stable version is 2.1.4. Each version is available on the Github release as well as at:
+The latest stable version is 2.1.4.
+Each version is available via the following download URLs.
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.2.0-win32.exe](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win32.exe) | [1aa1c9e853856cdb44d4336c8dc0e28da6c4688543662196628170a11364875f](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win32.exe.sha256) |
-| [fluent-bit-2.2.0-win32.zip](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win32.zip) | [7e496a63cd710040dc36c1ba11e60a9a46b384fdd455c82fbab7143ccd06b725](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win32.zip.sha256) |
-| [fluent-bit-2.2.0-win64.exe](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win64.exe) | [1cea437d0ee93eb6b6ea4410ba0bef8c196711ef1a09687760bfd96aa63183ff](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win64.exe.sha256) |
-| [fluent-bit-2.2.0-win64.zip](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win64.zip) | [723d7e138d19055476dc361e86e2fd57de5d2490837cde707f512a707b27ad40](https://releases.fluentbit.io/2.2/fluent-bit-2.2.0-win64.zip.sha256) |
+| [fluent-bit-2.2.0-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.exe) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.exe.sha256) |
+| [fluent-bit-2.2.0-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.zip) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.zip.sha256) |
+| [fluent-bit-2.2.0-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.exe) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.exe.sha256) |
+| [fluent-bit-2.2.0-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.zip) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.zip.sha256) |
+
+**Note these are now using the Github Actions built versions at packages.fluentbit.io, the legacy AppVeyor builds are still available at releases.fluentbit.io for now but are deprecated.**
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 

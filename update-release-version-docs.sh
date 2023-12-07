@@ -41,10 +41,8 @@ WIN_32_ZIP_HASH=${WIN_32_ZIP_HASH:?}
 WIN_64_EXE_HASH=${WIN_64_EXE_HASH:?}
 WIN_64_ZIP_HASH=${WIN_64_ZIP_HASH:?}
 
-sed_wrapper -i -e "s/The latest stable version is .*,/The latest stable version is $NEW_VERSION/g" "$SCRIPT_DIR"/installation/windows.md
+sed_wrapper -i -e "s/The latest stable version is .*$/The latest stable version is $NEW_VERSION./g" "$SCRIPT_DIR"/installation/windows.md
 sed_wrapper -i -e "s/fluent-bit-[0-9\.]*-win/fluent-bit-$NEW_VERSION-win/g" "$SCRIPT_DIR"/installation/windows.md
-
-sed_wrapper -i -e "s|releases.fluentbit.io/[0-9\.]*/|releases.fluentbit.io/$MAJOR_VERSION/|g" "$SCRIPT_DIR"/installation/windows.md
 
 sed_wrapper -i -e "s/win32.exe) | \[.*\]/win32.exe) | \[$WIN_32_EXE_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
 sed_wrapper -i -e "s/win32.zip) | \[.*\]/win32.zip) | \[$WIN_32_ZIP_HASH\]/g" "$SCRIPT_DIR"/installation/windows.md
