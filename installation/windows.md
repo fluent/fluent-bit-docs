@@ -88,8 +88,16 @@ Each version is available via the following download URLs.
 | [fluent-bit-2.2.0-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.zip) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.zip.sha256) |
 | [fluent-bit-2.2.0-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.exe) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.exe.sha256) |
 | [fluent-bit-2.2.0-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.zip) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.zip.sha256) |
+| [fluent-bit-2.2.0-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-winarm64.exe) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-winarm64.exe.sha256) |
+| [fluent-bit-2.2.0-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-winarm64.zip) | [xx](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-winarm64.zip.sha256) |
 
-**Note these are now using the Github Actions built versions at packages.fluentbit.io, the legacy AppVeyor builds are still available at releases.fluentbit.io for now but are deprecated.**
+**Note these are now using the Github Actions built versions, the legacy AppVeyor builds are still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.**
+
+MSI installers are also available:
+
+- [fluent-bit-2.2.0-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win32.msi)
+- [fluent-bit-2.2.0-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-win64.msi)
+- [fluent-bit-2.2.0-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-2.2.0-winarm64.msi)
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
