@@ -94,7 +94,7 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 | /api/v1/health             | Fluent Bit health check result                                                                                                                                     | String                |
 | /api/v2/metrics            | Internal metrics per loaded plugin                                                                                                                                 | cmetrics' text format |
 | /api/v2/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server                                                                                     | Prometheus Text 0.0.4 |
-| /api/v2/reload             | Execute hot reloading or get the status of hot reloading                                                                                                           | JSON                  |
+| /api/v2/reload             | Execute hot reloading or get the status of hot reloading. In more details, please refer to the [hot-reloading doc](hot-reload.md).                                 | JSON                  |
 
 ### Metric Descriptions
 
