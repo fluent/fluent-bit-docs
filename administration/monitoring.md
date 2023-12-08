@@ -92,9 +92,9 @@ Fluent Bit aims to expose useful interfaces for monitoring, as of Fluent Bit v0.
 | /api/v1/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server                                                                                     | Prometheus Text 0.0.4 |
 | /api/v1/storage            | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section the property `storage.metrics` has been enabled | JSON                  |
 | /api/v1/health             | Fluent Bit health check result                                                                                                                                     | String                |
-| /api/v2/metrics            | Internal metrics per loaded plugin                                                                                                                                 | cmetrics' text format |
+| /api/v2/metrics            | Internal metrics per loaded plugin                                                                                                                                 | [cmetrics text format](https://github.com/fluent/cmetrics) |
 | /api/v2/metrics/prometheus | Internal metrics per loaded plugin ready to be consumed by a Prometheus Server                                                                                     | Prometheus Text 0.0.4 |
-| /api/v2/reload             | Execute hot reloading or get the status of hot reloading                                                                                                           | JSON                  |
+| /api/v2/reload             | Execute hot reloading or get the status of hot reloading. For more details, please refer to the [hot-reloading documentation](hot-reload.md).                                 | JSON                  |
 
 ### Metric Descriptions
 
