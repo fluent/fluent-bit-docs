@@ -56,7 +56,7 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 | `Password` | Password of PostgreSQL username | - |
 | `Database` | Database name to connect to | - \(current user\) |
 | `Table` | Table name where to store data | - |
-| `Connection_Options` | PostgreSQL connection options | - |
+| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS) | - |
 | `Timestamp_Key` | Key in the JSON object containing the record timestamp | date |
 | `Async` | Define if we will use async or sync connections | false |
 | `min_pool_size` | Minimum number of connection in async mode | 1 |
