@@ -8,16 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     name: PR - Actionlint
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
           ./actionlint -color -shellcheck=
         shell: bash
 
-  docslint-pr:
+  shellcheck-pr:
     runs-on: ubuntu-latest
-    name: PR - Markdownlint
+    name: PR - Shellcheck
     steps:
-      - name: Run markdownlint
-        uses: actionshub/markdownlint@v2.1.2
+      - uses: actions/checkout@v4
+      - uses: ludeeus/action-shellcheck@master

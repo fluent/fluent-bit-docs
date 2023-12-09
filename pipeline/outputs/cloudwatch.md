@@ -32,7 +32,7 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | metric\_dimensions    | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set MUST also be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API\_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch\_concepts.html#Dimension). In the fluent-bit config, metric\_dimensions is a comma and semicolon separated string. If you have only one list of dimensions, put the values as a comma separated string. If you want to put list of lists, use the list as semicolon separated strings. For example, if you set the value as 'dimension\_1,dimension\_2;dimension\_3', we will convert it as \[\[dimension\_1, dimension\_2],\[dimension\_3]] |
 | sts\_endpoint         | Specify a custom STS endpoint for the AWS STS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. This option defaults to `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| external\_id | Specify an external ID for the STS API, can be used with the role_arn parameter if your role requires an external ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| external\_id          | Specify an external ID for the STS API, can be used with the role\_arn parameter if your role requires an external ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ## Getting Started
 
@@ -81,7 +81,8 @@ The following AWS IAM permissions are required to use this plugin:
 
 ### Worker support
 
-Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers. **The plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
+Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers in Fluent Bit 2.1.11 and prior. **2.1.11 and prior, the plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
+Starting from Fluent Bit 2.1.12, the `cloudwatch_logs` plugin added full support for workers, meaning that more than one worker can be configured.
 
 Example:
 
@@ -96,7 +97,9 @@ Example:
     workers 1
 ```
 
-If you enable a single worker, you are enabling a dedicated thread for your CloudWatch output. We recommend starting without workers, evaluating the performance, and then enabling a worker if needed. For most users, the plugin can provide sufficient throughput without workers.
+If you enable workers, you are enabling one or more dedicated threads for your CloudWatch output. 
+We recommend starting with 1 worker, evaluating the performance, and then enabling more workers if needed. 
+For most users, the plugin can provide sufficient throughput with 0 or 1 workers.
 
 ### Log Stream and Group Name templating using record\_accessor syntax
 
@@ -149,26 +152,28 @@ If the kubernetes structure is not found in the log record, then the `log_group_
 [2022/06/30 06:09:29] [ warn] [record accessor] translation failed, root key=kubernetes
 ```
 
-#### Limitations of record_accessor syntax
+#### Limitations of record\_accessor syntax
 
-Notice in the example above, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+Notice in the example above, that the template values are separated by dot characters. This is important; the Fluent Bit record\_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
 Assume that your log records contain the metadata keys `container_name` and `task`. The following would be invalid templates because the two template variables are not separated by commas or dots:
 
-- `$task-$container_name`
-- `$task/$container_name`
-- `$task_$container_name`
-- `$taskfooo$container_name`
+* `$task-$container_name`
+* `$task/$container_name`
+* `$task_$container_name`
+* `$taskfooo$container_name`
 
 However, the following are valid:
-- `$task.$container_name`
-- `$task.resource.$container_name`
-- `$task.fooo.$container_name`
+
+* `$task.$container_name`
+* `$task.resource.$container_name`
+* `$task.fooo.$container_name`
 
 And the following are valid since they only contain one template variable with nothing after it:
-- `fooo$task`
-- `fooo____$task`
-- `fooo/bar$container_name`
+
+* `fooo$task`
+* `fooo____$task`
+* `fooo/bar$container_name`
 
 ### Metrics Tutorial
 

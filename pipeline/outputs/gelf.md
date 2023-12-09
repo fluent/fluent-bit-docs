@@ -6,7 +6,7 @@ The following instructions assumes that you have a fully operational Graylog ser
 
 ## Configuration Parameters
 
-According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
+According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
 
 | Key                    | Description                                                                                                                                                                 | default       |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -24,7 +24,7 @@ According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pag
 
 ### TLS / SSL
 
-GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Notes
 

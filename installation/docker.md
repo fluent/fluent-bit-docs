@@ -15,8 +15,36 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 
 The following table describes the Linux container tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tag(s)      | Manifest Architectures    | Description                                                  |
-| ----------- | ------------------------- | ------------------------------------------------------------ |
+| Tag(s)       | Manifest Architectures    | Description                                                    |
+| ------------ | ------------------------- | -------------------------------------------------------------- |
+| 2.2.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.2.0 | x86_64, arm64v8, arm32v7 | Release [v2.2.0](https://fluentbit.io/announcements/v2.2.0/) |
+| 2.1.10-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.10 | x86_64, arm64v8, arm32v7 | Release [v2.1.10](https://fluentbit.io/announcements/v2.1.10/) |
+| 2.1.9-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.9 | x86_64, arm64v8, arm32v7 | Release [v2.1.9](https://fluentbit.io/announcements/v2.1.9/) |
+| 2.1.8-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.8 | x86_64, arm64v8, arm32v7 | Release [v2.1.8](https://fluentbit.io/announcements/v2.1.8/) |
+| 2.1.7-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.7 | x86_64, arm64v8, arm32v7 | Release [v2.1.7](https://fluentbit.io/announcements/v2.1.7/) |
+| 2.1.6-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.6 | x86_64, arm64v8, arm32v7 | Release [v2.1.6](https://fluentbit.io/announcements/v2.1.6/) |
+| 2.1.5 | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
+| 2.1.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.4 | x86_64, arm64v8, arm32v7 | Release [v2.1.4](https://fluentbit.io/announcements/v2.1.4/) |
+| 2.1.4-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.3 | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
+| 2.1.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.2 | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
+| 2.1.2-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.1        | x86\_64, arm64v8, arm32v7 | Release [v2.1.1](https://fluentbit.io/announcements/v2.1.1/)   |
+| 2.1.1-debug  | x86\_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
+| 2.1.0        | x86\_64, arm64v8, arm32v7 | Release [v2.1.0](https://fluentbit.io/announcements/v2.1.0/)   |
+| 2.1.0-debug  | x86\_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
+| 2.0.11       | x86\_64, arm64v8, arm32v7 | Release [v2.0.11](https://fluentbit.io/announcements/v2.0.11/) |
+| 2.0.11-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                           |
+| 2.0.10       | x86\_64, arm64v8, arm32v7 | Release [v2.0.10](https://fluentbit.io/announcements/v2.0.10/) |
+| 2.0.10-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                           |
 | 2.0.9       | x86\_64, arm64v8, arm32v7 | Release [v2.0.9](https://fluentbit.io/announcements/v2.0.9/) |
 | 2.0.9-debug | x86\_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
 | 2.0.8       | x86\_64, arm64v8, arm32v7 | Release [v2.0.8](https://fluentbit.io/announcements/v2.0.8/) |

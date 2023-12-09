@@ -38,7 +38,7 @@ Output the records as csv. Csv supports an additional configuration parameter.
 
 | Key | Description |
 | :--- | :--- |
-| Delimiter | The character to separate each data. Default: ',' |
+| Delimiter | The character to separate each data. Accepted values are "\t" (or "tab"), "space" or "comma". Other values are ignored and will use default silently. Default: ',' |
 
 ```python
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"

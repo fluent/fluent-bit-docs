@@ -26,7 +26,7 @@ TCP is a _connected oriented_ channel, to deliver and receive data from a remote
 
 The concept of `Connection Keepalive` refers to the ability of the client \(Fluent Bit on this case\) to keep the TCP connection open in a persistent way, that means that once the connection is created and used, instead of close it, it can be recycled. This feature offers many benefits in terms of performance since communication channels are always established before hand.
 
-Any component that uses TCP channels like HTTP or [TLS](security.md), can take advantage of this feature. For configuration purposes use the `net.keepalive` property.
+Any component that uses TCP channels like HTTP or [TLS](transport-security.md), can take advantage of this feature. For configuration purposes use the `net.keepalive` property.
 
 ### Connection Keepalive Idle Timeout
 
@@ -38,21 +38,31 @@ In order to control how long a keepalive connection can be idle, we expose the c
 
 If a transport layer protocol is specified, the plugin whose configuration section the `net.dns.mode` setting is specified on overrides the global `dns.mode` value and issues DNS requests using the specified protocol which can be either TCP or UDP
 
+### Max Connections Per Worker
+
+By default, Fluent Bit tries to deliver data as faster as possible and create TCP connections on-demand and in keepalive mode for performance reasons. In high-scalable environments, the user might want to control how many connections are done in parallel by setting a limit.
+
+This can be done by the configuration property called `net.max_worker_connections` that can be used in the output plugins sections.
+This feature acts at the worker level, e.g., if you have 5 workers and `net.max_worker_connections` is set to 10, a max of 50 connections will be allowed.
+If the limit is reached, the output plugin will issue a retry.
+
+
 ## Configuration Options
 
 For plugins that rely on networking I/O, the following section describes the network configuration properties available and how they can be used to optimize performance or adjust to different configuration needs:
 
-| Property | Description | Default |
-| :--- | :--- | :--- |
-| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | 10 |
-| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | true |
-| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired. |  |
-| `net.dns.prefer_ipv4` |  Prioritize IPv4 DNS results when trying to establish a connection. | false |
-| `net.dns.resolver`| Select the primary DNS resolver type (LEGACY or ASYNC). | |
-| `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off. | on |
-| `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection. | 30 |
-| `net.keepalive_max_recycle` | Set maximum number of times a keepalive connection can be used before it is retired. | 2000 |
-| `net.source_address` | Specify network address to bind for data traffic. |  |
+| Property | Description                                                                                                                               | Default       |
+| :--- |:------------------------------------------------------------------------------------------------------------------------------------------|:--------------|
+| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time.                | 10            |
+| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.                        | true          |
+| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired. |               |
+| `net.dns.prefer_ipv4` | Prioritize IPv4 DNS results when trying to establish a connection.                                                                        | false         |
+| `net.dns.resolver`| Select the primary DNS resolver type (LEGACY or ASYNC).                                                                                   |               |
+| `net.keepalive` | Enable or disable connection keepalive support. Accepts a boolean value: on / off.                                                        | on            |
+| `net.keepalive_idle_timeout` | Set maximum time expressed in seconds for an idle keepalive connection.                                                                   | 30            |
+| `net.keepalive_max_recycle` | Set maximum number of times a keepalive connection can be used before it is retired.                                                      | 2000          |
+| `net.max_worker_connections` | Set maximum number of TCP connections that can be established per worker.                                                                 | 0 (unlimited) |
+| `net.source_address` | Specify network address to bind for data traffic.                                                                                         |               |
 
 ## Example
 

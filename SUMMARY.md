@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v2.0 Documentation](README.md)
+* [Fluent Bit v2.2 Documentation](README.md)
 
 ## About
 
@@ -59,7 +59,7 @@
     * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
-* [Security](administration/security.md)
+* [Transport Security](administration/transport-security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
 * [Scheduling and Retries](administration/scheduling-and-retries.md)
@@ -67,8 +67,9 @@
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
 * [HTTP Proxy](administration/http-proxy.md)
+* [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
-  
+
 ## Local Testing
 
 * [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
@@ -84,6 +85,7 @@
   * [Docker Log Based Metrics](pipeline/inputs/docker-metrics.md)
   * [Docker Events](pipeline/inputs/docker-events.md)
   * [Dummy](pipeline/inputs/dummy.md)
+  * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Exec Wasi](pipeline/inputs/exec-wasi.md)
   * [Fluent Bit Metrics](pipeline/inputs/fluentbit-metrics.md)
@@ -91,16 +93,21 @@
   * [Head](pipeline/inputs/head.md)
   * [HTTP](pipeline/inputs/http.md)
   * [Health](pipeline/inputs/health.md)
+  * [Kafka](pipeline/inputs/kafka.md)
   * [Kernel Logs](pipeline/inputs/kernel-logs.md)
+  * [Kubernetes Events](pipeline/inputs/kubernetes-events.md)
   * [Memory Metrics](pipeline/inputs/memory-metrics.md)
   * [MQTT](pipeline/inputs/mqtt.md)
   * [Network I/O Log Based Metrics](pipeline/inputs/network-io-metrics.md)
   * [NGINX Exporter Metrics](pipeline/inputs/nginx.md)
   * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
+  * [Podman Metrics](pipeline/inputs/podman-metrics.md)
   * [Process Log Based Metrics](pipeline/inputs/process.md)
+  * [Process Exporter Metrics](pipeline/inputs/process-exporter-metrics.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
+  * [Splunk](pipeline/inputs/splunk.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
   * [StatsD](pipeline/inputs/statsd.md)
   * [Syslog](pipeline/inputs/syslog.md)
@@ -108,6 +115,7 @@
   * [Tail](pipeline/inputs/tail.md)
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
+  * [UDP](pipeline/inputs/udp.md)
   * [OpenTelemetry](pipeline/inputs/opentelemetry.md)
   * [Windows Event Log](pipeline/inputs/windows-event-log.md)
   * [Windows Event Log (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
@@ -127,6 +135,7 @@
   * [GeoIP2 Filter](pipeline/filters/geoip2-filter.md)
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
+  * [Log to Metrics](pipeline/filters/log_to_metrics.md)
   * [Lua](pipeline/filters/lua.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
@@ -136,7 +145,9 @@
   * [Nightfall](pipeline/filters/nightfall.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
+  * [Sysinfo](pipeline/filters/sysinfo.md)
   * [Throttle](pipeline/filters/throttle.md)
+  * [Type Converter](pipeline/filters/type-converter.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
   * [Wasm](pipeline/filters/wasm.md)
 * [Outputs](pipeline/outputs/README.md)
@@ -147,6 +158,7 @@
   * [Azure Blob](pipeline/outputs/azure\_blob.md)
   * [Azure Data Explorer](pipeline/outputs/azure\_kusto.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
+  * [Azure Logs Ingestion API](pipeline/outputs/azure_logs_ingestion.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
@@ -154,6 +166,7 @@
   * [FlowCounter](pipeline/outputs/flowcounter.md)
   * [Forward](pipeline/outputs/forward.md)
   * [GELF](pipeline/outputs/gelf.md)
+  * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
@@ -165,6 +178,7 @@
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [Observe](pipeline/outputs/observe.md)
+  * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
@@ -178,6 +192,7 @@
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
+  * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
 
 ## Stream Processing

@@ -8,19 +8,128 @@
 Tap can be used to generate events or records detailing what messages
 pass through Fluent Bit, at what time and what filters affect them.
 
-
 ### Simple example
 
 First, we will make sure that the container image we are going to use actually supports Fluent Bit Tap (available in Fluent Bit 2.0+):
 
 ```shell
-$ docker run --rm -ti fluent/fluent-bit:latest --help | grep -Z
-  -Z, --enable-chunk-trace     enable chunk tracing. activating it requires using the HTTP Server API.
+$ docker run --rm -ti fluent/fluent-bit:latest --help | grep trace
+  -Z, --enable-chunk-traceenable chunk tracing, it can be activated either through the http api or the command line
+  --trace-input           input to start tracing on startup.
+  --trace-output          output to use for tracing on startup.
+  --trace-output-property set a property for output tracing on startup.
+  --trace                 setup a trace pipeline on startup. Uses a single line, ie: "input=dummy.0 output=stdout output.format='json'"
 ```
 
 If the `--enable-chunk-trace` option is present it means Fluent Bit has support for Fluent Bit Tap but it is disabled by default, so remember to enable it with this option.
 
-Tap support is enabled and disabled via the embedded web server, so enable it like so (or the equivalent option in the configuration file):
+You can start fluent-bit with tracing activated from the beginning by using the `trace-input` and `trace-output` properties, like so:
+
+```bash
+$ fluent-bit -Z -i dummy -o stdout -f 1 --trace-input=dummy.0 --trace-output=stdout
+Fluent Bit v2.1.8
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+
+[2023/07/21 16:27:01] [ info] [fluent bit] version=2.1.8, commit=824ba3dd08, pid=622937
+[2023/07/21 16:27:01] [ info] [storage] ver=1.4.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/07/21 16:27:01] [ info] [cmetrics] version=0.6.3
+[2023/07/21 16:27:01] [ info] [ctraces ] version=0.3.1
+[2023/07/21 16:27:01] [ info] [input:dummy:dummy.0] initializing
+[2023/07/21 16:27:01] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2023/07/21 16:27:01] [ info] [sp] stream processor started
+[2023/07/21 16:27:01] [ info] [output:stdout:stdout.0] worker #0 started
+[2023/07/21 16:27:01] [ info] [fluent bit] version=2.1.8, commit=824ba3dd08, pid=622937
+[2023/07/21 16:27:01] [ info] [storage] ver=1.4.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/07/21 16:27:01] [ info] [cmetrics] version=0.6.3
+[2023/07/21 16:27:01] [ info] [ctraces ] version=0.3.1
+[2023/07/21 16:27:01] [ info] [input:emitter:trace-emitter] initializing
+[2023/07/21 16:27:01] [ info] [input:emitter:trace-emitter] storage_strategy='memory' (memory only)
+[2023/07/21 16:27:01] [ info] [sp] stream processor started
+[2023/07/21 16:27:01] [ info] [output:stdout:stdout.0] worker #0 started
+.[0] dummy.0: [[1689971222.068537501, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1689971223.068556121, {}], {"message"=>"dummy"}]
+[0] trace: [[1689971222.068677045, {}], {"type"=>1, "trace_id"=>"0", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971222, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971222, "end_time"=>1689971222}]
+[1] trace: [[1689971222.068735577, {}], {"type"=>3, "trace_id"=>"0", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971222, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971222, "end_time"=>1689971222}]
+[0] dummy.0: [[1689971224.068586317, {}], {"message"=>"dummy"}]
+[0] trace: [[1689971223.068626923, {}], {"type"=>1, "trace_id"=>"1", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971223, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971223, "end_time"=>1689971223}]
+[1] trace: [[1689971223.068675735, {}], {"type"=>3, "trace_id"=>"1", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971223, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971223, "end_time"=>1689971223}]
+[2] trace: [[1689971224.068689341, {}], {"type"=>1, "trace_id"=>"2", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971224, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971224, "end_time"=>1689971224}]
+[3] trace: [[1689971224.068747182, {}], {"type"=>3, "trace_id"=>"2", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971224, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971224, "end_time"=>1689971224}]
+^C[2023/07/21 16:27:05] [engine] caught signal (SIGINT)
+[2023/07/21 16:27:05] [ warn] [engine] service will shutdown in max 5 seconds
+[2023/07/21 16:27:05] [ info] [input] pausing dummy.0
+[0] dummy.0: [[1689971225.068568875, {}], {"message"=>"dummy"}]
+[2023/07/21 16:27:06] [ info] [engine] service has stopped (0 pending tasks)
+[2023/07/21 16:27:06] [ info] [input] pausing dummy.0
+[2023/07/21 16:27:06] [ warn] [engine] service will shutdown in max 1 seconds
+[0] trace: [[1689971225.068654038, {}], {"type"=>1, "trace_id"=>"3", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971225, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971225, "end_time"=>1689971225}]
+[1] trace: [[1689971225.068695829, {}], {"type"=>3, "trace_id"=>"3", "plugin_instance"=>"dummy.0", "records"=>[{"timestamp"=>1689971225, "record"=>{"message"=>"dummy"}}], "start_time"=>1689971225, "end_time"=>1689971225}]
+[2023/07/21 16:27:07] [ info] [engine] service has stopped (0 pending tasks)
+[2023/07/21 16:27:07] [ info] [output:stdout:stdout.0] thread worker #0 stopping...
+[2023/07/21 16:27:07] [ info] [output:stdout:stdout.0] thread worker #0 stopped
+[2023/07/21 16:27:07] [ info] [output:stdout:stdout.0] thread worker #0 stopping...
+[2023/07/21 16:27:07] [ info] [output:stdout:stdout.0] thread worker #0 stopped
+```
+
+If you see the following warning then the `-Z` or `--enable-chunk-tracing` option is missing:
+
+```bash
+[2023/07/21 16:26:42] [ warn] [chunk trace] enable chunk tracing via the configuration or  command line to be able to activate tracing.
+```
+
+Properties can be set for the output using the `--trace-output-property` option:
+
+```bash
+$ fluent-bit -Z -i dummy -o stdout -f 1 --trace-input=dummy.0 --trace-output=stdout --trace-output-property=format=json_lines
+Fluent Bit v2.1.8
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+
+[2023/07/21 16:28:59] [ info] [fluent bit] version=2.1.8, commit=824ba3dd08, pid=623170
+[2023/07/21 16:28:59] [ info] [storage] ver=1.4.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/07/21 16:28:59] [ info] [cmetrics] version=0.6.3
+[2023/07/21 16:28:59] [ info] [ctraces ] version=0.3.1
+[2023/07/21 16:28:59] [ info] [input:dummy:dummy.0] initializing
+[2023/07/21 16:28:59] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2023/07/21 16:28:59] [ info] [sp] stream processor started
+[2023/07/21 16:28:59] [ info] [output:stdout:stdout.0] worker #0 started
+[2023/07/21 16:28:59] [ info] [fluent bit] version=2.1.8, commit=824ba3dd08, pid=623170
+[2023/07/21 16:28:59] [ info] [storage] ver=1.4.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/07/21 16:28:59] [ info] [cmetrics] version=0.6.3
+[2023/07/21 16:28:59] [ info] [ctraces ] version=0.3.1
+[2023/07/21 16:28:59] [ info] [input:emitter:trace-emitter] initializing
+[2023/07/21 16:28:59] [ info] [input:emitter:trace-emitter] storage_strategy='memory' (memory only)
+[2023/07/21 16:29:00] [ info] [sp] stream processor started
+[2023/07/21 16:29:00] [ info] [output:stdout:stdout.0] worker #0 started
+.[0] dummy.0: [[1689971340.068565891, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1689971341.068632477, {}], {"message"=>"dummy"}]
+{"date":1689971340.068745,"type":1,"trace_id":"0","plugin_instance":"dummy.0","records":[{"timestamp":1689971340,"record":{"message":"dummy"}}],"start_time":1689971340,"end_time":1689971340}
+{"date":1689971340.068825,"type":3,"trace_id":"0","plugin_instance":"dummy.0","records":[{"timestamp":1689971340,"record":{"message":"dummy"}}],"start_time":1689971340,"end_time":1689971340}
+[0] dummy.0: [[1689971342.068613646, {}], {"message"=>"dummy"}]
+```
+
+With that options set the stdout plugin is now emitting traces in `json_lines` format:
+
+```json
+{"date":1689971340.068745,"type":1,"trace_id":"0","plugin_instance":"dummy.0","records":[{"timestamp":1689971340,"record":{"message":"dummy"}}],"start_time":1689971340,"end_time":1689971340}
+```
+
+All three options can also be defined using the much more flexible `--trace` option:
+
+```bash
+$ fluent-bit -Z -i dummy -o stdout -f 1 --trace="input=dummy.0 output=stdout output.format=json_lines"
+```
+
+We defined the entire tap pipeline using this configuration: `input=dummy.0 output=stdout output.format=json_lines` which defines the following:
+
+  * input: dummy.0 (listens to the tag and/or alias `dummy.0`)
+  * output: stdout (outputs to a stdout plugin)
+  * output.format: json_lines (sets the stdout format o `json_lines`)
+
+Tap support can also be activated and deactivated via the embedded web server:
 
 ```shell
 $ docker run --rm -ti -p 2020:2020 fluent/fluent-bit:latest -Z -H -i dummy -p alias=input_dummy -o stdout -f 1

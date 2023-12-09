@@ -2,7 +2,7 @@
 
 ## Install on Amazon Linux
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2 and Amazon Linux 2022.
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2 and Amazon Linux 2023.
 The following architectures are supported
 
 * x86\_64
@@ -22,12 +22,7 @@ The recommended secure deployment approach is to follow the instructions below.
 
 ### Amazon Linux 2022
 
-For Amazon Linux 2022, until it is GA, we need to force it to use the 2022 `releasever` in Yum but only for the Fluent Bit repository.
-
-```bash
-export FLUENT_BIT_INSTALL_COMMAND_PREFIX="sed -i 's|\$releasever/|2022/|g' /etc/yum.repos.d/fluent-bit.repo"
-curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
-```
+Amazon Linux 2022 was previously supported but is removed since it became GA Amazon Linux 2023
 
 ## Configure Yum
 
@@ -38,18 +33,18 @@ We provide **fluent-bit** through a Yum repository. In order to add the reposito
 ```config
 [fluent-bit]
 name = Fluent Bit
-baseurl = https://packages.fluentbit.io/amazonlinux/2/$basearch/
+baseurl = https://packages.fluentbit.io/amazonlinux/2/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
 ```
 
-### Amazon Linux 2022
+### Amazon Linux 2023
 
 ```config
 [fluent-bit]
 name = Fluent Bit
-baseurl = https://packages.fluentbit.io/amazonlinux/2022/$basearch/
+baseurl = https://packages.fluentbit.io/amazonlinux/2023/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 enabled=1
@@ -83,26 +78,25 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 Once your repository is configured, run the following command to install it:
 
 ```bash
-yum install fluent-bit
+sudo yum install fluent-bit
 ```
 
 Now the following step is to instruct _systemd_ to enable the service:
 
 ```bash
-sudo service fluent-bit start
+sudo systemctl start fluent-bit
 ```
 
 If you do a status check, you should see a similar output like this:
 
 ```bash
-$ service fluent-bit status
-Redirecting to /bin/systemctl status  fluent-bit.service
+$ systemctl status fluent-bit
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/usr/lib/systemd/system/fluent-bit.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago
  Main PID: 3820 (fluent-bit)
    CGroup: /system.slice/fluent-bit.service
-           └─3820 /opt/fluent-bit/bin/fluent-bit -c etc/fluent-bit/fluent-bit.conf
+           └─3820 /opt/fluent-bit/bin/fluent-bit -c /etc/fluent-bit/fluent-bit.conf
 ...
 ```
 

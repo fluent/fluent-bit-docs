@@ -39,6 +39,7 @@ The _Service_ section defines global properties of the service, the keys availab
 | scheduler.cap   | Set a maximum retry time in second. The property is supported from v1.8.7.                                                                                                                                                                                                                              | 2000          |
 | scheduler.base  | Set a base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                               | 5             |
 | json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
+| sp.convert_from_str_to_num | If enabled, Stream processor converts from number string to number type.        | true          |
 
 The following is an example of a _SERVICE_ section:
 
@@ -138,7 +139,7 @@ The following configuration file example demonstrates how to collect CPU metrics
 
 ## Visualize <a href="config_include_file" id="config_include_file"></a>
 
-You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://cloud.calyptia.com](https://cloud.calyptia.com/visualizer)
+You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [Calyptia](https://calyptia.com/free-trial)
 
 ![](../../../.gitbook/assets/image.png)
 

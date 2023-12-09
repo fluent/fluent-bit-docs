@@ -138,19 +138,21 @@ If you enable `Reserved_Data` and `Preserve_Key`, the original key field will be
     Parser dummy_test
     Reserve_Data On
     Preserve_Key On
+
+[OUTPUT]
+    Name stdout
+    Match *
 ```
 
 This will produce the following output:
 
 ```text
 $ fluent-bit -c dummy.conf
-Fluent-Bit v0.12.0
-Copyright (C) Treasure Data
-
-[2017/07/06 22:33:12] [ info] [engine] started
-[0] dummy.data: [1499347993.001371317, {"data":"100 0.5 true This is example", "INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[1] dummy.data: [1499347994.001303118, {"data":"100 0.5 true This is example", "INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[2] dummy.data: [1499347995.001296133, {"data":"100 0.5 true This is example", "INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[3] dummy.data: [1499347996.001320284, {"data":"100 0.5 true This is example", "INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
+Fluent Bit v2.1.1
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+...
+...
+[0] dummy.data: [[1687122778.299116136, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1687122779.296906553, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1687122780.297475803, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 ```
-
