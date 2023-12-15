@@ -24,6 +24,7 @@ Kubernetes exports it events through the API server. This input plugin allows to
 | kube_request_limit  | kubernetes limit parameter for events query, no limit applied when set to 0.          | 0                                                    |
 | kube_retention_time | Kubernetes retention time for events.                                                 | 1h                                                   |
 | kube_namespace      | Kubernetes namespace to query events from. Gets events from all namespaces by default |                                                      |
+| timestamp_key       | Record accessor for the timestamp from the event.                                     | $metadata['creationTimestamp']                       |
 | tls.debug           | Debug level between 0 (nothing) and 4 (every detail).                                 | 0                                                    |
 | tls.verify          | Enable or disable verification of TLS peer certificate.                               | On                                                   |
 | tls.vhost           | Set optional TLS virtual host.                                                        |                                                      |
