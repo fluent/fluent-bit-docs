@@ -12,7 +12,8 @@ The initial release of Node Exporter Metrics contains a subset of collectors and
 
 **Important note:** Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
-This plugin is currently only supported on Linux based operating systems\
+This plugin is supported on Linux-based operating systems for the most part with macOS offering a reduced subset of metrics.
+The table below indicates which collector is supported on macOS.
 
 
 ## Configuration
@@ -60,22 +61,22 @@ The following table describes the available collectors as part of this plugin. A
 
 > note: the Version column specifies the Fluent Bit version where the collector is available.
 
-| Name      | Description                                                                                      | OS     | Version |
-| --------- | ------------------------------------------------------------------------------------------------ | ------ | ------- |
-| cpu       | Exposes CPU statistics.                                                                          | Linux  | v1.8    |
-| cpufreq   | Exposes CPU frequency statistics.                                                                | Linux  | v1.8    |
-| diskstats | Exposes disk I/O statistics.                                                                     | Linux  | v1.8    |
-| filefd    | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux  | v1.8.2  |
-| loadavg   | Exposes load average.                                                                            | Linux  | v1.8    |
-| meminfo   | Exposes memory statistics.                                                                       | Linux  | v1.8    |
-| netdev    | Exposes network interface statistics such as bytes transferred.                                  | Linux  | v1.8.2  |
-| stat      | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux  | v1.8    |
-| time      | Exposes the current system time.                                                                 | Linux  | v1.8    |
-| uname     | Exposes system information as provided by the uname system call.                                 | Linux  | v1.8    |
-| vmstat    | Exposes statistics from `/proc/vmstat`.                                                          | Linux  | v1.8.2  |
-| systemd collector | Exposes statistics from systemd.                                                         | Linux  | v2.1.3  |
-| thermal_zone | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                            | Linux  | v2.2.1  |
-| nvme      | Exposes nvme statistics from `/proc`.                                                            | Linux  | v2.2.0  |
+| Name              | Description                                                                                      | OS          | Version |
+| ----------------- | ------------------------------------------------------------------------------------------------ | ----------- | ------- |
+| cpu               | Exposes CPU statistics.                                                                          | Linux,macOS | v1.8    |
+| cpufreq           | Exposes CPU frequency statistics.                                                                | Linux       | v1.8    |
+| diskstats         | Exposes disk I/O statistics.                                                                     | Linux,macOS | v1.8    |
+| filefd            | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux       | v1.8.2  |
+| loadavg           | Exposes load average.                                                                            | Linux,macOS | v1.8    |
+| meminfo           | Exposes memory statistics.                                                                       | Linux,macOS | v1.8    |
+| netdev            | Exposes network interface statistics such as bytes transferred.                                  | Linux,macOS | v1.8.2  |
+| stat              | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux       | v1.8    |
+| time              | Exposes the current system time.                                                                 | Linux       | v1.8    |
+| uname             | Exposes system information as provided by the uname system call.                                 | Linux,macOS | v1.8    |
+| vmstat            | Exposes statistics from `/proc/vmstat`.                                                          | Linux       | v1.8.2  |
+| systemd collector | Exposes statistics from systemd.                                                                 | Linux       | v2.1.3  |
+| thermal_zone      | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                               | Linux       | v2.2.1  |
+| nvme              | Exposes nvme statistics from `/proc`.                                                            | Linux       | v2.2.0  |
 
 ## Getting Started
 
