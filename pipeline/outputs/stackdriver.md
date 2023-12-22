@@ -184,7 +184,17 @@ Do following check:
 * If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
 *   If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
 
-    **Other implementations**
+### caught signal (SIGSEGV)
+
+> Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
+
+When the number of Workers is greater than 1, fluent-bit may interimittently crash.
+
+```
+[2023/06/07 08:15:30] [engine] caught signal (SIGSEGV)
+```
+
+## Other implementations
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
