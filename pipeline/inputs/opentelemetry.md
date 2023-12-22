@@ -17,6 +17,7 @@ The OpenTelemetry plugin allows you to ingest telemetry data as per the OTLP spe
 | buffer_max_size   | Specify the maximum buffer size in KB to receive a JSON message.                                                                               | 4M      |
 | buffer_chunk_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size.  | 512K    |
 |successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
+| tag_from_uri      | If true, tag will be created from uri. e.g. v1_metrics from /v1/metrics .                                                                      | true    |
 
 Important note: Raw traces means that any data forwarded to the traces endpoint (`/v1/traces`) will be packed and forwarded as a log message, and will NOT be processed by Fluent Bit. The traces endpoint by default expects a valid protobuf encoded payload, but you can set the `raw_traces` option in case you want to get trace telemetry data to any of Fluent Bit's supported outputs.
 
