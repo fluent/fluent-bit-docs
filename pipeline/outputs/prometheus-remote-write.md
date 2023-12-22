@@ -116,3 +116,20 @@ With [Coralogix Metrics](https://coralogix.com/platform/metrics/) you may need t
     tls.verify on
     header Authorization Bearer <CORALOGIX Key>
 ```
+
+### Levitate
+
+With [Levitate](https://last9.io/levitate-tsdb), you must use the Levitate cluster-specific write URL and specify the HTTP username and password for the token created for your Levitate cluster.
+
+```
+[OUTPUT]
+    name prometheus_remote_write
+    host app-tsdb.last9.io
+    match *
+    uri /v1/metrics/82xxxx/sender/org-slug/write
+    port 443
+    tls on
+    tls.verify on
+    http_user <Levitate Cluster Username>
+    http_passwd <Levitate Cluster Password>
+```

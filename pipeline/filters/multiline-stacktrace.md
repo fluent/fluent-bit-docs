@@ -110,7 +110,7 @@ This second file defines a multiline parser for the example. Note that a second 
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+    rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
     rule      "cont"          "/^\s+at.*/"                     "cont"
     
 ```
