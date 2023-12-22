@@ -44,6 +44,22 @@ Hot reloading also can be kicked via `SIGHUP`.
 
 `SIGHUP` signal is not supported on Windows. So, users can't enable this feature on Windows.
 
+## How to confirm reloaded or not
+
+### via HTTP
+
+The number of hot reloaded count can be obtained via the HTTP endpoint that is:
+
+* `GET /api/v2/reload`
+
+The endpoint returns the count of hot-reloaded as follows:
+
+```json
+{"hot_reload_count":3}
+```
+
+The default value of that number is 0.
+
 ## Limitations
 
 The hot reloading feature is currently working on Linux, macOS and Windows.

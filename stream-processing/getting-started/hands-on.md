@@ -72,7 +72,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
          -i tail                                                         \
              -p path=/sp-samples-1k.log                                  \
              -p parser=json                                              \
-             -p read_from_head=true                                      \ 
+             -p read_from_head=true                                      \
          -T "SELECT word, num FROM STREAM:tail.0 WHERE country='Chile';" \
          -o null -f 1
 ```
@@ -99,6 +99,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
          -i tail                                                         \
              -p path=/sp-samples-1k.log                                  \
              -p parser=json                                              \
+             -p read_from_head=true                                      \
          -T "SELECT AVG(num) FROM STREAM:tail.0 WHERE country='Chile';"  \
          -o null -f 1
 ```
@@ -127,6 +128,7 @@ $ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
          -i tail                                                    \
              -p path=/sp-samples-1k.log                             \
              -p parser=json                                         \
+             -p read_from_head=true                                 \
          -T "SELECT country, AVG(num) FROM STREAM:tail.0            \
              WINDOW TUMBLING (1 SECOND)                             \
              WHERE country='Chile'                                  \
