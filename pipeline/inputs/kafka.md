@@ -12,6 +12,8 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | client\_id | Client id passed to librdkafka. | |
 | group\_id | Group id passed to librdkafka. | fluent-bit |
 | poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
+| Buffer\_Max\_Size | Specify the maximum size of buffer per cycle to poll kafka messages from subscribed topics. To increase throughput, specify larger size. | 4M |
+| poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 
 ## Getting Started
