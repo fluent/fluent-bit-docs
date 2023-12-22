@@ -32,6 +32,7 @@ This plugin is currently only supported on Linux based operating systems\
 | collector.time.scrape\_interval      | The rate in seconds at which time metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.loadavg.scrape\_interval   | The rate in seconds at which loadavg metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.vmstat.scrape\_interval   | The rate in seconds at which vmstat metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.thermal_zone.scrape\_interval   | The rate in seconds at which thermal_zone metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.filefd.scrape\_interval   | The rate in seconds at which filefd metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.nvme.scrape\_interval | The rate in seconds at which nvme metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | metrics | To specify which metrics are collected from the host operating system. These metrics depend on `/proc` or `/sys` fs. The actual values of metrics will be read from `/proc` or `/sys` when needed. cpu, cpufreq, meminfo, diskstats, filesystem, stat, loadavg, vmstat, netdev, and filefd depend on procfs. cpufreq metrics depend on sysfs. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
@@ -72,7 +73,8 @@ The following table describes the available collectors as part of this plugin. A
 | time      | Exposes the current system time.                                                                 | Linux  | v1.8    |
 | uname     | Exposes system information as provided by the uname system call.                                 | Linux  | v1.8    |
 | vmstat    | Exposes statistics from `/proc/vmstat`.                                                          | Linux  | v1.8.2  |
-| systemd collector | Exposes statistics from systemd.                                                           | Linux  | v2.1.3  |
+| systemd collector | Exposes statistics from systemd.                                                         | Linux  | v2.1.3  |
+| thermal_zone | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                            | Linux  | v2.2.1  |
 | nvme      | Exposes nvme statistics from `/proc`.                                                            | Linux  | v2.2.0  |
 
 ## Getting Started
