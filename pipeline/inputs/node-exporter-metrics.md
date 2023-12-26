@@ -67,6 +67,7 @@ The following table describes the available collectors as part of this plugin. A
 | cpufreq           | Exposes CPU frequency statistics.                                                                | Linux       | v1.8    |
 | diskstats         | Exposes disk I/O statistics.                                                                     | Linux,macOS | v1.8    |
 | filefd            | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux       | v1.8.2  |
+| filesystem        | Exposes filesystem statistics from `/proc/*/mounts`.                                             | Linux       | v2.0.9  |
 | loadavg           | Exposes load average.                                                                            | Linux,macOS | v1.8    |
 | meminfo           | Exposes memory statistics.                                                                       | Linux,macOS | v1.8    |
 | netdev            | Exposes network interface statistics such as bytes transferred.                                  | Linux,macOS | v1.8.2  |
