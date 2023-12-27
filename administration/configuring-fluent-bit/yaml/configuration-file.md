@@ -119,7 +119,7 @@ pipeline:
           port: 8080
 ```
 
-This pipelinme consists of two _inputs_; a tail plugin and an http server plugin. Each plugin has its own map in the array of _inputs_ consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, ie: the _record_ and _allowlist_key_ properties for the _record_modifier_ _filter_:
+This pipeline consists of two _inputs_; a tail plugin and an http server plugin. Each plugin has its own map in the array of _inputs_ consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, ie: the _record_ and _allowlist_key_ properties for the _record_modifier_ _filter_:
 
 ```
 pipeline:
