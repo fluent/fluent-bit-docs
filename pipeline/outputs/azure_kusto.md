@@ -81,3 +81,32 @@ If you get a `403 Forbidden` error response, make sure that:
 
 - You provided the correct AAD registered application credentials.
 - You authorized the application to ingest into your database or table.
+
+### configuring extra connection configurations
+
+It has been observed, there are few instances of connection drops to kusto ingest cluster while ingesting from kubernetes cluster after the output plugin runs for an extended period of time. Hence it is recommeded to configure the following properties:
+net.keepalive_max_recycle = 10
+net.connect_timeout = 60
+
+The fluentbit upstream tls connection to kusto ingest cluster that is kept open goes stale eventually after being recycled several times while ingesting from kubernetes cluster. There is a property net.keepalive_max_recycle whose default value is 2000. Setting it the value explicitly to a lower values such as 10 helps in overcoming this limitation.
+
+Also, we have seen delays while retrieving connection while trying to connect to the kusto ingest cluster, hence setting net.connect_timeout to a higher value such as 60 sec rather the default 10 seconds makes sure we dont run into connection timeouts.
+
+The modified configuration file after making the suggested changes looks like the following
+
+```
+[OUTPUT]
+    Match *
+    Name azure_kusto
+    Tenant_Id <app_tenant_id>
+    Client_Id <app_client_id>
+    Client_Secret <app_secret>
+    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+    Database_Name <database_name>
+    Table_Name <table_name>
+    Ingestion_Mapping_Reference <mapping_name>
+    net.keepalive_max_recycle 10
+    net.connect_timeout 60
+```
+
+
