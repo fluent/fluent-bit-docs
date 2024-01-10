@@ -25,11 +25,12 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
-| labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
+| labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | `logging.googleapis.com/labels`. See [Stackdriver Special Fields](StackdriverSpecialFields) for more info. |
 | labels | Optional list of comma separated of strings specifying `key=value` pairs. The resulting `labels` will be combined with the elements in obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`.|  |
-| log\_name\_key | The value of this field is used by the Stackdriver output plugin to extract logName from jsonPayload and set the logName field. | logging.googleapis.com/logName |
+| log\_name\_key | The value of this field is used by the Stackdriver output plugin to extract logName from jsonPayload and set the logName field. | `logging.googleapis.com/logName`. See [Stackdriver Special Fields](StackdriverSpecialFields) for more info. |
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
-| severity\_key | Specify the name of the key from the original record that contains the severity information. |  |
+| severity\_key | Specify the name of the key from the original record that contains the severity information. | `logging.googleapis.com/severity`. See [Stackdriver Special Fields](StackdriverSpecialFields) for more info. |
+| project_id_key | The value of this field is used by the Stackdriver output plugin to find the gcp project id from jsonPayload and then extract the value of it to set the PROJECT_ID within LogEntry logName, which controls the gcp project that should receive these logs. | `logging.googleapis.com/projectId`. See [Stackdriver Special Fields](StackdriverSpecialFields) for more info. |
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
 | Workers | Enables dedicated thread(s) for this output. | 1 |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
@@ -140,7 +141,7 @@ This will produce the following log:
 }
 ```
 
-This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime. 
+This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime.
 
 For instance, for a K8s resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) to pack all six resource labels. Below is an example of what this could look like for a `k8s_container` resource:
 
@@ -189,3 +190,5 @@ Do following check:
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
 We plan to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). Use cases of special fields is [here](./stackdriver_special_fields.md).
+
+[StackdriverSpecialFields]: ./stackdriver_special_fields.md#log-entry-fields
