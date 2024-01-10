@@ -13,6 +13,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | host | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.  | 127.0.0.1 |
+| uri | Specify a custom HTTP URI. It must start with forward slash.| /loki/api/v1/push |
 | port | Loki TCP port | 3100 |
 | http\_user | Set HTTP basic authentication user name |  |
 | http\_passwd | Set HTTP basic authentication password |  |
