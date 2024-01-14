@@ -111,6 +111,8 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_TESTS\_INTERNAL | Enable internal tests | No |
 | FLB\_TESTS | Enable tests | No |
 | FLB\_BACKTRACE | Enable backtrace/stacktrace support | Yes |
+| FLB\_COVERAGE | Build with code-coverage | No |
+| FLB\_COVERAGE\_TYPE | Coverage type ([gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov-Intro.html), [llvm](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html)) | gcov |
 
 ### Optimization Options
 
