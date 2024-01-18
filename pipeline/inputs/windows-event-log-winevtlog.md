@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | String\_Inserts | Whether to include StringInserts in output records. \(optional\) | True  |
 | Render\_Event\_As\_XML | Whether to render system part of event as XML string or not. \(optional\) | False  |
 | Use\_ANSI | Use ANSI encoding on eventlog messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to True may solve the problem. \(optional\) | False  |
+| Event\_Query | Specify XML query for filtering events. | `*` |
 
 Note that if you do not set _db_, the plugin will tail channels on each startup.
 
@@ -38,6 +39,12 @@ Here is a minimum configuration example.
 ```
 
 Note that some Windows Event Log channels \(like `Security`\) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
+
+#### Query Languages for Event_Query Parameter
+
+The `Event_Query` parameter can be used to specify the XML query for filtering Windows EventLog during collection.
+The supported query types are [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query.
+For further details, please refer to [the MSDN doc](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
 
 ### Command Line
 
