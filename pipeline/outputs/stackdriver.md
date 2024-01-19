@@ -190,10 +190,6 @@ Do following check:
 
 When the number of Workers is greater than 1, Fluent Bit may interimittently crash.
 
-```
-[2023/06/07 08:15:30] [engine] caught signal (SIGSEGV)
-```
-
 ## Other implementations
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
