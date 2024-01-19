@@ -184,7 +184,7 @@ Do following check:
 * If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
 *   If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
 
-### caught signal (SIGSEGV)
+### Occasional Crashing with >1 `Workers`
 
 > Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
 
