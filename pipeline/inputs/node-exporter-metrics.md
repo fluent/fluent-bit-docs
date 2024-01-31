@@ -79,7 +79,7 @@ The following table describes the available collectors as part of this plugin. A
 | systemd collector | Exposes statistics from systemd.                                                                 | Linux       | v2.1.3  |
 | thermal_zone      | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                               | Linux       | v2.2.1  |
 | nvme              | Exposes nvme statistics from `/proc`.                                                            | Linux       | v2.2.0  |
-| processes         | Exposes processes statistics from `/proc`.                                                       | Linux  | v2.1.9  |
+| processes         | Exposes processes statistics from `/proc`.                                                       | Linux       | v2.2.0  |
 
 ## Getting Started
 
