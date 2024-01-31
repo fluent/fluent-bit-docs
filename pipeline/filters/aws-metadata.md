@@ -1,6 +1,9 @@
 # AWS Metadata
 
-The _AWS Filter_ Enriches logs with AWS Metadata. Currently the plugin adds the EC2 instance ID and availability zone to log records. To use this plugin, you must be running in EC2 and have the [instance metadata service enabled](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html).
+The _AWS Filter_ Enriches logs and metrics with AWS Metadata. Currently the plugin adds the EC2 instance ID and availability zone to logs type and metrics type of records.
+When using logs type of events in a pipeline, the additional key-values are added in ingested records.
+When using metrics type of events in a pipeline, the retrieved metadata are attached as labels.
+To use this plugin, you must be running in EC2 and have the [instance metadata service enabled](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html).
 
 ## Configuration Parameters
 
