@@ -92,6 +92,8 @@ $ bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildc
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -109,6 +111,13 @@ $ bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildc
     Nest_under Memstats
     Remove_prefix Mem.
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+```
+{% endtab %}
+{% endtabs %}
 
 ### Result
 
@@ -125,6 +134,8 @@ This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -150,6 +161,34 @@ This example nests all `Mem.*` and `Swap,*` items under the `Stats` key and then
     Nested_under Stats
     Remove_prefix NESTED
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard:
+            - Mem.*
+            - Swap.*
+          Nest_under: Stats
+          Add_prefix: NESTED
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Stats
+          Remove_prefix: NESTED
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Result
 
@@ -164,6 +203,8 @@ This example takes the keys starting with `Mem.*` and nests them under `LAYER1`,
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -194,6 +235,36 @@ This example takes the keys starting with `Mem.*` and nests them under `LAYER1`,
     Wildcard LAYER2*
     Nest_under LAYER3
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: Mem.*
+          Nest_under: LAYER1
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER1*
+          Nest_under: LAYER2
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER2*
+          Nest_under: LAYER3
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Result
 
@@ -223,6 +294,8 @@ This example starts with the 3-level deep nesting of _Example 2_ and applies the
 
 ### Configuration file
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -274,6 +347,52 @@ This example starts with the 3-level deep nesting of _Example 2_ and applies the
     Nested_under Lifted3_Lifted2_LAYER1
     Add_prefix Lifted3_Lifted2_Lifted1_
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: Mem.*
+          Nest_under: LAYER1
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER1*
+          Nest_under: LAYER2
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER2*
+          Nest_under: LAYER3
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: LAYER3
+          Add_prefix: Lifted3_
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Lifted3_LAYER2
+          Add_prefix: Lifted3_Lifted2_
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Lifted3_Lifted2_LAYER1
+          Add_prefix: Lifted3_Lifted2_Lifted1_
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ### Result
 
