@@ -107,6 +107,8 @@ bin/fluent-bit -i mem \
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -127,6 +129,32 @@ bin/fluent-bit -i mem \
     Rename Swap.total SWAPTOTAL
     Add Mem.total TOTALMEM
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: modify
+          match: '*'
+          Add:
+            - Service1 SOMEVALUE
+            - Service3 SOMEVALUE3
+            - Mem.total2 TOTALMEM2
+            - Mem.total TOTALMEM
+          Rename:
+            - Mem.free MEMFREE
+            - Mem.used MEMUSED
+            - Swap.total SWAPTOTAL
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Result
 
@@ -144,6 +172,8 @@ The output of both the command line and configuration invocations should be iden
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -181,6 +211,39 @@ The output of both the command line and configuration invocations should be iden
     Name           stdout
     Match          *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+          interval_sec: 1
+    filters:
+        - name: modify
+          match: mem.*
+          Condition:
+            - Key_Does_Not_Exist cpustats
+            - Key_Exists Mem.used
+          Set: cpustats UNKNOWN
+        - name: modify
+          match: mem.*
+          Condition: Key_Value_Does_Not_Equal cpustats KNOWN
+          Add: sourcetype memstats
+        - name: modify
+          match: mem.*
+          Condition: Key_Value_Equals cpustats UNKNOWN
+          Remove_wildcard:
+            - Mem
+            - Swap
+          Add: cpustats_more STILL_UNKNOWN
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Result
 
@@ -196,6 +259,8 @@ The output of both the command line and configuration invocations should be iden
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -218,6 +283,36 @@ The output of both the command line and configuration invocations should be iden
     Set ❄️ is_cold
     Set 💦 is_wet
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+          interval_sec: 1
+    filters:
+        - name: modify
+          match: mem.*
+          Remove_wildcard:
+            - Mem
+            - Swap
+          Set:
+            - This_plugin_is_on 🔥
+            - 🔥 is_hot
+          Copy: 🔥 💦
+          Rename:  💦 ❄️
+          Set:
+            - ❄️ is_cold
+            - 💦 is_wet
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ### Result
 
