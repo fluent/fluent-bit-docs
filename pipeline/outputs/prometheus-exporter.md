@@ -18,6 +18,8 @@ Important Note: The prometheus exporter only works with metric  plugins, such as
 
 The Prometheus exporter only works with metrics captured from metric plugins. In the following example, host metrics are captured by the node exporter metrics plugin and then are routed to prometheus exporter. Within the output plugin two labels are added `app="fluent-bit"`and `color="blue"`
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 # Node Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
@@ -46,4 +48,36 @@ The Prometheus exporter only works with metrics captured from metric plugins. In
     add_label       app fluent-bit
     add_label       color blue
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+# Node Exporter Metrics + Prometheus Exporter
+# -------------------------------------------
+# The following example collect host metrics on Linux and expose
+# them through a Prometheus HTTP end-point.
+#
+# After starting the service try it with:
+#
+# $ curl http://127.0.0.1:2021/metrics
+#
+service:
+    flush: 1
+    log_level: info
+pipeline:
+    inputs:
+        - name: node_exporter_metrics
+          tag:  node_metrics
+          scrape_interval: 2
+    outputs:
+        - name: prometheus_exporter
+          match: node_metrics
+          host: 0.0.0.0
+          port: 2021
+          # add user-defined labels
+          add_label:
+            - app fluent-bit
+            - color blue
+```
+{% endtab %}
+{% endtabs %}
