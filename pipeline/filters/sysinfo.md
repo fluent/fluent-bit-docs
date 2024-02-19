@@ -22,6 +22,8 @@ In order to start filtering records, you can run the filter from the command lin
 
 The following configuration file is to append fluent-bit version and OS name.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     Name dummy
@@ -37,6 +39,26 @@ The following configuration file is to append fluent-bit version and OS name.
     name stdout
     match *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          tag: test
+    filters:
+        - name: sysinfo
+          match: '*'
+          Fluentbit_version_key: flb_ver
+          Os_name_key: os_name
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 You can also run the filter from command line.
 
