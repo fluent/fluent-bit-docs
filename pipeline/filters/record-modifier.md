@@ -28,6 +28,8 @@ This is a sample in\_mem record to filter.
 
 The following configuration file is to append product name and hostname \(via environment variable\) to record.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -43,6 +45,27 @@ The following configuration file is to append product name and hostname \(via en
     Record hostname ${HOSTNAME}
     Record product Awesome_Tool
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          record: 
+             - hostname ${HOSTNAME}
+             - product Awesome_Tool
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 You can also run the filter from command line.
 
@@ -60,6 +83,9 @@ The output will be
 
 The following configuration file is to remove 'Swap.\*' fields.
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -76,6 +102,27 @@ The following configuration file is to remove 'Swap.\*' fields.
     Remove_key Swap.used
     Remove_key Swap.free
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          remove_key: 
+             - Swap.total
+             - Swap.used
+             - Swap.free
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 You can also run the filter from command line.
 
@@ -93,6 +140,8 @@ The output will be
 
 The following configuration file is to remain 'Mem.\*' fields.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -109,6 +158,27 @@ The following configuration file is to remain 'Mem.\*' fields.
     Allowlist_key Mem.used
     Allowlist_key Mem.free
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          Allowlist_key: 
+             - Mem.total
+             - Mem.used
+             - Mem.free
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 You can also run the filter from command line.
 
