@@ -132,7 +132,7 @@ So we gathered [CPU](../inputs/cpu-metrics.md) metrics and flushed them out to [
 
 > DISCLAIMER: the following example does not consider the generation of certificates for best practice on production environments.
 
-Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](tcp-and-tls.md).
+Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](../../administration/transport-security.md).
 
 ### Fluent Bit
 
