@@ -84,6 +84,6 @@ when Fluent Bit indicates that the application is exceeding the size limit for H
 
 ```yaml
 processors:
-  - rate_mimit:
-    limit: "200/s"
+  - rate_limit:
+      limit: "200/s"
 ```
