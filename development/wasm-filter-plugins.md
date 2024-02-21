@@ -170,8 +170,8 @@ These examples can be applied in our demo and can serve as an ideal starting poi
 ### Optimize execution of WASM programs
 
 To optimize WASM program execution, there is the option of using `flb-wamrc`.
-`flb-wamrc` will reduce runtime footprint and to be best perforemance for filtering operations.
-This tool will be built when `-DFLB_WAMRC=On` cmake option is specififed and llvm infrastructure is installed on the building box.
+`flb-wamrc` will reduce runtime footprint and to be best performance for filtering operations.
+This tool will be built when `-DFLB_WAMRC=On` cmake option is specified and llvm infrastructure is installed on the building box.
 
 ```shell
 $ flb-wamrc -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
