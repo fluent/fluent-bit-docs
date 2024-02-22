@@ -26,7 +26,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four components: `KEY REGEX NEW_TAG KEEP`. For more specific details of the Rule format and it composition read the next section. |
+| Rule | Defines the matching criteria and the format of the Tag for the matching record. The Rule format have four mandatory components: `KEY REGEX NEW_TAG KEEP` and an optional component: `AND_COMBINE`. For more specific details of the Rule format and it composition read the next section. |
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
 | Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values `memory` \(default\) or `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommend enabling the `filesystem` mode. |
 | Emitter\_Mem\_Buf\_Limit | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure.  The default for this limit is `10M`.  The pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`.  The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
@@ -151,6 +151,58 @@ Fluent Bit v1.x.x
 ...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
+## Configuration Example with many Rules 
+In case of many rules, they are passed through in order until one rule matches. With`AND_COMBINE`value`true` as optional fifth 
+component, the rule is combined with the following rule like an 'and' combination. Only if first and following rule match, the message is retagged with the tag in the last matched rule.
+An `AND_COMBINE` in the last rule is ignored. 
+```
+[SERVICE]
+    Flush     5
+    Log_Level info
+
+[INPUT]
+    Name tail
+    Tag  tail
+    Path /var/tmp/loginput.txt
+
+[FILTER]
+    Name          rewrite_tag
+    Match         tail
+    Rule          $log ^(1)$      newtag_or    false
+    Rule          $log ^(.*and)$  newtag_and_1 false true
+    Rule          $log ^(1.*)$    newtag_and_2 false
+    Rule          $log ^(42)$     newtag_or    false
+    Rule          $log ^(9)$      newtag_and_3 false true
+
+[OUTPUT]
+    Name  stdout
+    Match *
+```
+inputfile /var/tmp/loginput.txt
+```
+1
+2
+3
+9
+10and
+10
+42
+```
+
+the logmessages will be rewritten:
+```
+fluent-bit_1  | [0] tail: [1596050753.241336500, {"log"=>"2"}]
+fluent-bit_1  | [1] tail: [1596050753.241356700, {"log"=>"3"}]
+fluent-bit_1  | [2] tail: [1596050753.241410100, {"log"=>"10"}]
+fluent-bit_1  | [0] newtag_or: [1596050753.237370100, {"log"=>"1"}]
+fluent-bit_1  | [1] newtag_or: [1596050753.241427200, {"log"=>"42"}]
+fluent-bit_1  | [0] newtag_and_3: [1596050753.241374500, {"log"=>"9"}]
+fluent-bit_1  | [0] newtag_and_2: [1596050753.241392800, {"log"=>"10and"}]
+```
+
+
+
+
 
 ## Monitoring
 
