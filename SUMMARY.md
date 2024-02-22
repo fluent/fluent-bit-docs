@@ -107,6 +107,7 @@
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
+  * [SNMP](pipeline/inputs/snmp.md)
   * [Splunk](pipeline/inputs/splunk.md)
   * [Standard Input](pipeline/inputs/standard-input.md)
   * [StatsD](pipeline/inputs/statsd.md)
