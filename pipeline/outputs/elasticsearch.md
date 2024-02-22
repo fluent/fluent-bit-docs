@@ -28,7 +28,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
 | HTTP\_User | Optional username credential for Elastic X-Pack access |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
-| Index | Index name | fluent-bit |
+| Index | Index name, supports [Record Accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | fluent-bit |
 | Type | Type name | \_doc |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off | Off |
 | Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
@@ -47,7 +47,6 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Trace\_Output | Print all elasticsearch API request payloads to stdout \(for diag only\) | Off |
 | Trace\_Error | If elasticsearch return an error, print the elasticsearch API request and response \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. Types are deprecated in APIs in [v7.0](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html). This options is for v7.0 or later. | Off |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 
