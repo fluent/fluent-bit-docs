@@ -6,13 +6,14 @@ The **file** output plugin allows to write the data received through the _input_
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
+| Key | Description                                                                                                                                                   | Default |
+| :--- |:--------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
 | Path | Directory path to store files. If not set, Fluent Bit will write the files on it's own positioned directory. note: this option was added on Fluent Bit v1.4.6 |
-| File | Set file name to store the records. If not set, the file name will be the _tag_ associated with the records. |
-| Format | The format of the file content. See also Format section. Default: out\_file. |
-| Mkdir | Recursively create output directory if it does not exist. Permissions set to 0755. |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 1 |
+| File | Set file name to store the records. If not set, the file name will be the _tag_ associated with the records.                                                  |
+| Format | The format of the file content. See also Format section. Default: out\_file.                                                                                  |
+| Mkdir | Recursively create output directory if it does not exist. Permissions set to 0755.                                                                            |
+| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.                                           | 1       |
+| line_append | Append new data to the end of log in same line. Default value is false.                                                                                       | false   |
 
 ## Format
 
