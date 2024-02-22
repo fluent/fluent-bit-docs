@@ -42,6 +42,8 @@ In the example the Forward messages will only arrive through network interface u
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name              forward
@@ -54,6 +56,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: forward
+          listen: 0.0.0.0
+          port: 24224
+          buffer_chunk_size: 1M
+          buffer_max_size: 6M
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ## Testing
 
