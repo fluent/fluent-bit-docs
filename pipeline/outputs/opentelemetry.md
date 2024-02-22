@@ -21,7 +21,20 @@ Important Note: At the moment only HTTP endpoints are supported.
 | header               | Add a HTTP header key/value pair. Multiple headers can be set. |           |
 | log_response_payload | Log the response payload within the Fluent Bit log           | false     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields |           |
+| batch_size            | Set the number of logs to be flushed at a time |    1000       |
 | compress            | Set payload compression mechanism. Option available is 'gzip' |           |
+
+Metadata fields handling configuration properties:
+| Key | Description | default |
+| :--- | :--- | :--- |
+| trace_id_key            | Specify the field containing the trace id |           |
+| span_id_key            | Specify the field containing the span id |           |
+| severity_text_key            | Specify the field containing the severity text |           |
+| severity_number_key            | Specify the field containing the severity number |           |
+| time_unix_nano_key            | Specify the field containing the timestamp |           |
+| attributes_key            | Specify the field containing the attributes. It MUST be a list of valid key-value pairs |           |
+| resource_key            | Specify the field containing the resource fields. It MUST be a list of valid key-value pairs |           |
+| body_key            | Specify the field containing the body. It MUST be a valid JSON object |           |
 
 ## Getting Started
 
@@ -65,4 +78,35 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
     # add user-defined labels
     add_label            app fluent-bit
     add_label            color blue
+```
+
+## Setting metadata with record accessor
+
+The `*_key` parameters can be used to set the metadata fields. As of version 2.0.9, in_opentelemetry discards all metadata fields and parses only the body field, so you can use any other input plugin to collect the data and set the metadata values in out_opentelemetry using the `*_key` parameters. For example:
+
+```
+[INPUT]
+  Name   dummy
+  Tag    dummy.log
+  Rate 1
+  Samples 1
+  Dummy {"severity_text":"very severe text", "severity_number": "2", "resource":[{"resource-attr":"resource-val1"}],"body":{"testbody": "body"},"traceid":"2e9ab9abb4fca54cfda61ffea37e429d","spanid":"804df3bd74eb09e2","attributes":[{"testkey":"testval"}]}
+
+[OUTPUT]
+  Name stdout
+  Match *
+
+[OUTPUT]
+  Match *
+  Name opentelemetry
+  Host 0.0.0.0
+  Port 3434
+  Logs_uri /v1/logs
+  attributes_key $attributes
+  resource_key $resource
+  trace_id_key $traceid
+  span_id_key $spanid
+  body_key $body
+  severity_number_key $severity_number
+  severity_text_key $severity_text
 ```
