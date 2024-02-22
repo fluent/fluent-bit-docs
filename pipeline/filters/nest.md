@@ -115,6 +115,20 @@ $ bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildc
 
 {% tab title="fluent-bit.yaml" %}
 ```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: nest
+          match: '*'
+          operation: nest
+          wildcard: Mem.*
+          nest_under: Memstats
+          remove_prefix: Mem.
+    outputs:
+        - name: stdout
+          match: '*'
 ```
 {% endtab %}
 {% endtabs %}
