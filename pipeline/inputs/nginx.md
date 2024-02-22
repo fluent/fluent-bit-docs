@@ -79,6 +79,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
 ```ini
 [INPUT]
     Name          nginx_metrics
+    Nginx_Plus    off
     Host          127.0.0.1
     Port          80
     Status_URL    /status
