@@ -50,6 +50,9 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
 ```python
+[SERVICE]
+    parsers_file /path/to/parsers.conf
+
 [INPUT]
     name   tail
     path   lines.txt
