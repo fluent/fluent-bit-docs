@@ -57,6 +57,8 @@ As described above, the CPU input plugin gathers the overall usage every one sec
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name cpu
@@ -66,4 +68,18 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name  stdout
     Match *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag: my_cpu
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
