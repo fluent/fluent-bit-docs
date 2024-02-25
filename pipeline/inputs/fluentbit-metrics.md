@@ -26,6 +26,8 @@ They can be sent to output plugins including [Prometheus Exporter](../outputs/pr
 
 In the following configuration file, the input plugin _node_exporter_metrics collects _metrics every 2 seconds and exposes them through our [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 # Fluent Bit Metrics + Prometheus Exporter
 # -------------------------------------------
@@ -52,6 +54,27 @@ In the following configuration file, the input plugin _node_exporter_metrics col
     port            2021
 
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    log_level: info
+pipeline:
+    inputs:
+        - name: fluentbit_metrics
+          tag: internal_metrics
+          scrape_interval: 2
+
+    outputs:
+        - name: prometheus_exporter
+          match: internal_metrics
+          host: 0.0.0.0
+          port: 2021
+```
+{% endtab %}
+{% endtabs %}
 
 You can test the expose of the metrics by using _curl:_
 
