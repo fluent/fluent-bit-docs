@@ -35,6 +35,8 @@ As described above, the plugin processed all messages that the Linux Kernel repo
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name   kmsg
@@ -44,4 +46,18 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: kmsg
+          tag: kernel
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
