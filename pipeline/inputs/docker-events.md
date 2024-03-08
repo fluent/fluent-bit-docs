@@ -25,6 +25,8 @@ $ fluent-bit -i docker_events -o stdout
 
 In your main configuration file append the following **Input** & **Output** sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```yaml
 [INPUT]
     Name   docker_events
@@ -33,4 +35,17 @@ In your main configuration file append the following **Input** & **Output** sect
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: docker_events
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
