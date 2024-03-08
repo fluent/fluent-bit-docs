@@ -39,6 +39,8 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     name http
@@ -49,6 +51,21 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
     name stdout
     match app.log
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+    outputs:
+        - name: stdout
+          match: app.log
+```
+{% endtab %}
+{% endtabs %}
 
 If you do not set the tag `http.0` is automatically used. If you have multiple HTTP inputs then they will follow a pattern of `http.N` where N is an integer representing the input.
 
@@ -60,6 +77,8 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     name http
@@ -70,7 +89,21 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
     name  stdout
     match  http.0
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+    outputs:
+        - name: stdout
+          match: http.0
+```
+{% endtab %}
+{% endtabs %}
 
 #### How to set tag_key
 
@@ -84,6 +117,9 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ### Configuration File
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     name http
@@ -95,18 +131,46 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
     name stdout
     match value1
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+          tag_key: key1
+    outputs:
+        - name: stdout
+          match: value1
+```
+{% endtab %}
+{% endtabs %}
 
 #### How to set multiple custom HTTP header on success
 
 The `success_header` parameter allows to set multiple HTTP headers on success. The format is:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```ini
 [INPUT]
     name http
     success_header X-Custom custom-answer
     success_header X-Another another-answer
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    inputs:
+        - name: http
+          success_header: X-Custom custom-answer
+          success_header: X-Another another-answer
+```
+{% endtab %}
+{% endtabs %}
 
 
 #### Example Curl message
@@ -117,6 +181,8 @@ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:888
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     name http
@@ -127,6 +193,22 @@ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:888
     name stdout
     match *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Command Line
 
