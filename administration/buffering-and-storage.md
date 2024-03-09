@@ -62,9 +62,11 @@ If this input uses more than 50MB memory to buffer logs, you will get a warning 
 
 {% hint style="info" %}
 `Mem_Buf_Limit` applies only when `storage.type` is set to the default value of
-`memory`. The following section explains the applicable limits when you enable
-`storage.type filesystem`. 
+`memory`.
 {% endhint %}
+
+The following section explains the applicable limits when you enable
+`storage.type filesystem`. 
 
 #### Filesystem buffering to the rescue
 
