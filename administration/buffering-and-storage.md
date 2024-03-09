@@ -60,7 +60,11 @@ If this input uses more than 50MB memory to buffer logs, you will get a warning 
 [input] tcp.1 paused (mem buf overlimit)
 ```
 
-*Please note that `Mem_Buf_Limit` only applies when `storage.type` is set to the default value of `memory`*. The section below explains the limits that apply when you enable `storage.type filesystem`. 
+{% hint style="info" %}
+`Mem_Buf_Limit` applies only when `storage.type` is set to the default value of
+`memory`. The following section explains the applicable limits when you enable
+`storage.type filesystem`. 
+{% endhint %}
 
 #### Filesystem buffering to the rescue
 
