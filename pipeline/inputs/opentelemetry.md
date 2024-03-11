@@ -33,6 +33,9 @@ The OpenTelemetry plugin currently supports the following telemetry data types:
 
 A sample config file to get started will look something like the following:
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
 	name opentelemetry
@@ -43,6 +46,21 @@ A sample config file to get started will look something like the following:
 	name stdout
 	match *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: opentelemetry
+          listen: 127.0.0.1
+          port: 4318
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 With the above configuration, Fluent Bit will listen on port `4318` for data. You can now send telemetry data to the endpoints `/v1/metrics`, `/v1/traces`, and `/v1/logs` for metrics, traces, and logs respectively.
 
