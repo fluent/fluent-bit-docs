@@ -40,6 +40,8 @@ $ fluent-bit -i systemd \
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [SERVICE]
     Flush        1
@@ -55,4 +57,22 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.conf
+pipeline:
+    inputs:
+        - name: systemd
+          tag: host.*
+          systemd_filter: _SYSTEMD_UNIT=docker.service
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
