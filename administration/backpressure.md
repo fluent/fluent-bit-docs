@@ -44,7 +44,7 @@ The setting behaves similarly to the above scenario with `Mem_Buf_Limit` when th
 
 When (default) `storage.pause_on_chunks_overlimit` is disabled, the input will not pause when the memory limit is reached. Instead, it will switch to only buffering logs in the filesystem. The disk spaced used for filesystem buffering can be limited with `storage.total_limit_size`.
 
-Please consule the [Buffering & Storage](buffering-and-storage.md) docs for more information.
+Please consult the [Buffering & Storage](buffering-and-storage.md) docs for more information.
 
 ## About pause and resume Callbacks
 

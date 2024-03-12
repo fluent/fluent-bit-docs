@@ -189,7 +189,7 @@ Do following check:
 
 > Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
 
-When the number of Workers is greater than 1, Fluent Bit may interimittently crash.
+When the number of Workers is greater than 1, Fluent Bit may intermittently crash.
 
 ## Other implementations
 
