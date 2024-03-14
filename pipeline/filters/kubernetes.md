@@ -13,6 +13,8 @@ When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read 
   * Pod ID
   * Labels
   * Annotations
+  * Namespace Labels
+  * Namespace Annotations
 
 The data is cached locally in memory and appended to each record.
 
@@ -40,18 +42,21 @@ The plugin supports the following configuration parameters:
 | Regex\_Parser | Set an alternative Parser to process record Tag and extract pod\_name, namespace\_name, container\_name and docker\_id. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) \(refer to parser _filter-kube-test_ as an example\). |  |
 | K8S-Logging.Parser | Allow Kubernetes Pods to suggest a pre-defined Parser \(read more about it in Kubernetes Annotations section\) | Off |
 | K8S-Logging.Exclude | Allow Kubernetes Pods to exclude their logs from the log processor \(read more about it in Kubernetes Annotations section\). | Off |
-| Labels | Include Kubernetes resource labels in the extra metadata. | On |
-| Annotations | Include Kubernetes resource annotations in the extra metadata. | On |
+| Labels | Include Kubernetes pod resource labels in the extra metadata. | On |
+| Annotations | Include Kubernetes pod resource annotations in the extra metadata. | On |
 | Kube\_meta\_preload\_cache\_dir | If set, Kubernetes meta-data can be cached/pre-loaded from files in JSON format in this directory, named as namespace-pod.meta |  |
 | Dummy\_Meta | If set, use dummy-meta data \(for test/dev purposes\) | Off |
 | DNS\_Retries | DNS lookup retries N times until the network start working | 6 |
 | DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
-| Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). | Off |
+| Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `Kube_URL` settings.| Off |
 | Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
 | Kubelet\_Host | kubelet host using for HTTP request, this only works when `Use_Kubelet`  set to On. | 127.0.0.1 |
-| Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
+| Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached pod metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
 | Kube\_Token\_TTL | configurable 'time to live' for the K8s token. By default, it is set to 600 seconds. After this time, the token is reloaded from Kube_Token_File or the Kube_Token_Command.| 600 |
 | Kube\_Token\_Command | Command to get Kubernetes authorization token. By default, it will be `NULL` and we will use token file to get token. If you want to manually choose a command to get it, you can set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. |  |
+| Kube\_Meta\_Namespace\_Cache\_TTL | configurable TTL for K8s cached namespace metadata. By default, it is set to 900 which means a 15min TTL for namespace cache entries. Setting this to 0 will mean entries are evicted at random once the cache is full. | 900 |
+| Namespace\_Labels | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Namespace\_Annotations | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 
 ## Processing the 'log' value
 
@@ -76,7 +81,18 @@ To perform processing of the _log_ key, it's **mandatory to enable** the _Merge\
 
 If _log_ value processing fails, the value is untouched. The order above is not chained, meaning it's exclusive and the filter will try only one of the options above, **not** all of them.
 
-## Kubernetes Annotations
+## Kubernetes Namespace Meta
+Namespace Meta can be enabled via the following settings: 
+* Namespace\_Labels
+* Namespace\_Annotations
+
+Using any Namespace Meta requires the use of the Kube API as it can not be fetched directly from Kubelet. If `Use_Kubelet On` has been set, the Kubelet api will only be used to fetch pod metadata, while namespace meta is fetched from the upstream Kubernetes API.
+
+Namespace Meta if collected will be stored within a `kubernetes_namespace` record key.
+
+> Namespace meta is not be guaranteed to be in sync as namespace labels & annotations can be adjusted after pod creation. Adjust `Kube_Meta_Namespace_Cache_TTL` to lower caching times to fit your use case.
+
+## Kubernetes Pod Annotations
 
 A flexible feature of Fluent Bit Kubernetes filter is that allow Kubernetes Pods to suggest certain behaviors for the log processor pipeline when processing the records. At the moment it support:
 
