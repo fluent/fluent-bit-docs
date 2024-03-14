@@ -55,7 +55,7 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | tag_key                     | The key name of tag. If `include_tag_key` is false, This property is ignored.                                                                                                                                                    | `tag`       |
 | include_time_key            | If enabled, a timestamp is appended to output. The key name is used `time_key` property.                                                                                                                                         | `On`        |
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
-| ingestion_endpoint_connection_timeout                    | _Optional_ - Specifies the connection timeout in seconds of kusto ingest cluster                                                                                                                                                 | 60 |
+| kusto_endpoint_connection_timeout                    | _Optional_ - Specifies the connection timeout in seconds to kusto ingest cluster                                                                                                                                                 | 60 |
 
 ### Configuration File
 
@@ -72,7 +72,7 @@ Get started quickly with this configuration file:
     Database_Name <database_name>
     Table_Name <table_name>
     Ingestion_Mapping_Reference <mapping_name>
-    ingestion_endpoint_connection_timeout <timeout>
+    kusto_endpoint_connection_timeout <timeout>
 ```
 
 ## Troubleshooting
