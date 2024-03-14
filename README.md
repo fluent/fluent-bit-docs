@@ -2,7 +2,7 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit v2.2 Documentation
+# Fluent Bit v3.0 Documentation
 
 <figure><img src=".gitbook/assets/v2.2 big@2x.png" alt=""><figcaption></figcaption></figure>
 
@@ -21,7 +21,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
 * Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
-  * More than 100 built-in plugins are available
+  * Connect nearly any source to nearly any destination using preexisting plugins
   * Extensibility
     * Write any input, filter or output plugin in C language
     * WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)

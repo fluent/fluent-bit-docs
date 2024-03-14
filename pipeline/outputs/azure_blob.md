@@ -21,7 +21,9 @@ We expose different configuration properties. The following table lists all the 
 | Key | Description | default |
 | :--- | :--- | :--- |
 | account\_name | Azure Storage account name. This configuration property is mandatory |  |
-| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory. |  |
+| auth\_type | Specify the type to authenticate against the service. Fluent Bit supports `key` and `sas`. | key |
+| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`. |  |
+| sas\_token | Specify the Azure Storage shared access signatures to authenticate against the service. This configuration property is mandatory when `auth_type` is `sas`. |  |
 | container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
 | blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`. | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
