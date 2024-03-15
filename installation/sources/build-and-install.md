@@ -214,7 +214,8 @@ The _output plugins_ gives the capacity to flush the information to some externa
 
 ### Processor Plugins
 
-The _processor plugins_ gives the capability to handle the three types of events within the processor pipelines to allow modifying, enrich or drop events. The following table describes the processors available on this version:
+The _processor plugins_ provide the capability to handle the events within the processor pipelines to allow modifying, enrich or drop events. 
+The following table describes the processors available on this version:
 
 | option | description | default |
 | :--- | :--- | :--- |
