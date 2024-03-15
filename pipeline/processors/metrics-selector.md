@@ -1,6 +1,6 @@
 # Metrics Selector
 
-The **metric_selector** processor allows you to select metrics from the ingested metrics type of events.
+The **metric_selector** processor allows you to select metrics to include or exclude (similar to the `grep` filter for logs).
 
 ## Configuration Parameters <a id="config"></a>
 
