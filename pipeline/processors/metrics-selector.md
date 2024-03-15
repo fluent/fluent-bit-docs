@@ -52,7 +52,8 @@ pipeline:
 {% endtabs %}
 
 
-Note that processor is only effective on the YAML format. Also, processor elements should be located under input or output plguins' definitions.
+All processors are only valid with the YAML configuration format. 
+Processor configuration should be located under the relevant input or output plugin configuration.
 
 Metric\_Name parameter will translate the strings which is quoted with backslashes `/.../` as Regular expressions.
 Without them, users need to specify Operation\_Type whether prefix matching or substring matching.
