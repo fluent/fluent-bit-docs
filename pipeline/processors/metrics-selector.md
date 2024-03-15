@@ -58,3 +58,4 @@ Processor configuration should be located under the relevant input or output plu
 Metric\_Name parameter will translate the strings which is quoted with backslashes `/.../` as Regular expressions.
 Without them, users need to specify Operation\_Type whether prefix matching or substring matching.
 The default operation is prefix matching.
+For example, `/chunks/` will be translated as a regular expression.
