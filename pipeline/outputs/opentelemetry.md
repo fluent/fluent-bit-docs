@@ -22,6 +22,14 @@ Important Note: At the moment only HTTP endpoints are supported.
 | log_response_payload | Log the response payload within the Fluent Bit log           | false     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields |           |
 | compress            | Set payload compression mechanism. Option available is 'gzip' |           |
+| logs_observed_timestamp_metadata_key | Specify an ObservedTimestamp key to look up in the metadata. | $ObservedKey |
+| logs_timestamp_metadata_key |Specify a Timestamp key to look up in the metadata. | $Timestamp |
+| logs_severity_key_metadata_key |Specify a SeverityText key to look up in the metadata.| $SeverityText |
+| logs_severity_number_metadata_key | Specify a SeverityNumber key to look up in the metadata.| $SeverityNumber |
+| logs_trace_flags_metadata_key |Specify a Flags key to look up in the metadata.| $Flags |
+| logs_span_id_metadata_key |Specify a SpanId key to look up in the metadata.| $SpanId |
+| logs_trace_id_metadata_key |Specify a TraceId key to look up in the metadata.| $TraceId |
+| logs_attributes_metadata_key |Specify an Attributes key to look up in the metadata.| $Attributes |
 
 ## Getting Started
 
