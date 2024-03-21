@@ -212,3 +212,11 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 
+### Processor Plugins
+
+The _processor plugins_ provide the capability to handle the events within the processor pipelines to allow modifying, enrich or drop events. 
+The following table describes the processors available on this version:
+
+| option | description | default |
+| :--- | :--- | :--- |
+| [FLB\_PROCESSOR\_METRICS\_SELECTOR](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | On |

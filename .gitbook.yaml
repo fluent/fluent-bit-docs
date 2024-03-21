@@ -76,3 +76,6 @@ redirects:
     output/stdout:         ./pipeline/outputs/standard-output.md
     output/tcp:            ./pipeline/outputs/tcp-and-tls.md
     output/td:             ./pipeline/outputs/treasure-data.md
+
+    # Processors
+    processor/metrics_selector:   ./pipeline/processors/metrics_selector.md
