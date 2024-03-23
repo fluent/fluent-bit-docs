@@ -185,7 +185,7 @@ Both keys in the example are strings. Convert the `key1` to a double/float type 
 pipeline:
   inputs:
     - name: dummy
-			dummy: '{"key1": "123.4", "key2": "true"}'
+      dummy: '{"key1": "123.4", "key2": "true"}'
 
       processors:
         logs:
