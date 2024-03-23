@@ -130,6 +130,7 @@
 * [Processors](pipeline/processors/README.md)
   * [Content Modifier](pipeline/processors/content-modifier.md)
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
+  * [SQL](pipeline/processors/sql.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
