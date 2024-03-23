@@ -128,6 +128,7 @@
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
 * [Processors](pipeline/processors/README.md)
+  * [Content Modifier](pipeline/processors/content-modifier.md)
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
