@@ -127,6 +127,8 @@
   * [LTSV](pipeline/parsers/ltsv.md)
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
+* [Processors](pipeline/processors/README.md)
+  * [Metrics Selector](pipeline/processors/metrics-selector.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
@@ -194,8 +196,6 @@
   * [Treasure Data](pipeline/outputs/treasure-data.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
-* [Processors](pipeline/processors/README.md)
-  * [Metrics Selector](pipeline/processors/metrics-selector.md)
 
 ## Stream Processing
 

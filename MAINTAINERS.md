@@ -4,5 +4,6 @@ Fluent Bit is developed and supported by many individuals and companies.  The fo
 
 | Maintainer Name                                       | Documentation portion    | Company                                           |
 | :---------------------------------------------------- | ------------------------ | ------------------------------------------------- |
-| [Eduardo Silva](https://github.com/edsiper)           | All                      | [Arm Treasure Data](https://www.treasuredata.com) |
-| [Anurag Gupta](https://github.com/agup006)            | All                      | [Calyptia](https://Calyptia.com)                  |
+| [Eduardo Silva](https://github.com/edsiper)           | All                      | [Chronosphere](https://chronosphere.io)           |
+| [Anurag Gupta](https://github.com/agup006)            | All                      | [Calyptia](https://calyptia.com)                  |
+| [Jose Lecaros](https://github.com/lecaros)            | All                      | [Chronosphere](https://chronosphere.io)           |
