@@ -17,7 +17,7 @@ The plugin supports the following configuration parameters:
 | Render\_Event\_As\_XML | Whether to render system part of event as XML string or not. \(optional\) | False  |
 | Use\_ANSI | Use ANSI encoding on eventlog messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to True may solve the problem. \(optional\) | False  |
 | Event\_Query | Specify XML query for filtering events. | `*` |
-| Threshold\_Size| Specify threshold size per a cycle. (\optional\)  | |
+| Read\_Limit\_Per\_Cycle | Specify reading limitation per a cycle. (\optional\)  | |
 
 Note that if you do not set _db_, the plugin will tail channels on each startup.
 
@@ -41,7 +41,7 @@ Here is a minimum configuration example.
 
 Note that some Windows Event Log channels \(like `Security`\) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
 
-The default value of Threshold\_Size is set up as 512KiB.
+The default value of Read\_Limit\_Per\_Cycle is set up as 512KiB.
 Note that 512KiB(= 0x7ffff = 512 * 1024 * 1024) does not equals to 512KB (= 512 * 1000 * 1000).
 To increase events per second on this plugin, specify larger value than 512KiB.
 
