@@ -57,6 +57,7 @@ The plugin supports the following configuration parameters:
 | Kube\_Meta\_Namespace\_Cache\_TTL | configurable TTL for K8s cached namespace metadata. By default, it is set to 900 which means a 15min TTL for namespace cache entries. Setting this to 0 will mean entries are evicted at random once the cache is full. | 900 |
 | Namespace\_Labels | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 | Namespace\_Annotations | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Namespace\_Metadata\_Only | Include Kubernetes namespace metadata only and no pod metadata. If this is set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 
 ## Processing the 'log' value
 
@@ -91,6 +92,10 @@ Using any Namespace Meta requires the use of the Kube API as it can not be fetch
 Namespace Meta if collected will be stored within a `kubernetes_namespace` record key.
 
 > Namespace meta is not be guaranteed to be in sync as namespace labels & annotations can be adjusted after pod creation. Adjust `Kube_Meta_Namespace_Cache_TTL` to lower caching times to fit your use case.
+
+* Namespace\_Metadata\_Only
+  - Using this feature will instruct fluent-bit to only fetch namespace metadata and to not fetch POD metadata at all. 
+    POD basic metadata like container id, host, etc will be NOT be added and the Labels and Annotations configuration options which are used specifically for POD Metadata will be ignored.
 
 ## Kubernetes Pod Annotations
 
