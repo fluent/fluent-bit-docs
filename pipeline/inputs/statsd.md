@@ -20,6 +20,8 @@ The plugin supports the following configuration parameters:
 
 Here is a configuration example.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name   statsd
@@ -30,6 +32,21 @@ Here is a configuration example.
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: statsd
+          listen: 0.0.0.0
+          port: 8125
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Now you can input metrics through the UDP port as follows:
 
