@@ -39,6 +39,8 @@ In the example the JSON messages will only arrive through network interface unde
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name        tcp
@@ -52,6 +54,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name        stdout
     Match       *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: tcp
+          listen: 0.0.0.0
+          port: 5170
+          chunk_size: 32
+          buffer_size: 64
+          format: json
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
