@@ -17,6 +17,9 @@ The plugin supports the following configuration parameters:
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Forward messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | 1024000 |
 | Tag_Prefix          | Prefix incoming tag with the defined value.|  |
 | Tag                 | Override the tag of the forwarded events with the defined value.|  |
+| Shared\_Key         | Shared key for secure forward authentication. |  |
+| Self\_Hostname      | Hostname for secure forward authentication.   |  |
+| Security.Users      | Specify the username and password pairs for secure forward authentication. | |
 
 ## Getting Started
 
@@ -74,6 +77,51 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
+## Fluent Bit + Secure Forward Setup
+
+Since Fluent Bit v3, in\_forward can handle secure forward protocol.
+
+For using user-password authentication, it needs to specify `secutiry.users` at least an one-pair.
+For using shared key, it needs to specify `shared_key` in both of forward output and forward input.
+`self_hostname` is not able to specify with the same hostname between fluent servers and clients.
+
+{% tabs %}
+{% tab title="fluent-bit-secure-forward.conf" %}
+```python
+[INPUT]
+    Name              forward
+    Listen            0.0.0.0
+    Port              24224
+    Buffer_Chunk_Size 1M
+    Buffer_Max_Size   6M
+    Security.Users fluentbit changeme
+    Shared_Key secret
+    Self_Hostname flb.server.local
+
+[OUTPUT]
+    Name   stdout
+    Match  *
+```
+{% endtab %}
+
+{% tab title="fluent-bit-secure-forward.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: forward
+          listen: 0.0.0.0
+          port: 24224
+          buffer_chunk_size: 1M
+          buffer_max_size: 6M
+          security.users: fluentbit changeme
+          shared_key: secret
+          self_hostname: flb.server.local
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
