@@ -19,7 +19,7 @@ The plugin supports the following configuration parameters:
 | Tag                 | Override the tag of the forwarded events with the defined value.|  |
 | Shared\_Key         | Shared key for secure forward authentication. |  |
 | Self\_Hostname      | Hostname for secure forward authentication.   |  |
-| Secutiry.Users      | Specify username and password pairs for secure forward authenticaiton. | |
+| Security.Users      | Specify the username and password pairs for secure forward authentication. | |
 
 ## Getting Started
 
