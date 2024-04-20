@@ -44,6 +44,7 @@
 * [macOS](installation/macos.md)
 * [Windows](installation/windows.md)
 * [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
+* [Buildroot / Embedded Linux](installation/buildroot-embedded-linux.md)
 
 ## Administration
 
