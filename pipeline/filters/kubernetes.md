@@ -227,6 +227,31 @@ You can see on [Rublar.com](https://rubular.com/r/HZz3tYAahj6JCd) web site how t
 
 Under certain and not common conditions, a user would want to alter that hard-coded regular expression, for that purpose the option **Regex\_Parser** can be used \(documented on top\).
 
+##### Custom Tag For Enhanced Filtering
+
+One such use case involves splitting logs by namespace, pods, containers or docker id. The tag is restructured within the tail input using match groups, this can simplify the filtring by those match groups later in the pipeline. Since the tag no longer follows the original file name, a custom **Regex\_Parser** that matches the new tag structure is required:
+
+```text
+[PARSER]
+    Name    custom-tag
+    Format  regex
+    Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)
+
+[INPUT]
+    Name              tail
+    Tag               kube.<namespace_name>.<pod_name>.<container_name>.<docker_id>
+    Path              /var/log/containers/*.log
+    Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
+    Parser            cri
+
+[FILTER]
+    Name                kubernetes
+    Match               kube.*
+    Kube_Tag_Prefix     kube.
+    Regex_Parser        custom-tag
+    Merge_Log           On
+```
+
 #### Final Comments
 
 So at this point the filter is able to gather the values of _pod\_name_ and _namespace_, with that information it will check in the local cache \(internal hash table\) if some metadata for that key pair exists, if so, it will enrich the record with the metadata value, otherwise it will connect to the Kubernetes Master/API Server and retrieve that information.
