@@ -35,6 +35,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | Types | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`\(default\), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
 | Decode\_Field | Decode a field value, the only decoder available is `json`. The syntax is: `Decode_Field json <field_name>`. |
 | Skip\_Empty\_Values | Specify a boolean which determines if the parser should skip empty values. The default is `true`. |
+| Time_Strict | The default value (`true`) tells the parser to be strict with the expected time format. With this option set to false, the parser will be permissive with the format of the time. This is useful when the format expects time fraction but the time to be parsed doesn't include it.  |
 
 ## Parsers Configuration File
 
