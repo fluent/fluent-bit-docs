@@ -22,6 +22,7 @@ description: The following serves as a guide on how to install/deploy/upgrade Fl
 | Amazon Linux           | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](linux/amazon-linux.md#amazon-linux-2022) |
 | Raspbian / Raspberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
 | Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
+| Buildroot / Embedded Linux | [Buildroot / Embedded Linux](buildroot-embedded-linux.md) |
 
 ## Install on Windows (Packages)
 
