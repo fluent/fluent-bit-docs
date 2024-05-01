@@ -4,7 +4,7 @@ description: An input plugin to ingest payloads of Prometheus remote write
 
 # Prometheus Remote Write
 
-The input plugin of Prometheus remote write allows you to ingest payloads of Prometheus remote write protocol.
+This input plugin allows you to ingest a payload in the Prometheus remote-write format, i.e. a remote write sender can transmit data to Fluent Bit.
 
 The OpenTelemetry plugin allows you to ingest telemetry data as per the OTLP specification, from various OpenTelemetry exporters, the OpenTelemetry Collector, or Fluent Bit's OpenTelemetry output plugin.
 
