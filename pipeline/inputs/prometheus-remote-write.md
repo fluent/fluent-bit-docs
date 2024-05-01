@@ -15,7 +15,7 @@ This input plugin allows you to ingest a payload in the Prometheus remote-write 
 | buffer\_max\_size   | Specify the maximum buffer size in KB to receive a JSON message.                                                                               | 4M      |
 | buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size.  | 512K    |
 |successful\_response\_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
-| tag\_from\_uri      | If true, tag will be created from uri. e.g. v1_metrics from /v1/metrics .                                                                      | true    |
+| tag\_from\_uri      | If true, tag will be created from uri. e.g. api\_prom\_push from /api/prom/push .                                                                      | true    |
 
 
 
