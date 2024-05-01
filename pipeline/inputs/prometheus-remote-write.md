@@ -53,3 +53,22 @@ pipeline:
 {% endtabs %}
 
 With the above configuration, Fluent Bit will listen on port `8080` for data. You can now send payloads of Prometheus remote write to the endpoints `/api/prom/push`.
+
+## Examples
+
+### Communicate with TLS
+
+Communicating with TLS, you will need to use the tls related parameters:
+
+```
+[INPUT]
+	Name prometheus_remote_write
+	Listen 127.0.0.1
+	Port 8080
+	Uri /api/prom/push
+	Tls On
+	tls.crt_file /path/to/certificate.crt
+	tls.key_file /path/to/certificate.key
+```
+
+Then, enabled TLS configuration and able to ingest payloads of metrics with Prometheus' remote write protocol.
