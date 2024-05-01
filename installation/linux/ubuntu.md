@@ -1,6 +1,7 @@
 # Ubuntu
 
-Fluent Bit is distributed as **fluent-bit** package and is available for long-term support releases of Ubuntu. The latest supported version is Jammy Jellyfish (22.04).
+Fluent Bit is distributed as **fluent-bit** package and is available for long-term support releases of Ubuntu. 
+The latest officially supported version is Jammy Jellyfish (22.04).
 
 ## Single line install
 
