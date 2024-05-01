@@ -11,7 +11,7 @@ This input plugin allows you to ingest a payload in the Prometheus remote-write 
 | Key           | Description                                                                                                                                    | default |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | listen            | The address to listen on                                                                                                                       | 0.0.0.0 |
-| port              | The port for Fluent Bit to listen on                                                                                                           | 80    |
+| port              | The port for Fluent Bit to listen on                                                                                                           | 8080    |
 | buffer\_max\_size   | Specify the maximum buffer size in KB to receive a JSON message.                                                                               | 4M      |
 | buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size.  | 512K    |
 |successful\_response\_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
