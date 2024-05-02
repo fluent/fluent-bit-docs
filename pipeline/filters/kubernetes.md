@@ -229,7 +229,7 @@ Under certain and not common conditions, a user would want to alter that hard-co
 
 ##### Custom Tag For Enhanced Filtering
 
-One such use case involves splitting logs by namespace, pods, containers or docker id.
+One such use case involves splitting logs by namespace, pods, containers or container id.
 The tag is restructured within the tail input using match groups, this can simplify the filtering by those match groups later in the pipeline.
 Since the tag no longer follows the original file name, a custom **Regex\_Parser** that matches the new tag structure is required:
 
@@ -237,13 +237,13 @@ Since the tag no longer follows the original file name, a custom **Regex\_Parser
 [PARSER]
     Name    custom-tag
     Format  regex
-    Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)
+    Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
 
 [INPUT]
     Name              tail
-    Tag               kube.<namespace_name>.<pod_name>.<container_name>.<docker_id>
+    Tag               kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
     Path              /var/log/containers/*.log
-    Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
+    Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$
     Parser            cri
 
 [FILTER]
