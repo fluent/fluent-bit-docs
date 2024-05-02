@@ -1,7 +1,6 @@
 # macOS
 
-Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon M1 architectures.
-At the moment there is only an official supported package on x86_64 but you can build it from source as well by following the instructions below.
+Fluent Bit is compatible with latest Apple macOS system on x86_64 and Apple Silicon architectures.
 
 ## Installation Packages
 
