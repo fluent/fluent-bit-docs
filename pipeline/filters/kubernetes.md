@@ -229,7 +229,9 @@ Under certain and not common conditions, a user would want to alter that hard-co
 
 ##### Custom Tag For Enhanced Filtering
 
-One such use case involves splitting logs by namespace, pods, containers or docker id. The tag is restructured within the tail input using match groups, this can simplify the filtring by those match groups later in the pipeline. Since the tag no longer follows the original file name, a custom **Regex\_Parser** that matches the new tag structure is required:
+One such use case involves splitting logs by namespace, pods, containers or docker id.
+The tag is restructured within the tail input using match groups, this can simplify the filtering by those match groups later in the pipeline.
+Since the tag no longer follows the original file name, a custom **Regex\_Parser** that matches the new tag structure is required:
 
 ```text
 [PARSER]
