@@ -6,7 +6,7 @@ your time.
 
 This repository contains the files for the
 [Fluent Bit documentation library](https://docs.fluentbit.io/). Keeping these docs
-separate from from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit)
+separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit)
 helps reduce the number of commits to the Fluent Bit source code and makes it
 easier to maintain both projects.
 
@@ -45,42 +45,29 @@ request. This tag means that we're blocked from moving forward until you reply;
 to keep contributions from going stale, we'll wait [three weeks?] for your response,
 and close the pull request if we don't hear back from you.
 
-### Labels
-
-We use the following labels to categorize pull requests:
-
-The Fluent Bit docs repository uses labels to categorize pull requests. If you
-open a new pull request,
-
-- **bug:** This pull request addresses a bug.
-- **conflict:** This pull request has a conflict that you need to fix.
-- **dependencies:** This pull request updates a
-
 ## Submit a contribution
 
 All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then **if** the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, please specify in the first PR as a comment (for master branch) that it needs to be *backported*. One of our maintainers will take care of that process.
 
 As a contributor, we'll ask you to follow a few best practices related to Git:
 
+### One file per commit
+
+Each commit you make should only modify one file or interface—we follow the same
+practice in the Fluent Bit source code.
+
 ### Commit subjects
 
-The subject must be representative enough to describe which `file` or `interface` is modifying when committing your changes. An everyday use case or example is:
+Use descriptive commit subjects that describe which file or interface you're
+modifying.
 
-- User is enhancing the documentation for the Syslog output plugin
+For example, if you're modifying the Syslog output plugin doc, whose file is
+located at [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/syslog.md), this would be a descriptive commit subject:
 
-Considering that Syslog output plugin documentation resides in this address:
+`pipeline: outputs: syslog: fix grammar in examples`
 
-- [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/syslog.md)
-
-the suggested commit will be:
-
-```
-pipeline: outputs: syslog: fix grammar in examples
-```
-
-As you can see, the commit is prefixed with the paths of the file being modified. For maintainers, this helps to understand and prioritize the review of the contributions.
-
-Usually, a PR can have multiple commits, but we enforce that every commit only touches one file or interface (we apply the same practice in Fluent Bit source code).
+Since this commit is prefixed with the relevant file path, it helps our maintainers
+understand and prioritize your contribution.
 
 ### Set your email in Git
 
@@ -88,21 +75,20 @@ Make sure your email address is configured in your local Git environment. This
 should be the same email address associated with your GitHub account.
 
 For more information, refer to GitHub's guide to
-[setting your committ email address in Git](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-in-git).
+[setting your commit email address in Git](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-in-git).
 
 ### Sign off your commits
 
-Your commits must be **signed off**; this certifies who is the author of the commit. It might sound a bit redundant, but it is needed. If you don't sign-off your commits, our CI system will flag the PR with a [DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md) error and the PR will be blocked.
+You must sign off your commits to certify your identity as the commit author. If
+you don't sign off your commits, our CI system will flat the pull request with a
+[DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md)
+error and prevent your pull request from merging.
 
-The following link explains how to fix DCO error by signing your commits properly:
+To prevent DCO errors, refer to the following guide about
+[signing your commits properly](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md).
 
-- https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md
-
-For short: always use `-s` when committing your changes, e.g.:
-
-```
-git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"
-```
+> :bulb: For faster signing, you can use the `-s` flag in Git:<br>
+> `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 
 ## Style guidelines
 
