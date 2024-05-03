@@ -47,6 +47,14 @@ and close the pull request if we don't hear back from you.
 
 ## Submit a contribution
 
+When you open a pull request, make your changes against `master`, which is the
+active development branch. If your contribution also applies to the latest
+stable version, submit another PR for that versioned branch. However, if
+submitting multiple PRs at the same time adds too much complexity, you can instead
+create a single PR against `master` and specify that your changes need to be
+**backported** to other branches; one of our maintainers will take care of that
+process on your behalf.
+
 All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then **if** the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, please specify in the first PR as a comment (for master branch) that it needs to be *backported*. One of our maintainers will take care of that process.
 
 As a contributor, we'll ask you to follow a few best practices related to Git:
@@ -87,7 +95,8 @@ error and prevent your pull request from merging.
 To prevent DCO errors, refer to the following guide about
 [signing your commits properly](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md).
 
-> :bulb: For faster signing, you can use the `-s` flag in Git:<br>
+> :bulb: For faster signing, you can use the `-s` flag in Git:
+>
 > `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 
 ## Style guidelines
@@ -97,10 +106,6 @@ The Fluent Bit maintainers refer to the
 for most topics related to grammar, style, and formatting. We don't expect you
 to memorize these style rules, but the technical writer who reviews your pull
 request may suggest changes accordingly.
-
-### Line wrap
-
-[TBD]
 
 ### Vale
 
