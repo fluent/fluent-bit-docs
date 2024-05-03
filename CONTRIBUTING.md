@@ -98,6 +98,10 @@ To prevent DCO errors, refer to the following guide about
 > :bulb: For faster signing, you can use the `-s` flag in Git:
 >
 > `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
+>
+> If you're using VS Code, you can also enable the
+> [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047)
+> setting, whch automatically appends a `Signed-off-by:` message to your commits.
 
 ## Style guidelines
 
