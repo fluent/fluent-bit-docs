@@ -12,8 +12,8 @@ easier to maintain both projects.
 
 Fluent Bit has a group of dedicated maintainers who oversee this repository,
 including several technical writers. These writers will review any pull requests
-you open, so don't be afraid to contribute—even if you're not a writer by trade,
-your suggestions are valuable, and we'll help you wrangle any stray commas.
+you open, so don't be afraid to contribute—even if you're not a writer by trade.
+Your suggestions are valuable, and we'll help you wrangle any stray commas.
 
 ## GitBook
 
@@ -88,7 +88,7 @@ For more information, refer to GitHub's guide to
 ### Sign off your commits
 
 You must sign off your commits to certify your identity as the commit author. If
-you don't sign off your commits, our CI system will flat the pull request with a
+you don't sign off your commits, our CI system will flag the pull request with a
 [DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md)
 error and prevent your pull request from merging.
 
