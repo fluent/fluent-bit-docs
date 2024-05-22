@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | protected\_mode | If enabled, Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when invalid Lua script is executed or the triggered Lua function throws exceptions. Default is true. |
 | time\_as\_table | By default when the Lua script is invoked, the record timestamp is passed as a *floating number* which might lead to precision loss when it is converted back. If you desire timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | code | Inline LUA code instead of loading from a path via `script`. |
+| enable_flb_null| If enabled, null will be converted to flb_null in Lua. It is useful to prevent removing key/value since nil is a special value to remove key value from map in Lua. Default is false. |
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -37,6 +38,8 @@ $ fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 
 In your main configuration file append the following _Input_, _Filter_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name    dummy
@@ -51,6 +54,25 @@ In your main configuration file append the following _Input_, _Filter_ & _Output
     Name    null
     Match   *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call:  cb_print
+  outputs:
+    - name: null
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ## Lua Script Filter API <a id="lua_script"></a>
 
@@ -100,6 +122,32 @@ For functional examples of this interface, please refer to the code samples prov
 
 The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```
+[SERVICE]
+	flush 1
+	daemon off
+	log_level debug
+
+[INPUT]
+	Name random
+	Tag test
+	Samples 10
+
+[FILTER]
+	Name Lua
+	Match *
+	call append_tag
+	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+
+[OUTPUT]
+	Name stdout
+	Match *
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
 ```yaml
 service:
     flush:           1
@@ -127,30 +175,8 @@ pipeline:
         - name:  stdout
           match: "*"
 ```
-
-In classic mode:
-
-```
-[SERVICE]
-	flush 1
-	daemon off
-	log_level debug
-
-[INPUT]
-	Name random
-	Tag test
-	Samples 10
-
-[FILTER]
-	Name Lua
-	Match *
-	call append_tag
-	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
-
-[OUTPUT]
-	Name stdout
-	Match *
-```
+{% endtab %}
+{% endtabs %}
 
 #### Environment variable processing
 
@@ -165,6 +191,8 @@ The environment variable is set like so:
 
 We want to extract the `sandboxbsh` name and add it to our record as a special key.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
       [FILTER]
           Name                lua
@@ -172,8 +200,24 @@ We want to extract the `sandboxbsh` name and add it to our record as a special k
           Match               iots_thread.*
           Script              filters.lua
           Call                set_landscape_deployment
+```
+{% endtab %}
 
-  filters.lua: |
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  filters:
+    - name: lua
+      alias: filter-iots-lua
+      match: iots_thread.*
+      script: filters.lua
+      call:  set_landscape_deployment
+```
+{% endtab %}
+{% endtabs %}
+
+
+filters.lua:
+```lua
     -- Use a Lua function to create some additional entries based
     -- on substrings from the kubernetes properties.
     function set_landscape_deployment(tag, timestamp, record)
@@ -226,6 +270,8 @@ end
 
 #### Configuration
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [Input]
     Name    stdin
@@ -240,6 +286,24 @@ end
     Name    stdout
     Match   *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: stdin
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call: cb_split
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 #### Input
 
@@ -289,6 +353,8 @@ end
 
 Configuration to get istio logs and apply response code filter to them.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```ini
     [INPUT]
         Name                tail
@@ -308,6 +374,29 @@ Configuration to get istio logs and apply response code filter to them.
         Name                stdout
         Match               *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/containers/*_istio-proxy-*.log
+      multiline.parser: 'docker, cri'
+      tag: istio.*
+      mem_buf_limit: 64MB
+      skip_long_lines: off
+  filters:
+    - name: lua
+      match: istio.*
+      script: response_code_filter.lua
+      call: cb_response_code_filter
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 #### Input
 

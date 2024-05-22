@@ -41,6 +41,8 @@ Fluent Bit v1.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          netif
@@ -52,6 +54,23 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: netif
+          tag: netif
+          interval_sec: 1
+          interval_nsec: 0
+          interface: eth0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 

@@ -116,7 +116,8 @@ The output log would be similar to:
 }
 ```
 
-Notice that the template variables in the value for the `resource` key are separated by dot characters. Please see the section below about limitations in which characters can be used to separate template variables. 
+Notice that the template variables in the value for the `resource` key are separated by dot characters, only dots and commas
+ (`.` and `,`) can come after a template variable. For more information, please check the [Record accessor limitation's section](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md#limitations-of-record_accessor-templating).
 
 #### Example 3: Attach cluster metadata to non-container logs
 
@@ -148,23 +149,3 @@ This examples shows a use case for the `Cluster_Metadata_Only` option- attaching
     Format json_lines
 ```
 
-### Limitations of record_accessor templating
-
-Notice in example 2, that the template values are separated by dot characters. This is important; the Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
-
-The following would be invalid templates because the two template variables are not separated by commas or dots:
-
-- `$TaskID-$ECSContainerName`
-- `$TaskID/$ECSContainerName`
-- `$TaskID_$ECSContainerName`
-- `$TaskIDfooo$ECSContainerName`
-
-However, the following are valid:
-- `$TaskID.$ECSContainerName`
-- `$TaskID.ecs_resource.$ECSContainerName`
-- `$TaskID.fooo.$ECSContainerName`
-
-And the following are valid since they only contain one template variable with nothing after it:
-- `fooo$TaskID`
-- `fooo____$TaskID`
-- `fooo/bar$TaskID`

@@ -2,9 +2,9 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit v2.1 Documentation
+# Fluent Bit v3.0 Documentation
 
-<figure><img src=".gitbook/assets/FluentBitV3-02.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/3.0.png" alt=""><figcaption></figcaption></figure>
 
 [Fluent Bit](http://fluentbit.io) is a Fast and Lightweight **Telemetry Agent** for Logs, Metrics, and Traces for Linux, macOS, Windows, and BSD family operating systems. It has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
@@ -21,7 +21,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
 * Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
-  * More than 100 built-in plugins are available
+  * Connect nearly any source to nearly any destination using preexisting plugins
   * Extensibility
     * Write any input, filter or output plugin in C language
     * WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)

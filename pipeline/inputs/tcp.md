@@ -14,6 +14,7 @@ The plugin supports the following configuration parameters:
 | Chunk\_Size  | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). | 32      |
 | Format       | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ (option below).                                        | json    |
 | Separator    | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character  (LF or 0x10).                                                                                               |         |
+| Source\_Address\_Key| Specify the key where the source address will be injected.                                                                                                                                                                                              |         |
 
 ## Getting Started
 
@@ -39,6 +40,8 @@ In the example the JSON messages will only arrive through network interface unde
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name        tcp
@@ -52,6 +55,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name        stdout
     Match       *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: tcp
+          listen: 0.0.0.0
+          port: 5170
+          chunk_size: 32
+          buffer_size: 64
+          format: json
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 

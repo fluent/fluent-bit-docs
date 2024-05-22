@@ -6,7 +6,7 @@ The following instructions assumes that you have a fully operational Graylog ser
 
 ## Configuration Parameters
 
-According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
+According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
 
 | Key                    | Description                                                                                                                                                                 | default       |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -103,7 +103,7 @@ Now, this is what happens to this log:
 3. We used this `data` key as `Gelf_Short_Message_Key`; so GELF plugin changes it to `short_message`.
 4. [Kubernetes Filter](../filters/kubernetes.md) adds `host` name.
 5. Timestamp is generated.
-6. Any custom field (not present in [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification)) is prefixed by an underline.
+6. Any custom field (not present in [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification).) is prefixed by an underline.
 
 Finally, this is what our Graylog server input sees:
 

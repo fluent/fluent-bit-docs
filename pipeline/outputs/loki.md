@@ -13,8 +13,9 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | host | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.  | 127.0.0.1 |
+| uri | Specify a custom HTTP URI. It must start with forward slash.| /loki/api/v1/push |
 | port | Loki TCP port | 3100 |
-| uri  | Specify an optional HTTP URI for the target web server, e.g: /something | `/loki/api/v1/push` |
+| tls | Use TLS authentication | off |
 | http\_user | Set HTTP basic authentication user name |  |
 | http\_passwd | Set HTTP basic authentication password |  |
 | bearer\_token | Set bearer token authentication token value. |  |
@@ -28,6 +29,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
 | auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 | tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
+| compress | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression. ||
 
 ## Labels
 

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v2.1 Documentation](README.md)
+* [Fluent Bit v3.0 Documentation](README.md)
 
 ## About
 
@@ -44,6 +44,7 @@
 * [macOS](installation/macos.md)
 * [Windows](installation/windows.md)
 * [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
+* [Buildroot / Embedded Linux](installation/buildroot-embedded-linux.md)
 
 ## Administration
 
@@ -103,6 +104,7 @@
   * [Node Exporter Metrics](pipeline/inputs/node-exporter-metrics.md)
   * [Podman Metrics](pipeline/inputs/podman-metrics.md)
   * [Process Log Based Metrics](pipeline/inputs/process.md)
+  * [Process Exporter Metrics](pipeline/inputs/process-exporter-metrics.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
@@ -126,6 +128,10 @@
   * [LTSV](pipeline/parsers/ltsv.md)
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
+* [Processors](pipeline/processors/README.md)
+  * [Content Modifier](pipeline/processors/content-modifier.md)
+  * [Metrics Selector](pipeline/processors/metrics-selector.md)
+  * [SQL](pipeline/processors/sql.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
@@ -144,7 +150,9 @@
   * [Nightfall](pipeline/filters/nightfall.md)
   * [Rewrite Tag](pipeline/filters/rewrite-tag.md)
   * [Standard Output](pipeline/filters/standard-output.md)
+  * [Sysinfo](pipeline/filters/sysinfo.md)
   * [Throttle](pipeline/filters/throttle.md)
+  * [Type Converter](pipeline/filters/type-converter.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
   * [Wasm](pipeline/filters/wasm.md)
 * [Outputs](pipeline/outputs/README.md)
@@ -155,6 +163,7 @@
   * [Azure Blob](pipeline/outputs/azure\_blob.md)
   * [Azure Data Explorer](pipeline/outputs/azure\_kusto.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
+  * [Azure Logs Ingestion API](pipeline/outputs/azure_logs_ingestion.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
@@ -170,10 +179,12 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [Loki](pipeline/outputs/loki.md)
+  * [Microsoft Fabric](pipeline/outputs/azure\_kusto.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [Observe](pipeline/outputs/observe.md)
+  * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)

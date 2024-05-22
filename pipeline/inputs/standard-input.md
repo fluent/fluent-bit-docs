@@ -152,6 +152,8 @@ could use a `parser.conf` that captures the whole message line:
 
 then use that in the `parser` clause of the stdin plugin in the `fluent-bit.conf`:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     Name    stdin
@@ -162,6 +164,21 @@ then use that in the `parser` clause of the stdin plugin in the `fluent-bit.conf
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: stdin
+          tag: stdin
+          parser: stringify_message
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Fluent Bit will now read each line and emit a single message for each input
 line:

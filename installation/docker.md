@@ -17,6 +17,24 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tag(s)       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 3.0.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 3.0.4 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.4](https://fluentbit.io/announcements/v3.0.4/) |
+| 3.0.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 3.0.3 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.3](https://fluentbit.io/announcements/v3.0.3/) |
+| 3.0.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 3.0.2 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.2](https://fluentbit.io/announcements/v3.0.2/) |
+| 3.0.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 3.0.1 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.1](https://fluentbit.io/announcements/v3.0.1/) |
+| 3.0.0-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 3.0.0 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.0](https://fluentbit.io/announcements/v3.0.0/) |
+| 2.2.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 2.2.2 | x86_64, arm64v8, arm32v7, s390x | Release [v2.2.2](https://fluentbit.io/announcements/v2.2.2/) |
+| 2.2.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 2.2.1 | x86_64, arm64v8, arm32v7, s390x | Release [v2.2.1](https://fluentbit.io/announcements/v2.2.1/) |
+| 2.2.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.2.0 | x86_64, arm64v8, arm32v7 | Release [v2.2.0](https://fluentbit.io/announcements/v2.2.0/) |
+| 2.1.10-debug | x86_64, arm64v8, arm32v7 | Debug images |
+| 2.1.10 | x86_64, arm64v8, arm32v7 | Release [v2.1.10](https://fluentbit.io/announcements/v2.1.10/) |
 | 2.1.9-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.9 | x86_64, arm64v8, arm32v7 | Release [v2.1.9](https://fluentbit.io/announcements/v2.1.9/) |
 | 2.1.8-debug | x86_64, arm64v8, arm32v7 | Debug images |

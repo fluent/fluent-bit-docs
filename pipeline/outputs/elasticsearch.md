@@ -14,7 +14,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Port | TCP port of the target Elasticsearch instance | 9200 |
 | Path | Elasticsearch accepts new data on HTTP query path "/\_bulk". But it is also possible to serve Elasticsearch behind a reverse proxy on a subpath. This option defines such path on the fluent-bit side. It simply adds a path prefix in the indexing HTTP POST URI. | Empty string |
 | compress | Set payload compression mechanism. Option available is 'gzip' | |
-| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 4KB |
+| Buffer\_Size | Specify the buffer size used to read the response from the Elasticsearch HTTP service. This option is useful for debugging purposes where is required to read full responses, note that response size grows depending of the number of records inserted. To set an _unlimited_ amount of memory set this value to **False**, otherwise the value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 512KB |
 | Pipeline | Newer versions of Elasticsearch allows to setup filters called pipelines. This option allows to define which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. |  |
 | AWS\_Auth | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service | Off |
 | AWS\_Region | Specify the AWS region for Amazon OpenSearch Service |  |
@@ -22,6 +22,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon cluster |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn` |  |
 | AWS\_Service\_Name | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | es |
+| AWS\_Profile | AWS profile name | default |
 | Cloud\_ID | If you are using Elastic's Elasticsearch Service you can specify the cloud\_id of the cluster running. The Cloud ID string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`.
  |  |
 | Cloud\_Auth | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud |  |
@@ -31,7 +32,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Type | Type name | \_doc |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off | Off |
 | Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated. | logstash |
-| Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). |  |
+| Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). |  |
 | Logstash\_Prefix\_Separator | Set a separator between logstash_prefix and date.| - |
 | Logstash\_DateFormat | Time format \(based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)\) to generate the second part of the Index name. | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field. | @timestamp |
@@ -46,15 +47,14 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Trace\_Output | Print all elasticsearch API request payloads to stdout \(for diag only\) | Off |
 | Trace\_Error | If elasticsearch return an error, print the elasticsearch API request and response \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
-
-| Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. Types are deprecated in APIs in [v7.0](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html). This options is for v7.0 or later. | Off |
+| Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. If using Elasticsearch 8.0.0 or higher - it [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), so it shall be set to On. | Off |
 | Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq)
 
 ### TLS / SSL
 
-Elasticsearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+Elasticsearch output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ### write\_operation
 

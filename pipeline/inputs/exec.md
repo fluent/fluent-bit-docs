@@ -8,7 +8,7 @@ command arguments could lead to malicious command execution.
 
 ## Container support
 
-This plugin will not function in the distroless production images (AMD64 currently) as it needs a functional `/bin/sh` which is not present.
+This plugin will not function in all the distroless production images as it needs a functional `/bin/sh` which is not present.
 The debug images use the same binaries so even though they have a shell, there is no support for this plugin as it is compiled out.
 
 ## Configuration Parameters
@@ -56,6 +56,8 @@ Fluent Bit v1.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          exec
@@ -70,12 +72,34 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: exec
+          tag: exec_ls
+          command: ls /var/log
+          interval_sec: 1
+          interval_nsec: 0
+          buf_size: 8mb
+          oneshot: false
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ## Use as a command wrapper
 
 To use `fluent-bit` with the `exec` plugin to wrap another command, use the
 `Exit_After_Oneshot` and `Propagate_Exit_Code` options, e.g.:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     Name                exec
@@ -89,6 +113,25 @@ To use `fluent-bit` with the `exec` plugin to wrap another command, use the
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: exec
+          tag: exec_oneshot_demo
+          command: 'for s in $(seq 1 10); do echo "count: $s"; sleep 1; done; exit 1'
+          oneshot: true
+          exit_after_oneshot: true
+          propagate_exit_code: true
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 `fluent-bit` will output
 

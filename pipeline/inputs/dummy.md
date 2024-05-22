@@ -13,8 +13,11 @@ The plugin supports the following configuration parameters:
 | Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
 | Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
 | Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
+| Interval\_sec  | Set seconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. Default: 0 |
+| Interval\_nsec | Set nanoseconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. Default: 0 |
 | Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
 | Copies | Number of messages to generate each time they are generated. Defaults to 1. |
+| Flush\_on\_startup | If set to `true`, the first dummy event is generated at startup. Default: `false` |
 
 ## Getting Started
 

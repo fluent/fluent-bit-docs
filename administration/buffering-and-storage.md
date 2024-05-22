@@ -60,7 +60,13 @@ If this input uses more than 50MB memory to buffer logs, you will get a warning 
 [input] tcp.1 paused (mem buf overlimit)
 ```
 
-*Please note that `Mem_Buf_Limit` only applies when `storage.type` is set to the default value of `memory`*. The section below explains the limits that apply when you enable `storage.type filesystem`. 
+{% hint style="info" %}
+`Mem_Buf_Limit` applies only when `storage.type` is set to the default value of
+`memory`.
+{% endhint %}
+
+The following section explains the applicable limits when you enable
+`storage.type filesystem`. 
 
 #### Filesystem buffering to the rescue
 
@@ -91,7 +97,7 @@ Fluent Bit implements the concept of logical queues: based on its Tag, a Chunk c
 
 It's common to find cases where if we have multiple destinations for a Chunk, one of the destinations might be slower than the other, or maybe one is generating backpressure and not all of them. In this scenario, how do we limit the amount of filesystem Chunks that we are logically queueing?
 
-Starting from Fluent Bit v1.6, we introduced the new configuration property for output plugins called `storage.total_limit_size` which limits the number of Chunks that exist in the filesystem for a certain logical output destination. If one of the destinations reaches the `storage.total_limit_size`, the oldest Chunk from its queue for that logical output destination will be discarded.
+Starting from Fluent Bit v1.6, we introduced the new configuration property for output plugins called `storage.total_limit_size` which limits the total size in bytes of chunks that can exist in the filesystem for a certain logical output destination. If one of the destinations reaches the configured `storage.total_limit_size`, the oldest Chunk from its queue for that logical output destination will be discarded to make room for new data.
 
 ## Configuration
 
@@ -167,7 +173,7 @@ If certain chunks are filesystem _storage.type_ based, it's possible to control 
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| storage.total\_limit\_size | Limit the maximum number of Chunks in the filesystem for the current output logical destination. |  |
+| storage.total\_limit\_size | Limit the maximum disk space size in bytes for buffering chunks in the filesystem for the current output logical destination.  |  |
 
 The following example create records with CPU usage samples in the filesystem and then they are delivered to Google Stackdriver service limiting the logical queue \(buffering\) to 5M:
 
@@ -191,5 +197,5 @@ The following example create records with CPU usage samples in the filesystem an
     storage.total_limit_size  5M
 ```
 
-If for some reason Fluent Bit gets offline because of a network issue, it will continue buffering CPU samples but just keep a maximum of 5M of the newest data.
+If for some reason Fluent Bit gets offline because of a network issue, it will continue buffering CPU samples but just keep a maximum of 5MB of the newest data.
 
