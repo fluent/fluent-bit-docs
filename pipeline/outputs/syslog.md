@@ -27,7 +27,7 @@ As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of t
 | syslog\_procid\_preset | The preset process ID. It will be overwritten if `syslog_procid_key` is set and a key of a record is matched. This configuration is optional. | |
 | syslog\_msgid\_key | The key name from the original record that contains the Message ID associated to the message. This configuration is optional. |  |
 | syslog\_msgid\_preset | The preset message ID. It will be overwritten if `syslog_msgid_key` is set and a key of a record is matched. This configuration is optional. | |
-| syslog\_sd\_key | The key name from the original record that contains the Structured Data \(SD\)  content. This configuration is optional. |  |
+| syslog\_sd\_key | The key name from the original record that contains a map of key/value pairs to use as Structured Data \(SD\) content. The key name is included in the resulting SD field as shown in examples below. This configuration is optional. |  |
 | syslog\_message\_key | The key name from the original record that contains the message to deliver. Note that this property is **mandatory**, otherwise the message will be empty. |  |
 | allow\_longer\_sd\_id| If true, Fluent-bit allows SD-ID that is longer than 32 characters. Such long SD-ID violates RFC 5424.| false |
 
