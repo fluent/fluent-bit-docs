@@ -151,3 +151,62 @@ Example output:
 ```bash
 <14>1 2021-07-12T14:37:35.569848Z myhost myapp 1234 ID98 [uls@0 logtype="access" clustername="mycluster" namespace="mynamespace"] Sample app log message.
 ```
+
+### Adding Structured Data Authentication Token
+
+Some services use the structured data field to pass authentication tokens (e.g. `[<token>@41018]`), which would need to be added to each log message dynamically. However, this requires setting the token as a key rather than as a value. Here's an example of how that might be achieved, using `AUTH_TOKEN` as an [variable](../../administration/configuring-fluent-bit/classic-mode/variables.md)
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
+[FILTER] 
+    name  lua
+    match *
+    call  append_token
+    code  function append_token(tag, timestamp, record) record["${AUTH_TOKEN}"] = {} return 2, timestamp, record end
+    
+[OUTPUT]
+    name                    syslog
+    match                   *
+    host                    syslog.yourserver.com
+    port                    514
+    mode                    tcp
+    syslog_format           rfc5424
+    syslog_hostname_preset  my-hostname
+    syslog_appname_preset   my-appname
+    syslog_message_key      log
+    allow_longer_sd_id      true
+    syslog_sd_key           ${AUTH_TOKEN}
+    tls                     on
+    tls.crt_file            /path/to/my.crt
+```
+{% endtab %}
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  filters:
+    - name:  lua
+      match: "*"
+      call:  append_token
+      code:  |
+        function append_token(tag, timestamp, record)
+            record["${AUTH_TOKEN}"] = {}
+            return 2, timestamp, record
+        end
+
+  outputs:
+    - name: syslog
+      match: "*"
+      host: syslog.yourserver.com
+      port: 514
+      mode: tcp
+      syslog_format: rfc5424
+      syslog_hostname_preset: myhost
+      syslog_appname_preset: myapp
+      syslog_message_key: log
+      allow_longer_sd_id: true
+      syslog_sd_key: ${AUTH_TOKEN}
+      tls: on
+      tls.crt_file: /path/to/my.crt
+```
+{% endtab %}
+{% endtabs %}
