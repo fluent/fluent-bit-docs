@@ -33,7 +33,7 @@ As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of t
 
 ### TLS / SSL
 
-HTTP output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+The Syslog output plugin supports TLS/SSL. For more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Examples
 
