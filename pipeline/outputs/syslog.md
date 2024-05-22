@@ -12,7 +12,7 @@ As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of t
 | :--- | :--- | :--- |
 | host | Domain or IP address of the remote Syslog server. | 127.0.0.1 |
 | port | TCP or UDP port of the remote Syslog server. | 514 |
-| mode | Desired transport type. Available options are `tcp`, `tls` and `udp`. | udp |
+| mode | Desired transport type. Available options are `tcp` and `udp`. | udp |
 | syslog\_format | The Syslog protocol format to use. Available options are `rfc3164` and `rfc5424`. | rfc5424 |
 | syslog\_maxsize | The maximum size allowed per message. The value must be an integer representing the number of bytes allowed. If no value is provided, the default size is set depending of the protocol version specified by `syslog_format`.<br><br>`rfc3164` sets max size to 1024 bytes.<br><br>`rfc5424` sets the size to 2048 bytes. |  |
 | syslog\_severity\_key | The key name from the original record that contains the Syslog severity number. This configuration is optional. |  |
@@ -30,6 +30,10 @@ As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of t
 | syslog\_sd\_key | The key name from the original record that contains the Structured Data \(SD\)  content. This configuration is optional. |  |
 | syslog\_message\_key | The key name from the original record that contains the message to deliver. Note that this property is **mandatory**, otherwise the message will be empty. |  |
 | allow\_longer\_sd\_id| If true, Fluent-bit allows SD-ID that is longer than 32 characters. Such long SD-ID violates RFC 5424.| false |
+
+### TLS / SSL
+
+HTTP output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Examples
 
