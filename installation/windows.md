@@ -165,7 +165,7 @@ To halt the process, press CTRL-C in the terminal.
 
 ## Installing from EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/). It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
+Download an EXE installer from above. It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
 
 Double-click the EXE installer you've downloaded. The installation wizard will automatically start.
 
