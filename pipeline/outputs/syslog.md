@@ -41,6 +41,8 @@ HTTP output plugin supports TLS/SSL, for more details about the properties avail
 
 Get started quickly with this configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [OUTPUT]
     name                 syslog
@@ -59,6 +61,28 @@ Get started quickly with this configuration file:
     syslog_sd_key        sd
     syslog_message_key   message
 ```
+{% endtab %}
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    outputs:
+        - name: syslog
+          match: "*"
+          host: syslog.yourserver.com
+          port: 514
+          mode: udp
+          syslog_format: rfc5424
+          syslog_maxsize: 2048
+          syslog_severity_key: severity
+          syslog_facility_key: facility
+          syslog_hostname_key: hostname
+          syslog_appname_key: appname
+          syslog_procid_key: procid
+          syslog_msgid_key: msgid
+          syslog_sd_key: sd
+          syslog_message_key: message
+```
+{% endtab %}
+{% endtabs %}
 
 ### Structured Data
 
@@ -83,6 +107,8 @@ Example log:
 
 Example configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [OUTPUT]
     name                 syslog
@@ -99,6 +125,26 @@ Example configuration file:
     syslog_sd_key        uls@0
     syslog_message_key   log
 ```
+{% endtab %}
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  outputs:
+    - name: syslog
+      match: "*"
+      host: syslog.yourserver.com
+      port: 514
+      mode: udp
+      syslog_format: rfc5424
+      syslog_maxsize: 2048
+      syslog_hostname_key: hostname
+      syslog_appname_key: appname
+      syslog_procid_key: procid
+      syslog_msgid_key: msgid
+      syslog_sd_key: uls@0
+      syslog_message_key: log
+```
+{% endtab %}
+{% endtabs %}
 
 Example output:
 
