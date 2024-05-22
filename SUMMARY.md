@@ -129,6 +129,7 @@
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
 * [Processors](pipeline/processors/README.md)
+  * [Labels](pipeline/processors/labels.md)
   * [Content Modifier](pipeline/processors/content-modifier.md)
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
   * [SQL](pipeline/processors/sql.md)

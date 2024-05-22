@@ -220,3 +220,4 @@ The following table describes the processors available on this version:
 | option | description | default |
 | :--- | :--- | :--- |
 | [FLB\_PROCESSOR\_METRICS\_SELECTOR](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | On |
+| [FLB\_PROCESSOR\_LABELS](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | On |
