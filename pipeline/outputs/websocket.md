@@ -6,8 +6,8 @@ The **websocket** output plugin allows to flush your records into a WebSocket en
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| Host | IP address or hostname of the target WebScoket Server | 127.0.0.1 |
-| Port | TCP port of the target WebScoket Server | 80 |
+| Host | IP address or hostname of the target WebSocket Server | 127.0.0.1 |
+| Port | TCP port of the target WebSocket Server | 80 |
 | URI | Specify an optional HTTP URI for the target websocket server, e.g: /something | / |
 | Header | Add a HTTP header key/value pair. Multiple headers can be set. | |
 | Format | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_. | msgpack |
