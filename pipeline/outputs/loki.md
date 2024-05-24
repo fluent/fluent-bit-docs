@@ -19,6 +19,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | http\_user | Set HTTP basic authentication user name |  |
 | http\_passwd | Set HTTP basic authentication password |  |
 | bearer\_token | Set bearer token authentication token value. |  |
+| header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. |  |
 | tenant\_id | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent. |  |
 | labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluentbit |
 | label\_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
