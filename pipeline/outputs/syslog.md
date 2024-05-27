@@ -2,7 +2,8 @@
 
 The Syslog output plugin allows you to deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats through different transports such as UDP, TCP or TLS.
 
-As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of the structure of your original record so you can configure the plugin to use specific keys to compose your outgoing Syslog message.
+As of Fluent Bit v1.5.3 the configuration is very strict.
+You must be aware of the structure of your original record so you can configure the plugin to use specific keys to compose your outgoing Syslog message.
 
 > Future versions of Fluent Bit are expanding this plugin feature set to support better handling of keys and message composing.
 
@@ -33,7 +34,8 @@ As of Fluent Bit v1.5.3 the configuration is very strict. You must be aware of t
 
 ### TLS / SSL
 
-The Syslog output plugin supports TLS/SSL. For more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+The Syslog output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Examples
 
@@ -154,7 +156,9 @@ Example output:
 
 ### Adding Structured Data Authentication Token
 
-Some services use the structured data field to pass authentication tokens (e.g. `[<token>@41018]`), which would need to be added to each log message dynamically. However, this requires setting the token as a key rather than as a value. Here's an example of how that might be achieved, using `AUTH_TOKEN` as an [variable](../../administration/configuring-fluent-bit/classic-mode/variables.md)
+Some services use the structured data field to pass authentication tokens (e.g. `[<token>@41018]`), which would need to be added to each log message dynamically. 
+However, this requires setting the token as a key rather than as a value. 
+Here's an example of how that might be achieved, using `AUTH_TOKEN` as a [variable](../../administration/configuring-fluent-bit/classic-mode/variables.md):
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
