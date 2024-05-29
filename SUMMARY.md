@@ -106,6 +106,7 @@
   * [Process Log Based Metrics](pipeline/inputs/process.md)
   * [Process Exporter Metrics](pipeline/inputs/process-exporter-metrics.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
+  * [Prometheus Remote Write](pipeline/inputs/prometheus-remote-write.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Splunk](pipeline/inputs/splunk.md)

@@ -65,6 +65,7 @@ The following **input** plugins can take advantage of the TLS feature:
 * [NGINX Exporter Metrics](../pipeline/inputs/nginx.md)
 * [OpenTelemetry](../pipeline/inputs/opentelemetry.md)
 * [Prometheus Scrape Metrics](../pipeline/inputs/prometheus-scrape-metrics.md)
+* [Prometheus Remote Write](../pipeline/inputs/prometheus-remote-write.md)
 * [Splunk (HTTP HEC)](../pipeline/inputs/splunk.md)
 * [Syslog](../pipeline/inputs/syslog.md)
 * [TCP](../pipeline/inputs/tcp.md)
