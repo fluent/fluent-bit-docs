@@ -138,8 +138,8 @@ Refer to the following tables in the **General Options**, **Development Options*
 
 | option | description | default |
 | :--- | :--- | :--- |
-| FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE | Determine initial buffer size for msgpack to json conversion in terms of memory used by payload. | 2.0 |
-| FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE | Determine percentage of reallocation size when msgpack to json conversion buffer runs out of memory. | 0.1 |
+| FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE | Determine initial buffer size for msgpack to JSON conversion in terms of memory used by payload. | 2.0 |
+| FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE | Determine percentage of reallocation size when msgpack to JSON conversion buffer runs out of memory. | 0.1 |
 
 ### Input Plugins
 
