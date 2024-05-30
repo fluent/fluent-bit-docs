@@ -73,7 +73,9 @@ it's likely you may need root privileges so you can try to prefixing the command
 
 ## Build Options
 
-Fluent Bit provides certain options to CMake that can be enabled or disabled when configuring, please refer to the following tables under the _General Options_, _Development Options_, Input Plugins _and _Output Plugins_ sections.
+Fluent Bit provides options to CMake that you can enable or disable when configuring.
+Refer to the following tables in the **General Options**, **Development Options**,
+**Input Plugins** and **Output Plugins** sections.
 
 ### General Options
 
