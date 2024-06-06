@@ -13,7 +13,7 @@ The **splunk** input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Do
 | buffer_chunk_size        | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size. | 512K    |
 | successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.                                                              | 201     |
 | splunk\_token           | Specify a Splunk token for HTTP HEC authentication. If multiple tokens are specified (with commas and no spaces), usage will be divided across each of the tokens. |         |
-| store\_token\_in\_metadata | Store Splunk HEC tokens as a part of metadata. If set as false, they will be stored as a part of records.                                   | true    |
+| store\_token\_in\_metadata | Store Splunk HEC tokens in the Fluent Bit metadata. If set false, they will be stored as normal key-value pairs in the record data.                                   | true    |
 | splunk\_token\_key       | Use the specified key for storing the Splunk token for HTTP HEC. This is effective when `store_token_in_metadata` as false.                   | @splunk_token |
 
 ## Getting Started
