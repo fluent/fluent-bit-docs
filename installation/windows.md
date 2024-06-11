@@ -79,30 +79,30 @@ From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1
 
 ## Installation Packages
 
-The latest stable version is 3.0.6.
+The latest stable version is 3.0.7.
 Each version is available via the following download URLs.
 
 | INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
 | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-3.0.6-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win32.exe) | [9ea39f5efda5b013e9135a5b67b60fa94d27dcacf5c43094dfffb693ada11f2b](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win32.exe.sha256) |
-| [fluent-bit-3.0.6-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win32.zip) | [97b6465ed324dd9060dcf10b28341fcfeb3d30ec3abc02583e45902a80dece5e](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win32.zip.sha256) |
-| [fluent-bit-3.0.6-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win64.exe) | [4f4e02bca5adac697a8d9c0477b9060c038c9ca94f4b9c31f5ca65c746a4ddfc](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win64.exe.sha256) |
-| [fluent-bit-3.0.6-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win64.zip) | [00701ab3260a7f9347dcaeeb55d5183dd6ba1cd51cde92625c05b0e643f2b5c1](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win64.zip.sha256) |
-| [fluent-bit-3.0.6-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-winarm64.exe) | [fc90682c155e1288af81742c50740d3be0bff2ab211b8785c7c7e85196f121cb](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-winarm64.exe.sha256) |
-| [fluent-bit-3.0.6-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-winarm64.zip) | [fda4788899de83e68d9abf79f19ea5ced3e324568551fc1543891747ba241832](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-winarm64.zip.sha256) |
+| [fluent-bit-3.0.7-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win32.exe) | [cdbb85c4aad135b44af8431db4f5be118478d4dcc393036dd5b51c5ef13abd22](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win32.exe.sha256) |
+| [fluent-bit-3.0.7-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win32.zip) | [069e8a03085ad0ff871d6e84400e1f90676d55db417d7b14b8a53fab557ed5a9](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win32.zip.sha256) |
+| [fluent-bit-3.0.7-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win64.exe) | [a0cc600f3b745a90b1a8fc3e584ea55bc5988b4f0b508092ade4701dbb52762f](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win64.exe.sha256) |
+| [fluent-bit-3.0.7-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win64.zip) | [1d0919178a134f4d56a5e5ca45078600127f76eae3d33aae814b238ef2c29796](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win64.zip.sha256) |
+| [fluent-bit-3.0.7-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-winarm64.exe) | [81d81f081067b15cd4404986a65bfdca59aad26b7b1b05d0b8214d68e14a3b0b](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-winarm64.exe.sha256) |
+| [fluent-bit-3.0.7-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-winarm64.zip) | [9c97af63cd149808536babede3162e072da032accedbbe92b755e661292481c6](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-winarm64.zip.sha256) |
 
 **Note these are now using the Github Actions built versions, the legacy AppVeyor builds are still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.**
 
 MSI installers are also available:
 
-- [fluent-bit-3.0.6-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win32.msi)
-- [fluent-bit-3.0.6-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-win64.msi)
-- [fluent-bit-3.0.6-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.6-winarm64.msi)
+- [fluent-bit-3.0.7-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win32.msi)
+- [fluent-bit-3.0.7-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-win64.msi)
+- [fluent-bit-3.0.7-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-3.0.7-winarm64.msi)
 
 To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
 
 ```powershell
-PS> Get-FileHash fluent-bit-3.0.6-win32.exe
+PS> Get-FileHash fluent-bit-3.0.7-win32.exe
 ```
 
 ## Installing from ZIP archive
@@ -112,7 +112,7 @@ Download a ZIP archive from above. There are installers for 32-bit and 64-bit en
 Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
 
 ```powershell
-PS> Expand-Archive fluent-bit-3.0.6-win64.zip
+PS> Expand-Archive fluent-bit-3.0.7-win64.zip
 ```
 
 The ZIP package contains the following set of files.
