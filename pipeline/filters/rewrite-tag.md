@@ -59,7 +59,7 @@ If we wanted to match against the value of the key `name` we must use `$name`. T
 * `$name` = "abc-123"
 * `$ss['s1']['s2']` = "flb"
 
-Note that a key must point a value that contains a string, it's **not valid** for numbers, booleans, maps or arrays.
+Note that a key must point to a value that contains a string, it's **not valid** for numbers, booleans, maps or arrays.
 
 ### Regex
 
