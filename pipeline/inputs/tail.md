@@ -88,7 +88,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The two options separated by a comma means multi-format: try `docker` and `cri` multiline formats.
+The two options separated by a comma mean Fluent Bit will try each parser in the list in order, applying the first one that matches the log (i.e. use the first parser which has a `start_state` that matches the log). For example, it will first try `docker`, and if `docker` does not match, it will then try `cri`.
 
 We are **still working** on extending support to do multiline for nested stack traces and such. Over the Fluent Bit v1.8.x release cycle we will be updating the documentation.
 
