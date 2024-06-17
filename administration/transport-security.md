@@ -9,6 +9,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | :--- | :--- | :--- |
 | tls | enable or disable TLS support | Off |
 | tls.verify | force certificate validation | On |
+| tls.verify\_hostname | force hostname validation for certificates | Off |
 | tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
 | tls.ca\_file | absolute path to CA certificate file |  |
 | tls.ca\_path | absolute path to scan for certificate files |  |
@@ -170,4 +171,42 @@ Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/S
     tls.verify  On
     tls.ca_file /etc/certs/fluent.crt
     tls.vhost   fluent.example.com
+```
+
+### Verify subjectAltName
+
+When extracting the X509v3 Subject Alternative Name from a certificate:
+
+```
+X509v3 Subject Alternative Name:
+    DNS:my.fluent-aggregator.net
+```
+
+Then, the TLS client will connect to `other.fluent-aggregator.net`, there is a glitch of hostnames.
+
+This difference of the hostname can be detected with:
+
+
+```text
+[INPUT]
+    Name  cpu
+    Tag   cpu
+
+[OUTPUT]
+    Name                forward
+    Match               *
+    Host                other.fluent-aggregator.net
+    Port                24224
+    tls                 On
+    tls.verify          On
+    tls.verify_hostname on
+    tls.ca_file         /path/to/fluent-x509v3-alt-name.crt
+```
+
+This outgoing connect will be failed and disconnected:
+
+```
+[2024/06/17 16:51:31] [error] [tls] error: unexpected EOF with reason: certificate verify failed
+[2024/06/17 16:51:31] [debug] [upstream] connection #50 failed to other.fluent-aggregator.net:24224
+[2024/06/17 16:51:31] [error] [output:forward:forward.0] no upstream connections available
 ```
