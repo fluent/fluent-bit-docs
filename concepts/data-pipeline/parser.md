@@ -6,8 +6,19 @@ description: Convert Unstructured to Structured messages
 
 Dealing with raw strings or unstructured messages is a constant pain; having a structure is highly desired. Ideally we want to set a structure to the incoming data by the Input Plugins as soon as they are collected:
 
-![](<../../.gitbook/assets/logging\_pipeline\_parser (1) (1) (1) (1) (2) (2) (2) (3) (3) (3) (3) (3) (1).png>)
-
+```mermaid
+graph LR
+    accTitle: Fluent Bit data pipeline
+    accDescr: The Fluent Bit data pipeline includes input, a parser, a filter, a buffer, routing, and various outputs.
+    A[Input] --> B[Parser]
+    B --> C[Filter]
+    C --> D[Buffer]
+    D --> E((Routing))
+    E --> F[Output 1]
+    E --> G[Output 2]
+    E --> H[Output 3]
+    style B stroke:darkred,stroke-width:2px;
+```
 The Parser allows you to convert from unstructured to structured data. As a demonstrative example consider the following Apache (HTTP Server) log entry:
 
 ```
