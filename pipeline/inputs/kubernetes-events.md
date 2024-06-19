@@ -14,8 +14,8 @@ Kubernetes exports it events through the API server. This input plugin allows to
 |---------------------|---------------------------------------------------------------------------------------|------------------------------------------------------|
 | db                  | Set a database file to keep track of recorded Kubernetes events                       |                                                      |
 | db.sync             | Set a database sync method. values: extra, full, normal and off                       | normal                                               |
-| interval_sec        | Set the polling interval for each channel.                                            | 0                                                    |
-| interval_nsec       | Set the polling interval for each channel (sub seconds: nanoseconds)                  | 500000000                                            | 
+| interval_sec        | Set the reconnect interval (seconds)*                                                 | 0                                                    |
+| interval_nsec       | Set the reconnect interval (sub seconds: nanoseconds)*                                | 500000000                                            |
 | kube_url            | API Server end-point                                                                  | https://kubernetes.default.svc                       |
 | kube_ca_file        | Kubernetes TLS CA file                                                                | /var/run/secrets/kubernetes.io/serviceaccount/ca.crt |
 | kube_ca_path        | Kubernetes TLS ca path                                                                |                                                      |
@@ -28,7 +28,14 @@ Kubernetes exports it events through the API server. This input plugin allows to
 | tls.verify          | Enable or disable verification of TLS peer certificate.                               | On                                                   |
 | tls.vhost           | Set optional TLS virtual host.                                                        |                                                      |
 
+
+- _* as of Fluent-Bit 3.1 this plugin uses a kubernetes watch stream instead of polling. The interval parameters in versions > 3.1 are used for reconnecting the kubernetes watch stream._
+
+
 ## Getting Started
+
+### Kubernetes Service Account
+The kubernetes service account used by fluent-bit must have `get`, `list`, and `watch` permissions to `namespaces` and `pods` for the namespaces watched in the `kube_namespace` config parameter. If you are using the helm chart to set up fluent-bit, this role is included.
 
 ### Simple Configuration File
 
