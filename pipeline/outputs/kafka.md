@@ -118,9 +118,9 @@ specific avro schema.
 
 #### Kafka Configuration File with Raw format
 
-This example fluent-bit config creates dummy records with the _payloadkey_ and
-_msgkey_ keys. The value of the _msgkey_ will be used as the Kafka message key
-and the value of the _payloadkey_ as payload.
+This example Fluent Bit configuration file creates dummy records with the
+_payloadkey_ and _msgkey_ keys. The _msgkey_ value is used as the Kafka message
+key, and the _payloadkey_ value as the payload.
 
 
 ```text
