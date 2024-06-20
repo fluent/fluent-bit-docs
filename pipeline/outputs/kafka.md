@@ -125,8 +125,8 @@ key, and the _payloadkey_ value as the payload.
 
 ```text
 [INPUT]
-    Name dummy
-    Tag  dummy.data
+    Name example
+    Tag  example.data
     Dummy {"payloadkey":"Data to send to kafka", "msgkey": "Key to use in the message"}
 
 
