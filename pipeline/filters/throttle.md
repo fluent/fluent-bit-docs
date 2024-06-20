@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Window | Integer | Amount of intervals to calculate average over. Default 5. |
 | Interval | String | Time interval, expressed in "sleep" format. e.g 3s, 1.5m, 0.5h etc |
 | Print\_Status | Bool | Whether to print status messages with current rate and the limits to information logs |
+| Retain | Bool | Whether to whether or not to drop logs if rate limit is exceeded |
 
 ## Functional description
 
@@ -64,6 +65,14 @@ will become:
 ```
 
 As you can see, last pane of the window was overwritten and 1 message was dropped.
+If you can accept the cost of latency for collector messages, you can retain all the logs without dropped use  parameter 'Retain'.
+
+### Do not drop messages 
+The default value for 'Retain' is 'false',
+For 'Retain' not set or set as 'false', if rate limit is exceeded, throttle will drop the messages.
+In case that, if before fluent-bit first running, there is a input with huge messages which exceeded the throttle's (window * rate * interval), then only the first (window * rate * interval) records will be collected, the others before fluent-bit running will be dropped.
+
+If 'Retain' set as 'true', all messages will be collected without dropped, but at the cost of some latency for collecting all messages, which depends on the account of collected target input. 
 
 ### Interval vs Window size
 
@@ -128,6 +137,7 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o s
     Rate     1000
     Window   300
     Interval 1s
+    Retain   false
 
 [OUTPUT]
     Name   stdout
