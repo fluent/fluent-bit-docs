@@ -9,7 +9,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | :--- | :--- | :--- |
 | tls | enable or disable TLS support | Off |
 | tls.verify | force certificate validation | On |
-| tls.verify\_hostname | force hostname validation for certificates | Off |
+| tls.verify\_hostname | force TLS verification of hostnames | Off |
 | tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
 | tls.ca\_file | absolute path to CA certificate file |  |
 | tls.ca\_path | absolute path to scan for certificate files |  |
@@ -175,16 +175,17 @@ Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/S
 
 ### Verify subjectAltName
 
-When extracting the X509v3 Subject Alternative Name from a certificate:
+By default, TLS verification of hostnames is not done automatically.
+As an example, we can extract the X509v3 Subject Alternative Name from a certificate:
 
 ```
 X509v3 Subject Alternative Name:
     DNS:my.fluent-aggregator.net
 ```
 
-Then, the TLS client will connect to `other.fluent-aggregator.net`, there is a glitch of hostnames.
+As you can see, this certificate covers only `my.fluent-aggregator.net` so if we use a different hostname it should fail.
 
-This difference of the hostname can be detected with:
+To fully verify the alternative name and demonstrate the failure we enable `tls.verify_hostname`:
 
 
 ```text
