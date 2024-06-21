@@ -35,8 +35,10 @@ Kubernetes exports it events through the API server. This input plugin allows to
 ## Getting Started
 
 ### Kubernetes Service Account
-The kubernetes service account used by fluent-bit must have `get`, `list`, and `watch` permissions to `namespaces` and `pods` for the namespaces watched in the `kube_namespace` config parameter. If you are using the helm chart to set up fluent-bit, this role is included.
-
+The Kubernetes service account used by Fluent Bit must have `get`, `list`, and `watch`
+permissions to `namespaces` and `pods` for the namespaces watched in the
+`kube_namespace` configuration parameter. If you're using the helm chart to configure
+Fluent Bit, this role is included.
 ### Simple Configuration File
 
 In the following configuration file, the input plugin *kubernetes_events* collects events every 5 seconds (default for *interval_nsec*) and exposes them through the [standard output plugin](../outputs/standard-output.md) on the console.
