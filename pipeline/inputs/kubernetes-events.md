@@ -29,7 +29,7 @@ Kubernetes exports it events through the API server. This input plugin allows to
 | tls.vhost           | Set optional TLS virtual host.                                                        |                                                      |
 
 
-- _* as of Fluent-Bit 3.1 this plugin uses a kubernetes watch stream instead of polling. The interval parameters in versions > 3.1 are used for reconnecting the kubernetes watch stream._
+- _* As of Fluent-Bit 3.1, this plugin uses a Kubernetes watch stream instead of polling. In versions before 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream._
 
 
 ## Getting Started
