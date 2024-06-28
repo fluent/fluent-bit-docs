@@ -27,12 +27,17 @@ At this time, no other settings are supported.
 Fetches credentials via a signed web identity token for a Kubernetes service account.
 See https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html.
 
-## 4. ECS HTTP Credentials Endpoint
+## 4. EKS Pod Identities (HTTP Credentials)
+
+Fetches credentials via an agent that runs on the EKS node.
+See https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html.
+
+## 5. ECS HTTP Credentials Endpoint
 
 Fetches credentials for the ECS task's role.
 See https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html.
 
-## 5. EC2 Instance Profile Credentials (IMDS)
+## 6. EC2 Instance Profile Credentials (IMDS)
 
 Fetches credentials for the EC2 instance profile's role.
 See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html.
