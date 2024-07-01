@@ -11,34 +11,38 @@ Uses the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and optionally `AWS_SE
 
 ## 2. Shared Configuration and Credentials Files
 
-Reads the shared config file at `$AWS_CONFIG_FILE` (or `$HOME/.aws/config`) and the shared credentials file at `$AWS_SHARED_CREDENTIALS_FILE` (or `$HOME/.aws/credentials`) to fetch the credentials for the profile named `$AWS_PROFILE` or `$AWS_DEFAULT_PROFILE` (or "default"). See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html.
+Reads the shared config file at `$AWS_CONFIG_FILE` (or `$HOME/.aws/config`) and the shared credentials file at `$AWS_SHARED_CREDENTIALS_FILE` (or `$HOME/.aws/credentials`) to fetch the credentials for the profile named `$AWS_PROFILE` or `$AWS_DEFAULT_PROFILE` (or "default"). For more information, see [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) in the AWS CLI User Guide.
 
 The shared settings will be evaluated in the following order.
 
 Setting|File|Description
 ---|---|---
-`credential_process`|config| See https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html.<br/>Supported on Linux only.
+`credential_process`|config| See [Source credentials with an external process](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html) in the AWS CLI User Guide.<br/>Supported on Linux only.
 `aws_access_key_id`<br/>`aws_secret_access_key`<br/>*`aws_session_token`*|credentials|Access key ID and secret key to use to authenticate.<br/>The session token must be set for temporary credentials.
 
 At this time, no other settings are supported.
 
 ## 3. EKS Web Identity Token (OIDC)
 
-Fetches credentials via a signed web identity token for a Kubernetes service account.
-See https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html.
+Fetches credentials using a signed web identity token for a Kubernetes service account. For more information, see
+[IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)
+in the Amazon EKS User Guide.
 
 ## 4. EKS Pod Identities (HTTP Credentials)
 
-Fetches credentials via an agent that runs on the EKS node.
-See https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html.
+Fetches credentials using an agent running on the EKS node. For more information, see
+[EKS Pod Identities](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html)
+in the Amazon EKS User Guide.
 
 ## 5. ECS HTTP Credentials Endpoint
 
-Fetches credentials for the ECS task's role.
-See https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html.
+Fetches credentials for the ECS task's role. For more information, see
+[Task IAM Roles](https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html)
+in the Amazon ECS User Guide.
 
 ## 6. EC2 Instance Profile Credentials (IMDS)
 
-Fetches credentials for the EC2 instance profile's role.
-See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html.
+Fetches credentials for the EC2 instance profile's role. For more information, see
+[IAM Roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
+in the Amazon EC2 User Guide.
 As of Fluent Bit version 1.8.8, IMDSv2 is used by default and IMDSv1 may be disabled. Prior versions of Fluent Bit require enabling IMDSv1 on EC2.
