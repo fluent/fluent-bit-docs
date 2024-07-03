@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | `Add` | Similar to the `ADD` option in the [modify filter](https://docs.fluentbit.io/manual/pipeline/filters/modify). You can specify it multiple times. It takes two arguments: a `KEY` name and `VALUE`. The value uses Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/v/1.5/administration/configuring-fluent-bit/record-accessor) syntax to create a template that uses ECS Metadata values. See the list of supported metadata templating keys. This option lets you control both the key names for metadata and the format for metadata values. | _none_ |
 | `ECS_Tag_Prefix` | Similar to the `Kube_Tag_Prefix` option in the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) and performs the same function. The full log tag should be prefixed with this string and after the prefix the filter must find the next characters in the tag to be the Docker Container Short ID (the first 12 characters of the full container ID). The filter uses this to identify which container the log came from so it can find which task it's a part of. See the design section for more information. If not specified, it defaults to empty string, meaning that the tag must be prefixed with the 12 character container short ID. If you want to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks, don't set this parameter and enable the `Cluster_Metadata_Only` option | empty string |
+| `Container_Id_Field_Name` | If set to a non-empty string, retrieves the Container Short ID from an already populated field designated by this parameter. Only the cluster metadata will be attached if the field is incorrect or holds invalid data. | empty string |
 | `Cluster_Metadata_Only` | When enabled, the plugin will only attempt to attach cluster metadata values. Use to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks. | `Off` |
 | `ECS_Meta_Cache_TTL` | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max `TTL` for objects in the hash table. You should set this if you have frequent container or task restarts. For example, if your cluster runs short running batch jobs that complete in less than 10 minutes, there is no reason to keep any stored metadata longer than 10 minutes. You would therefore set this parameter to `10m`. | `1h` |
 
@@ -266,6 +267,65 @@ pipeline:
   Name stdout
   Match *
   Format json_lines
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### Example 4: Attach task metadata using container ID field
+
+Attaches the cluster metadata, as well as task metadata using the already populated field `container_id` containing the
+container ID to query the ECS introspection endpoint. In this configuration the tag can be set to anything.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+
+  filters:
+    - name: ecs
+      match: '*'
+      container_id_field_name: container_id
+      add:
+        - ecs_cluster $ClusterName
+        - ecs_task_id $TaskID
+        - ecs_container_name $ECSContainerName
+        - ecs_task_definition_family $TaskDefinitionFamily
+
+    outputs:
+    - name: stdout
+      match: '*'
+      format: json_lines
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name   forward
+  Listen 0.0.0.0
+  Port   24224
+
+[FILTER]
+  Name                           ecs
+  Match                          *
+  container_id_field_name        container_id
+  ADD ecs_cluster                $ClusterName
+  ADD ecs_task_id                $TaskID
+  ADD ecs_container_name         $ECSContainerName
+  ADD ecs_task_definition_family $TaskDefinitionFamily
+  ADD ecs_task_id                $TaskID
+
+[OUTPUT]
+    Name   stdout
+    Match  *
+    Format json_lines
 ```
 
 {% endtab %}
