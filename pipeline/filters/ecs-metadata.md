@@ -274,8 +274,9 @@ pipeline:
 
 #### Example 4: Attach task metadata using container ID field
 
-Attaches the cluster metadata, as well as task metadata using the already populated field `container_id` containing the
-container ID to query the ECS introspection endpoint. In this configuration the tag can be set to anything.
+Attaches the cluster metadata and task metadata using the populated `container_id`
+field, which includes the container ID to query the ECS introspection endpoint. In this
+configuration the tag of the incoming log record can be set to anything.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
