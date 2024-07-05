@@ -24,6 +24,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluent-bit |
 | label\_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
 | label\_map\_path | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section. | |
+| structured\_metadata | Optional comma separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values may also reference record keys via record accessors. More details in the Structured Metadata section. | |
 | remove\_keys | Optional list of keys to remove. | |
 | drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. | off |
 | line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
@@ -175,6 +176,26 @@ Based in the JSON example provided above, the internal stream labels will be:
 ```text
 job="fluentbit", team="Santiago Wanderers"
 ```
+
+### Structured Metadata
+
+[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) allows attaching custom fields to individual log lines without needing to embed the information in the content of the log line. This is particularly useful for high cardinality data for which labels are ill-suited. Although technically not labels, from a configuration perspective the `structured_metadata` configuration parameter behaves similarly to the `labels` parameter: both are comma-delimited `key=value` lists, and both may use record accessors to reference keys within the record being processed.
+
+Consider the following example:
+
+```python
+[OUTPUT]
+    name                loki
+    match               *
+    labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
+    structured_metadata pod=$kubernetes['pod_name']
+```
+
+This configuration defines fixed values for the cluster and region labels, uses the record accessor pattern to set the namespace label to the namespace name as determined by the kubernetes metadata filter (not shown in the example), and uses a structured metadata field to hold the pod name.
+
+Other common uses for structured metadata include trace and span ids, process and thread ids, and log levels.
+
+Structured metadata is only officially supported starting with Loki 3.0 and should not be used with Loki deployments that lack support.
 
 ## Networking and TLS Configuration
 
