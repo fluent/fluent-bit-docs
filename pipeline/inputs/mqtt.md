@@ -10,6 +10,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | Listen | Listener network interface, default: 0.0.0.0 |
 | Port | TCP port where listening for connections, default: 1883 |
+| Payload_Key |　Specify the key where the payload key/value will be preserved. |
 
 ## Getting Started
 

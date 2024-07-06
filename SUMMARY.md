@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v2.2 Documentation](README.md)
+* [Fluent Bit v3.1 Documentation](README.md)
 
 ## About
 
@@ -44,6 +44,7 @@
 * [macOS](installation/macos.md)
 * [Windows](installation/windows.md)
 * [Yocto / Embedded Linux](installation/yocto-embedded-linux.md)
+* [Buildroot / Embedded Linux](installation/buildroot-embedded-linux.md)
 
 ## Administration
 
@@ -105,6 +106,7 @@
   * [Process Log Based Metrics](pipeline/inputs/process.md)
   * [Process Exporter Metrics](pipeline/inputs/process-exporter-metrics.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
+  * [Prometheus Remote Write](pipeline/inputs/prometheus-remote-write.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Splunk](pipeline/inputs/splunk.md)
@@ -127,6 +129,10 @@
   * [LTSV](pipeline/parsers/ltsv.md)
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
+* [Processors](pipeline/processors/README.md)
+  * [Content Modifier](pipeline/processors/content-modifier.md)
+  * [Metrics Selector](pipeline/processors/metrics-selector.md)
+  * [SQL](pipeline/processors/sql.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
@@ -174,6 +180,7 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [Loki](pipeline/outputs/loki.md)
+  * [Microsoft Fabric](pipeline/outputs/azure\_kusto.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)

@@ -2,11 +2,15 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit v2.2 Documentation
+# Fluent Bit v3.1 Documentation
 
-<figure><img src=".gitbook/assets/v2.2 big@2x.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/3.0.png" alt=""><figcaption></figcaption></figure>
 
-[Fluent Bit](http://fluentbit.io) is a Fast and Lightweight **Telemetry Agent** for Logs, Metrics, and Traces for Linux, macOS, Windows, and BSD family operating systems. It has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
+[Fluent Bit](http://fluentbit.io) is a fast and lightweight **telemetry agent**
+for logs, metrics, and traces for Linux, macOS, Windows, and BSD family
+operating systems. It has been made with a strong focus on performance to allow
+the collection and processing of telemetry data from different sources without
+complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
 ## Features
 
@@ -21,7 +25,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
   * Security: built-in TLS/SSL support
   * Asynchronous I/O
 * Pluggable Architecture and [Extensibility](development/library_api.md): Inputs, Filters and Outputs
-  * More than 100 built-in plugins are available
+  * Connect nearly any source to nearly any destination using preexisting plugins
   * Extensibility
     * Write any input, filter or output plugin in C language
     * WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)
@@ -37,4 +41,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 [Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) **graduated** sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/). As a CNCF-hosted project, it is a fully **vendor-neutral** and community-driven project.
+Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/)
+and is now sponsored by [Chronosphere](https://chronosphere.io/). As a
+CNCF-hosted project, it is a fully **vendor-neutral** and community-driven
+project.

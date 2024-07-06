@@ -47,7 +47,12 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
 
 ### Configuration File
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
+[SERVICE]
+    parsers_file /path/to/parsers.conf
+
 [INPUT]
     name   tail
     path   lines.txt
@@ -62,6 +67,28 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
     name   stdout
     match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    parsers_file: /path/to/parsers.conf
+pipeline:
+    inputs:
+        - name: tail
+          path: lines.txt
+          parser: json
+    filters:
+        - name: grep
+          match: '*'
+          regex: log aa
+    outputs:
+        - name: stdout
+          match: '*'
+
+```
+{% endtab %}
+{% endtabs %}
 
 The filter allows to use multiple rules which are applied in order, you can have many _Regex_ and _Exclude_ entries as required.
 
@@ -88,12 +115,25 @@ If you want to match or exclude records based on nested values, you can use a [R
 
 if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you can use the following rule:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [FILTER]
     Name    grep
     Match   *
     Exclude $kubernetes['labels']['app'] myapp
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    filters:
+        - name: grep
+          match: '*'
+          exclude: $kubernetes['labels']['app'] myapp
+```
+{% endtab %}
+{% endtabs %}
 
 ### Excluding records missing/invalid fields
 
@@ -103,6 +143,9 @@ A simple way to do this is just to `exclude` with a regex that matches anything,
 
 Here is an example that checks for a specific valid value for the key as well:
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 # Use Grep to verify the contents of the iot_timestamp value.
 # If the iot_timestamp key does not exist, this will fail
@@ -113,6 +156,18 @@ Here is an example that checks for a specific valid value for the key as well:
     Match                    iots_thread.*
     Regex                    iot_timestamp ^\d{4}-\d{2}-\d{2}
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    filters:
+        - name: grep
+          alias: filter-iots-grep
+          match: iots_thread.*
+          regex: iot_timestamp ^\d{4}-\d{2}-\d{2}
+```
+{% endtab %}
+{% endtabs %}
 
 The specified key `iot_timestamp` must match the expected expression - if it does not or is missing/empty then it will be excluded.
 
@@ -122,6 +177,9 @@ If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` prope
 
 Note: If `Logical_Op` is set, setting both 'Regex' and `Exclude` results in an error.
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name dummy
@@ -138,6 +196,27 @@ Note: If `Logical_Op` is set, setting both 'Regex' and `Exclude` results in an e
 [OUTPUT]
     Name stdout
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"endpoint":"localhost", "value":"something"}'
+          tag: dummy
+    filters:
+        - name: grep
+          match: '*'
+          logical_op: or
+          regex:
+            - value something
+            - value error
+    outputs:
+        - name: stdout
+```
+{% endtab %}
+{% endtabs %}
 
 Output will be
 ```
