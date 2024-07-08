@@ -6,7 +6,7 @@ The **tcp** input plugin allows to retrieve structured JSON or raw messages over
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description                                                                                                                                                                                                                                                    | Default |
+| Key          | Description | Default |
 | ------------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | Listen       | Listener network interface.                                                                                                                                                                                                                                    | 0.0.0.0 |
 | Port         | TCP port where listening for connections                                                                                                                                                                                                                       | 5170    |
