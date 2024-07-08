@@ -7,7 +7,7 @@ The **tcp** input plugin allows to retrieve structured JSON or raw messages over
 The plugin supports the following configuration parameters:
 
 | Key          | Description | Default |
-| ------------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| ------------ | ----------- | ------- |
 | Listen       | Listener network interface.                                                                                                                                                                                                                                    | 0.0.0.0 |
 | Port         | TCP port where listening for connections                                                                                                                                                                                                                       | 5170    |
 | Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_.                                                                                                                              |         |
