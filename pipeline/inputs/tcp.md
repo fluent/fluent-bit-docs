@@ -6,8 +6,8 @@ The **tcp** input plugin allows to retrieve structured JSON or raw messages over
 
 The plugin supports the following configuration parameters:
 
-| Key          | Description                                                                                                                                                                                                                                                    | Default |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Key          | Description | Default |
+| ------------ | ----------- | ------- |
 | Listen       | Listener network interface.                                                                                                                                                                                                                                    | 0.0.0.0 |
 | Port         | TCP port where listening for connections                                                                                                                                                                                                                       | 5170    |
 | Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_.                                                                                                                              |         |
@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Format       | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ (option below).                                        | json    |
 | Separator    | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character  (LF or 0x10).                                                                                               |         |
 | Source\_Address\_Key| Specify the key where the source address will be injected.                                                                                                                                                                                              |         |
+| Threaded     | Improve data ingestion performance by letting Fluent Bit handle incoming data in parallel across multiple dedicated threads. | off |
 
 ## Getting Started
 
