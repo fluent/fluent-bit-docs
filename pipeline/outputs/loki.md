@@ -202,7 +202,6 @@ The following configuration:
     structured_metadata pod=$kubernetes['pod_name']
 ```
 
-This configuration defines fixed values for the cluster and region labels, uses the record accessor pattern to set the namespace label to the namespace name as determined by the kubernetes metadata filter (not shown in the example), and uses a structured metadata field to hold the pod name.
 
 Other common uses for structured metadata include trace and span ids, process and thread ids, and log levels.
 
