@@ -177,7 +177,7 @@ Based in the JSON example provided above, the internal stream labels will be:
 job="fluentbit", team="Santiago Wanderers"
 ```
 
-### Structured Metadata
+### Structured metadata
 
 [Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) allows attaching custom fields to individual log lines without needing to embed the information in the content of the log line. This is particularly useful for high cardinality data for which labels are ill-suited. Although technically not labels, from a configuration perspective the `structured_metadata` configuration parameter behaves similarly to the `labels` parameter: both are comma-delimited `key=value` lists, and both may use record accessors to reference keys within the record being processed.
 
