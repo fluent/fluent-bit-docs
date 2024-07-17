@@ -179,7 +179,13 @@ job="fluentbit", team="Santiago Wanderers"
 
 ### Structured metadata
 
-[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) allows attaching custom fields to individual log lines without needing to embed the information in the content of the log line. This is particularly useful for high cardinality data for which labels are ill-suited. Although technically not labels, from a configuration perspective the `structured_metadata` configuration parameter behaves similarly to the `labels` parameter: both are comma-delimited `key=value` lists, and both may use record accessors to reference keys within the record being processed.
+[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/)
+lets you attach custom fields to individual log lines without embedding the
+information in the content of the log line. This capability works well for high
+cardinality data that isn't suited for using labels. While not a label, the
+`structured_metadata` configuration parameter operates similarly to the `labels`
+parameter. Both parameters are comma-delimited `key=value` lists, and both can use
+record accessors to reference keys within the record being processed.
 
 Consider the following example:
 
