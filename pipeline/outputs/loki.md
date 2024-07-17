@@ -205,7 +205,8 @@ The following configuration:
 
 Other common uses for structured metadata include trace and span IDs, process and thread IDs, and log levels.
 
-Structured metadata is only officially supported starting with Loki 3.0 and should not be used with Loki deployments that lack support.
+Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
+with Loki deployments prior to Loki 3.0.
 
 ## Networking and TLS Configuration
 
