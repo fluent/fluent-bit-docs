@@ -187,7 +187,12 @@ cardinality data that isn't suited for using labels. While not a label, the
 parameter. Both parameters are comma-delimited `key=value` lists, and both can use
 record accessors to reference keys within the record being processed.
 
-Consider the following example:
+The following configuration:
+
+- Defines fixed values for the cluster and region labels.
+- Uses the record accessor pattern to set the namespace label to the namespace name as
+  determined by the Kubernetes metadata filter (not shown).
+- Uses a structured metadata field to hold the Kubernetes pod name.
 
 ```python
 [OUTPUT]
