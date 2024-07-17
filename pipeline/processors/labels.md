@@ -5,7 +5,8 @@ The **labels** processor allows you to manipulate the labels of Metrics.
 Similar to the functionality exposed by filters, this processor presents a enriching/modifying mechanism to perform such operations for labels manipulation.
 The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
 
-Note that processors and this specific component can only be enabled using the new YAML configuration format. Classic mode configuration format doesn't support processors.
+Note that processors and this specific component can only be enabled using the new YAML configuration format.
+Classic mode configuration format doesn't support processors.
 
 ## Configuration Parameters
 
