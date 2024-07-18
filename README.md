@@ -4,7 +4,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 # Fluent Bit v3.1 Documentation
 
-<figure><img src=".gitbook/assets/3.0.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/3.1.png" alt=""><figcaption></figcaption></figure>
 
 [Fluent Bit](http://fluentbit.io) is a fast and lightweight **telemetry agent**
 for logs, metrics, and traces for Linux, macOS, Windows, and BSD family
