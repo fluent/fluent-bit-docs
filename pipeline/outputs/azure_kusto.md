@@ -65,7 +65,7 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
 | ingestion_endpoint_connect_timeout                    | The connection timeout of various Kusto endpoints in seconds.                                                                                                                                                  | `60` |
 | compression_enabled                    | If enabled, sends compressed HTTP payload (gzip) to Kusto.                                                                                                                                                  | `true` |
-| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of kusto endpoint in seconds.                                                                                                                                                  | `3600` |
+| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.                                                                                                                                                  | `3600` |
 
 ### Configuration File
 
