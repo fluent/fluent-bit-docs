@@ -42,7 +42,8 @@ pipeline:
 
 #### Insert example
 
-The following example appends the key `agent` with the value `fluentbit` as the label of metrics.
+The following example appends the key `agent` with the value `fluentbit` as the label
+of metrics:
 
 ```yaml
 pipeline:
