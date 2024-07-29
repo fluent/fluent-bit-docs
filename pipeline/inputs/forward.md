@@ -81,7 +81,7 @@ pipeline:
 
 Since Fluent Bit v3, in\_forward can handle secure forward protocol.
 
-For using user-password authentication, it needs to specify `secutiry.users` at least an one-pair.
+For using user-password authentication, it needs to specify `security.users` at least an one-pair.
 For using shared key, it needs to specify `shared_key` in both of forward output and forward input.
 `self_hostname` is not able to specify with the same hostname between fluent servers and clients.
 
