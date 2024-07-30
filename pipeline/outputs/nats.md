@@ -15,7 +15,7 @@ In order to override the default configuration values, the plugin uses the optio
 nats://host:port
 ```
 
-The stream name ( like a Kafka "topic" ) is based on the event_check->tag.
+The stream name (like a Kafka _topic_) is based on the event_check->tag.
 
 ## Running
 
