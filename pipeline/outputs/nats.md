@@ -69,6 +69,6 @@ Each record is an individual entity represented in a JSON array that contains a 
 
 {% hint style="info" %}
 **Note:** This module
-[writes to the NATS stream as JSON](https://github.com/fluent/fluent-bit/blob/master/plugins/out_nats/nats.c#L185C1-L189C49),
+[writes to the NATS stream as JSON ](https://github.com/fluent/fluent-bit/blob/master/plugins/out_nats/nats.c#L185C1-L189C49),
 rather than MsgPack (`msgpack_to_json`).
 {% endhint %}
