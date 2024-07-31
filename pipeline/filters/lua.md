@@ -436,3 +436,113 @@ pipeline:
 #### Output
 
 In the output only the messages with response code 0 or greater than 399 are shown.
+
+
+### Timeformat Conversion
+
+In this example, we want to convert specific type of datetime format of a field to `utc ISO 8601` format.
+
+#### Lua script
+
+Script `custom_datetime_format.lua`
+
+```lua
+function convert_to_utc(tag, timestamp, record)
+    local date_time = record["pub_date"]
+    local new_record = record
+    if date_time then
+        if string.find(date_time, ",") then
+            local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+            local date_part, zone_part = date_time:match(pattern)
+
+            if date_part and zone_part then
+                local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                local handle = io.popen(command)
+                local result = handle:read("*a")
+                handle:close()
+                new_record["pub_date"] = result:match("%S+")
+            end
+        end
+    end
+    return 1, timestamp, new_record
+end
+```
+
+#### Configuration
+
+Configuration to get a json key with datetime and convert it to another format.
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```ini
+[INPUT]
+    Name    dummy
+    Dummy   {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
+    Tag     event_category_a
+
+[INPUT]
+    Name    dummy
+    Dummy   {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
+    Tag     event_category_b
+
+
+[FILTER]
+    Name                lua
+    Match               *
+    Script              custom_datetime_format.lua
+    call                convert_to_utc
+
+[Output]
+    Name                stdout
+    Match               *
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
+      tag: event_category_a
+
+    - name: dummy
+      dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
+      tag: event_category_b
+
+  filters:
+    - name: lua
+      match: '*'
+      script: custom_datetime_format.lua
+      call: convert_to_utc
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
+#### Input
+
+```json
+{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
+```
+and
+
+```json
+{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
+```
+Which are handled by dummy in this example.
+
+#### Output
+
+In the output It will convert the date time of two timezone to `ISO 8601` format in `UTC`.
+
+```ini
+...
+[2024/08/01 00:56:25] [ info] [output:stdout:stdout.0] worker #0 started
+[0] event_category_a: [[1722452186.727104902, {}], {"event"=>"Restock", "pub_date"=>"2024-07-30T18:01:06Z"}]
+[0] event_category_b: [[1722452186.730255842, {}], {"event"=>"Soldout", "pub_date"=>"2024-07-29T04:15:00Z"}]
+...
+```
