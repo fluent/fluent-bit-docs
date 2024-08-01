@@ -557,7 +557,8 @@ Which are handled by dummy in this example.
 
 #### Output
 
-In the output It will convert the date time of two timezone to `ISO 8601` format in `UTC`.
+The output of this process shows the conversion of the `datetime` of two timezones to
+`ISO 8601` format in `UTC`.
 
 ```ini
 ...
