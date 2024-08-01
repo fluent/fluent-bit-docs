@@ -513,7 +513,25 @@ pipeline:
   filters:
     - name: lua
       match: '*'
-      script: custom_datetime_format.lua
+      code: |
+        function convert_to_utc(tag, timestamp, record)
+          local date_time = record["pub_date"]
+          local new_record = record
+          if date_time then
+              if string.find(date_time, ",") then
+                  local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+                  local date_part, zone_part = date_time:match(pattern)
+                  if date_part and zone_part then
+                      local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                      local handle = io.popen(command)
+                      local result = handle:read("*a")
+                      handle:close()
+                      new_record["pub_date"] = result:match("%S+")
+                  end
+              end
+          end
+          return 1, timestamp, new_record
+        end
       call: convert_to_utc
 
   outputs:
