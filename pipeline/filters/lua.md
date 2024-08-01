@@ -471,7 +471,8 @@ end
 
 #### Configuration
 
-Configuration to get a json key with datetime and convert it to another format.
+Use this configuration to obtain a JSON key with `datetime`, and then convert it to
+another format.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
