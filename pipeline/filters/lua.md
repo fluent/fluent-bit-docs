@@ -440,7 +440,8 @@ In the output only the messages with response code 0 or greater than 399 are sho
 
 ### Timeformat Conversion
 
-In this example, we want to convert specific type of datetime format of a field to `utc ISO 8601` format.
+The following example converts a field's specific type of `datetime` format to
+`utc ISO 8601` format.
 
 #### Lua script
 
