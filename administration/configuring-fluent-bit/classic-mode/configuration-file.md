@@ -2,6 +2,8 @@
 description: This page describes the main configuration file used by Fluent Bit
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
+
 # Configuration File
 
 One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows to use one configuration file which works at a global scope and uses the [Format and Schema](format-schema.md) defined previously.
