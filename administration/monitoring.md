@@ -310,6 +310,8 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
 
 ## Grafana Dashboard and Alerts
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=0b83cb05-4f52-4853-83cc-f4539b64044d" />
+
 Fluent Bit's exposed [prometheus style metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be leveraged to create dashboards and alerts.
 
 The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) but with a few key differences such as the use of the `instance` label (see [why here](https://www.robustperception.io/controlling-the-instance-label)), stacked graphs and a focus on Fluent Bit metrics.
