@@ -2,6 +2,8 @@
 
 The **Lua** filter allows you to modify the incoming records (even split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
+
 Due to the necessity to have a flexible filtering mechanism, it is now possible to extend Fluent Bit capabilities by writing custom filters using Lua programming language. A Lua-based filter takes two steps:
 
 1. Configure the Filter in the main configuration
