@@ -1,5 +1,7 @@
 # Troubleshooting
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=759ddb3d-b363-4ee6-91fa-21025259767a" />
+
 * [Tap Functionality: generate events or records](troubleshooting.md#tap-functionality)
 * [Dump Internals Signal](troubleshooting#dump-internals-signal)
 
