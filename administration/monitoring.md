@@ -2,6 +2,8 @@
 description: Learn how to monitor your Fluent Bit data pipelines
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
+
 # Monitoring
 
 Fluent Bit comes with built-it features to allow you to monitor the internals of your pipeline, connect to Prometheus and Grafana, Health checks  and also connectors to use external services for such purposes:
