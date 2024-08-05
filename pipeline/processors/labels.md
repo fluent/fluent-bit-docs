@@ -1,4 +1,5 @@
 # Labels
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1e9a2474-00c3-4d8d-b170-79996be7af79" />
 
 The **labels** processor lets you manipulate the labels of metrics.
 
