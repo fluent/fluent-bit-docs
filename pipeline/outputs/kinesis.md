@@ -25,6 +25,7 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | log\_key | By default, the whole log record will be sent to Kinesis. If you specify a key name with this option, then only the value of that key will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Kinesis. |
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | endpoint | Specify a custom endpoint for the Kinesis API. |
+| port | Specify the port for the Kinesis API. This defaults to 443. |
 | sts\_endpoint | Custom endpoint for the STS API. |
 | auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. This option defaults to `true`. |
 | external\_id | Specify an external ID for the STS API, can be used with the role_arn parameter if your role requires an external ID. |
