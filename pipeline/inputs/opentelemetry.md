@@ -52,11 +52,11 @@ __OTLP/GRPC__
 
 The OpenTelemetry input plugin supports the following telemetry data types:
 
-|     Type    |   HTTP1/JSON  |  HTTP1/Protobuf | HTTP2/GRPC |
-| ----------- | ------------- | --------------- | ---------- |
-|    Logs     |     Stable    |      Stable     |   Stable   |
-|    Metrics  | Unimplemented |      Stable     |   Stable   |
-|    Traces   | Unimplemented |      Stable     |   Stable   |
+| Type    | HTTP1/JSON | HTTP1/Protobuf | HTTP2/GRPC |
+| ------- | ---------- | -------------- | ---------- |
+| Logs    | Stable | Stable | Stable |
+| Metrics | Unimplemented | Stable | Stable |
+| Traces  | Unimplemented | Stable | Stable |
 
 A sample config file to get started will look something like the following:
 
