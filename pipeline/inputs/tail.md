@@ -81,7 +81,7 @@ If you are running Fluent Bit to process logs coming from containers like Docker
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/containers/*.log
       multiline.parser: docker, cri
 ```
@@ -146,9 +146,9 @@ In your main configuration file append the following _Input_ & _Output_ sections
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/syslog
-      
+
   outputs:
     - stdout:
       match: *
