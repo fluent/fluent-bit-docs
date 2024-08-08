@@ -50,7 +50,7 @@ __OTLP/GRPC__
 
 ## Getting started
 
-The OpenTelemetry input plugin currently supports the following telemetry data types:
+The OpenTelemetry input plugin supports the following telemetry data types:
 
 |     Type    |   HTTP1/JSON  |  HTTP1/Protobuf | HTTP2/GRPC |
 | ----------- | ------------- | --------------- | ---------- |
