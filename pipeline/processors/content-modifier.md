@@ -2,6 +2,8 @@
 
 The **content_modifier** processor allows you to manipulate the messages, metadata/attributes and content of Logs and Traces.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
+
 Similar to the functionality exposed by filters, this processor presents a unified mechanism to perform such operations for data manipulation. The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
 
 Note that processors and this specific component can only be enabled using the new YAML configuration format. Classic mode configuration format doesn't support processors.

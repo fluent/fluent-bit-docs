@@ -2,6 +2,8 @@
 
 The **metric_selector** processor allows you to select metrics to include or exclude (similar to the `grep` filter for logs).
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=326269f3-cfea-472d-9169-1de32c142b90" />
+
 ## Configuration Parameters <a id="config"></a>
 
 The native processor plugin supports the following configuration parameters:

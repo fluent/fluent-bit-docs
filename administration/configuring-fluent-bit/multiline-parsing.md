@@ -2,6 +2,8 @@
 
 In an ideal world, applications might log their messages within a single line, but in reality applications generate multiple log messages that sometimes belong to the same context. But when is time to process such information it gets really complex. Consider application stack traces which always have multiple log lines.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e19a4c14-a9e4-4163-8f3a-52196eb9a585" />
+
 Starting from Fluent Bit v1.8, we have implemented a unified Multiline core functionality to solve all the user corner cases. In this section, you will learn about the features and configuration options available.
 
 ## Concepts

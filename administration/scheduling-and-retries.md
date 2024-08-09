@@ -1,5 +1,7 @@
 # Scheduling and Retries
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a70a6008-106f-43c8-8930-243806371482" />
+
 [Fluent Bit](https://fluentbit.io) has an Engine that helps to coordinate the data ingestion from input plugins and calls the _Scheduler_ to decide when it is time to flush the data through one or multiple output plugins. The Scheduler flushes new data at a fixed time of seconds and the _Scheduler_ retries when asked.
 
 Once an output plugin gets called to flush some data, after processing that data it can notify the Engine three possible return statuses:
