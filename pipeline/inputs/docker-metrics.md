@@ -6,12 +6,7 @@ description: >-
 
 # Docker Metrics
 
-Content:
-
-* [Configuration Parameters](https://app.gitbook.com/s/-LKKSx-3LBTCtaHbg0gl-887967055/pipeline/inputs/docker.md#configuration-parameters)
-* [Configuration File](https://app.gitbook.com/s/-LKKSx-3LBTCtaHbg0gl-887967055/pipeline/inputs/docker.md#configuration-file)
-
-### Configuration Parameters
+## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
@@ -23,7 +18,7 @@ The plugin supports the following configuration parameters:
 
 If you set neither `Include` nor `Exclude`, the plugin will try to get metrics from _all_ the running containers.
 
-### Configuration File
+## Configuration File
 
 Here is an example configuration that collects metrics from two docker instances (`6bab19c3a0f9` and `14159be4ca2c`).
 
