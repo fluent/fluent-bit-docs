@@ -36,17 +36,17 @@ In the following configuration file, the input plugin *kubernetes_events* collec
 
 ```text
 [SERVICE]
-flush           1
-log_level       info
+    flush           1
+    log_level       info
 
 [INPUT]
-name            kubernetes_events
-tag             k8s_events
-kube_url        https://kubernetes.default.svc
+    name            kubernetes_events
+    tag             k8s_events
+    kube_url        https://kubernetes.default.svc
 
 [OUTPUT]
-name            stdout
-match           *
+    name            stdout
+    match           *
 ```
 
 ### Event Timestamp
