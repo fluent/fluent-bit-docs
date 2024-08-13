@@ -6,17 +6,17 @@ The **dummy** input plugin, generates dummy events. It is useful for testing, de
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default value |
-| :--- | :--- | :--- |
-| Dummy | Dummy JSON record. | `{"message":"dummy"}` |
-| Metadata | Dummy JSON metadata. | `{}` |
-| Start\_time\_sec | Dummy base timestamp in seconds. | 0 |
-| Start\_time\_nsec | Dummy base timestamp in nanoseconds. | 0 |
-| Rate | Rate at which messages are generated expressed in how many times per second. | 1 |
-| Interval\_sec  | Set seconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. | 0 |
-| Interval\_nsec | Set nanoseconds of time interval at which every message is generated. If set, `Rate` configuration will be ignored. | 0 |
-| Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. | |
-| Copies | Number of messages to generate each time they are generated. | 1 |
+| Key                | Description | Default |
+| :----------------- | :---------- | :------ |
+| Dummy              | Dummy JSON record. | `{"message":"dummy"}` |
+| Metadata           | Dummy JSON metadata. | `{}` |
+| Start\_time\_sec   | Dummy base timestamp, in seconds. | `0` |
+| Start\_time\_nsec  | Dummy base timestamp, in nanoseconds. | `0` |
+| Rate               | Rate at which messages are generated expressed in how many times per second. | `1` |
+| Interval\_sec      | Set time interval, in seconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| Interval\_nsec     | Set time interval, in nanoseconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| Samples            | If set, the events number will be limited. For example, if Samples=3, the plugin generates only three events and stops. | _none_ |
+| Copies             | Number of messages to generate each time they are generated. | `1` |
 | Flush\_on\_startup | If set to `true`, the first dummy event is generated at startup. | `false` |
 
 ## Getting Started
