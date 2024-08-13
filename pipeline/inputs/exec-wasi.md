@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- |
 | WASI\_Path | The place of a WASM program file. |
 | Parser | Specify the name of a parser to interpret the entry as a structured message. |
-| Accessible\_Paths | Specify the whilelist of paths to be able to access paths from WASM programs. |
+| Accessible\_Paths | Specify the whitelist of paths to be able to access paths from WASM programs. |
 | Interval\_Sec | Polling interval \(seconds\). |
 | Interval\_NSec | Polling interval \(nanosecond\). |
 | Wasm\_Heap\_Size | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
