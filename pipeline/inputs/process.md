@@ -1,4 +1,5 @@
 # Process Metrics
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=91b97a84-1cd9-41fb-9189-a4f3b30b6bce" />
 
 _Process_ input plugin allows you to check how healthy a process is. It does so by performing a service check at every certain interval of time specified by the user.
 
