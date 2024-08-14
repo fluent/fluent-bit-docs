@@ -13,9 +13,9 @@ The plugin supports the following configuration parameters:
 | Accessible\_Paths | Specify the whilelist of paths to be able to access paths from WASM programs. |
 | Interval\_Sec | Polling interval \(seconds\). |
 | Interval\_NSec | Polling interval \(nanosecond\). |
-| Wasm\_Heap\_Size | Size of the heap size of Wasm execution. Review [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values. |
-| Wasm\_Stack\_Size | Size of the stack size of Wasm execution. Review [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values. |
-| Buf\_Size | Size of the buffer \(check [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values\) |
+| Wasm\_Heap\_Size | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| Wasm\_Stack\_Size | Size of the stack size of Wasm execution. Review [unit sizes](x../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| Buf\_Size | Size of the buffer \(check [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md for allowed values\) |
 | Oneshot | Only run once at startup. This allows collection of data precedent to fluent-bit's startup (bool, default: false) |
 
 ## Configuration Examples
