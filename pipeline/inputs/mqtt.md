@@ -8,9 +8,9 @@ The plugin supports the following configuration parameters:
 
 | Key         | Description                                                    | Default |
 | :---------- | :------------------------------------------------------------- | :------ |
-| Listen      | Listener network interface                                     | 0.0.0.0 |
-| Port        | TCP port where listening for connections                       | 1883    |
-| Payload_Key | Specify the key where the payload key/value will be preserved. |         |
+| Listen      | Listener network interface. | `0.0.0.0` |
+| Port        | TCP port where listening for connections. | `1883` |
+| Payload_Key | Specify the key where the payload key/value will be preserved. | _none_ |
 
 ## Getting Started
 
