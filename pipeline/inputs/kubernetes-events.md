@@ -50,4 +50,10 @@ In the following configuration file, the input plugin *kubernetes_events* collec
 ```
 
 ### Event Timestamp
-Event timestamp will be created from the first existing field in the following order of precedence: lastTimestamp, firstTimestamp, metadata.creationTimestamp
+
+Event timestamps are created from the first existing field, based on the following
+order of precedence:
+
+1. `lastTimestamp`
+1. `firstTimestamp`
+1. `metadata.creationTimestamp`
