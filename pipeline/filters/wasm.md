@@ -21,7 +21,7 @@ The plugin supports the following configuration parameters:
 | Wasm\_Path | Path to the built Wasm program that will be used. This can be a relative path against the main configuration file. |
 | Event\_Format | Define event format to interact with Wasm programs: msgpack or json. Default: json |
 | Function\_Name | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified above. |
-| Accessible\_Paths | Specify the whilelist of paths to be able to access paths from WASM programs. |
+| Accessible\_Paths | Specify the whitelist of paths to be able to access paths from WASM programs. |
 | Wasm\_Heap\_Size | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
 | Wasm\_Stack\_Size | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
 
