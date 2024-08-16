@@ -130,8 +130,7 @@ Fluent Bit v2.x.x
 
 ## Exported Metrics
 
-This documentation is copied from the nginx prometheus exporter metrics documentation: 
-[https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/README.md].
+This documentation is copied from the [nginx prometheus exporter metrics documentation](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md).
 
 ### Common metrics:
 Name | Type | Description | Labels
