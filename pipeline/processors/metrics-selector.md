@@ -11,9 +11,10 @@ The native processor plugin supports the following configuration parameters:
 | Key         | Description | Default |
 | :---------- | :--- | :--- |
 | Metric\_Name | Keep metrics in which the metric of name matches with the actual name or the regular expression. | |
-| Context | Specify matching context. Currently, metric_name is only supported. | `Metrics_Name` |
+| Context | Specify matching context. Currently, metric\_name and delete\_label\_value are only supported. | `Metrics_Name` |
 | Action | Specify the action for specified metrics. INCLUDE and EXCLUDE are allowed. | |
 | Operation\_Type | Specify the operation type of action for metrics payloads. PREFIX and SUBSTRING are allowed. | |
+| Label | Specify a label key and value pair. | |
 
 ## Configuration Examples <a id="config_example"></a>
 
@@ -41,6 +42,35 @@ pipeline:
           - name: metrics_selector
             metric_name: /fs/
             action: exclude
+
+          - name: labels
+            delete: name
+
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+
+{% tab title="context-delete\_label\_value.yaml" %}
+```yaml
+service:
+  flush: 5
+  daemon: off
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: fluentbit_metrics
+      tag: fluentbit.metrics
+      scrape_interval: 10
+
+      processors:
+        metrics:
+          - name: metrics_selector
+            context: delete_label_value
+            label: name stdout.0
 
           - name: labels
             delete: name
