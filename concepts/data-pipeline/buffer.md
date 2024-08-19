@@ -6,7 +6,7 @@ description: Data processing with reliability
 
 Previously defined in the [Buffering](../buffering.md) concept section, the `buffer` phase in the pipeline aims to provide a unified and persistent mechanism to store your data, either using the primary in-memory model or using the filesystem based mode.
 
-The `buffer` phase already contains the data in an immutable state, meaning, no other filter can be applied.
+The `buffer` phase already contains the data in an immutable state, meaning that no other filter can be applied.
 
 ```mermaid
 graph LR
