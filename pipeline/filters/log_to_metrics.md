@@ -211,4 +211,5 @@ As you can see in the output, there are per default the buckets `0.005, 0.01, 0.
 Please note, that the `+Inf` bucket will always be included implicitly. The buckets in a histogram are cumulative, so a value added to one bucket will add to all larger buckets, too.
 
 
-You can also see, that all the kubernetes labels have been attached to the metric, idential to the behavior of `label_field` described in [the previous chapter](#metric-label_values). That results in two sets for the histogram.
+This filter also attaches Kubernetes labels to each metric, identical to the behavior of `label_field`.
+This results in two sets for the histogram.
