@@ -25,7 +25,7 @@ Here is a simple configuration of Vivo Exporter, note that this example is not b
     match                  *
     empty_stream_on_read   off
     stream_queue_size      20M
-     http_cors_allow_origin *
+    http_cors_allow_origin *
 ```
 
 ### How it works
