@@ -196,12 +196,12 @@ We want to extract the `sandboxbsh` name and add it to our record as a special k
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
 ```
-      [FILTER]
-          Name                lua
-          Alias               filter-iots-lua
-          Match               iots_thread.*
-          Script              filters.lua
-          Call                set_landscape_deployment
+[FILTER]
+    Name                lua
+    Alias               filter-iots-lua
+    Match               iots_thread.*
+    Script              filters.lua
+    Call                set_landscape_deployment
 ```
 {% endtab %}
 
@@ -358,23 +358,23 @@ Configuration to get istio logs and apply response code filter to them.
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
 ```ini
-    [INPUT]
-        Name                tail
-        Path                /var/log/containers/*_istio-proxy-*.log
-        multiline.parser    docker, cri
-        Tag                 istio.*
-        Mem_Buf_Limit       64MB
-        Skip_Long_Lines     Off
+[INPUT]
+    Name                tail
+    Path                /var/log/containers/*_istio-proxy-*.log
+    multiline.parser    docker, cri
+    Tag                 istio.*
+    Mem_Buf_Limit       64MB
+    Skip_Long_Lines     Off
 
-    [FILTER]
-        Name                lua
-        Match               istio.*
-        Script              response_code_filter.lua
-        call                cb_response_code_filter
+[FILTER]
+    Name                lua
+    Match               istio.*
+    Script              response_code_filter.lua
+    call                cb_response_code_filter
 
-    [Output]
-        Name                stdout
-        Match               *
+[Output]
+    Name                stdout
+    Match               *
 ```
 {% endtab %}
 
