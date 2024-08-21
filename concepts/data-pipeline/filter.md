@@ -9,7 +9,7 @@ In production environments we want to have full control of the data we are colle
 ```mermaid
 graph LR
     accTitle: Fluent Bit data pipeline
-    accDescr: The Fluent Bit data pipeline includes input, a parser, a filter, a buffer, routing, and various outputs.
+    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, a parser, a filter, a buffer, routing, and various outputs.
     A[Input] --> B[Parser]
     B --> C[Filter]
     C --> D[Buffer]
