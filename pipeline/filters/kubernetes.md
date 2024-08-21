@@ -314,27 +314,27 @@ The difference is that kubelet need a special permission for resource `nodes/pro
 Fluent Bit Configuration Example:
 
 ```text
-    [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/*.log
-        DB                /var/log/flb_kube.db
-        Parser            docker
-        Docker_Mode       On
-        Mem_Buf_Limit     50MB
-        Skip_Long_Lines   On
-        Refresh_Interval  10
+[INPUT]
+    Name              tail
+    Tag               kube.*
+    Path              /var/log/containers/*.log
+    DB                /var/log/flb_kube.db
+    Parser            docker
+    Docker_Mode       On
+    Mem_Buf_Limit     50MB
+    Skip_Long_Lines   On
+    Refresh_Interval  10
 
-    [FILTER]
-        Name                kubernetes
-        Match               kube.*
-        Kube_URL            https://kubernetes.default.svc.cluster.local:443
-        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
-        Merge_Log           On
-        Buffer_Size         0
-        Use_Kubelet         true
-        Kubelet_Port        10250
+[FILTER]
+    Name                kubernetes
+    Match               kube.*
+    Kube_URL            https://kubernetes.default.svc.cluster.local:443
+    Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+    Merge_Log           On
+    Buffer_Size         0
+    Use_Kubelet         true
+    Kubelet_Port        10250
 ```
 
 So for fluent bit configuration, you need to set the `Use_Kubelet` to true to enable this feature.
