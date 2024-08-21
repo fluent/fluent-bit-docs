@@ -79,13 +79,13 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
-	name opentelemetry
-	listen 127.0.0.1
-	port 4318
+    name opentelemetry
+    listen 127.0.0.1
+    port 4318
 
 [OUTPUT]
-	name stdout
-	match *
+    name stdout
+    match *
 ```
 {% endtab %}
 
