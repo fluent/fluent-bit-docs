@@ -14,6 +14,11 @@ to run in their own self-contained threads. However, inputs and outputs implemen
 multithreading in distinct ways: inputs can run in **threaded** mode, and outputs
 can use one or more **workers**.
 
+Threading also affects certain processes related to inputs and outputs. For example, 
+[filters](../pipeline/filters/README.md) always run in the main thread, but
+[processors](../pipeline/processors/README.md) run in the self-contained threads of
+their respective inputs or outputs, if applicable.
+
 ## Inputs
 
 When inputs collect telemetry data, they can either perform this process
