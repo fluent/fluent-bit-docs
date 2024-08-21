@@ -141,12 +141,12 @@ The above configuration will generate a payload that looks like this
       "metadata": {
         "key1": "value1",
         "key2": "value2"
-    },
-    "logSourceName": "example_log_source",
-    "logRecords": [
-      "dummy"
-    ]
-  }
+      },
+      "logSourceName": "example_log_source",
+      "logRecords": [
+        "dummy"
+      ]
+    }
   ]
 }
 ```
