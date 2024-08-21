@@ -86,11 +86,13 @@ In case of multiple inputs, where oci_la_* properties can differ, you can add th
 [INPUT]
     Name dummy
     Tag dummy
+
 [Filter]
     Name modify
     Match *
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
+
 [Output]
     Name oracle_log_analytics
     Match *
@@ -109,6 +111,7 @@ You can attach certain metadata to the log events collected from various inputs.
 [INPUT]
     Name dummy
     Tag dummy
+
 [Output]
     Name oracle_log_analytics
     Match *
@@ -156,11 +159,13 @@ With oci_config_in_record option set to true, the metadata key-value pairs will 
 [INPUT]
     Name dummy
     Tag dummy
+
 [FILTER]
     Name Modify
     Match *
     Add olgm.key1 val1
     Add olgm.key2 val2
+
 [FILTER]
     Name nest
     Match *
@@ -168,11 +173,13 @@ With oci_config_in_record option set to true, the metadata key-value pairs will 
     Wildcard olgm.*
     Nest_under oci_la_global_metadata
     Remove_prefix olgm.
+
 [Filter]
     Name modify
     Match *
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
+
 [Output]
     Name oracle_log_analytics
     Match *
