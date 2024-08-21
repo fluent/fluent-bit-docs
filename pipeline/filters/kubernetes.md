@@ -271,7 +271,7 @@ There are some configuration setup needed for this feature.
 
 Role Configuration for Fluent Bit DaemonSet Example:
 
-```text
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -341,7 +341,7 @@ So for fluent bit configuration, you need to set the `Use_Kubelet` to true to en
 
 DaemonSet config Example:
 
-```text
+```yaml
 ---
 apiVersion: apps/v1
 kind: DaemonSet
