@@ -67,6 +67,7 @@
 * [Networking](administration/networking.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
+* [Multithreading](administration/multithreading.md)
 * [HTTP Proxy](administration/http-proxy.md)
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
