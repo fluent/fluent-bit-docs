@@ -63,6 +63,7 @@ Websocket plugin is working with tcp keepalive mode, please refer to [networking
     Listen      0.0.0.0
     Port        5170
     Format      json
+
 [OUTPUT]
     Name           websocket
     Match          *

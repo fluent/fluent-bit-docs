@@ -26,14 +26,14 @@ A sample config file to get started will look something like the following:
 {% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
-	name prometheus_remote_write
-	listen 127.0.0.1
-	port 8080
-	uri /api/prom/push
+    name prometheus_remote_write
+    listen 127.0.0.1
+    port 8080
+    uri /api/prom/push
 
 [OUTPUT]
-	name stdout
-	match *
+    name stdout
+    match *
 ```
 {% endtab %}
 
@@ -65,13 +65,13 @@ Communicating with TLS, you will need to use the tls related parameters:
 
 ```
 [INPUT]
-	Name prometheus_remote_write
-	Listen 127.0.0.1
-	Port 8080
-	Uri /api/prom/push
-	Tls On
-	tls.crt_file /path/to/certificate.crt
-	tls.key_file /path/to/certificate.key
+    Name prometheus_remote_write
+    Listen 127.0.0.1
+    Port 8080
+    Uri /api/prom/push
+    Tls On
+    tls.crt_file /path/to/certificate.crt
+    tls.key_file /path/to/certificate.key
 ```
 
 Now, you should be able to send data over TLS to the remote write input.
