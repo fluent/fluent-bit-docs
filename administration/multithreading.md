@@ -44,7 +44,7 @@ can have one or more workers running in parallel, and each worker can handle mul
 concurrent flushes. You can configure this behavior by changing the value of the
 `workers` setting.
 
-All outputs are capable of running in multiple workers, and each output has a
+All outputs are capable of running in multiple workers, and each output has
 a default value of `0`, `1`, or `2` workers. However, even if an output uses
 workers by default, you can safely reduce the number of workers below the default
 or disable workers entirely.
