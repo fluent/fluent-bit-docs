@@ -28,8 +28,8 @@ The plugin supports the following configuration parameters:
 | kubernetes_mode |  If enabled, it will automatically put pod_id, pod_name, namespace_name, docker_id and container_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](./kubernetes.md) filter plugin, which fills those fields. | | 
 | Regex | Include records in which the content of KEY matches the regular expression. | |  KEY  REGEX 
 | Exclude | Exclude records in which the content of KEY matches the regular expression. | |  KEY  REGEX 
-| Interval\_Sec | The interval for metrics emission, in seconds. If **Interval\_Sec** and **Interval\_Nsec** are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |
-| Interval\_Nsec | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with **Interval\_Sec**. Default value: `0`. |
+| Flush\_Interval\_Sec | The interval for metrics emission, in seconds. If **Flush\_Interval\_Sec** and **Flush\_Interval\_Nsec** are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |
+| Flush\_Interval\_Nsec | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with **Flush\_Interval\_Sec**. Default value: `0`. |
 
 ## Getting Started
 
