@@ -15,6 +15,8 @@ In order to override the default configuration values, the plugin uses the optio
 nats://host:port
 ```
 
+The stream name (like a Kafka _topic_) is based on the event_check->tag.
+
 ## Running
 
 [Fluent Bit](http://fluentbit.io) only requires to know that it needs to use the **nats** output plugin, if no extra information is given, it will use the default values specified in the above table.
@@ -65,3 +67,8 @@ Each record is an individual entity represented in a JSON array that contains a 
 ]
 ```
 
+{% hint style="info" %}
+**Note:** This module
+[writes to the NATS stream as JSON ](https://github.com/fluent/fluent-bit/blob/master/plugins/out_nats/nats.c#L185C1-L189C49),
+rather than MsgPack (`msgpack_to_json`).
+{% endhint %}
