@@ -19,6 +19,7 @@ The plugin supports the following configuration parameters:
 | Read\_From\_Tail | Start reading new entries. Skip entries already stored in Journald. | Off |
 | Lowercase | Lowercase the Journald field \(key\). | Off |
 | Strip\_Underscores | Remove the leading underscore of the Journald field \(key\). For example the Journald field _\_PID_ becomes the key _PID_. | Off |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
 
 ## Getting Started
 
