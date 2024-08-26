@@ -14,6 +14,7 @@ The plugin supports the following configuration parameters:
 | meta\_key | Specify a key name for meta information. | "@meta" |
 | hostname | Specify hostname or FQDN. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost" |
 | version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
 
 **Note:** The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients.
 Elasticsearch can build its cluster and dynamically generate a connection list which is called "sniffing".
