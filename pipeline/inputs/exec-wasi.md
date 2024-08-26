@@ -17,6 +17,7 @@ The plugin supports the following configuration parameters:
 | Wasm\_Stack\_Size | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
 | Buf\_Size | Size of the buffer \(check [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values\) |
 | Oneshot | Only run once at startup. This allows collection of data precedent to fluent-bit's startup (bool, default: false) |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Configuration Examples
 
