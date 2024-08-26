@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 | Format       | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ (option below).                                        | json    |
 | Separator    | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character  (LF or 0x10).                                                                                               |         |
 | Source\_Address\_Key| Specify the key where the source address will be injected.                                                                                                                                                                                              |         |
-| Threaded     | Improve data ingestion performance by letting Fluent Bit handle incoming data in parallel across multiple dedicated threads. | off |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
 
 ## Getting Started
 
