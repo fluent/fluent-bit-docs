@@ -133,3 +133,25 @@ With [Levitate](https://last9.io/levitate-tsdb), you must use the Levitate clust
     http_user <Levitate Cluster Username>
     http_passwd <Levitate Cluster Password>
 ```
+
+### Add Prometheus like Labels
+
+Ordinary prometheus clients add some of the labels as below:
+
+```
+[OUTPUT]
+    Name                 prometheus_remote_write
+    Match                your.metric
+    Host                 xxxxxxx.yyyyy.zzzz
+    Port                 443
+    Uri                  /api/v1/write
+    Header               Authorization Bearer YOUR_LICENSE_KEY
+    Log_response_payload True
+    Tls                  On
+    Tls.verify           On
+    # add user-defined labels
+    add_label instance ${HOSTNAME}
+    add_label job fluent-bit
+```
+
+`instance` label can be emulated with `add_label instance ${HOSTNAME}`. And other labels can be added with `add_label <key> <value>` setting.
