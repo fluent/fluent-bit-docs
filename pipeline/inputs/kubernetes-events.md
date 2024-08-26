@@ -31,6 +31,9 @@ Kubernetes exports it events through the API server. This input plugin allows to
 
 - _* As of Fluent-Bit 3.1, this plugin uses a Kubernetes watch stream instead of polling. In versions before 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream._
 
+## Threading
+
+This input always runs in its own [thread](../../administration/multithreading.md#inputs).
 
 ## Getting Started
 
