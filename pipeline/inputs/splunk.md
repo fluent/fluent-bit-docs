@@ -13,6 +13,7 @@ The **splunk** input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Do
 | buffer_chunk_size        | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size. | 512K    |
 | successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.                                                              | 201     |
 | splunk\_token           | Add an Splunk token for HTTP HEC.`                                  |         |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
 
 ## Getting Started
 
