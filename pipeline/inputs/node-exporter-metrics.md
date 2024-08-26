@@ -81,6 +81,10 @@ The following table describes the available collectors as part of this plugin. A
 | nvme              | Exposes nvme statistics from `/proc`.                                                            | Linux       | v2.2.0  |
 | processes         | Exposes processes statistics from `/proc`.                                                       | Linux       | v2.2.0  |
 
+## Threading
+
+This input always runs in its own [thread](../../administration/multithreading.md#inputs).
+
 ## Getting Started
 
 ### Simple Configuration File
@@ -114,7 +118,7 @@ In the following configuration file, the input plugin _node_exporter_metrics col
     host            0.0.0.0
     port            2021
 
-        
+
 ```
 {% endtab %}
 
@@ -201,4 +205,3 @@ docker-compose down
 Our current plugin implements a sub-set of the available collectors in the original Prometheus Node Exporter, if you would like that we prioritize a specific collector please open a Github issue by using the following template:\
 \
 \- [in_node_exporter_metrics](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_node_exporter_metrics:%20add%20ABC%20collector)
-
