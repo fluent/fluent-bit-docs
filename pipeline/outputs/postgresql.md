@@ -62,6 +62,7 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 | `min_pool_size` | Minimum number of connection in async mode | 1 |
 | `max_pool_size` | Maximum amount of connections in async mode | 4 |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB | false |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Libpq
 
@@ -129,4 +130,3 @@ Here follows a list of useful resources from the PostgreSQL documentation:
 * [libpq - Environment variables](https://www.postgresql.org/docs/current/libpq-envars.html)
 * [libpq - password file](https://www.postgresql.org/docs/current/libpq-pgpass.html)
 * [Trigger functions](https://www.postgresql.org/docs/current/plpgsql-trigger.html)
-
