@@ -18,6 +18,7 @@ The plugin supports the following configuration parameters:
 | Samples            | If set, the events number will be limited. For example, if Samples=3, the plugin generates only three events and stops. | _none_ |
 | Copies             | Number of messages to generate each time they are generated. | `1` |
 | Flush\_on\_startup | If set to `true`, the first dummy event is generated at startup. | `false` |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 

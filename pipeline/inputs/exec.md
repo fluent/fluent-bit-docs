@@ -25,6 +25,7 @@ The plugin supports the following configuration parameters:
 | Oneshot | Only run once at startup. This allows collection of data precedent to fluent-bit's startup (bool, default: false) |
 | Exit\_After\_Oneshot | Exit as soon as the one-shot command exits. This allows the exec plugin to be used as a wrapper for another command, sending the target command's output to any fluent-bit sink(s) then exiting. (bool, default: false) |
 | Propagate\_Exit\_Code | When exiting due to Exit\_After\_Oneshot, cause fluent-bit to exit with the exit code of the command exited by this plugin. Follows [shell conventions for exit code propagation](https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html). (bool, default: false) |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 

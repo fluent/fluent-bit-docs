@@ -11,6 +11,7 @@ The plugin supports the following configuration parameters:
 | Samples | If set, it will only generate a specific number of samples. By default this value is set to _-1_, which will generate unlimited samples. |
 | Interval\_Sec | Interval in seconds between samples generation. Default value is _1_. |
 | Interval\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 
@@ -78,4 +79,3 @@ Fluent Bit v1.x.x
 [3] random.0: [1475893657, {"rand_value"=>1501010137543905482}]
 [4] random.0: [1475893658, {"rand_value"=>16238242822364375212}]
 ```
-

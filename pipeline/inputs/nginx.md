@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Port | Port of the target nginx service to connect to. | 80 |
 | Status_URL | The URL of the Stub Status Handler. | /status |
 | Nginx_Plus | Turn on NGINX plus mode. | true |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -35,8 +36,8 @@ server {
 
 ### Configuration with NGINX Plus REST API
 
-A much more powerful and flexible metrics API is available with NGINX Plus. A path needs to be configured 
-in NGINX Plus first.
+Another metrics API is available with NGINX Plus. You must first configure a path in
+NGINX Plus.
 
 ```
 server {

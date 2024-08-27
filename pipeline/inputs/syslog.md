@@ -18,6 +18,7 @@ The plugin supports the following configuration parameters:
 | Buffer\_Max\_Size | Specify the maximum buffer size to receive a Syslog message. If not set, the default size will be the value of _Buffer\_Chunk\_Size_. |  |
 | Receive\_Buffer\_Size | Specify the maximum socket receive buffer size. If not set, the default value is OS-dependant, but generally too low to accept thousands of syslog messages per second without loss on _udp_ or _unix\_udp_ sockets. Note that on Linux the value is capped by `sysctl net.core.rmem_max`.| |
 | Source\_Address\_Key| Specify the key where the source address will be injected. | |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ### Considerations
 
@@ -228,4 +229,3 @@ $OMUxSockSocket /tmp/fluent-bit.sock
 ```
 
 Make sure that the socket file is readable by rsyslog \(tweak the `Unix_Perm` option shown above\).
-

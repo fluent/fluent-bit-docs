@@ -36,6 +36,7 @@ The plugin supports the following configuration parameters:
 | Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`                                                                                                                                                                                                                                                                                                                    |  |
 | Static\_Batch\_Size | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exists upon Fluent Bit start).                                                                                                                                                                                                                                                                                                                                                               | 50M     |
 | File\_Cache\_Advise | Set the posix_fadvise in POSIX_FADV_DONTNEED mode. This will reduce the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                                                                              | On     |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
 
@@ -127,7 +128,7 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections. 
+In your main configuration file, append the following `Input` and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
