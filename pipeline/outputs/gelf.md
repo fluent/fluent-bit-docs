@@ -22,6 +22,7 @@ According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/gettin
 | Gelf_Level_Key         | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between 0 and 7). (_Optional in GELF_) | level         |
 | Packet_Size            | If transport protocol is `udp`, you can set the size of packets to be sent.                                                                                                 | 1420          |
 | Compress               | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed.                                                                             | true          |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
