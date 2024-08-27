@@ -78,6 +78,11 @@ Before to get started with the plugin configuration, make sure to obtain the pro
         if not found, the default value is used.</td>
       <td style="text-align:left">Fluent Bit</td>
     </tr>
+    <tr>
+      <td style="text-align:left">log_key</td>
+      <td style="text-align:left">By default, the whole log record will be sent to LogDNA. If you specify a key name with this option, then only the value of  that key will be sent to LogDNA. For example, if you are using  the Fluentd Docker log driver, you can specify log_key log and only  the log message will be sent to LogDNA.</td>
+      <td style="text-align:left"></td>
+    </tr>    
   </tbody>
 </table>
 
