@@ -31,6 +31,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 | tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
 | compress | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression. ||
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Labels
 
@@ -284,4 +285,3 @@ Fluent Bit v1.7.0
 [2020/10/14 20:57:46] [debug] [http] request payload (272 bytes)
 [2020/10/14 20:57:46] [ info] [output:loki:loki.0] 127.0.0.1:3100, HTTP status=204
 ```
-

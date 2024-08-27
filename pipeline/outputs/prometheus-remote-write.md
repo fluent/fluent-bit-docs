@@ -25,7 +25,7 @@ Important Note: The prometheus exporter only works with metric plugins, such as 
 | header               | Add a HTTP header key/value pair. Multiple headers can be set.                                                                                                                                                                                                         |           |
 | log_response_payload | Log the response payload within the Fluent Bit log                                                                                                                                                                                                                     | false     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields                                                                                                                                     |           |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## Getting Started
 
@@ -93,7 +93,7 @@ With Logz.io [hosted prometheus](https://logz.io/solutions/infrastructure-monito
 [OUTPUT]
     name prometheus_remote_write
     host listener.logz.io
-    port 8053 
+    port 8053
     match *
     header Authorization Bearer <LOGZIO Key>
     tls on
@@ -109,7 +109,7 @@ With [Coralogix Metrics](https://coralogix.com/platform/metrics/) you may need t
 [OUTPUT]
     name prometheus_remote_write
     host metrics-api.coralogix.com
-    uri prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity 
+    uri prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity
     match *
     port 443
     tls on

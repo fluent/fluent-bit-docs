@@ -2,12 +2,13 @@
 
 The **nats** output plugin, allows to flush your records into a [NATS Server](https://docs.nats.io/nats-concepts/intro) end point. The following instructions assumes that you have a fully operational NATS Server in place.
 
-In order to flush records, the **nats** plugin requires to know two parameters:
+## Configuration parameters
 
 | parameter | description | default |
 | :--- | :--- | :--- |
 | host | IP address or hostname of the NATS Server | 127.0.0.1 |
 | port | TCP port of the target NATS Server | 4222 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 In order to override the default configuration values, the plugin uses the optional Fluent Bit network address format, e.g:
 
@@ -64,4 +65,3 @@ Each record is an individual entity represented in a JSON array that contains a 
   [1457108506,{"tag":"fluentbit","cpu_p":6.500000,"user_p":4.500000,"system_p":2}]
 ]
 ```
-

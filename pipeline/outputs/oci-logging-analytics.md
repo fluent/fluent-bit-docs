@@ -20,6 +20,7 @@ Following are the top level configuration properties of the plugin:
 | profile_name         | OCI Config Profile Name to be used from the configuration file                                                                                                                                                                       | DEFAULT |
 | namespace            | OCI Tenancy Namespace in which the collected log data is to be uploaded                                                                                                                                                              |         |
 | proxy                | define proxy if required, in http://host:port format, supports only http protocol                                                                                                                                                    |         |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 The following parameters are to set the Logging Analytics resources that must be used to process your logs by OCI Logging Analytics.
 
@@ -28,7 +29,7 @@ The following parameters are to set the Logging Analytics resources that must be
 | oci_config_in_record    | If set to true, the following oci_la_* will be read from the record itself instead of the output plugin configuration.                                                                        | false   |
 | oci_la_log_group_id     | The OCID of the Logging Analytics Log Group where the logs must be stored. This is a mandatory parameter                                                                                      |         |
 | oci_la_log_source_name  | The Logging Analytics Source that must be used to process the log records. This is a mandatory parameter                                                                                      |         |
-| oci_la_entity_id        | The OCID of the Logging Analytics Entity	                                                                                                                                                     |         |   
+| oci_la_entity_id        | The OCID of the Logging Analytics Entity	                                                                                                                                                     |         |
 | oci_la_entity_type	     | The entity type of the Logging Analytics Entity	                                                                                                                                              |         |
 | oci_la_log_path	        | Specify the original location of the log files	                                                                                                                                               |         |
 | oci_la_global_metadata	 | Use this parameter to specify additional global metadata along with original log content to Logging Analytics. The format is 'key_name value'. This option can be set multiple times          |         |

@@ -34,6 +34,7 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | profile               | Option to specify an AWS Profile for credentials. Defaults to `default`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. This option defaults to `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | external\_id          | Specify an external ID for the STS API, can be used with the role\_arn parameter if your role requires an external ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. Default: `1`. |
 
 ## Getting Started
 
@@ -79,28 +80,6 @@ The following AWS IAM permissions are required to use this plugin:
 	}]
 }
 ```
-
-### Worker support
-
-Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `cloudwatch_logs` plugin has partial support for workers in Fluent Bit 2.1.11 and prior. **2.1.11 and prior, the plugin can support a single worker; enabling multiple workers will lead to errors/indeterminate behavior.**
-Starting from Fluent Bit 2.1.12, the `cloudwatch_logs` plugin added full support for workers, meaning that more than one worker can be configured.
-
-Example:
-
-```
-[OUTPUT]
-    Name cloudwatch_logs
-    Match   *
-    region us-east-1
-    log_group_name fluent-bit-cloudwatch
-    log_stream_prefix from-fluent-bit-
-    auto_create_group On
-    workers 1
-```
-
-If you enable workers, you are enabling one or more dedicated threads for your CloudWatch output. 
-We recommend starting with 1 worker, evaluating the performance, and then enabling more workers if needed. 
-For most users, the plugin can provide sufficient throughput with 0 or 1 workers.
 
 ### Log Stream and Group Name templating using record\_accessor syntax
 
