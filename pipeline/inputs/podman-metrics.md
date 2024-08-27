@@ -13,7 +13,7 @@ description: The Podman Metrics input plugin allows you to collect metrics from 
 | path.config       | Custom path to podman containers configuration file        | /var/lib/containers/storage/overlay-containers/containers.json |
 | path.sysfs        | Custom path to sysfs subsystem directory                   | /sys/fs/cgroup                                                 |
 | path.procfs       | Custom path to proc subsystem directory                    | /proc                                                          |
-| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 

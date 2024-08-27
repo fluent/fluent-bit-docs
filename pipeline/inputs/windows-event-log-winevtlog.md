@@ -18,7 +18,7 @@ The plugin supports the following configuration parameters:
 | Use\_ANSI | Use ANSI encoding on eventlog messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to True may solve the problem. \(optional\) | False  |
 | Event\_Query | Specify XML query for filtering events. | `*` |
 | Read\_Limit\_Per\_Cycle | Specify read limit per cycle.  | 512KiB |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Note that if you do not set _db_, the plugin will tail channels on each startup.
 

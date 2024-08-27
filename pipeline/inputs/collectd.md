@@ -11,7 +11,7 @@ The plugin supports the following configuration parameters:
 | Listen | Set the address to listen to | 0.0.0.0 |
 | Port | Set the port to listen to | 25826 |
 | TypesDB | Set the data specification file | /usr/share/collectd/types.db |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Configuration Examples <a id="config_example"></a>
 

@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Listen | Listener network interface. | 0.0.0.0 |
 | Port | UDP port where listening for connections | 8125 |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Configuration Examples <a id="config_example"></a>
 

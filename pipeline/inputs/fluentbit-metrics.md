@@ -18,7 +18,7 @@ They can be sent to output plugins including [Prometheus Exporter](../outputs/pr
 | --------------- | --------------------------------------------------------------------------------------------------------- | --------- |
 | scrape_interval | The rate at which metrics are collected from the host operating system                                    | 2 seconds |
 | scrape_on_start | Scrape metrics upon start, useful to avoid waiting for 'scrape_interval' for the first round of metrics.  | false     |
-| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 
 ## Getting Started

@@ -87,7 +87,8 @@ curl http://127.0.0.1:2021/metrics
 ### Container to Collect Host Metrics
 
 When deploying Fluent Bit in a container you will need to specify additional settings to ensure that Fluent Bit has access to the process details.
-The following `docker` command deploys Fluent Bit with a specific mount path for `procfs` and settings enabled to ensure that Fluent Bit can collect from the host.
+The following `docker` command deploys Fluent Bit with a specific mount path for
+`procfs` and settings enabled to ensure that Fluent Bit can collect from the host.
 These are then exposed over port 2021.
 
 ```

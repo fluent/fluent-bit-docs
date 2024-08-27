@@ -3,7 +3,8 @@
 
 _Process_ input plugin allows you to check how healthy a process is. It does so by performing a service check at every certain interval of time specified by the user.
 
-The Process metrics plugin creates metrics that are log-based \(I.e. JSON payload\). If you are looking for Prometheus-based metrics please see the Node Exporter Metrics input plugin.
+The Process metrics plugin creates metrics that are log-based, such as JSON payload.
+For Prometheus-based metrics, see the Node Exporter Metrics input plugin.
 
 ## Configuration Parameters
 
