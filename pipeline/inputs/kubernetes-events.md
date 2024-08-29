@@ -9,6 +9,7 @@ Kubernetes exports it events through the API server. This input plugin allows to
 
 ## Configuration
 
+NOTE: As of Fluent-Bit 3.1, this plugin uses a Kubernetes watch stream instead of polling. In versions before 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream.
 
 | Key                 | Description                                                                           | Default                                              |
 |---------------------|---------------------------------------------------------------------------------------|------------------------------------------------------|
@@ -28,8 +29,6 @@ Kubernetes exports it events through the API server. This input plugin allows to
 | tls.verify          | Enable or disable verification of TLS peer certificate.                               | On                                                   |
 | tls.vhost           | Set optional TLS virtual host.                                                        |                                                      |
 
-
-- _* As of Fluent-Bit 3.1, this plugin uses a Kubernetes watch stream instead of polling. In versions before 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream._
 
 ## Threading
 
