@@ -29,7 +29,7 @@ configuration.
 | `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ | Yes |
 | `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` | Yes |
 | `AWS_Profile` | AWS profile name. | `default` | Yes |
-| `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ | No |
+| `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. After decoding, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ | No |
 | `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud. | _none_ | Yes |
 | `HTTP_User` | Optional username credential for Elastic X-Pack access. | _none_ | Yes |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ | Yes |
@@ -37,23 +37,23 @@ configuration.
 | `Index` | Index name. | `fluent-bit` | Yes |
 | `Type` | Type name. | `_doc` | Yes |
 | `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off`. | `Off` | Yes |
-| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, e.g: If `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` | Yes |
-| `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ | Yes |
+| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, For example, if `Logstash_Prefix` is equal to `mydata`, your index becomes `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` | Yes |
+| `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record, the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ | Yes |
 | `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and date. | `-` | Yes |
 | `Logstash_DateFormat` | Time format based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` | Yes |
-| `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` | Yes |
+| `Time_Key` | When `Logstash_Format` is enabled, each record gets a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` | Yes |
 | `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` | Yes |
 | `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` | Yes |
 | `Include_Tag_Key` | When enabled, it append the Tag name to the record. | `Off` | Yes |
 | `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` | Yes |
 | `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` | Yes |
-| `Id_Key` | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. | _none_ | Yes |
+| `Id_Key` | If set, `_id` is the value of the key from incoming record, and `Generate_ID` option is ignored. | _none_ | Yes |
 | `Write_Operation` | `Write_operation` can be any of: `create`, `index`, `update`, `upsert`. | `create` | Yes |
 | `Replace_Dots` | When enabled, replace field name dots with underscore. Required by Elasticsearch 2.0-2.3. | `Off` | Yes |
 | `Trace_Output` | Print all ElasticSearch API request payloads to `stdout` for diagnostics. | `Off` | Yes |
 | `Trace_Error` | If ElasticSearch returns an error, print the ElasticSearch API request and response for diagnostics. | `Off` | Yes |
 | `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` | Yes |
-| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), and is set to `On`. | `Off` | Yes |
+| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or later [doesn't support mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), which requires this value to be `On`. | `Off` | Yes |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` | No |
 | `Upstream` | If plugin will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) documentation section. | _none_ | No |
 
@@ -160,7 +160,7 @@ pipeline:
 
 ### Configuration File with Upstream
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
 
 ```text
 [INPUT]
