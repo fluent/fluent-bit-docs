@@ -9,7 +9,9 @@ Kubernetes exports it events through the API server. This input plugin allows to
 
 ## Configuration
 
-NOTE: As of Fluent-Bit 3.1, this plugin uses a Kubernetes watch stream instead of polling. In versions before 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream.
+Note: Starting with Fluent Bit 3.1, the Kubernetes Events plugin uses a Kubernetes
+watch stream instead of polling. Previous versions use the interval parameters for
+reconnecting the Kubernetes watch stream.
 
 | Key                 | Description                                                                           | Default                                              |
 |---------------------|---------------------------------------------------------------------------------------|------------------------------------------------------|
