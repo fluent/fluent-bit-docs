@@ -37,6 +37,7 @@ To get more details about how to setup these components, please refer to the fol
 | time\_key     | _Optional_ - Specify the key name where the timestamp will be stored. | `@timestamp` |
 | time\_generated | _Optional_ - If enabled, will generate a timestamp and append it to JSON. The key name is set by the 'time_key' parameter. | `true` |
 | compress      | _Optional_ - Enable HTTP payload gzip compression. | `true` |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 
@@ -58,7 +59,7 @@ Use this configuration to quickly get started:
     Name    tail
     Path    /path/to/your/sample.log
     Tag     sample
-    Key     RawData 
+    Key     RawData
 # Or use other plugins Plugin
 # [INPUT]
 #     Name    cpu

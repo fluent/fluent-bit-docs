@@ -4,7 +4,7 @@ description: An output plugin to expose Prometheus Metrics
 
 # Prometheus Exporter
 
-The prometheus exporter allows you to take metrics from Fluent Bit and expose them such that a Prometheus instance can scrape them. 
+The prometheus exporter allows you to take metrics from Fluent Bit and expose them such that a Prometheus instance can scrape them.
 
 Important Note: The prometheus exporter only works with metric  plugins, such as Node Exporter Metrics
 
@@ -13,6 +13,7 @@ Important Note: The prometheus exporter only works with metric  plugins, such as
 | host | This is address Fluent Bit will bind to when hosting prometheus metrics. Note: `listen` parameter is deprecated from v1.9.0. | 0.0.0.0 |
 | port | This is the port Fluent Bit will bind to when hosting prometheus metrics | 2021 |
 | add\_label | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields |  |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Getting Started
 

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v3.0 Documentation](README.md)
+* [Fluent Bit v3.1 Documentation](README.md)
 
 ## About
 
@@ -67,6 +67,7 @@
 * [Networking](administration/networking.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
+* [Multithreading](administration/multithreading.md)
 * [HTTP Proxy](administration/http-proxy.md)
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
@@ -106,6 +107,7 @@
   * [Process Log Based Metrics](pipeline/inputs/process.md)
   * [Process Exporter Metrics](pipeline/inputs/process-exporter-metrics.md)
   * [Prometheus Scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
+  * [Prometheus Remote Write](pipeline/inputs/prometheus-remote-write.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial Interface](pipeline/inputs/serial-interface.md)
   * [Splunk](pipeline/inputs/splunk.md)
@@ -130,7 +132,9 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Processors](pipeline/processors/README.md)
   * [Content Modifier](pipeline/processors/content-modifier.md)
+  * [Labels](pipeline/processors/labels.md)
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
+  * [OpenTelemetry Envelope](pipeline/processors/opentelemetry-envelope.md)
   * [SQL](pipeline/processors/sql.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
@@ -179,6 +183,7 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [Loki](pipeline/outputs/loki.md)
+  * [Microsoft Fabric](pipeline/outputs/azure\_kusto.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)

@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | Shared\_Key         | Shared key for secure forward authentication. |  |
 | Self\_Hostname      | Hostname for secure forward authentication.   |  |
 | Security.Users      | Specify the username and password pairs for secure forward authentication. | |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -81,7 +82,7 @@ pipeline:
 
 Since Fluent Bit v3, in\_forward can handle secure forward protocol.
 
-For using user-password authentication, it needs to specify `secutiry.users` at least an one-pair.
+For using user-password authentication, it needs to specify `security.users` at least an one-pair.
 For using shared key, it needs to specify `shared_key` in both of forward output and forward input.
 `self_hostname` is not able to specify with the same hostname between fluent servers and clients.
 
@@ -142,4 +143,3 @@ Copyright (C) Treasure Data
 [2016/10/07 21:49:40] [ info] [in_fw] binding 0.0.0.0:24224
 [0] my_tag: [1475898594, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
 ```
-

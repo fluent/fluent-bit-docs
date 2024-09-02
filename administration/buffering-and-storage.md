@@ -1,5 +1,7 @@
 # Buffering & Storage
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=cde12327-09ed-409c-ac02-7c0afa5eff51" />
+
 The end-goal of [Fluent Bit](https://fluentbit.io) is to collect, parse, filter and ship logs to a central place. In this workflow there are many phases and one of the critical pieces is the ability to do _buffering_ : a mechanism to place processed data into a temporary location until is ready to be shipped.
 
 By default when Fluent Bit processes data, it uses Memory as a primary and temporary place to store the records, but there are certain scenarios where it would be ideal to have a persistent buffering mechanism based in the filesystem to provide aggregation and data safety capabilities.

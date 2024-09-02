@@ -2,7 +2,7 @@
 
 Observe employs the **http** output plugin, allowing you to flush your records [into Observe](https://docs.observeinc.com/en/latest/content/data-ingestion/forwarders/fluentbit.html).
 
-For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.  
+For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
 
 The following are the specific HTTP parameters to employ:
 
@@ -19,6 +19,7 @@ The following are the specific HTTP parameters to employ:
 | header                     | The specific header to instructs Observe how to decode incoming payloads                                                                                                                                                                                                                                                           | X-Observe-Decoder fluent |
 | compress                   | Set payload compression mechanism. Option available is 'gzip'                                                                                                                                                                                                                                                                      | gzip      |
 | tls.ca_file                | **For use with Windows**: provide path to root cert                                                                                                                                                                                                                                                                                |           |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Configuration File
 
@@ -41,5 +42,5 @@ In your main configuration file, append the following _Input_ & _Output_ section
 
     # For Windows: provide path to root cert
     #tls.ca_file  C:\fluent-bit\isrgrootx1.pem
-    
+
 ```

@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Port | Port of the target nginx service to connect to. | 80 |
 | Status_URL | The URL of the Stub Status Handler. | /status |
 | Nginx_Plus | Turn on NGINX plus mode. | true |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -35,8 +36,8 @@ server {
 
 ### Configuration with NGINX Plus REST API
 
-A much more powerful and flexible metrics API is available with NGINX Plus. A path needs to be configured 
-in NGINX Plus first.
+Another metrics API is available with NGINX Plus. You must first configure a path in
+NGINX Plus.
 
 ```
 server {
@@ -130,8 +131,9 @@ Fluent Bit v2.x.x
 
 ## Exported Metrics
 
-This documentation is copied from the nginx prometheus exporter metrics documentation: 
-[https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/README.md].
+This documentation is copied from the
+[NGINX Prometheus Exporter metrics documentation](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md)
+on GitHub.
 
 ### Common metrics:
 Name | Type | Description | Labels

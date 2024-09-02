@@ -20,6 +20,7 @@ Our compliant implementation fully supports OTLP/HTTP and OTLP/GRPC. Note that t
 | buffer_chunk_size | Initial size and allocation strategy to store the payload (advanced users only)    | 512K    |
 |successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
 | tag_from_uri      | If true, tag will be created from uri. e.g. v1_metrics from /v1/metrics .                                                                      | true    |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Important note: Raw traces means that any data forwarded to the traces endpoint (`/v1/traces`) will be packed and forwarded as a log message, and will NOT be processed by Fluent Bit. The traces endpoint by default expects a valid protobuf encoded payload, but you can set the `raw_traces` option in case you want to get trace telemetry data to any of Fluent Bit's supported outputs.
 
@@ -50,13 +51,13 @@ __OTLP/GRPC__
 
 ## Getting started
 
-The OpenTelemetry plugin currently supports the following telemetry data types:
+The OpenTelemetry input plugin supports the following telemetry data types:
 
-|     Type    |    HTTP/JSON  |   HTTP/Protobuf |
-| ----------- | ------------- | --------------- |
-|    Logs     |     Stable    |      Stable     |
-|    Metrics  | Unimplemented |      Stable     |
-|    Traces   | Unimplemented |      Stable     |
+| Type    | HTTP1/JSON | HTTP1/Protobuf | HTTP2/GRPC |
+| ------- | ---------- | -------------- | ---------- |
+| Logs    | Stable | Stable | Stable |
+| Metrics | Unimplemented | Stable | Stable |
+| Traces  | Unimplemented | Stable | Stable |
 
 A sample config file to get started will look something like the following:
 
@@ -79,13 +80,13 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
-	name opentelemetry
-	listen 127.0.0.1
-	port 4318
+    name opentelemetry
+    listen 127.0.0.1
+    port 4318
 
 [OUTPUT]
-	name stdout
-	match *
+    name stdout
+    match *
 ```
 {% endtab %}
 

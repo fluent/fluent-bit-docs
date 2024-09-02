@@ -204,3 +204,4 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Buffer\_Size | Set the buffer size to read data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 16k |
 | Parser | The name of the parser to invoke instead of the default JSON input parser | |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |

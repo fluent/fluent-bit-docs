@@ -19,6 +19,7 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | Tag\_Keys | Space separated list of keys that needs to be tagged |  |
 | Auto\_Tags | Automatically tag keys where value is _string_. This option takes a boolean value: True/False, On/Off. | Off |
 | Uri | Custom URI endpoint | |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
@@ -207,4 +208,3 @@ key    value
 method "MATCH"
 method "POST"
 ```
-

@@ -72,6 +72,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 </table>
 
 | compress | Set the compression mechanism for the payload. This option allows two values: `gzip` \(enabled by default\) or `false` to disable compression. | gzip |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | :--- | :--- | :--- |
 
 
@@ -117,4 +118,3 @@ Fluent Bit v1.5.0
 [2020/04/10 10:58:35] [ info] [output:nrlogs:nrlogs.0] log-api.newrelic.com:443, HTTP status=202
 {"requestId":"feb312fe-004e-b000-0000-0171650764ac"}
 ```
-

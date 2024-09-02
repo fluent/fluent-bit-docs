@@ -2,7 +2,8 @@
 
 The **disk** input plugin, gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 
-The Disk I/O metrics plugin creates metrics that are log-based \(I.e. JSON payload\). If you are looking for Prometheus-based metrics please see the Node Exporter Metrics input plugin. 
+The Disk I/O metrics plugin creates metrics that are log-based, such as JSON payload.
+For Prometheus-based metrics, see the Node Exporter Metrics input plugin.
 
 ## Configuration Parameters
 
@@ -13,6 +14,7 @@ The plugin supports the following configuration parameters:
 | Interval\_Sec | Polling interval \(seconds\).  | 1 |
 | Interval\_NSec | Polling interval \(nanosecond\). | 0 |
 | Dev\_Name | Device name to limit the target. \(e.g. sda\). If not set, _in\_disk_ gathers information from all of disks and partitions. | all disks |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -72,4 +74,3 @@ pipeline:
 Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
-

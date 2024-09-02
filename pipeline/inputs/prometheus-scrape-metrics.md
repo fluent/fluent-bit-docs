@@ -12,6 +12,7 @@ The initial release of the Prometheus Scrape metric allows you to collect metric
 | port            | The port of the prometheus metric endpoint that you want to scrape                                                                                    |          |
 | scrape\_interval | The interval to scrape metrics                                                                                                                       | 10s      |
 | metrics\_path   | <p>The metrics URI endpoint, that must start with a forward slash.<br><br>Note: Parameters can also be added to the path by using <code>?</code></p> | /metrics |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Example
 
@@ -20,10 +21,10 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 ```
 [INPUT]
     name prometheus_scrape
-    host 0.0.0.0 
+    host 0.0.0.0
     port 8201
-    tag vault 
-    metrics_path /v1/sys/metrics?format=prometheus 
+    tag vault
+    metrics_path /v1/sys/metrics?format=prometheus
     scrape_interval 10s
 
 [OUTPUT]
@@ -78,6 +79,3 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_pause_ns = 1917611
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_runs = 19
 ```
-
-
-

@@ -1,6 +1,6 @@
 # Linux Packages
 
-The most secure option is to create the repositories acccording to the instructions for your specific OS.
+The most secure option is to create the repositories according to the instructions for your specific OS.
 
 A simple installation script is provided to be used for most Linux targets.
 This will by default install the most recent version released.

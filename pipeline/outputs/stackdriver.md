@@ -32,7 +32,7 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | severity\_key | Specify the name of the key from the original record that contains the severity information. | `logging.googleapis.com/severity`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | project_id_key | The value of this field is used by the Stackdriver output plugin to find the gcp project id from jsonPayload and then extract the value of it to set the PROJECT_ID within LogEntry logName, which controls the gcp project that should receive these logs. | `logging.googleapis.com/projectId`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
-| Workers | Enables dedicated thread(s) for this output. | 1 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
 | resource_labels | An optional list of comma separated strings specifying resource labels plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
 | compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression.|  |
@@ -189,7 +189,7 @@ Do following check:
 
 > Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
 
-When the number of Workers is greater than 1, Fluent Bit may interimittently crash.
+When the number of Workers is greater than 1, Fluent Bit may intermittently crash.
 
 ## Other implementations
 

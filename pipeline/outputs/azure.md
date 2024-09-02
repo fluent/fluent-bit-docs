@@ -20,6 +20,7 @@ To get more details about how to setup Azure Log Analytics, please refer to the 
 | Log_Type_Key | If included, the value for this key will be looked upon in the record and if present, will over-write the `log_type`. If not found then the `log_type` value will be used. | |
 | Time\_Key | Optional parameter to specify the key name where the timestamp will be stored. | @timestamp |
 | Time\_Generated | If enabled, the HTTP request header 'time-generated-field' will be included so Azure can override the timestamp with the key specified by 'time_key' option. | off |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 
@@ -61,4 +62,3 @@ Another example using the `Log_Type_Key` with [record-accessor](https://docs.flu
     Customer_ID abc
     Shared_Key  def
 ```
-

@@ -45,7 +45,7 @@ The following instructions assumes that you have a fully operational OpenSearch 
 | Trace\_Error | When enabled print the OpenSearch API calls to stdout when OpenSearch returns an error \(for diag only\)                                                                                                                                                                                                                                                                                                                                                     | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record                                                                                                                                                                                                                                                                                                                                                                                              | Off |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored.                                                                                                                                                                                                                        | Off |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.                                                                                                                                                                                                                                                                                                                                          | 2 |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | Compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression. |  |
 
 > The parameters _index_ and _type_ can be confusing if you are new to OpenSearch, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](opensearch.md#faq)
@@ -199,7 +199,7 @@ With data access permissions, IAM policies are not needed to access the collecti
 
 ### Issues with the OpenSearch cluster
 
-Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with the service's log_level attribute set to [Debug](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file). 
+Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with the service's log_level attribute set to [Debug](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file).
 
 For example, in this scenario the logs show that a connection was successfully established with the OpenSearch domain, and yet an error is still returned:
 ```
@@ -218,9 +218,9 @@ This behavior could be indicative of a hard-to-detect issue with index shard usa
 
 While OpenSearch index shards and disk space are related, they are not directly tied to one another.
 
-OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data. 
+OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data.
 
-In other words, depending on the way index creation and shard allocation are configured in the OpenSearch domain, all of the available index shards could be used long before the data nodes run out of disk space and begin exhibiting disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline). 
+In other words, depending on the way index creation and shard allocation are configured in the OpenSearch domain, all of the available index shards could be used long before the data nodes run out of disk space and begin exhibiting disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline).
 
 The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (though logs can still be added to existing indexes).
 
@@ -231,7 +231,7 @@ When that happens, the Fluent Bit OpenSearch output may begin showing confusing 
 
 If any of those symptoms are present, consider using the OpenSearch domain's API endpoints to troubleshoot possible shard issues.
 
-Running this command will show both the shard count and disk usage on all of the nodes in the domain. 
+Running this command will show both the shard count and disk usage on all of the nodes in the domain.
 ```
 GET _cat/allocation?v
 ```
