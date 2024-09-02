@@ -26,7 +26,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | label\_map\_path | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section. | |
 | structured\_metadata | Optional comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata) for more information. | |
 | remove\_keys | Optional list of keys to remove. | |
-| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. | off |
+| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. If set to `raw` and the log line is a string, the log line will be sent unquoted. | off |
 | line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
 | auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 | tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
@@ -176,6 +176,57 @@ Based in the JSON example provided above, the internal stream labels will be:
 
 ```text
 job="fluentbit", team="Santiago Wanderers"
+```
+
+## Drop Single Key
+
+If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single key=value pair.
+
+Consider this simple JSON example:
+
+```json
+{"key":"value"}
+```
+
+If the value is a string, `line_format` is `json`, and `drop_single_key` is `true`, it will be sent as a quoted string.
+
+```python
+[OUTPUT]
+    name            loki
+    match           *
+    drop_single_key on
+    line_format     json
+```
+
+The outputted line would show in Loki as:
+
+```json
+"value"
+```
+
+If `drop_single_key` is `raw`, or `line_format` is `key_value`, it will show in Loki as:
+
+```text
+value
+```
+
+If you want both structured JSON and plain-text logs in Loki, you should set `drop_single_key` to `raw` and `line_format` to `json`.
+Loki does not interpret a quoted string as valid JSON, and so to remove the quotes without `drop_single_key` set to raw, you would need to use a query like this:
+
+```C
+{"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
+```
+
+If `drop_single_key` is `off`, it will show in Loki as:
+
+```json
+{"key":"value"}
+```
+
+You can get the same behavior this flag provides in Loki with `drop_single_key` set to `off` with this query:
+
+```C
+{"job"="fluent-bit"} | json | line_format "{{.log}}"
 ```
 
 ### Structured metadata
