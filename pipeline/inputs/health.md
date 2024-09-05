@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Alert | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled. |
 | Add\_Host | If enabled, hostname is appended to each records. Default value is _false_. |
 | Add\_Port | If enabled, port number is appended to each records. Default value is _false_. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 
@@ -87,4 +88,3 @@ Fluent Bit v1.8.0
 [2] health.0: [1624145990.306498573, {"alive"=>true}]
 [3] health.0: [1624145991.305595498, {"alive"=>true}]
 ```
-

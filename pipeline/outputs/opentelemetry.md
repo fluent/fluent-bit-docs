@@ -35,6 +35,7 @@ Important Note: At the moment only HTTP endpoints are supported.
 | logs_span_id_metadata_key |Specify a SpanId key to look up in the metadata.| $SpanId |
 | logs_trace_id_metadata_key |Specify a TraceId key to look up in the metadata.| $TraceId |
 | logs_attributes_metadata_key |Specify an Attributes key to look up in the metadata.| $Attributes |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 

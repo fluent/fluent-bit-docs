@@ -32,10 +32,11 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the name of a parser to interpret the entry as a structured message.                                                                                                                                                                                                                                                                                                                                                                                                                             |  |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key.                                                                                                                                                                                                                                                                                                                                 | log |
 | Inotify_Watcher | Set to false to use file stat watcher instead of inotify.                                                                                                                                                                                                                                                                                                                                                                                                                                                | true |
-| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\).                                                                                       |  |
+| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter)\).                                                                                       |  |
 | Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`                                                                                                                                                                                                                                                                                                                    |  |
 | Static\_Batch\_Size | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exists upon Fluent Bit start).                                                                                                                                                                                                                                                                                                                                                               | 50M     |
-
+| File\_Cache\_Advise | Set the posix_fadvise in POSIX_FADV_DONTNEED mode. This will reduce the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                                                                              | On     |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
 
@@ -81,7 +82,7 @@ If you are running Fluent Bit to process logs coming from containers like Docker
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/containers/*.log
       multiline.parser: docker, cri
 ```
@@ -127,7 +128,7 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections. 
+In your main configuration file, append the following `Input` and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -146,9 +147,9 @@ In your main configuration file append the following _Input_ & _Output_ sections
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/syslog
-      
+
   outputs:
     - stdout:
       match: *

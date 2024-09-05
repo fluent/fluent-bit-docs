@@ -37,6 +37,7 @@ The plugin supports the following configuration parameters:
 | Keep\_Log | When `Keep_Log` is disabled, the `log` field is removed from the incoming message once it has been successfully merged \(`Merge_Log` must be enabled as well\). | On |
 | tls.debug | Debug level between 0 \(nothing\) and 4 \(every detail\). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
+| tls.verify\_hostname | When enabled, turns on hostname validation for certificates | Off |
 | Use\_Journal | When enabled, the filter reads logs coming in Journald format. | Off |
 | Cache\_Use\_Docker\_Id | When enabled, metadata will be fetched from K8s when docker\_id is changed. | Off |
 | Regex\_Parser | Set an alternative Parser to process record Tag and extract pod\_name, namespace\_name, container\_name and docker\_id. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) \(refer to parser _filter-kube-test_ as an example\). |  |
@@ -270,7 +271,7 @@ There are some configuration setup needed for this feature.
 
 Role Configuration for Fluent Bit DaemonSet Example:
 
-```text
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -313,34 +314,34 @@ The difference is that kubelet need a special permission for resource `nodes/pro
 Fluent Bit Configuration Example:
 
 ```text
-    [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/*.log
-        DB                /var/log/flb_kube.db
-        Parser            docker
-        Docker_Mode       On
-        Mem_Buf_Limit     50MB
-        Skip_Long_Lines   On
-        Refresh_Interval  10
+[INPUT]
+    Name              tail
+    Tag               kube.*
+    Path              /var/log/containers/*.log
+    DB                /var/log/flb_kube.db
+    Parser            docker
+    Docker_Mode       On
+    Mem_Buf_Limit     50MB
+    Skip_Long_Lines   On
+    Refresh_Interval  10
 
-    [FILTER]
-        Name                kubernetes
-        Match               kube.*
-        Kube_URL            https://kubernetes.default.svc.cluster.local:443
-        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
-        Merge_Log           On
-        Buffer_Size         0
-        Use_Kubelet         true
-        Kubelet_Port        10250
+[FILTER]
+    Name                kubernetes
+    Match               kube.*
+    Kube_URL            https://kubernetes.default.svc.cluster.local:443
+    Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+    Merge_Log           On
+    Buffer_Size         0
+    Use_Kubelet         true
+    Kubelet_Port        10250
 ```
 
 So for fluent bit configuration, you need to set the `Use_Kubelet` to true to enable this feature.
 
 DaemonSet config Example:
 
-```text
+```yaml
 ---
 apiVersion: apps/v1
 kind: DaemonSet

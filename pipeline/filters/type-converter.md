@@ -2,6 +2,8 @@
 
 The _Type Converter Filter_ plugin allows to convert data type and append new key value pair.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
+
 This plugin is useful in combination with plugins which expect incoming string value.
 e.g. [filter_grep](grep.md), [filter_modify](modify.md)
 

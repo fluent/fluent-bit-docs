@@ -2,6 +2,8 @@
 description: Learn how to monitor your Fluent Bit data pipelines
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
+
 # Monitoring
 
 Fluent Bit comes with built-it features to allow you to monitor the internals of your pipeline, connect to Prometheus and Grafana, Health checks  and also connectors to use external services for such purposes:
@@ -157,7 +159,7 @@ The following definitions are key to understand:
 | fluentbit\_filter\_bytes\_total            | name: the name or alias for the filter instance                         | The number of bytes of log records that this filter instance has successfully ingested                                                                                                                                                                                                       | counter | bytes   |
 | fluentbit\_filter\_records\_total          | name: the name or alias for the filter instance                         | The number of log records this filter has successfully ingested                                                                                                                                                                                                                              | counter | records |
 | fluentbit\_filter\_added\_records\_total   | name: the name or alias for the filter instance                         | The number of log records that have been added by the filter. This means they added into the data pipeline.                                                                                                                                                                                  | counter | records |
-| fluentbit\_filter\_dropped\_records\_total | name: the name or alias for the filter instance                         | The number of log records that have been dropped by the filter. This means they removed from the data pipeline.                                                                                                                                                                              | counter | records |
+| fluentbit\_filter\_drop\_records\_total    | name: the name or alias for the filter instance                         | The number of log records that have been dropped by the filter. This means they were removed from the data pipeline.                                                                                                                                                                         | counter | records |
 | fluentbit\_output\_dropped\_records\_total | name: the name or alias for the output instance                         | The number of log records that have been dropped by the output. This means they met an unrecoverable error or retries expired for their chunk.                                                                                                                                               | counter | records |
 | fluentbit\_output\_errors\_total           | name: the name or alias for the output instance                         | The number of chunks that have faced an error (either unrecoverable or retriable). This is the number of times a chunk has failed, and does not correspond with the number of error messages you see in the Fluent Bit log output.                                                           | counter | chunks  |
 | fluentbit\_output\_proc\_bytes\_total      | name: the name or alias for the output instance                         | The number of bytes of log records that this output instance has *successfully* sent. This is the total byte size of all unique chunks sent by this output. If a record is not sent due to some error, then it will not count towards this metric.                                           | counter | bytes   |
@@ -307,6 +309,8 @@ Now when querying the metrics we get the aliases in place instead of the plugin 
 ```
 
 ## Grafana Dashboard and Alerts
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=0b83cb05-4f52-4853-83cc-f4539b64044d" />
 
 Fluent Bit's exposed [prometheus style metrics](https://docs.fluentbit.io/manual/administration/monitoring) can be leveraged to create dashboards and alerts.
 
