@@ -7,9 +7,9 @@ description: Learn how to monitor your Fluent Bit data pipelines
 
 # Monitor data pipelines
 
-Fluent Bit includes features for monitoring the internals of your pipeline, and for
-connecting to Prometheus and Grafana, Health checks, and connectors to use external
-services:
+Fluent Bit includes features for monitoring the internals of your pipeline, in
+addition to connecting to Prometheus and Grafana, Health checks, and connectors to
+use external services:
 
 - [HTTP Server: JSON and Prometheus Exporter-style metrics](monitoring.md#http-server)
 - [Grafana Dashboards and Alerts](monitoring.md#grafana-dashboard-and-alerts)
@@ -111,6 +111,8 @@ Fluent Bit exposes the following endpoints for monitoring.
 
 ### v1 metrics
 
+The following descriptions apply to v1 metric endpoints.
+
 #### `/api/v1/metrics/prometheus` endpoint
 
 The following descriptions apply to metrics outputted in Prometheus format by the
@@ -165,6 +167,8 @@ The following descriptions apply to metrics outputted in JSON format by the
 | `input_chunks.{plugin name}.chunks.busy_size` | The sum of the byte size of each chunk which is currently marked as busy. | bytes   |
 
 ### v2 metrics
+
+The following descriptions apply to v2 metric endpoints.
 
 #### `/api/v2/metrics/prometheus` or `/api/v2/metrics` endpoint
 
