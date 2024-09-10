@@ -41,7 +41,7 @@ complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-3881
 - [Stream Processing](stream-processing/introduction.md): Perform data selection
   and transformation using simple SQL queries
   - Create new streams of data using query results
-  - Aggregation Wwndows
+  - Aggregation windows
   - Data analysis and prediction: Timeseries forecasting
 - Portable: Runs on Linux, macOS, Windows and BSD systems
 
