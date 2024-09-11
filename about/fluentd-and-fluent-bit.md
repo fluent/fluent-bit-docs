@@ -27,7 +27,7 @@ architecture and general design. Which one you choose depends on your end-users'
 
 The following table describes a comparison of different areas of the projects:
 
-|              | Fluentd               | Fluent Bit            |
+|  Attribute   | Fluentd               | Fluent Bit            |
 | ------------ | --------------------- | --------------------- |
 | Scope        | Containers / Servers  | Embedded Linux / Containers / Servers |
 | Language     | C & Ruby              | C                                     |
