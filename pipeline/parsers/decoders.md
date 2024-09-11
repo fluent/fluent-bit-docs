@@ -49,10 +49,10 @@ extra action if the decoder can't succeed.
 
 ### Decoder options
 
-| Name | Description |
-| :--- | :--- |
-| `json` | Handle the field content as a JSON map. If it finds a JSON map, it replaces the content with a structured map. |
-| `escaped` | Decode an escaped string. |
+| Name           | Description |
+| -------------- | ----------- |
+| `json`         | Handle the field content as a JSON map. If it finds a JSON map, it replaces the content with a structured map. |
+| `escaped`      | Decode an escaped string. |
 | `escaped_utf8` | Decode a UTF8 escaped string. |
 
 ### Optional Actions
@@ -61,7 +61,7 @@ If a decoder fails to decode the field or, you want to try another decoder, you 
 define an optional action. Available actions are:
 
 | Name | Description |
-| :--- | :--- |
+| -----| ----------- |
 | `try_next` | if the decoder failed, apply the next decoder in the list for the same field. |
 | `do_next` | if the decoder succeeded or failed, apply the next decoder in the list for the same field. |
 
