@@ -139,12 +139,6 @@ The following configuration file example demonstrates how to collect CPU metrics
     Match my*cpu
 ```
 
-## Visualize <a href="config_include_file" id="config_include_file"></a>
-
-You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [Calyptia](https://calyptia.com/free-trial)
-
-![](../../../.gitbook/assets/image.png)
-
 ## Include File <a href="config_include_file" id="config_include_file"></a>
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file.
@@ -169,5 +163,5 @@ Wildcard character (\*) is supported to include multiple files, e.g:
 @INCLUDE input_*.conf
 ```
 
-Note files matching the wildcard character are included unsorted. 
+Note files matching the wildcard character are included unsorted.
 If plugins ordering between files need to be preserved, the files should be included explicitly.
