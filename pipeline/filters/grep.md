@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 ### Record Accessor Enabled
 
 Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md)
-feature to specify the KEY. Use the record accesso to match values against nested
+feature to specify the KEY. Use the record accessor to match values against nested
 values.
 
 ## Filter records
@@ -42,11 +42,11 @@ configuration file. The following example assumes that you have a file named
 
 ### Command line
 
-When using the command line, pay special attention to quote the regular expressions.
+When using the command line, pay close attention to quote the regular expressions.
 Using a configuration file might be easier.
 
 The following command loads the [tail](../../pipeline/inputs/tail) plugin and
-reads the content of `lines.txt` file. Then the `grep` filter applies a regular
+reads the content of `lines.txt`. Then the `grep` filter applies a regular
 expression rule over the `log` field created by the `tail` plugin and only passes
 records with a field value starting with `aa`:
 
@@ -103,7 +103,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The filter allows you to use multiple rules which are applied in order. You can
+The filter lets you use multiple rules which are applied in order. You can
 have as many `Regex` and `Exclude` entries as required.
 
 ### Nested fields example
