@@ -5,7 +5,7 @@ formats. In addition, it provides filters that can be used to perform custom
 modifications. As your pipeline grows, it's important to validate your data and
 structure.
 
-We encourage Fluent Bit users to integrate data validation in their contininuous
+Fluent Bit users are encouraged to integrate data validation in their contininuous
 integration (CI) systems.
 
 In a normal production environment, inputs, filters, and outputs are defined in the
