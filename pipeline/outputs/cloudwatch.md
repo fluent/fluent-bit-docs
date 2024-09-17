@@ -65,7 +65,7 @@ In your main configuration file append the following _Output_ section:
 
 For an instance of Localstack running at `http://localhost:4566`, the following configuration needs to be added to the `[OUTPUT]` section:
 
-```
+```text
 endpoint localhost
 port 4566
 ```
