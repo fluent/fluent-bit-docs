@@ -61,6 +61,16 @@ In your main configuration file append the following _Output_ section:
     log_stream_prefix from-fluent-bit-
     auto_create_group On
 ```
+#### Intergration with Localstack (Cloudwatch Logs)
+
+For an instance of Localstack running at `http://localhost:4566`, the following configuration needs to be added to the `[OUTPUT]` section:
+
+```text
+endpoint localhost
+port 4566
+```
+
+Any testing credentials can be exported as local variables, such as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 ### Permissions
 
