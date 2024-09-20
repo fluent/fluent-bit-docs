@@ -1,28 +1,38 @@
 # Regular Expression
 
-The **regex** parser allows to define a custom Ruby Regular Expression that will use a named capture feature to define which content belongs to which key name.
+The **Regex** parser lets you define a custom Ruby regular expression that uses
+a named capture feature to define which content belongs to which key name.
 
-Fluent Bit uses [Onigmo](https://github.com/k-takata/Onigmo) regular expression library on Ruby mode, for testing purposes you can use the following web editor to test your expressions:
+Use [Tail Multiline](../inputs/tail.md#multiline) when you need to support regexes
+across multiple lines from a `tail`. The [Tail](../inputs/tail.md) input plugin
+treats each line as a separate entity.
 
-[http://rubular.com/](http://rubular.com/)
+{% hint style="warning" %}
+Security Warning: Onigmo is a backtracking regex engine. When using expensive
+regex patterns Onigmo can take a long time to perform pattern matching. Read
+["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+on OWASP for additional information.
+{% end hint %}
 
-Important: do not attempt to add multiline support in your regular expressions if you are using [Tail](../inputs/tail.md) input plugin since each line is handled as a separated entity. Instead use Tail [Multiline](../inputs/tail.md#multiline) support configuration feature.
-
-Security Warning: Onigmo is a _backtracking_ regex engine. You need to be careful not to use expensive regex patterns, or Onigmo can take very long time to perform pattern matching. For details, please read the article ["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) on OWASP.
-
-> Note: understanding how regular expressions works is out of the scope of this content.
-
-From a configuration perspective, when the format is set to **regex**, is mandatory and expected that a _Regex_ configuration key exists.
+Setting the format to **regex** requires a `regex` configuration key.
 
 ## Configuration Parameters
 
-The regex parser supports the following configuration parameters.
+The regex parser supports the following configuration parameters:
 
-|Key|Description|Default Value|
-|-------|------------|--------|
-|`Skip_Empty_Values`|If enabled, the parser ignores empty value of the record.| True|
+| Key | Description | Default Value |
+| --- | ----------- | ------------- |
+| `Skip_Empty_Values` | If enabled, the parser ignores empty value of the record. | `True` |
 
-The following parser configuration example aims to provide rules that can be applied to an Apache HTTP Server log entry:
+Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression
+library on Ruby mode.
+
+You can use only alphanumeric characters and underscore in group names. For example,
+a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`)
+character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
+
+The following parser configuration example provides rules that can be applied to an
+Apache HTTP Server log entry:
 
 ```python
 [PARSER]
@@ -34,13 +44,14 @@ The following parser configuration example aims to provide rules that can be app
     Types code:integer size:integer
 ```
 
-As an example, takes the following Apache HTTP Server log entry:
+As an example, review the following Apache HTTP Server log entry:
 
 ```text
 192.168.2.20 - - [29/Jul/2015:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-The above content do not provide a defined structure for Fluent Bit, but enabling the proper parser we can help to make a structured representation of it:
+This log entry doesn't provide a defined structure for Fluent Bit. Enabling the
+proper parser can help to make a structured representation of the entry:
 
 ```text
 [1154104030, {"host"=>"192.168.2.20",
@@ -54,8 +65,3 @@ The above content do not provide a defined structure for Fluent Bit, but enablin
               }
 ]
 ```
-
-A common pitfall is that you cannot use characters other than alphabets, numbers and underscore in group names. For example, a group name like `(?<user-name>.*)` will cause an error due to containing an invalid character \(`-`\).
-
-In order to understand, learn and test regular expressions like the example above, we suggest you try the following Ruby Regular Expression Editor: [http://rubular.com/r/X7BH0M4Ivm](http://rubular.com/r/X7BH0M4Ivm)
-
