@@ -1,6 +1,6 @@
 # Regular Expression
 
-The **Regex** parser lets you to define a custom Ruby regular expression that uses
+The **Regex** parser lets you define a custom Ruby regular expression that uses
 a named capture feature to define which content belongs to which key name.
 
 Use [Tail Multiline](../inputs/tail.md#multiline) when you need to support regexes
@@ -18,7 +18,7 @@ Setting the format to **regex** requires a `regex` configuration key.
 
 ## Configuration Parameters
 
-The regex parser supports the following configuration parameters.
+The regex parser supports the following configuration parameters:
 
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
@@ -27,10 +27,9 @@ The regex parser supports the following configuration parameters.
 Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression
 library on Ruby mode.
 
-You can only use alphanumeric characters and underscore in group names. For example,
+You can use only alphanumeric characters and underscore in group names. For example,
 a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`)
-character. Use the [http://rubular.com/](http://rubular.com/) web editor to test your
-expressions
+character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
 
 The following parser configuration example provides rules that can be applied to an
 Apache HTTP Server log entry:
