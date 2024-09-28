@@ -26,6 +26,7 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 | dd_tags         | _Optional_ - The [tags](https://docs.datadoghq.com/tagging/) you want to assign to your logs in Datadog. If unset, Datadog will look for the tags in the [`ddtags' attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs).                                                                                                                                                                                                                                                                                                                                   |                                  |
 | dd_message_key  | By default, the plugin searches for the key 'log' and remap the value to the key 'message'. If the property is set, the plugin will search the property name key.                                                                                                                                                                                                                                                                          |                                  |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. |  |
 
 ### Configuration File
 
