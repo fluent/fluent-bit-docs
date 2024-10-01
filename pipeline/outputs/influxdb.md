@@ -144,6 +144,8 @@ When collecting data from many inputs into many buckets, it can be helpful to re
     Strip_prefix  gpu.
 ```
 
+This will result in the buckets _cpubucket_, _gpubucket_ each containing two measurement streams named _one_, _two_. Without prefix stripping, the measurement names would be _cpu.one_, _cpu.two_ (stored in _cpubucket_) and _gpu.one_, _gpu.two_ (stored in _gpubucket_).
+
 ### Testing
 
 Before to start Fluent Bit, make sure the target database exists on InfluxDB, using the above example, we will insert the data into a _fluentbit_ database.
