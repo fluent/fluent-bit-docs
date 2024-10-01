@@ -12,6 +12,7 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | Bucket | InfluxDB bucket name where records will be inserted - if specified, `database` is ignored and v2 of API is used |  |
 | Org | InfluxDB organization name where the bucket is \(v2 only\) | fluent |
 | Sequence\_Tag | The name of the tag whose value is incremented for the consecutive simultaneous events. | \_seq |
+| Strip\_Prefix | String to be stripped from the front of _tag_ when writing influxdb measurement names |  |
 | HTTP\_User | Optional username for HTTP Basic Authentication |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | HTTP\_Token | Authentication token used with InfluDB v2 - if specified, both HTTP\_User and HTTP\_Passwd are ignored |  |
@@ -107,6 +108,40 @@ Basic example of `Tags_List_Key` usage:
     Tags_List_Key tags
     # tag level, status fields
     Tag_Keys level status
+```
+
+### Prefix stripping
+
+When collecting data from many inputs into many buckets, it can be helpful to remove a common prefix using _Strip_prefix_.
+
+```python
+[INPUT]
+    Name  cpu
+    Tag   cpu.one
+
+[INPUT]
+    Name  cpu
+    Tag   cpu.two
+
+[INPUT]
+    Name  cpu
+    Tag   gpu.one
+
+[INPUT]
+    Name  cpu
+    Tag   gpu.two
+
+[OUTPUT]
+    Name          influxdb
+    Match         cpu*
+    Bucket        cpubucket
+    Strip_prefix  cpu.
+
+[OUTPUT]
+    Name          influxdb
+    Match         gpu*
+    Bucket        gpubucket
+    Strip_prefix  gpu.
 ```
 
 ### Testing
