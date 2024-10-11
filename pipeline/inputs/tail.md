@@ -37,6 +37,7 @@ The plugin supports the following configuration parameters:
 | `static_batch_size`   | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start).                                                                                                                                                                                                                                                                                                                          | `50M`     |
 | `file_cache_advise`   | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                            | `on`      |
 | `threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                                                                                                                                            | `false`   |
+| `Unicode.Encoding`    | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data is not aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`.                                                                                                                                       | `none`    |
 
 ## Buffers and memory management
 
@@ -76,6 +77,17 @@ If no database file is present, positioning behavior depends on the value of `re
 - When `read_from_head` is `false`, the plugin starts monitoring from the end of the file (classic "tail" behavior). This means that only new content written after Fluent Bit starts will be monitored.
 
 The database file essentially stores `inode=offset` so it should be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
+
+{% hint style="info" %}
+Note that `Unicode.Encoding` depends on simdutf library which is written in C++11 or above.
+So, the older platforms are not supported for this feature.
+In addition, `Unicode.Encoding auto` is not covered for the all of the usages.
+This is because sometimes this auto-detecting for character encodings makes a mistake to guess the correct encoding.
+
+We recommend to use `UTF-16LE` or `UTF-16BE` if the target file encoding is pre-determined or known beforehand.
+In details, this parameter requests to use 2-bytes aligned chunk and buffer sizes.
+If they are not aligned for 2 bytes, Fluent Bit will use 2-bytes alignments automatically to avoid character breakages on consuming boundaries.
+{% endhint %}
 
 ## Monitor a large number of files
 
