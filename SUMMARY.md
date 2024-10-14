@@ -187,6 +187,7 @@
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
+  * [OpenObserve](pipeline/inputs/openobserve.md)
   * [Observe](pipeline/outputs/observe.md)
   * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
