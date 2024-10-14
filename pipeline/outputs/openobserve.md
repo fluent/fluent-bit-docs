@@ -1,4 +1,5 @@
 ---
+title: OpenObserve
 description: Send logs to OpenObserve using Fluent Bit
 ---
 
