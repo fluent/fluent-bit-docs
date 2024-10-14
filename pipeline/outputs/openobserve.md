@@ -5,7 +5,7 @@ description: Send logs to OpenObserve using Fluent Bit
 
 # OpenObserve
 
-The OpenObserve output plugin allows to ingest your logs into [OpenObserve](https://openobserve.ai/).
+Use the OpenObserve output plugin to ingest logs into [OpenObserve](https://openobserve.ai/).
 
 Before you begin, you need a [OpenObserve account](https://cloud.openobserve.ai/), a HTTP_User and HTTP_Passwd that will be available under Ingestion of your O2 platform. Alternatively, you can achieve this with various installation types as mentioned in this [documentation](https://openobserve.ai/docs/quickstart/)
 
