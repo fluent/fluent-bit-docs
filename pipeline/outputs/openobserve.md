@@ -43,7 +43,7 @@ Use this configuration file to get started:
   Format json
   Json_date_key    timestamp
   Json_date_format iso8601
-  HTTP_User <your_http_user>
+  HTTP_User <YOUR_HTTP_USER>
   HTTP_Passwd <your_http_password>
   compress gzip
 ```
