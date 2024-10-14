@@ -30,7 +30,7 @@ types as mentioned in the
 
 ### Configuration File
 
-Get started quickly with this configuration file:
+Use this configuration file to get started:
 
 ```
 [OUTPUT]
