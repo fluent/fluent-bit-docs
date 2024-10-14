@@ -44,6 +44,6 @@ Use this configuration file to get started:
   Json_date_key    timestamp
   Json_date_format iso8601
   HTTP_User <YOUR_HTTP_USER>
-  HTTP_Passwd <your_http_password>
+  HTTP_Passwd <YOUR_HTTP_PASSWORD>
   compress gzip
 ```
