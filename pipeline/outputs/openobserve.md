@@ -39,7 +39,7 @@ Use this configuration file to get started:
   URI /api/default/default/_json
   Host localhost
   Port 5080
-  tls Off
+  tls on
   Format json
   Json_date_key    timestamp
   Json_date_format iso8601
