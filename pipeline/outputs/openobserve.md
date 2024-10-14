@@ -41,7 +41,7 @@ Use this configuration file to get started:
   Port 5080
   tls Off
   Format json
-  Json_date_key    _timestamp
+  Json_date_key    timestamp
   Json_date_format iso8601
   HTTP_User <your_http_user>
   HTTP_Passwd <your_http_password>
