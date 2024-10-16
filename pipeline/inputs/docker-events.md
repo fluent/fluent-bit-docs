@@ -14,6 +14,7 @@ This plugin supports the following configuration parameters:
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _message_. | message |
 | Reconnect.Retry_limits| The maximum number of retries allowed. The plugin tries to reconnect with docker socket when EOF is detected. | 5 |
 | Reconnect.Retry_interval| The retrying interval. Unit is second. | 1 |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ### Command Line
 

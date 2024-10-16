@@ -78,6 +78,11 @@ Before to get started with the plugin configuration, make sure to obtain the pro
         if not found, the default value is used.</td>
       <td style="text-align:left">Fluent Bit</td>
     </tr>
+    <tr>
+      <td style="text-align:left">workers</td>
+      <td style="text-align:left">The number of <a href="https://docs.fluentbit.io/manual/administration/multithreading#outputs">workers</a> to perform flush operations for this output.</td>
+      <td style="text-align:left">`0`</td>
+    </tr>
   </tbody>
 </table>
 
@@ -150,4 +155,3 @@ Your record will be available and visible in your LogDNA dashboard after a few s
 In your LogDNA dashboard, go to the top filters and mark the Tags `aa` and `bb`, then you will be able to see your records as the example below:
 
 ![](../../.gitbook/assets/logdna.png)
-

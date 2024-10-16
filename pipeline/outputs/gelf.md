@@ -14,6 +14,7 @@ According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/gettin
 | Host                   | IP address or hostname of the target Graylog server                                                                                                                         | 127.0.0.1     |
 | Port                   | The port that your Graylog GELF input is listening on                                                                                                                       | 12201         |
 | Mode                   | The protocol to use (`tls`, `tcp` or `udp`)                                                                                                                                 | udp           |
+| Gelf\_Tag\_Key         | Key to be used for tag. (_Optional in GELF_)  |               |
 | Gelf_Short_Message_Key | A short descriptive message (**MUST be set in GELF**)                                                                                                                       | short_message |
 | Gelf_Timestamp_Key     | Your log timestamp (_SHOULD be set in GELF_)                                                                                                                                | timestamp     |
 | Gelf_Host_Key          | Key which its value is used as the name of the host, source or application that sent this message. (**MUST be set in GELF**)                                                | host          |
@@ -21,6 +22,7 @@ According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/gettin
 | Gelf_Level_Key         | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between 0 and 7). (_Optional in GELF_) | level         |
 | Packet_Size            | If transport protocol is `udp`, you can set the size of packets to be sent.                                                                                                 | 1420          |
 | Compress               | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed.                                                                             | true          |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 

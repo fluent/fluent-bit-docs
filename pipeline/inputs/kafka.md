@@ -14,8 +14,8 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | group\_id | Group id passed to librdkafka. | fluent-bit |
 | poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
 | Buffer\_Max\_Size | Specify the maximum size of buffer per cycle to poll kafka messages from subscribed topics. To increase throughput, specify larger size. | 4M |
-| poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -46,7 +46,8 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 #### Example of using kafka input/output plugins
 
-The fluent-bit source repository contains a full example of using fluent-bit to process kafka records: 
+The Fluent Bit source repository contains a full example of using Fluent Bit to
+process Kafka records:
 
 ```text
 [INPUT]

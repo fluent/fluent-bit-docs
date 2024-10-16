@@ -2,6 +2,8 @@
 
 The **sql** processor provides a simple interface to select content from Logs by also supporting conditional expressions.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=6bd80893-c66f-4950-9e6d-c21358e9e8c9" />
+
 Our SQL processor does not depend on a database or indexing; it runs everything on the fly (this is good). We don't have the concept of tables but you run the query on the STREAM.
 
 Note that this processor differs from the "stream processor interface" that runs after the filters; this one can only be used in the processor's section of the input plugins when using YAML configuration mode.

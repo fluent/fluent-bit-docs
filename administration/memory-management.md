@@ -1,5 +1,7 @@
 # Memory Management
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5cc3ce54-e910-4ebf-85f5-f02530b3e11b" />
+
 In certain scenarios it would be ideal to estimate how much memory Fluent Bit could be using, this is very useful for containerized environments where memory limits are a must.
 
 In order to that we will assume that the input plugins have set the **Mem\_Buf\_Limit** option \(you can learn more about it in the [Backpressure](backpressure.md) section\).

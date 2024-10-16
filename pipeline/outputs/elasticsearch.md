@@ -48,7 +48,7 @@ The **es** output plugin, allows to ingest your records into an [Elasticsearch](
 | Trace\_Error | If elasticsearch return an error, print the elasticsearch API request and response \(for diag only\) | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record | Off |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored. If using Elasticsearch 8.0.0 or higher - it [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), so it shall be set to On. | Off |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 > The parameters _index_ and _type_ can be confusing if you are new to Elastic, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](elasticsearch.md#faq)
 

@@ -63,6 +63,10 @@ The following table describes the available collectors as part of this plugin. A
 | paging\_file   | Exposes paging\_file statistics.                                                                | Windows | v2.1.9  |
 | process       | Exposes process statistics.                                                                      | Windows | v2.1.9  |
 
+## Threading
+
+This input always runs in its own [thread](../../administration/multithreading.md#inputs).
+
 ## Getting Started
 
 ### Simple Configuration File

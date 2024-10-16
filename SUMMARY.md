@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v3.1 Documentation](README.md)
+* [Fluent Bit v3.2 Documentation](README.md)
 
 ## About
 
@@ -67,6 +67,7 @@
 * [Networking](administration/networking.md)
 * [Memory Management](administration/memory-management.md)
 * [Monitoring](administration/monitoring.md)
+* [Multithreading](administration/multithreading.md)
 * [HTTP Proxy](administration/http-proxy.md)
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
@@ -131,7 +132,9 @@
   * [Decoders](pipeline/parsers/decoders.md)
 * [Processors](pipeline/processors/README.md)
   * [Content Modifier](pipeline/processors/content-modifier.md)
+  * [Labels](pipeline/processors/labels.md)
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
+  * [OpenTelemetry Envelope](pipeline/processors/opentelemetry-envelope.md)
   * [SQL](pipeline/processors/sql.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
@@ -184,6 +187,7 @@
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
+  * [OpenObserve](pipeline/inputs/openobserve.md)
   * [Observe](pipeline/outputs/observe.md)
   * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)

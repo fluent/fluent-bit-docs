@@ -18,6 +18,7 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | queue\_full\_retries | Fluent Bit queues data into rdkafka library, if for some reason the underlying library cannot flush the records the queue might fills up blocking new addition of records. The `queue_full_retries` option set the number of local retries to enqueue the data. The default value is 10 times, the interval between each retry is 1 second. Setting the `queue_full_retries` value to `0` set's an unlimited number of retries. | 10 |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 | raw\_log\_key | When using the raw format and set, the value of raw\_log\_key in the record will be send to kafka as the payload. | |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 > Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to 1 are examples of recommended settings of librdfkafka properties.
 
