@@ -63,7 +63,10 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | tag_key                     | The key name of tag. If `include_tag_key` is false, This property is ignored.                                                                                                                                                    | `tag`       |
 | include_time_key            | If enabled, a timestamp is appended to output. The key name is used `time_key` property.                                                                                                                                         | `On`        |
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| ingestion_endpoint_connect_timeout                    | The connection timeout of various Kusto endpoints in seconds.                                                                                                                                                  | `60` |
+| compression_enabled         | If enabled, sends compressed HTTP payload (gzip) to Kusto.                                                                                                                                                  | `true` |
+| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.                                                                                                                                                  | `3600` |
+| workers                     | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Configuration File
 
@@ -71,15 +74,19 @@ Get started quickly with this configuration file:
 
 ```
 [OUTPUT]
-    Match *
-    Name azure_kusto
-    Tenant_Id <app_tenant_id>
-    Client_Id <app_client_id>
-    Client_Secret <app_secret>
-    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
-    Database_Name <database_name>
-    Table_Name <table_name>
-    Ingestion_Mapping_Reference <mapping_name>
+    match *
+    name azure_kusto
+    tenant_id <app_tenant_id>
+    client_id <app_client_id>
+    client_secret <app_secret>
+    ingestion_endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+    database_name <database_name>
+    table_name <table_name>
+    ingestion_mapping_reference <mapping_name>
+    ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
+    compression_enabled <compression_enabled>
+    ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
+    
 ```
 
 ## Troubleshooting
