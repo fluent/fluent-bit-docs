@@ -5,7 +5,7 @@ The _Nest Filter_ plugin lets you operate on or with nested data. Its modes of o
 - `nest` - Take a set of records and place them in a map
 - `lift` - Take a map by key and lift its records up
 
-## Example usage for nest`
+## Example usage for `nest`
 
 As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*`
 under a new key `NestKey` the transformation becomes:
