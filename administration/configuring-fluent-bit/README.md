@@ -1,9 +1,9 @@
 # Configuring Fluent Bit
 
-Currently, Fluent Bit supports two configuration formats:
+Fluent Bit supports two configuration formats:
 
 * [Classic mode](classic-mode/README.md).
-* [Yaml](yaml/README.md). (YAML configuration is production ready since Fluent Bit 2.0.)
+* [YAML](yaml/README.md). (YAML configuration is production ready since Fluent Bit 2.0.)
 
 ## CLI flags
 

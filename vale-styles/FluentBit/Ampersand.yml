@@ -3,7 +3,7 @@ extends: existence
 message: "Don't use an ampersand in place of the word 'and'. Always write out 'and' unless the ampersand is part of a proper name."
 nonword: true
 ignorecase: false
-level: error
+level: suggestion
 scope: sentence
 tokens:
   - '[^\*{2}].*.&.*[^\*{2}]\n'
