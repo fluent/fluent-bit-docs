@@ -1,0 +1,12 @@
+---
+extends: existence
+message: 'Avoid words like "%s" that imply ease of use, because the user may find this action difficult.'
+level: suggestion
+ignorecase: true
+tokens:
+  - easy
+  - easily
+  - handy
+  - simple
+  - simply
+  - useful
