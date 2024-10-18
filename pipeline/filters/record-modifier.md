@@ -11,10 +11,10 @@ The plugin supports the following configuration parameters. `Remove_key` and
 | Key | Description |
 | :--- | :--- |
 | `Record` | Append fields. This parameter needs a key/value pair. |
-| `Remove\_key` | If the key is matched, that field is removed. |
-| `Allowlist\_key` | If the key isn't matched, that field is removed. |
-| `Whitelist\_key` | An alias of `Allowlist_key` for backwards compatibility. |
-| `Uuid\_key`| If set, the plugin appends Uuid to each record. The value assigned becomes the key in the map.|
+| `Remove_key` | If the key is matched, that field is removed. |
+| `Allowlist_key` | If the key isn't matched, that field is removed. |
+| `Whitelist_key` | An alias of `Allowlist_key` for backwards compatibility. |
+| `Uuid_key` | If set, the plugin appends Uuid to each record. The value assigned becomes the key in the map.|
 
 ## Getting Started
 
