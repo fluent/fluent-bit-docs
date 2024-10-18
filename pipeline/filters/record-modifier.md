@@ -145,7 +145,7 @@ The output looks something like:
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```
 
-### Remove fields with `Allowlist_key`
+### Retain fields with `Allowlist_key`
 
 The following configuration file retains `Mem.*` fields.
 
