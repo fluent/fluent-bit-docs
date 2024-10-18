@@ -1,24 +1,26 @@
 # Record Modifier
 
-The _Record Modifier Filter_ plugin allows to append fields or to exclude specific fields.
+The _Record Modifier_ [filter](pipeline/filters.md) plugin lets you append
+fields to a record, or exclude specific fields.
 
-## Configuration Parameters
+## Configuration parameters
 
-The plugin supports the following configuration parameters: _Remove\_key_ and _Allowlist\_key_ are exclusive.
+The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Record | Append fields. This parameter needs key and value pair. |
-| Remove\_key | If the key is matched, that field is removed. |
-| Allowlist\_key | If the key is **not** matched, that field is removed. |
-| Whitelist\_key | An alias of `Allowlist_key` for backwards compatibility. |
-| Uuid\_key| If set, the plugin appends uuid to each record.  The value assigned becomes the key in the map.|
+| `Record` | Append fields. This parameter needs a key/value pair. |
+| `Remove_key` | If the key is matched, that field is removed. You can this or `Allowlist_key`.|
+| `Allowlist_key` | If the key isn't matched, that field is removed. You can this or `Remove_key`. |
+| `Whitelist_key` | An alias of `Allowlist_key` for backwards compatibility. |
+| `Uuid_key` | If set, the plugin appends Uuid to each record. The value assigned becomes the key in the map. |
 
-## Getting Started
+## Get started
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file.
+To start filtering records, run the filter from the command line or through a
+configuration file.
 
-This is a sample in\_mem record to filter.
+This is a sample `in_mem` record to filter.
 
 ```text
 {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>299352, "Swap.total"=>2064380, "Swap.used"=>32656, "Swap.free"=>2031724}
@@ -26,11 +28,13 @@ This is a sample in\_mem record to filter.
 
 ### Append fields
 
-The following configuration file is to append product name and hostname \(via environment variable\) to record.
+The following configuration file appends a product name and hostname to a record
+using an environment variable:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```python
+
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
@@ -45,10 +49,12 @@ The following configuration file is to append product name and hostname \(via en
     Record hostname ${HOSTNAME}
     Record product Awesome_Tool
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
-```yaml
+
+```yaml copy
 pipeline:
     inputs:
         - name: mem
@@ -56,37 +62,37 @@ pipeline:
     filters:
         - name: record_modifier
           match: '*'
-          record: 
+          record:
              - hostname ${HOSTNAME}
              - product Awesome_Tool
     outputs:
         - name: stdout
           match: '*'
 ```
+
 {% endtab %}
 {% endtabs %}
 
+You can run the filter from command line:
 
-You can also run the filter from command line.
-
-```text
-$ fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
 ```
 
-The output will be
+The output looks something like:
 
-```python
+```python copy
 [0] mem.local: [1492436882.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>299352, "Swap.total"=>2064380, "Swap.used"=>32656, "Swap.free"=>2031724, "hostname"=>"localhost.localdomain", "product"=>"Awesome_Tool"}]
 ```
 
-### Remove fields with Remove\_key
+### Remove fields with `Remove_key`
 
-The following configuration file is to remove 'Swap.\*' fields.
-
+The following configuration file removes `Swap.*` fields:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```python
+
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
@@ -102,10 +108,12 @@ The following configuration file is to remove 'Swap.\*' fields.
     Remove_key Swap.used
     Remove_key Swap.free
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
-```yaml
+
+```yaml copy
 pipeline:
     inputs:
         - name: mem
@@ -113,7 +121,7 @@ pipeline:
     filters:
         - name: record_modifier
           match: '*'
-          remove_key: 
+          remove_key:
              - Swap.total
              - Swap.used
              - Swap.free
@@ -121,28 +129,30 @@ pipeline:
         - name: stdout
           match: '*'
 ```
+
 {% endtab %}
 {% endtabs %}
 
 You can also run the filter from command line.
 
-```text
-$ fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
 ```
 
-The output will be
+The output looks something like:
 
 ```python
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```
 
-### Remove fields with Allowlist\_key
+### Retain fields with `Allowlist_key`
 
-The following configuration file is to remain 'Mem.\*' fields.
+The following configuration file retains `Mem.*` fields.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```python
+
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
@@ -158,10 +168,12 @@ The following configuration file is to remain 'Mem.\*' fields.
     Allowlist_key Mem.used
     Allowlist_key Mem.free
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
-```yaml
+
+```yaml copy
 pipeline:
     inputs:
         - name: mem
@@ -169,7 +181,7 @@ pipeline:
     filters:
         - name: record_modifier
           match: '*'
-          Allowlist_key: 
+          Allowlist_key:
              - Mem.total
              - Mem.used
              - Mem.free
@@ -177,18 +189,18 @@ pipeline:
         - name: stdout
           match: '*'
 ```
+
 {% endtab %}
 {% endtabs %}
 
-You can also run the filter from command line.
+You can also run the filter from command line:
 
-```text
-$ fluent-bit -i mem -o stdout -F  record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
 ```
 
-The output will be
+The output looks something like:
 
 ```python
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```
-
