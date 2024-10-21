@@ -25,6 +25,7 @@ Datadog
 Datagen
 datapoint
 datapoints
+Datastream
 declaratively
 deduplicate
 Deployer
