@@ -51,9 +51,9 @@ with a nested array as the first element:
 where
 
 - _`TIMESTAMP`_ is a timestamp in seconds as an integer or floating point value
-  (not a string)
-- _`METADATA`_ is a possibly empty object containing event metadata
-- _`MESSAGE`_ is an object containing the event body
+  (not a string).
+- _`METADATA`_ is a possibly empty object containing event metadata.
+- _`MESSAGE`_ is an object containing the event body.
 
 Fluent Bit versions prior to v2.1.0 used:
 
@@ -67,7 +67,7 @@ streams.
 ## Filtering
 
 You might need to perform modifications on the Event's content. The process to alter,
-append to, or drop Events is called [_filtering_](pipeline/filters.md).
+append to, or drop Events is called [_filtering_](concepts/data-pipeline/filters.md).
 
 Use filtering to:
 
@@ -79,11 +79,11 @@ Use filtering to:
 
 Every Event ingested by Fluent Bit is assigned a Tag. This tag is an internal string
 used in a later stage by the Router to decide which Filter or
-[Output](pipeline/outputs.md) phase it must go through.
+[Output](concepts/data-pipeline/output.md) phase it must go through.
 
 Most tags are assigned manually in the configuration. If a tag isn't specified,
-Fluent Bit assigns the name of the [Input](pipeline/inputs.md) plugin instance
-where that Event was generated from.
+Fluent Bit assigns the name of the [Input](concepts/data-pipeline/input.md) plugin
+instance where that Event was generated from.
 
 {% hint style="info" %}
 The [Forward](../pipeline/inputs/forward.md) input plugin doesn't assign tags. This
@@ -118,7 +118,7 @@ Fluent Bit lets you deliver your collected and processed Events to one or multip
 destinations through a routing phase. A _Match_ represents a rule to select Events
 where a Tag matches a defined rule.
 
-To learn more about Tags and Matches, see [Routing](concepts/data-pipeline/router.md).
+To learn more about Tags and Matches, see [Routing](data-pipeline/router.md).
 
 ## Structured messages
 
