@@ -79,10 +79,10 @@ Use filtering to:
 
 Every Event ingested by Fluent Bit is assigned a Tag. This tag is an internal string
 used in a later stage by the Router to decide which Filter or
-[Output](concepts/data-pipeline/output.md) phase it must go through.
+[Output](data-pipeline/output.md) phase it must go through.
 
 Most tags are assigned manually in the configuration. If a tag isn't specified,
-Fluent Bit assigns the name of the [Input](concepts/data-pipeline/input.md) plugin
+Fluent Bit assigns the name of the [Input](data-pipeline/input.md) plugin
 instance where that Event was generated from.
 
 {% hint style="info" %}
