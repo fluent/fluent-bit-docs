@@ -109,8 +109,8 @@ SECONDS.NANOSECONDS
 
 where:
 
-- `_Seconds_` is the number of seconds that have elapsed since the Unix epoch.
-- `_Nanoseconds_` is a fractional second or one thousand-millionth of a second.
+- `_SECONDS_` is the number of seconds that have elapsed since the Unix epoch.
+- `_NANOSECONDS_` is a fractional second or one thousand-millionth of a second.
 
 ## Match
 
