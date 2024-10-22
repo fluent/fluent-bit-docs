@@ -1,5 +1,6 @@
 ---
-description: Strong commitment to openness and collaboration
+title: License
+description: Fluent Bit license description
 ---
 
 # License
