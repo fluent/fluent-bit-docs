@@ -17,6 +17,7 @@ This input plugin allows you to ingest a payload in the Prometheus remote-write 
 |successful\_response\_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
 | tag\_from\_uri      | If true, tag will be created from uri, e.g. api\_prom\_push from /api/prom/push, and any tag specified in the config will be ignored. If false then a tag must be provided in the config for this input. | true    |
 | uri               | Specify an optional HTTP URI for the target web server listening for prometheus remote write payloads, e.g: /api/prom/push                       | |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 
 A sample config file to get started will look something like the following:
@@ -26,14 +27,14 @@ A sample config file to get started will look something like the following:
 {% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
-	name prometheus_remote_write
-	listen 127.0.0.1
-	port 8080
-	uri /api/prom/push
+    name prometheus_remote_write
+    listen 127.0.0.1
+    port 8080
+    uri /api/prom/push
 
 [OUTPUT]
-	name stdout
-	match *
+    name stdout
+    match *
 ```
 {% endtab %}
 
@@ -65,13 +66,13 @@ Communicating with TLS, you will need to use the tls related parameters:
 
 ```
 [INPUT]
-	Name prometheus_remote_write
-	Listen 127.0.0.1
-	Port 8080
-	Uri /api/prom/push
-	Tls On
-	tls.crt_file /path/to/certificate.crt
-	tls.key_file /path/to/certificate.key
+    Name prometheus_remote_write
+    Listen 127.0.0.1
+    Port 8080
+    Uri /api/prom/push
+    Tls On
+    tls.crt_file /path/to/certificate.crt
+    tls.key_file /path/to/certificate.key
 ```
 
 Now, you should be able to send data over TLS to the remote write input.

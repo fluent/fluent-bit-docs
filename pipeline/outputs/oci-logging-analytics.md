@@ -20,6 +20,7 @@ Following are the top level configuration properties of the plugin:
 | profile_name         | OCI Config Profile Name to be used from the configuration file                                                                                                                                                                       | DEFAULT |
 | namespace            | OCI Tenancy Namespace in which the collected log data is to be uploaded                                                                                                                                                              |         |
 | proxy                | define proxy if required, in http://host:port format, supports only http protocol                                                                                                                                                    |         |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 The following parameters are to set the Logging Analytics resources that must be used to process your logs by OCI Logging Analytics.
 
@@ -28,7 +29,7 @@ The following parameters are to set the Logging Analytics resources that must be
 | oci_config_in_record    | If set to true, the following oci_la_* will be read from the record itself instead of the output plugin configuration.                                                                        | false   |
 | oci_la_log_group_id     | The OCID of the Logging Analytics Log Group where the logs must be stored. This is a mandatory parameter                                                                                      |         |
 | oci_la_log_source_name  | The Logging Analytics Source that must be used to process the log records. This is a mandatory parameter                                                                                      |         |
-| oci_la_entity_id        | The OCID of the Logging Analytics Entity	                                                                                                                                                     |         |   
+| oci_la_entity_id        | The OCID of the Logging Analytics Entity	                                                                                                                                                     |         |
 | oci_la_entity_type	     | The entity type of the Logging Analytics Entity	                                                                                                                                              |         |
 | oci_la_log_path	        | Specify the original location of the log files	                                                                                                                                               |         |
 | oci_la_global_metadata	 | Use this parameter to specify additional global metadata along with original log content to Logging Analytics. The format is 'key_name value'. This option can be set multiple times          |         |
@@ -86,11 +87,13 @@ In case of multiple inputs, where oci_la_* properties can differ, you can add th
 [INPUT]
     Name dummy
     Tag dummy
+
 [Filter]
     Name modify
     Match *
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
+
 [Output]
     Name oracle_log_analytics
     Match *
@@ -109,6 +112,7 @@ You can attach certain metadata to the log events collected from various inputs.
 [INPUT]
     Name dummy
     Tag dummy
+
 [Output]
     Name oracle_log_analytics
     Match *
@@ -138,12 +142,12 @@ The above configuration will generate a payload that looks like this
       "metadata": {
         "key1": "value1",
         "key2": "value2"
-    },
-    "logSourceName": "example_log_source",
-    "logRecords": [
-      "dummy"
-    ]
-  }
+      },
+      "logSourceName": "example_log_source",
+      "logRecords": [
+        "dummy"
+      ]
+    }
   ]
 }
 ```
@@ -156,11 +160,13 @@ With oci_config_in_record option set to true, the metadata key-value pairs will 
 [INPUT]
     Name dummy
     Tag dummy
+
 [FILTER]
     Name Modify
     Match *
     Add olgm.key1 val1
     Add olgm.key2 val2
+
 [FILTER]
     Name nest
     Match *
@@ -168,11 +174,13 @@ With oci_config_in_record option set to true, the metadata key-value pairs will 
     Wildcard olgm.*
     Nest_under oci_la_global_metadata
     Remove_prefix olgm.
+
 [Filter]
     Name modify
     Match *
     Add oci_la_log_source_name <LOG_SOURCE_NAME>
     Add oci_la_log_group_id <LOG_GROUP_OCID>
+
 [Output]
     Name oracle_log_analytics
     Match *

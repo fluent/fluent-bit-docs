@@ -6,7 +6,19 @@ description: Modify, Enrich or Drop your records
 
 In production environments we want to have full control of the data we are collecting, filtering is an important feature that allows us to **alter** the data before delivering it to some destination.
 
-![](<../../.gitbook/assets/logging\_pipeline\_filter (1) (2) (2) (2) (2) (2) (2) (1).png>)
+```mermaid
+graph LR
+    accTitle: Fluent Bit data pipeline
+    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, a parser, a filter, a buffer, routing, and various outputs.
+    A[Input] --> B[Parser]
+    B --> C[Filter]
+    C --> D[Buffer]
+    D --> E((Routing))
+    E --> F[Output 1]
+    E --> G[Output 2]
+    E --> H[Output 3]
+    style C stroke:darkred,stroke-width:2px;
+```
 
 Filtering is implemented through plugins, so each filter available could be used to match, exclude or enrich your logs with some specific metadata.
 

@@ -33,7 +33,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | gelf\_level\_key           | Specify the key to use for the `level` in _gelf_ format                                                                                                                                                                                                                                                                            |           |
 | body\_key                  | Specify the key to use as the body of the request (must prefix with "$"). The key must contain either a binary or raw string, and the content type can be specified using headers\_key (which must be passed whenever body\_key is present). When this option is present, each msgpack record will create a separate request.      |           |
 | headers\_key               | Specify the key to use as the headers of the request (must prefix with "$"). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content-type of the data contained in body\_key.                                                   |           |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ### TLS / SSL
 

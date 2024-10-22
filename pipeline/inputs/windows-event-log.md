@@ -11,6 +11,7 @@ The plugin supports the following configuration parameters:
 | Channels     | A comma-separated list of channels to read from.      |         |
 | Interval_Sec | Set the polling interval for each channel. (optional) | 1       |
 | DB           | Set the path to save the read offsets. (optional)     |         |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Note that if you do not set _db_, the plugin will read channels from the beginning on each startup.
 

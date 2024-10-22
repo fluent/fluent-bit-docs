@@ -11,6 +11,7 @@ The **Apache SkyWalking** output plugin, allows to flush your records to a [Apac
 | auth_token | Authentication token if needed for Apache SkyWalking OAP | None |
 | svc_name | Service name that fluent-bit belongs to | sw-service |
 | svc_inst_name | Service instance name of fluent-bit | fluent-bit |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
@@ -57,6 +58,6 @@ This message is packed into the following protocol format and written to the OAP
     "json": {
       "json": "{\"log\": \"This is the original log message\"}"
     }
-  } 
+  }
 }]
 ```
