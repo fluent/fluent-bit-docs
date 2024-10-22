@@ -15,7 +15,7 @@ operational Elasticsearch service running in your environment.
 | `Host` | IP address or hostname of the target Elasticsearch instance | `127.0.0.1` |
 | `Port` | TCP port of the target Elasticsearch instance | `9200` |
 | `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string |
-| `compress` | Set payload compression mechanism. Option available is `gzip`. |  |
+| `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
 | `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md). | `512KB` |
 | `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ |
 | `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
@@ -23,7 +23,7 @@ operational Elasticsearch service running in your environment.
 | `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service | _none_ |
 | `AWS_Role_ARN` | AWS IAM Role to assume to put records to your Amazon cluster | _none_ |
 | `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn` | _none_ |
-| `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | `es` |
+| `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` |
 | `AWS_Profile` | AWS profile name | `default` |
 | `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ |
 | `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ |
@@ -52,8 +52,7 @@ operational Elasticsearch service running in your environment.
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 If you have used a common relational database, the parameters `index` and `type` can
-be compared to the `database` and `table` concepts. Also see [the
-FAQ](elasticsearch.md#faq)
+be compared to the `database` and `table` concepts.
 
 ### TLS / SSL
 
@@ -111,7 +110,7 @@ fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
 
 ### Configuration File
 
-In your main configuration file append the following `Input` and `Output` sections. You can visualize this configuration [here](https://link.calyptia.com/qhq)
+In your main configuration file append the following `Input` and `Output` sections.
 
 ```python
 [INPUT]
