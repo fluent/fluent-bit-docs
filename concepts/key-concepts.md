@@ -8,7 +8,7 @@ Before diving into [Fluent Bit](https://fluentbit.io) you might want to get acqu
 with some of the key concepts of the service. This document provides an
 introduction to those concepts and common [Fluent Bit](https://fluentbit.io)
 terminology. Reading this document will help you gain a more general understanding of the
-log and stream processor.
+following topics:
 
 - Event or Record
 - Filtering
@@ -31,9 +31,9 @@ Jan 18 12:52:16 flb systemd[2222]: Started GNOME Terminal Server.
 Jan 18 12:52:16 flb gsd-media-keys[2640]: # watch_fast: "/org/gnome/terminal/legacy/" (establishing: 0, active: 0)
 ```
 
-It contains four lines, representing four independent Events.
+It contains four lines that represent four independent Events.
 
-Internally, an Event is comprised of:
+An Event is comprised of:
 
 - timestamp
 - key/value metadata (v2.1.0 and greater)
@@ -41,7 +41,7 @@ Internally, an Event is comprised of:
 
 ### Event format
 
-The Fluent Bit wire protocol represents an Event as a 2-element array
+The Fluent Bit wire protocol represents an Event as a two-element array
 with a nested array as the first element:
 
 ```javascript copy
@@ -52,7 +52,7 @@ where
 
 - _`TIMESTAMP`_ is a timestamp in seconds as an integer or floating point value
   (not a string).
-- _`METADATA`_ is a possibly empty object containing event metadata.
+- _`METADATA`_ is an object containing event metadata, and might be empty.
 - _`MESSAGE`_ is an object containing the event body.
 
 Fluent Bit versions prior to v2.1.0 used:
@@ -66,7 +66,7 @@ streams.
 
 ## Filtering
 
-You might need to perform modifications on the Event's content. The process to alter,
+You might need to perform modifications on an Event's content. The process to alter,
 append to, or drop Events is called [_filtering_](data-pipeline/filter.md).
 
 Use filtering to:
@@ -97,8 +97,8 @@ Matches, see [Routing](data-pipeline/router.md).
 
 ## Timestamp
 
-The timestamp represents the time an Event was created. Every Event contains a
-timestamp associated. A timestamp always exists, and is set by the Input plugin or
+The timestamp represents the time an Event was created. Every Event contains an
+associated timestamps. All events have timestamps, and they're set by the input plugin or
 discovered through a data parsing process.
 
 The timestamp is a numeric fractional integer in the format:
@@ -114,8 +114,8 @@ where:
 
 ## Match
 
-Fluent Bit lets you deliver your collected and processed Events to one or multiple
-destinations through a routing phase. A _Match_ represents a rule to select Events
+Fluent Bit lets you route your collected and processed Events to one or multiple
+destinations. A _Match_ represents a rule to select Events
 where a Tag matches a defined rule.
 
 To learn more about Tags and Matches, see [Routing](data-pipeline/router.md).
@@ -124,7 +124,7 @@ To learn more about Tags and Matches, see [Routing](data-pipeline/router.md).
 
 Source events can have a structure. A structure defines a set of `keys` and `values`
 inside the Event message to implement faster operations on data modifications.
-Fluent Bit handles every Event message as a structured message.
+Fluent Bit treats every Event message as a structured message.
 
 Consider the following two messages:
 
