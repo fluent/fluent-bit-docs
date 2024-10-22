@@ -67,7 +67,7 @@ streams.
 ## Filtering
 
 You might need to perform modifications on the Event's content. The process to alter,
-append to, or drop Events is called [_filtering_](concepts/data-pipeline/filters.md).
+append to, or drop Events is called [_filtering_](data-pipeline/filters.md).
 
 Use filtering to:
 
