@@ -296,7 +296,7 @@ The following snippet demonstrates using the namespace name as extracted by the
     Match *
     # ...
     Logstash_Prefix logstash
-    Logstash_Prefix_Key $kubernetes["namespace_name"]
+    Logstash_Prefix_Key $kubernetes['namespace_name']
     # ...
 ```
 
