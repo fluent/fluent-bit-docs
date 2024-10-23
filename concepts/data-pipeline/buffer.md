@@ -4,9 +4,12 @@ description: Data processing with reliability
 
 # Buffer
 
-Previously defined in the [Buffering](../buffering.md) concept section, the `buffer` phase in the pipeline aims to provide a unified and persistent mechanism to store your data, either using the primary in-memory model or using the filesystem based mode.
+The [`buffer`](../buffering.md) phase in the pipeline aims to provide a unified and
+persistent mechanism to store your data, using the primary in-memory model or the
+filesystem based mode.
 
-The `buffer` phase already contains the data in an immutable state, meaning that no other filter can be applied.
+The `buffer` phase contains the data in an immutable state, meaning that no other
+filter can be applied.
 
 ```mermaid
 graph LR
@@ -22,8 +25,7 @@ graph LR
     style D stroke:darkred,stroke-width:2px;
 ```
 
-{% hint style="info" %}
-Note that buffered data is not raw text, it's in Fluent Bit's internal binary representation.
-{% endhint %}
+Buffered data isn't raw text; it uses the Fluent Bit internal binary representation.
 
-Fluent Bit offers a buffering mechanism in the file system that acts as a _backup system_ to avoid data loss in case of system failures.
+Fluent Bit offers a buffering mechanism in the file system that acts as a backup
+system to avoid data loss in case of system failures.
