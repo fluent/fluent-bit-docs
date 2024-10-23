@@ -254,4 +254,4 @@ The following snippet demonstrates using the namespace name as extracted by the
     # ...
 ```
 
-For records that do nor have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
+For records that do not have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
