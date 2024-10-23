@@ -27,6 +27,7 @@ A section is defined by a name or title inside brackets. Looking at the example 
 * Multiple sections can exist on the same file.
 * A section is expected to have comments and entries, it cannot be empty.
 * Any commented line under a section, must be indented too.
+* End-of-line comments are not supported, only full-line comments.
 
 ## Entries: Key/Value <a id="entries_kv"></a>
 

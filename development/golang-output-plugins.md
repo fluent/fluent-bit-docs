@@ -21,7 +21,7 @@ Usage: fluent-bit [OPTION]
 Available Options
   -c  --config=FILE    specify an optional configuration file
   -d, --daemon        run Fluent Bit in background mode
-  -f, --flush=SECONDS    flush timeout in seconds (default: 5)
+  -f, --flush=SECONDS    flush timeout in seconds (default: 1)
   -i, --input=INPUT    set an input
   -m, --match=MATCH    set plugin match, same as '-p match=abc'
   -o, --output=OUTPUT    set an output
@@ -46,7 +46,7 @@ import "github.com/fluent/fluent-bit-go/output"
 //export FLBPluginRegister
 func FLBPluginRegister(def unsafe.Pointer) int {
     // Gets called only once when the plugin.so is loaded
-    return output.FLBPluginRegister(ctx, "gstdout", "Stdout GO!")
+    return output.FLBPluginRegister(def, "gstdout", "Stdout GO!")
 }
 
 //export FLBPluginInit
@@ -94,3 +94,58 @@ $ ldd out_gstdout.so
 $ bin/fluent-bit -e /path/to/out_gstdout.so -i cpu -o gstdout
 ```
 
+## Configuration file
+
+Fluent Bit can load / run Golang plugin using two configuration file.
+
+- Plugins configuration file
+- [Main configuration file](../administration/configuring-fluent-bit/classic-mode/configuration-file.md)
+
+### Plugins configuration file
+
+| Key  | Description | Default Value|
+| ---- | ----------- | ------------ |
+| Path | A path for a Golang plugin. | |
+
+#### Example
+
+```python
+[PLUGINS]
+    Path /path/to/out_gstdout.so
+```
+
+### Main configuration file
+
+The keys for Golang plugin available as of this version are described in the following table:
+
+| Key  | Description | Default Value|
+| ---- | ----------- | ------------ |
+| Plugins_file    | Path for a plugins configuration file. A _plugins_ configuration file allows to define paths for external plugins, for an example [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                                                     |               |
+
+#### Example
+
+The following is an example of a main configuration file.
+
+```python
+[SERVICE]
+    plugins_file /path/to/plugins.conf
+
+[INPUT]
+    Name dummy
+
+[OUTPUT]
+    Name gstdout
+```
+
+#### Config key constraint
+
+Some config keys are reserved by Fluent Bit and must not be used by a custom plugin, they are: `alias`,`host`,`ipv6`,`listen`,`log_level`,`log_suppress_interval`,`match`,`match_regex`,`mem_buf_limit`,`port`,`retry_limit`,`routable`,`storage.pause_on_chunks_overlimit`, `storage.total_limit_size`, `storage.type`, `tag`,`threaded`,`tls`,`tls.ca_file`, `tls.ca_path`, `tls.crt_file`, `tls.debug`, `tls.key_file`, `tls.key_passwd`, `tls.verify`, `tls.vhost`, `workers`
+
+### Run using a configuration file
+
+We can load a main configuration file using `-c` option.
+Note: No need to specify a plugins configuration file from command line.
+
+```text
+fluent-bit -c fluent-bit.conf
+```

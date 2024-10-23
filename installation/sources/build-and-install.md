@@ -1,6 +1,14 @@
 # Build and Install
 
-[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as it build system. The suggested procedure to prepare the build system consists of the following steps:
+[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as its build system. The suggested procedure to prepare the build system consists of the following steps:
+
+## Requirements
+
+- CMake >= 3.12
+- Flex
+- Bison >= 3
+- YAML headers
+- OpenSSL headers
 
 ## Prepare environment
 
@@ -87,6 +95,9 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_SIGNV4 | Enable AWS Signv4 support | Yes |
 | FLB\_STATIC\_CONF | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
 | FLB\_STREAM\_PROCESSOR | Enable Stream Processor | Yes |
+| FLB\_CONFIG\_YAML | Enable YAML configuration support | Yes |
+| FLB\_WASM | Build with WASM runtime support | Yes |
+| FLB\_WAMRC | Build with WASM AOT compiler executable | No |
 
 ### Development Options
 
@@ -101,6 +112,13 @@ Fluent Bit provides certain options to CMake that can be enabled or disabled whe
 | FLB\_TESTS | Enable tests | No |
 | FLB\_BACKTRACE | Enable backtrace/stacktrace support | Yes |
 
+### Optimization Options
+
+| option | description | default |
+| :--- | :--- | :--- |
+| FLB\_MSGPACK\_TO\_JSON\_INIT\_BUFFER\_SIZE | Determine initial buffer size for msgpack to json conversion in terms of memory used by payload. | 2.0 |
+| FLB\_MSGPACK\_TO\_JSON\_REALLOC\_BUFFER\_SIZE | Determine percentage of reallocation size when msgpack to json conversion buffer runs out of memory. | 0.1 |
+
 ### Input Plugins
 
 The _input plugins_ provides certain features to gather information from a specific source type which can be a network interface, some built-in metric or through a specific input device, the following input plugins are available:
@@ -112,7 +130,9 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_DISK](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | On |
 | [FLB\_IN\_DOCKER](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | On |
 | [FLB\_IN\_EXEC](../../pipeline/inputs/exec.md) | Enable Exec input plugin | On |
+| [FLB\_IN\_EXEC\_WASI](../../pipeline/inputs/exec-wasi.md) | Enable Exec WASI input plugin | On |
 | [FLB_IN_FLUENTBIT_METRICS](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | On |
+| [FLB\_IN\_ELASTICSEARCH](../../pipeline/inputs/elasticsearch.md) | Enable Elasticsearch/OpenSearch Bulk input plugin | On |
 | [FLB\_IN\_FORWARD](../../pipeline/inputs/forward.md) | Enable Forward input plugin | On |
 | [FLB\_IN\_HEAD](../../pipeline/inputs/head.md) | Enable Head input plugin | On |
 | [FLB\_IN\_HEALTH](../../pipeline/inputs/health.md) | Enable Health input plugin | On |
@@ -129,6 +149,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_TAIL](../../pipeline/inputs/tail.md) | Enable Tail \(follow files\) input plugin | On |
 | [FLB\_IN\_TCP](../../pipeline/inputs/tcp.md) | Enable TCP input plugin | On |
 | [FLB\_IN\_THERMAL](../../pipeline/inputs/thermal.md) | Enable system temperature\(s\) input plugin | On |
+| [FLB\_IN\_UDP](../../pipeline/inputs/udp.md) | Enable UDP input plugin | On |
 | [FLB\_IN\_WINLOG](../../pipeline/inputs/windows-event-log.md) | Enable Windows Event Log input plugin \(Windows Only\) | On |
 | [FLB\_IN\_WINEVTLOG](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using winevt.h API \(Windows Only\) | On |
 
@@ -139,6 +160,7 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | option | description | default |
 | :--- | :--- | :--- |
 | [FLB\_FILTER\_AWS](../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | On |
+| [FLB\_FILTER\_ECS](../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | On |
 | FLB\_FILTER\_EXPECT | Enable Expect data test filter | On |
 | [FLB\_FILTER\_GREP](../../pipeline/filters/grep.md) | Enable Grep filter | On |
 | [FLB\_FILTER\_KUBERNETES](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | On |
@@ -149,7 +171,10 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | [FLB\_FILTER\_RECORD\_MODIFIER](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | On |
 | [FLB\_FILTER\_REWRITE\_TAG](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | On |
 | [FLB\_FILTER\_STDOUT](../../pipeline/filters/standard-output.md) | Enable Stdout filter | On |
+| [FLB\_FILTER\_SYSINFO](../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | On |
 | [FLB\_FILTER\_THROTTLE](../../pipeline/filters/throttle.md) | Enable Throttle filter | On |
+| [FLB\_FILTER\_TYPE\_CONVERTER](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | On |
+| [FLB\_FILTER\_WASM](../../pipeline/filters/wasm.md) | Enable WASM filter | On |
 
 ### Output Plugins
 
@@ -158,6 +183,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | option | description | default |
 | :--- | :--- | :--- |
 | [FLB\_OUT\_AZURE](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | On |
+| [FLB\_OUT\_AZURE\_KUSTO](../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | On |
 | [FLB\_OUT\_BIGQUERY](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | On |
 | [FLB\_OUT\_COUNTER](../../pipeline/outputs/counter.md) | Enable Counter output plugin | On |
 | [FLB\_OUT\_CLOUDWATCH\_LOGS](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | On |
@@ -186,3 +212,12 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 
+### Processor Plugins
+
+The _processor plugins_ provide the capability to handle the events within the processor pipelines to allow modifying, enrich or drop events. 
+The following table describes the processors available on this version:
+
+| option | description | default |
+| :--- | :--- | :--- |
+| [FLB\_PROCESSOR\_METRICS\_SELECTOR](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | On |
+| [FLB\_PROCESSOR\_LABELS](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | On |

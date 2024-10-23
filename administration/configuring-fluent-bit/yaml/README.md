@@ -1,7 +1,3 @@
 # Fluent Bit YAML configuration
 
-Since version 1.9, Fluent Bit supports the use of YAML for configuration.
-
-{% hint style="info" %}
-YAML configuration is tech preview so not recommended for production.
-{% endhint %}
+YAML configuration feature was introduced since FLuent Bit version 1.9 as experimental, and it is production ready since Fluent Bit 2.0.

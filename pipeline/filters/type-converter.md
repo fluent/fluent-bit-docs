@@ -2,6 +2,8 @@
 
 The _Type Converter Filter_ plugin allows to convert data type and append new key value pair.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
+
 This plugin is useful in combination with plugins which expect incoming string value.
 e.g. [filter_grep](grep.md), [filter_modify](modify.md)
 
@@ -37,6 +39,8 @@ The plugin outputs uint values and filter_type_converter converts them into stri
 
 ### Convert uint to string
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name mem
@@ -52,6 +56,26 @@ The plugin outputs uint values and filter_type_converter converts them into stri
     Name stdout
     Match *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+    filters:
+        - name: type_converter
+          match: '*'
+          uint_key:
+            - Mem.total Mem.total_str string
+            - Mem.used  Mem.used_str  string
+            - Mem.free  Mem.free_str  string
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 You can also run the filter from command line.
 

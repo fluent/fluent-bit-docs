@@ -15,14 +15,15 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | HTTP\_User | Optional username for HTTP Basic Authentication |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User |  |
 | HTTP\_Token | Authentication token used with InfluDB v2 - if specified, both HTTP\_User and HTTP\_Passwd are ignored |  |
+| HTTP\_Header | Add a HTTP header key/value pair. Multiple headers can be set | |
 | Tag\_Keys | Space separated list of keys that needs to be tagged |  |
 | Auto\_Tags | Automatically tag keys where value is _string_. This option takes a boolean value: True/False, On/Off. | Off |
-| Tags\_List\_Enabled | Dynamically tag keys which are in the _string array_ at Tags\_List\_Key key. This option takes a boolean value: True/False, On/Off. | Off |
-| Tags\_List\_Key | Key of the _string array_ optionally contained within each log record that contains tag keys for that record | tags |
+| Uri | Custom URI endpoint | |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
-InfluxDB output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+InfluxDB output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
 
 ## Getting Started
 
@@ -207,4 +208,3 @@ key    value
 method "MATCH"
 method "POST"
 ```
-

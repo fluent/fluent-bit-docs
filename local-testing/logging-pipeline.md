@@ -4,7 +4,7 @@ You may wish to test a logging pipeline locally to observe how it deals with log
 
 ## Create a Configuration File
 
-Refer to the [Configuration File section](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file) to create a configuration to test.
+Refer to the [Configuration File section](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file) to create a configuration to test.
 
 `fluent-bit.conf`:
 

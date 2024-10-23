@@ -6,7 +6,19 @@ description: Create flexible routing rules
 
 Routing is a core feature that allows to **route** your data through Filters and finally to one or multiple destinations. The router relies on the concept of [Tags](../key-concepts.md) and [Matching](../key-concepts.md) rules
 
-![](<../../.gitbook/assets/logging_pipeline_routing (1) (1) (2) (2) (2) (2) (2) (2) (2) (1) (2) (1).png>)
+```mermaid
+graph LR
+    accTitle: Fluent Bit data pipeline
+    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, a parser, a filter, a buffer, routing, and various outputs.
+    A[Input] --> B[Parser]
+    B --> C[Filter]
+    C --> D[Buffer]
+    D --> E((Routing))
+    E --> F[Output 1]
+    E --> G[Output 2]
+    E --> H[Output 3]
+    style E stroke:darkred,stroke-width:2px;
+```
 
 There are two important concepts in Routing:
 
@@ -59,4 +71,26 @@ Routing is flexible enough to support _wildcard_ in the **Match** pattern. The b
     Match  my_*
 ```
 
-The match rule is set to **my_\*** which means it will match any Tag that starts with **my\_**.
+The match rule is set to **my\_\*** which means it will match any Tag that starts with **my\_**.
+
+## Routing with Regex
+
+Routing also provides support for _regex_ with the **Match_Regex** pattern, allowing for more complex and precise matching criteria.
+The following example demonstrates how to route data from sources based on a regular expression:
+
+```
+[INPUT]
+    Name temperature_sensor
+    Tag  temp_sensor_A
+
+[INPUT]
+    Name humidity_sensor
+    Tag  humid_sensor_B
+
+[OUTPUT]
+    Name         stdout
+    Match_regex  .*_sensor_[AB]
+```
+
+In this configuration, the **Match_regex** rule is set to `.*_sensor_[AB]`. This regular expression will match any Tag that ends with "_sensor_A" or "_sensor_B", regardless of what precedes it.
+This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.

@@ -1,5 +1,7 @@
 # Variables
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1731c7b5-34c6-424f-bfc6-88c2aa71e81f" />
+
 Fluent Bit supports the usage of environment variables in any value associated to a key when using a configuration file.
 
 The variables are case sensitive and can be used in the following format:
@@ -9,6 +11,12 @@ ${MY_VARIABLE}
 ```
 
 When Fluent Bit starts, the configuration reader will detect any request for `${MY_VARIABLE}` and will try to resolve its value.
+
+When Fluent Bit is running under systemd (using the official packages), environment variables can be set in the following files:
+* `/etc/default/fluent-bit` (Debian based system)
+* `/etc/sysconfig/fluent-bit` (Others)
+
+These files are ignored if they do not exist.
 
 ## Example
 

@@ -4,7 +4,7 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](<../.gitbook/assets/fluentbit_kube_logging (5).png>)
+![](<../.gitbook/assets/fluentbit\_kube\_logging (1).png>)
 
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible **Log Processor** that comes with full support for Kubernetes:
 
@@ -12,7 +12,7 @@ description: Kubernetes Production Grade Log Processor
 * Enrich logs with Kubernetes Metadata.
 * Centralize your logs in third party storage services like Elasticsearch, InfluxDB, HTTP, etc.
 
-## Concepts <a href="concepts" id="concepts"></a>
+## Concepts <a href="#concepts" id="concepts"></a>
 
 Before getting started it is important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of _nodes_, so our log agent tool will need to run on every node to collect logs from every _POD_, hence Fluent Bit is deployed as a DaemonSet (a POD that runs on every _node_ of the cluster).
 
@@ -25,98 +25,34 @@ When Fluent Bit runs, it will read, parse and filter the logs of every POD and w
 * Labels
 * Annotations
 
-To obtain this information, a built-in filter plugin called _kubernetes_ talks to the Kubernetes API Server to retrieve relevant information such as the _pod_id_, _labels_ and _annotations_, other fields such as _pod_name_, _container_id_ and _container_name_ are retrieved locally from the log file names. All of this is handled automatically, no intervention is required from a configuration aspect.
+To obtain this information, a built-in filter plugin called _kubernetes_ talks to the Kubernetes API Server to retrieve relevant information such as the _pod\_id_, _labels_ and _annotations_, other fields such as _pod\_name_, _container\_id_ and _container\_name_ are retrieved locally from the log file names. All of this is handled automatically, no intervention is required from a configuration aspect.
 
-> Our Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
+> Our Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes\_metadata\_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
 
-## Installation <a href="installation" id="installation"></a>
+## Installation <a href="#installation" id="installation"></a>
 
-[Fluent Bit](http://fluentbit.io) must be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster. To get started run the following commands to create the namespace, service account and role setup:
+[Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so it will be available on every node of your Kubernetes cluster.
 
-For Kubernetes v1.21 and below
-
-```
-$ kubectl create namespace logging
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding.yaml
-```
-
-For Kubernetes v1.22
-
-```
-$ kubectl create namespace logging
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml
-```
-
-The next step is to create a ConfigMap that will be used by our Fluent Bit DaemonSet:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
-```
-
-The default configmap assumes that dockershim is utilized for the cluster. If a CRI runtime, such as containerd or CRI-O, is being utilized, the [CRI parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf#L106-L112) should be utilized. More specifically, change the `Parser` described in `input-kubernetes.conf` from docker to cri.
+The recommended way to deploy Fluent Bit is with the official Helm Chart: <https://github.com/fluent/helm-charts>
 
 ### Note for OpenShift
 
-If you are using Red Hat OpenShift you will also need to run the following
+If you are using Red Hat OpenShift you will also need to set up security context constraints (SCC) using the relevant option in the helm chart.
 
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-openshift-security-context-constraints.yaml
-```
-
-### Note for Kubernetes < v1.16
-
-For Kubernetes versions older than v1.16, the DaemonSet resource is not available on `apps/v1` , the resource is available on `apiVersion: extensions/v1beta1` . Our current Daemonset Yaml files uses the new `apiVersion`.
-
-If you are using and older Kubernetes version, manually grab a copy of your Daemonset Yaml file and replace the value of `apiVersion` from:
-
-```yaml
-apiVersion: apps/v1
-```
-
-to
-
-```yaml
-apiVersion: extensions/v1beta1
-```
-
-You can read more about this deprecation on Kubernetes v1.14 Changelog here:
-
-[https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#deprecations](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#deprecations)
-
-### Fluent Bit to Elasticsearch
-
-Fluent Bit DaemonSet ready to be used with Elasticsearch on a normal Kubernetes Cluster:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml
-```
-
-### Fluent Bit to Elasticsearch on Minikube
-
-If you are using Minikube for testing purposes, use the following alternative DaemonSet manifest:
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds-minikube.yaml
-```
-
-## Installing with Helm Chart
+### Installing with Helm Chart
 
 [Helm](https://helm.sh) is a package manager for Kubernetes and allows you to quickly deploy application packages into your running cluster. Fluent Bit is distributed via a helm chart found in the Fluent Helm Charts repo: [https://github.com/fluent/helm-charts](https://github.com/fluent/helm-charts).
 
 To add the Fluent Helm Charts repo use the following command
 
-```
+```shell
 helm repo add fluent https://fluent.github.io/helm-charts
 ```
 
 To validate that the repo was added you can run `helm search repo fluent` to ensure the charts were added. The default chart can then be installed by running the following
 
-```
-helm install fluent-bit fluent/fluent-bit
+```shell
+helm upgrade --install fluent-bit fluent/fluent-bit
 ```
 
 ### Default Values
@@ -127,38 +63,11 @@ The default chart values include configuration to read container logs, with Dock
 
 The default configuration of Fluent Bit makes sure of the following:
 
-* Consume all containers logs from the running Node.
-* The [Tail input plugin](https://docs.fluentbit.io/manual/v/1.0/input/tail) will not append more than **5MB**  into the engine until they are flushed to the Elasticsearch backend. This limit aims to provide a workaround for [backpressure](https://docs.fluentbit.io/manual/v/1.0/configuration/backpressure) scenarios.
+* Consume all containers logs from the running Node and parse them with either the `docker` or `cri` multiline parser.
+* Persist how far it got into each file it is tailing so if a pod is restarted it picks up from where it left off.
 * The Kubernetes filter will enrich the logs with Kubernetes metadata, specifically _labels_ and _annotations_. The filter only goes to the API Server when it cannot find the cached info, otherwise it uses the cache.
 * The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](../pipeline/outputs/elasticsearch.md). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
-* There is an option called **Retry_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
-
-## Container Runtime Interface (CRI) parser
-
-Fluent Bit by default assumes that logs are formatted by the Docker interface standard. However, when using CRI you can run into issues with malformed JSON if you do not modify the parser used. Fluent Bit includes a CRI log parser that can be used instead. An example of the parser is seen below:
-
-```
-# CRI Parser
-[PARSER]
-    # http://rubular.com/r/tjUt3Awgg4
-    Name cri
-    Format regex
-    Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S.%L%z
-```
-
-To use this parser change the Input section for your configuration from `docker` to `cri`
-
-```
-[INPUT]
-    Name tail
-    Path /var/log/containers/*.log
-    Parser cri
-    Tag kube.*
-    Mem_Buf_Limit 5MB
-    Skip_Long_Lines On
-```
+* There is an option called **Retry\_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
 
 ## Windows Deployment
 
@@ -211,7 +120,7 @@ spec:
 
 ### Configure Fluent Bit
 
-Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here](https://link.calyptia.com/gzc)
+Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here (Sign-up required)](https://calyptia.com/free-trial)
 
 ```yaml
 fluent-bit.conf: |

@@ -32,8 +32,11 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. Fluent-bit uses `strptime(3)` to parse time so you can refer to [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. |
 | Time\_Offset | Specify a fixed UTC time offset \(e.g. -0600, +0200, etc.\) for local dates. |
 | Time\_Keep | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and it value in the log entry. |
+| Time\_System\_Timezone | If there is no timezone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured timezone. The configured timezone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
 | Types | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`\(default\), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
 | Decode\_Field | Decode a field value, the only decoder available is `json`. The syntax is: `Decode_Field json <field_name>`. |
+| Skip\_Empty\_Values | Specify a boolean which determines if the parser should skip empty values. The default is `true`. |
+| Time_Strict | The default value (`true`) tells the parser to be strict with the expected time format. With this option set to false, the parser will be permissive with the format of the time. This is useful when the format expects time fraction but the time to be parsed doesn't include it.  |
 
 ## Parsers Configuration File
 
@@ -63,7 +66,7 @@ For more information about the parsers available, please refer to the default pa
 
 ## Time Resolution and Fractional Seconds
 
-Time resolution and it format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function.
+Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function.
 
 In addition, we extended our time resolution to support fractional seconds like _2017-05-17T15:44:31**.187512963**Z_. Since Fluent Bit v0.12 we have full support for nanoseconds resolution, the **%L** format option for Time\_Format is provided as a way to indicate that content must be interpreted as fractional seconds.
 

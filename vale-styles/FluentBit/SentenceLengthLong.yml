@@ -1,0 +1,7 @@
+---
+extends: occurrence
+message: "Improve readability by using fewer than 35 words in this sentence."
+scope: sentence
+level: suggestion
+max: 35
+token: \b(\w+)\b

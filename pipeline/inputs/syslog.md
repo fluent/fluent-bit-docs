@@ -16,6 +16,9 @@ The plugin supports the following configuration parameters:
 | Parser | Specify an alternative parser for the message. If _Mode_ is set to _tcp_ or _udp_ then the default parser is _syslog-rfc5424_ otherwise _syslog-rfc3164-local_ is used. If your syslog messages have fractional seconds set this Parser value to _syslog-rfc5424_ instead. |  |
 | Buffer\_Chunk\_Size | By default the buffer to store the incoming Syslog messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Buffer\_Chunk\_Size_. If not set, _Buffer\_Chunk\_Size_ is equal to 32000 bytes \(32KB\). Read considerations below when using _udp_ or _unix\_udp_ mode. |  |
 | Buffer\_Max\_Size | Specify the maximum buffer size to receive a Syslog message. If not set, the default size will be the value of _Buffer\_Chunk\_Size_. |  |
+| Receive\_Buffer\_Size | Specify the maximum socket receive buffer size. If not set, the default value is OS-dependant, but generally too low to accept thousands of syslog messages per second without loss on _udp_ or _unix\_udp_ sockets. Note that on Linux the value is capped by `sysctl net.core.rmem_max`.| |
+| Source\_Address\_Key| Specify the key where the source address will be injected. | |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ### Considerations
 
@@ -40,6 +43,8 @@ By default the service will create and listen for Syslog messages on the unix so
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [SERVICE]
     Flush               1
@@ -51,11 +56,33 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Path                /tmp/in_syslog
     Buffer_Chunk_Size   32000
     Buffer_Max_Size     64000
+    Receive_Buffer_Size 512000
 
 [OUTPUT]
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.conf
+pipeline:
+    inputs:
+        - name: syslog
+          path: /tmp/in_syslog
+          buffer_chunk_size: 32000
+          buffer_max_size: 64000
+          receive_buffer_size: 512000
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ### Testing
 
@@ -87,8 +114,10 @@ The following content aims to provide configuration examples for different use c
 
 #### Fluent Bit Configuration
 
-Put the following content in your fluent-bit.conf file:
+Put the following content in your configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [SERVICE]
     Flush        1
@@ -105,6 +134,26 @@ Put the following content in your fluent-bit.conf file:
     Name     stdout
     Match    *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    parsers_file: parsers.conf
+pipeline:
+    inputs:
+        - name: syslog
+          parser: syslog-rfc3164
+          listen: 0.0.0.0
+          port: 5140
+          mode: tcp
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 then start Fluent Bit.
 
@@ -128,6 +177,8 @@ $ sudo service rsyslog restart
 
 Put the following content in your fluent-bit.conf file:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [SERVICE]
     Flush        1
@@ -144,6 +195,26 @@ Put the following content in your fluent-bit.conf file:
     Name      stdout
     Match     *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    parsers_file: parsers.conf
+pipeline:
+    inputs:
+        - name: syslog
+          parser: syslog-rfc3164
+          path: /tmp/fluent-bit.sock
+          mode: unix_udp
+          unix_perm: 0644
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 then start Fluent Bit.
 
@@ -158,4 +229,3 @@ $OMUxSockSocket /tmp/fluent-bit.sock
 ```
 
 Make sure that the socket file is readable by rsyslog \(tweak the `Unix_Perm` option shown above\).
-

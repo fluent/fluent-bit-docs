@@ -6,7 +6,7 @@ In order to understand how Stream Processing works in Fluent Bit, we will go thr
 
 ## Fluent Bit Data Pipeline
 
-[Fluent Bit](https://fluentbit.io) collects and process logs \(records\) from different input sources and allows to parse and filter these records before they hit the Storage interface. One data is processed and it's in a safe state \(either in memory or the file system\), the records are routed through the proper output destinations.
+[Fluent Bit](https://fluentbit.io) collects and process logs \(records\) from different input sources and allows to parse and filter these records before they hit the Storage interface. Once data is processed and it's in a safe state \(either in memory or the file system\), the records are routed through the proper output destinations.
 
 > Most of the phases in the pipeline are implemented through plugins: Input, Filter and Output.
 

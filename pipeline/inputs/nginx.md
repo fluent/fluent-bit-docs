@@ -1,4 +1,4 @@
-# Health
+# NGINX Exporter Metrics
 
 _NGINX Exporter Metrics_ input plugin scrapes metrics from the NGINX stub status handler.
 
@@ -6,11 +6,13 @@ _NGINX Exporter Metrics_ input plugin scrapes metrics from the NGINX stub status
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Host | Name of the target host or IP address to check. |
-| Host | Port of the target nginx service to connect to. |
-| Status_URL | The URL of the Stub Status Handler. |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| Host | Name of the target host or IP address to check. | localhost |
+| Port | Port of the target nginx service to connect to. | 80 |
+| Status_URL | The URL of the Stub Status Handler. | /status |
+| Nginx_Plus | Turn on NGINX plus mode. | true |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -34,8 +36,8 @@ server {
 
 ### Configuration with NGINX Plus REST API
 
-A much more powerful and flexible metrics API is available with NGINX Plus. A path needs to be configured 
-in NGINX Plus first.
+Another metrics API is available with NGINX Plus. You must first configure a path in
+NGINX Plus.
 
 ```
 server {
@@ -60,7 +62,7 @@ server {
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```bash
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -o stdout
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -p nginx_plus=off -o stdout
 ```
 
 To gather metrics from the command line with the NGINX Plus REST API we need to turn on the
@@ -81,6 +83,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Host          127.0.0.1
     Port          80
     Status_URL    /status
+    Nginx_Plus    off
 
 [OUTPUT]
     Name   stdout
@@ -109,8 +112,8 @@ And for NGINX Plus API:
 You can quickly test against the NGINX server running on localhost by invoking it directly from the command line:
 
 ```bash
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -o stdout -p match=* -f 1
-Fluent Bit v1.x.x
+$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p nginx_plus=off -o stdout -p match=* -f 1
+Fluent Bit v2.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
@@ -128,8 +131,9 @@ Fluent Bit v1.x.x
 
 ## Exported Metrics
 
-This documentation is copied from the nginx prometheus exporter metrics documentation: 
-[https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/README.md].
+This documentation is copied from the
+[NGINX Prometheus Exporter metrics documentation](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md)
+on GitHub.
 
 ### Common metrics:
 Name | Type | Description | Labels

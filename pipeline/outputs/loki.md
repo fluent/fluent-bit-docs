@@ -13,17 +13,25 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | host | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.  | 127.0.0.1 |
+| uri | Specify a custom HTTP URI. It must start with forward slash.| /loki/api/v1/push |
 | port | Loki TCP port | 3100 |
+| tls | Use TLS authentication | off |
 | http\_user | Set HTTP basic authentication user name |  |
 | http\_passwd | Set HTTP basic authentication password |  |
+| bearer\_token | Set bearer token authentication token value. |  |
+| header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. |  |
 | tenant\_id | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent. |  |
-| labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluentbit |
+| labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluent-bit |
 | label\_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
+| label\_map\_path | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section. | |
+| structured\_metadata | Optional comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata) for more information. | |
 | remove\_keys | Optional list of keys to remove. | |
-| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. | off |
+| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. If set to `raw` and the log line is a string, the log line will be sent unquoted. | off |
 | line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
 | auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
 | tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
+| compress | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression. ||
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Labels
 
@@ -110,6 +118,48 @@ both will generate the following Streams label:
 job="fluentbit", stream="stdout"
 ```
 
+### Using the `label_map_path` property
+
+The configuration property `label_map_path` is to read a JSON file that defines how to extract labels from each record.
+
+The file should contain a JSON object. Each keys define how to get label value from a nested record. Each values are used as label names.
+
+The following configuration examples generate the same Stream Labels:
+
+map.json:
+```json
+{
+    "sub": {
+           "stream": "stream"
+    }
+}
+```
+
+The following configuration examples generate the same Stream Labels:
+
+```text
+[OUTPUT]
+    name   loki
+    match  *
+    label_map_path /path/to/map.json
+```
+
+
+the above configuration accomplish the same than this one:
+
+```text
+[OUTPUT]
+    name   loki
+    match  *
+    labels job=fluentbit, $sub['stream']
+```
+
+both will generate the following Streams label:
+
+```text
+job="fluentbit", stream="stdout"
+```
+
 ### Kubernetes & Labels
 
 Note that if you are running in a Kubernetes environment, you might want to enable the option `auto_kubernetes_labels` which will auto-populate the streams with the Pod labels for you. Consider the following configuration:
@@ -128,12 +178,94 @@ Based in the JSON example provided above, the internal stream labels will be:
 job="fluentbit", team="Santiago Wanderers"
 ```
 
+## Drop Single Key
+
+If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single key=value pair.
+
+Consider this simple JSON example:
+
+```json
+{"key":"value"}
+```
+
+If the value is a string, `line_format` is `json`, and `drop_single_key` is `true`, it will be sent as a quoted string.
+
+```python
+[OUTPUT]
+    name            loki
+    match           *
+    drop_single_key on
+    line_format     json
+```
+
+The outputted line would show in Loki as:
+
+```json
+"value"
+```
+
+If `drop_single_key` is `raw`, or `line_format` is `key_value`, it will show in Loki as:
+
+```text
+value
+```
+
+If you want both structured JSON and plain-text logs in Loki, you should set `drop_single_key` to `raw` and `line_format` to `json`.
+Loki does not interpret a quoted string as valid JSON, and so to remove the quotes without `drop_single_key` set to raw, you would need to use a query like this:
+
+```C
+{"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
+```
+
+If `drop_single_key` is `off`, it will show in Loki as:
+
+```json
+{"key":"value"}
+```
+
+You can get the same behavior this flag provides in Loki with `drop_single_key` set to `off` with this query:
+
+```C
+{"job"="fluent-bit"} | json | line_format "{{.log}}"
+```
+
+### Structured metadata
+
+[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/)
+lets you attach custom fields to individual log lines without embedding the
+information in the content of the log line. This capability works well for high
+cardinality data that isn't suited for using labels. While not a label, the
+`structured_metadata` configuration parameter operates similarly to the `labels`
+parameter. Both parameters are comma-delimited `key=value` lists, and both can use
+record accessors to reference keys within the record being processed.
+
+The following configuration:
+
+- Defines fixed values for the cluster and region labels.
+- Uses the record accessor pattern to set the namespace label to the namespace name as
+  determined by the Kubernetes metadata filter (not shown).
+- Uses a structured metadata field to hold the Kubernetes pod name.
+
+```python
+[OUTPUT]
+    name                loki
+    match               *
+    labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
+    structured_metadata pod=$kubernetes['pod_name']
+```
+
+
+Other common uses for structured metadata include trace and span IDs, process and thread IDs, and log levels.
+
+Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
+with Loki deployments prior to Loki 3.0.
+
 ## Networking and TLS Configuration
 
 This plugin inherit core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
 
 * [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
-* [Security & TLS](../../administration/security.md): all about TLS configuration and certificates
+* [Security & TLS](../../administration/transport-security.md): all about TLS configuration and certificates
 
 Note that all options mentioned in the articles above must be enabled in the plugin configuration in question.
 
@@ -204,4 +336,3 @@ Fluent Bit v1.7.0
 [2020/10/14 20:57:46] [debug] [http] request payload (272 bytes)
 [2020/10/14 20:57:46] [ info] [output:loki:loki.0] 127.0.0.1:3100, HTTP status=204
 ```
-

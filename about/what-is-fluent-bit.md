@@ -2,18 +2,26 @@
 description: Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 ---
 
-# What is Fluent Bit ?
+# What is Fluent Bit?
 
-​[Fluent Bit](http://fluentbit.io/) is an open source and multi-platform log processor tool which aims to be a generic Swiss knife for logs processing and distribution.
+[Fluent Bit](https://fluentbit.io) is an open source telemetry agent specifically
+designed to efficiently handle the challenges of collecting and processing telemetry
+data across a wide range of environments, from constrained systems to complex cloud
+infrastructures. Managing telemetry data from various sources and formats can be a
+constant challenge, particularly when performance is a critical factor.
 
-Nowadays the number of sources of information in our environments is ever increasing. Handling data collection at scale is complex, and collecting and aggregating diverse data requires a specialized tool that can deal with:
+Rather than serving as a drop-in replacement, Fluent Bit enhances the observability
+strategy for your infrastructure by adapting and optimizing your existing logging
+layer, and adding metrics and traces processing. Fluent Bit supports a
+vendor-neutral approach, seamlessly integrating with other ecosystems such as
+Prometheus and OpenTelemetry. Trusted by major cloud providers, banks, and companies
+in need of a ready-to-use telemetry agent solution, Fluent Bit effectively manages
+diverse data sources and formats while maintaining optimal performance and keeping
+resource consumption low.
 
-* Different sources of information
-* Different data formats
-* Data Reliability
-* Security
-* Flexible Routing
-* Multiple destinations
+Fluent Bit can be deployed as an edge agent for localized telemetry data handling or
+utilized as a central aggregator/collector for managing telemetry data across
+multiple sources and environments.
 
-[Fluent Bit](https://fluentbit.io) has been designed with performance and low resources consumption in mind.
 
+{% embed url="https://www.youtube.com/watch?v=3ELc1helke4" %}

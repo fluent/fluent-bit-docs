@@ -15,11 +15,14 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Listen | Listener network interface. | 0.0.0.0 |
 | Port | UDP port where listening for connections | 8125 |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Configuration Examples <a id="config_example"></a>
 
 Here is a configuration example.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name   statsd
@@ -30,6 +33,21 @@ Here is a configuration example.
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: statsd
+          listen: 0.0.0.0
+          port: 8125
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Now you can input metrics through the UDP port as follows:
 
@@ -44,4 +62,3 @@ Fluent Bit will produce the following records:
 [0] statsd.0: [1574905088.971380537, {"type"=>"counter", "bucket"=>"click", "value"=>10.000000, "sample_rate"=>0.100000}]
 [0] statsd.0: [1574905141.863344517, {"type"=>"gauge", "bucket"=>"active", "value"=>99.000000, "incremental"=>0}]
 ```
-

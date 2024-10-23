@@ -2,6 +2,8 @@
 
 In an ideal world, applications might log their messages within a single line, but in reality applications generate multiple log messages that sometimes belong to the same context. But when is time to process such information it gets really complex. Consider application stack traces which always have multiple log lines.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e19a4c14-a9e4-4163-8f3a-52196eb9a585" />
+
 Starting from Fluent Bit v1.8, we have implemented a unified Multiline core functionality to solve all the user corner cases. In this section, you will learn about the features and configuration options available.
 
 ## Concepts
@@ -64,11 +66,11 @@ A rule might be defined as follows (comments added to simplify the definition) :
 ```
 # rules   |   state name   | regex pattern                   | next state
 # --------|----------------|---------------------------------------------
-rule         "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
+rule         "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
 
-In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
+In the example above, we have defined two rules, each one has its own state name, regex patterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
 
 The first rule of state name **must always** be **start_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
 
@@ -131,7 +133,7 @@ This second file defines a multiline parser for the example.
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
     rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 {% endtab %}
@@ -173,3 +175,111 @@ $ fluent-bit -c fluent-bit.conf
 ```
 
 The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
+
+## Limitations
+
+The multiline parser is a very powerful feature, but it has some limitations that you should be aware of:
+
+* The multiline parser is not affected by the `buffer_max_size` configuration option, allowing the composed log record to grow beyond this size.
+Hence, the `skip_long_lines` option will not be applied to multiline messages. 
+* It is not possible to get the time key from the body of the multiline message. However, it can be extracted and set as a new key by using a filter.
+
+## Get structured data from multiline message
+
+Fluent-bit supports `/pat/m` option. It allows `.` matches a new line. It is useful to parse multiline log.
+
+The following example is to get `date` and `message` from concatenated log.
+
+Example files content:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`. Then it sends the processing to the standard output.
+
+```
+[SERVICE]
+    flush        1
+    log_level    info
+    parsers_file parsers_multiline.conf
+
+[INPUT]
+    name             tail
+    path             test.log
+    read_from_head   true
+    multiline.parser multiline-regex-test
+
+[FILTER]
+    name             parser
+    match            *
+    key_name         log
+    parser           named-capture-test
+
+[OUTPUT]
+    name             stdout
+    match            *
+```
+{% endtab %}
+
+{% tab title="parsers_multiline.conf" %}
+This second file defines a multiline parser for the example.
+
+```
+[MULTILINE_PARSER]
+    name          multiline-regex-test
+    type          regex
+    flush_timeout 1000
+    #
+    # Regex rules for multiline parsing
+    # ---------------------------------
+    #
+    # configuration hints:
+    #
+    #  - first state always has the name: start_state
+    #  - every field in the rule must be inside double quotes
+    #
+    # rules |   state name  | regex pattern                  | next state
+    # ------|---------------|--------------------------------------------
+    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+    rule      "cont"          "/^\s+at.*/"                     "cont"
+
+[PARSER]
+    Name named-capture-test
+    Format regex
+    Regex /^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m
+```
+{% endtab %}
+
+{% tab title="test.log" %}
+An example file with multiline content:
+
+```
+single line...
+Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+    at com.myproject.module.MyProject.badMethod(MyProject.java:22)
+    at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
+    at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
+    at com.myproject.module.MyProject.someMethod(MyProject.java:10)
+    at com.myproject.module.MyProject.main(MyProject.java:6)
+another line...
+
+```
+{% endtab %}
+{% endtabs %}
+
+By running Fluent Bit with the given configuration file you will obtain:
+
+```
+$ fluent-bit -c fluent-bit.conf
+
+[0] tail.0: [1669160706.737650473, {"log"=>"single line...
+"}]
+[1] tail.0: [1669160706.737657687, {"date"=>"Dec 14 06:41:08", "message"=>"Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+    at com.myproject.module.MyProject.badMethod(MyProject.java:22)
+    at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
+    at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
+    at com.myproject.module.MyProject.someMethod(MyProject.java:10)
+    at com.myproject.module.MyProject.main(MyProject.java:6)
+"}]
+[2] tail.0: [1669160706.737657687, {"log"=>"another line...
+"}]
+```

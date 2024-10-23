@@ -4,6 +4,8 @@ description: This page describes the main configuration file used by Fluent Bit
 
 # Configuration File
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
+
 One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows to use one configuration file which works at a global scope and uses the [Format and Schema](format-schema.md) defined previously.
 
 The main configuration file supports four types of sections:
@@ -23,10 +25,10 @@ The _Service_ section defines global properties of the service, the keys availab
 
 | Key             | Description                                                                                                                                                                                                                                                                                             | Default Value |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| flush           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins.                                                                                                         | 5             |
+| flush           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when is required to flush the records ingested by input plugins through the defined output plugins.                                                                                                         | 1             |
 | grace           | Set the grace time in `seconds` as Integer value. The engine loop uses a Grace timeout to define wait time on exit                                                                                                                                                                                      | 5             |
 | daemon          | Boolean value to set if Fluent Bit should run as a Daemon (background) or not. Allowed values are: yes, no, on and off.  note: If you are using a Systemd based unit as the one we provide in our packages, do not turn on this option.                                                                 | Off           |
-| dns.mode        | Set the primary transport layer protocol used by the asynchronous DNS resolver which can be overriden on a per plugin basis                                                                                                                                                                             | UDP           |
+| dns.mode        | Set the primary transport layer protocol used by the asynchronous DNS resolver which can be overridden on a per plugin basis                                                                                                                                                                             | UDP           |
 | log_file        | Absolute path for an optional log file. By default all logs are redirected to the standard error interface (stderr).                                                                                                                                                                                    |               |
 | log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g: if 'debug' is set, it will include error, warning, info and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
 | parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
@@ -38,6 +40,8 @@ The _Service_ section defines global properties of the service, the keys availab
 | coro_stack_size | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small value (say 4096), or coroutine threads can overrun the stack buffer. Do not change the default value of this parameter unless you know what you are doing.              | 24576         |
 | scheduler.cap   | Set a maximum retry time in second. The property is supported from v1.8.7.                                                                                                                                                                                                                              | 2000          |
 | scheduler.base  | Set a base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                               | 5             |
+| json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
+| sp.convert_from_str_to_num | If enabled, Stream processor converts from number string to number type.        | true          |
 
 The following is an example of a _SERVICE_ section:
 
@@ -47,15 +51,17 @@ The following is an example of a _SERVICE_ section:
     Daemon          off
     Log_Level       debug
 ```
+For scheduler and retry details, please check there: [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries)
 
 ## Input <a href="config_input" id="config_input"></a>
 
 An _INPUT_ section defines a source (related to an input plugin), here we will describe the base configuration for each _INPUT_ section. Note that each input plugin may add it own configuration keys:
 
-| Key  | Description                                                 |
-| ---- | ----------------------------------------------------------- |
-| Name | Name of the input plugin.                                   |
-| Tag  | Tag name associated to all records coming from this plugin. |
+| Key         | Description                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the input plugin.                                                                                                                               |
+| Tag         | Tag name associated to all records coming from this plugin.                                                                                             |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 The _Name_ is mandatory and it let Fluent Bit know which input plugin should be loaded. The _Tag_ is mandatory for all plugins except for the _input forward_ plugin (as it provides dynamic tags).
 
@@ -73,11 +79,12 @@ The following is an example of an _INPUT_ section:
 
 A _FILTER_ section defines a filter (related to an filter plugin), here we will describe the base configuration for each _FILTER_ section. Note that each filter plugin may add it own configuration keys:
 
-| Key         | Description                                                                                                                     |   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | - |
-| Name        | Name of the filter plugin.                                                                                                      |   |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |   |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |   |
+| Key         | Description                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the filter plugin.                                                                                                                              |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 The _Name_ is mandatory and it let Fluent Bit know which filter plugin should be loaded. The _Match_ or _Match_Regex_ is mandatory for all plugins. If both are specified, _Match_Regex_ takes precedence.
 
@@ -94,13 +101,14 @@ The following is an example of an _FILTER_ section:
 
 ## Output <a href="config_output" id="config_output"></a>
 
-The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. The configuration support the following keys:
+The _OUTPUT_ section specify a destination that certain records should follow after a Tag match. Currently, Fluent Bit can route up to 256 _OUTPUT_ plugins. The configuration support the following keys:
 
-| Key         | Description                                                                                                                     |   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------- | - |
-| Name        | Name of the output plugin.                                                                                                      |   |
-| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard. |   |
-| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.   |   |
+| Key         | Description                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Name of the output plugin.                                                                                                                              |
+| Match       | A pattern to match against the tags of incoming records. It's case sensitive and support the star (\*) character as a wildcard.                         |
+| Match_Regex | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regex syntax.                           |
+| Log_Level   | Set the plugin's logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Defaults to the _SERVICE_ section's _Log_Level._ |
 
 ### Example
 
@@ -131,12 +139,6 @@ The following configuration file example demonstrates how to collect CPU metrics
     Match my*cpu
 ```
 
-## Visualize <a href="config_include_file" id="config_include_file"></a>
-
-You can also visualize Fluent Bit INPUT, FILTER, and OUTPUT configuration via [https://cloud.calyptia.com](https://cloud.calyptia.com/visualizer)
-
-![](../../../.gitbook/assets/image.png)
-
 ## Include File <a href="config_include_file" id="config_include_file"></a>
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file.
@@ -160,3 +162,6 @@ Wildcard character (\*) is supported to include multiple files, e.g:
 ```
 @INCLUDE input_*.conf
 ```
+
+Note files matching the wildcard character are included unsorted.
+If plugins ordering between files need to be preserved, the files should be included explicitly.
