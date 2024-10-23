@@ -13,7 +13,7 @@ operational Doris service running in your environment.
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `host` | HTTP address of the target Doris fe or be | `127.0.0.1` |
-| `port` | HTTP port of the target Doris fe or be | `8300` |
+| `port` | HTTP port of the target Doris fe or be | `8030` |
 | `user` | Username for Doris access | _none_ |
 | `password` | Password for Doris access | _none_ |
 | `database` | The target Doris database | _none_ |
@@ -28,3 +28,46 @@ operational Doris service running in your environment.
 Doris output plugin supports TLS/SSL. For more details about the properties
 available and general configuration, refer to[TLS/SSL](../../administration/transport-security.md).
 
+## Get started
+
+To insert records into a Doris database, you run the plugin from the
+command line or through the configuration file:
+
+### Command Line
+
+The **doris** plugin can read the parameters from the command through the `-p` argument (property).
+
+An example:
+
+```shell copy
+fluent-bit -i cpu -t cpu -o doris \
+    -m '*' \
+    -p host=127.0.0.1 \
+    -p port=8030 \
+    -p user=admin \
+    -p password=admin \
+    -p database=d_fb \
+    -p table=t_fb \
+    -p columns='date, log=cast(cpu_p as string)'
+```
+
+### Configuration File
+
+In your main configuration file append the following `Input` and `Output` sections.
+
+```python
+[INPUT]
+    Name  cpu
+    Tag   cpu
+
+[OUTPUT]
+    name  doris
+    match *
+    host  127.0.0.1
+    port  8030
+    user admin
+    password admin
+    database d_fb
+    table t_fb
+    columns date, log=cast(cpu_p as string)
+```
