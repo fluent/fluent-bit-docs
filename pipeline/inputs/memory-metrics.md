@@ -23,10 +23,17 @@ Fluent Bit v1.x.x
 [3] memory: [1488543159, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
 ```
 
+## Threading
+
+You can enable the `threaded` setting to run this input in its own
+[thread](../../administration/multithreading.md#inputs).
+
 ### Configuration File
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name   mem
@@ -36,4 +43,17 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: memory
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}

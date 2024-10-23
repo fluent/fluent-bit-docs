@@ -9,6 +9,8 @@ Vivo Exporter is an output plugin that exposes logs, metrics, and traces through
 | `empty_stream_on_read`   | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
 | `stream_queue_size`      | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
 | `http_cors_allow_origin` | Specify the value for the HTTP Access-Control-Allow-Origin header (CORS).                                                              |         |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+
 
 ### Getting Started
 
@@ -22,9 +24,10 @@ Here is a simple configuration of Vivo Exporter, note that this example is not b
 
 [OUTPUT]
     name                   vivo_exporter
+    match                  *
     empty_stream_on_read   off
     stream_queue_size      20M
-     http_cors_allow_origin *
+    http_cors_allow_origin *
 ```
 
 ### How it works
@@ -55,6 +58,7 @@ The example below will generate dummy log events which will be consuming by usin
 
 [OUTPUT]
     name   vivo_exporter
+    match  *
 
 ```
 

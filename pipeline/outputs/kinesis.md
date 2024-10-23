@@ -28,6 +28,8 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | sts\_endpoint | Custom endpoint for the STS API. |
 | auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. This option defaults to `true`. |
 | external\_id | Specify an external ID for the STS API, can be used with the role_arn parameter if your role requires an external ID. |
+| profile | AWS profile name to use. Defaults to `default`. |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. Default: `1`. |
 
 ## Getting Started
 
@@ -69,23 +71,6 @@ The following AWS IAM permissions are required to use this plugin:
 	}]
 }
 ```
-
-### Worker support
-
-Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have dedicated threads. This `kinesis_streams` plugin fully supports workers.
-
-Example:
-
-```text
-[OUTPUT]
-    Name  kinesis_streams
-    Match *
-    region us-east-1
-    stream my-stream
-    workers 2
-```
-
-If you enable a single worker, you are enabling a dedicated thread for your Kinesis output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient.
 
 ### AWS for Fluent Bit
 
@@ -132,4 +117,3 @@ aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
 For more see [the AWS for Fluent Bit github repo](https://github.com/aws/aws-for-fluent-bit#public-images).
-

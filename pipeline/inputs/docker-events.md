@@ -14,6 +14,7 @@ This plugin supports the following configuration parameters:
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _message_. | message |
 | Reconnect.Retry_limits| The maximum number of retries allowed. The plugin tries to reconnect with docker socket when EOF is detected. | 5 |
 | Reconnect.Retry_interval| The retrying interval. Unit is second. | 1 |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ### Command Line
 
@@ -25,6 +26,8 @@ $ fluent-bit -i docker_events -o stdout
 
 In your main configuration file append the following **Input** & **Output** sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```yaml
 [INPUT]
     Name   docker_events
@@ -33,4 +36,17 @@ In your main configuration file append the following **Input** & **Output** sect
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: docker_events
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}

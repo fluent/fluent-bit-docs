@@ -6,10 +6,10 @@ The **stdout** output plugin allows to print to the standard output the data rec
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| Format | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json\_lines_ and _json\_stream_. | msgpack |
+| Format | Specify the data format to be printed. Supported formats are _msgpack_, _json_, _json\_lines_ and _json\_stream_. | msgpack |
 | json\_date\_key | Specify the name of the time key in the output record. To disable the time key just set the value to `false`. | date |
 | json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_, _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _java_sql_timestamp_ (eg: _2018-05-30 09:39:52.000681_) | double |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 1 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ### Command Line
 
@@ -35,4 +35,3 @@ Fluent Bit v1.x.x
 ```
 
 No more, no less, it just works.
-

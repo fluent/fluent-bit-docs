@@ -31,17 +31,13 @@ To obtain this information, a built-in filter plugin called _kubernetes_ talks t
 
 ## Installation <a href="#installation" id="installation"></a>
 
-[Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so on that way it will be available on every node of your Kubernetes cluster.
+[Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so it will be available on every node of your Kubernetes cluster.
 
-The recommended way to deploy Fluent Bit is with the official Helm Chart: https://github.com/fluent/helm-charts
+The recommended way to deploy Fluent Bit is with the official Helm Chart: <https://github.com/fluent/helm-charts>
 
 ### Note for OpenShift
 
-If you are using Red Hat OpenShift you will also need to set up security context constraints (SCC):
-
-```
-$ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-openshift-security-context-constraints.yaml
-```
+If you are using Red Hat OpenShift you will also need to set up security context constraints (SCC) using the relevant option in the helm chart.
 
 ### Installing with Helm Chart
 
@@ -49,13 +45,13 @@ $ kubectl create -f https://raw.githubusercontent.com/fluent/fluent-bit-kubernet
 
 To add the Fluent Helm Charts repo use the following command
 
-```
+```shell
 helm repo add fluent https://fluent.github.io/helm-charts
 ```
 
 To validate that the repo was added you can run `helm search repo fluent` to ensure the charts were added. The default chart can then be installed by running the following
 
-```
+```shell
 helm upgrade --install fluent-bit fluent/fluent-bit
 ```
 
@@ -67,38 +63,11 @@ The default chart values include configuration to read container logs, with Dock
 
 The default configuration of Fluent Bit makes sure of the following:
 
-* Consume all containers logs from the running Node.
-* The [Tail input plugin](https://docs.fluentbit.io/manual/v/1.0/input/tail) will not append more than **5MB** into the engine until they are flushed to the Elasticsearch backend. This limit aims to provide a workaround for [backpressure](https://docs.fluentbit.io/manual/v/1.0/configuration/backpressure) scenarios.
+* Consume all containers logs from the running Node and parse them with either the `docker` or `cri` multiline parser.
+* Persist how far it got into each file it is tailing so if a pod is restarted it picks up from where it left off.
 * The Kubernetes filter will enrich the logs with Kubernetes metadata, specifically _labels_ and _annotations_. The filter only goes to the API Server when it cannot find the cached info, otherwise it uses the cache.
 * The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](../pipeline/outputs/elasticsearch.md). It uses the Logstash format to ingest the logs. If you need a different Index and Type, please refer to the plugin option and do your own adjustments.
 * There is an option called **Retry\_Limit** set to False, that means if Fluent Bit cannot flush the records to Elasticsearch it will re-try indefinitely until it succeed.
-
-## Container Runtime Interface (CRI) parser
-
-Fluent Bit by default assumes that logs are formatted by the Docker interface standard. However, when using CRI you can run into issues with malformed JSON if you do not modify the parser used. Fluent Bit includes a CRI log parser that can be used instead. An example of the parser is seen below:
-
-```
-# CRI Parser
-[PARSER]
-    # http://rubular.com/r/tjUt3Awgg4
-    Name cri
-    Format regex
-    Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S.%L%z
-```
-
-To use this parser change the Input section for your configuration from `docker` to `cri`
-
-```
-[INPUT]
-    Name tail
-    Path /var/log/containers/*.log
-    Parser cri
-    Tag kube.*
-    Mem_Buf_Limit 5MB
-    Skip_Long_Lines On
-```
 
 ## Windows Deployment
 
@@ -151,7 +120,7 @@ spec:
 
 ### Configure Fluent Bit
 
-Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here](https://link.calyptia.com/gzc)
+Assuming the basic volume configuration described above, you can apply the following config to start logging. You can visualize this configuration [here (Sign-up required)](https://calyptia.com/free-trial)
 
 ```yaml
 fluent-bit.conf: |

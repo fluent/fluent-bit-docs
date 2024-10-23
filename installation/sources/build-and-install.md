@@ -4,9 +4,9 @@
 
 ## Requirements
 
-- CMake >= 3.0
+- CMake >= 3.12
 - Flex
-- Bison
+- Bison >= 3
 - YAML headers
 - OpenSSL headers
 
@@ -149,6 +149,7 @@ The _input plugins_ provides certain features to gather information from a speci
 | [FLB\_IN\_TAIL](../../pipeline/inputs/tail.md) | Enable Tail \(follow files\) input plugin | On |
 | [FLB\_IN\_TCP](../../pipeline/inputs/tcp.md) | Enable TCP input plugin | On |
 | [FLB\_IN\_THERMAL](../../pipeline/inputs/thermal.md) | Enable system temperature\(s\) input plugin | On |
+| [FLB\_IN\_UDP](../../pipeline/inputs/udp.md) | Enable UDP input plugin | On |
 | [FLB\_IN\_WINLOG](../../pipeline/inputs/windows-event-log.md) | Enable Windows Event Log input plugin \(Windows Only\) | On |
 | [FLB\_IN\_WINEVTLOG](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using winevt.h API \(Windows Only\) | On |
 
@@ -170,7 +171,9 @@ The _filter plugins_ allows to modify, enrich or drop records. The following tab
 | [FLB\_FILTER\_RECORD\_MODIFIER](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | On |
 | [FLB\_FILTER\_REWRITE\_TAG](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | On |
 | [FLB\_FILTER\_STDOUT](../../pipeline/filters/standard-output.md) | Enable Stdout filter | On |
+| [FLB\_FILTER\_SYSINFO](../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | On |
 | [FLB\_FILTER\_THROTTLE](../../pipeline/filters/throttle.md) | Enable Throttle filter | On |
+| [FLB\_FILTER\_TYPE\_CONVERTER](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | On |
 | [FLB\_FILTER\_WASM](../../pipeline/filters/wasm.md) | Enable WASM filter | On |
 
 ### Output Plugins
@@ -209,3 +212,12 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | FLB\_OUT\_TCP | Enable TCP/TLS output plugin | On |
 | [FLB\_OUT\_TD](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | On |
 
+### Processor Plugins
+
+The _processor plugins_ provide the capability to handle the events within the processor pipelines to allow modifying, enrich or drop events. 
+The following table describes the processors available on this version:
+
+| option | description | default |
+| :--- | :--- | :--- |
+| [FLB\_PROCESSOR\_METRICS\_SELECTOR](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | On |
+| [FLB\_PROCESSOR\_LABELS](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | On |

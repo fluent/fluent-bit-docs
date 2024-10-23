@@ -21,7 +21,9 @@ We expose different configuration properties. The following table lists all the 
 | Key | Description | default |
 | :--- | :--- | :--- |
 | account\_name | Azure Storage account name. This configuration property is mandatory |  |
-| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory. |  |
+| auth\_type | Specify the type to authenticate against the service. Fluent Bit supports `key` and `sas`. | key |
+| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`. |  |
+| sas\_token | Specify the Azure Storage shared access signatures to authenticate against the service. This configuration property is mandatory when `auth_type` is `sas`. |  |
 | container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
 | blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`. | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
@@ -29,6 +31,7 @@ We expose different configuration properties. The following table lists all the 
 | emulator\_mode | If you want to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
 | endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
 | tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 
@@ -126,4 +129,3 @@ Azurite Queue service is successfully listening at http://127.0.0.1:10001
 127.0.0.1 - - [03/Sep/2020:17:40:03 +0000] "PUT /devstoreaccount1/logs/kubernetes/var.log.containers.app-default-96cbdef2340.log HTTP/1.1" 201 -
 127.0.0.1 - - [03/Sep/2020:17:40:04 +0000] "PUT /devstoreaccount1/logs/kubernetes/var.log.containers.app-default-96cbdef2340.log?comp=appendblock HTTP/1.1" 201 -
 ```
-

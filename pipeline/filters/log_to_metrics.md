@@ -2,6 +2,8 @@
 description: Generate metrics from logs
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5" />
+
 # Log To Metrics
 
 The _Log To Metrics Filter_ plugin allows you to generate log-derived metrics. It currently supports modes to count records, provide a gauge for field values or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values. This filter plugin does not actually act as a record filter and does not change or drop records. All records will pass this filter untouched and generated metrics will be emitted into a seperate metric pipeline.
@@ -20,6 +22,7 @@ The plugin supports the following configuration parameters:
 | metric_name | Sets the name of the metric. | Yes | |
 | metric_description | Sets a help text for the metric. | Yes | |
 | bucket | Defines a bucket for `histogram` | Yes, for mode  `histogram` | e.g. 0.75 |
+| add_label | Add a custom label NAME and set the value to the value of KEY | | | NAME  KEY |
 | label_field | Includes a record field as label dimension in the metric. | | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields.
 | value_field | Specify the record field that holds a numerical value | Yes, for modes [`gauge` and `histogram`] | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields.
 | kubernetes_mode |  If enabled, it will automatically put pod_id, pod_name, namespace_name, docker_id and container_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](./kubernetes.md) filter plugin, which fills those fields. | | 
@@ -39,12 +42,12 @@ The following example takes records from two dummy inputs and counts all message
 
 [INPUT]
     Name               dummy
-    Dummy              {"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456"}, "duration": 20, "color": "red", "shape": "circle"}
+    Dummy              {"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 20, "color": "red", "shape": "circle"}
     Tag                dummy.log
 
 [INPUT]
     Name               dummy
-    Dummy              {"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456"}, "duration": 60, "color": "blue", "shape": "square"}
+    Dummy              {"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}
     Tag                dummy.log2
 
 [FILTER]
@@ -86,6 +89,7 @@ The `gauge` mode needs a `value_field` specified, where the current metric value
     value_field        duration
     kubernetes_mode    on
     regex              message .*el.*
+    add_label          app $kubernetes['labels']['app']
     label_field        color
     label_field        shape
 ```
@@ -96,7 +100,7 @@ You can then use e.g. curl command to retrieve the generated metric:
 
 # HELP log_metric_gauge_current_duration This metric shows the current duration
 # TYPE log_metric_gauge_current_duration gauge
-log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="square"} 60
+log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="square"} 60
 ```
 
 As you can see in the output, only one line is printed, as the records from the first input plugin are ignored, as they do not match the regex.
@@ -107,7 +111,7 @@ If you execute the above `curl` command multiple times, you see, that in this ex
 
 
 #### Metric label_values
-As you can see, the label sets defined by `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only actually used combinations are displayed here. To see this, you can add a dummy `dummy` input to your configuration.
+As you can see, the label sets defined by `add_label` and `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only actually used combinations are displayed here. To see this, you can add a dummy `dummy` input to your configuration.
 
 The metric output would then look like:
 ```text
@@ -115,8 +119,8 @@ The metric output would then look like:
 
 # HELP log_metric_gauge_current_duration This metric shows the current duration
 # TYPE log_metric_gauge_current_duration gauge
-log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="square"} 60
-log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 20
+log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="square"} 60
+log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 20
 
 ```
 
@@ -136,6 +140,7 @@ Similar to the `gauge` mode, `histogram` needs a `value_field` specified, where 
     value_field        duration
     kubernetes_mode    on
     regex              message .*el.*
+    add_label          app $kubernetes['labels']['app']
     label_field        color
     label_field        shape
 ```
@@ -146,34 +151,34 @@ You can then use e.g. curl command to retrieve the generated metric:
 
 # HELP log_metric_histogram_current_duration This metric shows the request duration
 # TYPE log_metric_histogram_current_duration histogram
-log_metric_histogram_current_duration_bucket{le="0.005",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.01",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.025",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.05",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.1",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.25",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="1.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="2.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="5.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="10.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="+Inf",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 28
-log_metric_histogram_current_duration_sum{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 560
-log_metric_histogram_current_duration_count{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="red",shape="circle"} 28
-log_metric_histogram_current_duration_bucket{le="0.005",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.01",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.025",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.05",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.1",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.25",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="0.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="1.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="2.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="5.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="10.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 0
-log_metric_histogram_current_duration_bucket{le="+Inf",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 27
-log_metric_histogram_current_duration_sum{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 1620
-log_metric_histogram_current_duration_count{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",color="blue",shape="circle"} 27
+log_metric_histogram_current_duration_bucket{le="0.005",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.01",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.025",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.05",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.1",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.25",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="1.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="2.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="5.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="10.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="+Inf",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 28
+log_metric_histogram_current_duration_sum{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 560
+log_metric_histogram_current_duration_count{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 28
+log_metric_histogram_current_duration_bucket{le="0.005",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.01",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.025",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.05",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.1",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.25",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="0.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="1.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="2.5",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="5.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="10.0",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 0
+log_metric_histogram_current_duration_bucket{le="+Inf",namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 27
+log_metric_histogram_current_duration_sum{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 1620
+log_metric_histogram_current_duration_count{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 27
 ```
 
 As you can see in the output, there are per default the buckets `0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0` and `+Inf`, in which values are sorted into. A sum and a counter are also part of this metric. You can specify own buckets in the config, like in the following example:

@@ -1,9 +1,11 @@
 # Stackdriver Special fields
 
-When the [google-logging-agent](https://cloud.google.com/logging/docs/agent) receives a structured log record, it treats the [some fields](https://cloud.google.com/logging/docs/agent/configuration#special-fields) specially, allowing users to set specific fields in the LogEntry object that get written to the Logging API.
+When the [google-logging-agent](https://cloud.google.com/logging/docs/agent) receives a structured log record, it treats [some fields](https://cloud.google.com/logging/docs/agent/configuration#special-fields) specially, allowing users to set specific fields in the LogEntry object that get written to the Logging API.
 
-Currently, we also support some special fields in fluent-bit:
-| JSON log field | [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Logging agent function |
+## Log Entry Fields
+
+Currently, we support some special fields in fluent-bit for setting fields on the LogEntry object:
+| JSON log field | [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Description |
 | :--- | :--- | :--- |
 | logging.googleapis.com/operation | operation | Additional information about a potentially long-running operation |
 | logging.googleapis.com/labels | labels | The value of this field should be a structured record |
@@ -11,8 +13,16 @@ Currently, we also support some special fields in fluent-bit:
 | logging.googleapis.com/sourceLocation | sourceLocation | Additional information about the source code location that produced the log entry. |
 | logging.googleapis.com/http_request | httpRequest | A common proto for logging HTTP requests. |
 | logging.googleapis.com/trace | trace | Resource name of the trace associated with the log entry |
+| logging.googleapis.com/traceSampled | traceSampled | The sampling decision associated with this log entry. |
+| logging.googleapis.com/spanId | spanId | The ID of the trace span associated with this log entry. |
 | timestamp | timestamp | An object including the seconds and nanos fields that represents the time |
 | timestampSecond & timestampNanos | timestamp | The seconds and nanos that represents the time |
+
+## Other Special Fields
+
+| JSON log field | Description |
+| :--- | :--- |
+| logging.googleapis.com/projectId | Changes the project ID that this log will be written to. Ensure that you are authenticated to write logs to this project. |
 
 ## Operation
 Operation field contains additional information about a potentially long-running operation with which a log entry is associated.
@@ -239,7 +249,7 @@ the logEntry will be:
 ```
 
 ## httpRequest
-HttpRequest field is a common proto for logging HTTP requests. 
+HttpRequest field is a common proto for logging HTTP requests.
 
 The JSON representation is as followed:
 ```text
@@ -268,20 +278,20 @@ Set the input log as followed:
 ```text
 jsonPayload {
     "logging.googleapis.com/http_request": {
-        "requestMethod":"GET", 
-        "requestUrl":"logging.googleapis.com", 
-        "requestSize":"12", 
-        "status":200, 
-        "responseSize":"12", 
-        "userAgent":"Mozilla", 
-        "remoteIp":"255.0.0.1", 
-        "serverIp":"255.0.0.1", 
-        "referer":"referer", 
-        "latency":"1s", 
-        "cacheLookup":true, 
-        "cacheHit":true, 
-        "cacheValidatedWithOriginServer":true, 
-        "cacheFillBytes":"12", 
+        "requestMethod":"GET",
+        "requestUrl":"logging.googleapis.com",
+        "requestSize":"12",
+        "status":200,
+        "responseSize":"12",
+        "userAgent":"Mozilla",
+        "remoteIp":"255.0.0.1",
+        "serverIp":"255.0.0.1",
+        "referer":"referer",
+        "latency":"1s",
+        "cacheLookup":true,
+        "cacheHit":true,
+        "cacheValidatedWithOriginServer":true,
+        "cacheFillBytes":"12",
         "protocol":"HTTP/1.2"
     }
     ...
@@ -294,20 +304,20 @@ the logEntry will be:
         ...
     }
     "httpRequest": {
-        "requestMethod":"GET", 
-        "requestUrl":"logging.googleapis.com", 
-        "requestSize":"12", 
-        "status":200, 
-        "responseSize":"12", 
-        "userAgent":"Mozilla", 
-        "remoteIp":"255.0.0.1", 
-        "serverIp":"255.0.0.1", 
-        "referer":"referer", 
-        "latency":"1s", 
-        "cacheLookup":true, 
-        "cacheHit":true, 
-        "cacheValidatedWithOriginServer":true, 
-        "cacheFillBytes":"12", 
+        "requestMethod":"GET",
+        "requestUrl":"logging.googleapis.com",
+        "requestSize":"12",
+        "status":200,
+        "responseSize":"12",
+        "userAgent":"Mozilla",
+        "remoteIp":"255.0.0.1",
+        "serverIp":"255.0.0.1",
+        "referer":"referer",
+        "latency":"1s",
+        "cacheLookup":true,
+        "cacheHit":true,
+        "cacheValidatedWithOriginServer":true,
+        "cacheFillBytes":"12",
         "protocol":"HTTP/1.2"
     }
     ...

@@ -13,6 +13,8 @@ When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read 
   * Pod ID
   * Labels
   * Annotations
+  * Namespace Labels
+  * Namespace Annotations
 
 The data is cached locally in memory and appended to each record.
 
@@ -35,23 +37,28 @@ The plugin supports the following configuration parameters:
 | Keep\_Log | When `Keep_Log` is disabled, the `log` field is removed from the incoming message once it has been successfully merged \(`Merge_Log` must be enabled as well\). | On |
 | tls.debug | Debug level between 0 \(nothing\) and 4 \(every detail\). | -1 |
 | tls.verify | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | On |
+| tls.verify\_hostname | When enabled, turns on hostname validation for certificates | Off |
 | Use\_Journal | When enabled, the filter reads logs coming in Journald format. | Off |
 | Cache\_Use\_Docker\_Id | When enabled, metadata will be fetched from K8s when docker\_id is changed. | Off |
 | Regex\_Parser | Set an alternative Parser to process record Tag and extract pod\_name, namespace\_name, container\_name and docker\_id. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) \(refer to parser _filter-kube-test_ as an example\). |  |
 | K8S-Logging.Parser | Allow Kubernetes Pods to suggest a pre-defined Parser \(read more about it in Kubernetes Annotations section\) | Off |
 | K8S-Logging.Exclude | Allow Kubernetes Pods to exclude their logs from the log processor \(read more about it in Kubernetes Annotations section\). | Off |
-| Labels | Include Kubernetes resource labels in the extra metadata. | On |
-| Annotations | Include Kubernetes resource annotations in the extra metadata. | On |
+| Labels | Include Kubernetes pod resource labels in the extra metadata. | On |
+| Annotations | Include Kubernetes pod resource annotations in the extra metadata. | On |
 | Kube\_meta\_preload\_cache\_dir | If set, Kubernetes meta-data can be cached/pre-loaded from files in JSON format in this directory, named as namespace-pod.meta |  |
 | Dummy\_Meta | If set, use dummy-meta data \(for test/dev purposes\) | Off |
 | DNS\_Retries | DNS lookup retries N times until the network start working | 6 |
 | DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
-| Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). | Off |
+| Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `Kube_URL` settings.| Off |
 | Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
 | Kubelet\_Host | kubelet host using for HTTP request, this only works when `Use_Kubelet`  set to On. | 127.0.0.1 |
-| Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
+| Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached pod metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
 | Kube\_Token\_TTL | configurable 'time to live' for the K8s token. By default, it is set to 600 seconds. After this time, the token is reloaded from Kube_Token_File or the Kube_Token_Command.| 600 |
 | Kube\_Token\_Command | Command to get Kubernetes authorization token. By default, it will be `NULL` and we will use token file to get token. If you want to manually choose a command to get it, you can set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. |  |
+| Kube\_Meta\_Namespace\_Cache\_TTL | configurable TTL for K8s cached namespace metadata. By default, it is set to 900 which means a 15min TTL for namespace cache entries. Setting this to 0 will mean entries are evicted at random once the cache is full. | 900 |
+| Namespace\_Labels | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Namespace\_Annotations | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Namespace\_Metadata\_Only | Include Kubernetes namespace metadata only and no pod metadata. If this is set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 
 ## Processing the 'log' value
 
@@ -76,7 +83,24 @@ To perform processing of the _log_ key, it's **mandatory to enable** the _Merge\
 
 If _log_ value processing fails, the value is untouched. The order above is not chained, meaning it's exclusive and the filter will try only one of the options above, **not** all of them.
 
-## Kubernetes Annotations
+## Kubernetes Namespace Meta
+
+Namespace Meta can be enabled via the following settings:
+
+* Namespace\_Labels
+* Namespace\_Annotations
+
+Using any Namespace Meta requires the use of the Kube API as it can not be fetched directly from Kubelet. If `Use_Kubelet On` has been set, the Kubelet api will only be used to fetch pod metadata, while namespace meta is fetched from the upstream Kubernetes API.
+
+Namespace Meta if collected will be stored within a `kubernetes_namespace` record key.
+
+> Namespace meta is not be guaranteed to be in sync as namespace labels & annotations can be adjusted after pod creation. Adjust `Kube_Meta_Namespace_Cache_TTL` to lower caching times to fit your use case.
+
+* Namespace\_Metadata\_Only
+  * Using this feature will instruct fluent-bit to only fetch namespace metadata and to not fetch POD metadata at all.
+    POD basic metadata like container id, host, etc will be NOT be added and the Labels and Annotations configuration options which are used specifically for POD Metadata will be ignored.
+
+## Kubernetes Pod Annotations
 
 A flexible feature of Fluent Bit Kubernetes filter is that allow Kubernetes Pods to suggest certain behaviors for the log processor pipeline when processing the records. At the moment it support:
 
@@ -141,7 +165,7 @@ Kubernetes Filter depends on either [Tail](../inputs/tail.md) or [Systemd](../in
     Name    tail
     Tag     kube.*
     Path    /var/log/containers/*.log
-    Parser  docker
+    multiline.parser              docker, cri
 
 [FILTER]
     Name             kubernetes
@@ -202,9 +226,36 @@ You can see on [Rublar.com](https://rubular.com/r/HZz3tYAahj6JCd) web site how t
 
 * [https://rubular.com/r/HZz3tYAahj6JCd](https://rubular.com/r/HZz3tYAahj6JCd)
 
-#### Custom Regex
+### Custom Regex
 
 Under certain and not common conditions, a user would want to alter that hard-coded regular expression, for that purpose the option **Regex\_Parser** can be used \(documented on top\).
+
+#### Custom Tag For Enhanced Filtering
+
+One such use case involves splitting logs by namespace, pods, containers or container id.
+The tag is restructured within the tail input using match groups, this can simplify the filtering by those match groups later in the pipeline.
+Since the tag no longer follows the original file name, a custom **Regex\_Parser** that matches the new tag structure is required:
+
+```text
+[PARSER]
+    Name    custom-tag
+    Format  regex
+    Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
+
+[INPUT]
+    Name              tail
+    Tag               kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
+    Path              /var/log/containers/*.log
+    Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$
+    Parser            cri
+
+[FILTER]
+    Name                kubernetes
+    Match               kube.*
+    Kube_Tag_Prefix     kube.
+    Regex_Parser        custom-tag
+    Merge_Log           On
+```
 
 #### Final Comments
 
@@ -220,7 +271,7 @@ There are some configuration setup needed for this feature.
 
 Role Configuration for Fluent Bit DaemonSet Example:
 
-```text
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -239,7 +290,7 @@ rules:
       - pods
       - nodes
       - nodes/proxy
-    verbs: 
+    verbs:
       - get
       - list
       - watch
@@ -263,34 +314,34 @@ The difference is that kubelet need a special permission for resource `nodes/pro
 Fluent Bit Configuration Example:
 
 ```text
-    [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/*.log
-        DB                /var/log/flb_kube.db
-        Parser            docker
-        Docker_Mode       On
-        Mem_Buf_Limit     50MB
-        Skip_Long_Lines   On
-        Refresh_Interval  10
+[INPUT]
+    Name              tail
+    Tag               kube.*
+    Path              /var/log/containers/*.log
+    DB                /var/log/flb_kube.db
+    Parser            docker
+    Docker_Mode       On
+    Mem_Buf_Limit     50MB
+    Skip_Long_Lines   On
+    Refresh_Interval  10
 
-    [FILTER]
-        Name                kubernetes
-        Match               kube.*
-        Kube_URL            https://kubernetes.default.svc.cluster.local:443
-        Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
-        Merge_Log           On
-        Buffer_Size         0
-        Use_Kubelet         true
-        Kubelet_Port        10250
+[FILTER]
+    Name                kubernetes
+    Match               kube.*
+    Kube_URL            https://kubernetes.default.svc.cluster.local:443
+    Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+    Merge_Log           On
+    Buffer_Size         0
+    Use_Kubelet         true
+    Kubelet_Port        10250
 ```
 
 So for fluent bit configuration, you need to set the `Use_Kubelet` to true to enable this feature.
 
 DaemonSet config Example:
 
-```text
+```yaml
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -384,19 +435,23 @@ If you are not seeing metadata added to your kubernetes logs and see the followi
 When Fluent Bit is deployed as a DaemonSet it generally runs with specific roles that allow the application to talk to the Kubernetes API server. If you are deployed in a more restricted environment check that all the Kubernetes roles are set correctly.
 
 You can test this by running the following command (replace `fluentbit-system` with the namespace where your fluentbit is installed)
+
 ```text
 kubectl auth can-i list pods --as=system:serviceaccount:fluentbit-system:fluentbit
 ```
-If set roles are configured correctly, it should simply respond with `yes`. 
 
-For instance, using Azure AKS, running the above command may respond with: 
+If set roles are configured correctly, it should simply respond with `yes`.
+
+For instance, using Azure AKS, running the above command may respond with:
+
 ```text
 no - Azure does not have opinion for this user.
 ```
 
-If you have connectivity to the API server, but still "could not get meta for POD" - debug logging might give you a message with `Azure does not have opinion for this user`. Then the following `subject` may need to be included in the `fluentbit` `ClusterRoleBinding`: 
+If you have connectivity to the API server, but still "could not get meta for POD" - debug logging might give you a message with `Azure does not have opinion for this user`. Then the following `subject` may need to be included in the `fluentbit` `ClusterRoleBinding`:
 
 appended to `subjects` array:
+
 ```yaml
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
@@ -414,4 +469,3 @@ By default the Kube\_URL is set to `https://kubernetes.default.svc:443` . Ensure
 ### I can't see new objects getting metadata
 
 In some cases, you may only see some objects being appended with metadata while other objects are not enriched. This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
-

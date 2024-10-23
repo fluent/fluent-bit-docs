@@ -2,6 +2,8 @@
 description: This page describes the yaml configuration file used by Fluent Bit
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" />
+
 # YAML Configuration File
 
 One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope.
@@ -15,6 +17,9 @@ The YAML configuration file supports the following sections:
   * Inputs
   * Filters
   * Outputs
+
+The YAML configuration file does not support the following sections yet:
+* Parsers
 
 {% hint style="info" %}
 YAML configuration is used in the smoke tests for containers, so an always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
@@ -66,7 +71,7 @@ The _service_ section defines the global properties of the service. The Service 
 | dns.mode        | Sets the primary transport layer protocol used by the asynchronous DNS resolver, which can be overridden on a per plugin basis                                                                                                                                                                       | UDP           |
 | log_file        | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (stderr).                                                                                                                                                                                   |               |
 | log_level       | Set the logging verbosity level. Allowed values are: off, error, warn, info, debug and trace. Values are accumulative, e.g., if 'debug' is set, it will include error, warning, info, and debug.  Note that _trace_ mode is only available if Fluent Bit was built with the _WITH\_TRACE_ option enabled. | info          |
-| parsers_file    | Path for a `parsers` configuration file. Multiple Parsers_File entries can be defined within the section.                                                                                                                                                                                               |               |
+| parsers_file    | Path for a `parsers` configuration file. Only a single entry is currently supported.                                                                                                                                                                                               |               |
 | plugins_file    | Path for a `plugins` configuration file. A _plugins_ configuration file allows the definition of paths for external plugins; for an example, [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf).                                                         |               |
 | streams_file    | Path for the Stream Processor configuration file. To learn more about Stream Processing configuration go [here](../../../stream-processing/introduction.md).                                                                                                                                               |               |
 | http_server     | Enable built-in HTTP Server                                                                                                                                                                                                                                                                             | Off           |
@@ -76,6 +81,7 @@ The _service_ section defines the global properties of the service. The Service 
 | scheduler.cap   | Set a maximum retry time in seconds. The property is supported from v1.8.7.                                                                                                                                                                                                                             | 2000          |
 | scheduler.base  | Sets the base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                          | 5             |
 | json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
+| sp.convert_from_str_to_num | If enabled, Stream processor converts from number string to number type.        | true          |
 
 The following is an example of a _service_ section:
 
@@ -115,7 +121,7 @@ pipeline:
           port: 8080
 ```
 
-This pipelinme consists of two _inputs_; a tail plugin and an http server plugin. Each plugin has its own map in the array of _inputs_ consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, ie: the _record_ and _allowlist_key_ properties for the _record_modifier_ _filter_:
+This pipeline consists of two _inputs_; a tail plugin and an http server plugin. Each plugin has its own map in the array of _inputs_ consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, ie: the _record_ and _allowlist_key_ properties for the _record_modifier_ _filter_:
 
 ```
 pipeline:

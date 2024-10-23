@@ -59,7 +59,7 @@ If we wanted to match against the value of the key `name` we must use `$name`. T
 * `$name` = "abc-123"
 * `$ss['s1']['s2']` = "flb"
 
-Note that a key must point a value that contains a string, it's **not valid** for numbers, booleans, maps or arrays.
+Note that a key must point to a value that contains a string, it's **not valid** for numbers, booleans, maps or arrays.
 
 ### Regex
 
@@ -117,6 +117,8 @@ You can use `true` or `false` to decide the expected behavior. There is no defau
 
 The following configuration example will emit a dummy \(hand-crafted\) record, the filter will rewrite the tag, discard the old record and print the new record to the standard output interface:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [SERVICE]
     Flush     1
@@ -137,6 +139,30 @@ The following configuration example will emit a dummy \(hand-crafted\) record, t
     Name   stdout
     Match  from.*
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    log_level: info
+pipeline:
+    inputs:
+        - name: dummy
+          tag:  test_tag
+          dummy: '{"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}'
+    filters:
+        - name: rewrite_tag
+          match: test_tag
+          rule: $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
+          emitter_name: re_emitted
+    outputs:
+        - name: stdout
+          match: from.*
+```
+{% endtab %}
+{% endtabs %}
+
 
 The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`:
 

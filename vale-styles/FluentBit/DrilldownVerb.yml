@@ -1,0 +1,8 @@
+---
+extends: sequence
+message: "Use drill down as a verb."
+level: suggestion
+ignorecase: true
+tokens:
+  - tag: VB|VBD|VBG|VBN|VBP|VBZ
+    pattern: '(?:drilldown|drill-down)'

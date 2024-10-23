@@ -20,8 +20,22 @@ Important Note: At the moment only HTTP endpoints are supported.
 | traces_uri                  | Specify an optional HTTP URI for the target web server listening for traces, e.g: /v1/traces | /         |
 | header               | Add a HTTP header key/value pair. Multiple headers can be set. |           |
 | log_response_payload | Log the response payload within the Fluent Bit log           | false     |
+| logs_body_key | The log body key to look up in the log events body/message. Sets the Body field of the opentelemtry logs data model.   | message     |
+| logs_trace_id_message_key | The trace id key to look up in the log events body/message. Sets the TraceId field of the opentelemtry logs data model.  | traceId     |
+| logs_span_id_message_key | The span id key to look up in the log events body/message. Sets the SpanId field of the opentelemtry logs data model.  | spanId     |
+| logs_severity_text_message_key | The severity text id key to look up in the log events body/message. Sets the SeverityText field of the opentelemtry logs data model.  | severityText     |
+| logs_severity_number_message_key | The severity number id key to look up in the log events body/message. Sets the SeverityNumber field of the opentelemtry logs data model.  | severityNumber     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the OpenTelemetry exporter. You may have multiple of these fields |           |
 | compress            | Set payload compression mechanism. Option available is 'gzip' |           |
+| logs_observed_timestamp_metadata_key | Specify an ObservedTimestamp key to look up in the metadata. | $ObservedKey |
+| logs_timestamp_metadata_key |Specify a Timestamp key to look up in the metadata. | $Timestamp |
+| logs_severity_key_metadata_key |Specify a SeverityText key to look up in the metadata.| $SeverityText |
+| logs_severity_number_metadata_key | Specify a SeverityNumber key to look up in the metadata.| $SeverityNumber |
+| logs_trace_flags_metadata_key |Specify a Flags key to look up in the metadata.| $Flags |
+| logs_span_id_metadata_key |Specify a SpanId key to look up in the metadata.| $SpanId |
+| logs_trace_id_metadata_key |Specify a TraceId key to look up in the metadata.| $TraceId |
+| logs_attributes_metadata_key |Specify an Attributes key to look up in the metadata.| $Attributes |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 
@@ -62,6 +76,11 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
     Log_response_payload True
     Tls                  On
     Tls.verify           Off
+    logs_body_key $message
+    logs_span_id_message_key span_id
+    logs_trace_id_message_key trace_id
+    logs_severity_text_message_key loglevel
+    logs_severity_number_message_key lognum
     # add user-defined labels
     add_label            app fluent-bit
     add_label            color blue

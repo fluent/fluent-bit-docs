@@ -6,15 +6,19 @@ The **dummy** input plugin, generates dummy events. It is useful for testing, de
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
-| Metadata | Dummy JSON metadata. Default: `{}` |
-| Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
-| Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
-| Rate | Rate at which messages are generated expressed in how many times per second. Default: 1 |
-| Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
-| Copies | Number of messages to generate each time they are generated. Defaults to 1. |
+| Key                | Description | Default |
+| :----------------- | :---------- | :------ |
+| Dummy              | Dummy JSON record. | `{"message":"dummy"}` |
+| Metadata           | Dummy JSON metadata. | `{}` |
+| Start\_time\_sec   | Dummy base timestamp, in seconds. | `0` |
+| Start\_time\_nsec  | Dummy base timestamp, in nanoseconds. | `0` |
+| Rate               | Rate at which messages are generated expressed in how many times per second. | `1` |
+| Interval\_sec      | Set time interval, in seconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| Interval\_nsec     | Set time interval, in nanoseconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| Samples            | If set, the events number will be limited. For example, if Samples=3, the plugin generates only three events and stops. | _none_ |
+| Copies             | Number of messages to generate each time they are generated. | `1` |
+| Flush\_on\_startup | If set to `true`, the first dummy event is generated at startup. | `false` |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -37,13 +41,29 @@ Fluent Bit v2.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
-```python
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
 [INPUT]
     Name   dummy
-    Tag    dummy.log
+    Dummy {"message": "custom dummy"}
 
 [OUTPUT]
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message": "custom dummy"}'
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
