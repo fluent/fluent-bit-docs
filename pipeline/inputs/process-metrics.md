@@ -1,10 +1,10 @@
 # Process Metrics
 
-_Process_ _Metrics_ input plugin allows you to gather metrics from a process. When using a process name, ie: a non-numeric process parameter, the _process_ _metrics_ plugin will track all processes that match.
+The Process Metrics input plugin lets you gather metrics from a process. When using a process name like a non-numeric process parameter, the process metrics plugin  tracks all processes that match.
 
-The Process metrics plugin creates cmetrics based metrics. If you are looking for log-based metrics \(i.e. JSON payload) you can use the Process plugin instead.
+The Process metrics plugin creates `cmetrics` based metrics. For log-based metrics like JSON payload,  use the [Process Log Based Metrics](pipeline/inputs/process.md) plugin instead.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 
 In order to start performing the checks, you can run the plugin from the command line or through the configuration file:
 
-The following example will check the health of _crond_ process.
+The following example will check the health of `crond` process.
 
 ```bash
 $ fluent-bit -i proc_metrics -p process=crond -o stdout
@@ -24,7 +24,7 @@ $ fluent-bit -i proc_metrics -p process=crond -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and  `Output` sections:
 
 ```python
 [INPUT]
