@@ -100,6 +100,7 @@ Outputs
   bigquery                Send events to BigQuery via streaming insert
   counter                 Records counter
   datadog                 Send events to DataDog HTTP Event Collector
+  doris                   Apache Doris
   es                      Elasticsearch
   exit                    Exit after a number of flushes (test purposes)
   file                    Generate log file

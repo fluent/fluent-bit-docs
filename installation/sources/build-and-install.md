@@ -188,6 +188,7 @@ The _output plugins_ gives the capacity to flush the information to some externa
 | [FLB\_OUT\_COUNTER](../../pipeline/outputs/counter.md) | Enable Counter output plugin | On |
 | [FLB\_OUT\_CLOUDWATCH\_LOGS](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | On |
 | [FLB\_OUT\_DATADOG](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | On |
+| [FLB\_OUT|_DORIS](../../pipeline/outputs/doris.md) | Enable Apache Doris output plugin | On |
 | [FLB\_OUT\_ES](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | On |
 | [FLB\_OUT\_FILE](../../pipeline/outputs/file.md) | Enable File output plugin | On |
 | [FLB\_OUT\_KINESIS\_FIREHOSE](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | On |
