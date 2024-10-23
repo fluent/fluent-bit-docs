@@ -8,9 +8,9 @@ The Process metrics plugin creates `cmetrics` based metrics. For log-based metri
 
 The plugin supports the following configuration parameters:
 
-| Key     | Description                                                                              |
-| :---    | :---                                                                                     |
-| Process | Name or PID the target Process to check, defaults to the current instance of fluent-bit. |
+| Key            | Description |
+| :--------- | :----------- |
+| `Process` | Name or PID of the target Process to check, defaults to the current instance of fluent-bit. |
 
 ## Getting Started
 
