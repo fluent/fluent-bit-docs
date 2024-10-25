@@ -1,11 +1,11 @@
 ---
-description: 'Destinations for your data: databases, cloud services, and more!'
+description: Learn about destinations for your data, such as databases and cloud services.
 ---
 
 # Output
 
 The output interface lets you define destinations for your data. Common destinations
-are remote services, local file systems, or other standard interface. Outputs are
+are remote services, local file systems, or other standard interfaces. Outputs are
 implemented as plugins.
 
 ```mermaid
