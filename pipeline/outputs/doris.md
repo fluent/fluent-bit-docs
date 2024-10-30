@@ -12,32 +12,33 @@ operational Doris service running in your environment.
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `host` | HTTP address of the target Doris fe or be | `127.0.0.1` |
-| `port` | HTTP port of the target Doris fe or be | `8030` |
-| `user` | Username for Doris access | _none_ |
-| `password` | Password for Doris access | _none_ |
-| `database` | The target Doris database | _none_ |
-| `table` | The target Doris table | _none_ |
-| `time_key` | The name of the time key in the output record | `date` |
-| `columns` | The column mappings, details in [Doris stream load](https://doris.apache.org/docs/data-operate/import/import-way/stream-load-manual) | `date, log` |
-| `timeout_second` | Timeout seconds for Doris stream load | `60` |
+| `host` | HTTP address of the target Doris frontend (fe) or frontend (be). | `127.0.0.1` |
+| `port` | HTTP port of the target Doris frontend (fe) or frontend (be). | `8030` |
+| `user` | Username for Doris access. | _none_ |
+| `password` | Password for Doris access. | _none_ |
+| `database` | The target Doris database. | _none_ |
+| `table` | The target Doris table. | _none_ |
+| `label_prefix` | Doris stream load label prefix, the final generated Label is {label_prefix}\_{timestamp}\_{uuid}. | `fluentbit` |
+| `time_key` | The name of the time key in the output record. | `date` |
+| `header` | Doris stream load headers. Multiple headers can be set. See [Doris stream load](https://doris.apache.org/docs/data-operate/import/import-way/stream-load-manual) for details. | _none_ |
+| `log_request` | Whether to output Doris Stream Load request and response metadata in logs for troubleshooting. | `true` |
+| `log_progress_interval` | The time interval in seconds to calculate and output the speed in the log. Set to 0 to disable this type of logging. | `10` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ### TLS / SSL
 
-Doris output plugin supports TLS/SSL. For more details about the properties
-available and general configuration, refer to[TLS/SSL](../../administration/transport-security.md).
+Doris output plugin supports TLS/SSL. See [TLS/SSL](../../administration/transport-security.md)
+for more details about the supported properties and general configuration.
 
 ## Get started
 
-To insert records into a Doris database, you run the plugin from the
-command line or through the configuration file:
+To insert records into a Doris database, run the plugin from the command line or define a configuration file:
 
 ### Command Line
 
-The **doris** plugin can read the parameters from the command through the `-p` argument (property).
+The Doris plugin can read the parameters from the command through the `-p` argument,
 
-An example:
+as shown in the following example:
 
 ```shell copy
 fluent-bit -i cpu -t cpu -o doris \
@@ -48,14 +49,14 @@ fluent-bit -i cpu -t cpu -o doris \
     -p password=admin \
     -p database=d_fb \
     -p table=t_fb \
-    -p columns='date, log=cast(cpu_p as string)'
+    -p header='columns date, cpu_p, log=cast(cpu_p as string)'
 ```
 
 ### Configuration File
 
-In your main configuration file append the following `Input` and `Output` sections.
+In your main configuration file, append the following `Input` and `Output` sections.
 
-```python
+```python copy
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -69,5 +70,5 @@ In your main configuration file append the following `Input` and `Output` sectio
     password admin
     database d_fb
     table t_fb
-    columns date, log=cast(cpu_p as string)
+    columns date, cpu_p, log=cast(cpu_p as string)
 ```
