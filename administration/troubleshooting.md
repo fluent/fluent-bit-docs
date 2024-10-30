@@ -419,21 +419,21 @@ total chunks     : 92
    └─ down       : 57
 ```
 
-### Input plugins dump
+### Input plugins
 
-The dump provides insights for every input instance configured.
+The input plugins dump provides insights for every input instance configured.
 
-#### Status
+### Status
 
 Overall ingestion status of the plugin.
 
 | Entry | Sub-entry | Description |
 | :--- | :--- | :--- |
 | `overlimit` |  | If the plugin has been configured with [`Mem_Buf_Limit`](backpressure.md), this entry will report if the plugin is over the limit or not at the moment of the dump. Over the limit prints `yes`, otherwise `no`. |
-|  | ``mem_size` | Current memory size in use by the input plugin in-memory. |
+|  | `mem_size` | Current memory size in use by the input plugin in-memory. |
 |  | `mem_limit` | Limit set by `Mem_Buf_Limit`. |
 
-#### Tasks
+### Tasks
 
 When an input plugin ingests data into the engine, a Chunk is created. A Chunk can
 contains multiple records. At flush time, the engine creates a Task that contains the
