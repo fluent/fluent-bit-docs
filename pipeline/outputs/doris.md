@@ -18,16 +18,16 @@ operational Doris service running in your environment.
 | `password` | Password for Doris access. | _none_ |
 | `database` | The target Doris database. | _none_ |
 | `table` | The target Doris table. | _none_ |
-| `label_prefix` | Doris stream load label prefix, the final generated Label is {label_prefix}\_{timestamp}\_{uuid}. | `fluentbit` |
+| `label_prefix` | Label prefix of Doris stream load, the final generated Label is {label_prefix}\_{timestamp}\_{uuid}. | `fluentbit` |
 | `time_key` | The name of the time key in the output record. | `date` |
-| `header` | Doris stream load headers. Multiple headers can be set. See [Doris stream load](https://doris.apache.org/docs/data-operate/import/import-way/stream-load-manual) for details. | _none_ |
+| `header` | Headers of Doris stream load. Multiple headers can be set. See [Doris stream load](https://doris.apache.org/docs/data-operate/import/import-way/stream-load-manual) for details. | _none_ |
 | `log_request` | Whether to output Doris Stream Load request and response metadata in logs for troubleshooting. | `true` |
 | `log_progress_interval` | The time interval in seconds to calculate and output the speed in the log. Set to 0 to disable this type of logging. | `10` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ### TLS / SSL
 
-Doris output plugin supports TLS/SSL. See [TLS/SSL](../../administration/transport-security.md)
+The Doris output plugin supports TLS/SSL. See [TLS/SSL](../../administration/transport-security.md)
 for more details about the supported properties and general configuration.
 
 ## Get started
