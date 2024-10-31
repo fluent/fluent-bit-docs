@@ -1,24 +1,27 @@
 # Buildroot / Embedded Linux
 
-## Installing
+Install Fluent Bit in your embedded Linux system.
 
-To install, just select fluent-bit in your defconfig.
-See the Config.in file for all configuration options.
+## Install
 
-```defconfig
+To install, select Fluent Bit in your `defconfig`.
+See the `Config.in` file for all configuration options.
+
+```text
 BR2_PACKAGE_FLUENT_BIT=y
 ```
 
-## Running
+## Run
 
-The default config file is written to:
+The default configuration file is written to:
 
-```
+```text
 /etc/fluent-bit/fluent-bit.conf
 ```
 
-Fluent-bit is automatically started by the S99fluent-bit script.
+Fluent bit is started by the `S99fluent-bit` script.
 
 ## Support
 
-All configurations with a toolchain that supports threads and dynamic library linking are supported.
+All configurations with a toolchain that supports threads and dynamic library
+linking are supported.
