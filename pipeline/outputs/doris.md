@@ -56,6 +56,8 @@ fluent-bit -i cpu -t cpu -o doris \
 
 In your main configuration file, append the following `Input` and `Output` sections.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python copy
 [INPUT]
     Name  cpu
@@ -70,5 +72,27 @@ In your main configuration file, append the following `Input` and `Output` secti
     password admin
     database d_fb
     table t_fb
-    columns date, cpu_p, log=cast(cpu_p as string)
+    header columns date, cpu_p, log=cast(cpu_p as string)
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml copy
+pipeline:
+    inputs:
+        - name: cpu
+          tag: cpu
+    outputs:
+        - name: doris
+          match: '*'
+          host: 127.0.0.1
+          port: 8030
+          user: admin
+          password: admin
+          database: d_fb
+          table: t_fb
+          header: 
+            - columns date, cpu_p, log=cast(cpu_p as string)
+```
+{% endtab %}
+{% endtabs %}
