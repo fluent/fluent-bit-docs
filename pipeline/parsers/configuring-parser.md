@@ -29,7 +29,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | Format | Specify the format of the parser, the available options here are: [json](json.md), [regex](regular-expression.md), [ltsv](ltsv.md) or [logfmt](logfmt.md). |
 | Regex | If format is _regex_, this option _must_ be set specifying the Ruby Regular Expression that will be used to parse and compose the structured message. |
 | Time\_Key | If the log entry provides a field with a timestamp, this option specifies the name of that field. |
-| Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. Fluent-bit uses `strptime(3)` to parse time so you can refer to [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. |
+| Time\_Format | Specify the format of the time field so it can be recognized and analyzed properly. Fluent-bit uses `strptime(3)` to parse time so you can refer to [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. In addition **%L** is available for Fractional Seconds. |
 | Time\_Offset | Specify a fixed UTC time offset \(e.g. -0600, +0200, etc.\) for local dates. |
 | Time\_Keep | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and it value in the log entry. |
 | Time\_System\_Timezone | If there is no timezone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured timezone. The configured timezone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
