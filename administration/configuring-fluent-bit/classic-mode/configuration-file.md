@@ -7,7 +7,7 @@ description: This page describes the main configuration file used by Fluent Bit.
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
 
 One of the ways to configure Fluent Bit is using a main configuration file. Fluent
-Bit allows the use one configuration file which works at a global scope and uses the
+Bit allows the use one configuration file that works at a global scope and uses the
 defined [Format and Schema](format-schema.md).
 
 The main configuration file supports four sections:
@@ -28,16 +28,16 @@ are:
 | Key             | Description   | Default Value |
 | --------------- | ------------- | ------------- |
 | `flush`           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when it's required to flush the records ingested by input plugins through the defined output plugins.  | `1` |
-| `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a Grace timeout to define wait time on exit. | `5` |
-| daemon          | Boolean. Set if Fluent Bit should run as a Daemon (background) or not. Allowed values are: `yes`, `no`, `on`, and `off`. When using a Systemd based unit as the one provided in FLuent Bit packages, don't turn on this option.  | `Off` |
+| `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
+| daemon          | Boolean. Determines whether Fluent Bit should run as a Daemon (background). Allowed values are: `yes`, `no`, `on`, and `off`. Don't enable when using a Systemd based unit, such as the one provided in Fluent Bit packages.  | `Off` |
 | `dns.mode`        | Set the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per plugin basis. | `UDP` |
 | `log_file`        | Absolute path for an optional log file. By default all logs are redirected to the standard error interface (stderr). | _none_ |
-| `log_level`       | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. If 'debug' is set, it will include `error`, `warning`, `info`, and `debug`. Trace mode is only available if Fluent Bit was built with the _`WITH_TRACE`_ option enabled. | `info` |
+| `log_level`       | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. If `debug` is set, it will include `error`, `warning`, `info`, and `debug`. Trace mode is only available if Fluent Bit was built with the _`WITH_TRACE`_ option enabled. | `info` |
 | `parsers_file`    | Path for a `parsers` configuration file. Multiple `Parsers_File` entries can be defined within the section. | _none_ |
 | `plugins_file`    | Path for a `plugins` configuration file. A `plugins` configuration file defines paths for external plugins. [See an example](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
 | `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/introduction.md). | _none_|
-| `http_server`     | Enable the built-in HTTP Server | `Off` |
-| `http_listen`     | Set listening interface for HTTP Server when it's enabled | `0.0.0.0` |
+| `http_server`     | Enable the built-in HTTP Server. | `Off` |
+| `http_listen`     | Set listening interface for HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port`       | Set TCP Port for the HTTP Server. | `2020` |
 | `coro_stack_size` | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (`4096`) can cause coroutine threads to overrun the stack buffer. The default value of this parameter shouldn't be changed. | `24576` |
 | `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
@@ -156,7 +156,7 @@ flush the results every five seconds to the standard output:
 ## Config Include File
 
 To avoid complicated long configuration files is better to split specific parts in
-different files and call them (include) from one main file. The `@INCLUDE`can be used
+different files and call them (include) from one main file. The `@INCLUDE` can be used
 in the following way:
 
 ```text
