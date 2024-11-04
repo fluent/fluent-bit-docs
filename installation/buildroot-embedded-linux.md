@@ -19,7 +19,7 @@ The default configuration file is written to:
 /etc/fluent-bit/fluent-bit.conf
 ```
 
-Fluent bit is started by the `S99fluent-bit` script.
+Fluent Bit is started by the `S99fluent-bit` script.
 
 ## Support
 
