@@ -122,6 +122,5 @@ possible. For example:
 
 ### Vale
 
-The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which
-will automatically lints pull requests and adds suggestions to improve style and
-clarity.
+The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which lints
+pull requests and adds suggestions to improve style and clarity.
