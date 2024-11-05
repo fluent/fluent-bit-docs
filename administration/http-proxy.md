@@ -27,7 +27,7 @@ HTTP_PROXY='http://proxy.example.com:8080'
 ```
 
 The `HTTP_PROXY` environment variable is a [standard
-way](https://docs.docker.com/network/proxy/#use-environment-variables) for setting a
+method](https://docs.docker.com/network/proxy/#use-environment-variables) for setting a
 HTTP proxy in a containerized environment, and it's also natively supported by any
 application written in Go. Fluent Bit implements the same convention. The
 `http_proxy` environment variable is also supported. When both the `HTTP_PROXY` and
@@ -54,14 +54,14 @@ and `no_proxy` environment variables are provided, `NO_PROXY` takes precedence.
 The format for the `no_proxy` environment variable is a comma-separated list of
 host names or IP addresses.
 
-A domain name matches itself and all its subdomains (for example:`example.com` matches
-`example.com` and `test.example.com`):
+A domain name matches itself and all of its subdomains (for example,`example.com`
+matches both `example.com` and `test.example.com`):
 
 ```text
 NO_PROXY='foo.com,127.0.0.1,localhost'
 ```
 
-A domain with a leading dot (`.`) only matches its subdomains (for example:
+A domain with a leading dot (`.`) matches only its subdomains (for example,
 `.example.com` matches `test.example.com` but not `example.com`):
 
 ```text
