@@ -1,7 +1,7 @@
 # Requirements
 
-[Fluent Bit](http://fluentbit.io) has very low CPU and Memory consumption. It's
-compatible with most x86, x86_64, arm32v7, and arm64v8 based platforms.
+[Fluent Bit](http://fluentbit.io) has very low CPU and memory consumption. It's
+compatible with most x86-, x86_64-, arm32v7-, and arm64v8-based platforms.
 
 The build process requires the following components:
 
