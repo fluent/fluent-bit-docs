@@ -17,7 +17,7 @@ the worst case, the output plugin likely could use `20MB`.
 Fluent Bit has an internal binary representation for the data being processed. When
 this data reaches an output plugin, it can create its own representation in a new
 memory buffer for processing. The best examples are the
-[InfluxDB](pipeline/outputs/influxdb.md) and
+[InfluxDB](manual/pipeline/outputs/influxdb.md) and
 [Elasticsearch](pipeline/outputs/elasticsearch.md) output plugins, which need to
 convert the binary representation to their respective custom JSON formats before
 sending data to the backend servers.
