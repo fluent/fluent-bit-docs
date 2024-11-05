@@ -7,7 +7,7 @@ description: Enable hot reload through SIGHUP signal or an HTTP endpoint
 Fluent Bit supports the reloading feature when enabled in the configuration file
 or on the command line with `-Y` or `--enable-hot-reload` option.
 
-Hot reloading is supported on Linux, macOS, and Windows.
+Hot reloading is supported on Linux, macOS, and Windows operating systems.
 
 ## Update the configuration
 
@@ -45,7 +45,7 @@ curl -X POST -d '{}' localhost:2020/api/v2/reload
 
 Hot reloading can be used with `SIGHUP`.
 
-`SIGHUP` signal isn't supported on Windows. So, users can't enable this feature on Windows.
+`SIGHUP` signal isn't supported on Windows.
 
 ## Confirm a reload
 
