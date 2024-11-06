@@ -56,6 +56,7 @@ redirects:
     output/chronicle:      ./pipeline/outputs/chronicle.md
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
     output/datadog:        ./pipeline/outputs/datadog.md
+    output/doris:          ./pipeline/outputs/doris.md
     output/es:             ./pipeline/outputs/elasticsearch.md
     output/fabric:         ./pipeline/outputs/azure_kusto.md
     output/file:           ./pipeline/outputs/file.md

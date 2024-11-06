@@ -170,6 +170,7 @@
   * [Azure Logs Ingestion API](pipeline/outputs/azure_logs_ingestion.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
+  * [Doris](pipeline/outputs/doris.md)
   * [Dynatrace](pipeline/outputs/dynatrace.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
   * [File](pipeline/outputs/file.md)

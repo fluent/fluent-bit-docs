@@ -38,6 +38,7 @@ deprovisioning
 deprovisions
 Devo
 DogStatsD
+Doris
 downsample
 downsampled
 downsamples
