@@ -17,6 +17,7 @@ Calyptia
 chronotf
 clickstreams
 CloudWatch
+CMake
 Config
 Coralogix
 coroutine
