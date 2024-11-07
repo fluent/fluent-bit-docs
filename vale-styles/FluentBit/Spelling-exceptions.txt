@@ -58,6 +58,7 @@ Fargate
 Firehose
 FluentBit
 Fluentd
+glibc
 Golang
 golib
 Grafana
@@ -73,6 +74,7 @@ Hostname
 Ingester
 Keepalive
 Istio
+jemalloc
 keepalive
 Kinesis
 kubectl
