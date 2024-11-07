@@ -78,7 +78,7 @@ that rely on networking I/O:
 
 | Property | Description | Default |
 | :------- |:------------|:--------|
-| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this include the TLS handshake time. | `10` |
+| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this includes the TLS handshake time. | `10` |
 | `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | `true` |
 | `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired. | _none_ |
 | `net.dns.prefer_ipv4` | Prioritize IPv4 DNS results when trying to establish a connection. | `false` |
