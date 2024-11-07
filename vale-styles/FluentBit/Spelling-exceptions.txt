@@ -89,6 +89,7 @@ matchers
 Minishift
 minikube
 MTTx
+multithreading
 namespace
 namespaces
 Nginx
