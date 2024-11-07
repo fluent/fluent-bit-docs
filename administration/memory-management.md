@@ -5,7 +5,7 @@
 You might need to estimate how much memory Fluent Bit could be using in scenarios
 like containerized environments where memory limits are essential.
 
-To make an estimate, input plugins in use must set the `Mem_Buf_Limit`option.
+To make an estimate, in-use input plugins must set the `Mem_Buf_Limit`option.
 Learn more about it in [Backpressure](backpressure.md).
 
 ## Estimating
@@ -34,8 +34,8 @@ reporting a high memory usage by the service.
 
 It's strongly suggested that in any production environment, Fluent Bit should be
 built with [jemalloc](http://jemalloc.net/) enabled (`-DFLB_JEMALLOC=On`).
-jemalloc is an alternative memory allocator that can reduce fragmentation, resulting
-in better performance.
+The jemalloc implementation of malloc is an alternative memory allocator that can
+reduce fragmentation, resulting in better performance.
 
 Use the following command to determine if Fluent Bit has been built with jemalloc:
 
