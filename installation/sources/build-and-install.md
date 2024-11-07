@@ -12,8 +12,8 @@
 
 ## Prepare environment
 
-If you already know how CMake works you can skip this part and look at the build
-options available.
+If you already know how CMake works, you can skip this section and review the
+available [build options](#general-options).
 
 The following steps explain how to build and install the project with the default
 options.
@@ -31,7 +31,7 @@ options.
   cmake ../
   ```
 
-  This should display a series of results like:
+  This command displays a series of results similar to:
 
   ```text
   -- The C compiler identification is GNU 4.9.2
@@ -57,7 +57,7 @@ options.
   make
   ```
 
-  This should display results like:
+  This command displays results similar to:
 
   ```text
   Scanning dependencies of target msgpack
@@ -84,7 +84,7 @@ options.
 make install
 ```
 
-You might need root privileges. You can try to prefix the command with `sudo`.
+If the command indicates insufficient permissions, prefix the command with `sudo`.
 
 ## Build options
 
@@ -136,7 +136,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Input plugins
 
-Input plugin gather information from a specific source type like network interfaces,
+Input plugins gather information from a specific source type like network interfaces,
 some built-in metrics, or through a specific input device. The following input plugins
 are available:
 
