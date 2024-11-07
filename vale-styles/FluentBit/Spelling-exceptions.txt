@@ -91,6 +91,7 @@ minikube
 MTTx
 namespace
 namespaces
+netcat
 Nginx
 OAuth
 Okta
