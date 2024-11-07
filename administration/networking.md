@@ -16,7 +16,10 @@ Fluent Bit uses the following networking concepts:
 
 ### TCP connect timeout
 
-Most of the time creating a new TCP connection to a remote server is straightforward and takes a few milliseconds. But there are cases where DNS resolving, slow network or incomplete TLS handshakes might create long delays, or incomplete connection statuses.
+Most of the time creating a new TCP connection to a remote server is straightforward
+and takes a few milliseconds. But there are cases where DNS resolving, slow network
+or incomplete TLS handshakes might create long delays, or incomplete connection
+statuses.
 
 `net.connect_timeout` lets you configure the maximum time to wait for a connection
 to be established. This value already considers the TLS handshake process.
