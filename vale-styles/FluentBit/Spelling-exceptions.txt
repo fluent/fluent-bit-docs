@@ -95,6 +95,7 @@ MTTx
 multithreading
 namespace
 namespaces
+netcat
 Nginx
 OAuth
 Okta
