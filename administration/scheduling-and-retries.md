@@ -5,7 +5,7 @@
 [Fluent Bit](https://fluentbit.io) has an engine that helps to coordinate the data
 ingestion from input plugins. The engine calls the _scheduler_ to decide when it's time to
 flush the data through one or multiple output plugins. The scheduler flushes new data
-at a fixed time of seconds and retries when asked.
+at a fixed number of seconds, and retries when asked.
 
 When an output plugin gets called to flush some data, after processing that data it
 can notify the engine using these possible return statuses:
@@ -17,14 +17,14 @@ can notify the engine using these possible return statuses:
 
 ## Configure wait time for retry
 
-The scheduler provides two configuration options called `scheduler.cap` and
-`scheduler.base` which can be set in the Service section. These determine the waiting
+The scheduler provides two configuration options, called `scheduler.cap` and
+`scheduler.base`, which can be set in the Service section. These determine the waiting
 time before a retry happens.
 
 | Key | Description | Default |
 | --- | ------------| --------------|
-| `scheduler.cap` | Set a maximum retry time in seconds. Supported in v1.8.7 or greater. | `2000` |
-| `scheduler.base` | Set a base of exponential backoff. Supported in v1.8.7 or greater. | `5` |
+| `scheduler.cap` | Set a maximum retry time in seconds. Supported in v1.8.7 or later. | `2000` |
+| `scheduler.base` | Set a base of exponential backoff. Supported in v1.8.7 or later. | `5` |
 
 The `scheduler.base` determines the lower bound of time and the `scheduler.cap`
 determines the upper bound for each retry.
@@ -97,8 +97,8 @@ impose a limit to try N times and then discard the data after reaching that limi
 
 ### Retry example
 
-The following example configures two outputs where the HTTP plugin has an unlimited
-number of while the Elasticsearch plugin have a limit of `5` retries:
+The following example configures two outputs, where the HTTP plugin has an unlimited
+number of retries, and the Elasticsearch plugin have a limit of `5` retries:
 
 ```text
 [OUTPUT]
