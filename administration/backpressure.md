@@ -5,7 +5,7 @@
 It's possible for logs or data to be ingested or created faster than the ability to
 flush it to some destinations. A common scenario is when reading from big log files,
 especially with a large backlog, and dispatching the logs to a backend over the
-network, which takes time to respond. This generates backpressure leading to high
+network, which takes time to respond. This generates _backpressure_, leading to high
 memory consumption in the service.
 
 To avoid backpressure, Fluent Bit implements a mechanism in the engine that restricts
@@ -13,7 +13,7 @@ the amount of data an input plugin can ingest. Restriction is done through the
 configuration parameters `Mem_Buf_Limit` and `storage.Max_Chunks_Up`.
 
 As described in the [Buffering](../concepts/buffering.md) concepts section, Fluent
-Bit offers two modes for data handling: in-memory only (default) and in-memory +
+Bit offers two modes for data handling: in-memory only (default) and in-memory and
 filesystem (optional).
 
 The default `storage.type memory` buffer can be restricted with `Mem_Buf_Limit`. If
@@ -23,10 +23,10 @@ input pauses and Fluent Bit
 [emits](https://github.com/fluent/fluent-bit/blob/v2.0.0/src/flb_input_chunk.c#L1334)
 a `[warn] [input] {input name or alias} paused (mem buf overlimit)` log message.
 
-Depending on the input plugin in use, this might lead to discard incoming data (for
-example, TCP input plugin). The tail plugin can handle pause without data loss; it
-stores its current file offset and resumes reading later. When buffer memory is
-available, the input resumes accepting logs. Fluent Bit
+Depending on the input plugin in use, this might cause incoming data to be discarded
+(for example, TCP input plugin). The tail plugin can handle pauses without data
+ingloss, storing its current file offset and resuming reading later. When buffer
+memory is available, the input resumes accepting logs. Fluent Bit
 [emits](https://github.com/fluent/fluent-bit/blob/v2.0.0/src/flb_input_chunk.c#L1277)
 a `[info] [input] {input name or alias} resume (mem buf overlimit)` message.
 
@@ -34,8 +34,8 @@ Mitigate the risk of data loss by configuring secondary storage on the filesyste
 using the `storage.type` of `filesystem` (as described in [Buffering &
 Storage](buffering-and-storage.md)). Initially, logs will be buffered to both memory
 and the filesystem. When the `storage.max_chunks_up` limit is reached, all new data
-will be stored safely in the filesystem. Fluent Bit stops queueing new data in memory
-and will only buffers to the filesystem. When `storage.type filesystem` is set, the
+will be stored in the filesystem. Fluent Bit stops queueing new data in memory and
+buffers only to the filesystem. When `storage.type filesystem` is set, the
 `Mem_Buf_Limit` setting no longer has any effect. Instead, the `[SERVICE]` level
 `storage.max_chunks_up` setting controls the size of the memory buffer.
 
@@ -47,15 +47,15 @@ disabled by default and can be applied to all input plugins.
 As an example situation:
 
 - `Mem_Buf_Limit` is set to `1MB`.
-- The input plugin tries to append 700KB.
+- The input plugin tries to append 700&nbsp;KB.
 - The engine routes the data to an output plugin.
 - The output plugin backend (HTTP Server) is down.
 - Engine scheduler retries the flush after 10 seconds.
 - The input plugin tries to append 500KB.
 
-In this situation, the engine allows appending those 500KB of data into the memory,
-with a total of 1.2 MB of data buffered. The limit is permissive and will
-allow a single write past the limit. Once the limit is exceeded, the following
+In this situation, the engine allows appending those 500&nbsp;KB of data into the memory,
+with a total of 1.2&nbsp;MB of data buffered. The limit is permissive and will
+allow a single write past the limit. When the limit is exceeded, the following
 actions are taken:
 
 - Block local buffers for the input plugin (can't append more data).
@@ -65,13 +65,13 @@ The engine protects itself and won't append more data coming from the input plug
 question. It's the responsibility of the plugin to keep state and decide what to do
 in a `paused` state.
 
-In a few seconds, if the scheduler was able to flush the initial 700KB of data or it
+In a few seconds, if the scheduler was able to flush the initial 700&nbsp;KB of data or it
 has given up after retrying, that amount of memory is released and the following
 actions occur:
 
-- Upon data buffer release (700KB), the internal counters get updated.
-- Counters now are set at 500KB.
-- Since 500KB is &lt; 1 MB it checks the input plugin state.
+- Upon data buffer release (700&nbsp;KB), the internal counters get updated.
+- Counters now are set at 500&nbsp;KB.
+- Because 500&nbsp;KB isless than 1&nbsp;MB, it checks the input plugin state.
 - If the plugin is paused, it invokes a `resume` callback.
 - The input plugin can continue appending more data.
 
@@ -85,7 +85,7 @@ The setting behaves similar to the `Mem_Buf_Limit` scenario when the non-default
 `storage.pause_on_chunks_overlimit` is enabled.
 
 When (default) `storage.pause_on_chunks_overlimit` is disabled, the input won't pause
-when the memory limit is reached. Instead, it switches to only buffering logs in
+when the memory limit is reached. Instead, it switches to buffering logs only in
 the filesystem. Limit the disk spaced used for filesystem buffering with
 `storage.total_limit_size`.
 
