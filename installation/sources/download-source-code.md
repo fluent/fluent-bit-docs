@@ -1,12 +1,12 @@
 # Download source code
 
-You can download the most recent stable, or development source code.
+You can download the most recent stable or development source code.
 
 ## Stable
 
 For production systems, it's strongly suggested that you get the latest stable release
-of the source code in either zip or tarball format from Github using the following
-link pattern:
+of the source code in either zip file or tarball file format from GitHub using the
+following link pattern:
 
 ```text
 https://github.com/fluent/fluent-bit/archive/refs/tags/v&lt;release version&gt;.tar.gz
@@ -24,7 +24,7 @@ get the development version from the Git repository:
 git clone https://github.com/fluent/fluent-bit
 ```
 
-The  `master` branch is where the development of Fluent Bit happens.
+The `master` branch is where the development of Fluent Bit happens.
 Development version users should expect issues when compiling or at run time.
 
 Fluent Bit users are encouraged to help test every development version to ensure a
