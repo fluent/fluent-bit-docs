@@ -86,7 +86,7 @@ The waiting time will be:
 ## Configure retries
 
 The scheduler provides a configuration option called `Retry_Limit`, which can be set
-independently on each output section. This option lets you disable retries or
+independently for each output section. This option lets you disable retries or
 impose a limit to try N times and then discard the data after reaching that limit:
 
 |  | Value | Description |
