@@ -1,10 +1,10 @@
 # Networking
 
 [Fluent Bit](https://fluentbit.io) implements a unified networking interface that's
-exposed to components like plugins. This interface abstracts all the complexity of
+exposed to components like plugins. This interface abstracts the complexity of
 general I/O and is fully configurable.
 
-A common use case is when a component or plugin needs to connect to a service to send
+A common use case is when a component or plugin needs to connect with a service to send
 and receive data. There are many challenges to handle like unresponsive services,
 networking latency, or any kind of connectivity error. The networking interface aims
 to abstract and simplify the network I/O handling, minimize risks, and optimize
@@ -16,16 +16,16 @@ Fluent Bit uses the following networking concepts:
 
 ### TCP connect timeout
 
-Most of the time creating a new TCP connection to a remote server is straightforward
-and takes a few milliseconds. But there are cases where DNS resolving, slow network
-or incomplete TLS handshakes might create long delays, or incomplete connection
-statuses.
+Typically, creating a new TCP connection to a remote server is straightforward
+and takes a few milliseconds. However, there are cases where DNS resolving, a slow
+network, or incomplete TLS handshakes might create long delays, or incomplete
+connection statuses.
 
-`net.connect_timeout` lets you configure the maximum time to wait for a connection
-to be established. This value already considers the TLS handshake process.
+- `net.connect_timeout` lets you configure the maximum time to wait for a connection
+  to be established. This value already considers the TLS handshake process.
 
-`net.connect_timeout_log_error` indicates if an error should be logged in case of
-connect timeout. If disabled, the timeout is logged as a debug level message.
+- `net.connect_timeout_log_error` indicates if an error should be logged in case of
+  connect timeout. If disabled, the timeout is logged as a debug level message.
 
 ### TCP source address
 
@@ -39,15 +39,15 @@ and data flow.
 
 A connection keepalive refers to the ability of a client to keep the TCP connection
 open in a persistent way. This feature offers many benefits in terms
-of performance since communication channels are always established before hand.
+of performance because communication channels are always established beforehand.
 
 Any component that uses TCP channels like HTTP or [TLS](transport-security.md), can
-take advantage of this feature. For configuration purposes use the `net.keepalive`
+take use feature. For configuration purposes use the `net.keepalive`
 property.
 
 ### Connection keepalive idle timeout
 
-If a connection is keepalive enabled, there might be scenarios where the connection
+If a connection keepalive is enabled, there might be scenarios where the connection
 can be unused for long periods of time. Unused connections can be removed. To control
 how long a keepalive connection can be idle, Fluent Bit uses a configuration property
 called `net.keepalive_idle_timeout`.
@@ -60,15 +60,16 @@ TCP or UDP. If a transport layer protocol is specified, plugins that configure t
 
 ### Maximum connections per worker
 
-Fluent Bit tries to deliver data as faster as possible and create TCP connections
-on-demand and in keepalive mode for performance reasons. In highly scalable
-environments, you might want to control how many connections are done in
-parallel by setting a limit.
+For optimal performance, Fluent Bit tries to deliver data quickly and create
+TCP connections on-demand and in keepalive mode. In highly scalable
+environments, you might limit how many connections are created in
+parallel.
 
-Use the property called `net.max_worker_connections` property in the output plugins
-sections. This property acts at the worker level. For example, if you have 5 workers
-and `net.max_worker_connections` is set to 10, a maximum of 50 connections will be
-allowed. If the limit is reached, the output plugin will issue a retry.
+Use the `net.max_worker_connections` property in the output plugin section to set
+the maximum number of allowed connections. This property acts at the worker level.
+For example, if you have five workers and `net.max_worker_connections` is set
+to 10, a maximum of 50 connections is allowed. If the limit is reached, the output
+plugin issues a retry.
 
 ## Configuration options
 
@@ -78,9 +79,9 @@ that rely on networking I/O:
 
 | Property | Description | Default |
 | :------- |:------------|:--------|
-| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, this includes the TLS handshake time. | `10` |
+| `net.connect_timeout` | Set maximum time expressed in seconds to wait for a TCP connection to be established, including the TLS handshake time. | `10` |
 | `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | `true` |
-| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the [SERVICE] section and overridden on a per plugin basis if desired. | _none_ |
+| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). Can be set in the `[SERVICE]` section and overridden on a per plugin basis if desired. | _none_ |
 | `net.dns.prefer_ipv4` | Prioritize IPv4 DNS results when trying to establish a connection. | `false` |
 | `net.dns.resolver`| Select the primary DNS resolver type (`LEGACY` or `ASYNC`). | _none_ |
 | `net.keepalive` | Enable or disable connection keepalive support. Accepts a Boolean value: `on` or `off`.  | `on` |
@@ -91,7 +92,7 @@ that rely on networking I/O:
 
 ## Example
 
-This example sends 5 random messages through a TCP output connection. The remote
+This example sends five random messages through a TCP output connection. The remote
 side uses the `nc` (netcat) utility to see the data.
 
 Put the following configuration snippet in a file called `fluent-bit.conf`:
@@ -125,8 +126,8 @@ In another terminal, start `nc` and make it listen for messages on TCP port 9090
 nc -l 9090
 ```
 
-Now start Fluent Bit with the configuration file written previously and you will see
-the data flowing to netcat:
+Start Fluent Bit with the configuration file you defined previously to see
+data flowing to netcat:
 
 ```text
 $ nc -l 9090
@@ -137,8 +138,8 @@ $ nc -l 9090
 {"date":1587769736.572277,"rand_value":527581343064950185}
 ```
 
-If the `net.keepalive` option isn't enabled, Fluent Bit will close the TCP connection
-and netcat will quit.
+If the `net.keepalive` option isn't enabled, Fluent Bit closes the TCP connection
+and netcat quits.
 
-After the 5 records arrive, the connection will idle. After 10 seconds it will be
-closed due to `net.keepalive_idle_timeout`.
+After the five records arrive, the connection idles. After 10 seconds, the connection
+closes due to `net.keepalive_idle_timeout`.
