@@ -41,7 +41,7 @@ buffers only to the filesystem. When `storage.type filesystem` is set, the
 
 ## `Mem_Buf_Limit`
 
-`Mem_Buf_Limit` only applies with the default `storage.type memory`. This option is
+`Mem_Buf_Limit` applies only with the default `storage.type memory`. This option is
 disabled by default and can be applied to all input plugins.
 
 As an example situation:
@@ -51,7 +51,7 @@ As an example situation:
 - The engine routes the data to an output plugin.
 - The output plugin backend (HTTP Server) is down.
 - Engine scheduler retries the flush after 10 seconds.
-- The input plugin tries to append 500KB.
+- The input plugin tries to append 500&nbsp;KB.
 
 In this situation, the engine allows appending those 500&nbsp;KB of data into the memory,
 with a total of 1.2&nbsp;MB of data buffered. The limit is permissive and will
