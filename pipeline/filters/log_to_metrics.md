@@ -28,6 +28,8 @@ The plugin supports the following configuration parameters:
 | kubernetes_mode |  If enabled, it will automatically put pod_id, pod_name, namespace_name, docker_id and container_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](./kubernetes.md) filter plugin, which fills those fields. | | 
 | Regex | Include records in which the content of KEY matches the regular expression. | |  KEY  REGEX 
 | Exclude | Exclude records in which the content of KEY matches the regular expression. | |  KEY  REGEX 
+| Flush\_Interval\_Sec | The interval for metrics emission, in seconds. If **Flush\_Interval\_Sec** and **Flush\_Interval\_Nsec** are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |
+| Flush\_Interval\_Nsec | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with **Flush\_Interval\_Sec**. Default value: `0`. |
 
 ## Getting Started
 
@@ -209,4 +211,5 @@ As you can see in the output, there are per default the buckets `0.005, 0.01, 0.
 Please note, that the `+Inf` bucket will always be included implicitly. The buckets in a histogram are cumulative, so a value added to one bucket will add to all larger buckets, too.
 
 
-You can also see, that all the kubernetes labels have been attached to the metric, idential to the behavior of `label_field` described in [the previous chapter](#metric-label_values). That results in two sets for the histogram.
+This filter also attaches Kubernetes labels to each metric, identical to the behavior of `label_field`.
+This results in two sets for the histogram.
