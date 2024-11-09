@@ -33,6 +33,11 @@ Before to get started with the plugin configuration, make sure to obtain the pro
       <td style="text-align:left">443</td>
     </tr>
     <tr>
+      <td style="text-align:left">logdna_endpoint</td>
+      <td style="text-align:left">LogDNA ingestion endpoint</td>
+      <td style="text-align:left">/logs/ingest</td>
+    </tr>
+    <tr>
       <td style="text-align:left">api_key</td>
       <td style="text-align:left">API key to get access to the service. This property is <b>mandatory</b>.</td>
       <td
