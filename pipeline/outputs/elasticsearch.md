@@ -62,7 +62,7 @@ be compared to the `database` and `table` concepts.
 ### TLS / SSL
 
 Elasticsearch output plugin supports TLS/SSL. For more details about the properties
-available and general configuration, refer to[TLS/SSL](../../administration/transport-security.md).
+available and general configuration, refer to [TLS/SSL](../../administration/transport-security.md).
 
 ### AWS Sigv4 Authentication and Upstream Servers
 
