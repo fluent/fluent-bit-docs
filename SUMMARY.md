@@ -78,6 +78,7 @@
 * [HTTP Proxy](administration/http-proxy.md)
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
+* [Performance Tips](administration/performance.md)
 
 ## Local Testing
 

@@ -11,8 +11,8 @@ This event loop runs in the main Fluent Bit thread.
 To free up resources in the main thread, you can configure
 [inputs](../pipeline/inputs/README.md) and [outputs](../pipeline/outputs/README.md)
 to run in their own self-contained threads. However, inputs and outputs implement
-multithreading in distinct ways: inputs can run in threaded mode, and outputs
-can use one or more workers.
+multithreading in distinct ways: inputs can run in `threaded` mode, and outputs
+can use one or more `workers`.
 
 Threading also affects certain processes related to inputs and outputs. For example,
 [filters](../pipeline/filters/README.md) always run in the main thread, but
