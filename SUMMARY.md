@@ -49,15 +49,15 @@
 ## Administration
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
-  * [YAML Configuration Sections](administration/configuring-fluent-bit/yaml/README.md)
+  * [YAML Configuration](administration/configuring-fluent-bit/yaml/README.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
     * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
     * [Multiline Parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
     * [Pipeline](administration/configuring-fluent-bit/yaml/pipeline-section.md)
+    * [Plugins](administration/configuring-fluent-bit/yaml/plugins-section.md)
+    * [Upstream Servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md))
     * [Environment Variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
     * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
-
-    * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Classic mode](administration/configuring-fluent-bit/classic-mode/README.md)
     * [Format and Schema](administration/configuring-fluent-bit/classic-mode/format-schema.md)
     * [Configuration File](administration/configuring-fluent-bit/classic-mode/configuration-file.md)
