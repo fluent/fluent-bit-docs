@@ -1,14 +1,13 @@
 # Configuring Fluent Bit
 
-Fluent Bit supports these configuration formats:
+Currently, Fluent Bit supports two configuration formats:
 
-- [Classic mode](classic-mode/README.md)
-- [YAML](yaml/README.md) (Fluent Bit 2.0 or greater)
+* [Yaml](yaml/README.md): standard configuration format as of v3.2.
+* [Classic mode](classic-mode/README.md): to be deprecated at the end of 2025.
 
-## CLI flags
+## Command line interface
 
-Fluent Bit also supports a CLI with various flags for the available configuration
-options.
+Fluent Bit exposes most of it features through the command line interface. Running the `-h` option you can get a list of the options available:
 
 ```shell
 $ docker run --rm -it fluent/fluent-bit --help

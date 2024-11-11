@@ -49,6 +49,15 @@
 ## Administration
 
 * [Configuring Fluent Bit](administration/configuring-fluent-bit/README.md)
+  * [YAML Configuration Sections](administration/configuring-fluent-bit/yaml/README.md)
+    * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
+    * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
+    * [Multiline Parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
+    * [Pipeline](administration/configuring-fluent-bit/yaml/pipeline-section.md)
+    * [Environment Variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
+    * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
+
+    * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Classic mode](administration/configuring-fluent-bit/classic-mode/README.md)
     * [Format and Schema](administration/configuring-fluent-bit/classic-mode/format-schema.md)
     * [Configuration File](administration/configuring-fluent-bit/classic-mode/configuration-file.md)
@@ -56,8 +65,6 @@
     * [Commands](administration/configuring-fluent-bit/classic-mode/commands.md)
     * [Upstream Servers](administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
     * [Record Accessor](administration/configuring-fluent-bit/classic-mode/record-accessor.md)
-  * [YAML Configuration](administration/configuring-fluent-bit/yaml/README.md)
-    * [Configuration File](administration/configuring-fluent-bit/yaml/configuration-file.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
 * [Transport Security](administration/transport-security.md)
