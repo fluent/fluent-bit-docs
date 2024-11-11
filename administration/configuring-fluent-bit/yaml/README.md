@@ -36,7 +36,7 @@ To access detailed configuration guides for each section, use the following link
   - Details on setting up pipelines and using processors.
 - [Plugins Section documentation](plugins-section.md)
   - How to load external plugins.
-- [Upstreams Section documentation](upstream-servers-section.md)
+- [Upstream Servers Section documentation](upstream-servers-section.md)
   - Guide on setting up and using upstream nodes with supported plugins.
 - [Environment Variables Section documentation](environment-variables-section.md)
   - Information on setting environment variables and their scope within Fluent Bit.
