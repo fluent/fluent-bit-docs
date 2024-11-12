@@ -98,6 +98,7 @@
   * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Exec Wasi](pipeline/inputs/exec-wasi.md)
+  * [Ebpf](pipeline/inputs/ebpf.md)
   * [Fluent Bit Metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
   * [Head](pipeline/inputs/head.md)
