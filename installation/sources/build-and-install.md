@@ -53,38 +53,38 @@ options.
 
 1. Start the compilation process using the `make` command:
 
-  ```bash
-  make
-  ```
+   ```bash
+   make
+   ```
 
-  This command displays results similar to:
+   This command displays results similar to:
 
-  ```text
-  Scanning dependencies of target msgpack
-  [  2%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/unpack.c.o
-  [  4%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/objectc.c.o
-  [  7%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/version.c.o
-  ...
-  [ 19%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_file.c.o
-  [ 21%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_rconf.c.o
-  [ 23%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_string.c.o
-  ...
-  Scanning dependencies of target fluent-bit-static
-  [ 66%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_pack.c.o
-  [ 69%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_input.c.o
-  [ 71%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_output.c.o
-  ...
-  Linking C executable ../bin/fluent-bit
-  [100%] Built target fluent-bit-bin
-  ```
+   ```text
+   Scanning dependencies of target msgpack
+   [  2%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/unpack.c.o
+   [  4%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/objectc.c.o
+   [  7%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/version.c.o
+   ...
+   [ 19%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_file.c.o
+   [ 21%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_rconf.c.o
+   [ 23%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_string.c.o
+   ...
+   Scanning dependencies of target fluent-bit-static
+   [ 66%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_pack.c.o
+   [ 69%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_input.c.o
+   [ 71%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_output.c.o
+   ...
+   Linking C executable ../bin/fluent-bit
+   [100%] Built target fluent-bit-bin
+   ```
 
 1. To continue installing the binary on the system, use `make install`:
 
-```bash
-make install
-```
+   ```bash
+   make install
+   ```
 
-If the command indicates insufficient permissions, prefix the command with `sudo`.
+   If the command indicates insufficient permissions, prefix the command with `sudo`.
 
 ## Build options
 
