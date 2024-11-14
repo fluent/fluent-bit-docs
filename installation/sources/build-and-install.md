@@ -27,29 +27,29 @@ options.
 1. Let [CMake](http://cmake.org) configure the project specifying where the root
    path is located:
 
-  ```bash
-  cmake ../
-  ```
+   ```bash
+   cmake ../
+   ```
 
-  This command displays a series of results similar to:
+   This command displays a series of results similar to:
 
-  ```text
-  -- The C compiler identification is GNU 4.9.2
-  -- Check for working C compiler: /usr/bin/cc
-  -- Check for working C compiler: /usr/bin/cc -- works
-  -- Detecting C compiler ABI info
-  -- Detecting C compiler ABI info - done
-  -- The CXX compiler identification is GNU 4.9.2
-  -- Check for working CXX compiler: /usr/bin/c++
-  -- Check for working CXX compiler: /usr/bin/c++ -- works
-  ...
-  -- Could NOT find Doxygen (missing:  DOXYGEN_EXECUTABLE)
-  -- Looking for accept4
-  -- Looking for accept4 - not found
-  -- Configuring done
-  -- Generating done
-  -- Build files have been written to: /home/edsiper/coding/fluent-bit/build
-  ```
+   ```text
+   -- The C compiler identification is GNU 4.9.2
+   -- Check for working C compiler: /usr/bin/cc
+   -- Check for working C compiler: /usr/bin/cc -- works
+   -- Detecting C compiler ABI info
+   -- Detecting C compiler ABI info - done
+   -- The CXX compiler identification is GNU 4.9.2
+   -- Check for working CXX compiler: /usr/bin/c++
+   -- Check for working CXX compiler: /usr/bin/c++ -- works
+   ...
+   -- Could NOT find Doxygen (missing:  DOXYGEN_EXECUTABLE)
+   -- Looking for accept4
+   -- Looking for accept4 - not found
+   -- Configuring done
+   -- Generating done
+   -- Build files have been written to: /home/edsiper/coding/fluent-bit/build
+   ```
 
 1. Start the compilation process using the `make` command:
 
