@@ -20,71 +20,71 @@ options.
 
 1. Change to the `build/` directory inside the Fluent Bit sources:
 
-  ```bash
-  cd build/
-  ```
+   ```bash
+   cd build/
+   ```
 
 1. Let [CMake](http://cmake.org) configure the project specifying where the root
    path is located:
 
-  ```bash
-  cmake ../
-  ```
+   ```bash
+   cmake ../
+   ```
 
-  This command displays a series of results similar to:
+   This command displays a series of results similar to:
 
-  ```text
-  -- The C compiler identification is GNU 4.9.2
-  -- Check for working C compiler: /usr/bin/cc
-  -- Check for working C compiler: /usr/bin/cc -- works
-  -- Detecting C compiler ABI info
-  -- Detecting C compiler ABI info - done
-  -- The CXX compiler identification is GNU 4.9.2
-  -- Check for working CXX compiler: /usr/bin/c++
-  -- Check for working CXX compiler: /usr/bin/c++ -- works
-  ...
-  -- Could NOT find Doxygen (missing:  DOXYGEN_EXECUTABLE)
-  -- Looking for accept4
-  -- Looking for accept4 - not found
-  -- Configuring done
-  -- Generating done
-  -- Build files have been written to: /home/edsiper/coding/fluent-bit/build
-  ```
+   ```text
+   -- The C compiler identification is GNU 4.9.2
+   -- Check for working C compiler: /usr/bin/cc
+   -- Check for working C compiler: /usr/bin/cc -- works
+   -- Detecting C compiler ABI info
+   -- Detecting C compiler ABI info - done
+   -- The CXX compiler identification is GNU 4.9.2
+   -- Check for working CXX compiler: /usr/bin/c++
+   -- Check for working CXX compiler: /usr/bin/c++ -- works
+   ...
+   -- Could NOT find Doxygen (missing:  DOXYGEN_EXECUTABLE)
+   -- Looking for accept4
+   -- Looking for accept4 - not found
+   -- Configuring done
+   -- Generating done
+   -- Build files have been written to: /home/edsiper/coding/fluent-bit/build
+   ```
 
 1. Start the compilation process using the `make` command:
 
-  ```bash
-  make
-  ```
+   ```bash
+   make
+   ```
 
-  This command displays results similar to:
+   This command displays results similar to:
 
-  ```text
-  Scanning dependencies of target msgpack
-  [  2%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/unpack.c.o
-  [  4%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/objectc.c.o
-  [  7%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/version.c.o
-  ...
-  [ 19%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_file.c.o
-  [ 21%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_rconf.c.o
-  [ 23%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_string.c.o
-  ...
-  Scanning dependencies of target fluent-bit-static
-  [ 66%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_pack.c.o
-  [ 69%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_input.c.o
-  [ 71%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_output.c.o
-  ...
-  Linking C executable ../bin/fluent-bit
-  [100%] Built target fluent-bit-bin
-  ```
+   ```text
+   Scanning dependencies of target msgpack
+   [  2%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/unpack.c.o
+   [  4%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/objectc.c.o
+   [  7%] Building C object lib/msgpack-1.1.0/CMakeFiles/msgpack.dir/src/version.c.o
+   ...
+   [ 19%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_file.c.o
+   [ 21%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_rconf.c.o
+   [ 23%] Building C object lib/monkey/mk_core/CMakeFiles/mk_core.dir/mk_string.c.o
+   ...
+   Scanning dependencies of target fluent-bit-static
+   [ 66%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_pack.c.o
+   [ 69%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_input.c.o
+   [ 71%] Building C object src/CMakeFiles/fluent-bit-static.dir/flb_output.c.o
+   ...
+   Linking C executable ../bin/fluent-bit
+   [100%] Built target fluent-bit-bin
+   ```
 
 1. To continue installing the binary on the system, use `make install`:
 
-```bash
-make install
-```
+   ```bash
+   make install
+   ```
 
-If the command indicates insufficient permissions, prefix the command with `sudo`.
+   If the command indicates insufficient permissions, prefix the command with `sudo`.
 
 ## Build options
 
