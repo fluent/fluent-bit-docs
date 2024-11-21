@@ -1,5 +1,3 @@
----
-
 # Chronicle
 
 The Chronicle output plugin allows ingesting security logs into [Google Chronicle](https://chronicle.security/) service. This connector is designed to send unstructured security logs.
@@ -36,6 +34,7 @@ Fluent Bit's Chronicle output plugin uses a JSON credentials file for authentica
 | log\_type | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). |  |
 | region | The GCP region in which to store security logs. Currently, there are several supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is handled as `US`.   |  |
 | log\_key | By default, the whole log record will be sent to Google Chronicle. If you specify a key name with this option, then only the value of that key will be sent to Google Chronicle. | |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 See Google's [official documentation](https://cloud.google.com/chronicle/docs/reference/ingestion-api) for further details.
 

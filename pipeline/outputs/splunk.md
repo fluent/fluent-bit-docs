@@ -23,7 +23,7 @@ Connectivity, transport and authentication configuration properties:
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
 | channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
 | http_debug_bad_request | If the HTTP server response code is 400 (bad request) and this flag is enabled, it will print the full HTTP request and response to the stdout interface. This feature is available for debugging purposes. | |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
 
@@ -168,9 +168,9 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
     name cpu
     tag cpu
 
-# Move CPU metrics to be nested under "fields" and 
+# Move CPU metrics to be nested under "fields" and
 # add the prefix "metric_name:" to all metrics
-# NOTE: you can change Wildcard field to only select metric fields    
+# NOTE: you can change Wildcard field to only select metric fields
 [FILTER]
     Name nest
     Match cpu
@@ -183,18 +183,18 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
 [FILTER]
     Name    modify
     Match   cpu
-    Set index cpu-metrics 
+    Set index cpu-metrics
     Set source fluent-bit
     Set sourcetype custom
 
 # ensure splunk_send_raw is on
 [OUTPUT]
-    name splunk 
+    name splunk
     match *
     host <HOST>
     port 8088
     splunk_send_raw on
-    splunk_token f9bd5bdb-c0b2-4a83-bcff-9625e5e908db 
+    splunk_token f9bd5bdb-c0b2-4a83-bcff-9625e5e908db
     tls on
     tls.verify off
 ```

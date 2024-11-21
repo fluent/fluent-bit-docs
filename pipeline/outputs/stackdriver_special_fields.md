@@ -334,11 +334,21 @@ The JSON representation is as followed:
 "trace": string
 ```
 
+## Span ID
+
+The span ID within the trace associated with the log entry.
+
+The JSON representation is as followed:
+```text
+"spanId": string
+```
+
 ### Use Cases
 Set the input log as followed:
 ```text
 jsonPayload {
     "logging.googleapis.com/trace": "0123456789abcdef0123456789abcdef"
+    "logging.googleapis.com/spanId": "1234567890abcdef"
     ...
 }
 ```
@@ -349,6 +359,7 @@ the logEntry will be:
         ...
     }
     "trace": "projects/your-project-name/traces/0123456789abcdef0123456789abcdef"
+    "spanId": "1234567890abcdef"
     ...
 }
 ```

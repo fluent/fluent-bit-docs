@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Key | Rename a key. Default: head. |
 | Lines | Line number to read. If the number N is set, in\_head reads first N lines like head\(1\) -n. |
 | Split\_line | If enabled, in\_head generates key-value pair per line. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ### Split Line Mode
 
@@ -84,7 +85,7 @@ pipeline:
 Output is
 
 ```bash
-$ bin/fluent-bit -c head.conf 
+$ bin/fluent-bit -c head.conf
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -162,4 +163,3 @@ pipeline:
 Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
-

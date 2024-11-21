@@ -1,15 +1,16 @@
 ---
-description: Modify, Enrich or Drop your records
+description: Modify, enrich or drop your records
 ---
 
 # Filter
 
-In production environments we want to have full control of the data we are collecting, filtering is an important feature that allows us to **alter** the data before delivering it to some destination.
+In production environments you need full control of the data you're collecting.
+Filtering lets you alter the collected data before delivering it to a destination.
 
 ```mermaid
 graph LR
     accTitle: Fluent Bit data pipeline
-    accDescr: The Fluent Bit data pipeline includes input, a parser, a filter, a buffer, routing, and various outputs.
+    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, a parser, a filter, a buffer, routing, and various outputs.
     A[Input] --> B[Parser]
     B --> C[Filter]
     C --> D[Buffer]
@@ -20,10 +21,14 @@ graph LR
     style C stroke:darkred,stroke-width:2px;
 ```
 
-Filtering is implemented through plugins, so each filter available could be used to match, exclude or enrich your logs with some specific metadata.
+Filtering is implemented through plugins. Each available filter can be used to
+match, exclude, or enrich your logs with specific metadata.
 
-We support many filters, A common use case for filtering is Kubernetes deployments. Every Pod log needs to get the proper metadata associated
+Fluent Bit support many filters. A common use case for filtering is Kubernetes
+deployments. Every pod log needs the proper metadata associated with it.
 
-Very similar to the input plugins, Filters run in an instance context, which has its own independent configuration. Configuration keys are often called **properties**.
+Like input plugins, filters run in an instance context, which has its own independent
+configuration. Configuration keys are often called _properties_.
 
-For more details about the Filters available and their usage, please refer to the [Filters](https://docs.fluentbit.io/manual/pipeline/filters) section.
+For more details about the Filters available and their usage, see
+[Filters](https://docs.fluentbit.io/manual/pipeline/filters).

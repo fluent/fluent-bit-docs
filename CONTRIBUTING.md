@@ -32,7 +32,7 @@ the docs library. If you create a new page, you'll also need to update
 
 ## Workflow
 
-After you open a pull request in this repo, a Fluent Bit maintainer will review
+After you open a pull request in this repository, a Fluent Bit maintainer will review
 it, triage it, add comments or suggestions as needed, and then merge it. After
 your changes are successfully merged into `master`, the docs site will update
 within a few minutes.
@@ -99,9 +99,9 @@ To prevent DCO errors, refer to the following guide about
 >
 > `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 >
-> If you're using VS Code, you can also enable the
+> If you're using VSCode, you can also enable the
 > [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047)
-> setting, whch automatically appends a `Signed-off-by:` message to your commits.
+> setting, which automatically appends a `Signed-off-by:` message to your commits.
 
 ## Style guidelines
 
@@ -111,8 +111,16 @@ for most topics related to grammar, style, and formatting. We don't expect you
 to memorize these style rules, but the technical writer who reviews your pull
 request may suggest changes accordingly.
 
+### URLs
+
+When cross-linking to a page in this repository, use a full relative path whenever
+possible. For example:
+
+```text
+[LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+```
+
 ### Vale
 
-The Fluent Bit maintainers are working to add a [Vale](https://vale.sh/docs/) plugin
-to this repository, which will automatically lint pull requests and add
-suggestions to improve style and clarity.
+The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which lints
+pull requests and adds suggestions to improve style and clarity.

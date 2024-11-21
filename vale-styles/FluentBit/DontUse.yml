@@ -1,0 +1,18 @@
+---
+extends: existence
+message: "We don't use '%s'."
+ignorecase: true
+level: suggestion
+tokens:
+  - a.k.a.
+  - aka
+  - and/or
+  - at this point
+  - desire
+  - it is recommended that
+  - just
+  - note that
+  - please
+  - quite
+  - such that
+  - thus

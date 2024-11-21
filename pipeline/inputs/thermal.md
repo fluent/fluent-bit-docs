@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | Interval\_NSec | Polling interval \(nanoseconds\).  default: 0 |
 | name\_regex | Optional name filter regex.  default: None |
 | type\_regex | Optional type filter regex.  default: None |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 

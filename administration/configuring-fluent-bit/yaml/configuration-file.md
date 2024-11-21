@@ -2,6 +2,8 @@
 description: This page describes the yaml configuration file used by Fluent Bit
 ---
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" />
+
 # YAML Configuration File
 
 One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope.

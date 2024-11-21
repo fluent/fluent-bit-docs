@@ -2,15 +2,19 @@
 description: Enable hot reload through SIGHUP signal or an HTTP endpoint
 ---
 
-# Hot Reload
+# Hot reload
 
-Fluent Bit supports the hot reloading feature when enabled via the configuration file or command line with `-Y` or `--enable-hot-reload` option.
+Fluent Bit supports the reloading feature when enabled in the configuration file
+or on the command line with `-Y` or `--enable-hot-reload` option.
 
-## Getting Started
+Hot reloading is supported on Linux, macOS, and Windows operating systems.
 
-To get started with reloading via HTTP, the first step is to enable the HTTP Server from the configuration file:
+## Update the configuration
 
-```toml
+To get started with reloading over HTTP, enable the HTTP Server
+in the configuration file:
+
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -19,47 +23,44 @@ To get started with reloading via HTTP, the first step is to enable the HTTP Ser
 ...
 ```
 
-The above configuration snippet will enable the HTTP endpoint for hot reloading.
-
 ## How to reload
 
-### Via HTTP
+After updating the configuration, use one of the following methods to perform a
+hot reload:
 
-Hot reloading can be kicked via HTTP endpoints that are:
+### HTTP
 
-* `PUT /api/v2/reload`
-* `POST /api/v2/reload`
+Use the following HTTP endpoints to perform a hot reload:
 
-If users don't enable the hot reloading feature, hot reloading via these endpoints will not work.
+- `PUT /api/v2/reload`
+- `POST /api/v2/reload`
 
 For using curl to reload Fluent Bit, users must specify an empty request body as:
 
 ```text
-$ curl -X POST -d '{}' localhost:2020/api/v2/reload
+curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
-### Via Signal
+### Signal
 
-Hot reloading also can be kicked via `SIGHUP`.
+Hot reloading can be used with `SIGHUP`.
 
-`SIGHUP` signal is not supported on Windows. So, users can't enable this feature on Windows.
+`SIGHUP` signal isn't supported on Windows.
 
-## How to confirm reloaded or not
+## Confirm a reload
 
-### via HTTP
+Use one of the following methods to confirm the reload occurred.
 
-The number of hot reloaded count can be obtained via the HTTP endpoint that is:
+### HTTP
 
-* `GET /api/v2/reload`
+Obtain a count of hot reload using the HTTP endpoint:
 
-The endpoint returns the count of hot-reloaded as follows:
+- `GET /api/v2/reload`
+
+The endpoint returns `hot_reload_count` as follows:
 
 ```json
 {"hot_reload_count":3}
 ```
 
-The default value of that number is 0.
-
-## Limitations
-
-The hot reloading feature is currently working on Linux, macOS and Windows.
+The default value of the counter is `0`.
