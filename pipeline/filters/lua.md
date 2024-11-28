@@ -334,7 +334,7 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Response code filtering
 
-In this example, we want to filter istio logs to exclude lines with response codes between 1 and 399.
+In this example, we want to filter Istio logs to exclude lines with response codes between 1 and 399.
 Istio is configured to write the logs in json format.
 
 #### Lua script
@@ -356,7 +356,7 @@ end
 
 #### Configuration
 
-Configuration to get istio logs and apply response code filter to them.
+Configuration to get Istio logs and apply response code filter to them.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -442,7 +442,7 @@ pipeline:
 
 In the output only the messages with response code 0 or greater than 399 are shown.
 
-### Timeformat Conversion
+### Time format Conversion
 
 The following example converts a field's specific type of `datetime` format to
 `utc ISO 8601` format.
