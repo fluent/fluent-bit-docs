@@ -572,3 +572,53 @@ The output of this process shows the conversion of the `datetime` of two timezon
 ...
 ```
 
+### Using configuration variables
+
+Fluent Bit supports definition of configuration variables, which can be done in the following way:
+
+```yaml
+env:
+  myvar1: myvalue1
+```
+
+These variables can be accessed from the Lua code by referring to the FLB_ENV Lua table.
+Being this a Lua table, the subrecords can be accessed following the same syntax, i.e. `FLB_ENV['A']`. 
+
+#### Configuration
+
+```yaml
+env:
+  A: aaa
+  B: bbb
+  C: ccc
+
+service:
+    flush:           1
+    log_level:       info
+
+pipeline:
+    inputs:
+        - name:    random
+          tag:     test
+          samples: 10
+
+    filters:
+        - name:  lua
+          match: "*"
+          call:  append_tag
+          code:  |
+              function append_tag(tag, timestamp, record)
+                 new_record = record
+                 new_record["my_env"] = FLB_ENV
+                 return 1, timestamp, new_record
+              end
+
+    outputs:
+        - name:  stdout
+          match: "*"
+```
+
+#### Output
+
+test: [[1731990257.781970977, {}], {"my_env"=>{"A"=>"aaa", "C"=>"ccc", "HOSTNAME"=>"monox-2.lan", "B"=>"bbb"}, "rand_value"=>4805047635809401856}]
+
