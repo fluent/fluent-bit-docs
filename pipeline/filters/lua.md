@@ -114,13 +114,9 @@ Each callback **must** return three values:
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | If code equals 1, the original record information will be replaced with this new value. Note that the _record_ value **must** be a valid Lua table. This value can be an array of tables (i.e., array of objects in JSON format), and in that case the input record is effectively split into multiple records. (see below for more details) |
 
-### Code Examples
+## Features
 
-For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
-
-[https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
-
-#### Inline configuration
+### Inline configuration
 
 The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
 
@@ -180,7 +176,22 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### Environment variable processing
+### Number Type
+
++Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
+
+### Protected Mode
+
+Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
+
+
+## Code Examples
+
+For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
+
+[https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
+
+### Processing environment variables
 
 As an example that combines a bit of LUA processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with LUA regex and substitutions.
 
@@ -197,11 +208,11 @@ We want to extract the `sandboxbsh` name and add it to our record as a special k
 {% tab title="fluent-bit.conf" %}
 ```
 [FILTER]
-    Name                lua
-    Alias               filter-iots-lua
-    Match               iots_thread.*
-    Script              filters.lua
-    Call                set_landscape_deployment
+Name                lua
+Alias               filter-iots-lua
+Match               iots_thread.*
+Script              filters.lua
+Call                set_landscape_deployment
 ```
 {% endtab %}
 
@@ -243,14 +254,6 @@ filters.lua:
         return 2, timestamp, record
     end
 ```
-
-### Number Type
-
-+Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
-
-### Protected Mode
-
-Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
 
 ### Record Split
 
@@ -439,7 +442,6 @@ pipeline:
 
 In the output only the messages with response code 0 or greater than 399 are shown.
 
-
 ### Timeformat Conversion
 
 The following example converts a field's specific type of `datetime` format to
@@ -569,3 +571,4 @@ The output of this process shows the conversion of the `datetime` of two timezon
 [0] event_category_b: [[1722452186.730255842, {}], {"event"=>"Soldout", "pub_date"=>"2024-07-29T04:15:00Z"}]
 ...
 ```
+
