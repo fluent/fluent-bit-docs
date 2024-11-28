@@ -33,8 +33,7 @@ To get more details about how to setup these components, please refer to the fol
 | client\_secret| _Required_ - The client secret of the AAD application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). ||
 | dce\_url      | _Required_ - Data Collection Endpoint(DCE) URL. ||
 | dcr\_id       | _Required_ - Data Collection Rule (DCR) immutable ID (see [this document](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr) to collect the immutable id) ||
-| stream\_name  | _Required_ - Data Collection Rule (DCR) stream name (see [this document](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr) to collect the stream name) ||
-| table\_name   | _Required_ - The name of the custom log table (include the `_CL` suffix as well if applicable) ||
+| stream\_name  | _Required_ - Data Collection Rule (DCR) stream name (see [this document](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-api)) ||
 | time\_key     | _Optional_ - Specify the key name where the timestamp will be stored. | `@timestamp` |
 | time\_generated | _Optional_ - If enabled, will generate a timestamp and append it to JSON. The key name is set by the 'time_key' parameter. | `true` |
 | compress      | _Optional_ - Enable HTTP payload gzip compression. | `true` |
@@ -83,7 +82,6 @@ Use this configuration to quickly get started:
     tenant_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
     dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
     dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    table_name      ladcr_CL
     stream_name     Custom-ladcr_CL
     time_generated  true
     time_key        Time
