@@ -16,7 +16,7 @@ Important Note: At the moment only HTTP endpoints are supported.
 | port                 | TCP port of the target HTTP Server                           | 80        |
 | proxy                | Specify an HTTP Proxy. The expected format of this value is `http://HOST:PORT`. Note that HTTPS is **not** currently supported. It is recommended not to set this and to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. |           |
 | http2 | Defines whether HTTP/2 protocol is enabled. This setting also supports the `force` option, which forces HTTP/2 over a plaintext connection. | On |
-| grpc | Enable gRPC over HTTP/2. It doesn't work for other HTTP versions. | off |
+| grpc | Enables gRPC over an HTTP/2 connection. This setting applies to HTTP/2 only. | off |
 | metrics_uri                  | Specify an optional HTTP URI for the target web server listening for metrics, e.g: /v1/metrics | /         |
 | logs_uri                  | Specify an optional HTTP URI for the target web server listening for logs, e.g: /v1/logs | /         |
 | traces_uri                  | Specify an optional HTTP URI for the target web server listening for traces, e.g: /v1/traces | /         |
