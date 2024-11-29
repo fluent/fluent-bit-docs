@@ -184,7 +184,8 @@ To avoid type conversion, the `type_int_key` property is available.
 
 ### Protected Mode
 
-Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
+Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script.
+See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
 
 
 ## Code Examples
