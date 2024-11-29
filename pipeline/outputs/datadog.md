@@ -25,6 +25,7 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 | dd_source       | _Recommended_ - A human readable name for the underlying technology of your service (e.g. `postgres` or `nginx`). If unset, Datadog will look for the source in the [`ddsource` attribute](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source#source-attribute).                                                                                                                                                                                                                                                                                                                   |                                  |
 | dd_tags         | _Optional_ - The [tags](https://docs.datadoghq.com/tagging/) you want to assign to your logs in Datadog. If unset, Datadog will look for the tags in the [`ddtags` attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs).                                                                                                                                                                                                                                                                                                                                   |                                  |
 | dd_message_key  | By default, the plugin searches for the key 'log' and remap the value to the key 'message'. If the property is set, the plugin will search the property name key.                                                                                                                                                                                                                                                                          |                                  |
+| dd_hostname     | The host the emitted logs should be associated with. If unset, Datadog expects the host to be set with `host`, `hostname`, or `syslog.hostname` attributes. See [Datadog Logs preprocessor documentation](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=host#preprocessing) for recognized attributes. | _none_ |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
 
@@ -43,6 +44,7 @@ Get started quickly with this configuration file:
     dd_service  <my-app-service>
     dd_source   <my-app-source>
     dd_tags     team:logs,foo:bar
+    dd_hostname myhost
 ```
 
 ## Troubleshooting
