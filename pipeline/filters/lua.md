@@ -178,7 +178,9 @@ pipeline:
 
 ### Number Type
 
-+Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
+Lua treats numbers as a double type.
+It means an integer field (e.g. IDs, log levels) will be converted to a double.
+To avoid type conversion, the `type_int_key` property is available.
 
 ### Protected Mode
 
