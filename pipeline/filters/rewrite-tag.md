@@ -30,6 +30,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | Emitter\_Name | When the filter emits a record under the new Tag, there is an internal emitter plugin that takes care of the job. Since this emitter expose metrics as any other component of the pipeline, you can use this property to configure an optional name for it. |
 | Emitter\_Storage.type | Define a buffering mechanism for the new records created. Note these records are part of the emitter plugin. This option support the values `memory` \(default\) or `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, we strongly recommend enabling the `filesystem` mode. |
 | Emitter\_Mem\_Buf\_Limit | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure.  The default for this limit is `10M`.  The pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`.  The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| Recursion\_Action | Defines an action when recursion occurs. 'none', 'drop', 'drop_and_log' and 'exit' are supported. Default is `exit`.|
 
 ## Rules
 
@@ -112,6 +113,18 @@ We make use of placeholders, record content and environment variables.
 If a rule matches a rule the filter will emit a copy of the record with the new defined Tag. The property keep takes a boolean value to define if the original record with the old Tag must be preserved and continue in the pipeline or just be discarded.
 
 You can use `true` or `false` to decide the expected behavior. There is no default value and this is a mandatory field in the rule.
+
+### Recursion Action
+
+In some cases, `Rule` causes infinite loop. This option is to define an action when infinite loop occurs.
+
+| Value | Description |
+| :---  | :--- |
+| None | Do nothing. It is fastest since Fluent Bit will not check record. Fluent Bit will crash when recursion occurs. |
+| Drop | Drop records. |
+| Drop\_And\_Log | Drop records and log. It is useful if a loop condition is rare. |
+| Exit | Default. Fluent Bit logs and exits. It is useful for testing a condition. |
+
 
 ## Configuration Example
 
