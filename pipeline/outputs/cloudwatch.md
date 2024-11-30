@@ -84,7 +84,9 @@ The following AWS IAM permissions are required to use this plugin:
 		"Action": [
 			"logs:CreateLogStream",
 			"logs:CreateLogGroup",
-			"logs:PutLogEvents"
+			"logs:PutLogEvents",
+			"logs:DescribeLogStreams"
+			
 		],
 		"Resource": "*"
 	}]
