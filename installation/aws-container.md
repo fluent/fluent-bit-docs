@@ -10,15 +10,15 @@ distribution.
 The [AWS for Fluent Bit](https://github.com/aws/aws-for-fluent-bit) image contains Go
 Plugins for:
 
-- Amazon CloudWatch as  `cloudwatch_logs`.
-  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch) |
-  [Plugin](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit)
-- Amazon Kinesis Data Firehose as `kinesis_firehose`.
-  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/firehose)
-  [Plugin](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit)
-- Amazon Kinesis Data Streams as `kinesis_streams`.
-  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/kinesis)
-  [Plugin](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit)
+- Amazon CloudWatch as  `cloudwatch_logs`. See the
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch) or the
+  [Plugin repository](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit).
+- Amazon Kinesis Data Firehose as `kinesis_firehose`. See the
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/firehose) or the
+  [Plugin repository](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit).
+- Amazon Kinesis Data Streams as `kinesis_streams`. See the
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/kinesis) or the
+  [Plugin repository](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit).
 
 These plugins are higher performance than Go plugins.
 
