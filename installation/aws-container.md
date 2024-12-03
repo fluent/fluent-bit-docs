@@ -10,15 +10,15 @@ distribution.
 The [AWS for Fluent Bit](https://github.com/aws/aws-for-fluent-bit) image contains Go
 Plugins for:
 
-- [Amazon CloudWatch](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch)
-- [Amazon Kinesis Data Firehose](https://docs.fluentbit.io/manual/pipeline/outputs/firehose)
-- [Amazon Kinesis Data Streams](https://docs.fluentbit.io/manual/pipeline/outputs/kinesis)
-
-- [Amazon CloudWatch Logs](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit) as `cloudwatch_logs`
-- [Amazon Kinesis
-  Firehose](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit) as `kinesis_firehose`
-- [Amazon Kinesis
-  Streams](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit) as `kinesis_streams`
+- Amazon CloudWatch as  `cloudwatch_logs`.
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch) |
+  [Plugin](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit)
+- Amazon Kinesis Data Firehose as `kinesis_firehose`.
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/firehose)
+  [Plugin](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit)
+- Amazon Kinesis Data Streams as `kinesis_streams`.
+  [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/kinesis)
+  [Plugin](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit)
 
 These plugins are higher performance than Go plugins.
 
@@ -39,7 +39,7 @@ GitHub](https://github.com/aws/aws-for-fluent-bit/releases).
 
 ## SSM Public Parameters
 
-AWS vends SSM Public Parameters with the regional repository link for each image.
+AWS vends SSM public parameters with the regional repository link for each image.
 These parameters can be queried by any AWS account.
 
 To see a list of available version tags in a given region, run the following command:
