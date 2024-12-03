@@ -1,6 +1,6 @@
 # Containers on AWS
 
-AWS maintains a distribution of Fluent Bit combining the latest official release with
+AWS maintains a distribution of Fluent Bit that combines the latest official release with
 a set of Go Plugins for sending logs to AWS services. AWS and Fluent Bit are working
 together to rewrite their plugins for inclusion in the official Fluent Bit
 distribution.
@@ -10,7 +10,7 @@ distribution.
 The [AWS for Fluent Bit](https://github.com/aws/aws-for-fluent-bit) image contains Go
 Plugins for:
 
-- Amazon CloudWatch as  `cloudwatch_logs`. See the
+- Amazon CloudWatch as `cloudwatch_logs`. See the
   [Fluent docs](https://docs.fluentbit.io/manual/pipeline/outputs/cloudwatch) or the
   [Plugin repository](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit).
 - Amazon Kinesis Data Firehose as `kinesis_firehose`. See the
