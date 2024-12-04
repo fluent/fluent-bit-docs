@@ -18,6 +18,7 @@ The plugin supports the following configuration parameters:
 | Tag_Prefix          | Prefix incoming tag with the defined value.|  |
 | Tag                 | Override the tag of the forwarded events with the defined value.|  |
 | Shared\_Key         | Shared key for secure forward authentication. |  |
+| Empty\_Shared\_Key  | Use this option to connect to Fluentd with a zero-length shared key.                         | `false` |
 | Self\_Hostname      | Hostname for secure forward authentication.   |  |
 | Security.Users      | Specify the username and password pairs for secure forward authentication. | |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
