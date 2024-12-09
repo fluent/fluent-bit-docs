@@ -193,7 +193,6 @@ the Lua documentation for more information.
 
 For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
 
-[https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
 
 ### Processing environment variables
 
