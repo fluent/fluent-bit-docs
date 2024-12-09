@@ -114,13 +114,9 @@ Each callback **must** return three values:
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | If code equals 1, the original record information will be replaced with this new value. Note that the _record_ value **must** be a valid Lua table. This value can be an array of tables (i.e., array of objects in JSON format), and in that case the input record is effectively split into multiple records. (see below for more details) |
 
-### Code Examples
+## Features
 
-For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
-
-[https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
-
-#### Inline configuration
+### Inline configuration
 
 The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
 
@@ -180,7 +176,25 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### Environment variable processing
+### Number Type
+
+Lua treats numbers as a `double` type, which means an `integer` type
+containing data like user IDs and log levels will be converted to a `double`.
+To avoid type conversion, use the `type_int_key` property.
+
+### Protected Mode
+
+Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script.
+See [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html) in
+the Lua documentation for more information.
+
+
+## Code Examples
+
+For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
+
+
+### Processing environment variables
 
 As an example that combines a bit of LUA processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with LUA regex and substitutions.
 
@@ -197,11 +211,11 @@ We want to extract the `sandboxbsh` name and add it to our record as a special k
 {% tab title="fluent-bit.conf" %}
 ```
 [FILTER]
-    Name                lua
-    Alias               filter-iots-lua
-    Match               iots_thread.*
-    Script              filters.lua
-    Call                set_landscape_deployment
+Name                lua
+Alias               filter-iots-lua
+Match               iots_thread.*
+Script              filters.lua
+Call                set_landscape_deployment
 ```
 {% endtab %}
 
@@ -243,14 +257,6 @@ filters.lua:
         return 2, timestamp, record
     end
 ```
-
-### Number Type
-
-+Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
-
-### Protected Mode
-
-Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
 
 ### Record Split
 
@@ -331,7 +337,7 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Response code filtering
 
-In this example, we want to filter istio logs to exclude lines with response codes between 1 and 399.
+In this example, we want to filter Istio logs to exclude lines with response codes between 1 and 399.
 Istio is configured to write the logs in json format.
 
 #### Lua script
@@ -353,7 +359,7 @@ end
 
 #### Configuration
 
-Configuration to get istio logs and apply response code filter to them.
+Configuration to get Istio logs and apply response code filter to them.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -439,8 +445,7 @@ pipeline:
 
 In the output only the messages with response code 0 or greater than 399 are shown.
 
-
-### Timeformat Conversion
+### Time format Conversion
 
 The following example converts a field's specific type of `datetime` format to
 `utc ISO 8601` format.
@@ -568,4 +573,56 @@ The output of this process shows the conversion of the `datetime` of two timezon
 [0] event_category_a: [[1722452186.727104902, {}], {"event"=>"Restock", "pub_date"=>"2024-07-30T18:01:06Z"}]
 [0] event_category_b: [[1722452186.730255842, {}], {"event"=>"Soldout", "pub_date"=>"2024-07-29T04:15:00Z"}]
 ...
+```
+
+### Using configuration variables
+
+Fluent Bit supports definition of configuration variables, which can be done in the following way:
+
+```yaml
+env:
+  myvar1: myvalue1
+```
+
+These variables can be accessed from the Lua code by referring to the FLB_ENV Lua table.
+Being this a Lua table, the subrecords can be accessed following the same syntax, i.e. `FLB_ENV['A']`. 
+
+#### Configuration
+
+```yaml
+env:
+  A: aaa
+  B: bbb
+  C: ccc
+
+service:
+    flush:           1
+    log_level:       info
+
+pipeline:
+    inputs:
+        - name:    random
+          tag:     test
+          samples: 10
+
+    filters:
+        - name:  lua
+          match: "*"
+          call:  append_tag
+          code:  |
+              function append_tag(tag, timestamp, record)
+                 new_record = record
+                 new_record["my_env"] = FLB_ENV
+                 return 1, timestamp, new_record
+              end
+
+    outputs:
+        - name:  stdout
+          match: "*"
+```
+
+#### Output
+
+```
+test: [[1731990257.781970977, {}], {"my_env"=>{"A"=>"aaa", "C"=>"ccc", "HOSTNAME"=>"monox-2.lan", "B"=>"bbb"}, "rand_value"=>4805047635809401856}]
 ```
