@@ -273,7 +273,8 @@ The following configuration is similar to the above, except now all entries in t
     structured_metadata_map_keys $kubernetes
 ```
 
-Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and `pod_name`, the above configuration is equivalent to:
+Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and
+`pod_name`, the previous configuration is equivalent to:
 
 ```python
 [OUTPUT]
