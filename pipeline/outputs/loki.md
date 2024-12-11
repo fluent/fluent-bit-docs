@@ -260,10 +260,18 @@ Other common uses for structured metadata include trace and span IDs, process an
 Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
 with Loki deployments prior to Loki 3.0.
 
-#### Structured Metadata Maps
-In addition to the `structured_metadata` configuration parameter, a `structured_metadata_map_keys` is available, which can be used to dynamically populate structured metadata from map values in the log record. `structured_metadata_map_keys` can be set with a list of record accessors, where each one should reference map values in the log record. Record accessors which do not match a map value will simply be skipped.  
+#### Structured metadata maps
 
-The following configuration is similar to the above, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries.
+In addition to the `structured_metadata` configuration parameter, a
+`structured_metadata_map_keys` is available for your use, which dynamically populates
+structured metadata from map values in the log record. The
+`structured_metadata_map_keys` parameter can be set with a list of record accessors,
+each one referencing map values in the log record. Record accessors that don't match
+a map value are skipped.
+
+The following configuration is similar to the previous configuration, except all
+entries in the log record map value `$kubernetes` are used as structured metadata
+entries:
 
 ```python
 [OUTPUT]
