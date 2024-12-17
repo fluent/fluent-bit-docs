@@ -25,6 +25,7 @@ coroutines
 Crowdstrike
 CRDs
 DaemonSet
+Dash0
 Datadog
 Datagen
 datapoint
