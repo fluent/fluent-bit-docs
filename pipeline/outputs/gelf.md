@@ -26,7 +26,8 @@ According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/gettin
 
 ### TLS / SSL
 
-GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+The GELF output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Notes
 

@@ -52,7 +52,8 @@ The following instructions assumes that you have a fully operational OpenSearch 
 
 ### TLS / SSL
 
-OpenSearch output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+The OpenSearch output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### write\_operation
 
