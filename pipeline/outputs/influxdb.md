@@ -24,7 +24,8 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 
 ### TLS / SSL
 
-InfluxDB output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+The InfluxDB output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Getting Started
 

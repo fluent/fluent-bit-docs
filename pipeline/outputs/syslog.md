@@ -36,7 +36,7 @@ You must be aware of the structure of your original record so you can configure 
 ### TLS / SSL
 
 The Syslog output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/transport-security.md) section.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Examples
 

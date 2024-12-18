@@ -31,6 +31,7 @@ The following **output** plugins can take advantage of the TLS feature:
 * [Azure Data Explorer (Kusto)](../pipeline/outputs/azure_kusto.md)
 * [Azure Logs Ingestion API](../pipeline/outputs/azure_logs_ingestion.md)
 * [BigQuery](../pipeline/outputs/bigquery.md)
+* [Dash0](../pipeline/outputs/dash0.md)
 * [Datadog](../pipeline/outputs/datadog.md)
 * [Elasticsearch](../pipeline/outputs/elasticsearch.md)
 * [Forward](../pipeline/outputs/forward.md)
