@@ -44,6 +44,7 @@ are:
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
+| `max_stdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
 The following is an example of a `SERVICE` section:
 

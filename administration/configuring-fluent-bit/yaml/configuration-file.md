@@ -82,6 +82,7 @@ The _service_ section defines the global properties of the service. The Service 
 | scheduler.base  | Sets the base of exponential backoff. The property is supported from v1.8.7.                                                                                                                                                                                                                          | 5             |
 | json.convert_nan_to_null | If enabled, NaN is converted to null when fluent-bit converts msgpack to json.    | false         |
 | sp.convert_from_str_to_num | If enabled, Stream processor converts from number string to number type.        | true          |
+| max\_stdio | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | 512 |
 
 The following is an example of a _service_ section:
 
