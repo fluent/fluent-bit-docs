@@ -37,7 +37,7 @@ To get started with sending logs to Dash0:
       Match        *
       Host         ingress.eu-west-1.aws.dash0.com
       Port         443
-      Header       Authorization Bearer auth_vdOxPqcvSlBkhVQV95wU9TGXh2Fdjliq
+      Header       Authorization Bearer {your-Auth-token-here}
       Metrics_uri  /v1/metrics
       Logs_uri     /v1/logs
       Traces_uri   /v1/traces
@@ -51,7 +51,7 @@ To get started with sending logs to Dash0:
       Match:        *
       Host:         ingress.eu-west-1.aws.dash0.com
       Port:         443
-      Header:       Authorization Bearer auth_vdOxPqcvSlBkhVQV95wU9TGXh2Fdjliq
+      Header:       Authorization Bearer {your-Auth-token-here}
       Metrics_uri:  /v1/metrics
       Logs_uri:     /v1/logs
       Traces_uri:   /v1/traces
