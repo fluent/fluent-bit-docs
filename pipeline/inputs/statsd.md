@@ -19,9 +19,10 @@ The plugin supports the following configuration parameters:
 | Metrics | Ingested record will be marked as a metric record rather than a log record. | `off` |
 
 Note: When enabling `Metrics On`, we will also handle metrics from the DogStatsD protocol and the internal record in Fluent Bit will be handled as a metric type for downstream processing.
-Including key-value format of tags:
+[The full format of DogStatsD of metrics](https://docs.datadoghq.com/developers/dogstatsd/datagram_shell/?tab=metrics#the-dogstatsd-protocol) is not supported.
+Including key-value format of tags as below is supported:
 `<METRIC_NAME>:<VALUE>|<TYPE>|@<SAMPLE_RATE>|#<TAG_KEY_1>:<TAG_VALUE_1>`
-Events and ServiceChecks format are not supported yet with `Metrics On`.
+[Events](https://docs.datadoghq.com/developers/dogstatsd/datagram_shell/?tab=events#the-dogstatsd-protocol) and [ServiceChecks](https://docs.datadoghq.com/developers/dogstatsd/datagram_shell/?tab=servicechecks#the-dogstatsd-protocol) formats are not supported yet with `Metrics On`.
 
 ## Configuration Examples <a id="config_example"></a>
 
