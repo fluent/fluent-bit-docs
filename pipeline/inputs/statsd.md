@@ -18,7 +18,7 @@ The plugin supports the following configuration parameters:
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 | Metrics | Ingested record will be marked as a metric record rather than a log record. | `off` |
 
-Note: When enabling `Metrics On`, the DogStatsD protocol of metrics can be handled.
+Note: When enabling `Metrics On`, we will also handle metrics from the DogStatsD protocol and the internal record in Fluent Bit will be handled as a metric type for downstream processing.
 Including key-value format of tags:
 `<METRIC_NAME>:<VALUE>|<TYPE>|@<SAMPLE_RATE>|#<TAG_KEY_1>:<TAG_VALUE_1>`
 Events and ServiceChecks format are not supported yet with `Metrics On`.
