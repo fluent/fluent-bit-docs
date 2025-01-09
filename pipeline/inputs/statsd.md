@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 | Listen | Listener network interface. | 0.0.0.0 |
 | Port | UDP port where listening for connections | 8125 |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
-| Metrics | Ingest as metrics type of events. | `off` |
+| Metrics | Ingested record will be marked as a metric record rather than a log record. | `off` |
 
 Note: When enabling `Metrics On`, the DogStatsD protocol of metrics can be handled.
 Including key-value format of tags:
