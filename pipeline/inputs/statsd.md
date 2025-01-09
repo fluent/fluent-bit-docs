@@ -69,3 +69,53 @@ Fluent Bit will produce the following records:
 [0] statsd.0: [1574905088.971380537, {"type"=>"counter", "bucket"=>"click", "value"=>10.000000, "sample_rate"=>0.100000}]
 [0] statsd.0: [1574905141.863344517, {"type"=>"gauge", "bucket"=>"active", "value"=>99.000000, "incremental"=>0}]
 ```
+
+## Metrics Setup
+
+Here is a configuration example for metrics setup.
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```python
+[INPUT]
+    Name   statsd
+    Listen 0.0.0.0
+    Port   8125
+    Metrics On
+
+[OUTPUT]
+    Name   stdout
+    Match  *
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: statsd
+          listen: 0.0.0.0
+          port: 8125
+          metrics: On
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
+Now you can input metrics as metrics type of events through the UDP port as follows:
+
+```bash
+echo "click:+10|c|@0.01|#hello:tag"              | nc -q0 -u 127.0.0.1 8125
+echo "active:+99|g|@0.01"                        | nc -q0 -u 127.0.0.1 8125
+echo "inactive:29|g|@0.0125|#hi:from_fluent-bit" | nc -q0 -u 127.0.0.1 8125
+```
+
+Fluent Bit will procude the following metrics events:
+
+```
+2025-01-09T11:40:26.562424694Z click{incremental="true",hello="tag"} = 1000
+2025-01-09T11:40:28.591477424Z active{incremental="true"} = 9900
+2025-01-09T11:40:31.593118033Z inactive{hi="from_fluent-bit"} = 2320
+```
