@@ -67,6 +67,7 @@
     * [Record Accessor](administration/configuring-fluent-bit/classic-mode/record-accessor.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
+* [AWS Credentials](administration/aws-credentials.md)
 * [Transport Security](administration/transport-security.md)
 * [Buffering & Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
