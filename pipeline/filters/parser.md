@@ -12,6 +12,8 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
 | Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
 | Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
+| Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
+| Nest\_Under | Specify field name to nest parsed records under. |  |
 
 ## Getting Started
 
@@ -155,4 +157,43 @@ Fluent Bit v2.1.1
 [0] dummy.data: [[1687122778.299116136, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1687122779.296906553, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1687122780.297475803, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+```
+
+### Nest parsed fields
+
+Instead of expanding parsed fields at the root of the object,
+you may choose to have them nested under a new field defined by `Nest_Under`:
+
+```python copy
+[SERVICE]
+    Parsers_File /fluent-bit/etc/parsers.conf
+
+[INPUT]
+    Name  Dummy
+    Dummy {"log":"error: my error","element":"{\"a\":\"b\",\"c\":{\"x\":\"y\"}}"}
+    Tag   dummy.data
+
+[FILTER]
+    Name parser
+    Match dummy.*
+    Parser json
+    Key_Name element
+    Nest_Under parsed
+
+[OUTPUT]
+    Name stdout
+    Match *
+```
+
+Resulting in the following output:
+
+```text
+$ fluent-bit -c dummy.conf
+Fluent Bit v2.1.1
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+...
+...
+[0] dummy.data: [[1736759501.208000317, {}], {"parsed"=>{"a"=>"b", "c"=>{"x"=>"y"}}}]
+[0] dummy.data: [[1736759502.207935361, {}], {"parsed"=>{"a"=>"b", "c"=>{"x"=>"y"}}}]
+[0] dummy.data: [[1736759503.207765898, {}], {"parsed"=>{"a"=>"b", "c"=>{"x"=>"y"}}}]
 ```
