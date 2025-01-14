@@ -65,17 +65,17 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | buffering_enabled           | _Optional_ - Enable buffering into disk before ingesting into Azure Kusto. | `Off` |
-| buffer_dir                  | _Optional_ - When buffering is turned ON, specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-kusto/` |
-| upload_timeout              | _Optional_ - When buffering is turned ON, specifies a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached upload_file_size limit yet. | `30m` |
-| upload_file_size            | _Optional_ - When buffering is turned ON, specifies the size of files to be uploaded in MBs. | `200MB` |
-| azure_kusto_buffer_key      | _Optional_ - When buffering is turned ON, set the azure kusto buffer key which needs to be specified when using multiple instances of azure kusto output plugin and buffering is enabled. | `key` |
-| store_dir_limit_size        | _Optional_ - When buffering is turned ON, set the max size of the buffer directory. | `8GB` |
-| buffer_file_delete_early    | _Optional_ - When buffering is turned ON, whether to delete the buffered file early after successful blob creation. | `Off` |
-| unify_tag                   | _Optional_ - This creates a single buffer file when the buffering mode is ON. | `On` |
-| blob_uri_length             | _Optional_ - Set the length of generated blob uri before ingesting to kusto. | `64` |
-| scheduler_max_retries       | _Optional_ - When buffering is turned ON, Set the maximum number of retries for ingestion using the scheduler. | `3` |
-| use_imds                    | _Optional_ - Whether to use IMDS to retrieve oauth token. | `Off` |
-| delete_on_max_upload_error  | _Optional_ - When buffering is turned ON, Whether to delete the buffer file on maximum upload errors. | `Off` |
+| buffer_dir                  | _Optional_ - When buffering is `On`, specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-kusto/` |
+| upload_timeout              | _Optional_ - When buffering is `On`, specifies a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached `upload_file_size` limit. | `30m` |
+| upload_file_size            | _Optional_ - When buffering is `On`, specifies the size of files to be uploaded in MBs. | `200MB` |
+| azure_kusto_buffer_key     | _Optional_ - When buffering is `On`, set the Azure Kusto buffer key which must be specified when using multiple instances of Azure Kusto output plugin and buffering is enabled. | `key` |
+| store_dir_limit_size        | _Optional_ - When buffering is `On`, set the max size of the buffer directory. | `8GB` |
+| buffer_file_delete_early    | _Optional_ - When buffering is `On`, whether to delete the buffered file early after successful blob creation. | `Off` |
+| unify_tag                   | _Optional_ - This creates a single buffer file when the buffering mode is `On`. | `On` |
+| blob_uri_length             | _Optional_ - Set the length of generated blob URI before ingesting to Kusto. | `64` |
+| scheduler_max_retries       | _Optional_ - When buffering is `On`, set the maximum number of retries for ingestion using the scheduler. | `3` |
+| use_imds                 | _Optional_ - Whether to use IMDS to retrieve OAuth token. | `Off` |
+| delete_on_max_upload_error  | _Optional_ - When buffering is `On`, whether to delete the buffer file on maximum upload errors. | `Off` |
 | io_timeout                  | _Optional_ - Configure the HTTP IO timeout for uploads. | `60s` |
 
 ### Configuration File
