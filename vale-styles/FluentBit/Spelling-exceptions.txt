@@ -9,6 +9,7 @@ autoscaler
 autoscaling
 backoff
 backpressure
+BitBake
 Blackhole
 blocklist
 Buildkite
@@ -183,6 +184,7 @@ Vivo
 VMs
 Wavefront
 Worldmap
+Yocto
 Zipkin
 Zsh
 Zstandard
