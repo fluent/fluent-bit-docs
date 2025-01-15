@@ -123,6 +123,7 @@ quantile
 quantiles
 queryable
 Queryable
+Raspbian
 rdkafka
 Redpanda
 rollup
