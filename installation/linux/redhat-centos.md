@@ -85,7 +85,7 @@ which platforms are supported in each release.
 
 ### Install
 
-1. Once your repository is configured, run the following command to install it:
+1. After your repository is configured, run the following command to install it:
 
    ```bash
    sudo yum install fluent-bit
@@ -131,7 +131,7 @@ baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
 
 Depending on your Red Hat distribution version, this variable can return a value
 other than the OS major release version (for example, RHEL7 Server distributions return
-`7Server` instead of `7`). The Fluent-Bit package URL uses the major OS
+`7Server` instead of `7`). The Fluent Bit package URL uses the major OS
 release version, so any other value here will cause a 404.
 
 To resolve this issue, replace the `$releasever` variable with your system's OS major
