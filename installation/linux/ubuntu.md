@@ -112,4 +112,4 @@ systemctl status fluent-bit
 
 The default configuration of `fluent-bit` is collecting metrics of CPU usage and
 sending the records to the standard output. You can see the outgoing data in your
-`/var/log/syslog file.
+`/var/log/syslog` file.
