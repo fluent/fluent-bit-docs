@@ -40,6 +40,7 @@ deprovisioned
 deprovisioning
 deprovisions
 Devo
+Distroless
 DogStatsD
 downsample
 downsampled
@@ -79,6 +80,7 @@ Keepalive
 Istio
 jemalloc
 keepalive
+keyless
 Kinesis
 kubectl
 kubelet
@@ -96,6 +98,7 @@ Minishift
 minikube
 MTTx
 multithreading
+Musl
 namespace
 namespaces
 netcat
@@ -143,6 +146,7 @@ ServiceMonitors
 sharding
 SignalFx
 Signup
+Sigstore
 sparkline
 sparklines
 Sparklines
