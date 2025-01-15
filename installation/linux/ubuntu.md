@@ -30,7 +30,7 @@ curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/ke
 
 ### Updated key from March 2022
 
-From the 1.9.0 and 1.8.15 releases, the
+For releases 1.9.0 and 1.8.15 and later, the
 [GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure
 the new key is added.
 
