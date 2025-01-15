@@ -118,7 +118,7 @@ records to the standard output. You can see the outgoing data in your
 
 ### Yum install fails with a "404 - Page not found" error for the package mirror
 
-The `fluent-bit.repo` file for the latest installations of Fluent-Bit uses a
+The `fluent-bit.repo` file for the latest installations of Fluent Bit uses a
 `$releasever` variable to determine the correct version of the package to install to
 your system:
 
