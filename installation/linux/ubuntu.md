@@ -82,7 +82,7 @@ If you have the error `Certificate verification failed`, check if the package
 
 ## Install Fluent Bit
 
-1. Use the following apt-get` command to install the latest Fluent Bit:
+1. Use the following `apt-get` command to install the latest Fluent Bit:
 
    ```bash
    sudo apt-get install fluent-bit
