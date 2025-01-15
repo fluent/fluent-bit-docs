@@ -2,7 +2,7 @@
 # Transport Security
 
 Fluent Bit provides integrated support for Transport Layer Security (TLS) and
-it predecessors Secure Sockets Layer (SSL) respectively. This section refers only
+its predecessor Secure Sockets Layer (SSL). This section refers only
 to TLS for both implementations.
 
 Both input and output plugins that perform Network I/O can optionally enable TLS and
@@ -10,18 +10,18 @@ configure the behavior. The following table describes the properties available:
 
 | Property | Description | Default |
 | :--- | :--- | :--- |
-| `tls` | Enable or disable TLS support | `Off` |
-| `tls.verify` | Force certificate validation | `On` |
-| `tls.verify_hostname` | Force TLS verification of host names | `Off` |
-| `tls.debug` | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose) | `1` |
-| `tls.ca_file` | Absolute path to CA certificate file | _none_ |
-| `tls.ca_path` | Absolute path to scan for certificate files | _none_ |
-| `tls.crt_file` | Absolute path to Certificate file | _none_ |
-| `tls.key_file` | Absolute path to private Key file | _none_ |
-| `tls.key_passwd` | Optional password for `tls.key_file` file | _none_ |
-| `tls.vhost` | Hostname to be used for TLS SNI extension | _none_ |
+| `tls` | Enable or disable TLS support. | `Off` |
+| `tls.verify` | Force certificate validation. | `On` |
+| `tls.verify_hostname` | Force TLS verification of host names. | `Off` |
+| `tls.debug` | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4`. (Verbose) | `1` |
+| `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
+| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
+| `tls.key_file` | Absolute path to private Key file. | _none_ |
+| `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
+| `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
 
-To use TLS on input plugins, the user is expected to provide both a certificate and
+To use TLS on input plugins, you must provide both a certificate and a
 private key.
 
 The listed properties can be enabled in the configuration file, specifically in each
@@ -77,15 +77,15 @@ The following **input** plugins can take advantage of the TLS feature:
 - [Syslog](../pipeline/inputs/syslog.md)
 - [TCP](../pipeline/inputs/tcp.md)
 
-In addition, other plugins implement a sub-set of TLS support, with
+In addition, other plugins implement a subset of TLS support, with
 restricted configuration:
 
 - [Kubernetes Filter](../pipeline/filters/kubernetes.md)
 
 ## Example: enable TLS on HTTP input
 
-By default HTTP input plugin uses plain TCP, enabling TLS from the command line can
-be done using the following command:
+By default, the HTTP input plugin uses plain TCP. Run the following command to enable
+TLS:
 
 ```bash
 ./bin/fluent-bit -i http \
@@ -99,8 +99,7 @@ be done using the following command:
 ```
 
 In the previous command, the two properties `tls` and `tls.verify` are set
-for demonstration purposes. It's strongly suggested to always keep verification
-on.
+for demonstration purposes. Always enable verification in production environments.
 
 The same behavior can be accomplished using a configuration file:
 
@@ -120,8 +119,8 @@ The same behavior can be accomplished using a configuration file:
 
 ## Example: enable TLS on HTTP output
 
-By default HTTP output plugin uses plain TCP, enabling TLS from the command line can
-be done with:
+By default, the HTTP output plugin uses plain TCP. Run the following command to enable
+TLS:
 
 ```bash
 fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
@@ -131,7 +130,7 @@ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
 ```
 
 In the previous command, the properties `tls` and `tls.verify` are enabled
-for demonstration purposes. Verification should always be on.
+for demonstration purposes. Always enable verification in production environments.
 
 The same behavior can be accomplished using a configuration file:
 
@@ -154,10 +153,10 @@ The same behavior can be accomplished using a configuration file:
 
 ### Generate a self signed certificates for testing purposes
 
-This will generate a 4096 bit RSA key pair and a certificate that's signed using
-`SHA-256` with the expiration date set to 30 days in the future. In this example,
-`test.host.net` set as common name. This example opts out of `DES`, so the private
-key will be stored in plain text.
+The following command generates a 4096 bit RSA key pair and a certificate that's signed
+using `SHA-256` with the expiration date set to 30 days in the future. In this example,
+`test.host.net` is set as the common name. This example opts out of `DES`, so the
+private key is stored in plain text.
 
 ```bash
 openssl req -x509 \
