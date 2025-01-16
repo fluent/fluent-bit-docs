@@ -151,7 +151,7 @@ Debug images are available for all architectures (for 1.9.0 and later), and cont
 a full Debian shell and package manager that can be used to troubleshoot or for
 testing purposes.
 
-From a deployment perspective, there is no need to specify an architecture. The
+From a deployment perspective, there's no need to specify an architecture. The
 container client tool that pulls the image gets the proper layer for the running
 architecture.
 
