@@ -1,6 +1,6 @@
 # macOS
 
-Fluent Bit is compatible with latest Apple macOS software for x86_64 and
+Fluent Bit is compatible with the latest Apple macOS software for x86_64 and
 Apple Silicon architectures.
 
 ## Installation packages
@@ -73,7 +73,7 @@ brew install git cmake openssl bison
    make -j 16
    ```
 
-1. Install Fluent Bit to the directory specified previously.
+1. Install Fluent Bit to the previously specified directory.
    Writing to this directory requires root privileges.
 
    ```bash
@@ -107,7 +107,7 @@ The binaries and configuration examples can be located at `/opt/fluent-bit/`.
    ```
 
 1. Create the specific macOS SDK target. For example, to specify macOS Big Sur
-   (11.3) SDK environment):
+   (11.3) SDK environment:
 
    ```bash copy
    export MACOSX_DEPLOYMENT_TARGET=11.3
@@ -119,7 +119,7 @@ The binaries and configuration examples can be located at `/opt/fluent-bit/`.
    cd build/
    ```
 
-1. Build the Fluent Bit macOS installer.
+1. Build the Fluent Bit macOS installer:
 
    ```bash copy
    cmake -DCPACK_GENERATOR=productbuild -DCMAKE_INSTALL_PREFIX=/opt/fluent-bit ../
@@ -160,7 +160,7 @@ export PATH=/opt/fluent-bit/bin:$PATH
 
 To test, try Fluent Bit by generating a test message using the
 [Dummy input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/dummy)
-which prints to the standard output interface every 1 second:
+which prints to the standard output interface every one second:
 
 ```bash copy
 fluent-bit -i dummy -o stdout -f 1
