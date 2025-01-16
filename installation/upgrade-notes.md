@@ -27,9 +27,10 @@ important changes:
 
 ### Tail Input Plugin
 
-By default, the plugin follows a file from the end once the service starts, instead
-of reading from the beginning. Every file found at start is followed from it last
-position. New files discovered at runtime or rotated are read from the beginning.
+By default, the tail input plugin follows a file from the end after the service starts,
+instead of reading it from the beginning. Every file found when the plugin starts is
+followed from it last position. New files discovered at runtime or when files rotate
+are read from the beginning.
 
 To keep the old behavior, set the option `read_from_head` to `true`.
 
