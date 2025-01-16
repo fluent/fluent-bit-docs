@@ -57,8 +57,8 @@ which platforms are supported in each release.
 
 On Ubuntu, you need to add the Fluent Bit APT server entry to your sources lists.
 Add the following content at bottom of your `/etc/apt/sources.list` file. Ensure
-`CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases)
-(for example: `focal` for Ubuntu 20.04):
+`CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases).
+For example, `focal` for Ubuntu 20.04.
 
 ```bash
 deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main
