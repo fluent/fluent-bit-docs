@@ -79,6 +79,7 @@
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
 * [Performance Tips](administration/performance.md)
+* [AWS credentials](administration/aws-credentials.md)
 
 ## Local Testing
 
