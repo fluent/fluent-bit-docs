@@ -28,7 +28,7 @@ addition, Fluent Bit adds metadata to each entry using the
 The Kubernetes filter plugin talks to the Kubernetes API Server to retrieve relevant
 information such as the `pod_id`, `labels`, and `annotations`. Other fields, such as
 `pod_name`, `container_id`, and `container_name`, are retrieved locally from the log
-file names. All of this is handled automatically, no intervention is required from a
+file names. All of this is handled automatically, and no intervention is required from a
 configuration aspect.
 
 ## Installation
