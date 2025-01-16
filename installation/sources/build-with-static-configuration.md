@@ -24,7 +24,7 @@ point for the build system to lookup and parse the configuration files. This
 directory must contain a minimum of one configuration file called
 `fluent-bit.conf` containing the required
 [SERVICE](/administration/configuring-fluent-bit/yaml/service-section.md),
-[INPUT](/concepts/data-pipeline/input.md) and [OUTPUT](/concepts/data-pipeline/output.md)
+[INPUT](/concepts/data-pipeline/input.md), and [OUTPUT](/concepts/data-pipeline/output.md)
 sections.
 
 As an example, create a new `fluent-bit.conf` file with the following
