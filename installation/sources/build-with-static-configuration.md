@@ -1,8 +1,8 @@
 # Build with static configuration
 
-[Fluent Bit](https://fluentbit.io) in normal operation mode is configurable through [text
-files](https://github.com/fluent/fluent-bit-docs/tree/8ab2f4cda8dfdd8def7fa0cf5c7ffc23069e5a70/installation/configuration/file.md)
-or using specific arguments in the command line. While this is the ideal deployment
+[Fluent Bit](https://fluentbit.io) in normal operation mode is configurable through
+[text files](/installation/configuration/file.md)
+or using specific arguments in the command line. Although this is the ideal deployment
 case, there are scenarios where a more restricted configuration is required. Static
 configuration mode restricts configuration ability.
 
@@ -55,7 +55,7 @@ to the standard output interface.
    cd fluent-bit/build/
    ```
 
-1. Run CMake, appending the appending the `FLB_STATIC_CONF` option pointing to
+1. Run CMake, appending the `FLB_STATIC_CONF` option pointing to
    the configuration directory recently created:
 
    ```bash copy
@@ -68,7 +68,7 @@ to the standard output interface.
    make
    ```
 
-The `fluent-bit` binary generated is ready to run without further configuration:
+The generated `fluent-bit` binary is ready to run without additional configuration:
 
 ```bash
 $ bin/fluent-bit
