@@ -1,6 +1,7 @@
 accessor
 Alertmanager
 allowlist
+Ansible
 API
 APIs
 Appname
@@ -19,6 +20,7 @@ chronotf
 clickstreams
 CloudWatch
 CMake
+cmdlet
 Config
 Coralogix
 coroutine
