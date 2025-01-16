@@ -14,7 +14,7 @@ use external services:
 - [HTTP Server: JSON and Prometheus Exporter-style metrics](monitoring.md#http-server)
 - [Grafana Dashboards and Alerts](monitoring.md#grafana-dashboard-and-alerts)
 - [Health Checks](monitoring.md#health-check-for-fluent-bit)
-- [Telemetry pipeline: hosted service to monitor and visualize your pipelines](monitoring.md#telemetry-pipeline)
+- [Telemetry Pipeline: hosted service to monitor and visualize your pipelines](monitoring.md#telemetry-pipeline)
 
 ## HTTP server
 
