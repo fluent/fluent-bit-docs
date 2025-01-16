@@ -1,10 +1,10 @@
 # Upgrade Notes
 
-The following article cover the relevant notes for users upgrading from previous
-Fluent Bit versions. These aim to cover compatibility changes that you must be aware of.
+The following article covers the relevant compatibility changes for users upgrading
+from previous Fluent Bit versions.
 
 For more details about changes on each release, refer to the
- [Official Release Notes](https://fluentbit.io/announcements/).
+[Official Release Notes](https://fluentbit.io/announcements/).
 
 Release notes will be prepared in advance of a Git tag for a release. An official
 release should provide both a tag and a release note together to allow users to
@@ -31,7 +31,7 @@ By default, the plugin follows a file from the end once the service starts, inst
 of reading from the beginning. Every file found at start is followed from it last
 position. New files discovered at runtime or rotated are read from the beginning.
 
-To keep the old behavior, set the option `read_from_head` to true.
+To keep the old behavior, set the option `read_from_head` to `true`.
 
 ### Stackdriver Output Plugin
 
@@ -48,21 +48,20 @@ If you have existing queries based on the resource's `project_id,` update your q
 
 The migration from v1.4 to v1.5 is pretty straightforward.
 
-- If you enabled `keepalive` mode in your configuration, this configuration property
-  has been renamed to `net.keepalive`. Now all Network I/O keepalive is enabled by
-  default. To learn more about this and other associated configuration properties
-  read the
+- The `keepalive` configuration mode has been renamed to `net.keepalive`. Now,
+  all Network I/O keepalive is enabled by default. To learn more about this and other
+  associated configuration properties read the
   [Networking Administration](https://docs.fluentbit.io/manual/administration/networking#tcp-keepalive)
   section.
-- If you use the Elasticsearch output plugin, note the default value of `type`
+- If you use the Elasticsearch output plugin, the default value of `type`
   [changed from `flb_type` to `_doc`](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196).
-  Many versions of Elasticsearch tolerate this, but ES v5.6 through v6.1 require
-  a `type` without a leading underscore. See the
+  Many versions of Elasticsearch tolerate this, but Elasticsearch v5.6 through v6.1
+  require a `type` without a leading underscore. See the
   [Elasticsearch output plugin documentation FAQ entry](https://docs.fluentbit.io/manual/pipeline/outputs/elasticsearch#faq-underscore) for more.
 
 ## Fluent Bit v1.4
 
-If you are migrating from Fluent Bit v1.3, there are no breaking changes, only new exciting features to enjoy :\)
+If you are migrating from Fluent Bit v1.3, there are no breaking changes.
 
 ## Fluent Bit v1.3
 
@@ -75,7 +74,7 @@ If you are upgrading from an older version, review the following incremental cha
 
 Fluent Bit v1.2 fixed many issues associated with JSON encoding and decoding.
 
-For example, when parsing Docker logs it's no longer necessary** to use decoders. The
+For example, when parsing Docker logs, it's no longer necessary to use decoders. The
 new Docker parser looks like this:
 
 ```python
@@ -93,7 +92,7 @@ Fluent Bit made improvements to Kubernetes Filter handling of stringified `log`
 messages. If the `Merge_Log` option is enabled, it will try to handle the log content
 as a JSON map, if so, it will add the keys to the root map.
 
-In addition, fixes and improvements where made to the  `Merge_Log_Key` option. If a
+In addition, fixes and improvements were made to the  `Merge_Log_Key` option. If a
 merge log succeed, all new keys will be packaged under the key specified by this
 option. A suggested configuration is as follows:
 
@@ -152,7 +151,8 @@ The expected behavior is that Tag will be expanded to:
 kube.var.log.containers.apache.log
 ```
 
-but the change introduced in 1.0 series switched from absolute path to the base filename only:
+The change introduced in the 1.0 series switched from absolute path to the base
+filename only:
 
 ```text
 kube.apache.log
@@ -167,7 +167,7 @@ where it also helps to keep compatibility with Fluentd behavior.
 This behavior switch in Tail input plugin affects how Filter Kubernetes operates.
 When the filter is used it needs to perform local metadata lookup that comes from the
 file names when using Tail as a source. With the new `Kube_Tag_Prefix` option
-you can specify what's the prefix used in Tail input plugin, for the previous configuration
+you can specify the prefix used in the Tail input plugin. For the previous configuration
 example the new configuration will look like:
 
 ```python
