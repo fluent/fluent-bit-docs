@@ -126,7 +126,7 @@ the final record will be composed as follows:
 
 ## Fluent Bit v1.1
 
-If you are upgrading from Fluent Bit &lt;= 1.0.x review the following relevant
+If you are upgrading from Fluent Bit 1.0.x or earlier, review the following relevant
 changes when switching to Fluent Bit v1.1 or later series:
 
 ### Kubernetes filter
