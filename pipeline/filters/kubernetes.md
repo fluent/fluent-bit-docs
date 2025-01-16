@@ -469,3 +469,9 @@ By default the Kube\_URL is set to `https://kubernetes.default.svc:443` . Ensure
 ### I can't see new objects getting metadata
 
 In some cases, you may only see some objects being appended with metadata while other objects are not enriched. This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
+
+## Credit
+
+Our Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata
+Filter](https://github.com/fabric8io/fluent-plugin-kubernetes\_metadata\_filter)
+written by [Jimmi Dyson](https://github.com/jimmidyson).
