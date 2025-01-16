@@ -23,12 +23,11 @@ DaemonSet, which is a pod that runs on every node of the cluster.
 
 When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In
 addition, Fluent Bit adds metadata to each entry using the
-[Kubernetes](../pipeline/filters/kubernetes) filter
-plugin.
+[Kubernetes](../pipeline/filters/kubernetes) filter plugin.
 
 The Kubernetes filter plugin talks to the Kubernetes API Server to retrieve relevant
-information such as the `pod_id`, `labels`, and `annotations`. Other fields such as
-`pod_name`, `container_id`, and `container_name` are retrieved locally from the log
+information such as the `pod_id`, `labels`, and `annotations`. Other fields, such as
+`pod_name`, `container_id`, and `container_name`, are retrieved locally from the log
 file names. All of this is handled automatically, no intervention is required from a
 configuration aspect.
 
@@ -38,7 +37,7 @@ configuration aspect.
 be available on every node of your Kubernetes cluster.
 
 The recommended way to deploy Fluent Bit for Kubernetes is with the official Helm
-Chart: <https://github.com/fluent/helm-charts>
+Chart at <https://github.com/fluent/helm-charts>.
 
 ### Note for OpenShift
 
@@ -57,9 +56,9 @@ Use the following command to add the Fluent Helm charts repository
 helm repo add fluent https://fluent.github.io/helm-charts
 ```
 
-To validate that the repository was added you can run `helm search repo fluent` to
+To validate that the repository was added, run `helm search repo fluent` to
 ensure the charts were added. The default chart can then be installed by running the
-following
+following command:
 
 ```shell
 helm upgrade --install fluent-bit fluent/fluent-bit
@@ -90,7 +89,7 @@ The default configuration of Fluent Bit ensures the following:
   It uses the Logstash format to ingest the logs. If you need a different `Index`
   and `Type`, refer to the plugin option and update as needed.
 - There is an option called `Retry_Limit`, which is set to `False`. If Fluent Bit
-  can't flush the records to Elasticsearch it will retry indefinitely until it
+  can't flush the records to Elasticsearch, it will retry indefinitely until it
   succeeds.
 
 ## Windows deployment
@@ -104,7 +103,7 @@ When deploying Fluent Bit to Kubernetes, there are three log files that you need
 - `C:\k\kubelet.err.log`
 
   This is the error log file from kubelet daemon running on host. Retain this file
-  for future troubleshooting like debugging deployment failures.
+  for future troubleshooting, including debugging deployment failures.
 
 - `C:\var\log\containers\<pod>_<namespace>_<container>-<docker>.log`
 
@@ -146,7 +145,7 @@ spec:
 ### Configure Fluent Bit
 
 Assuming the basic volume configuration described previously, you can apply the
-following configuration to start logging.
+following configuration to start logging:
 
 ```yaml
 fluent-bit.conf: |
@@ -196,8 +195,8 @@ starts up:
 - `DNS_Retries`: Retries N times until the network start working (6)
 - `DNS_Wait_Time`: Lookup interval between network status checks (30)
 
-By default, Fluent Bit waits for 3 minutes (30 seconds x 6 times). If it's not enough
-for you, tweak the configuration as follows.
+By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's not enough
+for you, update the configuration as follows:
 
 ```python
 [filter]
