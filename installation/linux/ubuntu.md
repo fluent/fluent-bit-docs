@@ -6,7 +6,7 @@ support releases of Ubuntu. The latest officially supported version is Noble Num
 
 ## Single line install
 
-An installation script is provided to be used for most Linux targets.
+An installation script is provided for most Linux targets.
 This will always install the most recent version released.
 
 ```bash
@@ -66,31 +66,36 @@ deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluen
 
 ### Update your repositories database
 
-Now let your system update the `apt` database:
+Update the `apt` database on your system:
 
 ```bash
 sudo apt-get update
 ```
 
 {% hint style="info" %}
-Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`). This could
-avoid potential issues with expired certificates.
+Fluent Bit recommends upgrading your system to avoid potential issues
+with expired certificates:
 
-If you have the error `Certificate verification failed`, check if the package
-`ca-certificates` is properly installed (`sudo apt-get install ca-certificates`).
+`sudo apt-get upgrade`
+
+
+If you receive the error `Certificate verification failed`, check if the package
+`ca-certificates` is properly installed:
+
+`sudo apt-get install ca-certificates`
 {% endhint %}
 
 ## Install Fluent Bit
 
 1. Use the following `apt-get` command to install the latest Fluent Bit:
 
-   ```bash
+   ```bash copy
    sudo apt-get install fluent-bit
    ```
 
 1. Instruct `systemd` to enable the service:
 
-   ```bash
+   ```bash copy
    sudo systemctl start fluent-bit
    ```
 
