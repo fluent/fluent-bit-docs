@@ -118,7 +118,7 @@ PS> Get-FileHash fluent-bit-3.2.4-win32.exe
 1. Download a ZIP archive. Choose the suitable installers for your 32-bit or 64-bit
    environments.
 
-1. Expand the ZIP archive. You can do this by clicking "Extract All" in Explorer
+1. Expand the ZIP archive. You can do this by clicking **Extract All** in Explorer
    or `Expand-Archive` in PowerShell.
 
    ```text
@@ -144,7 +144,7 @@ PS> Get-FileHash fluent-bit-3.2.4-win32.exe
        └── fluent-bit.h
    ```
 
-1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:.
+1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:
 
    ```text
    PS> .\bin\fluent-bit.exe -i dummy -o stdout
@@ -171,7 +171,7 @@ Fluent Bit v2.0.x
 [3] dummy.0: [1561684388.441405800, {"message"=>"dummy"}]
 ```
 
-To halt the process, press `CTRL-C` in the terminal.
+To halt the process, press `Control+C` in the terminal.
 
 ## Installing from the EXE installer
 
@@ -181,7 +181,7 @@ To halt the process, press `CTRL-C` in the terminal.
    ![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1) (1).png>)
 
 1. Click **Next** and finish the installation. By default, Fluent Bit is installed
-   into `C:\Program Files\fluent-bit\`.
+   in `C:\Program Files\fluent-bit\`.
 
 You should be able to launch Fluent Bit using the following PowerShell command:.
 
@@ -209,7 +209,7 @@ This can be used for provisioning with automation like Ansible, Puppet, and so o
 
 Windows services are equivalent to daemons in UNIX (long-running background
 processes).
-For v1.5.0 and later, Fluent Bit has native support for Windows service.
+For v1.5.0 and later, Fluent Bit has native support for Windows services.
 
 For example, you have the following installation layout:
 
@@ -243,7 +243,7 @@ SERVICE_NAME: fluent-bit
     ...
 ```
 
-To halt the Fluent Bit service, execute the `stop` command.
+To halt the Fluent Bit service, use the `stop` command.
 
 ```text
 sc.exe stop fluent-bit
@@ -259,7 +259,7 @@ sc.exe config fluent-bit start= auto
 
 ### Fluent Bit fails to start up when installed under `C:\Program Files`
 
-Quotations are required if file paths contain spaces. Here is an example:
+Quotations are required if file paths contain spaces. For example:
 
 ```text
 sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
@@ -310,13 +310,13 @@ PS> Remove-Service fluent-bit
 
 ## Compile from Source
 
-If you need to create a custom executable, you can use the following procedure to
+If you need to create a custom executable, use the following procedure to
 compile Fluent Bit by yourself.
 
 ### Preparation
 
 1. Install Microsoft Visual C++ to compile Fluent Bit. You can install the minimum
-toolkit using the following command:
+   toolkit using the following command:
 
 ```text
 PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
@@ -325,7 +325,8 @@ PS> start vs.exe
 
 1. Choose `C++ Build Tools` and `C++ CMake tools for Windows` and wait until the process finishes.
 
-1. Install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
+1. Install flex and bison. One way to install them on Windows is to use
+   [winflexbison](https://github.com/lexxmark/winflexbison).
 
    ```text
    PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
@@ -351,8 +352,8 @@ PS> start vs.exe
 1. Open the **Start menu** on Windows and type `command Prompt for VS`. From the result
    list, select the one that corresponds to your target system ( `x86` or `x64`).
 
-1. Check that the installed OpenSSL library files match the selected target. You can
-   check the library files by using the `dumpbin` command with the  `/headers`
+1. Verify the installed OpenSSL library files match the selected target. You can
+   examine the library files by using the `dumpbin` command with the  `/headers`
    option .
 
 1. Clone the source code of Fluent Bit.
