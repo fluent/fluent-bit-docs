@@ -5,7 +5,7 @@ Current available images can be deployed in multiple architectures.
 
 ## Start Docker
 
-Use the following command to start Docker with Fluent Bit.
+Use the following command to start Docker with Fluent Bit:
 
 ```shell
 docker run -ti cr.fluentbit.io/fluent/fluent-bit
@@ -172,7 +172,7 @@ The following checks were performed on each of these signatures:
 ```
 
 Replace `cosign` with the binary installed if it has a different name
-(for example: `cosign-linux-amd64`).
+(for example, `cosign-linux-amd64`).
 
 Keyless signing is also provided but is still experimental:
 
@@ -201,7 +201,8 @@ documentation.
      -i cpu -o stdout -f 1
    ```
 
-That command will let Fluent Bit measure CPU usage every second and flush the results to the standard output, e.g:
+That command lets Fluent Bit measure CPU usage every second and flushes the results
+to the standard output. For example:
 
 ```shell
 [2019/10/01 12:29:02] [ info] [engine] started
@@ -213,7 +214,7 @@ That command will let Fluent Bit measure CPU usage every second and flush the re
 ### Why there is no Fluent Bit Docker image based on Alpine Linux?
 
 Alpine Linux uses Musl C library instead of Glibc. Musl isn't fully compatible with
-Glibc which generated many issues in the following areas when used with Fluent Bit:
+Glibc, which generated many issues in the following areas when used with Fluent Bit:
 
 - Memory Allocator: To run properly in high-load environments, Fluent Bit uses
   Jemalloc as a default memory allocator which reduces fragmentation and provides
@@ -223,24 +224,24 @@ Glibc which generated many issues in the following areas when used with Fluent B
   plugins in Fluent Bit.
 - Alpine Linux Musl Time format parser doesn't support Glibc extensions.
 - The Fluent Bit maintainers' preference for base images are Distroless and
-  Debian for security and maintenance reasons .
+  Debian for security and maintenance reasons.
 
 ### Why use Distroless containers?
 
 The reasons for using Distroless are well covered in
 [Why should I use Distroless images?](https://github.com/GoogleContainerTools/distroless#why-should-i-use-distroless-images).
 
-- Only include what you need, reduce the attack surface available.
+- Include only what you need, reduce the attack surface available.
 - Reduces size and improves performance.
 - Reduces false positives on scans (and reduces resources required for scanning).
 - Reduces supply chain security requirements to only what you need.
 - Helps prevent unauthorised processes or users interacting with the container.
-- Less need to harden the container (and container runtime, K8S, and so on).
+- Less need to harden the container (and container runtime, K8s, and so on).
 - Faster CI/CD processes.
 
 With any choice, there are downsides:
 
-- No shell or package manager to update/add things.
+- No shell or package manager to update or add things.
   - Generally, dynamic updating is a bad idea in containers as the time it's done
     affects the outcome: two containers started at different times using the same
     base image can perform differently or get different dependencies.
@@ -264,7 +265,7 @@ For debugging, debug containers are available now in K8S:
 
 - This can be a significantly different container from the one you want to
   investigate, with lots of extra tools or even a different base.
-- No resource limits applied to this container - can be good or bad.
-- Runs in pod namespaces, it's another container that can access everything the others can.
+- No resource limits applied to this container, which can be good or bad.
+- Runs in pod namespaces. It's another container that can access everything the others can.
 - Might need architecture of the pod to share volumes or other information.
 - Requires more recent versions of K8S and the container runtime plus RBAC allowing it.
