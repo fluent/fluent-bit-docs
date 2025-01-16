@@ -10,9 +10,9 @@ be used.
 - [ECS HTTP credentials endpoint](#ecs-http-credentials-endpoint)
 - [EC2 Instance Profile Credentials (IMDS)](#ec2-instance-profile-credentials-imds)
 
-  All AWS plugins additionally support a `role_arn` (or `AWS_ROLE_ARN`, for
-  [Elasticsearch](../pipeline/outputs/elasticsearch.md)) configuration parameter. If
-  specified, the fetched credentials will then be used to assume the given role.
+All AWS plugins additionally support a `role_arn` (or `AWS_ROLE_ARN`, for
+[Elasticsearch](../pipeline/outputs/elasticsearch.md)) configuration parameter. If
+specified, the fetched credentials will then be used to assume the given role.
 
 ## Environment variables
 
