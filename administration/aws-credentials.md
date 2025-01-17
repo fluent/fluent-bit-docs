@@ -1,8 +1,7 @@
 # AWS Credentials
 
-Plugins that interact with AWS services fetch credentials from various providers in
-the following order. Only the first provider that's able to provide credentials will
-be used.
+Plugins that interact with AWS services fetch credentials from the following providers
+in order. Only the first provider that provides credentials is used.
 
 - [Environment variables](#environment-variables)
 - [Shared configuration and credentials files](#shared-configuration-and-credentials-files)
@@ -12,7 +11,7 @@ be used.
 
 All AWS plugins additionally support a `role_arn` (or `AWS_ROLE_ARN`, for
 [Elasticsearch](../pipeline/outputs/elasticsearch.md)) configuration parameter. If
-specified, the fetched credentials will then be used to assume the given role.
+specified, the fetched credentials are used to assume the given role.
 
 ## Environment variables
 
@@ -24,7 +23,7 @@ Plugins use the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and optionally
 Plugins read the shared `config` file at `$AWS_CONFIG_FILE` (or `$HOME/.aws/config`),
 and the shared credentials file at `$AWS_SHARED_CREDENTIALS_FILE` (or
 `$HOME/.aws/credentials`)  to fetch the credentials for the profile named
-`$AWS_PROFILE`  or `$AWS_DEFAULT_PROFILE` (or "default"). See
+`$AWS_PROFILE` or `$AWS_DEFAULT_PROFILE` (or "default"). See
 [Configuration and credential file settings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 
 The shared settings evaluate in the following order:
