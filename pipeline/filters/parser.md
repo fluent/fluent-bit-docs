@@ -12,7 +12,6 @@ The plugin supports the following configuration parameters:
 | Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
 | Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
 | Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
-| Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
 | Nest\_Under | Specify field name to nest parsed records under. |  |
 
 ## Getting Started
