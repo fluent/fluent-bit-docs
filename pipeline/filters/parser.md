@@ -184,7 +184,7 @@ you can nest them under a new field defined by `Nest_Under`:
     Match *
 ```
 
-Resulting in the following output:
+This configuration results in the following output:
 
 ```text
 $ fluent-bit -c dummy.conf
