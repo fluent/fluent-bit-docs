@@ -161,7 +161,7 @@ Fluent Bit v2.1.1
 ### Nest parsed fields
 
 Instead of expanding parsed fields at the root of the object,
-you may choose to have them nested under a new field defined by `Nest_Under`:
+you can nest them under a new field defined by `Nest_Under`:
 
 ```python copy
 [SERVICE]
