@@ -25,20 +25,20 @@ Without any extra configuration, Fluent Bit exposes certain pre-configured parse
 
 ### Configurable Multiline Parsers
 
-Besides the built-in parsers listed above, through the configuration files is possible to define your own Multiline parsers with their own rules. 
+Besides the built-in parsers listed above, through the configuration files is possible to define your own Multiline parsers with their own rules.
 
-A multiline parser is defined in a _parsers configuration file_ by using a `[MULTILINE_PARSER]` section definition. The Multiline parser must have a unique name and a type plus other configured properties associated with each type. 
+A multiline parser is defined in a _parsers configuration file_ by using a `[MULTILINE_PARSER]` section definition. The Multiline parser must have a unique name and a type plus other configured properties associated with each type.
 
 To understand which Multiline parser type is required for your use case you have to know beforehand what are the conditions in the content that determines the beginning of a multiline message and the continuation of subsequent lines. We provide a regex based configuration that supports states to handle from the most simple to difficult cases.
 
-| Property      | Description                                                                                                                                                                                                                                                                                                                                                                                                               | Default |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| name          | Specify a unique name for the Multiline Parser definition. A good practice is to prefix the name with the word `multiline_` to avoid confusion with normal parser's definitions.                                                                                                                                                                                                                                          |         |
-| type          | Set the multiline mode, for now, we support the type `regex`.                                                                                                                                                                                                                                                                                                                                                             |         |
-| parser        | <p>Name of a pre-defined parser that must be applied to the incoming content before applying the regex rule. If no parser is defined, it's assumed that's a raw text and not a structured message. </p><p></p><p>Note: when a parser is applied to a raw text, then the regex is applied against a specific key of the structured message by using the  <code>key_content</code>  configuration property (see below).</p> |         |
-| key_content   | For an incoming structured message, specify the key that contains the data that should be processed by the regular expression and possibly concatenated.                                                                                                                                                                                                                                                                  |         |
-| flush_timeout | Timeout in milliseconds to flush a non-terminated multiline buffer. Default is set to 5 seconds.                                                                                                                                                                                                                                                                                                                          | 5s      |
-| rule          | Configure a rule to match a multiline pattern. The rule has a specific format described below. Multiple rules can be defined.                                                                                                                                                                                                                                                                                             |         |
+| Property       | Description                                                                                                                                                                                                                                                                                                                                                                                                     | Default |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| name           | Specify a unique name for the Multiline Parser definition. A good practice is to prefix the name with the word `multiline_` to avoid confusion with normal parser's definitions.                                                                                                                                                                                                                                |         |
+| type           | Set the multiline mode, for now, we support the type `regex`.                                                                                                                                                                                                                                                                                                                                                   |         |
+| parser         | <p>Name of a pre-defined parser that must be applied to the incoming content before applying the regex rule. If no parser is defined, it's assumed that's a raw text and not a structured message.</p><p>Note: when a parser is applied to a raw text, then the regex is applied against a specific key of the structured message by using the <code>key_content</code> configuration property (see below).</p> |         |
+| key\_content   | For an incoming structured message, specify the key that contains the data that should be processed by the regular expression and possibly concatenated.                                                                                                                                                                                                                                                        |         |
+| flush\_timeout | Timeout in milliseconds to flush a non-terminated multiline buffer. Default is set to 5 seconds.                                                                                                                                                                                                                                                                                                                | 5s      |
+| rule           | Configure a rule to match a multiline pattern. The rule has a specific format described below. Multiple rules can be defined.                                                                                                                                                                                                                                                                                   |         |
 
 #### Lines and States
 
@@ -49,7 +49,7 @@ Before start configuring your parser you need to know the answer to the followin
 
 When matching regex, we have to define **states**, some states define the start of a multiline message while others are states for the continuation of multiline messages. You can have multiple **continuation states** definitions to solve complex cases.
 
-The first regex that matches the start of a multiline message is called **start_state**, then other regexes continuation lines can have different state names.
+The first regex that matches the start of a multiline message is called **start\_state**, then other regexes continuation lines can have different state names.
 
 #### Rules Definition
 
@@ -57,7 +57,7 @@ A rule specifies how to match a multiline pattern and perform the concatenation.
 
 1. state name
 2. regular expression pattern
-3. next state 
+3. next state
 
 A rule might be defined as follows (comments added to simplify the definition) :
 
@@ -68,9 +68,9 @@ rule         "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
 
-In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must be** inside double quotes. 
+In the example above, we have defined two rules, each one has its own state name, regex paterns, and the next state name. Every field that composes a rule **must be** inside double quotes.
 
-The first rule of state name **must always** be **start_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
+The first rule of state name **must always** be **start\_state**, and the regex pattern **must** match the first line of a multiline message, also a next state must be set to specify how the possible continuation lines would look like.
 
 {% hint style="info" %}
 To simplify the configuration of regular expressions, you can use the Rubular web site. We have posted an example by using the regex described above plus a log line that matches the pattern:\
@@ -92,7 +92,7 @@ Example files content:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output. 
+This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
 
 ```
 [SERVICE]
@@ -148,7 +148,6 @@ Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something
     at com.myproject.module.MyProject.someMethod(MyProject.java:10)
     at com.myproject.module.MyProject.main(MyProject.java:6)
 another line...
-
 ```
 {% endtab %}
 {% endtabs %}
@@ -169,7 +168,6 @@ $ fluent-bit -c fluent-bit.conf
 "}]
 [2] tail.0: [1626634867.472226330, {"log"=>"another line...
 "}]
-
 ```
 
 The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
@@ -178,6 +176,5 @@ The lines that did not match a pattern are not considered as part of the multili
 
 The multiline parser is a very powerful feature, but it has some limitations that you should be aware of:
 
-* The multiline parser is not affected by the `buffer_max_size` configuration option, allowing the composed log record to grow beyond this size.
-Hence, the `skip_long_lines` option will not be applied to multiline messages. 
-* It is not possible to get the time key from the body of the multiline message. However, it can be extracted and set as a new key by using a filter. 
+* The multiline parser is not affected by the `buffer_max_size` configuration option, allowing the composed log record to grow beyond this size. Hence, the `skip_long_lines` option will not be applied to multiline messages.
+* It is not possible to get the time key from the body of the multiline message. However, it can be extracted and set as a new key by using a filter.

@@ -2,7 +2,7 @@
 
 ## Install on Amazon Linux
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2. 
+Fluent Bit is distributed as **fluent-bit** package and is available for the latest Amazon Linux 2.
 
 The following architectures are supported
 
@@ -11,24 +11,21 @@ The following architectures are supported
 
 ## Single line install
 
-A simple installation script is provided to be used for most Linux targets.
-This will always install the most recent version released.
+A simple installation script is provided to be used for most Linux targets. This will always install the most recent version released.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-This is purely a convenience helper and should always be validated prior to use.
-The recommended secure deployment approach is to follow the instructions below.
+This is purely a convenience helper and should always be validated prior to use. The recommended secure deployment approach is to follow the instructions below.
 
 ## Configure Yum
 
-We provide **fluent-bit** through a Yum repository. 
-In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
+We provide **fluent-bit** through a Yum repository. In order to add the repository reference to your system, please add a new file called _fluent-bit.repo_ in _/etc/yum.repos.d/_ with the following content:
 
 ### Amazon Linux 2
 
-```config
+```
 [fluent-bit]
 name = Fluent Bit
 baseurl = https://packages.fluentbit.io/amazonlinux/2/$basearch/
@@ -45,7 +42,7 @@ From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated
 
 The GPG Key fingerprint of the new key is:
 
-```text
+```
 C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
@@ -54,7 +51,7 @@ The previous key is still available at [https://packages.fluentbit.io/fluentbit-
 
 The GPG Key fingerprint of the old key is:
 
-```text
+```
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 

@@ -8,6 +8,7 @@
 * [A Brief History of Fluent Bit](about/history.md)
 * [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
+* [Community Learning Page](about/community-learning-page.md)
 
 ## Concepts
 
@@ -140,7 +141,7 @@
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
-  * [Azure Blob](pipeline/outputs/azure\_blob.md)
+  * [Azure Blob](pipeline/outputs/azure_blob.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -187,7 +188,7 @@
 
 ## Fluent Bit for Developers <a href="#development" id="development"></a>
 
-* [C Library API](development/library\_api.md)
+* [C Library API](development/library_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)

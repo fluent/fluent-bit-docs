@@ -1,17 +1,17 @@
 # Prometheus Scrape Metrics
 
-Fluent Bit 1.9 includes additional metrics features to allow you to collect both logs and metrics with the same collector.&#x20;
+Fluent Bit 1.9 includes additional metrics features to allow you to collect both logs and metrics with the same collector.
 
 The initial release of the Prometheus Scrape metric allows you to collect metrics from a Prometheus-based endpoint at a set interval. These metrics can be routed to metric supported endpoints such as [Prometheus Exporter](../outputs/prometheus-exporter.md), [InfluxDB](../outputs/influxdb.md), or [Prometheus Remote Write](../outputs/prometheus-remote-write.md)
 
 ## Configuration <a href="#configuration" id="configuration"></a>
 
-| Key             | Description                                                                                                                                          | Default  |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| host            | The host of the prometheus metric endpoint that you want to scrape                                                                                   |          |
-| port            | The port of the promethes metric endpoint that you want to scrape                                                                                    |          |
+| Key              | Description                                                                                                                                          | Default  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| host             | The host of the prometheus metric endpoint that you want to scrape                                                                                   |          |
+| port             | The port of the promethes metric endpoint that you want to scrape                                                                                    |          |
 | scrape\_interval | The interval to scrape metrics                                                                                                                       | 10s      |
-| metrics\_path   | <p>The metrics URI endpoint, that must start with a forward slash.<br><br>Note: Parameters can also be added to the path by using <code>?</code></p> | /metrics |
+| metrics\_path    | <p>The metrics URI endpoint, that must start with a forward slash.<br><br>Note: Parameters can also be added to the path by using <code>?</code></p> | /metrics |
 
 ## Example
 
@@ -29,7 +29,6 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 [OUTPUT]
     name stdout
     match *
-
 ```
 
 **Example Output**
@@ -78,6 +77,3 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_pause_ns = 1917611
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_runs = 19
 ```
-
-
-
