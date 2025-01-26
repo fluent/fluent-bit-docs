@@ -8,6 +8,7 @@
 * [A Brief History of Fluent Bit](about/history.md)
 * [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
+* [Sandbox and Lab Resources](about/sandbox-and-lab-resources.md)
 
 ## Concepts
 
