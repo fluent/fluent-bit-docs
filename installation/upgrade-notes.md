@@ -17,8 +17,9 @@ infrastructure.
 
 ## Fluent Bit v4.0.0
 
-The Debian 12 package has been updated to use OpenSSL 3 rather than OpenSSL 1.1.
-This will show up as different required dependencies for that target at installation time.
+The Debian 12 package has been updated to use OpenSSL 3.0.0 rather than OpenSSL 1.1.0.
+This package displays as different required dependencies for that target at
+installation time.
 
 ## Fluent Bit v1.9.9
 
