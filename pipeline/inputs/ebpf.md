@@ -40,7 +40,7 @@ Create a build directory and run `cmake` with the `-DFLB_IN_EBPF=On` flag to ena
 ```bash
 mkdir build
 cd build
-cmake --DFLB_IN_EBPF=On --target=flb-ebpf-generate_skeletons ..
+cmake .. -DFLB_IN_EBPF=On
 ```
 
 3. **Compile the Source**
