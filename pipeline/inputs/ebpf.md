@@ -15,12 +15,13 @@ To enable `in_ebpf`, ensure the following dependencies are installed on your sys
 - **Required Packages**:
   - `bpftool`: Used to manage and debug eBPF programs.
   - `libbpf-dev`: Provides the `libbpf` library for loading and interacting with eBPF programs.
+  - `clang`: Clang compiler
   - **CMake** 3.13 or higher: Required for building the plugin.
 
 ### Installing Dependencies on Ubuntu
 ```bash
 sudo apt update
-sudo apt install libbpf-dev linux-tools-common cmake
+sudo apt install libbpf-dev linux-tools-common cmake clang
 ```
 
 ## Building Fluent Bit with `in_ebpf`
