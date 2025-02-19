@@ -10,28 +10,29 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 
 ## Configuration Parameters
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| host | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.  | 127.0.0.1 |
-| uri | Specify a custom HTTP URI. It must start with forward slash.| /loki/api/v1/push |
-| port | Loki TCP port | 3100 |
-| tls | Use TLS authentication | off |
-| http\_user | Set HTTP basic authentication user name |  |
-| http\_passwd | Set HTTP basic authentication password |  |
-| bearer\_token | Set bearer token authentication token value. |  |
-| header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. |  |
-| tenant\_id | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent. |  |
-| labels | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section. | job=fluent-bit |
-| label\_keys | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section. |  |
-| label\_map\_path | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section. | |
-| structured\_metadata | Optional comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata) for more information. | |
-| remove\_keys | Optional list of keys to remove. | |
-| drop\_single\_key | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. If set to `raw` and the log line is a string, the log line will be sent unquoted. | off |
-| line\_format | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format. | json |
-| auto\_kubernetes\_labels | If set to true, it will add all Kubernetes labels to the Stream labels | off |
-| tenant\_id\_key | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically. ||
-| compress | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression. ||
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| Key                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                     | Default           |
+|:--------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------|
+| host                            | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.                                                                                                                                                                                                                                                                                                               | 127.0.0.1         |
+| uri                             | Specify a custom HTTP URI. It must start with forward slash.                                                                                                                                                                                                                                                                                                                                                                    | /loki/api/v1/push |
+| port                            | Loki TCP port                                                                                                                                                                                                                                                                                                                                                                                                                   | 3100              |
+| tls                             | Use TLS authentication                                                                                                                                                                                                                                                                                                                                                                                                          | off               |
+| http\_user                      | Set HTTP basic authentication user name                                                                                                                                                                                                                                                                                                                                                                                         |                   |
+| http\_passwd                    | Set HTTP basic authentication password                                                                                                                                                                                                                                                                                                                                                                                          |                   |
+| bearer\_token                   | Set bearer token authentication token value.                                                                                                                                                                                                                                                                                                                                                                                    |                   |
+| header                          | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set.                                                                                                                                                                                                                                                                                                                                               |                   |
+| tenant\_id                      | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent.                                                                                                                                                                                                                                                                       |                   |
+| labels                          | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section.                                                                                                                                                                 | job=fluent-bit    |
+| label\_keys                     | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section.                                                                                                                                                                                                                                                                     |                   |
+| label\_map\_path                | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section.                                                                                                                                                                                                                                                                                                   |                   |
+| structured\_metadata            | Optional comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata) for more information.                                                                                                                                                               |                   |
+| structured\_metadata\_map\_keys | Optional comma-separated list of record key strings specifying record values of type map, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured-metadata) for more information. |                   |
+| remove\_keys                    | Optional list of keys to remove.                                                                                                                                                                                                                                                                                                                                                                                                |                   |
+| drop\_single\_key               | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. If set to `raw` and the log line is a string, the log line will be sent unquoted.                                                                                                                                                                                                | off               |
+| line\_format                    | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format.                                                                                             | json              |
+| auto\_kubernetes\_labels        | If set to true, it will add all Kubernetes labels to the Stream labels                                                                                                                                                                                                                                                                                                                                                          | off               |
+| tenant\_id\_key                 | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically.                                                                                                                                                                                                                                     |                   |
+| compress                        | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression.                                                                                                                                                                                                                                                                                                                 |                   |
+| workers                         | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                                                                                                                                                                                                            | `0`               |
 
 ## Labels
 
@@ -229,7 +230,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 {"job"="fluent-bit"} | json | line_format "{{.log}}"
 ```
 
-### Structured metadata
+### Structured Metadata
 
 [Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/)
 lets you attach custom fields to individual log lines without embedding the
@@ -254,11 +255,61 @@ The following configuration:
     structured_metadata pod=$kubernetes['pod_name']
 ```
 
-
 Other common uses for structured metadata include trace and span IDs, process and thread IDs, and log levels.
 
 Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
 with Loki deployments prior to Loki 3.0.
+
+#### Structured Metadata Maps
+In addition to the `structured_metadata` configuration parameter, a `structured_metadata_map_keys` is available, which can be used to dynamically populate structured metadata from map values in the log record. `structured_metadata_map_keys` can be set with a list of record accessors, where each one should reference map values in the log record. Record accessors which do not match a map value will simply be skipped.  
+
+The following configuration is similar to the above, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries.
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
+[OUTPUT]
+    name                         loki
+    match                        *
+    labels                       cluster=my-k8s-cluster, region=us-east-1
+    structured_metadata_map_keys $kubernetes
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  outputs:
+    - name:                         loki
+      match:                        *
+      labels:                       cluster=my-k8s-cluster, region=us-east-1
+      structured_metadata_map_keys: $kubernetes
+```
+{% endtab %}
+{% endtabs %}
+
+Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and `pod_name`, the above configuration is equivalent to:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
+[OUTPUT]
+    name                loki
+    match               *
+    labels              cluster=my-k8s-cluster, region=us-east-1
+    structured_metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  outputs:
+    - name:                loki
+      match:               *
+      labels:              cluster=my-k8s-cluster, region=us-east-1
+      structured_metadata: $kubernetes['namespace_name'], $kubernetes['pod_name']
+```
+{% endtab %}
+{% endtabs %}
 
 ## Networking and TLS Configuration
 
