@@ -29,6 +29,8 @@ $ ./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
     Name someip
@@ -41,6 +43,19 @@ In your main configuration file append the following _Input_ & _Output_ sections
 [OUTPUT]
     Name        stdout
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: someip
+      Event: '4,1,32768,1'
+      Event: '4,1,32769,2'
+      RPC: '4,1,1,CgAQAw=='
+```
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
