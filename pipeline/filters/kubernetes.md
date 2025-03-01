@@ -9,9 +9,10 @@ When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read 
   * Namespace
   * Container Name
   * Container ID
-* Query Kubernetes API Server to obtain extra metadata for the POD in question:
+* Query Kubernetes API Server or Kubelet to obtain extra metadata for the POD in question:
   * Pod ID
   * Labels
+  * Owner References
   * Annotations
   * Namespace Labels
   * Namespace Annotations
@@ -59,6 +60,7 @@ The plugin supports the following configuration parameters:
 | Namespace\_Labels | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 | Namespace\_Annotations | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 | Namespace\_Metadata\_Only | Include Kubernetes namespace metadata only and no pod metadata. If this is set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Owner\_References | Include Kubernetes owner references in the extra metadata | Off |
 
 ## Processing the 'log' value
 
@@ -155,6 +157,14 @@ spec:
 ```
 
 Note that the annotation value is boolean which can take a _true_ or _false_ and **must** be quoted.
+
+## Kubernetes Owner References
+
+An opt-in feature of Fluent Bit Kubernetes filter to include owner references information under `kubernetes.ownerReferences` field in the record when enabled. An example of record is shown below.
+
+```
+"kubernetes"=>{"pod_name"=>"fluentbit-gke-2p6b5", "namespace_name"=>"kube-system", "pod_id"=>"c759a5f5-xxxx-xxxx-9117-8a1dc0b1f907", "labels"=>{"component"=>"xxxx", "controller-revision-hash"=>"77665fff9", "k8s-app"=>"fluentbit-xxxx"}, "ownerReferences"=>[{"apiVersion"=>"apps/v1", "kind"=>"DaemonSet", "name"=>"fluentbit-gke", "uid"=>"1a12c3e2-d6c4-4a8a-b877-dd3c857d1aea", "controller"=>true, "blockOwnerDeletion"=>true}], "host"=>"xxx-2a9c049c-qgw3", "pod_ip"=>"10.128.0.111", "container_name"=>"fluentbit", "docker_id"=>"2accxxx", "container_hash"=>"xxxx", "container_image"=>"sha256:5163dxxxxea2"}}
+```
 
 ## Workflow of Tail + Kubernetes Filter
 
