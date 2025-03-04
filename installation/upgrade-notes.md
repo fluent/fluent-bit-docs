@@ -15,6 +15,21 @@ will appear after a tag and its associated release note. This lets users to expe
 the new release binary to appear and allow/deny/update it as appropriate in their
 infrastructure.
 
+## Fluent Bit v3.2.8
+
+Apt repos have their `Origin` and `Label` set to`packages.fluentbit.io` and `fluent-bit` respectively.
+This was done via <https://github.com/fluent/fluent-bit/pull/9949>.
+Previously both values were set to `. <CODENAME>`, e.g. `. Jammy`.
+
+For existing repos, doing an `apt-get` update will flag this change so the settings may need updating:
+
+```shell
+Repository 'https://packages.fluentbit.io/ubuntu/jammy jammy InRelease' changed its 'Origin' value from '. jammy' to 'packages.fluentbit.io'
+Repository 'https://packages.fluentbit.io/ubuntu/jammy jammy InRelease' changed its 'Label' value from '. jammy' to 'fluent-bit'
+```
+
+You may need to allow the updated information to be added, e.g. via `sudo apt-get update --allow-releaseinfo-change` or by modifying the repository configuration directly.
+
 ## Fluent Bit v1.9.9
 
 The `td-agent-bit` package is no longer provided after this release.
