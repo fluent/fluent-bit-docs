@@ -9,11 +9,20 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | imds\_version | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'. | v2 |
-| az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, "us-east-1a". | true |
+| partition | The [partition](https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html), such as `"aws"`. | false |
+| domain | The domain for AWS resources in the region, such as `"amazonaws.com"`. | false |
+| region | The [region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions), such as `"us-east-1"`. | false |
+| az | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones), such as `"us-east-1a"`. | true |
+| az\_id | The [availability zone ID](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#az-ids), such as `"use1-az1"`. | false |
+| placement\_group | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) name. | false |
+| partition\_number | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) partition number. | false |
+| host\_id | The [dedicated host](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html) ID. | false |
 | ec2\_instance\_id | The EC2 instance ID. | true |
 | ec2\_instance\_type | The EC2 instance type. | false |
-| private\_ip | The EC2 instance private ip. | false |
-| ami\_id | The EC2 instance image id. | false |
+| private\_ip | The EC2 instance private IPv4 address. | false |
+| public\_ip | The EC2 instance public IPv4 address. | false |
+| ipv6 | The EC2 instance IPv6 address. | false |
+| ami\_id | The EC2 instance image ID. | false |
 | account\_id | The account ID for current EC2 instance. | false |
 | hostname | The hostname for current EC2 instance. | false |
 | vpc\_id | The VPC ID for current EC2 instance. | false |
@@ -45,10 +54,19 @@ $ bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
     Name aws
     Match *
     imds_version v1
+    partition true
+    domain true
+    region true
     az true
+    az_id true
+    placement_group true
+    partition_number true
+    host_id true
     ec2_instance_id true
     ec2_instance_type true
     private_ip true
+    public_ip true
+    ipv6 true
     ami_id true
     account_id true
     hostname true
