@@ -75,6 +75,7 @@ For example, if you set up the configuration as below:
 
 [OUTPUT]
   Name file
+  Match *
   Format template
   Template {time} used={Mem.used} free={Mem.free} total={Mem.total}
 ```
