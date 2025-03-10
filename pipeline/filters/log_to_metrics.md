@@ -8,7 +8,7 @@ description: Generate metrics from logs
 
 ## Log To Metrics
 
-The _Log To Metrics Filter_ plugin allows you to generate log-derived metrics. It currently supports modes to count records, provide a gauge for field values or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values. This filter plugin does not actually act as a record filter and does not change or drop records. All records will pass this filter untouched and generated metrics will be emitted into a seperate metric pipeline.
+The _Log To Metrics Filter_ plugin allows you to generate log-derived metrics. It currently supports modes to count records or field values, provide a gauge for field values or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values. This filter plugin does not actually act as a record filter and does not change or drop records. All records will pass this filter untouched and generated metrics will be emitted into a seperate metric pipeline.
 
 _Please note that this plugin is an experimental feature and is not recommended for production use. Configuration parameters and plugin functionality are subject to change without notice._
 
@@ -25,7 +25,7 @@ The plugin supports the following configuration parameters:
 | bucket                | Defines a bucket for `histogram`                                                                                                                                                                                                                                                                                                                                                                                              | Yes, for mode `histogram`                 | e.g. 0.75                                                                                                                                               |
 | add\_label            | Add a custom label NAME and set the value to the value of KEY                                                                                                                                                                                                                                                                                                                                                                 |                                           |                                                                                                                                                         |
 |  label\_field         | Includes a record field as label dimension in the metric.                                                                                                                                                                                                                                                                                                                                                                     |                                           | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| value\_field          | Specify the record field that holds a numerical value                                                                                                                                                                                                                                                                                                                                                                         | Yes, for modes \[`gauge` and `histogram`] | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| value\_field          | Specify the record field that holds a numerical value                                                                                                                                                                                                                                                                                                                                                                         | Yes, for modes \[`gauge` and `histogram`, optional for `counter`] | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
 | kubernetes\_mode      | If enabled, it will automatically put pod\_id, pod\_name, namespace\_name, docker\_id and container\_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](kubernetes.md) filter plugin, which fills those fields.                                                                                                                                                          |                                           |                                                                                                                                                         |
 | Regex                 | Include records in which the content of KEY matches the regular expression.                                                                                                                                                                                                                                                                                                                                                   |                                           | KEY REGEX                                                                                                                                               |
 | Exclude               | Exclude records in which the content of KEY matches the regular expression.                                                                                                                                                                                                                                                                                                                                                   |                                           | KEY REGEX                                                                                                                                               |
@@ -34,7 +34,7 @@ The plugin supports the following configuration parameters:
 
 ### Getting Started
 
-The following example takes records from two dummy inputs and counts all messages passing through the `log_to_metrics` filter. It then generates metric records which are provided to the `prometheus_exporter`:
+The following example takes records from two dummy inputs and generates two different counter metrics: It counts all messages passing through the `log_to_metrics` filter and it counts the total time spend according to the duration field of each message. It then generates metric records which are provided to the `prometheus_exporter`:
 
 #### Configuration - Counter
 
@@ -61,6 +61,15 @@ The following example takes records from two dummy inputs and counts all message
     metric_name        count_all_dummy_messages
     metric_description This metric counts dummy messages
 
+[FILTER]
+    name               log_to_metrics
+    match              dummy.log*
+    tag                test_metric
+    metric_mode        counter
+    metric_name        total_duration 
+    metric_description This metric counts the total time spend
+    value_field        duration
+
 [OUTPUT]
     name               prometheus_exporter
     match              *
@@ -76,7 +85,10 @@ You can then use e.g. curl command to retrieve the generated metric:
 
 # HELP log_metric_counter_count_all_dummy_messages This metric counts dummy messages
 # TYPE log_metric_counter_count_all_dummy_messages counter
-log_metric_counter_count_all_dummy_messages 49
+log_metric_counter_count_all_dummy_messages 24
+# HELP log_metric_counter_total_duration This metric counts the total time spend
+# TYPE log_metric_counter_total_duration counter
+log_metric_counter_total_duration 960
 ```
 
 #### Configuration - Gauge
