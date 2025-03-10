@@ -55,7 +55,7 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 
 Example configuration file for k8s resource type:
 
-local_resource_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entry. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
+`local_resource_id` is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entry. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
 
 The local_resource_id should be in format:
 
