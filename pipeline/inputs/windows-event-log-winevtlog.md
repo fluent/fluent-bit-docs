@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 | DB | Set the path to save the read offsets. \(optional\) |  |
 | String\_Inserts | Whether to include StringInserts in output records. \(optional\) | True  |
 | Render\_Event\_As\_XML | Whether to render system part of event as XML string or not. \(optional\) | False  |
-| Ignore\_Missing\_Channels | Whether to ignore event channels not present in the event log and keep running with channels that could be subscribed to. \(optional\) | False  |
+| Ignore\_Missing\_Channels | Whether to ignore event channels not present in the event log, and continue running with subscribed channels. \(optional\) | False  |
 | Use\_ANSI | Use ANSI encoding on eventlog messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to True may solve the problem. \(optional\) | False  |
 | Event\_Query | Specify XML query for filtering events. | `*` |
 | Read\_Limit\_Per\_Cycle | Specify read limit per cycle.  | 512KiB |
