@@ -47,7 +47,7 @@ Credentials are fetched for the ECS task's role. See
 
 ## EKS Pod Identity credentials
 
-Credentials are fetched using pod identity endpoint. See
+Credentials are fetched using  a pod identity endpoint. See
 [Learn how EKS Pod Identity grants pods access to AWS services](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
 
 ## EC2 instance profile credentials (IMDS)
