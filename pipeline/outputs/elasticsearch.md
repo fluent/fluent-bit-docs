@@ -160,12 +160,14 @@ pipeline:
 
 ### Configuration File with Upstream
 
-In your main configuration file append the following `Input` and `Output` sections:
+#### Classic mode Configuration File with Upstream
+
+In your main classic mode configuration file append the following `Input` and `Output` sections:
 
 ```text
 [INPUT]
-    Name     cpu
-    Tag      cpu
+    Name     dummy
+    Dummy    { "message" : "this is dummy data" }
 
 [OUTPUT]
     Name     es
@@ -196,6 +198,54 @@ configuration file can be similar to the following:
     name     node-3
     host     localhost
     port     9203
+```
+
+#### YAML Configuration File with Upstream
+
+In your main YAML configuration file (fluent-bit.yaml) put the following `Input` and `Output` sections:
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: "{ \"message\" : \"this is dummy data\" }"
+  outputs:
+    - name: es
+      match: "*"
+      index: fluent-bit
+      type: my_type
+      upstream: ./upstream.yaml
+```
+
+Your Upstream Servers configuration file can use
+[classic mode](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
+(refer to "Classic mode Configuration File with Upstream" section at this page) or
+[YAML format](../../administration/configuring-fluent-bit/yaml/upstream-servers-section.md).
+If Upstream Servers configuration uses YAML format, then it can be placed in the same file as main configuration (for example, in fluent-bit.yaml), like:
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: "{ \"message\" : \"this is dummy data\" }"
+  outputs:
+    - name: es
+      match: "*"
+      index: fluent-bit
+      type: my_type
+      upstream: ./fluent-bit.yaml
+upstream_servers:
+  - name: es-balancing
+    nodes:
+      - name: node-1
+        host: localhost
+        port: 9201
+      - name: node-2
+        host: localhost
+        port: 9202
+      - name: node-3
+        host: localhost
+        port: 9203
 ```
 
 ## Elasticsearch field names
