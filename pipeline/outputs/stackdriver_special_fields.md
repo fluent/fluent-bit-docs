@@ -221,7 +221,7 @@ The `logging.googleapis.com/monitored_resource` field is parsed in a special way
 
 The `type` field from the [`MonitoredResource` proto]() is not parsed out of the special field. It is read from the [`resource` plugin configuration option](https://docs.fluentbit.io/manual/pipeline/outputs/stackdriver#configuration-parameters). If it is supplied in the `logging.googleapis.com/monitored_resource` special field, it will not be recognized.
 
-The `labels` field is expected to be an `object<string, string>`. If any fields have a value that is not a string, the value will be ignored and not preserved. The plugin will log an error and drop the field.
+The `labels` field is expected to be an `object<string, string>`. If any fields have a value that is not a string, the value is ignored and not preserved. The plugin logs an error and drops the field.
 
 If no valid `labels` field is found, or if all of entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
 
