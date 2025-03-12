@@ -26,7 +26,7 @@ Currently, we support some special fields in fluent-bit for setting fields on th
 | JSON log field | Description |
 | :--- | :--- |
 | `logging.googleapis.com/projectId` | Changes the project ID that this log will be written to. Ensure that you are authenticated to write logs to this project. |
-| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](). |
+| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](./stackdriver.md#resource-labels). |
 
 ## Using Special Fields
 
@@ -61,7 +61,7 @@ Adding special fields to logs is best done through the [`modify` filter](https:/
 
 For special fields with simple types (with the exception of the [`logging.googleapis.com/insertId` field](#insert-id)), they will follow this pattern (demonstrated with the `logging.googleapis.com/logName` field):
 
-**1. If the special field matches the type, it will be moved to the corresponding LogEntry field.** For example:
+1. If the special field matches the type, it will be moved to the corresponding LogEntry field. For example:
 ```text
 {
     "logging.googleapis.com/logName": "my_log"
@@ -79,7 +79,7 @@ the logEntry will be:
 }
 ```
 
-**2. If the field is non-empty but an invalid, it will be left in the jsonPayload.** For example:
+2. If the field is non-empty but an invalid, it will be left in the jsonPayload. For example:
 ```text
 {
     "logging.googleapis.com/logName": 12345
@@ -132,7 +132,7 @@ The `timestampSecond` and `timestampNano` fields don't map directly to the `time
 
 For special fields that expect the format of a proto type from the `LogEntry` (with the exception of the `logging.googleapis.com/monitored_resource` field) will follow this pattern (demonstrated with the `logging.googleapis.com/operation` field):
 
-**If any subfields of the proto are empty or in incorrect type, the plugin will set these subfields empty.** For example:
+If any subfields of the proto are empty or in incorrect type, the plugin will set these subfields empty. For example:
 ```text
 {
     "logging.googleapis.com/operation": {
@@ -158,7 +158,7 @@ the logEntry will be:
 }
 ```
 
-**If the field itself is not a map, the plugin will leave this field untouched.** For example:
+If the field itself is not a map, the plugin will leave this field untouched. For example:
 ```text
 {
     "logging.googleapis.com/operation": "some string",
@@ -176,7 +176,7 @@ the logEntry will be:
 }
 ```
 
-**If there are extra subfields, the plugin will add the recognized fields to the corresponding field in the LogEntry, and preserve the extra subfields in jsonPayload.** For example:
+If there are extra subfields, the plugin will add the recognized fields to the corresponding field in the LogEntry, and preserve the extra subfields in jsonPayload. For example:
 ```text
 {
     "logging.googleapis.com/operation": {
@@ -221,7 +221,7 @@ The `logging.googleapis.com/monitored_resource` field is parsed in a special way
 
 The `type` field from the [`MonitoredResource` proto]() is not parsed out of the special field. It is read from the [`resource` plugin configuration option](https://docs.fluentbit.io/manual/pipeline/outputs/stackdriver#configuration-parameters). If it is supplied in the `logging.googleapis.com/monitored_resource` special field, it will not be recognized.
 
-The `labels` field is expected to be an `object<string, string>`. If any fields have a value that is not a string, the value will be ignored and **not preserved**. The plugin will log an error and drop the field.
+The `labels` field is expected to be an `object<string, string>`. If any fields have a value that is not a string, the value will be ignored and not preserved. The plugin will log an error and drop the field.
 
 If no valid `labels` field is found, or if all of entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
 
@@ -253,7 +253,8 @@ If one of the following JSON timestamp representations is present in a structure
 
 Without time-related fields, the plugin will set the current time as timestamp.
 
-**Format 1**
+### Format 1
+
 Set the input log as followed:
 ```text
 {
@@ -275,7 +276,8 @@ the logEntry will be:
 }
 ```
 
-**Format 2**
+### Format 2
+
 Set the input log as followed:
 ```text
 {
