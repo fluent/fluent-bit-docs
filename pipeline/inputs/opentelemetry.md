@@ -14,7 +14,7 @@ Our compliant implementation fully supports OTLP/HTTP and OTLP/GRPC. Note that t
 | ----------------- | -----------------------------------------------------------------------------------| ------- |
 | listen            | The network address to listen.                                                     | 0.0.0.0 |
 | port              | The port for Fluent Bit to listen for incoming connections. Note that as of Fluent Bit v3.0.2 this port is used for both transport OTLP/HTTP and OTLP/GRPC.                                                                                      | 4318    |
-| tag_key           | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the  |         |
+| tag_key           | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key  |         |
 | raw_traces        | Route trace data as a log                                                          | false   |
 | buffer_max_size   | Specify the maximum buffer size in KB/MB/GB to the HTTP payload.                   | 4M      |
 | buffer_chunk_size | Initial size and allocation strategy to store the payload (advanced users only)    | 512K    |
