@@ -55,7 +55,7 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 
 Example configuration file for k8s resource type:
 
-local_resource_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entry. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
+`local_resource_id` is used by the Stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the `local_resource_id` field in the log entry. If there is no field `logging.googleapis.com/local_resource_id` in the log, the plugin will then construct it by using the tag value of the log.
 
 The local_resource_id should be in format:
 
@@ -157,6 +157,15 @@ For instance, for a K8s resource type, `resource_labels` can be used in tandem w
 ```
 
 `resource_labels` also supports validation for required labels based on the input resource type. This allows fluent-bit to check if all specified labels are present for a given configuration before runtime. If validation is not currently supported for a resource type that you would like to use this API with, we encourage you to open a pull request for it. Adding validation for a new resource type is simple - all that is needed is to specify the resources associated with the type alongside the required labels [here](https://github.com/fluent/fluent-bit/blob/master/plugins/out_stackdriver/stackdriver_resource_types.c#L27).
+
+## Log Name
+
+By default, the plugin will write to the following log name:
+```
+/projects/<project ID>/logs/<log tag>
+```
+You may be in a scenario where being more specific about the log name is important (for example [integration with Log Router rules](https://cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics]((https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series))). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field][StackdriverSpecialFields]. You can configure a `log_name_key` if you'd like to use something different than `logging.googleapis.com/logName`, i.e. if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
+
 ## Troubleshooting Notes
 
 ### Upstream connection error
