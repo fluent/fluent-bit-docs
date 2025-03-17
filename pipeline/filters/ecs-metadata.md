@@ -20,7 +20,7 @@ The following template variables can be used for values with the `Add` option. S
 | Variable | Description | Supported with Cluster\_Metadata\_Only On |
 | :--- | :--- | :--- |
 | `$ClusterName` | The ECS cluster name. Fluent Bit is running on EC2 instance(s) that are part of this cluster. | Yes |
-| `$ContainerInstanceARN` | The full ARN of the ECS EC2 Container Instance. This is the instance that Fluent Bit is running on. | Yes |
+| `$ContainerInstanceArn` | The full ARN of the ECS EC2 Container Instance. This is the instance that Fluent Bit is running on. | Yes |
 | `$ContainerInstanceID` | The ID of the ECS EC2 Container Instance. | Yes |
 | `$ECSAgentVersion` | The Version string of the ECS Agent that is running on the container instance. | Yes |
 | `$ECSContainerName` | The name of the container from which the log originated. This is the name in your ECS Task Definition. | No |
