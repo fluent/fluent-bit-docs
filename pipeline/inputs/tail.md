@@ -136,10 +136,10 @@ In your main configuration file, append the following `Input` and `Output` secti
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```python
+```text
 [INPUT]
-    Name        tail
-    Path        /var/log/syslog
+    Name    tail
+    Path    /var/log/syslog
 
 [OUTPUT]
     Name   stdout
@@ -180,6 +180,9 @@ We need to specify a `Parser_Firstline` parameter that matches the first line of
 
 In the case above we can use the following parser, that extracts the Time as `time` and the remaining portion of the multiline as `log`
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [PARSER]
     Name multiline
@@ -188,9 +191,24 @@ In the case above we can use the following parser, that extracts the Time as `ti
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+parsers:
+  - name: multiline
+    format: regex
+    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+    time_key: time
+    time_format: '%b %d %H:%M:%S'
+```
+{% endtab %}
+{% endtabs %}
 
 If we want to further parse the entire event we can add additional parsers with `Parser_N` where N is an integer. The final Fluent Bit configuration looks like the following:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 # Note this is generally added to parsers.conf and referenced in [SERVICE]
 [PARSER]
@@ -210,6 +228,31 @@ If we want to further parse the entire event we can add additional parsers with 
     Name             stdout
     Match            *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+parsers:
+  - name: multiline
+    format: regex
+    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+    time_key: time
+    time_format: '%b %d %H:%M:%S'
+
+pipeline:
+  inputs:
+    - name:  tail
+      multiline: on
+      read_from_head: true
+      parser_firstline: multiline
+      path: /var/log/java.log
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Our output will be as follows.
 
@@ -262,12 +305,26 @@ Fluent Bit keep the state or checkpoint of each file through using a SQLite data
 
 The SQLite journaling mode enabled is `Write Ahead Log` or `WAL`. This allows to improve performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
     name    tail
     path    /var/log/containers/*.log
     db      test.db
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name:  tail
+      path: /var/log/containers/*.log
+      db: test.db
+```
+{% endtab %}
+{% endtabs %}
 
 The above configuration enables a database file called `test.db` and in the same path for that file SQLite will create two additional files:
 
