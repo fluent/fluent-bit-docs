@@ -15,6 +15,12 @@ will appear after a tag and its associated release note. This lets users to expe
 the new release binary to appear and allow/deny/update it as appropriate in their
 infrastructure.
 
+## Fluent Bit v4.0.0
+
+The Debian 12 package has been updated to use OpenSSL 3.0.0 rather than OpenSSL 1.1.0.
+This package displays as different required dependencies for that target at
+installation time.
+
 ## Fluent Bit v1.9.9
 
 The `td-agent-bit` package is no longer provided after this release.
