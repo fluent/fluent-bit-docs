@@ -33,6 +33,7 @@ Content and Splunk metadata \(fields\) handling configuration properties:
 | event\_key | Specify the key name that will be used to send a single value as part of the record. |  |
 | event\_host | Specify the key name that contains the host value. This option allows a record accessors pattern. |  |
 | event\_source | Set the source value to assign to the event data. |  |
+| event\_source\_key | Set a record key that will populate 'source'. If the key is found, it will have precedence over the value set in `event_source`. |  |
 | event\_sourcetype | Set the sourcetype value to assign to the event data. |  |
 | event\_sourcetype\_key | Set a record key that will populate 'sourcetype'. If the key is found, it will have precedence over the value set in `event_sourcetype`. |  |
 | event\_index | The name of the index by which the event data is to be indexed. |  |
