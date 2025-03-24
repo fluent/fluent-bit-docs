@@ -25,7 +25,7 @@ The `service` section defines global properties of the service. The available co
 
 ### Configuration Example
 
-Below is a simple configuration example that defines a `service` section and a pipeline with a `random` input and `stdout` output:
+Below is a simple configuration example that defines a `service` section with [hot reloading](../../hot_reload.md) enabled and a pipeline with a `random` input and `stdout` output:
 
 ```yaml
 service:
