@@ -14,6 +14,8 @@ Hot reloading is supported on Linux, macOS, and Windows operating systems.
 To get started with reloading over HTTP, enable the HTTP Server
 in the configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [SERVICE]
     HTTP_Server  On
@@ -22,6 +24,18 @@ in the configuration file:
     Hot_Reload   On
 ...
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2020
+    hot_reload: on
+```
+{% endtab %}
+{% endtabs %}
 
 ## How to reload
 
