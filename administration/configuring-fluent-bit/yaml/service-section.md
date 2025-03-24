@@ -16,7 +16,7 @@ The `service` section defines global properties of the service. The available co
 | `http_server` | Enables the built-in HTTP Server. | `off` |
 | `http_listen` | Sets the listening interface for the HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port` | Sets the TCP port for the HTTP Server. | `2020` |
-| `hot_reload` | Enables hot reloading of configuration with SIGHUP. | `on` |
+| `hot_reload` | Enables hot [reloading](../../hot_reload.md) of configuration with SIGHUP. | `on` |
 | `coro_stack_size` | Sets the coroutine stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (`4096`) can cause coroutine threads to overrun the stack buffer. The default value of this parameter should not be changed. | `24576` |
 | `scheduler.cap` | Sets a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
 | `scheduler.base` | Sets the base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
