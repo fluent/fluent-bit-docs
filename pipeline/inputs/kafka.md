@@ -16,6 +16,8 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | Buffer\_Max\_Size | Specify the maximum size of buffer per cycle to poll kafka messages from subscribed topics. To increase throughput, specify larger size. | 4M |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 | threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| enable_auto_commit | Use kafa auto-commit instead of commiting easch individual message. | `false` |
+
 
 ## Getting Started
 
