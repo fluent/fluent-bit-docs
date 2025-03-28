@@ -9,7 +9,8 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Add | This parameter is similar to the ADD option in the [modify filter](https://docs.fluentbit.io/manual/pipeline/filters/modify).  You can specify it any number of times and it takes two arguments, a KEY name and VALUE. The value uses Fluent Bit [record_accessor](https://docs.fluentbit.io/manual/v/1.5/administration/configuring-fluent-bit/record-accessor) syntax to create a template that uses ECS Metadata values. See the list below for supported metadata templating keys. This option is designed to give you full power to control both the key names for metadata as well as the format for metadata values. See the examples below for more.  | No default |
-| ECS\_Tag\_Prefix | This parameter is similar to the Kube_Tag_Prefix option in the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) and performs the same function. The full log tag should be prefixed with this string and after the prefix the filter must find the next characters in the tag to be the Docker Container Short ID (the first 12 characters of the full container ID). The filter uses this to identify which container the log came from so it can find which task it is a part of. See the design section below for more information. If not specified, it defaults to empty string, meaning that the tag must be prefixed with the 12 character container short ID. If you just want to attach cluster metadata to system/OS logs from processes that do not run as part of containers or ECS Tasks, then do not set this parameter and enable the Cluster\_Metadata\_Only option | emptry string |
+| ECS\_Tag\_Prefix | This parameter is similar to the Kube_Tag_Prefix option in the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) and performs the same function. The full log tag should be prefixed with this string and after the prefix the filter must find the next characters in the tag to be the Docker Container Short ID (the first 12 characters of the full container ID). The filter uses this to identify which container the log came from so it can find which task it is a part of. See the design section below for more information. If not specified, it defaults to empty string, meaning that the tag must be prefixed with the 12 character container short ID. If you just want to attach cluster metadata to system/OS logs from processes that do not run as part of containers or ECS Tasks, then do not set this parameter and enable the Cluster\_Metadata\_Only option | Empty string |
+| Container\_Id\_Field\_Name | If set to a non-empty string, retrieves the Container Short ID from an already populated field designated by this parameter. Only the cluster metadata will be attached if the field is incorrect or holds invalid data. | Empty string |
 | Cluster\_Metadata\_Only | When enabled, the plugin will only attempt to attach cluster metadata values. This is useful if you want to attach cluster metadata to system/OS logs from processes that do not run as part of containers or ECS Tasks. | Off |
 | ECS\_Meta\_Cache\_TTL | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max TTL for objects in the hash table. You should set this if you have frequent container/task restarts. For example, your cluster runs short running batch jobs that complete in less than 10 minutes, there is no reason to keep any stored metadata longer than 10 minutes. So you would set this parameter to "10m". | 1h (1 hour) |
 
@@ -36,7 +37,7 @@ The following template variables can be used for values with the `Add` option. S
 
 #### Example 1: Attach Task ID and cluster name to container logs
 
-```text
+```text copy
 [INPUT]
     Name                tail
     Tag                 ecs.*
@@ -78,7 +79,7 @@ The output log should be similar to:
 
 #### Example 2: Attach customized resource name to container logs
 
-```text
+```text copy
 [INPUT]
     Name                tail
     Tag                 ecs.*
@@ -123,7 +124,7 @@ Notice that the template variables in the value for the `resource` key are separ
 
 This examples shows a use case for the `Cluster_Metadata_Only` option- attaching cluster metadata to ECS Agent logs. 
 
-```text
+```text copy
 [INPUT]
     Name                tail
     Tag                 ecsagent.*
@@ -146,6 +147,34 @@ This examples shows a use case for the `Cluster_Metadata_Only` option- attaching
 [OUTPUT]
     Name stdout
     Match *
+    Format json_lines
+```
+
+#### Example 4: Attach task metadata using container ID field
+
+Attaches the cluster metadata and task metadata using the populated `container_id`
+field, which includes the container ID to query the ECS introspection endpoint. In this
+configuration the tag of the incoming log record can be set to anything.
+
+```text copy
+[INPUT]
+  Name   forward
+  Listen 0.0.0.0
+  Port   24224
+
+[FILTER]
+  Name                           ecs
+  Match                          *
+  container_id_field_name        container_id
+  ADD ecs_cluster                $ClusterName
+  ADD ecs_task_id                $TaskID
+  ADD ecs_container_name         $ECSContainerName
+  ADD ecs_task_definition_family $TaskDefinitionFamily
+  ADD ecs_task_id                $TaskID
+
+[OUTPUT]
+    Name   stdout
+    Match  *
     Format json_lines
 ```
 
