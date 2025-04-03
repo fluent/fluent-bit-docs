@@ -1,6 +1,8 @@
 # Conditional processing
 
-Conditional processing allows you to selectively apply processors to log records based on field values. This feature enables you to create processing pipelines that apply processors only to records that match specific criteria.
+Conditional processing lets you selectively apply [processors](README.md) to logs based on
+the value of fields that those logs contain. This feature lets you create processing pipelines
+that only process records that meet certain criteria, and ignore the rest.
 
 ## Configuration
 
