@@ -2,62 +2,90 @@
 
 Conditional processing allows you to selectively apply processors to log records based on field values. This feature enables you to create processing pipelines that apply processors only to records that match specific criteria.
 
-## Configuration format
+## Configuration
 
-Conditional processing is available for processors in the YAML configuration format. To apply a processor conditionally, you add a `condition` block to the processor configuration:
+You can turn a standard processor into a conditional processor by adding a `condition` block to the
+processor's YAML configuration settings.
+
+{% hint style="info" %}
+Conditional processing is only available for
+[YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md),
+not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
+{% endhint %}
+
+
+These `condition` blocks use the following syntax:
 
 ```yaml
-- name: processor_name
-  # Regular processor configuration...
-  condition:
-    op: and|or
-    rules:
-      - field: "$field_name"
-        op: comparison_operator
-        value: comparison_value
-      # Additional rules...
+pipeline:
+  inputs:
+  <...>
+      processors:
+        logs:
+          - name: {processor_name}
+            <...>
+            condition:
+	      op: {and|or}
+              rules:
+                - field: {field_name1}
+                  op: {comparison_operator}
+                  value: {comparison_value1}
+                - field: {field_name2}
+                  op: {comparison_operator}
+                  value: {comparison_value2}
+            <...>
 ```
 
-### Condition operators
+Each processor can only have a single `condition` block, but can have multiple rules within that condition.
+These rules are stored as items in the `condition.rules` array.
 
-The `op` field in the condition block specifies the logical operator to apply across all rules:
+### Condition evaluation
 
-| Operator | Description |
-| --- | --- |
-| `and` | All rules must evaluate to true for the condition to be true |
-| `or` | At least one rule must evaluate to true for the condition to be true |
+The `condition.op` parameter specifies the condition's evaluation logic. It has two possible values:
+
+- `and`: All rules in the `condition.rules` array must evaluate to `true` for the condition to be met.
+- `or`: One or more rules in the `conditions.rules` array must evaluate to `true` for the condition to be met.
 
 ### Rules
 
-Each rule consists of:
+Each item in the `condition.rules` array must include values for the following parameters:
 
-- `field`: The field to evaluate (must use [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md) with `$` prefix)
-- `op`: The comparison operator
-- `value`: The value to compare against
-
-### Comparison operators
-
-The following comparison operators are supported:
-
-| Operator | Description |
+| Parameter | Description |
 | --- | --- |
-| `eq` | Equal to |
-| `neq` | Not equal to |
-| `gt` | Greater than |
-| `lt` | Less than |
-| `gte` | Greater than or equal to |
-| `lte` | Less than or equal to |
-| `regex` | Matches regular expression |
-| `not_regex` | Does not match regular expression |
-| `in` | Value is in the specified array |
-| `not_in` | Value is not in the specified array |
+| `field` | The field within your logs to evaluate. The value of this parameter must use [the correct syntax](#field-access) to access the fields inside logs. |
+| `op` | The [comparison operator](#comparison-operators) to evaluate whether the rule is true. This parameter (`condition.rules.op`) is distinct from the `condition.op` parameter and has different possible values. |
+| `value` | The value of the specified log field to use in your comparison. Optionally, you can provide [an array that contains multiple values](#array-of-values). | 
 
-### Field access
+Rules are evaluated against each log that passes through your data pipeline. For example, given a rule with these parameters:
 
-You can access record fields using [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md):
+```
+- field: "$status"
+   op: eq
+   value: 200
+```
 
-- Simple fields: `$field`
-- Nested fields: `$parent['child']['subchild']`
+This rule evaluates to `true` for a log that contains the string `'status':200`, but evaluates to `false` for a log that contains the string `'status':403`.
+
+#### Field access
+
+The `conditions.rules.field` parameter uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md) to reference fields inside logs.
+
+You can use `$field` syntax to access a top-level field, and `$field['child']['subchild']` to access nested fields.
+
+#### Comparison operators
+
+The `conditions.rules.op` parameter has the following possible values:
+
+- `eq`: equal to
+- `neq`: not equal to
+- `gt`: greater than
+- `lt`: less than
+- `gte`: greater than or equal to
+- `lte`: less than or equal to
+- `regex`: matches a regular expression
+- `not_regex`: does not match a regular expression
+- `in`: is included in the specified array
+- `not_in`: is not included in the specified array
 
 ## Examples
 
