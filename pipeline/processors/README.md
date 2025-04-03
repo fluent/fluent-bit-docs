@@ -6,7 +6,7 @@ Processors are components that can modify, transform, or enhance data records as
 
 Fluent Bit offers the following processors:
 
-- [Content Modifier](content-modifier.md): Manipulate message content, metadata/attributes for logs and traces
+- [Content Modifier](content-modifier.md): Manipulate the content, metadata, and attributes of logs and traces.
 - [Labels](labels.md): Add, update or delete labels in records
 - [Metrics Selector](metrics-selector.md): Select specific metrics
 - [OpenTelemetry Envelope](opentelemetry-envelope.md): Convert logs to OpenTelemetry format
