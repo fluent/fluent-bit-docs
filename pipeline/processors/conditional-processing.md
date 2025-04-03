@@ -113,9 +113,9 @@ pipeline:
                   value: "POST"
 ```
 
-### Multiple conditions with AND
+### Multiple conditions with `and`
 
-Apply a processor only when both conditions are met:
+This example applies a condition that only processes logs when all of the specified rules are met:
 
 ```yaml
 pipeline:
