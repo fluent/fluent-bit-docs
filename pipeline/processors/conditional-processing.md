@@ -1,18 +1,19 @@
 # Conditional processing
 
-Conditional processing lets you selectively apply [processors](README.md) to logs based on
-the value of fields that those logs contain. This feature lets you create processing pipelines
-that only process records that meet certain criteria, and ignore the rest.
+Conditional processing lets you selectively apply [processors](README.md) to
+logs based on the value of fields that those logs contain. This feature lets you
+create processing pipelines that only process records that meet certain
+criteria, and ignore the rest.
+
+Conditional processing is available in Fluent Bit version 4.0 and greater.
 
 ## Configuration
 
-You can turn a standard processor into a conditional processor by adding a `condition` block to the
-processor's YAML configuration settings.
+You can turn a standard processor into a conditional processor by adding a
+`condition` block to the processor's YAML configuration settings.
 
 {% hint style="info" %}
-Conditional processing is only available for
-[YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md),
-not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
+Conditional processing is only available for [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
 {% endhint %}
 
 
@@ -38,15 +39,19 @@ pipeline:
             <...>
 ```
 
-Each processor can only have a single `condition` block, but can have multiple rules within that condition.
-These rules are stored as items in the `condition.rules` array.
+Each processor can only have a single `condition` block, but that condition can
+include multiple rules. These rules are stored as items in the `condition.rules`
+array.
 
 ### Condition evaluation
 
-The `condition.op` parameter specifies the condition's evaluation logic. It has two possible values:
+The `condition.op` parameter specifies the condition's evaluation logic. It has
+two possible values:
 
-- `and`: All rules in the `condition.rules` array must evaluate to `true` for the condition to be met.
-- `or`: One or more rules in the `conditions.rules` array must evaluate to `true` for the condition to be met.
+- `and`: A log entry meets this condition when all of the rules in the `condition.rules`
+  are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
+- `or`: A log entry meets this condition when one or more rules in the `condition.rules`
+  array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
 
 ### Rules
 
@@ -56,7 +61,7 @@ Each item in the `condition.rules` array must include values for the following p
 | --- | --- |
 | `field` | The field within your logs to evaluate. The value of this parameter must use [the correct syntax](#field-access) to access the fields inside logs. |
 | `op` | The [comparison operator](#comparison-operators) to evaluate whether the rule is true. This parameter (`condition.rules.op`) is distinct from the `condition.op` parameter and has different possible values. |
-| `value` | The value of the specified log field to use in your comparison. Optionally, you can provide [an array that contains multiple values](#array-of-values). | 
+| `value` | The value of the specified log field to use in your comparison. Optionally, you can provide [an array that contains multiple values](#array-of-values). |
 
 Rules are evaluated against each log that passes through your data pipeline. For example, given a rule with these parameters:
 
@@ -93,7 +98,8 @@ The `conditions.rules.op` parameter has the following possible values:
 
 ### Basic condition
 
-This example applies a condition that only processes logs that contain the string `{"request": {"method": "POST"`:
+This example applies a condition that only processes logs that contain the
+string `{"request": {"method": "POST"`:
 
 ```yaml
 pipeline:
@@ -117,7 +123,8 @@ pipeline:
 
 ### Multiple conditions with `and`
 
-This example applies a condition that only processes logs when all of the specified rules are met:
+This example applies a condition that only processes logs when all of the
+specified rules are met:
 
 ```yaml
 pipeline:
@@ -144,7 +151,8 @@ pipeline:
 
 ### Multiple conditions with `or`
 
-This example applies a condition that only processes logs when one or more of the specified rules are met:
+This example applies a condition that only processes logs when one or more of
+the specified rules are met:
 
 ```yaml
 pipeline:
@@ -234,4 +242,5 @@ pipeline:
                   value: ["error", "fatal"]
 ```
 
-This configuration would add the `alert` field to error logs from critical services, and add the `paging_required` field to errors containing specific critical patterns.
+This configuration adds an `alert` field to error logs from critical services,
+and adds a `paging_required` field to errors that contain specific critical patterns.
