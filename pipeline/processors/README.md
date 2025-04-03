@@ -19,4 +19,6 @@ Fluent Bit offers the following processors:
 
 ## Features
 
+All available processors include the following features:
+
 - [Conditional Processing](conditional-processing.md): Apply processors only to records that meet specific conditions
