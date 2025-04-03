@@ -140,9 +140,9 @@ pipeline:
                   value: "\/sensitive-.*"
 ```
 
-### OR condition example
+### Multiple conditions with `or`
 
-Flag records that meet any of multiple criteria:
+This example applies a condition that only processes logs when one or more of the specified rules are met:
 
 ```yaml
 pipeline:
