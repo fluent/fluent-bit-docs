@@ -191,9 +191,9 @@ pipeline:
                   value: ["POST", "PUT", "DELETE"]
 ```
 
-## Multiple processors with conditions
+### Multiple processors with conditions
 
-You can chain multiple conditional processors to create advanced processing pipelines:
+This example uses multiple processors with conditional processing enabled for each:
 
 ```yaml
 pipeline:
