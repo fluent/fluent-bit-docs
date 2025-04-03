@@ -13,7 +13,7 @@ Fluent Bit offers the following processors:
 
 - [Content Modifier](content-modifier.md): Manipulate the content, metadata, and attributes of logs and traces.
 - [Labels](labels.md): Add, update, or delete metric labels.
-- [Metrics Selector](metrics-selector.md): Select specific metrics
+- [Metrics Selector](metrics-selector.md): Choose which metrics to keep or discard.
 - [OpenTelemetry Envelope](opentelemetry-envelope.md): Convert logs to OpenTelemetry format
 - [SQL](sql.md): Process records using SQL queries
 
