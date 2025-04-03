@@ -89,9 +89,9 @@ The `conditions.rules.op` parameter has the following possible values:
 
 ## Examples
 
-### Simple condition
+### Basic condition
 
-Process records only when the HTTP method is POST:
+This example applies a condition that only processes logs that contain the string `{"request": {"method": "POST"`:
 
 ```yaml
 pipeline:
