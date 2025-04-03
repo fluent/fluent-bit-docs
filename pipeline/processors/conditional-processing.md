@@ -167,9 +167,9 @@ pipeline:
                   value: 400
 ```
 
-### Using IN operator
+### Array of values
 
-Apply a processor when a value matches one of multiple options:
+This example uses an array for the value of `condition.rules.value`:
 
 ```yaml
 pipeline:
