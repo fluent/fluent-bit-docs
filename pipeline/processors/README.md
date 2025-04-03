@@ -15,7 +15,7 @@ Fluent Bit offers the following processors:
 - [Labels](labels.md): Add, update, or delete metric labels.
 - [Metrics Selector](metrics-selector.md): Choose which metrics to keep or discard.
 - [OpenTelemetry Envelope](opentelemetry-envelope.md): Transform logs into an OpenTelemetry-compatible format.
-- [SQL](sql.md): Process records using SQL queries
+- [SQL](sql.md): Use SQL queries to extract log content.
 
 ## Features
 
