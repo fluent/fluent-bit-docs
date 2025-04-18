@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | tags\_enabled | Specifies if should attach EC2 instance tags. EC2 instance must have the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled (which is disabled by default). | false |
 | tags\_include | Defines list of specific EC2 tag keys to inject into the logs. Tag keys must be separated by "," character. Tags which are not present in this list will be ignored. Example: `Name,tag1,tag2`. | |
 | tags\_exclude | Defines list of specific EC2 tag keys not to inject into the logs. Tag keys must be separated by "," character. Tags which are not present in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, configuration is invalid and plugin fails. Example: `Name,tag1,tag2` | |
+| retry\_interval\_s |Defines minimum duration between retries for fetching EC2 instance tags. | 300 |
 
 Note: _If you run Fluent Bit in a container, you may have to use instance metadata v1._ The plugin behaves the same regardless of which version is used.
 

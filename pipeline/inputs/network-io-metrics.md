@@ -2,7 +2,8 @@
 
 The **netif** input plugin gathers network traffic information of the running system every certain interval of time, and reports them.
 
-The Network I/O Metrics plugin creates metrics that are log-based \(I.e. JSON payload\). If you are looking for Prometheus-based metrics please see the Node Exporter Metrics input plugin. 
+The Network I/O Metrics plugin creates metrics that are log-based, such as JSON
+payload. For Prometheus-based metrics, see the Node Exporter Metrics input plugin.
 
 ## Configuration Parameters
 
@@ -15,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Interval\_NSec | Polling interval \(nanosecond\). | 0 |
 | Verbose | If true, gather metrics precisely. | false |
 | Test\_At\_Init | If true, testing if the network interface is valid at initialization. | false |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -41,6 +43,8 @@ Fluent Bit v1.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          netif
@@ -52,8 +56,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: netif
+          tag: netif
+          interval_sec: 1
+          interval_nsec: 0
+          interface: eth0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
-

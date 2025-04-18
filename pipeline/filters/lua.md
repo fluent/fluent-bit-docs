@@ -2,6 +2,8 @@
 
 The **Lua** filter allows you to modify the incoming records (even split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
+
 Due to the necessity to have a flexible filtering mechanism, it is now possible to extend Fluent Bit capabilities by writing custom filters using Lua programming language. A Lua-based filter takes two steps:
 
 1. Configure the Filter in the main configuration
@@ -20,6 +22,7 @@ The plugin supports the following configuration parameters:
 | protected\_mode | If enabled, Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when invalid Lua script is executed or the triggered Lua function throws exceptions. Default is true. |
 | time\_as\_table | By default when the Lua script is invoked, the record timestamp is passed as a *floating number* which might lead to precision loss when it is converted back. If you desire timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | code | Inline LUA code instead of loading from a path via `script`. |
+| enable_flb_null| If enabled, null will be converted to flb_null in Lua. It is useful to prevent removing key/value since nil is a special value to remove key value from map in Lua. Default is false. |
 
 ## Getting Started <a id="getting_started"></a>
 
@@ -37,6 +40,8 @@ $ fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 
 In your main configuration file append the following _Input_, _Filter_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name    dummy
@@ -51,6 +56,25 @@ In your main configuration file append the following _Input_, _Filter_ & _Output
     Name    null
     Match   *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call:  cb_print
+  outputs:
+    - name: null
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ## Lua Script Filter API <a id="lua_script"></a>
 
@@ -90,16 +114,38 @@ Each callback **must** return three values:
 | timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
 | record | table | If code equals 1, the original record information will be replaced with this new value. Note that the _record_ value **must** be a valid Lua table. This value can be an array of tables (i.e., array of objects in JSON format), and in that case the input record is effectively split into multiple records. (see below for more details) |
 
-### Code Examples
+## Features
 
-For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
-
-[https://github.com/fluent/fluent-bit/tree/master/scripts](https://github.com/fluent/fluent-bit/tree/master/scripts)
-
-#### Inline configuration
+### Inline configuration
 
 The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```
+[SERVICE]
+	flush 1
+	daemon off
+	log_level debug
+
+[INPUT]
+	Name random
+	Tag test
+	Samples 10
+
+[FILTER]
+	Name Lua
+	Match *
+	call append_tag
+	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+
+[OUTPUT]
+	Name stdout
+	Match *
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
 ```yaml
 service:
     flush:           1
@@ -127,32 +173,28 @@ pipeline:
         - name:  stdout
           match: "*"
 ```
+{% endtab %}
+{% endtabs %}
 
-In classic mode:
+### Number Type
 
-```
-[SERVICE]
-	flush 1
-	daemon off
-	log_level debug
+Lua treats numbers as a `double` type, which means an `integer` type
+containing data like user IDs and log levels will be converted to a `double`.
+To avoid type conversion, use the `type_int_key` property.
 
-[INPUT]
-	Name random
-	Tag test
-	Samples 10
+### Protected Mode
 
-[FILTER]
-	Name Lua
-	Match *
-	call append_tag
-	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script.
+See [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html) in
+the Lua documentation for more information.
 
-[OUTPUT]
-	Name stdout
-	Match *
-```
 
-#### Environment variable processing
+## Code Examples
+
+For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
+
+
+### Processing environment variables
 
 As an example that combines a bit of LUA processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with LUA regex and substitutions.
 
@@ -165,15 +207,33 @@ The environment variable is set like so:
 
 We want to extract the `sandboxbsh` name and add it to our record as a special key.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
-      [FILTER]
-          Name                lua
-          Alias               filter-iots-lua
-          Match               iots_thread.*
-          Script              filters.lua
-          Call                set_landscape_deployment
+[FILTER]
+Name                lua
+Alias               filter-iots-lua
+Match               iots_thread.*
+Script              filters.lua
+Call                set_landscape_deployment
+```
+{% endtab %}
 
-  filters.lua: |
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  filters:
+    - name: lua
+      alias: filter-iots-lua
+      match: iots_thread.*
+      script: filters.lua
+      call:  set_landscape_deployment
+```
+{% endtab %}
+{% endtabs %}
+
+
+filters.lua:
+```lua
     -- Use a Lua function to create some additional entries based
     -- on substrings from the kubernetes properties.
     function set_landscape_deployment(tag, timestamp, record)
@@ -198,14 +258,6 @@ We want to extract the `sandboxbsh` name and add it to our record as a special k
     end
 ```
 
-### Number Type
-
-+Lua treats number as double. It means an integer field (e.g. IDs, log levels) will be converted double. To avoid type conversion, The `type_int_key` property is available.
-
-### Protected Mode
-
-Fluent Bit supports protected mode to prevent crash when executes invalid Lua script. See also [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html).
-
 ### Record Split
 
 The Lua callback function can return an array of tables (i.e., array of records) in its third _record_ return value. With this feature, the Lua filter can split one input record into multiple records according to custom logic.
@@ -226,6 +278,8 @@ end
 
 #### Configuration
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [Input]
     Name    stdin
@@ -240,6 +294,24 @@ end
     Name    stdout
     Match   *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: stdin
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call: cb_split
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 #### Input
 
@@ -265,7 +337,7 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Response code filtering
 
-In this example, we want to filter istio logs to exclude lines with response codes between 1 and 399.
+In this example, we want to filter Istio logs to exclude lines with response codes between 1 and 399.
 Istio is configured to write the logs in json format.
 
 #### Lua script
@@ -287,27 +359,52 @@ end
 
 #### Configuration
 
-Configuration to get istio logs and apply response code filter to them.
+Configuration to get Istio logs and apply response code filter to them.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```ini
-    [INPUT]
-        Name                tail
-        Path                /var/log/containers/*_istio-proxy-*.log
-        multiline.parser    docker, cri
-        Tag                 istio.*
-        Mem_Buf_Limit       64MB
-        Skip_Long_Lines     Off
+[INPUT]
+    Name                tail
+    Path                /var/log/containers/*_istio-proxy-*.log
+    multiline.parser    docker, cri
+    Tag                 istio.*
+    Mem_Buf_Limit       64MB
+    Skip_Long_Lines     Off
 
-    [FILTER]
-        Name                lua
-        Match               istio.*
-        Script              response_code_filter.lua
-        call                cb_response_code_filter
+[FILTER]
+    Name                lua
+    Match               istio.*
+    Script              response_code_filter.lua
+    call                cb_response_code_filter
 
-    [Output]
-        Name                stdout
-        Match               *
+[Output]
+    Name                stdout
+    Match               *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/containers/*_istio-proxy-*.log
+      multiline.parser: 'docker, cri'
+      tag: istio.*
+      mem_buf_limit: 64MB
+      skip_long_lines: off
+  filters:
+    - name: lua
+      match: istio.*
+      script: response_code_filter.lua
+      call: cb_response_code_filter
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 #### Input
 
@@ -347,3 +444,185 @@ Configuration to get istio logs and apply response code filter to them.
 #### Output
 
 In the output only the messages with response code 0 or greater than 399 are shown.
+
+### Time format Conversion
+
+The following example converts a field's specific type of `datetime` format to
+`utc ISO 8601` format.
+
+#### Lua script
+
+Script `custom_datetime_format.lua`
+
+```lua
+function convert_to_utc(tag, timestamp, record)
+    local date_time = record["pub_date"]
+    local new_record = record
+    if date_time then
+        if string.find(date_time, ",") then
+            local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+            local date_part, zone_part = date_time:match(pattern)
+
+            if date_part and zone_part then
+                local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                local handle = io.popen(command)
+                local result = handle:read("*a")
+                handle:close()
+                new_record["pub_date"] = result:match("%S+")
+            end
+        end
+    end
+    return 1, timestamp, new_record
+end
+```
+
+#### Configuration
+
+Use this configuration to obtain a JSON key with `datetime`, and then convert it to
+another format.
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```ini
+[INPUT]
+    Name    dummy
+    Dummy   {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
+    Tag     event_category_a
+
+[INPUT]
+    Name    dummy
+    Dummy   {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
+    Tag     event_category_b
+
+
+[FILTER]
+    Name                lua
+    Match               *
+    Script              custom_datetime_format.lua
+    call                convert_to_utc
+
+[Output]
+    Name                stdout
+    Match               *
+```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
+      tag: event_category_a
+
+    - name: dummy
+      dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
+      tag: event_category_b
+
+  filters:
+    - name: lua
+      match: '*'
+      code: |
+        function convert_to_utc(tag, timestamp, record)
+          local date_time = record["pub_date"]
+          local new_record = record
+          if date_time then
+              if string.find(date_time, ",") then
+                  local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+                  local date_part, zone_part = date_time:match(pattern)
+                  if date_part and zone_part then
+                      local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                      local handle = io.popen(command)
+                      local result = handle:read("*a")
+                      handle:close()
+                      new_record["pub_date"] = result:match("%S+")
+                  end
+              end
+          end
+          return 1, timestamp, new_record
+        end
+      call: convert_to_utc
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
+#### Input
+
+```json
+{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
+```
+and
+
+```json
+{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
+```
+Which are handled by dummy in this example.
+
+#### Output
+
+The output of this process shows the conversion of the `datetime` of two timezones to
+`ISO 8601` format in `UTC`.
+
+```ini
+...
+[2024/08/01 00:56:25] [ info] [output:stdout:stdout.0] worker #0 started
+[0] event_category_a: [[1722452186.727104902, {}], {"event"=>"Restock", "pub_date"=>"2024-07-30T18:01:06Z"}]
+[0] event_category_b: [[1722452186.730255842, {}], {"event"=>"Soldout", "pub_date"=>"2024-07-29T04:15:00Z"}]
+...
+```
+
+### Using configuration variables
+
+Fluent Bit supports definition of configuration variables, which can be done in the following way:
+
+```yaml
+env:
+  myvar1: myvalue1
+```
+
+These variables can be accessed from the Lua code by referring to the FLB_ENV Lua table.
+Being this a Lua table, the subrecords can be accessed following the same syntax, i.e. `FLB_ENV['A']`. 
+
+#### Configuration
+
+```yaml
+env:
+  A: aaa
+  B: bbb
+  C: ccc
+
+service:
+    flush:           1
+    log_level:       info
+
+pipeline:
+    inputs:
+        - name:    random
+          tag:     test
+          samples: 10
+
+    filters:
+        - name:  lua
+          match: "*"
+          call:  append_tag
+          code:  |
+              function append_tag(tag, timestamp, record)
+                 new_record = record
+                 new_record["my_env"] = FLB_ENV
+                 return 1, timestamp, new_record
+              end
+
+    outputs:
+        - name:  stdout
+          match: "*"
+```
+
+#### Output
+
+```
+test: [[1731990257.781970977, {}], {"my_env"=>{"A"=>"aaa", "C"=>"ccc", "HOSTNAME"=>"monox-2.lan", "B"=>"bbb"}, "rand_value"=>4805047635809401856}]
+```

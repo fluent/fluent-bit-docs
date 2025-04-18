@@ -6,14 +6,15 @@ description: The Podman Metrics input plugin allows you to collect metrics from 
 
 ## Configuration Parameters
 
-| **Key**               | Description                                                | Default                                                        |
-| --------------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| scrape_interval       | Interval between each scrape of podman data (in seconds)   | 30                                                             |
-| scrape_on_start       | Should this plugin scrape podman data after it is started  | false                                                          |
-| path.config           | Custom path to podman containers configuration file        | /var/lib/containers/storage/overlay-containers/containers.json |
-| path.sysfs            | Custom path to sysfs subsystem directory                   | /sys/fs/cgroup                                                 |
-| path.procfs           | Custom path to proc subsystem directory                    | /proc                                                          |
-| remove_stale_counters | Should this plugin remove counters for removed containers  | false                                                          |
+| **Key**               | Description                                                                                             | Default                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| scrape_interval       | Interval between each scrape of podman data (in seconds)                                                | 30                                                             |
+| scrape_on_start       | Should this plugin scrape podman data after it is started                                               | false                                                          |
+| path.config           | Custom path to podman containers configuration file                                                     | /var/lib/containers/storage/overlay-containers/containers.json |
+| path.sysfs            | Custom path to sysfs subsystem directory                                                                | /sys/fs/cgroup                                                 |
+| path.procfs           | Custom path to proc subsystem directory                                                                 | /proc                                                          |
+| remove_stale_counters | Should this plugin remove counters for removed containers                                               | false                                                          |
+| threaded              | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | false                                                          |
 
 ## Getting Started
 

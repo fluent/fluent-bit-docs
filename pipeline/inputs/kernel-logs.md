@@ -7,6 +7,7 @@ The **kmsg** input plugin reads the Linux Kernel log buffer since the beginning,
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | Prio_Level | The log level to filter. The kernel log is dropped if its priority is more than prio_level. Allowed values are 0-8. Default is 8. 8 means all logs are saved. | 8 |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -35,6 +36,8 @@ As described above, the plugin processed all messages that the Linux Kernel repo
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name   kmsg
@@ -44,4 +47,17 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: kmsg
+          tag: kernel
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}

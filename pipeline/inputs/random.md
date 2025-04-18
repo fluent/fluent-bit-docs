@@ -11,6 +11,7 @@ The plugin supports the following configuration parameters:
 | Samples | If set, it will only generate a specific number of samples. By default this value is set to _-1_, which will generate unlimited samples. |
 | Interval\_Sec | Interval in seconds between samples generation. Default value is _1_. |
 | Interval\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 
@@ -28,6 +29,8 @@ $ fluent-bit -i random -o stdout
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          random
@@ -39,6 +42,23 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: random
+          samples: -1
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ## Testing
 
@@ -59,4 +79,3 @@ Fluent Bit v1.x.x
 [3] random.0: [1475893657, {"rand_value"=>1501010137543905482}]
 [4] random.0: [1475893658, {"rand_value"=>16238242822364375212}]
 ```
-

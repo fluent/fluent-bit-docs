@@ -15,10 +15,10 @@ There are no additional requirements to execute WASM plugins.
 
 `flb-wamrc` is just `flb-` prefixed AOT (Ahead Of Time) compiler that is provided from [wasm-micro-runtime](https://github.com/bytecodealliance/wasm-micro-runtime).
 
-For `flb-wamrc` support, users have to install llvm infrastructure, e.g:
+For `flb-wamrc` support, users have to install llvm infrastructure and some additional libraries (`libmlir`, `libPolly`, `libedit`, and `libpfm`), e.g:
 
 ```text
-# apt install -y llvm
+# apt install -y llvm libmlir-14-dev libclang-common-14-dev libedit-dev libpfm4-dev
 ```
 
 ### For Build WASM programs
@@ -128,12 +128,50 @@ For example, one of the examples of [Rust WASM filter](https://github.com/fluent
 [0] dummy.local: [1666270589.270348000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:29.270348000 +0000"}]
 [0] dummy.local: [1666270590.271107000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:30.271107000 +0000"}]
 ```
+Another example of a Rust WASM filter is the [flb_filter_iis](https://github.com/kenriortega/flb_filter_iis) filter.
+This filter takes the [Internet Information Services (IIS)](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis) [w3c logs](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis#select-w3c-fields-to-log) (with some custom modifications) and transforms the raw string into a standard Fluent Bit JSON structured record.
+
+```text
+[INPUT]
+    Name             dummy
+    Dummy            {"log": "2023-08-11 19:56:44 W3SVC1 WIN-PC1 ::1 GET / - 80 ::1 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200 - - localhost 304 142 756 1078 -"}
+    Tag              iis.*
+
+[FILTER]
+    Name             wasm
+    match            iis.*
+    WASM_Path        /plugins/flb_filter_iis_wasm.wasm
+    Function_Name    flb_filter_log_iis_w3c_custom
+    accessible_paths .
+
+[OUTPUT]
+    name             stdout
+    match            iis.*
+```
+
+The incoming raw strings from an IIS log are composed of the following fields:
+
+`date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port c-ip cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-bytes cs-bytes time-taken c-authorization-header`
+
+The output after the filter logic will be:
+
+```text
+[0] iis.*: [[1692131925.559486675, {}], {"c_authorization_header"=>"-", "c_ip"=>"::1", "cs_bytes"=>756, "cs_cookie"=>"-", "cs_host"=>"localhost", "cs_method"=>"GET", "cs_referer"=>"-", "cs_uri_query"=>"-", "cs_uri_stem"=>"/", "cs_user_agent"=>"Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200", "date"=>"2023-08-11 19:56:44", "s_computername"=>"WIN-PC1", "s_ip"=>"::1", "s_port"=>"80", "s_sitename"=>"W3SVC1", "sc_bytes"=>142, "sc_status"=>"304", "source"=>"LogEntryIIS", "tag"=>"iis.*", "time"=>"2023-08-15T20:38:45.559486675 +0000", "time_taken"=>1078}]
+```
+This filter approach provides us with several powerful advantages inherent to programming languages. 
+For instance, it:
+- Can be extended by adding type conversion to fields such as `sc_bytes, cs_bytes, time_taken`. This is particularly useful when we need to validate our data results.
+- Allows for the use of conditions to apply more descriptive filters, for example, "get only all logs that contain status codes above 4xx or 5xx".
+- Can be used to define a `allow/deny` list using a data structure array or a file to store predefined IP addresses.
+- Makes it possible to call an external resource such as an API or database to enhance our data.
+- Allows all methods to be thoroughly tested and shared as a binary bundle or library.
+These examples can be applied in our demo and can serve as an ideal starting point to create more complex logic, depending on our requirements.
 
 ### Optimize execution of WASM programs
 
 To optimize WASM program execution, there is the option of using `flb-wamrc`.
-`flb-wamrc` will reduce runtime footprint and to be best perforemance for filtering operations.
-This tool will be built when `-DFLB_WAMRC=On` cmake option is specififed and llvm infrastructure is installed on the building box.
+`flb-wamrc` will reduce runtime footprint and to be best performance for filtering operations.
+This tool will be built when `-DFLB_WAMRC=On` cmake option is specified and llvm infrastructure is installed on the building box.
 
 ```shell
 $ flb-wamrc -o /path/to/built_wasm.aot /path/to/built_wasm.wasm

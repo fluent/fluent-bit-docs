@@ -6,10 +6,12 @@ The **MQTT** input plugin, allows to retrieve messages/data from MQTT control pa
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Listen | Listener network interface, default: 0.0.0.0 |
-| Port | TCP port where listening for connections, default: 1883 |
+| Key         | Description                                                    | Default |
+| :---------- | :------------------------------------------------------------- | :------ |
+| Listen      | Listener network interface. | `0.0.0.0` |
+| Port        | TCP port where listening for connections. | `1883` |
+| Payload_Key | Specify the key where the payload key/value will be preserved. | _none_ |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -52,4 +54,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
-

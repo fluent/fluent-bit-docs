@@ -33,11 +33,12 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | gelf\_level\_key           | Specify the key to use for the `level` in _gelf_ format                                                                                                                                                                                                                                                                            |           |
 | body\_key                  | Specify the key to use as the body of the request (must prefix with "$"). The key must contain either a binary or raw string, and the content type can be specified using headers\_key (which must be passed whenever body\_key is present). When this option is present, each msgpack record will create a separate request.      |           |
 | headers\_key               | Specify the key to use as the headers of the request (must prefix with "$"). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content-type of the data contained in body\_key.                                                   |           |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ### TLS / SSL
 
-HTTP output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+The HTTP output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Getting Started
 
@@ -61,6 +62,8 @@ $ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -m '*'
 
 In your main configuration file, append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name  cpu
@@ -73,6 +76,23 @@ In your main configuration file, append the following _Input_ & _Output_ section
     Port  80
     URI   /something
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag:  cpu
+    outputs:
+        - name: http
+          match: '*'
+          host: 192.168.2.3
+          port: 80
+          URI: /something
+```
+{% endtab %}
+{% endtabs %}
 
 By default, the URI becomes tag of the message, the original tag is ignored. To retain the tag, multiple configuration sections have to be made based and flush to different URIs.
 
@@ -80,6 +100,8 @@ Another approach we also support is the sending the original message tag in a co
 
 To configure this behaviour, add this config:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [OUTPUT]
     Name  http
@@ -90,6 +112,22 @@ To configure this behaviour, add this config:
     Format json
     header_tag  FLUENT-TAG
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    outputs:
+        - name: http
+          match: '*'
+          host: 192.168.2.3
+          port: 80
+          URI: /something
+          format: json
+          header_tag: FLUENT-TAG
+```
+{% endtab %}
+{% endtabs %}
+
 
 Provided you are using Fluentd as data receiver, you can combine `in_http` and `out_rewrite_tag_filter` to make use of this HTTP header.
 
@@ -113,6 +151,8 @@ Notice how we override the tag, which is from URI path, with our custom header
 
 #### Example : Add a header
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [OUTPUT]
     Name           http
@@ -123,11 +163,29 @@ Notice how we override the tag, which is from URI path, with our custom header
     Header         X-Key-B Value_B
     URI            /something
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    outputs:
+        - name: http
+          match: '*'
+          host: 127.0.0.1
+          port: 9000
+          header:
+            - X-Key-A Value_A
+            - X-Key-B Value_B
+          URI: /something
+```
+{% endtab %}
+{% endtabs %}
 
 #### Example : Sumo Logic HTTP Collector
 
 Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timestamps. The `PrivateKey` is specific to a configured HTTP collector.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [OUTPUT]
     Name             http
@@ -139,6 +197,22 @@ Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timesta
     Json_date_key    timestamp
     Json_date_format iso8601
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+    outputs:
+        - name: http
+          match: '*'
+          host: collectors.au.sumologic.com
+          port: 443
+          URI: /receiver/v1/http/[PrivateKey]
+          format: json_lines
+          json_date_key: timestamp
+          json_date_format: iso8601
+```
+{% endtab %}
+{% endtabs %}
 
 A sample Sumo Logic query for the [CPU](../inputs/cpu-metrics.md) input. \(Requires `json_lines` format with `iso8601` date format for the `timestamp` field\).
 

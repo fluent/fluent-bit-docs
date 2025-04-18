@@ -2,50 +2,79 @@
 description: Enable hot reload through SIGHUP signal or an HTTP endpoint
 ---
 
-# Hot Reload
+# Hot reload
 
-Fluent Bit supports the hot reloading feature when enabled via the command line with `-Y` or `--enable-hot-reload` option.
+Fluent Bit supports the reloading feature when enabled in the configuration file
+or on the command line with `-Y` or `--enable-hot-reload` option.
 
-## Getting Started
+Hot reloading is supported on Linux, macOS, and Windows operating systems.
 
-To get started with reloading via HTTP, the first step is to enable the HTTP Server from the configuration file:
+## Update the configuration
 
-```
+To get started with reloading over HTTP, enable the HTTP Server
+in the configuration file:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
     HTTP_PORT    2020
-
-# Other stuff of plugin configurations
+    Hot_Reload   On
+...
 ```
+{% endtab %}
 
-The above configuration snippet will enable the HTTP endpoint for hot reloading.
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2020
+    hot_reload: on
+```
+{% endtab %}
+{% endtabs %}
 
 ## How to reload
 
-### Via HTTP
+After updating the configuration, use one of the following methods to perform a
+hot reload:
 
-Hot reloading can be kicked via HTTP endpoints that are:
+### HTTP
 
-* `PUT /api/v2/reload`
-* `POST /api/v2/reload`
+Use the following HTTP endpoints to perform a hot reload:
 
-If users don't enable the hot reloading feature, hot reloading via these endpoints will not work.
+- `PUT /api/v2/reload`
+- `POST /api/v2/reload`
 
-For using curl to reload fluent-bit, users must specify an empty request body as:
-
+For using curl to reload Fluent Bit, users must specify an empty request body as:
 
 ```text
-$ curl -X POST -d {} localhost:2020/api/v2/reload
+curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
-### Via Signal
+### Signal
 
-Hot reloading also can be kicked via `SIGHUP`.
+Hot reloading can be used with `SIGHUP`.
 
-`SIGHUP` signal is not supported on Windows. So, users can't enable this feature on Windows.
+`SIGHUP` signal isn't supported on Windows.
 
-## Limitations
+## Confirm a reload
 
-The hot reloading feature is currently working on Linux and macOS. Windows is not supported yet.
+Use one of the following methods to confirm the reload occurred.
 
+### HTTP
+
+Obtain a count of hot reload using the HTTP endpoint:
+
+- `GET /api/v2/reload`
+
+The endpoint returns `hot_reload_count` as follows:
+
+```json
+{"hot_reload_count":3}
+```
+
+The default value of the counter is `0`.

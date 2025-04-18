@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | Key | Rename a key. Default: head. |
 | Lines | Line number to read. If the number N is set, in\_head reads first N lines like head\(1\) -n. |
 | Split\_line | If enabled, in\_head generates key-value pair per line. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ### Split Line Mode
 
@@ -39,6 +40,8 @@ siblings     : 1
 
 Cpu frequency is "cpu MHz : 2791.009". We can get the line with this configuration file.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name           head
@@ -57,11 +60,32 @@ Cpu frequency is "cpu MHz : 2791.009". We can get the line with this configurati
     Name           stdout
     Match          *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: head
+          tag: head.cpu
+          file: /proc/cpuinfo
+          lines: 8
+          split_line: true
+    filters:
+        - name: record_modifier
+          match: '*'
+          whitelist_key: line7
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Output is
 
 ```bash
-$ bin/fluent-bit -c head.conf 
+$ bin/fluent-bit -c head.conf
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -102,6 +126,8 @@ Fluent Bit v1.x.x
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          head
@@ -115,8 +141,25 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: head
+          tag: uptime
+          file: /proc/uptime
+          buf_size: 256
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
 
 e.g. 1.5s = 1s + 500000000ns
-

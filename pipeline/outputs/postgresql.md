@@ -56,11 +56,13 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 | `Password` | Password of PostgreSQL username | - |
 | `Database` | Database name to connect to | - \(current user\) |
 | `Table` | Table name where to store data | - |
+| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS) | - |
 | `Timestamp_Key` | Key in the JSON object containing the record timestamp | date |
 | `Async` | Define if we will use async or sync connections | false |
 | `min_pool_size` | Minimum number of connection in async mode | 1 |
 | `max_pool_size` | Maximum amount of connections in async mode | 4 |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB | false |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Libpq
 
@@ -74,15 +76,16 @@ In your main configuration file add the following section:
 
 ```text
 [OUTPUT]
-    Name          pgsql
-    Match         *
-    Host          172.17.0.2
-    Port          5432
-    User          fluentbit
-    Password      YourCrazySecurePassword
-    Database      fluentbit
-    Table         fluentbit
-    Timestamp_Key ts
+    Name                pgsql
+    Match               *
+    Host                172.17.0.2
+    Port                5432
+    User                fluentbit
+    Password            YourCrazySecurePassword
+    Database            fluentbit
+    Table               fluentbit
+    Connection_Options  -c statement_timeout=0
+    Timestamp_Key       ts
 ```
 
 ## The output table
@@ -127,4 +130,3 @@ Here follows a list of useful resources from the PostgreSQL documentation:
 * [libpq - Environment variables](https://www.postgresql.org/docs/current/libpq-envars.html)
 * [libpq - password file](https://www.postgresql.org/docs/current/libpq-pgpass.html)
 * [Trigger functions](https://www.postgresql.org/docs/current/plpgsql-trigger.html)
-

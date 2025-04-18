@@ -1,5 +1,7 @@
 # Variables
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1731c7b5-34c6-424f-bfc6-88c2aa71e81f" />
+
 Fluent Bit supports the usage of environment variables in any value associated to a key when using a configuration file.
 
 The variables are case sensitive and can be used in the following format:

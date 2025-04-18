@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | Alert | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled. |
 | Add\_Host | If enabled, hostname is appended to each records. Default value is _false_. |
 | Add\_Port | If enabled, port number is appended to each records. Default value is _false_. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 
@@ -32,6 +33,8 @@ $ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name          health
@@ -44,6 +47,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: health
+          host: 127.0.0.1
+          port: 80
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
+
 
 ## Testing
 
@@ -67,4 +88,3 @@ Fluent Bit v1.8.0
 [2] health.0: [1624145990.306498573, {"alive"=>true}]
 [3] health.0: [1624145991.305595498, {"alive"=>true}]
 ```
-

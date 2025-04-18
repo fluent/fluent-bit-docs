@@ -9,10 +9,13 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | :--- | :--- | :--- |
 | brokers | Single or multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. |  |
 | topics | Single entry or list of topics separated by comma \(,\) that Fluent Bit will subscribe to. |  |
+| format | Serialization format of the messages. If set to "json", the payload will be parsed as json. | none  |
 | client\_id | Client id passed to librdkafka. | |
 | group\_id | Group id passed to librdkafka. | fluent-bit |
 | poll\_ms | Kafka brokers polling interval in milliseconds. | 500 |
+| Buffer\_Max\_Size | Specify the maximum size of buffer per cycle to poll kafka messages from subscribed topics. To increase throughput, specify larger size. | 4M |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -43,7 +46,8 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 #### Example of using kafka input/output plugins
 
-The fluent-bit source repository contains a full example of using fluent-bit to process kafka records: 
+The Fluent Bit source repository contains a full example of using Fluent Bit to
+process Kafka records:
 
 ```text
 [INPUT]
@@ -51,6 +55,7 @@ The fluent-bit source repository contains a full example of using fluent-bit to 
     brokers kafka-broker:9092
     topics fb-source
     poll_ms 100
+    format json
 
 [FILTER]
     Name    lua
@@ -65,6 +70,8 @@ The fluent-bit source repository contains a full example of using fluent-bit to 
 ```
 
 The above will connect to the broker listening on `kafka-broker:9092` and subscribe to the `fb-source` topic, polling for new messages every 100 milliseconds.
+
+Since the payload will be in json format, we ask the plugin to automatically parse the payload with `format json`.
 
 Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker.
 

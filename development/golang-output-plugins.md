@@ -21,7 +21,7 @@ Usage: fluent-bit [OPTION]
 Available Options
   -c  --config=FILE    specify an optional configuration file
   -d, --daemon        run Fluent Bit in background mode
-  -f, --flush=SECONDS    flush timeout in seconds (default: 5)
+  -f, --flush=SECONDS    flush timeout in seconds (default: 1)
   -i, --input=INPUT    set an input
   -m, --match=MATCH    set plugin match, same as '-p match=abc'
   -o, --output=OUTPUT    set an output
@@ -46,7 +46,7 @@ import "github.com/fluent/fluent-bit-go/output"
 //export FLBPluginRegister
 func FLBPluginRegister(def unsafe.Pointer) int {
     // Gets called only once when the plugin.so is loaded
-    return output.FLBPluginRegister(ctx, "gstdout", "Stdout GO!")
+    return output.FLBPluginRegister(def, "gstdout", "Stdout GO!")
 }
 
 //export FLBPluginInit
