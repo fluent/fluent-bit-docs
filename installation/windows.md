@@ -272,7 +272,7 @@ Instead of `sc.exe`, PowerShell can be used to manage Windows services.
 Create a Fluent Bit service:
 
 ```text
-PS> New-Service fluent-bit -BinaryPathName "C:\fluent-bit\bin\fluent-bit.exe -c C:\fluent-bit\conf\fluent-bit.conf" -StartupType Automatic
+PS> New-Service fluent-bit -BinaryPathName "`"C:\Program Files\fluent-bit\bin\fluent-bit.exe`" -c `"C:\Program Files\fluent-bit\conf\fluent-bit.conf`"" -StartupType Automatic
 ```
 
 Start the service:
