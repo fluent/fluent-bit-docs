@@ -2,9 +2,9 @@
 
 Any Fluent Bit [filter](../filters/README.md) can be used as a processor.
 
-## grep example
+## Grep example
 
-In this example the grep filter is used as an output processor to send Log records only if they match a regular expression.
+In this example, the [Grep](../filters/grep) filter is used as an output processor that sends log records only if they match a specified regular expression.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
