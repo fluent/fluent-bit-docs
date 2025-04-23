@@ -86,31 +86,31 @@ after 1.9.9. The correct package name to use now is `fluent-bit`.
 
 ## Installation packages
 
-The latest stable version is 4.0.0.
+The latest stable version is 4.0.1.
 Each version is available from the following download URLs.
 
 | INSTALLERS | SHA256 CHECKSUMS |
 |----------- | ---------------- |
-| [fluent-bit-4.0.0-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win32.exe) | [2676f127b2b71d44f494027fbac4a20bc8be2257fe8a201b28b9780056bde24f](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win32.exe.sha256) |
-| [fluent-bit-4.0.0-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win32.zip) | [cb32a9e27134a9861d427a61be4ffd056abc3f74fa1d185e269037538dda9faa](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win32.zip.sha256) |
-| [fluent-bit-4.0.0-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win64.exe) | [c4173fe51f81dc3108d6036687d8d0b715f619ffcfb04223ab1c31ef4284ff92](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win64.exe.sha256) |
-| [fluent-bit-4.0.0-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win64.zip) | [cc8ac4c5b9d2953ffb3ff39b72f9d18aaf0ede2615317d9437c5d1f53b9321be](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win64.zip.sha256) |
-| [fluent-bit-4.0.0-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-winarm64.exe) | [6bddf88feaf298f79517566013537ed3f7003f72509db9c5a7719b8dd022515b](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-winarm64.exe.sha256) |
-| [fluent-bit-4.0.0-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-winarm64.zip) | [51179cb8e9b4dd4ea1d930e8913f03f42688c99c6b8ddbf8da9b1a67938a1d5f](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-winarm64.zip.sha256) |
+| [fluent-bit-4.0.1-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win32.exe) | [1734f62dd29d7a94390564e08dc8ecb558e7e668d3c2057d158a40166287effd](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win32.exe.sha256) |
+| [fluent-bit-4.0.1-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win32.zip) | [8b8c37bef79d2f940068e1b7ef34d16e5c7e63deaebefbf4117c03cf59788b20](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win32.zip.sha256) |
+| [fluent-bit-4.0.1-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win64.exe) | [8a5a72c8cd9fd9ef3ec4238ff322022de9b1714a06610d678288a577dc5da2f5](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win64.exe.sha256) |
+| [fluent-bit-4.0.1-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win64.zip) | [79789acb344743f89ea8c4edc1ddd079e80bef5f3060edd8be47d7cf201f0762](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win64.zip.sha256) |
+| [fluent-bit-4.0.1-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-winarm64.exe) | [a6c50736c11f01dbf34a1336cdbaa8e16500c5431a5f9a82d0b17e79ecc50913](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-winarm64.exe.sha256) |
+| [fluent-bit-4.0.1-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-winarm64.zip) | [1b2ace05905e1ef5a29ab7a7b4466a66554a919ddff90d93460a5b0e9d5913b5](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-winarm64.zip.sha256) |
 
 These are now using the Github Actions built versions. Legacy AppVeyor builds are
 still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.
 
 MSI installers are also available:
 
-- [fluent-bit-4.0.0-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win32.msi)
-- [fluent-bit-4.0.0-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-win64.msi)
-- [fluent-bit-4.0.0-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.0-winarm64.msi)
+- [fluent-bit-4.0.1-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win32.msi)
+- [fluent-bit-4.0.1-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-win64.msi)
+- [fluent-bit-4.0.1-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.1-winarm64.msi)
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
 ```text copy
-PS> Get-FileHash fluent-bit-4.0.0-win32.exe
+PS> Get-FileHash fluent-bit-4.0.1-win32.exe
 ```
 
 ## Installing from a ZIP archive
@@ -122,7 +122,7 @@ PS> Get-FileHash fluent-bit-4.0.0-win32.exe
    or `Expand-Archive` in PowerShell.
 
    ```text
-   PS> Expand-Archive fluent-bit-4.0.0-win64.zip
+   PS> Expand-Archive fluent-bit-4.0.1-win64.zip
    ```
 
    The ZIP package contains the following set of files.
