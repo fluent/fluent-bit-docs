@@ -1,4 +1,4 @@
-# Filters
+# Filters as processors
 
 Any Fluent Bit [filter](../filters/README.md) can be used as a processor.
 
