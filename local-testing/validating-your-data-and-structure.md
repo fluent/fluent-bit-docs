@@ -1,17 +1,10 @@
-# Validating your data and structure
+# Validate your data and structure
 
-Fluent Bit is a powerful log processing tool that supports mulitple sources and
-formats. In addition, it provides filters that can be used to perform custom
-modifications. As your pipeline grows, it's important to validate your data and
-structure.
+Fluent Bit supports multiple sources and formats. In addition, it provides filters that you can use to perform custom modifications. As your pipeline grows, it's important to validate your data and structure.
 
-Fluent Bit users are encouraged to integrate data validation in their contininuous
-integration (CI) systems.
+Fluent Bit users are encouraged to integrate data validation in their continuous integration (CI) systems.
 
-In a normal production environment, inputs, filters, and outputs are defined in the
-configuration. Fluent Bit provides the [Expect](../pipeline/filters/expect.md) filter,
-which can be used to validate `keys` and `values` from your records and take action
-when an exception is found.
+In a normal production environment, inputs, filters, and outputs are defined in configuration files. Fluent Bit provides the [Expect](../pipeline/filters/expect.md) filter, which you can use to validate keys and values from your records and take action when an exception is found.
 
 A simplified view of the data processing pipeline is as follows:
 
@@ -19,25 +12,23 @@ A simplified view of the data processing pipeline is as follows:
 flowchart LR
 IS[Inputs / Sources]
 Fil[Filters]
-OD[Outputs/ Destination]
+OD[Outputs / Destination]
 IS --> Fil --> OD
 ```
 
 ## Understand structure and configuration
 
-Consider the following pipeline, where your source of data is a file with JSON
-content and two filters:
+Consider the following pipeline, which uses a JSON file as its data source and has two filters:
 
-- [grep](../pipeline/filters/grep.md) to exclude certain records
-- [record_modifier](../pipeline/filters/record-modifier.md) to alter the record
-  content by adding and removing specific keys.
+- [Grep](../pipeline/filters/grep.md) to exclude certain records.
+- [Record Modifier](../pipeline/filters/record-modifier.md) to alter records' content by adding and removing specific keys.
 
 ```mermaid
 flowchart LR
-tail["tail (input)"]
-grep["grep (filter)"]
-record["record_modifier (filter)"]
-stdout["stdout (output)"]
+tail["Tail (input)"]
+grep["Grep (filter)"]
+record["Record Modifier (filter)"]
+stdout["Stdout (output)"]
 
 tail --> grep
 grep --> record
@@ -46,7 +37,7 @@ record --> stdout
 
 Add data validation between each step to ensure your data structure is correct.
 
-This example uses the `expect` filter.
+This example uses the [Expect](/pipeline/filters/expect) filter.
 
 ```mermaid
 flowchart LR
@@ -61,16 +52,15 @@ tail --> E1 --> grep
 grep --> E2 --> record --> E3 --> stdout
 ```
 
-`Expect` filters set rules aiming to validate criteria like:
+Expect filters set rules aiming to validate criteria like:
 
-- Does the record contain a key `A`?
+- Does the record contain key `A`?
 - Does the record not contain key `A`?
-- Does the record key `A` value equal `NULL`?
-- Is the record key `A` value not `NULL`?
-- Does the record key `A` value equal `B`?
+- Does the key `A` value equal `NULL`?
+- Is the key `A` value not `NULL`?
+- Does the key `A` value equal `B`?
 
-Every `expect` filter configuration exposes rules to validate the content of your
-records using [configuration properties](../pipeline/filters/expect.md#configuration-parameters).
+Every Expect filter configuration exposes rules to validate the content of your records using [configuration parameters](../pipeline/filters/expect.md#configuration-parameters).
 
 ## Test the configuration
 
@@ -82,9 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following Fluent Bit configuration file configures a pipeline to consume the
-log, while applying an `expect` filter to validate that the keys `color` and `label`
-exist:
+The following Fluent Bit configuration file configures a pipeline to consume the log, while applying an Expect filter to validate that the keys `color` and `label` exist:
 
 ```python
 [SERVICE]
@@ -111,12 +99,9 @@ exist:
     match       *
 ```
 
-If the JSON parser fails or is missing in the `tail` input
-(`parser json`), the `expect` filter triggers the `exit` action.
+If the JSON parser fails or is missing in the [Tail](/pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
 
-To extend the pipeline, add a grep filter to match records that map `label`
-containing a key called `name` with value the `abc`, and add an `expect` filter
-to re-validate that condition:
+To extend the pipeline, add a Grep filter to match records that map `label` containing a key called `name` with value the `abc`, and add an Expect filter to re-validate that condition:
 
 ```python
 [SERVICE]
@@ -171,6 +156,4 @@ to re-validate that condition:
 
 ## Production deployment
 
-When deploying in production, consider removing the `expect` filters from your
-configuration. These filters are unneccesary unless you need 100% coverage of
-checks at runtime.
+When deploying in production, consider removing any Expect filters from your configuration file. These filters are unnecessary unless you need 100% coverage of checks at runtime.
