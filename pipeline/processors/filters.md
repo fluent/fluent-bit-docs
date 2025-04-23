@@ -1,6 +1,6 @@
 # Filters
 
-Any Fluent Bit [filter](../../filters/README.md) can be used as a processor.
+Any Fluent Bit [filter](../filters/README.md) can be used as a processor.
 
 ## grep example
 
