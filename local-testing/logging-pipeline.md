@@ -4,7 +4,7 @@ You can test logging pipelines locally to observe how they handles log messages.
 
 ## Create a configuration file
 
-Start by creating a [Fluent Bit configuration file](/administration/configuring-fluent-bit/classic-mode/configuration-file) to test.
+Start by creating a [Fluent Bit configuration file](../administration/configuring-fluent-bit/classic-mode/configuration-file) to test.
 
 {% code title="fluent-bit.conf" %}
 ```text
