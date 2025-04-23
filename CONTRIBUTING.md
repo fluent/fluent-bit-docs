@@ -113,11 +113,11 @@ request may suggest changes accordingly.
 
 ### URLs
 
-When cross-linking to a page in this repository, use a full relative path whenever
+When cross-linking to a page in this repository, use a full absolute path whenever
 possible. For example:
 
 ```text
-[LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+[LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
 ```
 
 ### Vale
