@@ -37,7 +37,7 @@ record --> stdout
 
 Add data validation between each step to ensure your data structure is correct.
 
-This example uses the [Expect](/pipeline/filters/expect) filter.
+This example uses the [Expect](../pipeline/filters/expect) filter.
 
 ```mermaid
 flowchart LR
@@ -99,7 +99,7 @@ The following Fluent Bit configuration file configures a pipeline to consume the
     match       *
 ```
 
-If the JSON parser fails or is missing in the [Tail](/pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
+If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
 
 To extend the pipeline, add a Grep filter to match records that map `label` containing a key called `name` with value the `abc`, and add an Expect filter to re-validate that condition:
 
