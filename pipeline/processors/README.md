@@ -19,6 +19,7 @@ Fluent Bit offers the following processors:
 - [OpenTelemetry Envelope](opentelemetry-envelope.md): Transform logs into an
   OpenTelemetry-compatible format.
 - [SQL](sql.md): Use SQL queries to extract log content.
+- [Filters](filters.md): Any filter can be used as a processor.
 
 ## Features
 
