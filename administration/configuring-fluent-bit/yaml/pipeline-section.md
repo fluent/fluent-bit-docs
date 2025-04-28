@@ -11,7 +11,7 @@ The `pipeline` section defines the flow of how data is collected, processed, and
 
 ## Example Configuration
 
-Here’s a simple example of a pipeline configuration:
+Here's a simple example of a pipeline configuration:
 
 ```yaml
 pipeline:
