@@ -147,6 +147,7 @@
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry Envelope](pipeline/processors/opentelemetry-envelope.md)
   * [SQL](pipeline/processors/sql.md)
+  * [Traces](pipeline/processors/traces.md)
   * [Filters as processors](pipeline/processors/filters.md)
   * [Conditional processing](pipeline/processors/conditional-processing.md)
 * [Filters](pipeline/filters/README.md)
