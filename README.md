@@ -6,11 +6,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 <figure><img src=".gitbook/assets/3.2.png" alt=""><figcaption></figcaption></figure>
 
-[Fluent Bit](http://fluentbit.io) is a fast and lightweight telemetry agent for logs,
-metrics, and traces for Linux, macOS, Windows, and BSD family operating systems.
-Fluent Bit has been made with a strong focus on performance to allow the collection
-and processing of telemetry data from different sources without
-complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
+[Fluent Bit](http://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
 ## Features
 
@@ -47,9 +43,9 @@ complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-3881
 
 ## Fluent Bit, Fluentd and CNCF
 
-[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) graduated sub-project
-under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the
-terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by
-[Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
+Fluent Bit was originally created by [Eduardo
+Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by
+[Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully
+vendor-neutral and community-driven project.
