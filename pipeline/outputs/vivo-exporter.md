@@ -32,7 +32,7 @@ Here is a simple configuration of Vivo Exporter, note that this example is not b
 
 ### How it works
 
-Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it’s appended to the end. If the buffer is full, it removes the older entries to make room for new data.
+Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
 
 The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
 

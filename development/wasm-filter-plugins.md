@@ -97,7 +97,7 @@ For Rust:
 // #[no_mangle] attribute is needed for preventing mangles and align C ABI.
 // Also we can use an arbitrary function name for filter operations w/ WASM.
 #[no_mangle]
-pub extern “C” fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32)
+pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32)
 ```
 
 Note that `//export XXX` on TinyGo and `#[no_mangle]` attributes on Rust are required. This is because TinyGo and Rust will mangle their function names if they are not specified.
@@ -158,7 +158,7 @@ The output after the filter logic will be:
 ```text
 [0] iis.*: [[1692131925.559486675, {}], {"c_authorization_header"=>"-", "c_ip"=>"::1", "cs_bytes"=>756, "cs_cookie"=>"-", "cs_host"=>"localhost", "cs_method"=>"GET", "cs_referer"=>"-", "cs_uri_query"=>"-", "cs_uri_stem"=>"/", "cs_user_agent"=>"Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200", "date"=>"2023-08-11 19:56:44", "s_computername"=>"WIN-PC1", "s_ip"=>"::1", "s_port"=>"80", "s_sitename"=>"W3SVC1", "sc_bytes"=>142, "sc_status"=>"304", "source"=>"LogEntryIIS", "tag"=>"iis.*", "time"=>"2023-08-15T20:38:45.559486675 +0000", "time_taken"=>1078}]
 ```
-This filter approach provides us with several powerful advantages inherent to programming languages. 
+This filter approach provides us with several powerful advantages inherent to programming languages.
 For instance, it:
 - Can be extended by adding type conversion to fields such as `sc_bytes, cs_bytes, time_taken`. This is particularly useful when we need to validate our data results.
 - Allows for the use of conditions to apply more descriptive filters, for example, "get only all logs that contain status codes above 4xx or 5xx".

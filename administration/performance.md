@@ -21,7 +21,7 @@ By increasing the buffer size, Fluent Bit will make fewer system calls (read(2))
 
 ## Fluent Bit and SIMD for JSON Encoding
 
-Starting in Fluent Bit v3.2, performance improvements have been introduced for JSON encoding. Plugins that convert logs from Fluent Bit’s internal binary representation to JSON can now do so up to 30% faster using SIMD (Single Instruction, Multiple Data) optimizations.
+Starting in Fluent Bit v3.2, performance improvements have been introduced for JSON encoding. Plugins that convert logs from Fluent Bit's internal binary representation to JSON can now do so up to 30% faster using SIMD (Single Instruction, Multiple Data) optimizations.
 
 ### Enabling SIMD Support
 

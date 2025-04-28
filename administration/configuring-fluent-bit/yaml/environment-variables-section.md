@@ -29,7 +29,7 @@ Fluent Bit provides a set of predefined environment variables that can be used i
 
 | Name | Description |
 |--|--|
-| `${HOSTNAME}` | The system’s hostname. |
+| `${HOSTNAME}` | The system's hostname. |
 
 ## External Variables
 
