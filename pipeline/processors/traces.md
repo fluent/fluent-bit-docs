@@ -70,7 +70,7 @@ With this head sampling configuration, a sample set of ingested traces will rand
 
 ## Tail sampling
 
-Teal sampling is used to obtain a more selective and fine grained control over the collection of traces and spans without collecting everything. Below is an example showing the process is a combination of waiting on making a sampling decision together followed by configuration defined conditions to determine the spans to be sampled.
+Tail sampling is used to obtain a more selective and fine grained control over the collection of traces and spans without collecting everything. Below is an example showing the process is a combination of waiting on making a sampling decision together followed by configuration defined conditions to determine the spans to be sampled.
 
 ![](/imgs/traces_tail_sampling.png)
 
