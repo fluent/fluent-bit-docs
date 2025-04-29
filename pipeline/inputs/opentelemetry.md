@@ -14,12 +14,13 @@ Our compliant implementation fully supports OTLP/HTTP and OTLP/GRPC. Note that t
 | ----------------- | -----------------------------------------------------------------------------------| ------- |
 | listen            | The network address to listen.                                                     | 0.0.0.0 |
 | port              | The port for Fluent Bit to listen for incoming connections. Note that as of Fluent Bit v3.0.2 this port is used for both transport OTLP/HTTP and OTLP/GRPC.                                                                                      | 4318    |
-| tag_key           | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the  |         |
-| raw_traces        | Route trace data as a log                                                          | false   |
+| tag | Tag for all the data ingested by this plugin. Important: This will only be used if `tag_from_uri` is set to false. Otherwise, the tag will be created from URI. | | 
+| tag_key           | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key  |         |
+| raw_traces        | Route trace data as a log                                                          | `false`   |
 | buffer_max_size   | Specify the maximum buffer size in KB/MB/GB to the HTTP payload.                   | 4M      |
 | buffer_chunk_size | Initial size and allocation strategy to store the payload (advanced users only)    | 512K    |
 |successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
-| tag_from_uri      | If true, tag will be created from uri. e.g. v1_metrics from /v1/metrics .                                                                      | true    |
+| tag_from_uri      | By default, tag will be created from uri. e.g. v1_metrics from /v1/metrics. This must be set to false if using `tag`  | `true`    |
 | threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Important note: Raw traces means that any data forwarded to the traces endpoint (`/v1/traces`) will be packed and forwarded as a log message, and will NOT be processed by Fluent Bit. The traces endpoint by default expects a valid protobuf encoded payload, but you can set the `raw_traces` option in case you want to get trace telemetry data to any of Fluent Bit's supported outputs.

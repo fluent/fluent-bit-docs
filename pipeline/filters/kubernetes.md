@@ -9,9 +9,10 @@ When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read 
   * Namespace
   * Container Name
   * Container ID
-* Query Kubernetes API Server to obtain extra metadata for the POD in question:
+* Query Kubernetes API Server or Kubelet to obtain extra metadata for the POD in question:
   * Pod ID
   * Labels
+  * Owner References
   * Annotations
   * Namespace Labels
   * Namespace Annotations
@@ -50,6 +51,7 @@ The plugin supports the following configuration parameters:
 | DNS\_Retries | DNS lookup retries N times until the network start working | 6 |
 | DNS\_Wait\_Time | DNS lookup interval between network status checks | 30 |
 | Use\_Kubelet | this is an optional feature flag to get metadata information from kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `Kube_URL` settings.| Off |
+| Use\_Tag\_For\_Meta | When enabled, Kubernetes metadata (e.g., pod_name, container_name, namespace_name etc) will be extracted from the tag itself. Connection to Kubernetes API Server will not get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail--kubernetes-filter) and [Custom Tag For Enhanced Filtering](#custom-tag-for-enhanced-filtering) to better understand metadata extraction from tags. | Off |
 | Kubelet\_Port | kubelet port using for HTTP request, this only works when `Use_Kubelet`  set to On. | 10250 |
 | Kubelet\_Host | kubelet host using for HTTP request, this only works when `Use_Kubelet`  set to On. | 127.0.0.1 |
 | Kube\_Meta\_Cache\_TTL | configurable TTL for K8s cached pod metadata. By default, it is set to 0 which means TTL for cache entries is disabled and cache entries are evicted at random when capacity is reached. In order to enable this option, you should set the number to a time interval. For example, set this value to 60 or 60s and cache entries which have been created more than 60s will be evicted. | 0 |
@@ -59,6 +61,7 @@ The plugin supports the following configuration parameters:
 | Namespace\_Labels | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 | Namespace\_Annotations | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
 | Namespace\_Metadata\_Only | Include Kubernetes namespace metadata only and no pod metadata. If this is set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| Owner\_References | Include Kubernetes owner references in the extra metadata | Off |
 
 ## Processing the 'log' value
 
@@ -155,6 +158,14 @@ spec:
 ```
 
 Note that the annotation value is boolean which can take a _true_ or _false_ and **must** be quoted.
+
+## Kubernetes Owner References
+
+An opt-in feature of Fluent Bit Kubernetes filter to include owner references information under `kubernetes.ownerReferences` field in the record when enabled. An example of record is shown below.
+
+```
+"kubernetes"=>{"pod_name"=>"fluentbit-gke-2p6b5", "namespace_name"=>"kube-system", "pod_id"=>"c759a5f5-xxxx-xxxx-9117-8a1dc0b1f907", "labels"=>{"component"=>"xxxx", "controller-revision-hash"=>"77665fff9", "k8s-app"=>"fluentbit-xxxx"}, "ownerReferences"=>[{"apiVersion"=>"apps/v1", "kind"=>"DaemonSet", "name"=>"fluentbit-gke", "uid"=>"1a12c3e2-d6c4-4a8a-b877-dd3c857d1aea", "controller"=>true, "blockOwnerDeletion"=>true}], "host"=>"xxx-2a9c049c-qgw3", "pod_ip"=>"10.128.0.111", "container_name"=>"fluentbit", "docker_id"=>"2accxxx", "container_hash"=>"xxxx", "container_image"=>"sha256:5163dxxxxea2"}}
+```
 
 ## Workflow of Tail + Kubernetes Filter
 
@@ -469,3 +480,9 @@ By default the Kube\_URL is set to `https://kubernetes.default.svc:443` . Ensure
 ### I can't see new objects getting metadata
 
 In some cases, you may only see some objects being appended with metadata while other objects are not enriched. This can occur at times when local data is cached and does not contain the correct id for the kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated which will then be reflected in Fluent Bit logs, however in some cases for `Pod` objects this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
+
+## Credit
+
+Our Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata
+Filter](https://github.com/fabric8io/fluent-plugin-kubernetes\_metadata\_filter)
+written by [Jimmi Dyson](https://github.com/jimmidyson).

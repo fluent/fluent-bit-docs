@@ -4,7 +4,7 @@ While Fluent Bit comes with a variety of built-in plugins, it also supports load
 
 ## 1. Inline YAML Section
 
-You can specify external plugins directly within your main YAML configuration file using the `plugins` section. Here’s an example:
+You can specify external plugins directly within your main YAML configuration file using the `plugins` section. Here's an example:
 
 ```yaml
 plugins:
@@ -22,9 +22,9 @@ pipeline:
       match: '*'
 ```
 
-## 2. YAML Plugins File Included via plugins_file Option
+## 2. YAML Plugins File Included using the `plugins_file` Option
 
-Alternatively, you can load external plugins from a separate YAML file by specifying the plugins_file option in the service section. Here’s how to configure this:
+Alternatively, you can load external plugins from a separate YAML file by specifying the `plugins_file` option in the service section. Here's how to configure this:
 
 ```yaml
 service:
@@ -49,6 +49,5 @@ plugins:
 
 ### Key Points
 
-- Built-in vs. External: Fluent Bit comes with many built-in plugins, but you can load external plugins at runtime to extend the tool’s functionality.
+- Built-in versus External: Fluent Bit comes with many built-in plugins, but you can load external plugins at runtime to extend the tool's functionality.
 - Loading Mechanism: External plugins must be shared object files (.so). You can define them inline in the main YAML configuration or include them from a separate YAML file for better modularity.
-

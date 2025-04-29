@@ -1,6 +1,7 @@
 accessor
 Alertmanager
 allowlist
+Ansible
 API
 APIs
 Appname
@@ -9,6 +10,7 @@ autoscaler
 autoscaling
 backoff
 backpressure
+BitBake
 Blackhole
 blocklist
 Buildkite
@@ -18,6 +20,7 @@ chronotf
 clickstreams
 CloudWatch
 CMake
+cmdlet
 Config
 Coralogix
 coroutine
@@ -39,6 +42,7 @@ deprovisioned
 deprovisioning
 deprovisions
 Devo
+Distroless
 DogStatsD
 downsample
 downsampled
@@ -78,6 +82,7 @@ Keepalive
 Istio
 jemalloc
 keepalive
+keyless
 Kinesis
 kubectl
 kubelet
@@ -95,6 +100,7 @@ Minishift
 minikube
 MTTx
 multithreading
+Musl
 namespace
 namespaces
 netcat
@@ -122,6 +128,7 @@ quantile
 quantiles
 queryable
 Queryable
+Raspbian
 rdkafka
 Redpanda
 rollup
@@ -141,6 +148,7 @@ ServiceMonitors
 sharding
 SignalFx
 Signup
+Sigstore
 sparkline
 sparklines
 Sparklines
@@ -183,6 +191,7 @@ Vivo
 VMs
 Wavefront
 Worldmap
+Yocto
 Zipkin
 Zsh
 Zstandard

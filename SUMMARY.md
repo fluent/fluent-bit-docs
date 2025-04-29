@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit v3.2 Documentation](README.md)
+* [Fluent Bit v4.0 Documentation](README.md)
 
 ## About
 
@@ -8,6 +8,7 @@
 * [A Brief History of Fluent Bit](about/history.md)
 * [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
+* [Sandbox and Lab Resources](about/sandbox-and-lab-resources.md)
 
 ## Concepts
 
@@ -55,7 +56,7 @@
     * [Multiline Parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
     * [Pipeline](administration/configuring-fluent-bit/yaml/pipeline-section.md)
     * [Plugins](administration/configuring-fluent-bit/yaml/plugins-section.md)
-    * [Upstream Servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md))
+    * [Upstream Servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md)
     * [Environment Variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
     * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
   * [Classic mode](administration/configuring-fluent-bit/classic-mode/README.md)
@@ -79,6 +80,7 @@
 * [Hot Reload](administration/hot-reload.md)
 * [Troubleshooting](administration/troubleshooting.md)
 * [Performance Tips](administration/performance.md)
+* [AWS credentials](administration/aws-credentials.md)
 
 ## Local Testing
 
@@ -145,6 +147,9 @@
   * [Metrics Selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry Envelope](pipeline/processors/opentelemetry-envelope.md)
   * [SQL](pipeline/processors/sql.md)
+  * [Traces](pipeline/processors/traces.md)
+  * [Filters as processors](pipeline/processors/filters.md)
+  * [Conditional processing](pipeline/processors/conditional-processing.md)
 * [Filters](pipeline/filters/README.md)
   * [AWS Metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
@@ -173,8 +178,8 @@
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
-  * [Azure Blob](pipeline/outputs/azure\_blob.md)
-  * [Azure Data Explorer](pipeline/outputs/azure\_kusto.md)
+  * [Azure Blob](pipeline/outputs/azure_blob.md)
+  * [Azure Data Explorer](pipeline/outputs/azure_kusto.md)
   * [Azure Log Analytics](pipeline/outputs/azure.md)
   * [Azure Logs Ingestion API](pipeline/outputs/azure_logs_ingestion.md)
   * [Counter](pipeline/outputs/counter.md)
@@ -194,12 +199,12 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [Loki](pipeline/outputs/loki.md)
-  * [Microsoft Fabric](pipeline/outputs/azure\_kusto.md)
+  * [Microsoft Fabric](pipeline/outputs/azure_kusto.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [NULL](pipeline/outputs/null.md)
   * [Observe](pipeline/outputs/observe.md)
-  * [OpenObserve](pipeline/inputs/openobserve.md)
+  * [OpenObserve](pipeline/outputs/openobserve.md)
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [Oracle Log Analytics](pipeline/outputs/oci-logging-analytics.md)
@@ -229,7 +234,7 @@
 
 ## Fluent Bit for Developers <a href="#development" id="development"></a>
 
-* [C Library API](development/library\_api.md)
+* [C Library API](development/library_api.md)
 * [Ingest Records Manually](development/ingest-records-manually.md)
 * [Golang Output Plugins](development/golang-output-plugins.md)
 * [WASM Filter Plugins](development/wasm-filter-plugins.md)
