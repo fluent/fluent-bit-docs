@@ -2,6 +2,8 @@
 
 The _Metrics Selector_ processor lets you choose which metrics to include or exclude, similar to the [Grep](../pipeline/filters/grep) filter for logs.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=326269f3-cfea-472d-9169-1de32c142b90" />
+
 ## Configuration parameters
 
 The Metrics Selector processor supports the following configuration parameters:
