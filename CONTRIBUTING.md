@@ -126,7 +126,7 @@ The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which l
 pull requests and adds suggestions to improve style and clarity. Most Vale tests are
 at the `suggestion` level and won't block merging.
 
-The following tests are at a `warning` level and will prevent merging:
+The following tests are at a `error` level and will prevent merging:
 
 - [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
   [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
