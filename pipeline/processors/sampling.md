@@ -1,6 +1,6 @@
-# Traces
+# Sampling
 
-The _Traces_ sampling processor is designed with a pluggable architecture, allowing easy extension to support multiple sampling strategies and backends. It provides you with the ability to apply head or tail sampling to incoming trace telemetry data.
+The _Sampling_ processor is designed with a pluggable architecture, allowing easy extension to support multiple trace sampling strategies and backends. It provides you with the ability to apply head or tail sampling to incoming trace telemetry data.
 
 Available samplers:
 
@@ -21,9 +21,9 @@ Conditions:
 
 The processor does not provide any extra configuration parameter, it can be used directly in your _processors_ Yaml directive.
 
-## Traces types
+## Sampling types
 
-Traces have both a name and a type with the following possible settings:
+Sampling has both a name and a type with the following possible settings:
 
 | Key    |     Possible values     |
 | :----- | :---------------------: |
