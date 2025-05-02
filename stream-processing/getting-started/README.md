@@ -6,4 +6,4 @@
 | Task | A single execution unit. For example, a SQL query. |
 | Results | After a stream processor runs a SQL query, results are generated. You can re-ingest these results back into the main Fluent Bit pipeline or redirect them to the standard output interface for debugging purposes. |
 | Tag | Fluent Bit groups records and assigns tags to them. These tags define routing rules and can be used to apply stream processors to specific tags that match a pattern. |
-| Match | Matching rules can use a wildcard to match specific records associated with a tag/ |
+| Match | Matching rules can use a wildcard to match specific records associated with a tag. |
