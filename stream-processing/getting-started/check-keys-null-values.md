@@ -2,7 +2,7 @@
 
 When working with structured messages (also known as records), there are certain cases where you might want to confirm whether a key exists, and whether its value is null or not null.
 
-In Fluent Bit, records are a binary serialization of maps with keys and value. A value can be null, which is a valid data type. The following statements can be applied in Fluent Bit SQL:
+In Fluent Bit, records are a binary serialization of maps with keys and value. A value can be `null`, which is a valid data type. The following statements can be applied in Fluent Bit SQL:
 
 ## Check if a key value is null
 
