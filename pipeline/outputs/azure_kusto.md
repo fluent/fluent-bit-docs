@@ -66,8 +66,20 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
 | ingestion_endpoint_connect_timeout                    | The connection timeout of various Kusto endpoints in seconds.                                                                                                                                                  | `60` |
 | compression_enabled         | If enabled, sends compressed HTTP payload (gzip) to Kusto.                                                                                                                                                  | `true` |
-| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.                                                                                                                                                  | `3600` |
-| workers                     | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.  
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| buffering_enabled           | _Optional_ - Enable buffering into disk before ingesting into Azure Kusto. | `Off` |
+| buffer_dir                  | _Optional_ - When buffering is `On`, specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-kusto/` |
+| upload_timeout              | _Optional_ - When buffering is `On`, specifies a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached `upload_file_size` limit. | `30m` |
+| upload_file_size            | _Optional_ - When buffering is `On`, specifies the size of files to be uploaded in MBs. | `200MB` |
+| azure_kusto_buffer_key     | _Optional_ - When buffering is `On`, set the Azure Kusto buffer key which must be specified when using multiple instances of Azure Kusto output plugin and buffering is enabled. | `key` |
+| store_dir_limit_size        | _Optional_ - When buffering is `On`, set the max size of the buffer directory. | `8GB` |
+| buffer_file_delete_early    | _Optional_ - When buffering is `On`, whether to delete the buffered file early after successful blob creation. | `Off` |
+| unify_tag                   | _Optional_ - This creates a single buffer file when the buffering mode is `On`. | `On` |
+| blob_uri_length             | _Optional_ - Set the length of generated blob URI before ingesting to Kusto. | `64` |
+| scheduler_max_retries       | _Optional_ - When buffering is `On`, set the maximum number of retries for ingestion using the scheduler. | `3` |
+| delete_on_max_upload_error  | _Optional_ - When buffering is `On`, whether to delete the buffer file on maximum upload errors. | `Off` |
+| io_timeout                  | _Optional_ - Configure the HTTP IO timeout for uploads. | `60s` |
 
 ### Configuration File
 
@@ -75,19 +87,30 @@ Get started quickly with this configuration file:
 
 ```
 [OUTPUT]
-    match *
-    name azure_kusto
-    tenant_id <app_tenant_id>
-    client_id <app_client_id>
-    client_secret <app_secret>
-    ingestion_endpoint https://ingest-<cluster>.<region>.kusto.windows.net
-    database_name <database_name>
-    table_name <table_name>
-    ingestion_mapping_reference <mapping_name>
+    Match *
+    Name azure_kusto
+    Tenant_Id <app_tenant_id>
+    Client_Id <app_client_id>
+    Client_Secret <app_secret>
+    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+    Database_Name <database_name>
+    Table_Name <table_name>
+    Ingestion_Mapping_Reference <mapping_name>
     ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
     compression_enabled <compression_enabled>
     ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
-    
+    buffering_enabled On
+    upload_timeout 2m
+    upload_file_size 125M
+    azure_kusto_buffer_key kusto1
+    buffer_file_delete_early Off
+    unify_tag On
+    buffer_dir /var/log/
+    store_dir_limit_size 16GB
+    blob_uri_length 128
+    scheduler_max_retries 3
+    delete_on_max_upload_error Off
+    io_timeout 60s
 ```
 
 ## Troubleshooting
