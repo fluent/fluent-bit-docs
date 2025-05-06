@@ -1,22 +1,20 @@
-# Check Keys and NULL values
+# Check keys and null values
 
-> Feature available on Fluent Bit &gt;= 1.2
+When working with structured messages (also known as records), there are certain cases where you might want to confirm whether a key exists, and whether its value is null or not null.
 
-When working with structured messages \(records\), there are certain cases where we want to know if a key exists, if it value is _null_ or have a value different than _null_.
+In Fluent Bit, records are a binary serialization of maps with keys and value. A value can be `null`, which is a valid data type. The following statements can be applied in Fluent Bit SQL:
 
-[Fluent Bit](https://fluentbit.io) internal records are a binary serialization of maps with keys and values. A value can be _null_ which is a valid data type. In our SQL language we provide the following statements that can be applied to the conditionals statements:
+## Check if a key value is null
 
-## Check if a key value IS NULL
-
-The following SQL statement can be used to retrieve all records from stream _test_ where the key called _phone_ has a _null_ value:
+The following statement retrieves all records from the stream `test` where the key `phone` has a value of `null`:
 
 ```sql
 SELECT * FROM STREAM:test WHERE phone IS NULL;
 ```
 
-## Check if a key value IS NOT NULL
+## Check if a key value is not null
 
-Similar to the example above, there are cases where we want to retrieve all records that certain key value have something different than _null_:
+The following statement is similar to the previous example, but instead retrieves all records from the stream `test` where the key `phone` has a non-null value:
 
 ```sql
 SELECT * FROM STREAM:test WHERE phone IS NOT NULL;
@@ -24,15 +22,13 @@ SELECT * FROM STREAM:test WHERE phone IS NOT NULL;
 
 ## Check if a key exists
 
-Another common use-case is to check if certain key exists in the record. We provide specific record functions that can be used in the conditional part of the SQL statement. The prototype of the function to check if a key exists in the record is the following:
-
+You can also confirm whether a certain key exists in a record at all, regardless of its value. Fluent Bit provides specific record functions that you can use in the condition part of the SQL statement. The following function determines whether `key` exists in a record:
 ```text
 @record.contains(key)
 ```
 
-The following example query all records that contains a key called _phone_:
+For example, the following statement retrieves all records that contain a key called `phone`:
 
 ```sql
 SELECT * FROM STREAM:test WHERE @record.contains(phone);
 ```
-

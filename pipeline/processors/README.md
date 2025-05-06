@@ -18,9 +18,9 @@ Fluent Bit offers the following processors:
 - [Metrics Selector](metrics-selector.md): Choose which metrics to keep or discard.
 - [OpenTelemetry Envelope](opentelemetry-envelope.md): Transform logs into an
   OpenTelemetry-compatible format.
-- [SQL](sql.md): Use SQL queries to extract log content.
-- [Traces](traces.md): Trace sampling designed with a pluggable architecture,
+- [Sampling](sampling.md): Trace sampling designed with a pluggable architecture,
   allowing easy extension to support multiple sampling strategies and backends.
+- [SQL](sql.md): Use SQL queries to extract log content.
 - [Filters](filters.md): Any filter can be used as a processor.
 
 ## Features
