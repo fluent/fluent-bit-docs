@@ -13,7 +13,7 @@ This input plugin allows you to ingest a payload in the Prometheus remote-write 
 | listen            | The address to listen on                                                                                                                       | 0.0.0.0 |
 | port              | The port for Fluent Bit to listen on                                                                                                           | 8080    |
 | buffer\_max\_size   | Specify the maximum buffer size in KB to receive a JSON message.                                                                               | 4M      |
-| buffer\_chunk\_size | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size.  | 512K    |
+| buffer\_chunk\_size | This sets the chunk size for incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size.  | 512K    |
 |successful\_response\_code | It allows to set successful response code. `200`, `201` and `204` are supported.| 201 |
 | tag\_from\_uri      | If true, tag will be created from uri, e.g. api\_prom\_push from /api/prom/push, and any tag specified in the config will be ignored. If false then a tag must be provided in the config for this input. | true    |
 | uri               | Specify an optional HTTP URI for the target web server listening for prometheus remote write payloads, e.g: /api/prom/push                       | |
