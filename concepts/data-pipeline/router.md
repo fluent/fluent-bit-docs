@@ -76,7 +76,7 @@ example defines a common destination for both sources of data:
     Match  my_*
 ```
 
-The match rule is set to `my_*`, which matches any Tag starting with `my_*`.
+The match rule is set to `my_*`, which matches any Tag starting with `my_`.
 
 ## Routing with Regex
 
