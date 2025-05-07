@@ -36,7 +36,7 @@ Be aware there is a separate Golang output plugin provided by [Grafana](https://
 
 ## Labels
 
-Loki store the record logs inside Streams, a stream is defined by a set of labels, at least one label is required.
+Loki stores the record logs inside Streams, a stream is defined by a set of labels, at least one label is required.
 
 Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text but also allowing to set as labels certain keys that exists as part of the records that are being processed.
 Consider the following JSON record \(pretty printed for readability\):
@@ -88,6 +88,8 @@ When processing that new configuration, the internal labels will be:
 ```text
 job="fluentbit", mystream="stdout"
 ```
+
+Extracting keys to labels through `labels`, `label_keys` or `label_map_path` will remove those keys from the record.
 
 ### Using the `label_keys` property
 
