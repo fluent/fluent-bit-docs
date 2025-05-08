@@ -2,13 +2,13 @@
 
 Stream processing in Fluent Bit uses SQL to perform record queries.
 
-For additional information, see the [stream processing README file](https://github.com/fluent/fluent-bit/tree/master/src/stream_processor).
+For more information, see the [stream processing README file](https://github.com/fluent/fluent-bit/tree/master/src/stream_processor).
 
 ## Statements
 
 Use the following SQL statements in Fluent Bit.
 
-### SELECT
+### `SELECT`
 
 ```sql
 SELECT results_statement
@@ -24,7 +24,7 @@ Groups keys from records that originate from a specified stream, or from records
 A `SELECT` statement not associated with stream creation will send the results to the standard output interface, which can be helpful for debugging purposes.
 {% endhint %}
 
-You can filter the results of this query by applying a condition through a `WHERE` statement. For information about the `WINDOW` and `GROUP BY` statements, see [Aggregation functions](#aggregation-functions).
+You can filter the results of this query by applying a condition by using a `WHERE` statement. For information about the `WINDOW` and `GROUP BY` statements, see [Aggregation functions](#aggregation-functions).
 
 #### Examples
 
@@ -40,7 +40,7 @@ Selects the `code` key from records with tags whose name begins with `apache`:
 SELECT code AS http_status FROM TAG:'apache.*';
 ```
 
-### CREATE STREAM
+### `CREATE STREAM`
 
 ```sql
 CREATE STREAM stream_name
@@ -64,7 +64,7 @@ Creates a new stream called `hello` for all records whose original tag name begi
 CREATE STREAM hello AS SELECT * FROM TAG:'apache.*';
 ```
 
-## Aggregation Functions
+## Aggregation functions
 
 You can use aggregation functions in the `results_statement` on keys, which lets you perform data calculation on groups of records. These groups are determined by the `WINDOW` key. If `WINDOW` is unspecified, aggregation functions are applied to the current buffer of records received, which might have a non-deterministic number of elements. You can also apply aggregation functions to records in a window of a specific time interval.
 
@@ -72,23 +72,23 @@ Fluent Bit uses a tumbling window, which is non-overlapping. For example, a wind
 
 Additionally, you can use the `GROUP BY` statement to group results by one or more keys with matching values.
 
-### AVG
+### `AVG`
 
 ```sql
 SELECT AVG(size) FROM STREAM:apache WHERE method = 'POST' ;
 ```
 
-Calculates the average size of POST requests.
+Calculates the average size of `POST` requests.
 
-### COUNT
+### `COUNT`
 
 ```sql
 SELECT host, COUNT(*) FROM STREAM:apache WINDOW TUMBLING (X SECOND) GROUP BY host;
 ```
 
-Counts the number of records in 5 second window, grouped by host IP addresses.
+Counts the number of records in a five-second window, grouped by host IP addresses.
 
-### MIN
+### `MIN`
 
 ```sql
 SELECT MIN(key) FROM STREAM:apache;
@@ -96,14 +96,14 @@ SELECT MIN(key) FROM STREAM:apache;
 
 Returns the minimum value of a key in a set of records.
 
-### MAX
+### `MAX`
 
 ```sql
 SELECT MAX(key) FROM STREAM:apache;
 ```
 Returns the maximum value of a key in a set of records.
 
-### SUM
+### `SUM`
 
 ```sql
 SELECT SUM(key) FROM STREAM:apache;
@@ -115,7 +115,7 @@ Calculates the sum of all values of a key in a set of records.
 
 Use time functions to add a new key with time data into a record.
 
-### NOW
+### `NOW`
 
 ```sql
 SELECT NOW() FROM STREAM:apache;
@@ -123,7 +123,7 @@ SELECT NOW() FROM STREAM:apache;
 
 Adds the current system time to a record using the format `%Y-%m-%d %H:%M:%S`. Output example: `2019-03-09 21:36:05`.
 
-### UNIX\_TIMESTAMP
+### `UNIX_TIMESTAMP`
 
 ```sql
 SELECT UNIX_TIMESTAMP() FROM STREAM:apache;
@@ -135,21 +135,21 @@ Adds the current Unix time to a record. Output example: `1552196165`.
 
 Use record functions to append new keys to a record using values from the record's context.
 
-### RECORD\_TAG
+### `RECORD_TAG`
 
 ```sql
 SELECT RECORD_TAG() FROM STREAM:apache;
 ```
 
-Append Tag string associated to the record as a new key.
+Append tag string associated to the record as a new key.
 
-### RECORD\_TIME
+### `RECORD_TIME`
 
 ```sql
 SELECT RECORD_TIME() FROM STREAM:apache;
 ```
 
-## The WHERE condition
+## `WHERE` condition
 
 Similar to conventional SQL statements, Fluent Bit supports the `WHERE` condition. You can use this condition in both keys and subkeys. For example:
 
@@ -163,7 +163,7 @@ You can confirm whether a key exists in a record by using the record-specific fu
 SELECT MAX(key) FROM STREAM:apache WHERE @record.contains(key);
 ```
 
-And to check whether the value of a key is `NULL`:
+To determine if the value of a key is `NULL`:
 
 ```sql
 SELECT MAX(key) FROM STREAM:apache WHERE key IS NULL;
