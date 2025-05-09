@@ -128,6 +128,7 @@ at the `suggestion` level and won't block merging.
 
 The following tests are at a `error` level and will prevent merging:
 
+- [AmSpelling](https://developers.google.com/style/word-list)
 - [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
   [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
   By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
