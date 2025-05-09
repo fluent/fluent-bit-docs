@@ -2,7 +2,7 @@ extends: existence
 message: "Use an em dash ('—') instead of '–'."
 link: 'https://developers.google.com/style/dashes'
 nonword: true
-level: suggestion
+level: error
 action:
   name: edit
   params:
