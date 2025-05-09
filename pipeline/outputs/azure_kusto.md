@@ -11,7 +11,7 @@ The Kusto output plugin allows to ingest your logs into an [Azure Data Explorer]
 You can create an Azure Data Explorer cluster in one of the following ways:
 
 - [Create a free-tier cluster](https://dataexplorer.azure.com/freecluster)
-- [Create a fully-featured cluster](https://docs.microsoft.com/en-us/azure/data-explorer/create-cluster-database-portal)
+- [Create a fully featured cluster](https://docs.microsoft.com/en-us/azure/data-explorer/create-cluster-database-portal)
 
 ## For ingesting into Microsoft Fabric Real Time Analytics : Creating an Eventhouse Cluster and KQL Database
 
@@ -19,7 +19,6 @@ You can create an Eventhouse cluster and a KQL database follow the following ste
 
 - [Create an Eventhouse cluster](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-eventhouse-cluster)
 - [Create a KQL database](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-database)
-
 
 ## Creating an Azure Registered Application
 
@@ -66,7 +65,7 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 | time_key                    | The key name of time. If `include_time_key` is false, This property is ignored.                                                                                                                                                  | `timestamp` |
 | ingestion_endpoint_connect_timeout                    | The connection timeout of various Kusto endpoints in seconds.                                                                                                                                                  | `60` |
 | compression_enabled         | If enabled, sends compressed HTTP payload (gzip) to Kusto.                                                                                                                                                  | `true` |
-| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.  
+| ingestion_resources_refresh_interval                    | The ingestion resources refresh interval of Kusto endpoint in seconds.
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | buffering_enabled           | _Optional_ - Enable buffering into disk before ingesting into Azure Kusto. | `Off` |
 | buffer_dir                  | _Optional_ - When buffering is `On`, specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-kusto/` |
