@@ -6,6 +6,40 @@ description: Send logs to Azure Data Explorer (Kusto)
 
 The Kusto output plugin allows to ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/services/data-explorer/) cluster, via the [Queued Ingestion](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/api/netfx/about-kusto-ingest#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
 
+## Authentication Methods
+
+Fluent-Bit can use various authentication methods to connect to your Azure Data Explorer cluster:
+
+### Service Principal Authentication (Default)
+
+For service principal authentication, you'll need to create an Azure AD application:
+
+- [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+
+Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
+
+### Managed Identity Authentication
+
+When running on Azure services that support Managed Identities (such as Azure VMs, AKS, or App Service):
+
+1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster)
+2. Configure Fluent Bit with `auth_type` set to `managed_identity`
+3. For system-assigned identity, set `client_id` to `system`
+4. For user-assigned identity, set `client_id` to the managed identity's client ID (GUID)
+
+### Workload Identity Authentication
+
+For Kubernetes environments using Azure Workload Identity:
+
+1. [Set up Azure Workload Identity in your Kubernetes cluster](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster)
+2. Configure your pod to use a service account with Workload Identity Federation
+3. Configure Fluent Bit with:
+   - `auth_type` set to `workload_identity`
+   - `tenant_id` and `client_id` of your Azure AD application
+   - `workload_identity_token_file` pointing to your token file path (typically `/var/run/secrets/azure/tokens/azure-identity-token`)
+
 ## For ingesting into Azure Data Explorer:  Creating a Kusto Cluster and Database
 
 You can create an Azure Data Explorer cluster in one of the following ways:
@@ -19,15 +53,6 @@ You can create an Eventhouse cluster and a KQL database follow the following ste
 
 - [Create an Eventhouse cluster](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-eventhouse-cluster)
 - [Create a KQL database](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-database)
-
-
-## Creating an Azure Registered Application
-
-Fluent-Bit will use the application's credentials, to ingest data into your cluster.
-
-- [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
-- [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
 
 ## Creating a Table
 
@@ -51,11 +76,12 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 
 | Key                         | Description                                                                                                                                                                                                                      | Default     |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| tenant_id                   | _Required if `managed_identity_client_id` is not set_ - The tenant/domain ID of the AAD registered application.                                                                                                                                                             |             |
-| client_id                   | _Required if `managed_identity_client_id` is not set_ - The client ID of the AAD registered application.                                                                                                                                                                    |             |
-| client_secret               | _Required if `managed_identity_client_id` is not set_ - The client secret of the AAD registered application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). |
-| managed_identity_client_id  | _Required if `tenant_id`, `client_id`, and `client_secret` are not set_ - The managed identity ID to authenticate with. Set to `SYSTEM` for system-assigned managed identity, or set to the MI client ID (GUID) for user-assigned managed identity.                                                                                                                                                                   |             |
-| ingestion_endpoint          | _Required_ - The cluster's ingestion endpoint, usually in the form `https://ingest-cluster_name.region.kusto.windows.net                                                                                                         |
+| tenant_id                   | _Required for service principal and workload identity auth_ - The tenant/domain ID of the AAD registered application.                                                                                                            |             |
+| client_id                   | _Required for service principal and workload identity auth_ - The client ID of the AAD registered application. When using managed identity authentication, set this to 'system' for system-assigned identity or provide the managed identity's client ID.                                                                                                                 |             |
+| client_secret               | _Required for service principal auth_ - The client secret of the AAD registered application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). |             |
+| workload_identity_token_file | _Required for workload identity auth_ - The file path containing the workload identity token when using Azure Workload Identity authentication in Kubernetes.                                                                    |  /var/run/secrets/azure/tokens/azure-identity-token           |
+| auth_type                   | Authentication type to use. Supported values: `service_principal` (default), `managed_identity`, `workload_identity`.                                                                                                           | `service_principal` |
+| ingestion_endpoint          | _Required_ - The cluster's ingestion endpoint, usually in the form `https://ingest-cluster_name.region.kusto.windows.net`                                                                                                       |             |
 | database_name               | _Required_ - The database name.                                                                                                                                                                                                  |             |
 | table_name                  | _Required_ - The table name.                                                                                                                                                                                                     |             |
 | ingestion_mapping_reference | _Optional_ - The name of a [JSON ingestion mapping](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/mappings#json-mapping) that will be used to map the ingested payload into the table columns.           |             |
@@ -83,7 +109,9 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 
 ### Configuration File
 
-Get started quickly with this configuration file:
+Get started quickly with these configuration examples:
+
+#### Service Principal Authentication (Default)
 
 ```
 [OUTPUT]
@@ -99,18 +127,46 @@ Get started quickly with this configuration file:
     ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
     compression_enabled <compression_enabled>
     ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
-    buffering_enabled On
-    upload_timeout 2m
-    upload_file_size 125M
-    azure_kusto_buffer_key kusto1
-    buffer_file_delete_early Off
-    unify_tag On
-    buffer_dir /var/log/
-    store_dir_limit_size 16GB
-    blob_uri_length 128
-    scheduler_max_retries 3
-    delete_on_max_upload_error Off
-    io_timeout 60s
+    buffering_enabled <buffering_enabled>
+    upload_timeout <upload_timeout>
+    upload_file_size <upload_file_size>
+    azure_kusto_buffer_key <azure_kusto_buffer_key>
+    buffer_file_delete_early <buffer_file_delete_early>
+    unify_tag <unify_tag>
+    buffer_dir <buffer_dir>
+    blob_uri_length <blob_uri_length>
+    scheduler_max_retries <scheduler_max_retries>
+    delete_on_max_upload_error <delete_on_max_upload_error>
+```
+
+#### Managed Identity Authentication
+
+```
+[OUTPUT]
+    Match *
+    Name azure_kusto
+    Auth_Type managed_identity
+    Client_Id <managed_identity_client_id>  # Use 'system' for system-assigned managed identity
+    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+    Database_Name <database_name>
+    Table_Name <table_name>
+    # Additional parameters as needed
+```
+
+#### Workload Identity Authentication
+
+```
+[OUTPUT]
+    Match *
+    Name azure_kusto
+    Auth_Type workload_identity
+    Tenant_Id <tenant_id>
+    Client_Id <client_id>
+    Workload_Identity_Token_File /var/run/secrets/azure/tokens/azure-identity-token
+    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+    Database_Name <database_name>
+    Table_Name <table_name>
+    # Additional parameters as needed
 ```
 
 ## Troubleshooting
