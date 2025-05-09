@@ -28,6 +28,8 @@ We expose different configuration properties. The following table lists all the 
 | blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`. | appendblob |
 | auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
 | path | Optional path to store your blobs. If your blob name is `myblob`, you can specify sub-directories where to store it using path, so setting path to `/logs/kubernetes` will store your blob in `/logs/kubernetes/myblob`. |  |
+| compress | Sets payload compression in network transfer. Only value supported is: `gzip` | |
+| compress\_blob | Enables GZIP compression in the final `blockblob` file. This option is not compatible when `blob_type` = `appendblob`  | |
 | emulator\_mode | If you want to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
 | endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
 | tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
