@@ -138,3 +138,7 @@ The following tests are at a `error` level and will prevent merging:
   to prevent this problem.
 - [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
   Checks for the same word used twice in succession.
+
+The following tests are at a `warning` level and won't prevent merging:
+
+- [Ampersand](https://developers.google.com/style/word-list#ampersand)
