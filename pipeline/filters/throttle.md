@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 
 ## Functional description
 
-Lets imagine we have configured:
+Using the following configuration:
 
 ```text
 Rate 5
@@ -23,23 +23,25 @@ Window 5
 Interval 1s
 ```
 
-we received 1 message first second, 3 messages 2nd, and 5 3rd. As you can see, disregard that Window is actually 5, we use "slow" start to prevent overflooding during the startup.
+You would received 1 message in the first second, 3 messages second, and 5 third.
+Disregard that Window is actually 5, because the configuration uses `slow` start
+to prevent flooding during the startup.
 
 ```text
-+-------+-+-+-+ 
-|1|3|5| | | | | 
-+-------+-+-+-+ 
-|  3  |         average = 3, and not 1.8 if you calculate 0 for last 2 panes. 
++-------+-+-+-+
+|1|3|5| | | | |
++-------+-+-+-+
+|  3  |         average = 3, and not 1.8 if you calculate 0 for last 2 panes.
 +-----+
 ```
 
 But as soon as we reached Window size \* Interval, we will have true sliding window with aggregation over complete window.
 
 ```text
-+-------------+ 
-|1|3|5|7|3|4| | 
-+-------------+ 
-  |  4.4    |   
++-------------+
+|1|3|5|7|3|4| |
++-------------+
+  |  4.4    |
   ----------+
 ```
 
@@ -135,4 +137,3 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o s
 ```
 
 The example above will pass 1000 messages per second in average over 300 seconds.
-

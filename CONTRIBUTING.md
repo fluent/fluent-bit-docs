@@ -133,6 +133,7 @@ The following tests are at a `error` level and will prevent merging:
 - [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
 - [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
 - [HeadingPunctuation](https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings)
+- [LyHyphens](https://developers.google.com/style/hyphens)
 - [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
   [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
   By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
@@ -141,6 +142,7 @@ The following tests are at a `error` level and will prevent merging:
   in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en)
   or [Microsoft Word](https://support.microsoft.com/en-us/office/smart-quotes-in-word-and-powerpoint-702fc92e-b723-4e3d-b2cc-71dedaf2f343)
   to prevent this problem.
+- [Ordinal](https://developers.google.com/style/numbers)
 - [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
   Checks for the same word used twice in succession.
 
