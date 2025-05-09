@@ -18,13 +18,16 @@ Use the following command to start Fluent Bit while using a configuration file:
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
 ```shell
-docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf cr.fluentbit.io/fluent/fluent-bit
+docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
+  cr.fluentbit.io/fluent/fluent-bit
 ```
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
 ```shell
-docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml cr.fluentbit.io/fluent/fluent-bit -c /fluent-bit/etc/fluent-bit.yaml
+docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
+  cr.fluentbit.io/fluent/fluent-bit \
+  -c /fluent-bit/etc/fluent-bit.yaml
 ```
 {% endtab %}
 {% endtabs %}
