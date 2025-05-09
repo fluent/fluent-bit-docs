@@ -405,8 +405,6 @@ spec:
 
 The key point is to set `hostNetwork` to `true` and `dnsPolicy` to `ClusterFirstWithHostNet` that fluent bit DaemonSet could call Kubelet locally. Otherwise it could not resolve the dns for kubelet.
 
-Now you are good to use this new feature!
-
 ### Verify that the Use\_Kubelet option is working
 
 Basically you should see no difference about your experience for enriching your log files with Kubernetes metadata.

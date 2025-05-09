@@ -6,7 +6,7 @@
 
 * [What is Fluent Bit?](about/what-is-fluent-bit.md)
 * [A Brief History of Fluent Bit](about/history.md)
-* [Fluentd & Fluent Bit](about/fluentd-and-fluent-bit.md)
+* [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
 * [Sandbox and Lab Resources](about/sandbox-and-lab-resources.md)
 
@@ -69,7 +69,7 @@
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
   * [Multiline Parsing](administration/configuring-fluent-bit/multiline-parsing.md)
 * [Transport Security](administration/transport-security.md)
-* [Buffering & Storage](administration/buffering-and-storage.md)
+* [Buffering and Storage](administration/buffering-and-storage.md)
 * [Backpressure](administration/backpressure.md)
 * [Scheduling and Retries](administration/scheduling-and-retries.md)
 * [Networking](administration/networking.md)
@@ -217,7 +217,7 @@
   * [Stackdriver](pipeline/outputs/stackdriver.md)
   * [Standard Output](pipeline/outputs/standard-output.md)
   * [Syslog](pipeline/outputs/syslog.md)
-  * [TCP & TLS](pipeline/outputs/tcp-and-tls.md)
+  * [TCP and TLS](pipeline/outputs/tcp-and-tls.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
@@ -230,7 +230,7 @@
 * [Getting Started](stream-processing/getting-started/README.md)
   * [Fluent Bit + SQL](stream-processing/getting-started/fluent-bit-sql.md)
   * [Check Keys and NULL values](stream-processing/getting-started/check-keys-null-values.md)
-  * [Hands On! 101](stream-processing/getting-started/hands-on.md)
+  * [Hands On 101](stream-processing/getting-started/hands-on.md)
 
 ## Fluent Bit for Developers <a href="#development" id="development"></a>
 

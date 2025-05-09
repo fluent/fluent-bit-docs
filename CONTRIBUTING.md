@@ -129,6 +129,9 @@ at the `suggestion` level and won't block merging.
 The following tests are at a `error` level and will prevent merging:
 
 - [AmSpelling](https://developers.google.com/style/word-list)
+- [Emdash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
 - [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
   [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
   By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
@@ -139,3 +142,7 @@ The following tests are at a `error` level and will prevent merging:
   to prevent this problem.
 - [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
   Checks for the same word used twice in succession.
+
+The following tests are at a `warning` level and won't prevent merging:
+
+- [Ampersand](https://developers.google.com/style/word-list#ampersand)
