@@ -1,4 +1,4 @@
-# Buffering & Storage
+# Buffering and Storage
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=cde12327-09ed-409c-ac02-7c0afa5eff51" />
 
