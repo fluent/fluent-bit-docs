@@ -1,11 +1,10 @@
 ---
-title: Monitor data pipelines
 description: Learn how to monitor your Fluent Bit data pipelines
 ---
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
-
 # Monitor data pipelines
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
 
 Fluent Bit includes features for monitoring the internals of your pipeline, in
 addition to connecting to Prometheus and Grafana, Health checks, and connectors to
@@ -23,7 +22,7 @@ metrics of each running plugin.
 
 You can integrate the monitoring interface with Prometheus.
 
-### Getting started
+### Get started
 
 To get started, enable the HTTP server from the configuration file. The following
 configuration instructs Fluent Bit to start an HTTP server on TCP port `2020` and
@@ -66,7 +65,7 @@ Use `curl` to gather information about the HTTP server. The following command se
 the command output to the `jq` program, which outputs human-readable JSON data to the
 terminal.
 
-```curl
+```bash
 curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
@@ -99,15 +98,15 @@ Fluent Bit exposes the following endpoints for monitoring.
 
 | URI                        | Description   | Data format           |
 | -------------------------- | ------------- | --------------------- |
-| /                          | Fluent Bit build information. | JSON |
-| /api/v1/uptime             | Return uptime information in seconds. | JSON |
-| /api/v1/metrics            | Display internal metrics per loaded plugin. | JSON                  |
-| /api/v1/metrics/prometheus | Display internal metrics per loaded plugin in Prometheus Server format. | Prometheus Text 0.0.4 |
-| /api/v1/storage            | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section of the property `storage.metrics` is enabled. | JSON |
-| /api/v1/health             | Display the Fluent Bit health check result. | String |
-| /api/v2/metrics            | Display internal metrics per loaded plugin. | [cmetrics text format](https://github.com/fluent/cmetrics) |
-| /api/v2/metrics/prometheus | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
-| /api/v2/reload             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
+| `/`                          | Fluent Bit build information. | JSON |
+| `/api/v1/uptime`             | Return uptime information in seconds. | JSON |
+| `/api/v1/metrics`            | Display internal metrics per loaded plugin. | JSON                  |
+| `/api/v1/metrics/prometheus` | Display internal metrics per loaded plugin in Prometheus Server format. | Prometheus Text 0.0.4 |
+| `/api/v1/storage`            | Get internal metrics of the storage layer / buffered data. This option is enabled only if in the `SERVICE` section of the property `storage.metrics` is enabled. | JSON |
+| `/api/v1/health`             | Display the Fluent Bit health check result. | String |
+| `/api/v2/metrics`            | Display internal metrics per loaded plugin. | [cmetrics text format](https://github.com/fluent/cmetrics) |
+| `/api/v2/metrics/prometheus` | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
+| `/api/v2/reload             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
 
 ### v1 metrics
 
@@ -137,8 +136,8 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_input_records_total`        | name: the name or alias for the input instance  | The number of log records this input ingested successfully. | counter | records |
 | `fluentbit_output_dropped_records_total` | name: the name or alias for the output instance | The number of log records dropped by the output. These records hit an unrecoverable error or retries expired for their chunk. | counter | records |
 | `fluentbit_output_errors_total`        | name: the name or alias for the output instance | The number of chunks with an error that's either unrecoverable or unable to retry. This metric represents the number of times a chunk failed, and doesn't correspond with the number of error messages visible in the Fluent Bit log output. | counter | chunks  |
-| `fluentbit_output_proc_bytes_total`      | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record is not sent due to some error, it doesn't count towards this metric. | counter | bytes   |
-| `fluentbit_output_proc_records_total`    | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record is not sent successfully, it doesn't count towards this metric. | counter | records |
+| `fluentbit_output_proc_bytes_total`      | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record isn't sent due to some error, it doesn't count towards this metric. | counter | bytes   |
+| `fluentbit_output_proc_records_total`    | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record isn't sent successfully, it doesn't count towards this metric. | counter | records |
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`         | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
@@ -163,7 +162,7 @@ The following descriptions apply to metrics outputted in JSON format by the
 | `input_chunks.{plugin name}.chunks.total`     | The current total number of chunks owned by this input instance. | chunks  |
 | `input_chunks.{plugin name}.chunks.up`        | The current number of chunks that are in memory for this input. If file system storage is enabled, chunks that are "up" are also stored in the filesystem layer. | chunks  |
 | `input_chunks.{plugin name}.chunks.down`      | The current number of chunks that are "down" in the filesystem for this input. | chunks  |
-| `input_chunks.{plugin name}.chunks.busy`      | Chunks are that are being processed or sent by outputs and are not eligible to have new data appended. | chunks  |
+| `input_chunks.{plugin name}.chunks.busy`      | Chunks are that are being processed or sent by outputs and aren't eligible to have new data appended. | chunks  |
 | `input_chunks.{plugin name}.chunks.busy_size` | The sum of the byte size of each chunk which is currently marked as busy. | bytes   |
 
 ### v2 metrics
@@ -198,8 +197,8 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_filter_drop_records_total`    | name: the name or alias for the filter instance | The number of log records dropped by the filter and removed from the data pipeline. | counter | records |
 | `fluentbit_output_dropped_records_total` | name: the name or alias for the output instance | The number of log records dropped by the output. These records hit an unrecoverable error or retries expired for their chunk. | counter | records |
 | `fluentbit_output_errors_total`          | name: the name or alias for the output instance | The number of chunks with an error that's either unrecoverable or unable to retry. This metric represents the number of times a chunk failed, and doesn't correspond with the number of error messages visible in the Fluent Bit log output. | counter | chunks  |
-| `fluentbit_output_proc_bytes_total`      | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record is not sent due to some error, it doesn't count towards this metric. | counter | bytes   |
-| `fluentbit_output_proc_records_total`    | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record is not sent successfully, it doesn't count towards this metric. | counter | records |
+| `fluentbit_output_proc_bytes_total`      | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record isn't sent due to some error, it doesn't count towards this metric. | counter | bytes   |
+| `fluentbit_output_proc_records_total`    | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record isn't sent successfully, it doesn't count towards this metric. | counter | records |
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
@@ -227,7 +226,7 @@ layer.
 | `fluentbit_input_storage_chunks`            | name: the name or alias for the input instance  | The current total number of chunks owned by this input instance. | gauge | chunks |
 | `fluentbit_input_storage_chunks_up`         | name: the name or alias for the input instance  | The current number of chunks that are in memory for this input. If file system storage is enabled, chunks that are "up" are also stored in the filesystem layer. | gauge | chunks |
 | `fluentbit_input_storage_chunks_down`       | name: the name or alias for the input instance  | The current number of chunks that are "down" in the filesystem for this input. | gauge | chunks |
-| `fluentbit_input_storage_chunks_busy`       | name: the name or alias for the input instance  | Chunks are that are being processed or sent by outputs and are not eligible to have new data appended. | gauge | chunks |
+| `fluentbit_input_storage_chunks_busy`       | name: the name or alias for the input instance  | Chunks are that are being processed or sent by outputs and aren't eligible to have new data appended. | gauge | chunks |
 | `fluentbit_input_storage_chunks_busy_bytes` | name: the name or alias for the input instance  | The sum of the byte size of each chunk which is currently marked as busy. | gauge | bytes |
 | `fluentbit_output_upstream_total_connections` | name: the name or alias for the output instance | The sum of the connection count of each output plugins. | gauge | bytes |
 | `fluentbit_output_upstream_busy_connections` | name: the name or alias for the output instance | The sum of the connection count in a busy state of each output plugins.                                                                                                  | gauge   | bytes   |
@@ -236,8 +235,8 @@ layer.
 
 Query the service uptime with the following command:
 
-```curl
-$ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
+```bash
+curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 The command prints a similar output like this:
@@ -254,7 +253,7 @@ The command prints a similar output like this:
 Query internal metrics in JSON format with the following command:
 
 ```bash
-$ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
+curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 ```
 
 The command prints a similar output like this:
@@ -284,7 +283,7 @@ The command prints a similar output like this:
 Query internal metrics in Prometheus Text 0.0.4 format:
 
 ```bash
-$ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
+curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 ```
 
 This command returns the same metrics in Prometheus format instead of JSON:
@@ -371,14 +370,14 @@ Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tre
 
 ## Health Check for Fluent Bit
 
-Fluent bit now supports four new configs to set up the health check.
+Fluent bit supports the following configurations to set up the health check.
 
 | Configuration name     | Description | Default       |
 | ---------------------- | ------------| ------------- |
-| `Health_Check`           | enable Health check feature | Off |
-| `HC_Errors_Count`       | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for output error: `[2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)` | 5 |
-| `HC_Retry_Failure_Count` | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined HC_Period, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1` | 5 |
-| `HC_Period` | The time period by second to count the error and retry failure data point | 60 |
+| `Health_Check`           | Enable Health check feature | `Off` |
+| `HC_Errors_Count`       | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined `HC_Period`, example for output error: `[2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)` | `5` |
+| `HC_Retry_Failure_Count` | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined `HC_Period`, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1` | `5` |
+| `HC_Period` | The time period by second to count the error and retry failure data point | `60` |
 
 Not every error log means an error to be counted. The error retry failures count only
 on specific errors, which is the example in configuration table description.
@@ -425,7 +424,7 @@ Use the following command to call the health endpoint:
 curl -s http://127.0.0.1:2020/api/v1/health
 ```
 
-With the example config, the health status is determined by the following equation:
+With the example configuration, the health status is determined by the following equation:
 
 ```text
 Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 seconds
@@ -437,5 +436,5 @@ Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 secon
 ## Telemetry Pipeline
 
 [Telemetry Pipeline](https://chronosphere.io/platform/telemetry-pipeline/) is a
-hosted service that allows you to monitor your Fluent Bit agents including data flow,
+hosted service that lets you monitor your Fluent Bit agents including data flow,
 metrics, and configurations.
