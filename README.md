@@ -12,10 +12,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 - High performance: High throughput with low resources consumption
 - Data parsing
-  - Convert your unstructured messages using Fluent Bit parsers:
-    [JSON](pipeline/parsers/json.md),
-    [Regex](pipeline/parsers/regular-expression.md),
-    [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+  - Convert your unstructured messages using Fluent Bit parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
 - Metrics support: Prometheus and OpenTelemetry compatible
 - Reliability and data integrity
   - [Backpressure](administration/backpressure.md) handling
@@ -23,25 +20,20 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 - Networking
   - Security: Built-in TLS/SSL support
   - Asynchronous I/O
-- Pluggable architecture and [extensibility](development/library_api.md): Inputs,
-  Filters and Outputs:
+- Pluggable architecture and [extensibility](development/library_api.md): Inputs, Filters and Outputs:
   - Connect nearly any source to nearly any destination using preexisting plugins
   - Extensibility:
     - Write input, filter, or output plugins in the C language
-    - WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or
-      [WASM Input Plugins](development/wasm-input-plugins.md)
-    - Write [Filters in Lua](pipeline/filters/lua.md) or
-      [Output plugins in Golang](development/golang-output-plugins.md)
-- [Monitoring](administration/monitoring.md): Expose internal metrics over HTTP
-  in JSON and [Prometheus](https://prometheus.io/) format
-- [Stream Processing](stream-processing/introduction.md): Perform data selection
-  and transformation using simple SQL queries
+    - WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)
+    - Write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
+- [Monitoring](administration/monitoring.md): Expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
+- [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using simple SQL queries
   - Create new streams of data using query results
   - Aggregation windows
   - Data analysis and prediction: Time series forecasting
 - Portable: Runs on Linux, macOS, Windows and BSD systems
 
-## Fluent Bit, Fluentd and CNCF
+## Fluent Bit, Fluentd, and CNCF
 
 [Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
