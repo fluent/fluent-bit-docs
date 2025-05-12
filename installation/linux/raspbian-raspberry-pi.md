@@ -4,6 +4,7 @@ Fluent Bit is distributed as the `fluent-bit` package and is available for the
 Raspberry, specifically for [Raspbian](http://raspbian.org) distribution. The
 following versions are supported:
 
+* Raspbian Bookworm (12)
 * Raspbian Bullseye (11)
 * Raspbian Buster (10)
 
@@ -47,6 +48,12 @@ On Debian and derivative systems such as Raspbian, you need to add the Fluent Bi
 APT server entry to your sources lists.
 
 Add the following content at bottom of your `/etc/apt/sources.list` file.
+
+### Raspbian 12 (Bookworm)
+
+```text
+deb https://packages.fluentbit.io/raspbian/bookworm bookworm main
+```
 
 ### Raspbian 11 (Bullseye)
 
