@@ -130,8 +130,8 @@ The following terms are key to understanding how Fluent Bit processes metrics:
   as successful, or it can fail the chunk entirely if an unrecoverable error is
   encountered, or it can ask for the chunk to be retried.
 
-| Metric name                            | Labels                                          | Description | Type    | Unit    |
-|----------------------------------------|-------------------------------------------------|-------------|---------|---------|
+| Metric name | Labels | Description | Type | Unit |
+| ----------- | ------ | ----------- | ---- | ---- |
 | `fluentbit_input_bytes_total`          | name: the name or alias for the input instance  | The number of bytes of log records that this input instance has ingested successfully. | counter | bytes   |
 | `fluentbit_input_records_total`        | name: the name or alias for the input instance  | The number of log records this input ingested successfully. | counter | records |
 | `fluentbit_output_dropped_records_total` | name: the name or alias for the output instance | The number of log records dropped by the output. These records hit an unrecoverable error or retries expired for their chunk. | counter | records |
