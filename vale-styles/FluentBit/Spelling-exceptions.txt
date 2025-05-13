@@ -13,6 +13,7 @@ backpressure
 BitBake
 Blackhole
 blocklist
+boolean
 Buildkite
 cAdvisor
 Calyptia
@@ -21,6 +22,7 @@ clickstreams
 CloudWatch
 CMake
 cmdlet
+cmetrics
 Config
 Coralogix
 coroutine
