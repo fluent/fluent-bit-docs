@@ -37,8 +37,17 @@ The plugin supports the following configuration parameters:
 | Static\_Batch\_Size | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exists upon Fluent Bit start).                                                                                                                                                                                                                                                                                                                                                               | 50M     |
 | File\_Cache\_Advise | Set the posix_fadvise in POSIX_FADV_DONTNEED mode. This will reduce the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                                                                              | On     |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Unicode.Encoding | Set the encoding which the origin of character encoding. Currently, UTF-16LE, UTF-16BE, and auto is supported.                                                                                                                                                                                                                                                                                                                                                       |  |
 
 Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+
+Note that `Unicode.Encoding` depends on simdutf library which is written in C++11 or above.
+So, the older platforms are not supported for this feature.
+In addition, `Unicode.Encoding auto` is not covered for the all of the usages.
+This is because sometimes this auto-detecting for character encodings makes a mistake to guess the correct encoding.
+We recommend to use `UTF-16LE` or `UTF-16BE` if the target file encoding is pre-determined or known beforehand.
+In details, this parameter requests to use 2-bytes aligned chunk and buffer sizes.
+If they are not aligned for 2 bytes, Fluent Bit will use 2-bytes alignments automatically to avoid character breakages on consuming boundaries.
 
 ## Multiline Support
 
