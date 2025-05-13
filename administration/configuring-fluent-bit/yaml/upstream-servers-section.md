@@ -39,4 +39,4 @@ Each node in the `upstream_servers` group must specify a `name`, `host`, and `po
 Additional settings like `tls`, `tls_verify`, and `shared_key` can be configured for
 secure communication.
 
-While the `upstream_servers` section can be defined globally, some output plugins might require the configuration to be specified in a separate YAML file. Be sure to consult the documentation for each specific output plugin to understand its requirements.
+While the `upstream_servers` section can be defined globally, some output plugins might require the configuration to be specified in a separate YAML file. Consult the documentation for each specific output plugin to understand its requirements.
