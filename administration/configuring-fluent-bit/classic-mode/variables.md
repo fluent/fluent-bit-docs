@@ -24,7 +24,7 @@ These files are ignored if they don't exist.
 
 Create the following configuration file \(`fluent-bit.conf`\):
 
-```text
+```yaml
 [SERVICE]
     Flush        1
     Daemon       Off
