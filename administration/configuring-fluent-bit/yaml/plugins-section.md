@@ -1,9 +1,6 @@
 # Plugins section
 
-Fluent Bit comes with a variety of built-in plugins, and also supports loading
-external plugins at runtime. This feature is especially useful for loading Go or
-WebAssembly (Wasm) plugins that are built as shared object files (.so). Fluent Bit YAML
-configuration provides the following ways to load these external plugins:
+Fluent Bit comes with a variety of built-in plugins, and also supports loading external plugins at runtime. This feature is especially useful for loading Go or WebAssembly (Wasm) plugins that are built as shared object files (.so). Fluent Bit YAML configuration provides the following ways to load these external plugins:
 
 ## Inline YAML
 
@@ -27,8 +24,7 @@ pipeline:
 
 ## YAML plugins file included using the `plugins_file` option
 
-You can load external plugins from a separate YAML file by specifying the
-`plugins_file` option in the service section for better modularity.
+You can load external plugins from a separate YAML file by specifying the `plugins_file` option in the service section for better modularity.
 
 To configure this:
 
