@@ -15,7 +15,7 @@ The following example demonstrates how to include additional YAML files using re
     └── inclusion-2.yaml
 ```
 
-The content of `fluent-bit.yaml`
+The content of `fluent-bit.yaml`:
 
 ```yaml
 includes:
