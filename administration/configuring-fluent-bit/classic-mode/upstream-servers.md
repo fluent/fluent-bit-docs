@@ -10,9 +10,7 @@ The current balancing mode implemented is `round-robin`.
 
 ## Configuration
 
-To define an `Upstream` you must create an specific configuration file that contains
-an `UPSTREAM` and one or multiple `NODE` sections. The following table describes the
-properties associated with each section. All properties are mandatory:
+To define an `Upstream` you must create an specific configuration file that contains an `UPSTREAM` and one or multiple `NODE` sections. The following table describes the properties associated with each section. All properties are mandatory:
 
 | Section | Key | Description |
 | :--- | :--- | :--- |
@@ -23,9 +21,7 @@ properties associated with each section. All properties are mandatory:
 
 ### Nodes and specific plugin configuration
 
-A `Node` might contain additional configuration keys required by the plugin, to
-provide enough flexibility for the output plugin. A common use case is a `Forward`
-output where if TLS is enabled, it requires a shared key.
+A `Node` might contain additional configuration keys required by the plugin, to provide enough flexibility for the output plugin. A common use case is a `Forward` output where if TLS is enabled, it requires a shared key.
 
 ### Nodes and TLS (Transport Layer Security)
 
@@ -64,6 +60,4 @@ The following example defines an `Upstream` called forward-balancing which aims 
     shared_key secret
 ```
 
-Every `Upstream` definition must exists in its own configuration file in the file
-system. Adding multiple `Upstream` configurations in the same file or different files isn't
-allowed.
+Every `Upstream` definition must exists in its own configuration file in the file system. Adding multiple `Upstream` configurations in the same file or different files isn't allowed.
