@@ -122,11 +122,7 @@ pipeline:
           port: 8080
 ```
 
-This pipeline consists of two `inputs`: a tail plugin and an HTTP server plugin. Each
-plugin has its own map in the array of `inputs` consisting of simple properties. To
-use more advanced properties that consist of multiple values the property itself can
-be defined using an array, such as the `record` and `allowlist_key` properties for the
-`record_modifier` `filter`:
+This pipeline consists of two `inputs`: a tail plugin and an HTTP server plugin. Each plugin has its own map in the array of `inputs` consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, such as the `record` and `allowlist_key` properties for the `record_modifier` `filter`:
 
 ```yaml
 pipeline:
@@ -158,9 +154,7 @@ An `input` section defines a source (related to an input plugin). Each section h
 | `Tag` | Tag name associated to all records coming from this plugin. |
 | `Log_Level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
 
-The `Name` is mandatory and defines for Fluent Bit which input plugin should be
-loaded. `Tag` is mandatory for all plugins except for the `input forward` plugin
-which provides dynamic tags.
+The `Name` is mandatory and defines for Fluent Bit which input plugin should be loaded. `Tag` is mandatory for all plugins except for the `input forward` plugin which provides dynamic tags.
 
 #### Example input
 
@@ -242,16 +236,14 @@ pipeline:
 ## Processors
 
 Fluent-Bit 2.1.2 and greater implements an interface called "processor" to extend the processing capabilities in input and output plugins directly without routing the data. The input and output plugins can run in separate threads. This interface allows users to apply data transformations and filtering to incoming data records before they're processed further in the pipeline.
+
 This capability is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
 
 [Processor example](configuration-file.md#example-using-processors)
 
 ### Example: Using processors
 
-The following configuration file example demonstrates the use of processors to change
-the log record in the input plugin section by adding a new key `hostname` with the
-value `monox`. It uses Lua to append the tag to the log record. The output
-plugin section adds a new key named `output` with the value `new data`.
+The following configuration file example demonstrates the use of processors to change the log record in the input plugin section by adding a new key `hostname` with the value `monox`. It uses Lua to append the tag to the log record. The output plugin section adds a new key named `output` with the value `new data`.
 
 ```yaml
   service:
