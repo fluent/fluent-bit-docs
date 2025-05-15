@@ -20,4 +20,4 @@ parsers:
 
 You can define multiple parsers sections, either within the main configuration file or distributed across included files.
 
-For more detailed information on parser options and advanced configurations, refer to the [Configuring Parsers](../../../pipeline/parsers/configuring-parser.md) section.
+For more detailed information on parser options and advanced configurations, refer to the [Configuring Parsers](../../../pipeline/parsers/configuring-parser.md) documentation.
