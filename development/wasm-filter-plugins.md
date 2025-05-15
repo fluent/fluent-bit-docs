@@ -58,7 +58,7 @@ Filters
 
 ## Build a Wasm filter for filter plugin
 
-Currently, Fluent Bit's Wasm filter assumes C ABI, also known as `wasm32-unknown-unknown` on Rust target and `wasm32-wasi` on TinyGo target.
+The Fluent Bit Wasm filter assumes C ABI, also known as `wasm32-unknown-unknown` on Rust target and `wasm32-wasi` on TinyGo target.
 
 ### To Install Additional Components
 
