@@ -12,8 +12,7 @@ ${MY_VARIABLE}
 
 When Fluent Bit starts, the configuration reader will detect any request for `${MY_VARIABLE}` and will try to resolve its value.
 
-When Fluent Bit is running under [`systemd`](https://systemd.io/) (using the official packages), environment
-variables can be set in the following files:
+When Fluent Bit is running under [`systemd`](https://systemd.io/) (using the official packages), environment variables can be set in the following files:
 
 - `/etc/default/fluent-bit` (Debian based system)
 - `/etc/sysconfig/fluent-bit` (Others)
