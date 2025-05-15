@@ -101,6 +101,7 @@ matchers
 Minishift
 minikube
 MTTx
+multiline
 multithreading
 Musl
 namespace
