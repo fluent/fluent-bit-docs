@@ -22,4 +22,4 @@ multiline_parsers:
 
 This example defines a multiline parser named `multiline-regex-test` that uses regular expressions to handle multi-event logs. The parser contains two rules: the first rule transitions from `start_state` to cont when a matching log entry is detected, and the second rule continues to match subsequent lines.
 
-For more detailed information on configuring multiline parsers, including advanced options and use cases, refer to the Configuring Multiline Parsers section.
+For more detailed information on configuring multiline parsers, including advanced options and use cases, refer to the Configuring Multiline Parsers documentation.
