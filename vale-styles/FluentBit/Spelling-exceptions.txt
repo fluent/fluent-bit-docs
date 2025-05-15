@@ -192,6 +192,7 @@ VictoriaMetrics
 VictorOps
 Vivo
 VMs
+Wasm
 Wavefront
 Worldmap
 Yocto

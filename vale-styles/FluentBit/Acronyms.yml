@@ -49,6 +49,7 @@ exceptions:
   - JSX
   - LESS
   - LLDB
+  - LLVM
   - LTS
   - NET
   - NOTE
@@ -89,6 +90,7 @@ exceptions:
   - UTC
   - UTF
   - UUID
+  - WASI
   - XML
   - XSS
   - YAML
