@@ -1,8 +1,8 @@
-# Environment Variables Section
+# Environment variables section
 
-The `env` section allows you to define environment variables directly within the configuration file. These variables can then be used to dynamically replace values throughout your configuration using the `${VARIABLE_NAME}` syntax.
+The `env` section lets you define environment variables directly within the configuration file. These variables can then be used to dynamically replace values throughout your configuration using the `${VARIABLE_NAME}` syntax.
 
-Values set in the `env` section are case-sensitive. However, as a best practice, we recommend using uppercase names for environment variables. The example below defines two variables, `FLUSH_INTERVAL` and `STDOUT_FMT`, which can be accessed in the configuration using `${FLUSH_INTERVAL}` and `${STDOUT_FMT}`:
+Values set in the `env` section are case-sensitive. However, as a best practice, Fluent Bit recommends using uppercase names for environment variables. The following example defines two variables, `FLUSH_INTERVAL` and `STDOUT_FMT`, which can be accessed in the configuration using `${FLUSH_INTERVAL}` and `${STDOUT_FMT}`:
 
 ```yaml
 env:
@@ -23,19 +23,19 @@ pipeline:
       format: ${STDOUT_FMT}
 ```
 
-## Predefined Variables
+## Predefined variables
 
 Fluent Bit provides a set of predefined environment variables that can be used in your configuration:
 
 | Name | Description |
-|--|--|
+| ---- | ----------- |
 | `${HOSTNAME}` | The system's hostname. |
 
-## External Variables
+## External variables
 
-In addition to variables defined in the configuration file or the predefined ones, Fluent Bit can access system environment variables set in the user space. These external variables can be referenced in the configuration using the same ${VARIABLE_NAME} pattern.
+In addition to variables defined in the configuration file or the predefined ones, Fluent Bit can access system environment variables set in the user space. These external variables can be referenced in the configuration using the same `${VARIABLE_NAME}` pattern.
 
-For example, to set the FLUSH_INTERVAL system environment variable to 2 and use it in your configuration:
+For example, to set the `FLUSH_INTERVAL` system environment variable to `2` and use it in your configuration:
 
 ```bash
 export FLUSH_INTERVAL=2
@@ -58,4 +58,4 @@ pipeline:
       format: json_lines
 ```
 
-This approach allows you to easily manage and override configuration values using environment variables, providing flexibility in various deployment environments.
+This approach lets you manage and override configuration values using environment variables, providing flexibility in various deployment environments.
