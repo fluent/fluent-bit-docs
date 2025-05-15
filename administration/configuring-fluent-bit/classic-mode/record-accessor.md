@@ -2,13 +2,13 @@
 description: A full feature set to access content of your records.
 ---
 
-# Record Accessor
+# Record accessor
 
 Fluent Bit works internally with structured records and it can be composed of an unlimited number of keys and values. Values can be anything like a number, string, array, or a map.
 
 Having a way to select a specific part of the record is critical for certain core functionalities or plugins, this feature is called _Record Accessor._
 
-Consider Record Accessor to be a basic grammar to specify record content and other miscellaneous values.
+Consider record accessor to be a basic grammar to specify record content and other miscellaneous values.
 
 ## Format
 
