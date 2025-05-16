@@ -335,7 +335,7 @@ make
 Fluent Bit uses CMake 3. On some systems you might need to invoke it as `cmake3`.
 {% endhint %}
 
-To enable the unit tests, run the followign command:
+To enable the unit tests, run the following command:
 
 ```text
 cmake -DFLB_DEV=On -DFLB_TESTS_RUNTIME=On -DFLB_TESTS_INTERNAL=On ../
