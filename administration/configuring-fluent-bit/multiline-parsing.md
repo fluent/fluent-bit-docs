@@ -2,7 +2,8 @@
 
 In an ideal world, applications might log their messages within a single line, but in
 reality applications generate multiple log messages that sometimes belong to the same
-context. Processing this information can be complex, like in application stack traces which always have multiple log lines.
+context. Processing this information can be complex, like in application stack traces,
+which always have multiple log lines.
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e19a4c14-a9e4-4163-8f3a-52196eb9a585" />
 
@@ -33,7 +34,9 @@ multiline parser cases. For example:
 You can define your own Multiline parsers with their own rules, using a configuration
 file.
 
-A multiline parser is defined in a `parsers configuration file` by using a `[MULTILINE_PARSER]` section definition. The multiline parser must have a unique name and a type plus other configured properties associated with each type.
+A multiline parser is defined in a `parsers configuration file` by using a
+`[MULTILINE_PARSER]` section definition. The multiline parser must have a unique name
+and a type, plus other configured properties associated with each type.
 
 To understand which multiline parser type is required for your use case you have to
 know the conditions in the content that determine the beginning of a multiline
