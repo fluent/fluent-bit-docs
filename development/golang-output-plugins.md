@@ -78,9 +78,7 @@ To build the code, use the following line:
 go build -buildmode=c-shared -o out_gstdout.so out_gstdout.go
 ```
 
-Once built, a shared library called `out_gstdout.so` will be available. Confirm the
-final `.so` file is as expected. When you use the `ldd` over the library  should see
-something similar to this:
+Once built, a shared library called `out_gstdout.so` will be available. Confirm the final `.so` file is as expected. When you use the `ldd` over the library should see something similar to this:
 
 ```shell
 $ ldd out_gstdout.so
@@ -173,8 +171,7 @@ The following configuration keys are reserved by Fluent Bit and must not be used
 
 ### Run using a configuration file
 
-You can load a main configuration file using `-c` option.
-Note: No need to specify a plugins configuration file from command line.
+You can load a main configuration file using `-c` option. You don't need to specify a plugins configuration file from command line.
 
 ```text
 fluent-bit -c fluent-bit.conf
