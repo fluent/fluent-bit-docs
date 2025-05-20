@@ -9,7 +9,7 @@ The plugin supports the following configuration parameters
 | Key | Description | Default |
 | :-- | :---------- | :------ |
 | `file` | The single value file that Fluent Bit will use as a lookup table to determine if the specified `lookup_key` exists. | _none_ |
-| `lookup_key` | The specific key to look up and determine if it exists. Supports [record accessor](administration/configuring-fluent-bit/classic-mode/record-accessor). | _none_ |
+| `lookup_key` | The specific key to look up and determine if it exists. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). | _none_ |
 | `record` | The record to add if the `lookup_key` is found in the specified `file`. You can add multiple record parameters. | _none_ |
 | `mode` | Set the check mode. `exact` and `partial` are supported. | `exact`|
 | `print_query_time` | Print to stdout the elapsed query time for every matched record. | `false` |
@@ -39,7 +39,7 @@ The plugin supports the following configuration parameters
     match      test1
 ```
 
-In the following configuration reads a file `test1.log` that includes the following values
+The following configuration reads a file `test1.log` that includes the following values:
 
 ```text
 {"remote_addr": true, "ioc":"false", "url":"https://badurl.com/payload.htm","badurl":"no"}
@@ -60,7 +60,7 @@ Additionally, it uses  the following lookup file which contains a list of malici
 7.7.7.7
 ```
 
-The configuration uses `$remote_addr` as the lookup key and `7.7.7.7` is malicious. The record output for the last record would look like the following
+The configuration uses `$remote_addr` as the lookup key, and `7.7.7.7` is malicious. The record output for the last record would look like the following:
 
 ```text
 {"remote_addr": "7.7.7.7", "ioc":"abc", "url":"https://badurl.com/payload.htm","badurl":"null"}
