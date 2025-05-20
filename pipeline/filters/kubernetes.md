@@ -81,7 +81,7 @@ For Fluent Bit v1.2 or greater, don't use decoders (`Decode_Field_As`) if you ar
 To perform processing of the `log` key, you must enable the `Merge_Log` configuration property in this filter, then the following processing order will be done:
 
 - If a pod suggests a parser, the filter will use that parser to process the content of `log`.
-- If the `Merge_Parser` options was set and the pod didn't suggest a parser, process the `log` content using the suggested parser in the configuration.
+- If the `Merge_Parser` option was set and the pod didn't suggest a parser, process the `log` content using the suggested parser in the configuration.
 - If no pod was suggested and no `Merge_Parser` is set, try to handle the content as JSON.
 
 If `log` value processing fails, the value is untouched. The order of processing isn't chained, meaning it's exclusive and the filter will try only one of the options, not all of them.
@@ -169,7 +169,7 @@ For example:
 "kubernetes"=>{"pod_name"=>"fluentbit-gke-2p6b5", "namespace_name"=>"kube-system", "pod_id"=>"c759a5f5-xxxx-xxxx-9117-8a1dc0b1f907", "labels"=>{"component"=>"xxxx", "controller-revision-hash"=>"77665fff9", "k8s-app"=>"fluentbit-xxxx"}, "ownerReferences"=>[{"apiVersion"=>"apps/v1", "kind"=>"DaemonSet", "name"=>"fluentbit-gke", "uid"=>"1a12c3e2-d6c4-4a8a-b877-dd3c857d1aea", "controller"=>true, "blockOwnerDeletion"=>true}], "host"=>"xxx-2a9c049c-qgw3", "pod_ip"=>"10.128.0.111", "container_name"=>"fluentbit", "docker_id"=>"2accxxx", "container_hash"=>"xxxx", "container_image"=>"sha256:5163dxxxxea2"}
 ```
 
-## Workflow of tail and Kubernetes filter
+## Workflow of Tail and Kubernetes filter
 
 Kubernetes Filter depends on either [Tail](../inputs/tail.md) or [Systemd](../inputs/systemd.md) input plugins to process and enrich records with Kubernetes metadata. Consider the following configuration example:
 
@@ -230,7 +230,7 @@ The transformation doesn't modify the original tag, it creates a new representat
 The new value is used by the filter to lookup the pod name and namespace, for that purpose it uses an internal regular expression:
 
 ```text
-(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64}).log$
+(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
 ```
 
 For more details, review the source code of that definition [here](https://github.com/fluent/fluent-bit/blob/master/plugins/filter_kubernetes/kube_regex.h#L26>).
@@ -245,7 +245,7 @@ Under some uncommon conditions, a user might want to alter that hard-coded regul
 
 #### Custom tags For enhanced filtering
 
-One such use case involves splitting logs by namespace, pods, containers or container id. The tag is restructured within the tail input using match groups. Restructuring can simplify the filtering by those match groups later in the pipeline. Since the tag no longer follows the original filename, a custom `Regex_Parser` that matches the new tag structure is required:
+One such use case involves splitting logs by namespace, pods, containers or container ID. The tag is restructured within the tail input using match groups. Restructuring can simplify the filtering by those match groups later in the pipeline. Since the tag no longer follows the original filename, a custom `Regex_Parser` that matches the new tag structure is required:
 
 ```python
 [PARSER]
@@ -411,7 +411,7 @@ To know if Fluent Bit is using the kubelet, you can review Fluent Bit logs. Ther
 [ info] [filter:kubernetes:kubernetes.0] testing connectivity with Kubelet...
 ```
 
-If you are in debug mode, you could see more:
+If you are in debug mode, you can see more:
 
 ```text
 [debug] [filter:kubernetes:kubernetes.0] Send out request to Kubelet for pods information.
