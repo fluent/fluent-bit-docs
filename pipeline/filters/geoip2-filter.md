@@ -4,11 +4,11 @@ description: Look up Geo data from IP.
 
 # GeoIP2 filter
 
-GeoIP2 Filter lets enrich the incoming data stream using location data from GeoIP2 database.
+The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
 The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
-## Configuration parameters>
+## Configuration parameters
 
 This plugin supports the following configuration parameters:
 
@@ -20,7 +20,7 @@ This plugin supports the following configuration parameters:
 
 ## Get started
 
-The following configuration processes incoming `remote_addr`, and appends country information retrieved from GeoLite2 database.
+The following configuration processes the incoming `remote_addr` and appends country information retrieved from the GeoLite2 database.
 
 ```python
 [INPUT]
@@ -44,7 +44,7 @@ Each `Record` parameter specifies the following triplet:
 
 - `country`: The field name to be added to records.
 - `remote_addr`: The lookup key to process.
-- `%{country.names.en}`: The query for GeoIP2 database.
+- `%{country.names.en}`: The GeoIP2 database query.
 
 By running Fluent Bit with this configuration, you will see the following output:
 
