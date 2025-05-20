@@ -1,26 +1,28 @@
 ---
-description: Look up Geo data from IP
+description: Look up Geo data from IP.
 ---
 
-# GeoIP2 Filter
+# GeoIP2 filter
 
-GeoIP2 Filter allows you to enrich the incoming data stream using location data from GeoIP2 database.
+The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
-## Configuration Parameters <a id="config"></a>
+The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+
+## Configuration parameters
 
 This plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| database | Path to the GeoIP2 database. |
-| lookup\_key | Field name to process |
-| record | Defines the `KEY LOOKUP_KEY VALUE` triplet. See below for how to set up this option. |
+| `database` | Path to the GeoIP2 database. |
+| `lookup_key` | Field name to process. |
+| `record` | Defines the `KEY LOOKUP_KEY VALUE` triplet. |
 
-## Getting Started <a id="getting_started"></a>
+## Get started
 
-The following configuration will process incoming `remote_addr`, and append country information retrieved from GeoLite2 database.
+The following configuration processes the incoming `remote_addr` and appends country information retrieved from the GeoLite2 database.
 
-```text
+```python
 [INPUT]
     Name   dummy
     Dummy  {"remote_addr": "8.8.8.8"}
@@ -38,17 +40,14 @@ The following configuration will process incoming `remote_addr`, and append coun
     Match  *
 ```
 
-Each `Record` parameter above specifies the following triplet:
+Each `Record` parameter specifies the following triplet:
 
-1. The field name to be added to records \(`country`\)
-2. The lookup key to process \(`remote_addr`\)
-3. The query for GeoIP2 database \(`%{country.names.en}`\)
+- `country`: The field name to be added to records.
+- `remote_addr`: The lookup key to process.
+- `%{country.names.en}`: The GeoIP2 database query.
 
-By running Fluent Bit with the configuration above, you will see the following output:
+By running Fluent Bit with this configuration, you will see the following output:
 
 ```javascript
 {"remote_addr": "8.8.8.8", "country": "United States", "isocode": "US"}
 ```
-
-Note that the `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geoip2/geolite2/).
-
