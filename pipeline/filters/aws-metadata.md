@@ -8,18 +8,18 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `imds_version` | Specify which version of the instance metadata service to use. Valid values are 'v1' or 'v2'. | v2 |
-| `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html); for example, `us-east-1a`. | `true` |
+| `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
+| `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), such as `us-east-1a`. | `true` |
 | `ec2_instance_id` | The EC2 instance ID. | `true` |
 | `ec2_instance_type` | The EC2 instance type. | `false` |
 | `private_ip` | The EC2 instance private IP. | `false` |
-| `ami_id` | The EC2 instance image id. | `false` |
-| `account_id` | The account ID for current EC2 instance. | `false` |
-| `hostname` | The hostname for current EC2 instance. | `false` |
-| `vpc_id` | The VPC ID for current EC2 instance. | `false` |
-| `tags_enabled` | Specifies if should attach EC2 instance tags. EC2 instance must have the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
-| `tags_include` | Defines list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated `,`. Tags which aren't present in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
-| `tags_exclude` | Defines list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated `,`. Tags which aren't present in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, configuration is invalid and plugin fails. Example: `Name,tag1,tag2` | _none_ |
+| `ami_id` | The EC2 instance image ID. | `false` |
+| `account_id` | The account ID for the current EC2 instance. | `false` |
+| `hostname` | The hostname for the current EC2 instance. | `false` |
+| `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
+| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
+| `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
+| `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
 | `retry_interval_s` |Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
 
 If you run Fluent Bit in a container, you might need to use instance metadata v1. The plugin behaves the same regardless of which version is used.
@@ -70,7 +70,7 @@ The following is an example of a configuration file:
 
 ## EC2 tags
 
-EC2 Tags let you to label and organize your EC2 instances by creating custom-defined key-value pairs. These tags are commonly utilized for resource management, cost allocation, and automation. Including them in the Fluent Bit generated logs is almost essential.
+EC2 Tags let you label and organize your EC2 instances by creating custom-defined key-value pairs. These tags are commonly used for resource management, cost allocation, and automation. Including them in the Fluent Bit-generated logs is almost essential.
 
 To achieve this, AWS Filter can be configured with `tags_enabled true` to enable the tagging of logs with the relevant EC2 instance tags. This setup ensures that logs are appropriately tagged, making it easier to manage and analyze them based on specific criteria.
 
@@ -100,7 +100,7 @@ If you run Fluent Bit logs might look like the following:
 
 #### `tags_exclude`
 
-Suppose the EC2 instance has three tags: `Name:fluent-bit-docs-example`, `project:fluentbit`, and `department:it`. In this example,  the `department` tag is redundant and will be excluded. All of the projects belong to the `it` department, and you don't want to waste storage space on redundant labels.
+Suppose the EC2 instance has three tags: `Name:fluent-bit-docs-example`, `project:fluentbit`, and `department:it`. In this example, the `department` tag is redundant and will be excluded. All of the projects belong to the `it` department, and you don't want to waste storage space on redundant labels.
 
 Here is an example configuration that achieves this:
 
