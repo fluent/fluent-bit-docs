@@ -60,7 +60,7 @@ The plugin supports the following configuration parameters:
 | `Kube_Meta_Namespace_Cache_TTL` | Configurable `TTL` for Kubernetes cached namespace metadata. Setting this to `0` will mean entries are evicted at random once the cache is full. | `900` (seconds) |
 | `Namespace_Labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
 | `Namespace_Annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `Namespace_Metadata_Only` | Include Kubernetes namespace metadata only and no pod metadata. When set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| Off |
+| `Namespace_Metadata_Only` | Include Kubernetes namespace metadata only and no pod metadata. When set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
 | `Owner_References` | Include Kubernetes owner references in the extra metadata. | `Off` |
 
 ## Processing the `log` value
@@ -477,6 +477,4 @@ The following section goes over specific log messages you might receive. Learn h
 
 ## Credit
 
-The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata
-Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter)
-written by [Jimmi Dyson](https://github.com/jimmidyson).
+The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
