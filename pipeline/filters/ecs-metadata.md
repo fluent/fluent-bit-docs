@@ -10,24 +10,24 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Add` | Similar to the `ADD` option in the [modify filter](https://docs.fluentbit.io/manual/pipeline/filters/modify). You can specify it multiple times. It takes two arguments: a `KEY` name and `VALUE`. The value uses Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/v/1.5/administration/configuring-fluent-bit/record-accessor) syntax to create a template that uses ECS Metadata values. See the list of supported metadata templating keys. This option is designed to give you full power to control both the key names for metadata and the format for metadata values. | _none_ |
+| `Add` | Similar to the `ADD` option in the [modify filter](https://docs.fluentbit.io/manual/pipeline/filters/modify). You can specify it multiple times. It takes two arguments: a `KEY` name and `VALUE`. The value uses Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/v/1.5/administration/configuring-fluent-bit/record-accessor) syntax to create a template that uses ECS Metadata values. See the list of supported metadata templating keys. This option allows you to control both the key names for metadata and the format for metadata values. | _none_ |
 | `ECS_Tag_Prefix` | Similar to the `Kube_Tag_Prefix` option in the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) and performs the same function. The full log tag should be prefixed with this string and after the prefix the filter must find the next characters in the tag to be the Docker Container Short ID (the first 12 characters of the full container ID). The filter uses this to identify which container the log came from so it can find which task it's a part of. See the design section for more information. If not specified, it defaults to empty string, meaning that the tag must be prefixed with the 12 character container short ID. If you want to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks, don't set this parameter and enable the `Cluster_Metadata_Only` option | empty string |
 | `Cluster_Metadata_Only` | When enabled, the plugin will only attempt to attach cluster metadata values. Use to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks. | `Off` |
-| `ECS_Meta_Cache_TTL` | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max `TTL` for objects in the hash table. You should set this if you have frequent container or task restarts. For example, your cluster runs short running batch jobs that complete in less than 10 minutes, there is no reason to keep any stored metadata longer than 10 minutes. So you would set this parameter to `10m`. | `1h` |
+| `ECS_Meta_Cache_TTL` | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max `TTL` for objects in the hash table. You should set this if you have frequent container or task restarts. For example, if your cluster runs short running batch jobs that complete in less than 10 minutes, there is no reason to keep any stored metadata longer than 10 minutes. You would therefore set this parameter to `10m`. | `1h` |
 
 ### Supported templating variables for the `ADD` option
 
-The following template variables can be used for values with the `Add` option. See the tutorial in the sections following for examples.
+The following template variables can be used for values with the `ADD` option. See the tutorial in the sections following for examples.
 
 | Variable | Description | Supported with `Cluster_Metadata_Only` on |
 | :--- | :--- | :--- |
 | `$ClusterName` | The ECS cluster name. Fluent Bit is running on EC2 instances that are part of this cluster. | `Yes` |
 | `$ContainerInstanceArn` | The full ARN of the ECS EC2 Container Instance. This is the instance that Fluent Bit is running on. | `Yes` |
 | `$ContainerInstanceID` | The ID of the ECS EC2 Container Instance. | `Yes` |
-| `$ECSAgentVersion` | The Version string of the ECS Agent running on the container instance. | `Yes` |
+| `$ECSAgentVersion` | The version string of the ECS Agent running on the container instance. | `Yes` |
 | `$ECSContainerName` | The name of the container from which the log originated. This is the name in your ECS Task Definition. | `No` |
 | `$DockerContainerName` | The name of the container from which the log originated. This is the name obtained from Docker and is the name shown if you run `docker ps` on the instance.  | `No` |
-| `$ContainerID` | The ID of the container from which the log originated. This is the full 64 character long container ID. | `No` |
+| `$ContainerID` | The ID of the container from which the log originated. This is the full 64-character-long container ID. | `No` |
 | `$TaskDefinitionFamily` | The family name of the task definition for the task from which the log originated. | `No` |
 | `$TaskDefinitionVersion` | The version or revision of the task definition for the task from which the log originated. | `No` |
 | `$TaskID` | The ID of the ECS Task from which the log originated. | `No` |
