@@ -26,6 +26,7 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - ECS
   - FAQ
   - FIPS
   - GCC
