@@ -80,6 +80,7 @@ HashiCorp
 hostname
 Hostname
 Ingester
+inotify
 Keepalive
 Istio
 jemalloc
@@ -169,7 +170,7 @@ subrecord
 substring
 syslog
 systemctl
-Systemd
+systemd
 Tanzu
 Telegraf
 templated

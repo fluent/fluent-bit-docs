@@ -38,7 +38,45 @@ The plugin supports the following configuration parameters:
 | File\_Cache\_Advise | Set the posix_fadvise in POSIX_FADV_DONTNEED mode. This will reduce the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                                                                              | On     |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+{% hint style="info" %}
+If the database parameter `DB` is **not** specified, by default the plugin reads each target file from the beginning. This also might cause some unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+{% endhint %}
+
+## Monitor a large number of files
+
+To monitor a large number of files, you can increase the inotify settings in your Linux environment by modifying the following sysctl parameters:
+
+```text
+sysctl fs.inotify.max_user_watches=LIMIT1
+sysctl fs.inotify.max_user_instances=LIMIT2
+```
+
+Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing. Higher values raise your inotify limit accordingly.
+
+However, these changes revert upon reboot unless you write them to the appropriate `inotify.conf` file, in which case they will persist across reboots. The specific name of this file might vary depending on how you built and installed Fluent Bit. For example, to write changes to a file named `fluent-bit_fs_inotify.conf`, run the following commands:
+
+```shell
+mkdir -p /etc/sysctl.d
+echo fs.inotify.max_user_watches = LIMIT1 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+echo fs.inotify.max_user_instances = LIMIT2 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+```
+
+Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing.
+
+You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf`. For example, you can add this snippet to your override file to raise the number of files that the Tail plugin can monitor:
+
+```text
+[Service]
+LimitNOFILE=LIMIT
+```
+
+Replace _`LIMIT`_ with the integer value of your choosing.
+
+If you don't already have an override file, you can use the following command to create one in the correct directory:
+
+```shell copy
+systemctl edit fluent-bit.service
+```
 
 ## Multiline Support
 
