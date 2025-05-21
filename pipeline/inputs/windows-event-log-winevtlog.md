@@ -20,6 +20,10 @@ The plugin supports the following configuration parameters:
 | Event\_Query | Specify XML query for filtering events. | `*` |
 | Read\_Limit\_Per\_Cycle | Specify read limit per cycle.  | 512KiB |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Remote.Server | Specify server name of remote access for Windows EventLog. | |
+| Remote.Domain | Specify domain name of remote access for Windows EventLog. | |
+| Remote.Username | Specify user name of remote access for Windows EventLog. | |
+| Remote.Password | Specify password of remote access for Windows EventLog.  | |
 
 Note that if you do not set _db_, the plugin will tail channels on each startup.
 
