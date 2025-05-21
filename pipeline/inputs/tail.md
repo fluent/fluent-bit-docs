@@ -39,12 +39,12 @@ The plugin supports the following configuration parameters:
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 {% hint style="info" %}
-If the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+If the database parameter `DB` is **not** specified, by default the plugin reads each target file from the beginning. This also might cause some unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
 {% endhint %}
 
 ## Monitor a large number of files
 
-If you need to monitor a large number of files, you can increase the inotify settings in your Linux environment. To do so, modify the following sysctl parameters:
+To monitor a large number of files, you can increase the inotify settings in your Linux environment by modifying the following sysctl parameters:
 
 ```text
 sysctl fs.inotify.max_user_watches=LIMIT1
@@ -63,7 +63,7 @@ echo fs.inotify.max_user_instances = LIMIT2 >> /etc/sysctl.d/fluent-bit_fs_inoti
 
 Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing.
 
-You can also provide a custom systemd file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf`. For example, you can add this snippet to your override file to raise the number of files that the Tail plugin can monitor:
+You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf`. For example, you can add this snippet to your override file to raise the number of files that the Tail plugin can monitor:
 
 ```text
 [Service]
