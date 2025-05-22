@@ -354,7 +354,7 @@ name:
 You can create Grafana dashboards and alerts using Fluent Bit's exposed Prometheus
 style metrics.
 
-The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/dashboard.json)
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json)
 is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s
 [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few
 key differences, such as the use of the `instance` label, stacked graphs, and a focus
@@ -366,7 +366,7 @@ for more information.
 
 ### Alerts
 
-Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/tree/8172a24d278539a1420036a9434e9f56d987a040/monitoring/alerts.yaml).
+Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
 
 ## Health Check for Fluent Bit
 
