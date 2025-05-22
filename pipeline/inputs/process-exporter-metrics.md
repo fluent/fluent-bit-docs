@@ -9,7 +9,7 @@ description: >-
 [Prometheus Node Exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU / Disk / Network / Process statistics.
 Fluent Bit 2.2 onwards includes a process exporter plugin that builds off the Prometheus design to collect process level metrics without having to manage two separate processes or agents.
 
-The Process Exporter Metrics plugin implements collecting of the various metrics available from [the 3rd party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and these will be expanded over time as needed.
+The Process Exporter Metrics plugin implements collecting of the various metrics available from [the third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and these will be expanded over time as needed.
 
 **Important note:** All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
@@ -103,6 +103,6 @@ docker run -ti -v /proc:/host/proc:ro \
 
 ## Enhancement Requests
 
-Development prioritises a subset of the available collectors in the [the 3rd party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter), to request others please open a Github issue by using the following template:\
+Development prioritises a subset of the available collectors in the [the third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter), to request others please open a Github issue by using the following template:\
 \
 \- [in_process_exporter_metrics](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_process_exporter_metrics:%20add%20ABC%20collector)

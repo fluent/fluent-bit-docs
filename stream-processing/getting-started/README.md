@@ -1,21 +1,9 @@
-# Getting Started
-
-The following guide assumes that you are familiar with [Fluent Bit](https://fluentbit.io), if that is not the case we suggest you review the official manual first:
-
-* [Fluent Bit Manual](https://docs.fluentbit.io/manual/)
-
-## Requirements
-
-* [Fluent Bit](https://fluentbit.io) &gt;= v1.1.0 or Fluent Bit from [GIT Master](https://github.com/fluent/fluent-bit)
-* Basic understanding of Structured Query Language \(SQL\)
-
-## Technical Concepts
+# Get started
 
 | Concept | Description |
 | :--- | :--- |
-| Stream | A Stream represents an unique flow of data being ingested by an Input plugin. By default Streams get a name using the plugin name plus an internal numerical identification, e.g: tail.0 . Stream name can be changed setting the _alias_ property. |
-| Task | Stream Processor configuration have the notion of Tasks that represents an execution unit, for short: SQL queries are configured in a Task. |
-| Results | When Stream Processor runs a SQL query, results are generated. These results can be re-ingested back into the main Fluent Bit pipeline or simply redirected to the standard output interfaces for debugging purposes. |
-| Tag | Fluent Bit group records and associate a Tag to them. Tags are used to define routing rules or in the case of the stream processor to attach to specific Tag that matches a pattern. |
-| Match | Matching rule that can use a wildcard to match specific records associated to a Tag. |
-
+| Stream | A stream is a single flow of data being ingested by an input plugin. By default, each stream name is the name of its input plugin plus a number (for example, `tail.0`). You can use the `alias` property to change this name. |
+| Task | A single execution unit. For example, a SQL query. |
+| Results | After a stream processor runs a SQL query, results are generated. You can re-ingest these results back into the main Fluent Bit pipeline or redirect them to the standard output interface for debugging purposes. |
+| Tag | Fluent Bit groups records and assigns tags to them. These tags define routing rules and can be used to apply stream processors to specific tags that match a pattern. |
+| Match | Matching rules can use a wildcard to match specific records associated with a tag. |

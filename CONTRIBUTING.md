@@ -113,14 +113,41 @@ request may suggest changes accordingly.
 
 ### URLs
 
-When cross-linking to a page in this repository, use a full relative path whenever
+When cross-linking to a page in this repository, use a full absolute path whenever
 possible. For example:
 
 ```text
-[LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+[LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
 ```
 
 ### Vale
 
 The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which lints
-pull requests and adds suggestions to improve style and clarity.
+pull requests and adds suggestions to improve style and clarity. Most Vale tests are
+at the `suggestion` level and won't block merging.
+
+The following tests are at a `error` level and will prevent merging:
+
+- [AmSpelling](https://developers.google.com/style/word-list)
+- [Emdash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
+- [Gender](https://developers.google.com/style/pronouns#gender-neutral-pronouns)
+- [GenderBias](https://developers.google.com/style/inclusive-documentation)
+- [HeadingPunctuation](https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings)
+- [LyHyphens](https://developers.google.com/style/hyphens)
+- [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
+  [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
+  By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
+  curly quotes. If you copy-paste from one of these tools, you must correct the quotes
+  back to straight quotes. You can also turn off smart quotes
+  in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en)
+  or [Microsoft Word](https://support.microsoft.com/en-us/office/smart-quotes-in-word-and-powerpoint-702fc92e-b723-4e3d-b2cc-71dedaf2f343)
+  to prevent this problem.
+- [Ordinal](https://developers.google.com/style/numbers)
+- [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
+  Checks for the same word used twice in succession.
+
+The following tests are at a `warning` level and won't prevent merging:
+
+- [Ampersand](https://developers.google.com/style/word-list#ampersand)

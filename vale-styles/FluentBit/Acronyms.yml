@@ -26,6 +26,7 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - ECS
   - FAQ
   - FIPS
   - GCC
@@ -49,6 +50,7 @@ exceptions:
   - JSX
   - LESS
   - LLDB
+  - LLVM
   - LTS
   - NET
   - NOTE
@@ -70,6 +72,7 @@ exceptions:
   - SCM
   - SCSS
   - SDK
+  - SDS
   - SIEM
   - SLA
   - SQL
@@ -89,6 +92,7 @@ exceptions:
   - UTC
   - UTF
   - UUID
+  - WASI
   - XML
   - XSS
   - YAML

@@ -12,7 +12,7 @@ description: The HTTP input plugin allows you to send custom records to an HTTP 
 | port                     | The port for Fluent Bit to listen on                                                                                                          | 9880    |
 | tag_key                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                           |         |
 | buffer_max_size          | Specify the maximum buffer size in KB to receive a JSON message.                                                                              | 4M      |
-| buffer_chunk_size        | This sets the chunk size for incoming incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size. | 512K    |
+| buffer_chunk_size        | This sets the chunk size for incoming JSON messages. These chunks are then stored/managed in the space available by buffer_max_size. | 512K    |
 | successful_response_code | It allows to set successful response code. `200`, `201` and `204` are supported.                                                              | 201     |
 | success_header           | Add an HTTP header key/value pair on success. Multiple headers can be set. Example: `X-Custom custom-answer`                                  |         |
 | threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
@@ -34,7 +34,7 @@ The http input plugin allows Fluent Bit to open up an HTTP port that you can the
 #### How to set tag
 
 The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system.
-For example, in the following curl message below the tag set is `app.log**. **` because the end end path is `/app_log`:
+For example, in the following curl message below the tag set is `app.log**. **` because the end path is `/app_log`:
 
 ### Curl request
 

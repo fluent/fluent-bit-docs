@@ -17,7 +17,7 @@ If no parser is configured for the stdin plugin, it expects *valid JSON* input d
 1. A JSON object with one or more key-value pairs: `{ "key": "value", "key2": "value2" }`
 3. A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#event-or-record) format, which may be:
   * `[TIMESTAMP, { "key": "value" }]` where TIMESTAMP is a floating point value representing a timestamp in seconds; or
-  * from Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where TIMESTAMP has the same meaning as above and and METADATA is a JSON object.
+  * from Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where TIMESTAMP has the same meaning as above and METADATA is a JSON object.
 
 Multi-line input JSON is supported.
 

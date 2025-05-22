@@ -1,11 +1,10 @@
 ---
-description: Select or exclude records using patterns
+description: Select or exclude records using regular expressions.
 ---
 
 # Grep
 
-The _Grep Filter_ plugin lets you match or exclude specific records based on
-regular expression patterns for values or nested values.
+The _Grep_ filter plugin lets you match or exclude specific records based on regular expression patterns for values or nested values.
 
 ## Configuration parameters
 
@@ -13,21 +12,17 @@ The plugin supports the following configuration parameters:
 
 | Key          | Value Format | Description |
 | ------------ | ------------ | ----------- |
-| `Regex`      | KEY REGEX | Keep records where the content of KEY matches the regular expression. |
-| `Exclude`    | KEY REGEX | Exclude records where the content of KEY matches the regular expression. |
-| `Logical_Op` | Operation | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses AND) or excluding (uses OR). Available from 2.1 or higher. |
+| `Regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. |
+| `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
+| `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
 
 ### Record Accessor Enabled
 
-Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md)
-feature to specify the KEY. Use the record accessor to match values against nested
-values.
+Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the `KEY`. Use the record accessor to match values against nested values.
 
 ## Filter records
 
-To start filtering records, run the filter from the command line or through the
-configuration file. The following example assumes that you have a file named
-`lines.txt` with the following content:
+To start filtering records, run the filter from the command line or through the configuration file. The following example assumes that you have a file named `lines.txt` with the following content:
 
 ```text
 {"log": "aaa"}
@@ -42,16 +37,12 @@ configuration file. The following example assumes that you have a file named
 
 ### Command line
 
-When using the command line, pay close attention to quote the regular expressions.
-Using a configuration file might be easier.
+When using the command line, pay close attention to quote the regular expressions. Using a configuration file might be easier.
 
-The following command loads the [tail](../../pipeline/inputs/tail) plugin and
-reads the content of `lines.txt`. Then the `grep` filter applies a regular
-expression rule over the `log` field created by the `tail` plugin and only passes
-records with a field value starting with `aa`:
+The following command loads the [tail](../../pipeline/inputs/tail) plugin and reads the content of `lines.txt`. Then the `grep` filter applies a regular expression rule over the `log` field created by the `tail` plugin and only passes records with a field value starting with `aa`:
 
-```text
-$ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
+```shell
+bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
 ```
 
 ### Configuration file
@@ -103,15 +94,11 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The filter lets you use multiple rules which are applied in order. You can
-have as many `Regex` and `Exclude` entries as required.
+The filter lets you use multiple rules which are applied in order. You can have as many `Regex` and `Exclude` entries as required.
 
 ### Nested fields example
 
-To match or exclude records based on nested values, you can use
-[Record
-Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md)
-format as the `KEY` name.
+To match or exclude records based on nested values, you can use [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) format as the `KEY` name.
 
 Consider the following record example:
 
@@ -132,8 +119,7 @@ Consider the following record example:
 }
 ```
 
-For example, to exclude records that match the nested field `kubernetes.labels.app`,
-use the following rule:
+For example, to exclude records that match the nested field `kubernetes.labels.app`, use the following rule:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -162,15 +148,15 @@ use the following rule:
 
 You might want to drop records that are missing certain keys.
 
-One way to do this is to `exclude` with a regex that matches anything. A missing
+One way to do this is to `exclude` with a regular expression that matches anything. A missing
 key fails this check.
 
-The followinfg example checks for a specific valid value for the key:
+The following example checks for a specific valid value for the key:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
 
-```text
+```python
 # Use Grep to verify the contents of the iot_timestamp value.
 # If the iot_timestamp key does not exist, this will fail
 # and exclude the row.
@@ -201,7 +187,7 @@ or is missing or empty, then it will be excluded.
 ### Multiple conditions
 
 If you want to set multiple `Regex` or `Exclude`, use the `Logical_Op` property
-to use a logical conjuction or disjunction.
+to use a logical conjunction or disjunction.
 
 If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
 

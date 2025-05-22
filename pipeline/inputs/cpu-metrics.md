@@ -57,7 +57,7 @@ As described above, the CPU input plugin gathers the overall usage every one sec
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following _Input_ and _Output_ sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}

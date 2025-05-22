@@ -196,7 +196,7 @@ Name | Type | Description | Labels
 
 #### [HTTP Upstreams](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_http_upstream)
 
-> Note: for the `state` metric, the string values are converted to float64 using the following rule: `"up"` -> `1.0`, `"draining"` -> `2.0`, `"down"` -> `3.0`, `"unavail"` –> `4.0`, `"checking"` –> `5.0`, `"unhealthy"` -> `6.0`.
+> Note: for the `state` metric, the string values are converted to float64 using the following rule: `"up"` = `1.0`, `"draining"` = `2.0`, `"down"` = `3.0`, `"unavail"` = `4.0`, `"checking"` = `5.0`, `"unhealthy"` = `6.0`.
 
 Name | Type | Description | Labels
 ----|----|----|----|
@@ -216,7 +216,9 @@ Name | Type | Description | Labels
 
 #### [Stream Upstreams](https://nginx.org/en/docs/http/ngx_http_api_module.html#def_nginx_stream_upstream)
 
-> Note: for the `state` metric, the string values are converted to float64 using the following rule: `"up"` -> `1.0`, `"down"` -> `3.0`, `"unavail"` –> `4.0`, `"checking"` –> `5.0`, `"unhealthy"` -> `6.0`.
+> Note: for the `state` metric, the string values are converted to float64 using the
+> following rule: `"up"` = `1.0`, `"down"` = `3.0`, `"unavail"` = `4.0`,
+> `"checking"` = `5.0`, `"unhealthy"` = `6.0`.
 
 Name | Type | Description | Labels
 ----|----|----|----|

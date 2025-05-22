@@ -12,7 +12,7 @@ According to the parameters you have set in the configuration file, the plugin w
 
 > **NOTE:** If you are not familiar with how PostgreSQL's users and grants system works, you might find useful reading the recommended links in the "References" section at the bottom.
 
-A typical installation normally consists of a self-contained database for Fluent Bit in which you can store the output of one or more pipelines. Ultimately, it is your choice to to store them in the same table, or in separate tables, or even in separate databases based on several factors, including workload, scalability, data protection and security.
+A typical installation normally consists of a self-contained database for Fluent Bit in which you can store the output of one or more pipelines. Ultimately, it is your choice to store them in the same table, or in separate tables, or even in separate databases based on several factors, including workload, scalability, data protection and security.
 
 In this example, for the sake of simplicity, we use a single table called `fluentbit` in a database called `fluentbit` that is owned by the user `fluentbit`. Feel free to use different names. Preferably, for security reasons, do not use the `postgres` user \(which has `SUPERUSER` privileges\).
 

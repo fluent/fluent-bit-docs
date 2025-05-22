@@ -2,7 +2,7 @@ extends: substitution
 message: "Consider using '%s' instead of '%s'."
 link: 'https://developers.google.com/style/inclusive-documentation'
 ignorecase: true
-level: suggestion
+level: error
 swap:
   (?:alumna|alumnus):          graduate
   (?:alumnae|alumni):          graduates
