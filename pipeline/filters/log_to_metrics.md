@@ -6,37 +6,39 @@ description: Generate metrics from logs
 
 ![](https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5)
 
-## Log To Metrics
+The _log to metrics_ filter lets you generate log-derived metrics. It supports modes to count records, provide a guage for field values, or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values.
 
-The _Log To Metrics Filter_ plugin allows you to generate log-derived metrics. It currently supports modes to count records, provide a gauge for field values or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values. This filter plugin does not actually act as a record filter and does not change or drop records. All records will pass this filter untouched and generated metrics will be emitted into a seperate metric pipeline.
+This filter does not actually act as a record filter and therefore does not change or drop records. All records will pass through this filter untouched, and any generated metrics will be emitted into a separate metric pipeline.
 
-_Please note that this plugin is an experimental feature and is not recommended for production use. Configuration parameters and plugin functionality are subject to change without notice._
+{% hint style="warning" %}
+This filter is an experimental feature and is not recommended for production use. Configuration parameters and other capabilities are subject to change without notice.
+{% endhint %}
 
-### Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                   | Mandatory                                 | Value Format                                                                                                                                            |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| tag                   | Defines the tag for the generated metrics record                                                                                                                                                                                                                                                                                                                                                                              | Yes                                       |                                                                                                                                                         |
-| metric\_mode          | Defines the mode for the metric. Valid values are \[`counter`, `gauge` or `histogram`]                                                                                                                                                                                                                                                                                                                                        | Yes                                       |                                                                                                                                                         |
-| metric\_name          | Sets the name of the metric.                                                                                                                                                                                                                                                                                                                                                                                                  | Yes                                       |                                                                                                                                                         |
-| metric\_description   | Sets a help text for the metric.                                                                                                                                                                                                                                                                                                                                                                                              | Yes                                       |                                                                                                                                                         |
-| bucket                | Defines a bucket for `histogram`                                                                                                                                                                                                                                                                                                                                                                                              | Yes, for mode `histogram`                 | e.g. 0.75                                                                                                                                               |
-| add\_label            | Add a custom label NAME and set the value to the value of KEY                                                                                                                                                                                                                                                                                                                                                                 |                                           |                                                                                                                                                         |
-|  label\_field         | Includes a record field as label dimension in the metric.                                                                                                                                                                                                                                                                                                                                                                     |                                           | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| value\_field          | Specify the record field that holds a numerical value                                                                                                                                                                                                                                                                                                                                                                         | Yes, for modes \[`gauge` and `histogram`] | Name of record key. Supports [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| kubernetes\_mode      | If enabled, it will automatically put pod\_id, pod\_name, namespace\_name, docker\_id and container\_name into the metric as labels. This option is intended to be used in combination with the [kubernetes](kubernetes.md) filter plugin, which fills those fields.                                                                                                                                                          |                                           |                                                                                                                                                         |
-| Regex                 | Include records in which the content of KEY matches the regular expression.                                                                                                                                                                                                                                                                                                                                                   |                                           | KEY REGEX                                                                                                                                               |
-| Exclude               | Exclude records in which the content of KEY matches the regular expression.                                                                                                                                                                                                                                                                                                                                                   |                                           | KEY REGEX                                                                                                                                               |
-| Flush\_Interval\_Sec  | The interval for metrics emission, in seconds. If **Flush\_Interval\_Sec** and **Flush\_Interval\_Nsec** are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |                                           |                                                                                                                                                         |
-| Flush\_Interval\_Nsec | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with **Flush\_Interval\_Sec**. Default value: `0`.                                                                                                                                                                                                                                                                                     |                                           |                                                                                                                                                         |
+| Parameter | Description | Value format |
+|---|---|---|
+| `tag` | Required. Defines the tag for the generated metrics record. |  |
+| `metric_mode` | Required. Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`. |  |
+| `metric_name` | Required. Sets the name of the metric. |  |
+| `metric_description` | Required. Sets a description for the metric. |  |
+| `bucket` | Required for mode `histogram`. Defines a bucket for histograms. | for example, `0.75` |
+| `add_label` | Adds a custom label `NAME` and set the value to the value of `KEY`. |  |
+| `label_field` | Includes a record field as label dimension in the metric. | Name of record key. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `value_field` | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | Name of record key. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `kubernetes_mode` | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [kubernetes](../pipeline/filters/kubernetes.md) filter plugin, which fills those fields. |  |
+| `Regex` | Includes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
+| `Exclude` | Excludes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
+| `Flush_Interval_Sec` | The interval for metrics emission, in seconds. If `Flush_Interval_Sec` and `Flush_Interval_Nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |  |
+| `Flush_Interval_Nsec` | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with `Flush_Interval_Sec`. Default value: `0`. |  |
 
-### Getting Started
+## Examples
 
-The following example takes records from two dummy inputs and counts all messages passing through the `log_to_metrics` filter. It then generates metric records which are provided to the `prometheus_exporter`:
+### Counter
 
-#### Configuration - Counter
+The following example takes records from two `dummy` inputs and counts all messages that pass through the `log_to_metrics` filter. It then generate metric records, which are provided to the `prometheus_exporter` output:
 
 ```python
 [SERVICE]
@@ -68,7 +70,7 @@ The following example takes records from two dummy inputs and counts all message
     port               2021
 ```
 
-You can then use e.g. curl command to retrieve the generated metric:
+You can then use a tool like curl to retrieve the generated metric:
 
 ```
 > curl -s http://127.0.0.1:2021/metrics
@@ -79,9 +81,9 @@ You can then use e.g. curl command to retrieve the generated metric:
 log_metric_counter_count_all_dummy_messages 49
 ```
 
-#### Configuration - Gauge
+### Gauge
 
-The `gauge` mode needs a `value_field` specified, where the current metric values are generated from. In this example we also apply a regex filter and enable the `kubernetes_mode` option:
+The `gauge` mode needs a `value_field` to specify where to generate the metric values from. This example also applies a `regex` filter and enables the `kubernetes_mode` option:
 
 ```python
 [FILTER]
@@ -99,7 +101,7 @@ The `gauge` mode needs a `value_field` specified, where the current metric value
     label_field        shape
 ```
 
-You can then use e.g. curl command to retrieve the generated metric:
+You can then use a tool like curl to retrieve the generated metric:
 
 ```
 > curl -s http://127.0.0.1:2021/metrics
@@ -110,15 +112,15 @@ You can then use e.g. curl command to retrieve the generated metric:
 log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="square"} 60
 ```
 
-As you can see in the output, only one line is printed, as the records from the first input plugin are ignored, as they do not match the regex.
+In the resulting output, only one line is printed. Records from the first input plugin are ignored because they don't match the regular expression.
 
-The filter also allows to use multiple rules which are applied in order, you can have many _Regex_ and _Exclude_ entries as required (see [grep](grep.md) filter plugin).
+This filter also lets you use multiple rules, which are applied in order. You can have as many `regex` and `exclude` entries as required (see [Grep](../pipeline/filters/grep.md) filter plugin).
 
-If you execute the above `curl` command multiple times, you see, that in this example the metric value stays at `60`, as the messages generated by the dummy plugin are not changing. In a real-world scenario the values would change and return the last processed value.
+If you execute the example curl command multiple times, the example metric value remains at `60` because the messages generated by the Dummy plugin don't change. In a real-world scenario, the values would change and return to the last processed value.
 
-**Metric label\_values**
+#### Metric `label_values`
 
-As you can see, the label sets defined by `add_label` and `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only actually used combinations are displayed here. To see this, you can add a dummy `dummy` input to your configuration.
+The label sets defined by `add_label` and `label_field` are added to the metric. The lines in the metric represent every combination of labels. Only combinations that are actualy used are displayed here. To see this, you can add a `dummy` input to your configuration.
 
 The metric output would then look like:
 
@@ -131,12 +133,11 @@ log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",conta
 log_metric_gauge_current_duration{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="red",shape="circle"} 20
 
 ```
+You can also see that all Kubernetes labels have been attached to the metric accordingly.
 
-You can also see, that all the kubernetes labels have been attached to the metric, accordingly.
+### Histogram
 
-#### Configuration - Histogram
-
-Similar to the `gauge` mode, `histogram` needs a `value_field` specified, where the current metric values are generated from. In this example we also apply a regex filter and enable the `kubernetes_mode` option:
+Similar to the `gauge` mode, the `histogram` mode needs a `value_field` to specify where to generate the metric values from. This example also applies a `regex` filter and enables the `kubernetes_mode` option:
 
 ```python
 [FILTER]
@@ -154,7 +155,7 @@ Similar to the `gauge` mode, `histogram` needs a `value_field` specified, where 
     label_field        shape
 ```
 
-You can then use e.g. curl command to retrieve the generated metric:
+You can then use a tool like curl to retrieve the generated metric:
 
 ```
 > curl -s http://127.0.0.1:2021/metrics
@@ -192,7 +193,7 @@ log_metric_histogram_current_duration_sum{namespace_name="default",pod_name="pod
 log_metric_histogram_current_duration_count{namespace_name="default",pod_name="pod1",container_name="mycontainer",docker_id="abc123",pod_id="def456",app="app1",color="blue",shape="circle"} 27
 ```
 
-As you can see in the output, there are per default the buckets `0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0` and `+Inf`, in which values are sorted into. A sum and a counter are also part of this metric. You can specify own buckets in the config, like in the following example:
+In the resulting output, there are several buckets by default: `0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0` and `+Inf`. Values are sorted into these buckets. A sum and a counter are also part of this metric. You can specify own buckets in the configuration, like in the following example:
 
 ```python
 [FILTER]
@@ -217,6 +218,8 @@ As you can see in the output, there are per default the buckets `0.005, 0.01, 0.
     label_field        shape
 ```
 
-Please note, that the `+Inf` bucket will always be included implicitly. The buckets in a histogram are cumulative, so a value added to one bucket will add to all larger buckets, too.
+{% hint style="info" %}
+The `+Inf` bucket will always be included regardless of the buckets you specify. The buckets in a histogram are cumulative, so a value added to one bucket will be added to all larger buckets, too.
+{% endhint %}
 
 This filter also attaches Kubernetes labels to each metric, identical to the behavior of `label_field`. This results in two sets for the histogram.
