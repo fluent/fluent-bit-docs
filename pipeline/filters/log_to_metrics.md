@@ -24,7 +24,7 @@ The plugin supports the following configuration parameters:
 | `metric_mode` | Required. Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`. |  |
 | `metric_name` | Required. Sets the name of the metric. |  |
 | `metric_description` | Required. Sets a description for the metric. |  |
-| `bucket` | Required for mode `histogram`. Defines a bucket for histograms. | for example, `0.75` |
+| `bucket` | Required for mode `histogram`. Defines a bucket for histograms. | For example, `0.75` |
 | `add_label` | Adds a custom label `NAME` and set the value to the value of `KEY`. |  |
 | `label_field` | Includes a record field as label dimension in the metric. | Name of record key. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
 | `value_field` | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | Name of record key. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
