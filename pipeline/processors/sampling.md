@@ -34,7 +34,7 @@ Sampling has both a name and a type with the following possible settings:
 
 In this example, head sampling will be used to process a smaller percentage of the overall ingested traces and spans. This is done by setting up the pipeline to ingest on the OpenTelemetry defined port as shown below using the OpenTelemetry Protocol (OTLP). The processor section defines traces for head sampling and the sampling percentage defining the total ingested traces and spans to be forwarded to the defined output plugins.
 
-![](/imgs/traces_head_sampling.png)
+![](../.gitbook/assets/traces_head_sampling.png)
 
 | Sampling settings     | Description                                                                                                         |
 | :-------------------- | :------------------------------------------------------------------------------------------------------------------ |
@@ -72,7 +72,7 @@ With this head sampling configuration, a sample set of ingested traces will rand
 
 Tail sampling is used to obtain a more selective and fine grained control over the collection of traces and spans without collecting everything. Below is an example showing the process is a combination of waiting on making a sampling decision together followed by configuration defined conditions to determine the spans to be sampled.
 
-![](/imgs/traces_tail_sampling.png)
+![](../.gitbook/assets/traces_tail_sampling.png)
 
 The following samplings settings are available with their default values:
 
