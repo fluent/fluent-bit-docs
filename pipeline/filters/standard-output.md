@@ -1,16 +1,18 @@
-# Standard Output
+# Standard output
 
-The stdout filter plugin allows printing to the standard output the data flowed through the filter plugin, which can be very useful while debugging.
+The stdout filter plugin allows printing to the standard output the data flowed through the filter plugin, which can be used while debugging.
 
-The plugin has no configuration parameters, is very simple to use.
+The plugin has no configuration parameters.
 
-## Command Line
+## Command line
 
-```text
-$ fluent-bit -i cpu -F stdout -m '*' -o null
+Use the following command from the command line:
+
+```shell
+fluent-bit -i cpu -F stdout -m '*' -o null
 ```
 
-We have specified to gather [CPU](../inputs/cpu-metrics.md) usage metrics and print them out in a human-readable way when they flow through the stdout plugin.
+Fluent Bit specifies gathering [CPU](../inputs/cpu-metrics.md) usage metrics and prints them out in a human-readable way when they flow through the stdout plugin.
 
 ```text
 Fluent Bit v1.x.x
@@ -33,4 +35,3 @@ Fluent Bit v1.x.x
 [2021/06/04 14:54:04] [ warn] [engine] service will stop in 5 seconds
 [2021/06/04 14:54:08] [ info] [engine] service stopped
 ```
-
