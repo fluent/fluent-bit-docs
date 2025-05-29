@@ -54,6 +54,9 @@ command like:
 bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
+Replace _`PATH_TO_CONF_FILE`_ with the path for where your filter configuration file
+is located.
+
 Which results in output like:
 
 ```text
