@@ -1,28 +1,28 @@
 ---
-description: Concatenate Multiline or Stack trace log messages. Available on Fluent Bit >=
+description: Concatenate multiline or stack trace log messages. Available on Fluent Bit >=
   v1.8.2.
 ---
 
 # Multiline
 
-The Multiline Filter helps to concatenate messages that originally belong to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines.
+The Multiline filter helps concatenate messages that originally belonged to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines.
 
-Along with multiline filters, you can enable one of the following Fluent Bit built-in parsers with auto detection and multi-format support:
+Along with multiline filters, you can enable one of the following built-in Fluent Bit parsers with auto detection and multi-format support:
 
 - Go
 - Python
 - Ruby
-- Java (Google Cloud Platform Java Stack Trace format)
+- Java (Google Cloud Platform Java stack trace format)
 
 When using this filter:
 
-- The usage of this filter depends on a previous configuration of a [Multiline Parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition.
+- The usage of this filter depends on a previous configuration of a [multiline parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition.
 - To concatenate messages read from a log file, it's highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages originally split by Docker or CRI container engines, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support).
 
 {% hint style="warning" %}
 This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter processes one chunk at a time and isn't suitable for most inputs which might send multiline messages in separate chunks.
 
-When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag Filter](pipeline/filters/rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
+When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](pipeline/filters/rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
 
 {% endhint %}
 
@@ -53,7 +53,7 @@ The plugin supports the following configuration parameters:
 
 The following example aims to parse a log file called `test.log` that contains some full lines, a custom Java stack trace and a Go Stack Trace.
 
-The following example files can be located at: [in the Fluent Bit repository](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline).
+The following example files can be located [in the Fluent Bit repository](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline).
 
 Example files content:
 
@@ -258,7 +258,7 @@ Lines that don't match a pattern aren't considered as part of the multiline mess
 
 ## Docker partial message use case
 
-When Fluent Bit is consuming logs from a container runtime, such as docker, these logs will be split when larger than a certain limit, usually 16KB. If your application emits a 100K log line, it will be split into 7 partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
+When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16KB. If your application emits a 100K log line, it will be split into seven partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
 
 ```text
 {"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]
