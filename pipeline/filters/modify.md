@@ -50,7 +50,7 @@ The plugin supports the following rules:
 | `Move_to_start` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the start of the message. |
 | `Move_to_end` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the end of the message. |
 
-- Rules are case insensitive, parameters aren't.
+- Rules are case insensitive, but parameters aren't.
 - Any number of rules can be set in a filter instance.
 - Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
 
@@ -71,15 +71,17 @@ The plugin supports the following conditions:
 | `Matching_keys_have_matching_values` | `REGEXP:KEY` | `REGEXP:VALUE` | Is `true` if all keys matching `KEY` have values that match `VALUE`. |
 | `Matching_keys_do_not_have_matching_values` | `REGEXP:KEY` | `REGEXP:VALUE` | Is `true` if all keys matching `KEY` have values that don't match `VALUE`. |
 
-- Conditions are case insensitive, parameters aren't.
+- Conditions are case insensitive, but parameters aren't.
 - Any number of conditions can be set.
 - Conditions apply to the whole filter instance and all its rules. _Not_ to individual rules.
-- All conditions have to be `true` for the rules to be applied.
+- All conditions must be `true` for the rules to be applied.
 - You can set [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) as `STRING:KEY` for nested key.
 
 ## Example 1 - add and rename
 
-To start filtering records, you can run the filter from the command line or through the configuration file. The following invokes the [Memory Usage Input Plugin](../inputs/memory-metrics.md), which outputs data similar to the following:
+To start filtering records, you can run the filter from the command line or through
+the configuration file. The following invokes the [Memory Usage Input Plugin](../inputs/memory-metrics.md),
+which outputs data similar to the following:
 
 ```text
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
