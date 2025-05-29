@@ -10,6 +10,7 @@ autoscaler
 autoscaling
 backoff
 backpressure
+Bazel
 BitBake
 Blackhole
 blocklist
@@ -175,6 +176,7 @@ Tanzu
 Telegraf
 templated
 temporality
+Tensorflow
 Terraform
 Thanos
 Timeshift
