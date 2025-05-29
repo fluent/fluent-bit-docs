@@ -18,7 +18,7 @@ The plugin supports the following configuration parameters:
 | `input_field` | Specify the name of the field in the record to apply inference on. | _none_ |
 | `model_file` | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_ |
 | `include_input_fields` | Include all input filed in filter's output. | `True` |
-| `normalization_value` | Divide input values to `normalization_value. | _none_ |
+| `normalization_value` | Divide input values to `normalization_value`. | _none_ |
 
 ## Creating a Tensorflow Lite shared library
 
