@@ -1,5 +1,8 @@
 #!/usr/bin/ruby
 
+# This file is out of date and does not appear to be used by current versions of
+# markdownlint. See .markdownlint.json.
+
 # Enable all rules by default
 all
 
