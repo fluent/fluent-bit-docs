@@ -1,25 +1,25 @@
 # Parser
 
-The _Parser Filter_ plugin allows for parsing fields in event records.
+The _Parser_ filter allows for parsing fields in event records.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Key\_Name | Specify field name in record to parse. |  |
-| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
-| Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
-| Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
+| `Key_Name` | Specify field name in record to parse. | _none_ |
+| `Parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
+| `Preserve_Key` | Keep the original `Key_Name` field in the parsed result. If false, the field will be removed. | `False` |
+| `Reserve_Data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `False` |
 
-## Getting Started
+## Get started
 
-### Configuration File
-
-This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
+### Configuration file
 
 The plugin needs a parser file which defines how to parse each field.
+
+This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
 
 ```python
 [PARSER]
@@ -28,7 +28,7 @@ The plugin needs a parser file which defines how to parse each field.
     Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
-The path of the parser file should be written in configuration file under the **\[SERVICE\]** section.
+The path of the parser file should be written in configuration file under the `[SERVICE]` section.
 
 ```python
 [SERVICE]
@@ -113,7 +113,7 @@ Copyright (C) Treasure Data
 [3] dummy.data: [1499347996.001320284, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
 ```
 
-If you enable `Reserved_Data` and `Preserve_Key`, the original key field will be preserved as well:
+If you enable `Reserved_Data` and `Preserve_Key`, the original key field will also be preserved:
 
 ```python
 [PARSER]
