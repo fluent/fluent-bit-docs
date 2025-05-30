@@ -1,6 +1,6 @@
 # Parser
 
-The _Parser_ filter plugin allows for parsing fields in event records.
+The _Parser_ filter allows for parsing fields in event records.
 
 ## Configuration parameters
 
