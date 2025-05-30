@@ -542,7 +542,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores) / sum(kube_node_status_allocatable_cpu_cores)",
+          "expr": "sum(kube_pod_container_resource_requests{unit="core",resource="cpu"}) / sum(kube_node_status_allocatable{unit="core",resource="cpu"})",
           "instant": false,
           "refId": "A"
         }
@@ -712,7 +712,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_cpu_cores) / sum(kube_node_status_allocatable_cpu_cores)",
+          "expr": "sum(kube_pod_container_resource_limits{unit="core",resource="cpu"}) / sum(kube_node_status_allocatable{unit="core",resource="cpu"})",
           "instant": false,
           "refId": "A"
         }
