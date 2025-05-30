@@ -1,6 +1,6 @@
 # Sysinfo
 
-The _Sysinfo_ filter plugin lets you append system information like the Fluent Bit version or hostname.
+The _Sysinfo_ filter lets you append system information like the Fluent Bit version or hostname.
 
 ## Configuration parameters
 
