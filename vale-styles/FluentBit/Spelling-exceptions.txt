@@ -169,6 +169,7 @@ subcommands
 subquery
 subrecord
 substring
+sysinfo
 syslog
 systemctl
 systemd
