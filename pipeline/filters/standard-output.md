@@ -1,6 +1,6 @@
 # Standard output
 
-The stdout filter plugin allows printing to the standard output the data flowed through the filter plugin, which can be used while debugging.
+The standard output filter allows printing the data flowing through the filter plugin to `stdout`, which can be used while debugging.
 
 The plugin has no configuration parameters.
 
