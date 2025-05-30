@@ -1,31 +1,31 @@
 ---
-description: Use Wasm programs as a filter
+description: Use Wasm programs as a filter.
 ---
 
-# Wasm Filter
+# Wasm
 
-Wasm Filter allows you to modify the incoming records using [Wasm](https://webassembly.org/) technology.
+The _Wasm_ filter lets you modify the incoming records using [Wasm](https://webassembly.org/) technology.
 
-Due to the necessity to have a flexible filtering mechanism, it is now possible to extend Fluent Bit capabilities by writing custom filters using built Wasm programs and its runtime. A Wasm-based filter takes two steps:
+You can extend Fluent Bit capabilities by writing custom filters using built Wasm programs and its runtime. A Wasm-based filter takes the following steps:
 
-0. (Optional) Compiled as AOT (Ahead Of Time) objects to optimize Wasm execution pipeline
-1. Configure the Filter in the main configuration
-2. Prepare a Wasm program that will be used by the Filter
+1. (Optional) Compile Ahead Of Time (AOT) objects to optimize the Wasm execution pipeline.
+1. Configure the filter in the main configuration.
+1. Prepare a Wasm program that will be used by the filter.
 
-## Configuration Parameters <a id="config"></a>
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| Wasm\_Path | Path to the built Wasm program that will be used. This can be a relative path against the main configuration file. |
-| Event\_Format | Define event format to interact with Wasm programs: msgpack or json. Default: json |
-| Function\_Name | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified above. |
-| Accessible\_Paths | Specify the whitelist of paths to be able to access paths from WASM programs. |
-| Wasm\_Heap\_Size | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| Wasm\_Stack\_Size | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Wasm_Path` | Path to the built Wasm program that will be used. This can be a path relative to the main configuration file. |
+| `Event_Format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
+| `Function_Name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
+| `Accessible_Paths` | Specify the allowlist of paths to be able to access paths from Wasm programs. |
+| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
 
-## Configuration Examples <a id="config_example"></a>
+## Configuration example
 
 Here is a configuration example.
 
