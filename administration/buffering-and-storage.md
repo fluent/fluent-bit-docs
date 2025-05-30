@@ -201,6 +201,7 @@ The Service section refers to the section defined in the main
 | `storage.checksum` | Enable the data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. Accepted values: `Off`, `On`. | `Off` |
 | `storage.max_chunks_up` | If the input plugin has enabled `filesystem` storage type, this property sets the maximum number of chunks that can be `up` in memory. Use this setting to control memory usage when you enable `storage.type filesystem`. | `128` |
 | `storage.backlog.mem_limit` | If `storage.path` is set, Fluent Bit looks for data chunks that weren't delivered and are still in the storage layer. These are called _backlog_ data. _Backlog chunks_ are filesystem chunks that were left over from a previous Fluent Bit run; chunks that couldn't be sent before exit that Fluent Bit will pick up when restarted. Fluent Bit will check the `storage.backlog.mem_limit` value against the current memory usage from all `up` chunks for the input. If the `up` chunks currently consume less memory than the limit, it will bring the _backlog_ chunks up into memory so they can be sent by outputs. | `5M` |
+| `storage.backlog.flush_on_shutdown` | When enabled, Fluent Bit will attempt to flush all backlog filesystem chunks to their destination(s) during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but may increase shutdown time. Accepted values: `Off`, `On`. | `Off` |
 | `storage.metrics` | If `http_server` option is enabled in the main `[SERVICE]` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | `off` |
 | `storage.delete_irrecoverable_chunks` | When enabled, [irrecoverable chunks](./buffering-and-storage.md#irrecoverable-chunks) will be deleted during runtime, and any other irrecoverable chunk located in the configured storage path directory will be deleted when Fluent-Bit starts. Accepted values: 'Off`, 'On`. | `Off` |
 
@@ -214,6 +215,7 @@ A Service section will look like this:
     storage.sync              normal
     storage.checksum          off
     storage.backlog.mem_limit 5M
+    storage.backlog.flush_on_shutdown off
 ```
 
 This configuration sets an optional buffering mechanism where the route to the data
