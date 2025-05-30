@@ -1,6 +1,6 @@
 # Throttle
 
-The _Throttle_ filter plugin sets the average `Rate` of messages per `Interval`, based on the leaky bucket and sliding window algorithm. In case of flooding, it will leak at a certain rate.
+The _Throttle_ filter sets the average `Rate` of messages per `Interval`, based on the leaky bucket and sliding window algorithm. In case of flooding, it will leak at a certain rate.
 
 ## Configuration parameters
 
@@ -23,9 +23,7 @@ Window 5
 Interval 1s
 ```
 
-You would receive 1 message in the first second, 3 messages second, and 5 third.
-Disregard that Window is actually 5, because the configuration uses `slow` start
-to prevent flooding during the startup.
+You would receive 1 message in the first second, 3 messages second, and 5 third. Disregard that Window is actually 5, because the configuration uses `slow` start to prevent flooding during the startup.
 
 ```text
 +-------+-+-+-+
