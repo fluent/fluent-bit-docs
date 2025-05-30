@@ -4,12 +4,8 @@
 # markdownlint. See .markdownlint.json.
 
 # Enable all rules by default
-# all
+all
 
-## Exclude line length test
-exclude_rule 'MD013'
-
-# Commenting out, but saving for later - we're still getting errors for length
 # Extend line length, since each sentence should be on a separate line.
 rule 'MD013', :line_length => 99999, :ignore_code_blocks => true
 
