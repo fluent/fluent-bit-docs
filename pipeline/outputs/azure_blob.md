@@ -34,6 +34,18 @@ We expose different configuration properties. The following table lists all the 
 | endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
 | tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| buffering\_enabled | Enable buffering into disk before ingesting into Azure Blob. | false |
+| buffer\_dir | Specifies the location of directory where the buffered data will be stored. | /tmp/fluent-bit/azure-blob/ |
+| upload\_timeout | Optionally specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached upload_file_size limit yet. | 30m |
+| upload\_file\_size | Specifies the size of files to be uploaded in MBs. | 200M |
+| azure\_blob\_buffer\_key | Set the azure blob buffer key which needs to be specified when using multiple instances of azure blob output plugin and buffering is enabled. | key |
+| store\_dir\_limit\_size | Set the max size of the buffer directory. | 8G |
+| buffer\_file\_delete\_early | Whether to delete the buffered file early after successful blob creation. | false |
+| blob\_uri\_length | Set the length of generated blob uri before ingesting to Azure Kusto. | 64 |
+| unify\_tag | Whether to create a single buffer file when buffering mode is enabled. | false |
+| scheduler\_max\_retries | Maximum number of retries for the scheduler send blob. | 3 |
+| delete\_on\_max\_upload\_error | Whether to delete the buffer file on maximum upload errors. | false |
+| io\_timeout | HTTP IO timeout. | 60s |
 
 ## Getting Started
 
