@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-### Configuration File
+### Configuration file
 
 The plugin needs a parser file which defines how to parse each field.
 
