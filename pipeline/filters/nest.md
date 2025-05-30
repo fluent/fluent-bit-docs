@@ -74,8 +74,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-To start filtering records, run the filter from the command line or through the configuration file. The following example invokes the
-[Memory Usage Input Plugin](../inputs/memory-metrics.md), which outputs the following:
+To start filtering records, run the filter from the command line or through the configuration file. The following example invokes the [Memory Usage input plugin](../inputs/memory-metrics.md), which outputs the following:
 
 ```text
 [0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
@@ -83,10 +82,9 @@ To start filtering records, run the filter from the command line or through the 
 
 ## Example 1 - nest
 
-### Use `nest` from the command Line
+### Use `nest` from the command line
 
-Using command line mode requires quotes to parse the wildcard properly. The use
-of a configuration file is recommended.
+Using the command line mode requires quotes to parse the wildcard properly. The use of a configuration file is recommended.
 
 The following command loads the _mem_ plugin. Then the _nest_ filter matches the
 wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
@@ -154,8 +152,7 @@ The output of both the command line and configuration invocations should be iden
 
 ## Example 2 - `nest` and `lift` undo
 
-This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then
-reverses these actions with a `lift` operation. The output appears unchanged.
+This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then reverses these actions with a `lift` operation. The output appears unchanged.
 
 ### `nest` and `lift` undo configuration file
 
@@ -322,10 +319,7 @@ pipeline:
 
 ## Example 4 - multiple `nest` and `lift` filters with prefix
 
-This example uses the 3-level deep nesting of Example 2 and applies the
-`lift` filter three times to reverse the operations. The end result is that all
-records are at the top level, without nesting, again. One prefix is added for each
-level that's lifted.
+This example uses the 3-level deep nesting of Example 2 and applies the `lift` filter three times to reverse the operations. The end result is that all records are at the top level, without nesting, again. One prefix is added for each level that's lifted.
 
 ### `nest` and `lift` prefix configuration file
 
