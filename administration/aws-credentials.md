@@ -45,6 +45,11 @@ See [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/user
 Credentials are fetched for the ECS task's role. See
 [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html).
 
+## EKS Pod Identity credentials
+
+Credentials are fetched using  a pod identity endpoint. See
+[Learn how EKS Pod Identity grants pods access to AWS services](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
+
 ## EC2 instance profile credentials (IMDS)
 
 Fetches credentials for the EC2 instance profile's role. See
