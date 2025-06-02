@@ -37,6 +37,16 @@ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /
 
 An alternative is to use Rocky or Alma Linux, which should be equivalent.
 
+## RHEL/AlmaLinux/RockyLinux and CentOS 9 Stream
+
+From CentOS 9 Stream onwards, the CentOS dependencies will update more often than downstream usage.
+This may mean that incompatible (more recent) versions are provided of certain dependencies (e.g. OpenSSL).
+For OSS, we also provide RockyLinux and AlmaLinux repositories.
+
+Replace the `centos` string in Yum configuration below with `almalinux` or `rockylinux` to use those repositories instead.
+This may be required for RHEL 9 as well which will no longer track equivalent CentOS 9 stream dependencies.
+No RHEL 9 build is provided, it is expected to use one of the OSS variants listed.
+
 ## Configure Yum
 
 The `fluent-bit` is provided through a Yum repository. To add the repository
@@ -146,3 +156,10 @@ gpgkey=https://packages.fluentbit.io/fluentbit.key
 repo_gpgcheck=1
 enabled=1
 ```
+
+### Yum install fails with incompatible dependencies using CentOS 9+
+
+CentOS 9 onwards will no longer be compatible with RHEL 9 as it may track more recent dependencies.
+Alternative AlmaLinux and RockyLinux repositories are available.
+
+See the guidance above.

@@ -34,6 +34,7 @@
   * [Build with Static Configuration](installation/sources/build-with-static-configuration.md)
 * [Linux Packages](installation/linux/README.md)
   * [Amazon Linux](installation/linux/amazon-linux.md)
+  * [Alma / Rocky Linux](installation/linux/alma-rocky.md)
   * [Redhat / CentOS](installation/linux/redhat-centos.md)
   * [Debian](installation/linux/debian.md)
   * [Ubuntu](installation/linux/ubuntu.md)

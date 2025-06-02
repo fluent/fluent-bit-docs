@@ -9,10 +9,10 @@ Fluent Bit supports the following operating systems and architectures:
 |  | [CentOS 9 Stream](linux/redhat-centos.md) | x86_64, Arm64v8 |
 |  | [CentOS 8](linux/redhat-centos.md) | x86_64, Arm64v8 |
 |  | [CentOS 7](linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [Rocky Linux 8](linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [Rocky Linux 9](linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [Alma Linux 8](linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [Alma Linux 9](linux/redhat-centos.md) | x86_64, Arm64v8 |
+|  | [Rocky Linux 8](linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Rocky Linux 9](linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Alma Linux 8](linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Alma Linux 9](linux/alma-rocky.md) | x86_64, Arm64v8 |
 |  | [Debian 12 (Bookworm)](linux/debian.md) | x86_64, Arm64v8 |
 |  | [Debian 11 (Bullseye)](linux/debian.md) | x86_64, Arm64v8 |
 |  | [Debian 10 (Buster)](linux/debian.md) | x86_64, Arm64v8 |
