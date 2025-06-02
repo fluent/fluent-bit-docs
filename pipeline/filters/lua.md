@@ -1,44 +1,44 @@
 # Lua
 
-The **Lua** filter allows you to modify the incoming records (even split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
+The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
 
-Due to the necessity to have a flexible filtering mechanism, it is now possible to extend Fluent Bit capabilities by writing custom filters using Lua programming language. A Lua-based filter takes two steps:
+A Lua-based filter requires two steps:
 
-1. Configure the Filter in the main configuration
-2. Prepare a Lua script that will be used by the Filter
+1. Configure the filter in the main configuration.
+1. Prepare a Lua script for the filter to use.
 
-## Configuration Parameters <a id="config"></a>
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description |
-| :--- | :--- |
-| script | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
-| call | Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the **script** parameter defined above. |
-| type\_int\_key | If these keys are matched, the fields are converted to integer. If more than one key, delimit by space. Note that starting from Fluent Bit v1.6 integer data types are preserved and not converted to double as in previous versions. |
-| type\_array\_key| If these keys are matched, the fields are handled as array. If more than one key, delimit by space. It is useful the array can be empty. |
-| protected\_mode | If enabled, Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when invalid Lua script is executed or the triggered Lua function throws exceptions. Default is true. |
-| time\_as\_table | By default when the Lua script is invoked, the record timestamp is passed as a *floating number* which might lead to precision loss when it is converted back. If you desire timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
-| code | Inline LUA code instead of loading from a path via `script`. |
-| enable_flb_null| If enabled, null will be converted to flb_null in Lua. It is useful to prevent removing key/value since nil is a special value to remove key value from map in Lua. Default is false. |
+| --- | ----------- |
+| `script` | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
+| `call` | The Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the `script` parameter. |
+| `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |
+| `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
+| `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
+| `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it is converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
+| `code` | Inline Lua code instead of loading from a path defined in `script`. |
+| `enable_flb_null` | If enabled, `null` will be converted to `flb_null` in Lua. This helps prevent removing key/value since `nil` is a special value to remove key/value from map in Lua. Default value: `false`. |
 
-## Getting Started <a id="getting_started"></a>
+## Get started
 
-In order to test the filter, you can run the plugin from the command line or through the configuration file. The following examples use the [dummy](../inputs/dummy.md) input plugin for data ingestion, invoke Lua filter using the [test.lua](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua) script and call the [cb\_print\(\)](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua#L29) function which only prints the same information to the standard output:
+To test the Lua filter, you can run the plugin from the command line or through the configuration file. The following examples use the [dummy](../inputs/dummy.md) input plugin for data ingestion, invoke Lua filter using the [test.lua](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua) script, and call the [`cb_print()`](https://github.com/fluent/fluent-bit/blob/master/scripts/test.lua#L29) function, which only prints the same information to the standard output.
 
-### Command Line
+### Command line
 
 From the command line you can use the following options:
 
 ```bash
-$ fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
+fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_, _Filter_ & _Output_ sections:
+In your main configuration file, append the following `Input`, `Filter`, and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -76,16 +76,16 @@ pipeline:
 {% endtabs %}
 
 
-## Lua Script Filter API <a id="lua_script"></a>
+## Lua script filter API
 
-The life cycle of a filter have the following steps:
+The life cycle of a filter has the following steps:
 
-1. Upon Tag matching by this filter, it may process or bypass the record.
-2. If tag matched, it will accept the record and invoke the function defined in the `call` property which basically is the name of a function defined in the Lua `script`.
-3. Invoke Lua function and pass each record in JSON format.
-4. Upon return, validate return value and continue the pipeline.
+1. Upon tag matching by this filter, it might process or bypass the record.
+1. If the tag matched, it will accept the record and invoke the function defined in the `call` property, which is the name of a function defined in the Lua `script`.
+1. It invokes the Lua function and passes each record in JSON format.
+1. Upon return, it validates the return value and continues the pipeline.
 
-## Callback Prototype
+## Callback prototype
 
 The Lua script can have one or multiple callbacks that can be used by this filter. The function prototype is as follows:
 
@@ -96,23 +96,23 @@ function cb_print(tag, timestamp, record)
 end
 ```
 
-#### Function Arguments
+#### Function arguments
 
-| name | description |
-| :--- | :--- |
-| tag | Name of the tag associated with the incoming record. |
-| timestamp | Unix timestamp with nanoseconds associated with the incoming record. The original format is a double (seconds.nanoseconds) |
-| record | Lua table with the record content |
+| Name | Description |
+| ---- | ----------- |
+| `tag` | Name of the tag associated with the incoming record. |
+| `timestamp` | Unix timestamp with nanoseconds associated with the incoming record. The original format is a double (`seconds.nanoseconds`). |
+| `record` | Lua table with the record content. |
 
-#### Return Values
+#### Return values
 
-Each callback **must** return three values:
+Each callback must return three values:
 
-| name | data type | description |
-| :--- | :--- | :--- |
-| code | integer | The code return value represents the result and further action that may follows. If _code_ equals -1, means that the record will be dropped. If _code_ equals 0, the record will not be modified, otherwise if _code_ equals 1, means the original timestamp and record have been modified so it must be replaced by the returned values from _timestamp_ (second return value) and _record_ (third return value). If _code_ equals 2, means the original timestamp is not modified and the record has been modified so it must be replaced by the returned values from _record_ (third return value). The _code_ 2 is supported from v1.4.3. |
-| timestamp | double | If code equals 1, the original record timestamp will be replaced with this new value. |
-| record | table | If code equals 1, the original record information will be replaced with this new value. Note that the _record_ value **must** be a valid Lua table. This value can be an array of tables (i.e., array of objects in JSON format), and in that case the input record is effectively split into multiple records. (see below for more details) |
+| Name | Data type | Description |
+| ---- | --------- | ----------- |
+| `code` | integer | The code return value represents the result and further actions that might follow. If `code` equals `-1`, this means that the record will be dropped. If `code` equals `0`, the record won't be modified. Otherwise, if `code` equals `1`, this means the original timestamp and record have been modified, so it must be replaced by the returned values from `timestamp` (second return value) and `record` (third return value). If `code` equals `2`, this means the original timestamp won't be modified and the record has been modified, so it must be replaced by the returned values from `record` (third return value). |
+| `timestamp` | double | If `code` equals `1`, the original record timestamp will be replaced with this new value. |
+| `record` | table | If `code` equals `1`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
 
 ## Features
 
@@ -176,36 +176,29 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Number Type
+### Number type
 
-Lua treats numbers as a `double` type, which means an `integer` type
-containing data like user IDs and log levels will be converted to a `double`.
-To avoid type conversion, use the `type_int_key` property.
+Lua treats numbers as a `double` type, which means an `integer` type containing data like user IDs and log levels will be converted to a `double`. To avoid type conversion, use the `type_int_key` property.
 
-### Protected Mode
+### Protected mode
 
-Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script.
-See [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html) in
-the Lua documentation for more information.
+Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script. See [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html) in the Lua documentation for more information.
 
+## Code examples
 
-## Code Examples
-
-For functional examples of this interface, please refer to the code samples provided in the source code of the project located here:
-
+For functional examples of this interface, refer to the code samples provided in the source code of the project.
 
 ### Processing environment variables
 
-As an example that combines a bit of LUA processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with LUA regex and substitutions.
+As an example that combines Lua processing with the [Kubernetes filter](./kubernetes.md) that demonstrates using environment variables with Lua regular expressions and substitutions.
 
-Kubernetes pods generally have various environment variables set by the infrastructure automatically which may contain useful information.
+Kubernetes pods generally have various environment variables set by the infrastructure automatically, which can contain valuable information.
 
-In this example, we want to extract part of the Kubernetes cluster API name.
+This example extracts part of the Kubernetes cluster API name.
 
-The environment variable is set like so:
-`KUBERNETES_SERVICE_HOST: api.sandboxbsh-a.project.domain.com`
+The environment variable is set as `KUBERNETES_SERVICE_HOST: api.sandboxbsh-a.project.domain.com`.
 
-We want to extract the `sandboxbsh` name and add it to our record as a special key.
+The goal of this example is to extract the `sandboxbsh` name and add it to the record as a special key.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -258,9 +251,9 @@ filters.lua:
     end
 ```
 
-### Record Split
+### Record split
 
-The Lua callback function can return an array of tables (i.e., array of records) in its third _record_ return value. With this feature, the Lua filter can split one input record into multiple records according to custom logic.
+The Lua callback function can return an array of tables (for example, an array of records) in its third `record` return value. With this feature, the Lua filter can split one input record into multiple records according to custom logic.
 
 For example:
 
@@ -337,8 +330,7 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Response code filtering
 
-In this example, we want to filter Istio logs to exclude lines with response codes between 1 and 399.
-Istio is configured to write the logs in json format.
+This example filters Istio logs to exclude lines with a response code between `1` and `399`. Istio is confiured to write logs in JSON format.
 
 #### Lua script
 
@@ -443,16 +435,15 @@ pipeline:
 
 #### Output
 
-In the output only the messages with response code 0 or greater than 399 are shown.
+In the output, only the messages with response code `0` or greater than `399` are shown.
 
-### Time format Conversion
+### Time format conversion
 
-The following example converts a field's specific type of `datetime` format to
-`utc ISO 8601` format.
+The following example converts a field's specific type of `datetime` format to the UTC ISO 8601 format.
 
 #### Lua script
 
-Script `custom_datetime_format.lua`
+Script `custom_datetime_format.lua`:
 
 ```lua
 function convert_to_utc(tag, timestamp, record)
@@ -478,8 +469,7 @@ end
 
 #### Configuration
 
-Use this configuration to obtain a JSON key with `datetime`, and then convert it to
-another format.
+Use this configuration to obtain a JSON key with `datetime`, and then convert it to another format.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -564,8 +554,7 @@ Which are handled by dummy in this example.
 
 #### Output
 
-The output of this process shows the conversion of the `datetime` of two timezones to
-`ISO 8601` format in `UTC`.
+The output of this process shows the conversion of the `datetime` of two timezones to ISO 8601 format in UTC.
 
 ```ini
 ...
@@ -584,8 +573,7 @@ env:
   myvar1: myvalue1
 ```
 
-These variables can be accessed from the Lua code by referring to the FLB_ENV Lua table.
-Being this a Lua table, the subrecords can be accessed following the same syntax, i.e. `FLB_ENV['A']`. 
+These variables can be accessed from the Lua code by referring to the `FLB_ENV` Lua table. Since this is a Lua table, you can access its subrecords through the same syntax (for example, `FLB_ENV['A']`).
 
 #### Configuration
 
@@ -623,6 +611,6 @@ pipeline:
 
 #### Output
 
-```
+```shell
 test: [[1731990257.781970977, {}], {"my_env"=>{"A"=>"aaa", "C"=>"ccc", "HOSTNAME"=>"monox-2.lan", "B"=>"bbb"}, "rand_value"=>4805047635809401856}]
 ```
