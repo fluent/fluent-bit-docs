@@ -6,8 +6,8 @@ The _Lua_ filter lets you modify incoming records (or split one record into mult
 
 A Lua-based filter requires two steps:
 
-1. Configure the filter in the main configuration
-2. Prepare a Lua script for the filter to use
+1. Configure the filter in the main configuration.
+1. Prepare a Lua script for the filter to use.
 
 ## Configuration parameters
 
@@ -33,12 +33,12 @@ To test the Lua filter, you can run the plugin from the command line or through 
 From the command line you can use the following options:
 
 ```bash
-$ fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
+fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 ```
 
 ### Configuration file
 
-In your main configuration file, append the following `Input`, `Filter` and `Output` sections:
+In your main configuration file, append the following `Input`, `Filter`, and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -81,9 +81,9 @@ pipeline:
 The life cycle of a filter has the following steps:
 
 1. Upon tag matching by this filter, it might process or bypass the record.
-2. If the tag matched, it will accept the record and invoke the function defined in the `call` property, which is the name of a function defined in the Lua `script`.
-3. It invokes the Lua function and passes each record in JSON format.
-4. Upon return, it validates the return value and continues the pipeline.
+1. If the tag matched, it will accept the record and invoke the function defined in the `call` property, which is the name of a function defined in the Lua `script`.
+1. It invokes the Lua function and passes each record in JSON format.
+1. Upon return, it validates the return value and continues the pipeline.
 
 ## Callback prototype
 
@@ -186,7 +186,7 @@ Fluent Bit supports protected mode to prevent crashes if it executes an invalid 
 
 ## Code examples
 
-For functional examples of this interface, refer to the code samples provided in the source code of the project located here:
+For functional examples of this interface, refer to the code samples provided in the source code of the project.
 
 ### Processing environment variables
 
