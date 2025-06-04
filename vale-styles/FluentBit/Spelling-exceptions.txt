@@ -24,6 +24,7 @@ CloudWatch
 CMake
 cmdlet
 cmetrics
+collectd
 Config
 Coralogix
 coroutine
@@ -34,6 +35,8 @@ DaemonSet
 Dash0
 Datadog
 Datagen
+datagram
+datagrams
 datapoint
 datapoints
 Datastream
