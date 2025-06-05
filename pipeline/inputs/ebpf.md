@@ -4,7 +4,7 @@
 This plugin is experimental and might be unstable. Use it in development or testing environments only. Its features and behavior are subject to change.
 {% endhint %}
 
-The `in_ebpf` input plugin is an experimental plugin for Fluent Bit that uses eBPF (extended Berkeley Packet Filter) to capture low-level system events. This plugin lets Fluent Bit monitor kernel-level activities such as process executions, file accesses, memory allocations, network connections, and signal handling. It provides valuable insights into system behavior for debugging, monitoring, and security analysis.
+The `in_ebpf` input plugin uses eBPF (extended Berkeley Packet Filter) to capture low-level system events. This plugin lets Fluent Bit monitor kernel-level activities such as process executions, file accesses, memory allocations, network connections, and signal handling. It provides valuable insights into system behavior for debugging, monitoring, and security analysis.
 
 The `in_ebpf` plugin leverages eBPF to trace kernel events in real-time. By specifying trace points, users can collect targeted system-level metrics and events, giving visibility into operating system interactions and performance characteristics.
 
@@ -12,7 +12,7 @@ The `in_ebpf` plugin leverages eBPF to trace kernel events in real-time. By spec
 
 To enable `in_ebpf`, ensure the following dependencies are installed on your system:
 
-- **Kernel version**: 4.18 or higher with eBPF support enabled.
+- **Kernel version**: 4.18 or greater, with eBPF support enabled.
 - **Required packages**:
   - `bpftool`: Used to manage and debug eBPF programs.
   - `libbpf-dev`: Provides the `libbpf` library for loading and interacting with eBPF programs.
