@@ -1,6 +1,6 @@
 # Docker Metrics
 
-The _Docker_ input plugin you collect Docker container metrics like memory usage and CPU consumption.
+The _Docker_ input plugin you collect Docker container metrics, including memory usage and CPU consumption.
 
 ## Configuration parameters
 
