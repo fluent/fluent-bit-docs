@@ -1,7 +1,6 @@
 # Record Modifier
 
-The _Record Modifier_ [filter](pipeline/filters.md) plugin lets you append
-fields to a record, or exclude specific fields.
+The _Record Modifier_ [filter](pipeline/filters.md) lets you append fields to a record, or exclude specific fields.
 
 ## Configuration parameters
 
@@ -10,10 +9,10 @@ The plugin supports the following configuration parameters:
 | Key | Description |
 | :--- | :--- |
 | `Record` | Append fields. This parameter needs a key/value pair. |
-| `Remove_key` | If the key is matched, that field is removed. You can this or `Allowlist_key`.|
-| `Allowlist_key` | If the key isn't matched, that field is removed. You can this or `Remove_key`. |
+| `Remove_key` | If the key is matched, that field is removed. You can use this or `Allowlist_key`.|
+| `Allowlist_key` | If the key isn't matched, that field is removed. You can use this or `Remove_key`. |
 | `Whitelist_key` | An alias of `Allowlist_key` for backwards compatibility. |
-| `Uuid_key` | If set, the plugin appends Uuid to each record. The value assigned becomes the key in the map. |
+| `Uuid_key` | If set, the plugin appends UUID to each record. The value assigned becomes the key in the map. |
 
 ## Get started
 
