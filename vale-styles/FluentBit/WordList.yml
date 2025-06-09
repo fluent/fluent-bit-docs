@@ -33,6 +33,7 @@ swap:
   authN: authentication
   authZ: authorization
   autoupdate: automatically update
+  blacklist: blocklist
   cellular data: mobile data
   cellular network: mobile network
   chapter: documents|pages|sections
@@ -74,5 +75,6 @@ swap:
   touch: tap
   url:  URL
   vs\.: versus
+  whitelist: allowlist
   wish: want
   World Wide Web: web
