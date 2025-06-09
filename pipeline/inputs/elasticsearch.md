@@ -34,7 +34,7 @@ fluent-bit -i elasticsearch -p port=9200 -o stdout
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your configuration file append the following `Input` and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
