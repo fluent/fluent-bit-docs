@@ -233,13 +233,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 
 ## `structured_metadata`
 
-[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/)
-lets you attach custom fields to individual log lines without embedding the
-information in the content of the log line. This capability works well for high
-cardinality data that isn't suited for using labels. While not a label, the
-`structured_metadata` configuration parameter operates similarly to the `labels`
-parameter. Both parameters are comma-delimited `key=value` lists, and both can use
-record accessors to reference keys within the record being processed.
+[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) lets you attach custom fields to individual log lines without embedding the information in the content of the log line. This capability works well for high cardinality data that isn't suited for using labels. While not a label, the `structured_metadata` configuration parameter operates similarly to the `labels` parameter. Both parameters are comma-delimited `key=value` lists, and both can use record accessors to reference keys within the record being processed.
 
 The following configuration:
 
