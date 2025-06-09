@@ -23,8 +23,8 @@ There is a separate Golang output plugin provided by [Grafana](https://grafana.c
 | `labels` | Stream labels for API request. It can be multiple comma separated of strings specifying `key=value` pairs. Allows fixed parameters, or adding custom record keys (similar to the `label_keys` property). See the Labels section. | `job=fluent-bit` |
 | `label_keys` | (Optional.) List of record keys that will be placed as stream labels. This configuration property is for records key only. See the Labels section. | _none_ |
 | `label_map_path` | Specify the label map path. The file defines how to extract labels from each record. See the Labels section. | _none_ |
-| `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata). | _none_ |
-| `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured-metadata). | _none_ |
+| `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured_metadata). | _none_ |
+| `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured_metadata). | _none_ |
 | `remove_keys` | (Optional.) List of keys to remove. | _none_ |
 | `drop_single_key` | When set to `true` and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in `line_format`. If set to `raw` and the log line is a string, the log line will be sent unquoted. | `off` |
 | `line_format` | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`, the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together (separated by a single space) in the format. | `json` |
@@ -180,7 +180,7 @@ Based on the JSON example provided, the internal stream labels will be:
 job="fluentbit", team="Santiago Wanderers"
 ```
 
-## `drop_single_key`
+## Use `drop_single_key`
 
 If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single `key=value` pair.
 
@@ -231,7 +231,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 {"job"="fluent-bit"} | json | line_format "{{.log}}"
 ```
 
-## `structured_metadata`
+## Use `structured_metadata`
 
 [Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) lets you attach custom fields to individual log lines without embedding the information in the content of the log line. This capability works well for high cardinality data that isn't suited for using labels. While not a label, the `structured_metadata` configuration parameter operates similarly to the `labels` parameter. Both parameters are comma-delimited `key=value` lists, and both can use record accessors to reference keys within the record being processed.
 
