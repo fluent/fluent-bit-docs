@@ -317,7 +317,7 @@ Assuming the value `$kubernetes` is a map containing two entries `namespace_name
 
 ## Networking and TLS Configuration
 
-This plugin inherits core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
+This plugin inherits core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available, refer to the following articles:
 
 - [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
 - [Security and TLS](../../administration/transport-security.md): all about TLS configuration and certificates
