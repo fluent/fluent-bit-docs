@@ -116,7 +116,7 @@ For example, [Filebeats](https://www.elastic.co/beats/filebeat), [Metricbeat](ht
 
 The Fluent Bit node information is returning as Elasticsearch 8.0.0.
 
-Users have to specify the following configurations on their beats configurations:
+Users must specify the following configurations on their beats configurations:
 
 ```yaml
 output.elasticsearch:
