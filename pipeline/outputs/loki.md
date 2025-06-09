@@ -35,7 +35,7 @@ There is a separate Golang output plugin provided by [Grafana](https://grafana.c
 
 ## Labels
 
-Loki stores the record logs inside Streams. A _stream_ is defined by a set of labels, at least one label is required.
+Loki stores the record logs inside Streams. A stream is defined by a set of labels, and at least one label is required.
 
 Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text. It also allows setting as labels certain keys that exists as part of the records that are being processed.
 
@@ -67,7 +67,7 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
 
 The label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` .
 
-The second label name must start with a dollar sign `$`, meaning it's a [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern which provides the ability to retrieve values from nested maps by using the key names.
+The second label name must start with a dollar sign `$`, meaning it's a [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern, which provides the ability to retrieve values from nested maps by using the key names.
 
 When processing the previous configuration, internally the ending labels for the stream in question becomes:
 
@@ -164,7 +164,7 @@ job="fluentbit", stream="stdout"
 
 #### Kubernetes and labels
 
-If you are running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which auto-populates the streams with the Pod labels for you. Consider the following configuration:
+If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which auto-populates the streams with the Pod labels for you. Consider the following configuration:
 
 ```python
 [OUTPUT]
@@ -182,7 +182,7 @@ job="fluentbit", team="Santiago Wanderers"
 
 ## Use `drop_single_key`
 
-If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single `key=value` pair.
+If there's only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single `key=value` pair.
 
 Consider this JSON example:
 
@@ -212,8 +212,8 @@ If `drop_single_key` is `raw`, or `line_format` is `key_value`, it will show in 
 value
 ```
 
-If you want both structured JSON and plain text logs in Loki, you should set `drop_single_key` to `raw` and `line_format` to `json`.
-Loki doesn't interpret a quoted string as valid JSON.T o remove the quotes without `drop_single_key` set to `raw`, you would need to use a query like this:
+If you want both structured JSON and plain text logs in Loki, set `drop_single_key` to `raw` and `line_format` to `json`.
+Loki doesn't interpret a quoted string as valid JSON. To remove the quotes without `drop_single_key` set to `raw`, use a query like this:
 
 ```C
 {"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
@@ -233,7 +233,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 
 ## Use `structured_metadata`
 
-[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) lets you attach custom fields to individual log lines without embedding the information in the content of the log line. This capability works well for high cardinality data that isn't suited for using labels. While not a label, the `structured_metadata` configuration parameter operates similarly to the `labels` parameter. Both parameters are comma-delimited `key=value` lists, and both can use record accessors to reference keys within the record being processed.
+[Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/) lets you attach custom fields to individual log lines without embedding the information in the content of the log line. This capability works well for high cardinality data that isn't suited for using labels. Although not a label, the `structured_metadata` configuration parameter operates similarly to the `labels` parameter. Both parameters are comma-delimited `key=value` lists, and both can use record accessors to reference keys within the record being processed.
 
 The following configuration:
 
@@ -259,7 +259,7 @@ with Loki deployments prior to Loki 3.0.
 
 In addition to the `structured_metadata` configuration parameter, a `structured_metadata_map_keys` is available, which can be used to dynamically populate structured metadata from map values in the log record. `structured_metadata_map_keys` can be set with a list of record accessors, where each one should reference map values in the log record. Record accessors which don't match a map value will be skipped.
 
-The following configuration is similar to the previous example, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries.
+The following configuration is similar to the previous example, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
@@ -328,7 +328,7 @@ All options mentioned in these articles must be enabled in the plugin configurat
 
 Fluent Bit supports sending logs and metrics to [Grafana Cloud](https://grafana.com/products/cloud/) by providing the appropriate URL and ensuring TLS is enabled.
 
-An example configuration, set the credentials and ensure the host URL matches the correct one for your deployment:
+Aa an example configuration, set the credentials and ensure the host URL matches the correct one for your deployment:
 
 ```python
     [OUTPUT]
