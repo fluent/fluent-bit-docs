@@ -1,45 +1,45 @@
 # Loki
 
 [Loki](https://grafana.com/oss/loki/) is multi-tenant log aggregation system inspired by Prometheus.
-It is designed to be very cost effective and easy to operate.
 
-The Fluent Bit `loki` built-in output plugin allows you to send your log or events to a Loki service.
-It supports data enrichment with Kubernetes labels, custom label keys and Tenant ID within others.
+The Fluent Bit _Loki_ built-in output plugin lets you send your log or events to a Loki service.
+It supports data enrichment with Kubernetes labels, custom label keys, and Tenant ID, along with other information.
 
-Be aware there is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
+There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
 
-## Configuration Parameters
+## Configuration parameters
 
-| Key                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                     | Default           |
-|:--------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------|
-| host                            | Loki hostname or IP address. Do not include the subpath, i.e. `loki/api/v1/push`, but just the base hostname/URL.                                                                                                                                                                                                                                                                                                               | 127.0.0.1         |
-| uri                             | Specify a custom HTTP URI. It must start with forward slash.                                                                                                                                                                                                                                                                                                                                                                    | /loki/api/v1/push |
-| port                            | Loki TCP port                                                                                                                                                                                                                                                                                                                                                                                                                   | 3100              |
-| tls                             | Use TLS authentication                                                                                                                                                                                                                                                                                                                                                                                                          | off               |
-| http\_user                      | Set HTTP basic authentication user name                                                                                                                                                                                                                                                                                                                                                                                         |                   |
-| http\_passwd                    | Set HTTP basic authentication password                                                                                                                                                                                                                                                                                                                                                                                          |                   |
-| bearer\_token                   | Set bearer token authentication token value.                                                                                                                                                                                                                                                                                                                                                                                    |                   |
-| header                          | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set.                                                                                                                                                                                                                                                                                                                                               |                   |
-| tenant\_id                      | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no X-Scope-OrgID header is sent.                                                                                                                                                                                                                                                                       |                   |
-| labels                          | Stream labels for API request. It can be multiple comma separated of strings specifying  `key=value` pairs. In addition to fixed parameters, it also allows to add custom record keys \(similar to `label_keys` property\). More details in the Labels section.                                                                                                                                                                 | job=fluent-bit    |
-| label\_keys                     | Optional list of record keys that will be placed as stream labels. This configuration property is for records key only. More details in the Labels section.                                                                                                                                                                                                                                                                     |                   |
-| label\_map\_path                | Specify the label map file path. The file defines how to extract labels from each record. More details in the Labels section.                                                                                                                                                                                                                                                                                                   |                   |
-| structured\_metadata            | Optional comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata) for more information.                                                                                                                                                               |                   |
-| structured\_metadata\_map\_keys | Optional comma-separated list of record key strings specifying record values of type map, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured-metadata) for more information. |                   |
-| remove\_keys                    | Optional list of keys to remove.                                                                                                                                                                                                                                                                                                                                                                                                |                   |
-| drop\_single\_key               | If set to true and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in line\_format. If set to `raw` and the log line is a string, the log line will be sent unquoted.                                                                                                                                                                                                | off               |
-| line\_format                    | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`,  the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together \(separated by a single space\) in the format.                                                                                             | json              |
-| auto\_kubernetes\_labels        | If set to true, it will add all Kubernetes labels to the Stream labels                                                                                                                                                                                                                                                                                                                                                          | off               |
-| tenant\_id\_key                 | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. It is useful to set Tenant ID dynamically.                                                                                                                                                                                                                                     |                   |
-| compress                        | Set payload compression mechanism. The only available option is gzip. Default = "", which means no compression.                                                                                                                                                                                                                                                                                                                 |                   |
-| workers                         | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                                                                                                                                                                                                            | `0`               |
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `host` | Loki base hostname or IP address. Don't include the sub-path, only the base hostname or URL.  | `127.0.0.1`         |
+| `uri`  | Specify a custom HTTP URI. It must start with a forward slash (`/`).| `/loki/api/v1/push` |
+| `port` | The Loki TCP port. | `3100` |
+| `tls` | Use TLS authentication. | `off` |
+| `http_user` | Set HTTP basic authentication user name. | _none_ |
+| `http_passwd` | Set HTTP basic authentication password. | _none_ |
+| `bearer_token` | Set bearer token authentication token value. | _none_ |
+| `header` | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `tenant_id` | Tenant ID used by default to push logs to Loki. If omitted or empty it assumes Loki is running in single-tenant mode and no `X-Scope-OrgID` header is sent. | _none_ |
+| `labels` | Stream labels for API request. It can be multiple comma separated of strings specifying `key=value` pairs. Allows fixed parameters, or adding custom record keys (similar to the `label_keys` property). See the Labels section. | `job=fluent-bit` |
+| `label_keys` | (Optional.) List of record keys that will be placed as stream labels. This configuration property is for records key only. See the Labels section. | _none_ |
+| `label_map_path` | Specify the label map path. The file defines how to extract labels from each record. See the Labels section. | _none_ |
+| `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured-metadata). | _none_ |
+| `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured-metadata). | _none_ |
+| `remove_keys` | (Optional.) List of keys to remove. | _none_ |
+| `drop_single_key` | When set to `true` and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in `line_format`. If set to `raw` and the log line is a string, the log line will be sent unquoted. | `off` |
+| `line_format` | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`, the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together (separated by a single space) in the format. | `json` |
+| `auto_kubernetes_labels` | If set to `true`, adds all Kubernetes labels to the Stream labels. | `off` |
+| `tenant_id_key` | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. Use to set Tenant ID dynamically. | _none_ |
+| `compress` | Set payload compression mechanism. The only available option is `gzip`. | `""` (no compression) |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Labels
 
-Loki store the record logs inside Streams, a stream is defined by a set of labels, at least one label is required.
+Loki stores the record logs inside Streams. A _stream_ is defined by a set of labels, at least one label is required.
 
-Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text but also allowing to set as labels certain keys that exists as part of the records that are being processed.
-Consider the following JSON record \(pretty printed for readability\):
+Fluent Bit implements a flexible mechanism to set labels by using fixed key/value pairs of text. It also allows setting as labels certain keys that exists as part of the records that are being processed.
+
+Consider the following JSON record (pretty printed for readability):
 
 ```javascript
 {
@@ -65,18 +65,19 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
     labels job=fluentbit, $sub['stream']
 ```
 
-As you can see the label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` .
-Note that the second label name **must** starts with a `$`, that means that's a [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern so it provide you the ability to retrieve values from nested maps by using the key names.
+The label `job` has the value `fluentbit` and the second label is configured to access the nested map called `sub` targeting the value of the key `stream` .
 
-When processing above's configuration, internally the ending labels for the stream in question becomes:
+The second label name must start with a dollar sign `$`, meaning it's a [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern which provides the ability to retrieve values from nested maps by using the key names.
+
+When processing the previous configuration, internally the ending labels for the stream in question becomes:
 
 ```text
 job="fluentbit", stream="stdout"
 ```
 
-Another feature of Labels management is the ability to provide custom key names, using the same record accessor pattern we can specify the key name manually and let the value to be populated automatically at runtime, e.g:
+Another feature of Labels management is the ability to provide custom key names. Using the same record accessor pattern you can specify the key name manually and let the value populate automatically at runtime:
 
-```text
+```python
 [OUTPUT]
     name   loki
     match  *
@@ -89,14 +90,14 @@ When processing that new configuration, the internal labels will be:
 job="fluentbit", mystream="stdout"
 ```
 
-### Using the `label_keys` property
+### Use `label_keys`
 
-The additional configuration property called `label_keys` allow to specify multiple record keys that needs to be placed as part of the outgoing Stream Labels, yes, this is a similar feature than the one explained above in the `labels` property.
-Consider this as another way to set a record key in the Stream, but with the limitation that you cannot use a custom name for the key value.
+The `label_keys` configuration property lets you specify multiple record keys which need to be placed as part of the outgoing Stream Labels.
+This is another way to set a record key in the Stream, but with the limitation that you can't use a custom name for the key value.
 
 The following configuration examples generate the same Stream Labels:
 
-```text
+```python
 [OUTPUT]
     name       loki
     match      *
@@ -104,30 +105,31 @@ The following configuration examples generate the same Stream Labels:
     label_keys $sub['stream']
 ```
 
-the above configuration accomplish the same than this one:
+The previous configuration accomplishes the same as this one:
 
-```text
+```python
 [OUTPUT]
     name   loki
     match  *
     labels job=fluentbit, $sub['stream']
 ```
 
-both will generate the following Streams label:
+Both generate the following Streams label:
 
 ```text
 job="fluentbit", stream="stdout"
 ```
 
-### Using the `label_map_path` property
+### Use `label_map_path`
 
-The configuration property `label_map_path` is to read a JSON file that defines how to extract labels from each record.
+The `label_map_path` configuration property reads a JSON file that defines how to extract labels from each record.
 
-The file should contain a JSON object. Each keys define how to get label value from a nested record. Each values are used as label names.
+The file should contain a JSON object. Each key defines how to get label value from a nested record. Each value is used as a label name.
 
 The following configuration examples generate the same Stream Labels:
 
-map.json:
+`map.json`:
+
 ```json
 {
     "sub": {
@@ -136,34 +138,33 @@ map.json:
 }
 ```
 
-The following configuration examples generate the same Stream Labels:
+Add the JSON path to the plugin output configuration:
 
-```text
+```python
 [OUTPUT]
     name   loki
     match  *
     label_map_path /path/to/map.json
 ```
 
+The previous configurations accomplish the same as this one:
 
-the above configuration accomplish the same than this one:
-
-```text
+```python
 [OUTPUT]
     name   loki
     match  *
     labels job=fluentbit, $sub['stream']
 ```
 
-both will generate the following Streams label:
+Both will generate the following Streams label:
 
 ```text
 job="fluentbit", stream="stdout"
 ```
 
-### Kubernetes & Labels
+#### Kubernetes and labels
 
-Note that if you are running in a Kubernetes environment, you might want to enable the option `auto_kubernetes_labels` which will auto-populate the streams with the Pod labels for you. Consider the following configuration:
+If you are running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which auto-populates the streams with the Pod labels for you. Consider the following configuration:
 
 ```python
 [OUTPUT]
@@ -173,17 +174,17 @@ Note that if you are running in a Kubernetes environment, you might want to enab
     auto_kubernetes_labels on
 ```
 
-Based in the JSON example provided above, the internal stream labels will be:
+Based on the JSON example provided, the internal stream labels will be:
 
 ```text
 job="fluentbit", team="Santiago Wanderers"
 ```
 
-## Drop Single Key
+## `drop_single_key`
 
-If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single key=value pair.
+If there is only one key remaining after removing keys, you can use the `drop_single_key` property to send its value to Loki, rather than a single `key=value` pair.
 
-Consider this simple JSON example:
+Consider this JSON example:
 
 ```json
 {"key":"value"}
@@ -211,8 +212,8 @@ If `drop_single_key` is `raw`, or `line_format` is `key_value`, it will show in 
 value
 ```
 
-If you want both structured JSON and plain-text logs in Loki, you should set `drop_single_key` to `raw` and `line_format` to `json`.
-Loki does not interpret a quoted string as valid JSON, and so to remove the quotes without `drop_single_key` set to raw, you would need to use a query like this:
+If you want both structured JSON and plain text logs in Loki, you should set `drop_single_key` to `raw` and `line_format` to `json`.
+Loki doesn't interpret a quoted string as valid JSON.T o remove the quotes without `drop_single_key` set to `raw`, you would need to use a query like this:
 
 ```C
 {"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
@@ -230,7 +231,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 {"job"="fluent-bit"} | json | line_format "{{.log}}"
 ```
 
-### Structured Metadata
+## `structured_metadata`
 
 [Structured metadata](https://grafana.com/docs/loki/latest/get-started/labels/structured-metadata/)
 lets you attach custom fields to individual log lines without embedding the
@@ -260,23 +261,27 @@ Other common uses for structured metadata include trace and span IDs, process an
 Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
 with Loki deployments prior to Loki 3.0.
 
-#### Structured Metadata Maps
-In addition to the `structured_metadata` configuration parameter, a `structured_metadata_map_keys` is available, which can be used to dynamically populate structured metadata from map values in the log record. `structured_metadata_map_keys` can be set with a list of record accessors, where each one should reference map values in the log record. Record accessors which do not match a map value will simply be skipped.  
+### Structured metadata maps
 
-The following configuration is similar to the above, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries.
+In addition to the `structured_metadata` configuration parameter, a `structured_metadata_map_keys` is available, which can be used to dynamically populate structured metadata from map values in the log record. `structured_metadata_map_keys` can be set with a list of record accessors, where each one should reference map values in the log record. Record accessors which don't match a map value will be skipped.
+
+The following configuration is similar to the previous example, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries.
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```text
+
+```python
 [OUTPUT]
     name                         loki
     match                        *
     labels                       cluster=my-k8s-cluster, region=us-east-1
     structured_metadata_map_keys $kubernetes
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
   outputs:
     - name:                         loki
@@ -284,23 +289,27 @@ The following configuration is similar to the above, except now all entries in t
       labels:                       cluster=my-k8s-cluster, region=us-east-1
       structured_metadata_map_keys: $kubernetes
 ```
+
 {% endtab %}
 {% endtabs %}
 
-Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and `pod_name`, the above configuration is equivalent to:
+Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and `pod_name`, the previous configuration is equivalent to:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```text
+
+```python
 [OUTPUT]
     name                loki
     match               *
     labels              cluster=my-k8s-cluster, region=us-east-1
     structured_metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
   outputs:
     - name:                loki
@@ -308,25 +317,26 @@ Assuming the value `$kubernetes` is a map containing two entries `namespace_name
       labels:              cluster=my-k8s-cluster, region=us-east-1
       structured_metadata: $kubernetes['namespace_name'], $kubernetes['pod_name']
 ```
+
 {% endtab %}
 {% endtabs %}
 
 ## Networking and TLS Configuration
 
-This plugin inherit core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
+This plugin inherits core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available refer to the following articles:
 
-* [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
-* [Security & TLS](../../administration/transport-security.md): all about TLS configuration and certificates
+- [Networking Setup](../../administration/networking.md): timeouts, keepalive and source address
+- [Security and TLS](../../administration/transport-security.md): all about TLS configuration and certificates
 
-Note that all options mentioned in the articles above must be enabled in the plugin configuration in question.
+All options mentioned in these articles must be enabled in the plugin configuration in question.
 
-### Fluent Bit + Grafana Cloud
+### Fluent Bit and Grafana Cloud
 
-Fluent Bit supports sending logs (and metrics) to [Grafana Cloud](https://grafana.com/products/cloud/) by providing the appropriate URL and ensuring TLS is enabled.
+Fluent Bit supports sending logs and metrics to [Grafana Cloud](https://grafana.com/products/cloud/) by providing the appropriate URL and ensuring TLS is enabled.
 
-An example configuration - make sure to set the credentials and ensure the host URL matches the correct one for your deployment:
+An example configuration, set the credentials and ensure the host URL matches the correct one for your deployment:
 
-```text
+```python
     [OUTPUT]
         Name        loki
         Match       *
@@ -338,12 +348,12 @@ An example configuration - make sure to set the credentials and ensure the host 
         http_passwd XXX
 ```
 
-## Getting Started
+## Get Started
 
-The following configuration example, will emit a dummy example record and ingest it on Loki .
+The following configuration example emits a dummy example record and ingests it on Loki .
 Copy and paste the following content into a file called `out_loki.conf`:
 
-```text
+```python
 [SERVICE]
     flush     1
     log_level info
@@ -363,13 +373,13 @@ Copy and paste the following content into a file called `out_loki.conf`:
     auto_kubernetes_labels on
 ```
 
-run Fluent Bit with the new configuration file:
+Run Fluent Bit with the new configuration file:
 
-```text
-$ fluent-bit -c out_loki.conf
+```shell
+fluent-bit -c out_loki.conf
 ```
 
-Fluent Bit output:
+Which returns output that similar to the following:
 
 ```text
 Fluent Bit v1.7.0

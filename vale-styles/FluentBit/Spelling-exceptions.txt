@@ -1,5 +1,5 @@
 accessor
-Alertmanager
+accessors
 allowlist
 Ansible
 API
