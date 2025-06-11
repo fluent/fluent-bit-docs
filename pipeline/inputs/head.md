@@ -1,6 +1,6 @@
 # Head
 
-The _Head_ input plugin reads events from the head of a file. It's behavior is similar to the `head` command.
+The _Head_ input plugin reads events from the head of a file. Its behavior is similar to the `head` command.
 
 ## Configuration parameters
 
@@ -11,8 +11,8 @@ The plugin supports the following configuration parameters:
 | `File` | Absolute path to the target file. For example: `/proc/uptime`. |
 | `Buf_Size` | Buffer size to read the file. |
 | `Interval_Sec` | Polling interval (seconds). |
-| `Interval_NSec` | Polling interval (nanosecond). |
-| `Add_Path` | If enabled, the path is appended to each records. Default value is `false`. |
+| `Interval_NSec` | Polling interval (nanoseconds). |
+| `Add_Path` | If enabled, the path is appended to each records. Default: `false`. |
 | `Key` | Rename a key. Default: `head`. |
 | `Lines` | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`. |
 | `Split_line` | If enabled, `in_head` generates key-value pair per line. |
