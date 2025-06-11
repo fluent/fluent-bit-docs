@@ -35,13 +35,13 @@ From the command line you can let Fluent Bit listen for Forward messages with th
 fluent-bit -i forward -o stdout
 ```
 
-By default the service will listen an all interfaces (`0.0.0.0`) through TCP port `24224`. You can change this by passing parameters to the command:
+By default, the service listens on all interfaces (`0.0.0.0`) through TCP port `24224`. You can change this by passing parameters to the command:
 
 ```bash
 fluent-bit -i forward -p listen="192.168.3.2" -p port=9090 -o stdout
 ```
 
-In the example the Forward messages will only arrive through network interface `192.168.3.2` address and TCP Port `9090`.
+In the example, the Forward messages arrive only through network interface `192.168.3.2` address and TCP Port `9090`.
 
 ### Configuration file
 
@@ -85,7 +85,7 @@ pipeline:
 
 ## Fluent Bit and Secure Forward Setup
 
-In Fluent Bit v3 and greater, `in_forward` can handle secure forward protocol.
+In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
 
 For using user-password authentication, specify `security.users` at least an one-pair.
 For using shared key, specify `shared_key` in both of forward output and forward input.
@@ -135,7 +135,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](http://www.fluentd.org):
+After Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](http://www.fluentd.org):
 
 ```bash
 echo '{"key 1": 123456789, "key 2": "abcdefg"}' | fluent-cat my_tag
