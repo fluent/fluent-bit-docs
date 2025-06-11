@@ -93,7 +93,6 @@ exceptions:
   - UTF
   - UUID
   - WASI
-  - WASM
   - XML
   - XSS
   - YAML
