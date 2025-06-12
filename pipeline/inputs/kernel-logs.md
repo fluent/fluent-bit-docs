@@ -6,7 +6,7 @@ The _kmsg_ input plugin reads the Linux Kernel log buffer from the beginning. It
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Prio_Level` | The log level to filter. The kernel log is dropped if its priority is more than `prio_level`. Allowed values are `0`-`8`. 8 means all logs are saved. | `8` |
+| `Prio_Level` | The log level to filter. The kernel log is dropped if its priority is more than `prio_level`. Allowed values are `0`-`8`. `8` means all logs are saved. | `8` |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Get started
