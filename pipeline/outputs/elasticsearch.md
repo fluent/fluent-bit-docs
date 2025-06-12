@@ -29,7 +29,7 @@ operational Elasticsearch service running in your environment.
 | `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ |
 | `HTTP_User` | Optional username credential for Elastic X-Pack access | _none_ |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User` | _none_ |
-| `HTTP_API_Key` | API key for Elastic. If `HTTP_User` or `Cloud_Auth` are defined, this will be ignored  | _none_ |
+| `HTTP_API_Key` | API key for Elastic, must be base64 encoded. If `HTTP_User` or `Cloud_Auth` are defined, this will be ignored  | _none_ |
 | `Index` | Index name | `fluent-bit` |
 | `Type` | Type name | `_doc` |
 | `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off` | `Off` |
