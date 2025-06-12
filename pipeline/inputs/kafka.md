@@ -8,7 +8,7 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| `brokers` | Single or multiple list of Kafka Brokers, e.g: 192.168.1.3:9092, 192.168.1.4:9092. | _none_ |
+| `brokers` | Single or multiple list of Kafka Brokers. For example: `192.168.1.3:9092`, `192.168.1.4:9092`. | _none_ |
 | `topics` | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to. | _none_ |
 | `format` | Serialization format of the messages. If set to `json`, the payload will be parsed as JSON. | _none_ |
 | `client_id` | Client id passed to librdkafka. | _none_ |
@@ -47,8 +47,7 @@ In your main configuration file append the following `Input` and `Output` sectio
 
 #### Example of using Kafka input and output plugins
 
-The Fluent Bit source repository contains a full example of using Fluent Bit to
-process Kafka records:
+The Fluent Bit source repository contains a full example of using Fluent Bit to process Kafka records:
 
 ```text
 [INPUT]
