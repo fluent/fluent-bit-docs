@@ -97,6 +97,7 @@ Kube
 Kubernetes
 Kusto
 labelset
+librdkafka
 loadgenerator
 Logstash
 Lua
