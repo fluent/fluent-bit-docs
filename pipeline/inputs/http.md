@@ -1,7 +1,7 @@
 
 # HTTP
 
-The _HTTP_ input plugin allows Fluent Bit to open up an HTTP port that you can then route data to in a dynamic way.
+The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then route data to in a dynamic way.
 
 ## Configuration parameters
 
@@ -26,7 +26,7 @@ The HTTP input plugin will accept and automatically handle gzipped content in ve
 
 ## Get started
 
-This plugin supports dynamic tags which allow you to send data with different tags through the same input. See the following for an example:
+This plugin supports dynamic tags which let you send data with different tags through the same input. See the following for an example:
 
 [Link to video](https://asciinema.org/a/375571)
 
