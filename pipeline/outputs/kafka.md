@@ -49,6 +49,45 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Topics      test
 ```
 
+### Windows build guidance
+
+It is assumed that you have installed openssl in C:\Program Files\OpenSSL-Win64
+
+The kafka output plugin will produce an error similar to the following when trying to build for windows
+
+```text
+LINK : warning LNK4044: unrecognized option '/lpthread'; ignored
+LINK : fatal error LNK1104: cannot open file 'libcrypto.lib'
+NMAKE : fatal error U1077: '"C:\Program Files\CMake\bin\cmake.exe"' : return code '0xffffffff'
+```
+
+This is due to the fact that the location of the openssl library required is incorrect. You can fix it by following the steps below
+
+Update the file <fluentbit_repo>/cmake/windows-setup.cmake
+In the entry for set(FLB_OUT_KAFKA, change the value from `No` to `Yes`
+
+Generate the build files using 
+
+```
+cmake -DFLB_OUT_KAFKA=On -G "NMake Makefiles" ..
+```
+
+After running the command above, a couple files should have been generated in the build/ folder. For the files build/src/fluent-bit-bin.vcxproj and build/src/fluent-bit-shared.vcxproj, in the Link subtrees, in the AdditionalDependencies property, add the paths to libcrypto.lib and libssl.lib files (files should exist in your OpenSSL installation folder)
+e.g. <AdditionalDependencies>(..............)C:\Program Files\OpenSSL-Win64\lib\libcrypto.lib;C:\Program Files\OpenSSL-Win64\lib\libssl.lib</AdditionalDependencies>
+
+Run
+ 
+```
+cmake --build .
+```
+The binary should now build successfully in build/bin/Debug/fluent-bit.exe
+
+Test with
+
+```
+C:\./<repo>/build/bin/fluent-bit.exe -i dummy -o kafka
+```
+
 ### Avro Support
 
 Fluent-bit comes with support for avro encoding for the out_kafka plugin.
