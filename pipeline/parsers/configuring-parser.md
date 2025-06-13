@@ -1,6 +1,6 @@
 # Configuring Parser
 
-Parsers are an important component of [Fluent Bit](http://fluentbit.io), with them you can take any unstructured log entry and give them a structure that makes easier it processing and further filtering.
+Parsers are an important component of [Fluent Bit](http://fluentbit.io), with them you can take any unstructured log entry and give them a structure that makes it easier for processing and further filtering.
 
 The parser engine is fully configurable and can process log entries based in two types of format:
 
@@ -34,7 +34,8 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | Time\_Keep | By default when a time key is recognized and parsed, the parser will drop the original time field. Enabling this option will make the parser to keep the original time field and its value in the log entry. |
 | Time\_System\_Timezone | If there is no timezone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured timezone. The configured timezone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
 | Types | Specify the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string`\(default\), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
-| Decode\_Field | Decode a field value, the only decoder available is `json`. The syntax is: `Decode_Field json <field_name>`. |
+| Decode\_Field | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field <decoder_type> <field_name>`. See [Decoders](pipeline/parsers/decoders.md) for additional information. |
+| Decode\_Field\_As | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field_As <decoder_type> <field_name>`. See [Decoders](pipeline/parsers/decoders.md) for additional information. |
 | Skip\_Empty\_Values | Specify a boolean which determines if the parser should skip empty values. The default is `true`. |
 | Time_Strict | The default value (`true`) tells the parser to be strict with the expected time format. With this option set to false, the parser will be permissive with the format of the time. This is useful when the format expects time fraction but the time to be parsed doesn't include it.  |
 
