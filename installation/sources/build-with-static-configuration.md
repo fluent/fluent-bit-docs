@@ -27,8 +27,7 @@ directory must contain a minimum of one configuration file called
 [INPUT](/concepts/data-pipeline/input.md), and [OUTPUT](/concepts/data-pipeline/output.md)
 sections.
 
-As an example, create a new `fluent-bit.conf` file with the following
-content:
+As an example, create a new `fluent-bit.yaml` file or `fluent-bit.conf` file with the corresponding content below:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
