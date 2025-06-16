@@ -2,7 +2,7 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit Documentation
+# Fluent Bit documentation
 
 <figure><img src=".gitbook/assets/fluent_bit_logo.png" alt=""><figcaption></figcaption></figure>
 
@@ -32,6 +32,10 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
   - Aggregation windows
   - Data analysis and prediction: Time series forecasting
 - Portable: Runs on Linux, macOS, Windows and BSD systems
+
+### Release notes
+
+For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
 ## Fluent Bit, Fluentd, and CNCF
 
