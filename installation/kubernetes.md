@@ -144,10 +144,49 @@ spec:
 
 ### Configure Fluent Bit
 
-Assuming the basic volume configuration described previously, you can apply the
-following configuration to start logging:
+Assuming the basic volume configuration described previously, you can apply one of the following configurations to start logging:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
+parsers:
+    - name: docker
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L'
+      time_keep: true
+      
+pipeline:
+    inputs:
+        - name: tail
+          tag: kube.*
+          path: 'C:\\var\\log\\containers\\*.log'
+          parser: docker
+          db: 'C:\\fluent-bit\\tail_docker.db'
+          mem_buf_limit: 7MB
+          refresh_interval: 10
+          
+        - name: tail
+          tag: kube.error
+          path: 'C:\\k\\kubelet.err.log'
+          db: 'C:\\fluent-bit\\tail_kubelet.db'
+          
+    filters:
+        - name: kubernetes
+          match: kube.*
+          kube_url: 'https://kubernetes.default.svc.cluster.local:443'
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 fluent-bit.conf: |
     [SERVICE]
       Parsers_File      C:\\fluent-bit\\parsers.conf
@@ -185,6 +224,9 @@ parsers.conf: |
         Time_Keep    On
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Mitigate unstable network on Windows pods
 
 Windows pods often lack working DNS immediately after boot
@@ -198,10 +240,28 @@ starts up:
 By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's not enough
 for you, update the configuration as follows:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+    filters:
+        - name: kubernetes
+          ...
+          dns_retries: 10
+          dns_wait_time: 30
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [filter]
     Name kubernetes
     ...
     DNS_Retries 10
     DNS_Wait_Time 30
 ```
+
+% endtab %}
+{% endtabs %}
