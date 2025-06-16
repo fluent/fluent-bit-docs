@@ -36,6 +36,30 @@ To define where to route data, specify a `Match` rule in the output configuratio
 Consider the following configuration example that delivers `CPU` metrics to an
 Elasticsearch database and Memory (`mem`) metrics to the standard output interface:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag: my_cpu
+          
+        - name: mem
+          tag: my_mem
+          
+    outputs:
+        - name: es
+          match: my_cpu
+       
+        - name: stdout
+          match: my_mem
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
     Name cpu
@@ -54,6 +78,9 @@ Elasticsearch database and Memory (`mem`) metrics to the standard output interfa
     Match  my_mem
 ```
 
+{% endtab %}
+{% endtabs %}
+
 Routing reads the `Input` `Tag` and the `Output` `Match` rules. If data has a `Tag`
 that doesn't match at routing time, the data is deleted.
 
@@ -61,6 +88,27 @@ that doesn't match at routing time, the data is deleted.
 
 Routing is flexible enough to support wildcards in the `Match` pattern. The following
 example defines a common destination for both sources of data:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag: my_cpu
+
+        - name: mem
+          tag: my_mem
+  
+    outputs:
+        - name: stdout
+          match: 'my_*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -76,6 +124,9 @@ example defines a common destination for both sources of data:
     Match  my_*
 ```
 
+{% endtab %}
+{% endtabs %}
+
 The match rule is set to `my_*`, which matches any Tag starting with `my_`.
 
 ## Routing with Regex
@@ -83,6 +134,27 @@ The match rule is set to `my_*`, which matches any Tag starting with `my_`.
 Routing also provides support for regular expressions with the `Match_Regex` pattern,
 allowing for more complex and precise matching criteria. The following example
 demonstrates how to route data from sources based on a regular expression:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: temperature_sensor
+          tag: temp_sensor_A
+
+        - name: humidity_sensor
+          tag: humid_sensor_B
+ 
+    outputs:
+        - name: stdout
+          match: '.*_sensor_[AB]'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -97,6 +169,9 @@ demonstrates how to route data from sources based on a regular expression:
     Name         stdout
     Match_regex  .*_sensor_[AB]
 ```
+
+{% endtab %}
+{% endtabs %}
 
 In this configuration, the `Match_regex` rule is set to `.*_sensor_[AB]`. This
 regular expression matches any `Tag` that ends with `_sensor_A` or `_sensor_B`,
