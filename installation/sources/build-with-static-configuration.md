@@ -30,7 +30,29 @@ sections.
 As an example, create a new `fluent-bit.conf` file with the following
 content:
 
-```python copy
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    daemon: off
+    log_level: info
+
+pipeline:
+    inputs:
+        - name: cpu
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Flush     1
     Daemon    off
@@ -43,6 +65,9 @@ content:
     Name      stdout
     Match     *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 This configuration calculates CPU metrics from the running system and prints them
 to the standard output interface.
