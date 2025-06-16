@@ -35,7 +35,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 ### Release notes
 
-For more details about changes on each release, refer to the [official release notes](https://fluentbit.io/announcements/).
+For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
 ## Fluent Bit, Fluentd, and CNCF
 
