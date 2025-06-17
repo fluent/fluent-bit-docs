@@ -65,6 +65,22 @@ The upper bound will be 30. The waiting time will be a random number between (3,
 The following example configures the `scheduler.base` as `3` seconds and
 `scheduler.cap` as `30` seconds.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 5
+    daemon: off
+    log_level: debug
+    scheduler.base: 3
+    scheduler.cap: 30
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [SERVICE]
     Flush            5
@@ -73,6 +89,9 @@ The following example configures the `scheduler.base` as `3` seconds and
     scheduler.base   3
     scheduler.cap    30
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The waiting time will be:
 
@@ -100,6 +119,31 @@ impose a limit to try N times and then discard the data after reaching that limi
 The following example configures two outputs, where the HTTP plugin has an unlimited
 number of retries, and the Elasticsearch plugin have a limit of `5` retries:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+  
+    outputs:
+        - name: http
+          host: 192.168.5.6
+          port: 8080
+          retry_limit: false
+
+        - name: es
+          host: 192.168.5.20
+          port: 9200
+          logstash_format: on
+          retry_limit: 5
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [OUTPUT]
     Name        http
@@ -114,3 +158,6 @@ number of retries, and the Elasticsearch plugin have a limit of `5` retries:
     Logstash_Format On
     Retry_Limit     5
 ```
+
+{% endtab %}
+{% endtabs %}
