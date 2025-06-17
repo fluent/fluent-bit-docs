@@ -95,7 +95,38 @@ that rely on networking I/O:
 This example sends five random messages through a TCP output connection. The remote
 side uses the `nc` (netcat) utility to see the data.
 
-Put the following configuration snippet in a file called `fluent-bit.conf`:
+Use the following configuration snippet of your choice in a corresponding file named `fluent-bit.yaml` or `fluent-bit.conf`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+
+pipeline:
+    inputs:
+        - name:  random
+          samples: 5
+
+    outputs:
+        - name: tcp
+          match: '*'
+          host: 127.0.0.1
+          port: 9090
+          format: json_lines
+          # Networking Setup
+          net.dns.mode: TCP
+          net.connect_timeout: 5
+          net.source_address: 127.0.0.1
+          net.keepalive: on
+          net.keepalive_idle_timeout: 10
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
@@ -119,6 +150,9 @@ Put the following configuration snippet in a file called `fluent-bit.conf`:
     net.keepalive               on
     net.keepalive_idle_timeout  10
 ```
+
+{% endtab %}
+{% endtabs %}
 
 In another terminal, start `nc` and make it listen for messages on TCP port 9090:
 
