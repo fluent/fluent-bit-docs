@@ -18,7 +18,29 @@ The initial release of the Prometheus Scrape metric allows you to collect metric
 
 If an endpoint exposes Prometheus Metrics we can specify the configuration to scrape and then output the metrics. In the following example, we retrieve metrics from the HashiCorp Vault application.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: prometheus_scrape
+          host: 0.0.0.0
+          port: 8201
+          tag: vault
+          metrics_path: /v1/sys/metrics?format=prometheus
+          scrape_interval: 10s
+          
+    outputs:
+        - name: stdout
+          match: '*'
 ```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name prometheus_scrape
     host 0.0.0.0
@@ -30,8 +52,10 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 [OUTPUT]
     name stdout
     match *
-
 ```
+
+{% endtab %}
+{% endtabs %}
 
 **Example Output**
 
