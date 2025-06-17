@@ -84,9 +84,27 @@ register new records. This can happen with any input source plugin. The goal of
 
 For a full data safety guarantee, use filesystem buffering.
 
-Here is an example input definition:
+Choose your preferred format for an example input definition:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: tcp
+          listen: 0.0.0.0
+          port: 5170
+          format: none
+          tag: tcp-logs
+          mem_buf_limit: 50MB
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name          tcp
     Listen        0.0.0.0
@@ -95,6 +113,9 @@ Here is an example input definition:
     Tag           tcp-logs
     Mem_Buf_Limit 50MB
 ```
+
+{% endtab %}
+{% endtabs %}
 
 If this input uses more than 50&nbsp;MB memory to buffer logs, you will get a warning like
 this in the Fluent Bit logs:
@@ -207,7 +228,25 @@ The Service section refers to the section defined in the main
 
 A Service section will look like this:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    storage.path: /var/log/flb-storage/
+    storage.sync: normal
+    storage.checksum: off
+    storage.backlog.mem_limit: 5M
+    storage.backlog.flush_on_shutdown: off
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush                     1
     log_Level                 info
@@ -217,6 +256,9 @@ A Service section will look like this:
     storage.backlog.mem_limit 5M
     storage.backlog.flush_on_shutdown off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 This configuration sets an optional buffering mechanism where the route to the data
 is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without
@@ -236,7 +278,33 @@ The following example configures a service offering filesystem buffering
 capabilities and two input plugins being the first based in filesystem and the second
 with memory only.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    storage.path: /var/log/flb-storage/
+    storage.sync: normal
+    storage.checksum: off
+    storage.max_chunks_up: 128
+    storage.backlog.mem_limit: 5M
+
+pipeline:
+    inputs:
+        - name: cpu
+          storage.type: filesystem
+
+        - name: mem
+          storage.type: memory
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush                     1
     log_Level                 info
@@ -255,6 +323,9 @@ with memory only.
     storage.type  memory
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Output Section Configuration
 
 If certain chunks are filesystem `storage.type` based, it's possible to control the
@@ -269,7 +340,35 @@ The following example creates records with CPU usage samples in the filesystem w
 are delivered to Google Stackdriver service while limiting the logical queue
 (buffering) to `5M`:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    storage.path: /var/log/flb-storage/
+    storage.sync: normal
+    storage.checksum: off
+    storage.max_chunks_up: 128
+    storage.backlog.mem_limit: 5M
+
+pipeline:
+    inputs:
+        - name: cpu
+          storage.type: filesystem
+
+    outputs:
+        - name: stackdriver
+          match: '*'
+          storage.total_limit_size: 5M
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush                     1
     log_Level                 info
@@ -288,6 +387,9 @@ are delivered to Google Stackdriver service while limiting the logical queue
     match                     *
     storage.total_limit_size  5M
 ```
+
+{% endtab %}
+{% endtabs %}
 
 If Fluent Bit is offline because of a network issue, it will continue buffering CPU
 samples, keeping a maximum of 5&nbsp;MB of the newest data.
