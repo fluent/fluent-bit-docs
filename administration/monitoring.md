@@ -28,7 +28,29 @@ To get started, enable the HTTP server from the configuration file. The followin
 configuration instructs Fluent Bit to start an HTTP server on TCP port `2020` and
 listen on all network interfaces:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
+service:
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2020
+    
+pipeline:
+    inputs:
+        - name: cpu
+          
+    outputs:       
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -42,9 +64,16 @@ listen on all network interfaces:
     Match *
 ```
 
-Apply the configuration file:
+{% endtab %}
+{% endtabs %}
+
+Start Fluent bit with the corresponding configuration chosen above:
 
 ```shell
+# For YAML configuration.
+bin/fluent-bit -c fluent-bit.conf
+
+# For classic configuration.
 bin/fluent-bit -c fluent-bit.conf
 ```
 
@@ -308,6 +337,30 @@ section can get an _alias_ that will be used as the parent name for the metric.
 The following example sets an alias to the `INPUT` section of the configuration file,
 which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2020
+    
+pipeline:
+    inputs:
+        - name: cpu
+          alias: server1_cpu
+          
+    outputs:       
+        - name: stdout
+          alias: raw_output
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```yaml
 [SERVICE]
     HTTP_Server  On
@@ -323,6 +376,9 @@ which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
     Alias raw_output
     Match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 When querying the related metrics, the aliases are returned instead of the plugin
 name:
@@ -398,7 +454,33 @@ the HC_Period interval
 The `HC_Errors_Count` and `HC_Retry_Failure_Count` only count for output plugins and
 count a sum for errors and retry failures from all running output plugins.
 
-The following configuration file example shows how to define these settings:
+The following configuration examples show how to define these settings:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    http_server: on
+    http_listen: 0.0.0.0
+    http_port: 2020
+    health_check: on
+    hc_errors_count: 5
+    hc_retry_failure_count: 5
+    hc_period: 5
+    
+pipeline:
+    inputs:
+        - name: cpu
+          
+    outputs:       
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
 
 ```yaml
 [SERVICE]
@@ -417,6 +499,9 @@ The following configuration file example shows how to define these settings:
     Name  stdout
     Match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Use the following command to call the health endpoint:
 
