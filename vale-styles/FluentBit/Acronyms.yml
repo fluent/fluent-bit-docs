@@ -53,6 +53,7 @@ exceptions:
   - LLVM
   - LTS
   - NET
+  - NGINX
   - NOTE
   - NVDA
   - OSS
