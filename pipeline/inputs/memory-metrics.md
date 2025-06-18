@@ -1,15 +1,22 @@
-# Memory Metrics
+# Memory metrics
 
-The **mem** input plugin, gathers the information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
+The  _Memory_ (`mem`) input plugin gathers information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
 
-## Getting Started
+## Get started
 
-In order to get memory and swap usage from your system, you can run the plugin from the command line or through the configuration file:
+To get memory and swap usage from your system, you can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
+
+Run the following command from the command line:
 
 ```bash
-$ fluent-bit -i mem -t memory -o stdout -m '*'
+fluent-bit -i mem -t memory -o stdout -m '*'
+```
+
+Which outputs information similar to:
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -28,12 +35,13 @@ Fluent Bit v1.x.x
 You can enable the `threaded` setting to run this input in its own
 [thread](../../administration/multithreading.md#inputs).
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
+
 ```python
 [INPUT]
     Name   mem
@@ -43,9 +51,11 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
     inputs:
@@ -55,5 +65,6 @@ pipeline:
         - name: stdout
           match: '*'
 ```
+
 {% endtab %}
 {% endtabs %}
