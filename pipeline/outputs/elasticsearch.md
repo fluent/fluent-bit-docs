@@ -112,7 +112,29 @@ fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
 
 In your main configuration file append the following `Input` and `Output` sections.
 
-```python
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag: cpu
+          
+    outputs:
+        - name: es
+          match: '*'
+          host: 192.168.2.3
+          port: 9200
+          index: my_index
+          type: my_type
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -126,7 +148,8 @@ In your main configuration file append the following `Input` and `Output` sectio
     Type  my_type
 ```
 
-![example configuration visualization from Calyptia](../../.gitbook/assets/image%20%282%29.png)
+{% endtab %}
+{% endtabs %}
 
 ## About Elasticsearch field names
 
@@ -158,7 +181,31 @@ See [details](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e7
 
 Example configuration:
 
-```text copy
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          match: '*'
+          host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+          port: 443
+          index: my_index
+          type: my_type
+          aws_auth: on
+          aws_region: us-west-2
+          tls: on
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name  es
     Match *
@@ -170,6 +217,9 @@ Example configuration:
     AWS_Region us-west-2
     tls     On
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Be aware that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.
 
@@ -184,7 +234,29 @@ to the
 
 Example configuration:
 
-```text copy
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          include_tag_key: true
+          tag_key: tags
+          tls: on
+          tls.verify: off
+          cloud_id: 'elastic-obs-deployment:ZXVybxxxxxxxxxxxg=='
+          cloud_auth: 'elastic:2vxxxxxxxxYV'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name es
     Include_Tag_Key true
@@ -195,6 +267,9 @@ Example configuration:
     cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
     cloud_auth elastic:2vxxxxxxxxYV
 ```
+
+{% endtab %}
+{% endtabs %}
 
 In Elastic Cloud version 8 and great, the type option must be removed by setting
 `Suppress_Type_Name On`.
@@ -221,6 +296,30 @@ Rejecting mapping update to [products] as the final mapping would have more than
 
 This means that you can't set up your configuration like the following:.
 
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          match: 'foo.*'
+          index: search
+          type: type1
+
+        - name: es
+          match: 'bar.*'
+          index: search
+          type: type2
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [OUTPUT]
     Name  es
@@ -234,6 +333,9 @@ This means that you can't set up your configuration like the following:.
     Index search
     Type  type2
 ```
+
+{% endtab %}
+{% endtabs %}
 
 For details, read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).
 
@@ -250,7 +352,31 @@ This doesn't work in Elasticsearch versions 5.6 through 6.1
 Ensure you set an explicit map such as `doc` or `flb_type` in the configuration,
 as seen on the last line:
 
-```text copy
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          match: '*'
+          host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+          port: 443
+          index: my_index
+          aws_auth: on
+          aws_region: us-west-2
+          tls: on
+          type: doc
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name  es
     Match *
@@ -263,10 +389,13 @@ as seen on the last line:
     Type  doc
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Validation failures
 
 In Fluent Bit v1.8.2 and greater, Fluent Bit started using `create` method (instead
-of `index`) for data submission. This makes Fluent Bit compatible with Datastream,
+of `index`) for data submission. This makes Fluent Bit compatible with `Datastream`,
 introduced in Elasticsearch 7.9. You might see errors like:
 
 ```text
@@ -277,7 +406,26 @@ If you see `action_request_validation_exception` errors on your pipeline with
 Fluent Bit versions greater than v1.8.2, correct them  by turning on `Generate_ID`
 as follows:
 
-```text copy
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          match: '*'
+          host: 192.168.12.1
+          generate_id: on
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name es
     Match *
@@ -285,10 +433,34 @@ as follows:
     Generate_ID on
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### `Logstash_Prefix_Key`
 
 The following snippet demonstrates using the namespace name as extracted by the
 `kubernetes` filter as `logstash` prefix:
+
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        ...
+          
+    outputs:
+        - name: es
+          match: '*'
+          # ...
+          logstash_prefix: logstash
+          logstash_prefix_key: $kubernetes['namespace_name'] 
+          # ...
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
@@ -299,6 +471,9 @@ The following snippet demonstrates using the namespace name as extracted by the
     Logstash_Prefix_Key $kubernetes['namespace_name']
     # ...
 ```
+
+{% endtab %}
+{% endtabs %}
 
 For records that don't have the field `kubernetes.namespace_name`, the default prefix
 `logstash` will be used.
