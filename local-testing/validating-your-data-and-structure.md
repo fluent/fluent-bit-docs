@@ -66,15 +66,66 @@ Every Expect filter configuration exposes rules to validate the content of your 
 
 Consider a JSON file `data.log` with the following content:
 
-```javascript
+```text
 {"color": "blue", "label": {"name": null}}
 {"color": "red", "label": {"name": "abc"}, "meta": "data"}
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following Fluent Bit configuration file configures a pipeline to consume the log, while applying an Expect filter to validate that the keys `color` and `label` exist:
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the 
+keys `color` and `label` exist.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+The following is the Fluent Bit YAML configuration file:
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.yaml
+
+pipeline:
+    inputs:
+        - name: tail
+          path: data.log
+          parser: json
+          exit_on_eof: on
+
+    # First 'expect' filter to validate that our data was structured properly
+    filters:
+        - name: expect
+          match: '*'
+          key_exists: 
+            - color
+            - $label['name']
+          action: exit
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="parsers.yaml" %}
+
+The following is the Fluent Bit YAML parsers file:
+
+```yaml
+parsers:
+    - name: json
+      format: json
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+The following is the Fluent Bit classic configuration file:
+
+```text
 [SERVICE]
     flush        1
     log_level    info
@@ -99,11 +150,84 @@ The following Fluent Bit configuration file configures a pipeline to consume the
     match       *
 ```
 
+{% endtab %}
+
+{% tab title="parsers.conf" %}
+
+The following is the Fluent Bit classic parsers file:
+
+```text
+[PARSER]
+    Name json
+    Format json
+```
+
+{% endtab %}
+{% endtabs %}
+
 If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
 
 To extend the pipeline, add a Grep filter to match records that map `label` containing a key called `name` with value the `abc`, and add an Expect filter to re-validate that condition:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+The following is the Fluent Bit YAML configuration file:
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.yaml
+
+pipeline:
+    inputs:
+        - name: tail
+          path: data.log
+          parser: json
+          exit_on_eof: on
+
+    # First 'expect' filter to validate that our data was structured properly
+    filters:
+        - name: expect
+          match: '*'
+          key_exists: 
+            - color
+            - $label['name']
+          action: exit
+          
+        # Match records that only contains map 'label' with key 'name' = 'abc'
+        - name: grep
+          match: '*'
+          regex: "$label['name'] ^abc$"
+          
+        # Check that every record contains 'label' with a non-null value
+        - name: expect
+          match: '*'
+          key_val_eq: $label['name'] abc
+          action: exit
+
+        # Append a new key to the record using an environment variable
+        - name: record_modifier
+          match: '*'
+          record: hostname ${HOSTNAME}
+
+        # Check that every record contains 'hostname' key
+        - name: expect
+          match: '*'
+          key_exists: hostname
+          action: exit
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush        1
     log_level    info
@@ -154,6 +278,9 @@ To extend the pipeline, add a Grep filter to match records that map `label` cont
     match      *
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ## Production deployment
 
-When deploying in production, consider removing any Expect filters from your configuration file. These filters are unnecessary unless you need 100% coverage of checks at runtime.
+When deploying in production, consider removing any `Expect` filters from your configuration file. These filters are unnecessary unless you need 100% coverage of checks at runtime.
