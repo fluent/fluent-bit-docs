@@ -282,7 +282,7 @@ The following example retrieves `date` and `message` from concatenated logs.
 
 Example files content:
 
-% tabs %}
+{% tabs %}
 
 {% tab title="fluent-bit.yaml" %}
 
