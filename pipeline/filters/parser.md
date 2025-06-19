@@ -21,16 +21,61 @@ The plugin needs a parser file which defines how to parse each field.
 
 This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+parsers:
+    - name: dummy_test
+      format: regex
+      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [PARSER]
     Name dummy_test
     Format regex
     Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
+{% endtab %}
+{% endtabs %}
+
 The path of the parser file should be written in configuration file under the `[SERVICE]` section.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: /path/to/parsers.yaml
+
+pipeline:
+    inputs:
+      - name: dummy
+        tag: dummy.data
+        dummy: '{"data":"100 0.5 true This is example"}'
+
+    filters:
+      - name: parser
+        match: 'dummy.*'
+        key_name: data
+        parser: dummy_test
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Parsers_File /path/to/parsers.conf
 
@@ -50,21 +95,42 @@ The path of the parser file should be written in configuration file under the `[
     Match *
 ```
 
-The output is
+{% endtab %}
+{% endtabs %}
+
+The output when running the corresponding configuration is as follows:
 
 ```text
-$ fluent-bit -c dummy.conf
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
+# For YAML configuration.
+$ ./fluent-bit --config fluent-bit.yaml
+
+# For classic configuration.
+$ ./fluent-bit --config fluent-bit.conf
+
+Fluent Bit v4.0.0
+* Copyright (C) 2015-2025 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
 
-[2017/07/06 22:33:12] [ info] [engine] started
-[0] dummy.data: [1499347993.001371317, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[1] dummy.data: [1499347994.001303118, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[2] dummy.data: [1499347995.001296133, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[3] dummy.data: [1499347996.001320284, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
+[2025/06/19 10:58:47] [ info] [fluent bit] version=4.0.0, commit=3a91b155d6, pid=76206
+[2025/06/19 10:58:47] [ info] [storage] ver=1.5.2, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/06/19 10:58:47] [ info] [simd    ] disabled
+[2025/06/19 10:58:47] [ info] [cmetrics] version=0.9.9
+[2025/06/19 10:58:47] [ info] [ctraces ] version=0.6.2
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] initializing
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2025/06/19 10:58:47] [ info] [output:stdout:stdout.0] worker #0 started
+[2025/06/19 10:58:47] [ info] [sp] stream processor started
+[0] dummy.data: [[1750323528.603308000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
+[0] dummy.data: [[1750323529.603788000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
+[0] dummy.data: [[1750323530.604204000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
+[0] dummy.data: [[1750323531.603961000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 ```
 
 You can see the records `{"data":"100 0.5 true This is example"}` are parsed.
@@ -73,16 +139,65 @@ You can see the records `{"data":"100 0.5 true This is example"}` are parsed.
 
 By default, the parser plugin only keeps the parsed fields in its output.
 
-If you enable `Reserve_Data`, all other fields are preserved:
+If you enable `Reserve_Data`, all other fields are preserved. First the contents of the corresponding parsers file, 
+depending on the choice for YAML or classic configurations, would be as follows:
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: dummy_test
+      format: regex
+      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+```
+
+{% endtab %}
+
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name dummy_test
     Format regex
     Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
-```python
+{% endtab %}
+{% endtabs %}
+
+Now add `Reserve_Data` to the filter section of the corresponding configuration file as follows:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: /path/to/parsers.yaml
+
+pipeline:
+    inputs:
+      - name: dummy
+        tag: dummy.data
+        dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
+
+    filters:
+      - name: parser
+        match: 'dummy.*'
+        key_name: data
+        parser: dummy_test
+        reserve_data: on
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Parsers_File /path/to/parsers.conf
 
@@ -97,32 +212,109 @@ If you enable `Reserve_Data`, all other fields are preserved:
     Key_Name data
     Parser dummy_test
     Reserve_Data On
+    
+ [OUTPUT]
+    Name stdout
+    Match *
 ```
 
-This will produce the output:
+{% endtab %}
+{% endtabs %}
+
+The output when running the corresponding configuration is as follows:
 
 ```text
-$ fluent-bit -c dummy.conf
-Fluent-Bit v0.12.0
-Copyright (C) Treasure Data
+# For YAML configuration.
+$ ./fluent-bit --config fluent-bit.yaml
 
-[2017/07/06 22:33:12] [ info] [engine] started
-[0] dummy.data: [1499347993.001371317, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
-[1] dummy.data: [1499347994.001303118, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
-[2] dummy.data: [1499347995.001296133, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
-[3] dummy.data: [1499347996.001320284, {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}, "key1":"value1", "key2":"value2"]
+# For classic configuration.
+$ ./fluent-bit --config fluent-bit.conf
+
+Fluent Bit v4.0.0
+* Copyright (C) 2015-2025 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+[2025/06/19 10:58:47] [ info] [fluent bit] version=4.0.0, commit=3a91b155d6, pid=76206
+[2025/06/19 10:58:47] [ info] [storage] ver=1.5.2, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/06/19 10:58:47] [ info] [simd    ] disabled
+[2025/06/19 10:58:47] [ info] [cmetrics] version=0.9.9
+[2025/06/19 10:58:47] [ info] [ctraces ] version=0.6.2
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] initializing
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2025/06/19 10:58:47] [ info] [output:stdout:stdout.0] worker #0 started
+[2025/06/19 10:58:47] [ info] [sp] stream processor started
+[0] dummy.data: [[1750325238.681398000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1750325239.682090000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1750325240.682903000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
 ```
 
-If you enable `Reserved_Data` and `Preserve_Key`, the original key field will also be preserved:
+If you enable `Reserve_Data` and `Preserve_Key`, the original key field will also be preserved. First the contents of 
+the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: dummy_test
+      format: regex
+      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+```
+
+{% endtab %}
+
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name dummy_test
     Format regex
     Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
-```python
+{% endtab %}
+{% endtabs %}
+
+Now add `Reserve_Data` and `Preserve_Key`to the filter section of the corresponding configuration file as follows:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: /path/to/parsers.yaml
+
+pipeline:
+    inputs:
+      - name: dummy
+        tag: dummy.data
+        dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
+
+    filters:
+      - name: parser
+        match: 'dummy.*'
+        key_name: data
+        parser: dummy_test
+        reserve_data: on
+        preserve_key: on
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Parsers_File /path/to/parsers.conf
 
@@ -138,21 +330,45 @@ If you enable `Reserved_Data` and `Preserve_Key`, the original key field will al
     Parser dummy_test
     Reserve_Data On
     Preserve_Key On
-
-[OUTPUT]
+    
+ [OUTPUT]
     Name stdout
     Match *
 ```
 
-This will produce the following output:
+{% endtab %}
+{% endtabs %}
+
+The output when running the corresponding configuration is as follows:
 
 ```text
-$ fluent-bit -c dummy.conf
-Fluent Bit v2.1.1
-* Copyright (C) 2015-2022 The Fluent Bit Authors
-...
-...
-[0] dummy.data: [[1687122778.299116136, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
-[0] dummy.data: [[1687122779.296906553, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
-[0] dummy.data: [[1687122780.297475803, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+# For YAML configuration.
+$ ./fluent-bit --config fluent-bit.yaml
+
+# For classic configuration.
+$ ./fluent-bit --config fluent-bit.conf
+
+Fluent Bit v4.0.0
+* Copyright (C) 2015-2025 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+[2025/06/19 10:58:47] [ info] [fluent bit] version=4.0.0, commit=3a91b155d6, pid=76206
+[2025/06/19 10:58:47] [ info] [storage] ver=1.5.2, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/06/19 10:58:47] [ info] [simd    ] disabled
+[2025/06/19 10:58:47] [ info] [cmetrics] version=0.9.9
+[2025/06/19 10:58:47] [ info] [ctraces ] version=0.6.2
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] initializing
+[2025/06/19 10:58:47] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2025/06/19 10:58:47] [ info] [output:stdout:stdout.0] worker #0 started
+[2025/06/19 10:58:47] [ info] [sp] stream processor started
+[0] dummy.data: [[1750325678.572817000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1750325679.574538000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
+[0] dummy.data: [[1750325680.569750000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 ```
