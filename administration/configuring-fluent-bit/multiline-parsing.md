@@ -5,8 +5,6 @@ reality applications generate multiple log messages that sometimes belong to the
 context. Processing this information can be complex, like in application stack traces,
 which always have multiple log lines.
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e19a4c14-a9e4-4163-8f3a-52196eb9a585" />
-
 Fluent Bit v1.8 implemented a unified Multiline core capability to solve corner cases.
 
 ## Concepts
@@ -72,7 +70,27 @@ A rule specifies how to match a multiline pattern and perform the concatenation.
 - regular expression pattern
 - next state
 
-A rule might be defined as follows (comments added to simplify the definition):
+A rule might be defined as follows (comments added to simplify the definition) in corresponding YAML and classic 
+configuration examples below:
+
+{% tabs %}
+{% tab title="parsers_multiline.yaml" %}
+
+```yaml
+# rules |   state name  | regex pattern                  | next state
+# ------|---------------|--------------------------------------------
+rules:
+  - state: start_state
+    regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+    next_state:  cont
+  - state: cont
+    regex: '/^\s+at.*/'
+    next_state: cont
+```
+
+{% endtab %}
+
+{% tab title="parsers_multiline.conf" %}
 
 ```text
 # rules   |   state name   | regex pattern                   | next state
@@ -80,6 +98,9 @@ A rule might be defined as follows (comments added to simplify the definition):
 rule         "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"   "cont"
 rule         "cont"          "/^\s+at.*/"                      "cont"
 ```
+
+{% endtab %}
+{% endtabs %}
 
 This example defines two rules. Each rule has its own state name, regex patterns, and the next state name. Every field that composes a rule must be inside double quotes.
 
@@ -91,19 +112,42 @@ To simplify the configuration of regular expressions, you can use the [Rubular](
 
 #### Configuration example
 
-The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition explained previously.
-
-{% hint style="info" %}
-The following example files can be located [at this link](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/regex-001).
-{% endhint %}
-
-Example files content:
+The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition 
+explained previously. It is provided in corresponding YAML and classic configuration examples below:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
 
-```python
+{% tab title="fluent-bit.yaml" %}
+
+This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.yaml` and tails the file `test.log` 
+by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers_multiline.yaml
+
+pipeline:
+    inputs:
+      - name: tail
+        path: test.log
+        read_from_head: true
+        multiline.parser: multiline-regex-test
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` 
+by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
+
+```text
 [SERVICE]
     flush        1
     log_level    info
@@ -122,10 +166,42 @@ This is the primary Fluent Bit configuration file. It includes the `parsers_mult
 
 {% endtab %}
 
-{% tab title="parsers_multiline.conf" %}
-This second file defines a multiline parser for the example.
+{% tab title="parsers_multiline.yaml" %}
 
-```python
+This file defines a multiline parser for the YAML configuration example.
+
+```yaml
+multiline_parsers:
+    - name: multiline-regex-test
+      type: regex
+      flush_timeout: 1000
+      #
+      # Regex rules for multiline parsing
+      # ---------------------------------
+      #
+      # configuration hints:
+      #
+      #  - first state always has the name: start_state
+      #  - every field in the rule must be inside double quotes
+      #
+      # rules |   state name  | regex pattern                  | next state
+      # ------|---------------|--------------------------------------------
+      rules:
+        - state: start_state
+          regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+          next_state:  cont
+        - state: cont
+          regex: '/^\s+at.*/'
+```
+
+
+{% endtab %}
+
+{% tab title="parsers_multiline.conf" %}
+
+This second file defines a multiline parser for the classic configuration example.
+
+```text
 [MULTILINE_PARSER]
     name          multiline-regex-test
     type          regex
@@ -148,7 +224,8 @@ This second file defines a multiline parser for the example.
 {% endtab %}
 
 {% tab title="test.log" %}
-An example file with multiline content:
+
+The example log file with multiline content:
 
 ```text
 single line...
@@ -165,23 +242,27 @@ another line...
 {% endtab %}
 {% endtabs %}
 
-By running Fluent Bit with the given configuration file you will obtain:
+By running Fluent Bit with the corresponding configuration file you will obtain the following output:
 
 ```text
-$ fluent-bit -c fluent-bit.conf
+# For YAML configuration.
+$ ./fluent-bit --config fluent-bit.yaml
 
-[0] tail.0: [0.000000000, {"log"=>"single line...
+# For classic configuration.
+$ ./fluent-bit --config fluent-bit.conf
+
+...
+[0] tail.0: [[1750332967.679671000, {}], {"log"=>"single line...
 "}]
-[1] tail.0: [1626634867.472226330, {"log"=>"Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+[1] tail.0: [[1750332967.679677000, {}], {"log"=>"Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
     at com.myproject.module.MyProject.badMethod(MyProject.java:22)
     at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
     at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
     at com.myproject.module.MyProject.someMethod(MyProject.java:10)
     at com.myproject.module.MyProject.main(MyProject.java:6)
 "}]
-[2] tail.0: [1626634867.472226330, {"log"=>"another line...
+[2] tail.0: [[1750332967.679677000, {}], {"log"=>"another line...
 "}]
-
 ```
 
 The lines that didn't match a pattern aren't considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
@@ -201,11 +282,47 @@ The following example retrieves `date` and `message` from concatenated logs.
 
 Example files content:
 
-{% tabs %}
-{% tab title="fluent-bit.conf" %}
-This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`. Then it sends the processing to the standard output.
+% tabs %}
 
-```python
+{% tab title="fluent-bit.yaml" %}
+
+This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` 
+by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`. 
+Then it sends the processing to the standard output.
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers_multiline.yaml
+
+pipeline:
+    inputs:
+      - name: tail
+        path: test.log
+        read_from_head: true
+        multiline.parser: multiline-regex-test
+
+    filters:
+      - name: parser
+        match: '*'
+        key_name: log
+        parser: named-capture-test
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file 
+`test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser 
+`named-capture-test`. Then it sends the processing to the standard output.
+
+```text
 [SERVICE]
     flush        1
     log_level    info
@@ -230,10 +347,47 @@ This is the primary Fluent Bit configuration file. It includes the `parsers_mult
 
 {% endtab %}
 
-{% tab title="parsers_multiline.conf" %}
-This second file defines a multiline parser for the example.
+{% tab title="parsers_multiline.yaml" %}
 
-```python
+This file defines a multiline parser for the YAML example.
+
+```yaml
+multiline_parsers:
+    - name: multiline-regex-test
+      type: regex
+      flush_timeout: 1000
+      #
+      # Regex rules for multiline parsing
+      # ---------------------------------
+      #
+      # configuration hints:
+      #
+      #  - first state always has the name: start_state
+      #  - every field in the rule must be inside double quotes
+      #
+      # rules |   state name  | regex pattern                  | next state
+      # ------|---------------|--------------------------------------------
+      rules:
+        - state: start_state
+          regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+          next_state:  cont
+        - state: cont
+          regex: '/^\s+at.*/'
+          next_state: cont
+
+parsers:
+    - name: named-capture-test
+      format: regex
+      regex: '/^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m'
+ ```
+
+{% endtab %}
+
+{% tab title="parsers_multiline.conf" %}
+
+This file defines a multiline parser for the classic example.
+
+```text
 [MULTILINE_PARSER]
     name          multiline-regex-test
     type          regex
@@ -261,7 +415,8 @@ This second file defines a multiline parser for the example.
 {% endtab %}
 
 {% tab title="test.log" %}
-An example file with multiline content:
+
+The example log file with multiline content:
 
 ```text
 single line...
@@ -278,20 +433,24 @@ another line...
 {% endtab %}
 {% endtabs %}
 
-By running Fluent Bit with the given configuration file you will obtain:
+By running Fluent Bit with the corresponding configuration file you will obtain:
 
 ```text
-$ fluent-bit -c fluent-bit.conf
+# For YAML configuration.
+$ ./fluent-bit --config fluent-bit.yaml
 
-[0] tail.0: [1669160706.737650473, {"log"=>"single line...
+# For classic configuration
+$ ./fluent-bit --config fluent-bit.conf
+
+[0] tail.0: [[1750333602.460984000, {}], {"log"=>"single line...
 "}]
-[1] tail.0: [1669160706.737657687, {"date"=>"Dec 14 06:41:08", "message"=>"Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
+[1] tail.0: [[1750333602.460998000, {}], {"date"=>"Dec 14 06:41:08", "message"=>"Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
     at com.myproject.module.MyProject.badMethod(MyProject.java:22)
     at com.myproject.module.MyProject.oneMoreMethod(MyProject.java:18)
     at com.myproject.module.MyProject.anotherMethod(MyProject.java:14)
     at com.myproject.module.MyProject.someMethod(MyProject.java:10)
     at com.myproject.module.MyProject.main(MyProject.java:6)
 "}]
-[2] tail.0: [1669160706.737657687, {"log"=>"another line...
+[2] tail.0: [[1750333602.460998000, {}], {"log"=>"another line...
 "}]
 ```
