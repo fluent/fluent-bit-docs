@@ -98,12 +98,40 @@ TLS:
            -m '*'
 ```
 
+{% hint style="info" %}
+See Tips & Trick section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these 
+examples.
+{% endhint %}
+
 In the previous command, the two properties `tls` and `tls.verify` are set
 for demonstration purposes. Always enable verification in production environments.
 
 The same behavior can be accomplished using a configuration file:
 
-```python
+{% tabs %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: http
+        port: 9999
+        tls: on
+        tls.verify: off
+        tls.cert_file: self_signed.crt
+        tls.key_file: self_signed.key
+
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name http
     port 9999
@@ -116,6 +144,9 @@ The same behavior can be accomplished using a configuration file:
     Name       stdout
     Match      *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Example: enable TLS on HTTP output
 
@@ -134,7 +165,31 @@ for demonstration purposes. Always enable verification in production environment
 
 The same behavior can be accomplished using a configuration file:
 
-```python
+{% tabs %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: cpu
+        tag: cpu
+
+    outputs:
+      - name: http
+        match: '*'
+        host: 192.168.2.3
+        port: 80
+        uri: /something
+        tls: on
+        tls.verify: off
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -148,6 +203,9 @@ The same behavior can be accomplished using a configuration file:
     tls        On
     tls.verify Off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Tips and Tricks
 
@@ -175,7 +233,32 @@ Fluent Bit supports
 If you are serving multiple host names on a single IP address (for example, using
 virtual hosting), you can make use of `tls.vhost` to connect to a specific hostname.
 
-```python
+{% tabs %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: cpu
+        tag: cpu
+
+    outputs:
+      - name: forward
+        match: '*'
+        host: 192.168.10.100
+        port: 24224
+        tls: on
+        tls.verify: off
+        tls.ca_file: '/etc/certs/fluent.crt'
+        tls.vhost: 'fluent.example.com'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -190,6 +273,9 @@ virtual hosting), you can make use of `tls.vhost` to connect to a specific hostn
     tls.ca_file /etc/certs/fluent.crt
     tls.vhost   fluent.example.com
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Verify `subjectAltName`
 
@@ -207,6 +293,31 @@ hostname it should fail.
 To fully verify the alternative name and demonstrate the failure, enable
 `tls.verify_hostname`:
 
+{% tabs %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: cpu
+        tag: cpu
+
+    outputs:
+      - name: forward
+        match: '*'
+        host: other.fluent-aggregator.net
+        port: 24224
+        tls: on
+        tls.verify: on
+        tls.verify_hostname: on
+        tls.ca_file: '/path/to/fluent-x509v3-alt-name.crt'
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
 ```python
 [INPUT]
     Name  cpu
@@ -222,6 +333,9 @@ To fully verify the alternative name and demonstrate the failure, enable
     tls.verify_hostname on
     tls.ca_file         /path/to/fluent-x509v3-alt-name.crt
 ```
+
+{% endtab %}
+{% endtabs %}
 
 This outgoing connect will fail and disconnect:
 
