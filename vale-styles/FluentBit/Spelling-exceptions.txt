@@ -115,6 +115,7 @@ namespace
 namespaces
 netcat
 Nginx
+NGINX
 OAuth
 Okta
 Oniguruma

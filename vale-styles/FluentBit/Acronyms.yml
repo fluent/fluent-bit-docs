@@ -54,6 +54,7 @@ exceptions:
   - LTS
   - MQTT
   - NET
+  - NGINX
   - NOTE
   - NVDA
   - OSS
