@@ -19,7 +19,7 @@ To listen for MQTT messages, you can run the plugin from the command line or thr
 
 ### Command line
 
-The MQTT input plugin lets Fluent Bit behave as a server. Dispatch some messages using a MQTT client. In the following example `mosquitto` tool is being used for the purpose:
+The MQTT input plugin lets Fluent Bit behave as a server. Dispatch some messages using a MQTT client. In the following example, the `mosquitto` tool is being used for the purpose:
 
 Running the following command:
 
