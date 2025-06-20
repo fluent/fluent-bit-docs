@@ -28,7 +28,7 @@ server {
         index  index.html index.htm;
     }
     // configure the stub status handler.
-    loc.     ation /status {
+    location /status {
         stub_status;
     }
 }
