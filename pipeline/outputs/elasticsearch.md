@@ -112,7 +112,7 @@ fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
 
 In your main configuration file append the following `Input` and `Output` sections.
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -234,7 +234,7 @@ to the
 
 Example configuration:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -296,7 +296,7 @@ Rejecting mapping update to [products] as the final mapping would have more than
 
 This means that you can't set up your configuration like the following:.
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -352,7 +352,7 @@ This doesn't work in Elasticsearch versions 5.6 through 6.1
 Ensure you set an explicit map such as `doc` or `flb_type` in the configuration,
 as seen on the last line:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -406,7 +406,7 @@ If you see `action_request_validation_exception` errors on your pipeline with
 Fluent Bit versions greater than v1.8.2, correct them  by turning on `Generate_ID`
 as follows:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -441,7 +441,7 @@ pipeline:
 The following snippet demonstrates using the namespace name as extracted by the
 `kubernetes` filter as `logstash` prefix:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
