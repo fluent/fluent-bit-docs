@@ -52,6 +52,7 @@ exceptions:
   - LLDB
   - LLVM
   - LTS
+  - MQTT
   - NET
   - NOTE
   - NVDA
