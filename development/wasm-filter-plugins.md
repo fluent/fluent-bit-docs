@@ -98,7 +98,31 @@ pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, t
 
 The `//export XXX` attribute on TinyGo and `#[no_mangle]` attribute on Rust are required. This is because TinyGo and Rust will mangle their function names if they aren't specified.
 
-Once built, a Wasm program will be available. Then you can execute that built program with the following Fluent Bit configuration:
+Once built, a Wasm program will be available. Then you can execute that built program with one of the following Fluent Bit configurations:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          tag: dummy.local
+
+    filters:
+      - name: wasm
+        match: 'dummy.*'
+        wasm_path: /path/to/built_filter.wasm
+        function_name: super_awesome_filter
+        accessible_paths: /path/to/fluent-bit
+        
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -110,12 +134,15 @@ Once built, a Wasm program will be available. Then you can execute that built pr
     Match dummy.*
     WASM_Path /path/to/built_filter.wasm
     Function_Name super_awesome_filter
-    accessible_paths .,/path/to/fluent-bit
+    accessible_paths /path/to/fluent-bit
 
 [OUTPUT]
     Name  stdout
     Match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 For example, one of the sample [Rust Wasm filters](https://github.com/fluent/fluent-bit/tree/master/examples/filter_rust) should generate its filtered logs as follows:
 
@@ -125,7 +152,33 @@ For example, one of the sample [Rust Wasm filters](https://github.com/fluent/flu
 [0] dummy.local: [1666270590.271107000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:30.271107000 +0000"}]
 ```
 Another example of a Rust Wasm filter is the [flb_filter_iis](https://github.com/kenriortega/flb_filter_iis) filter.
+
 This filter takes the [Internet Information Services (IIS)](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis) [w3c logs](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis#select-w3c-fields-to-log) (with some custom modifications) and transforms the raw string into a standard Fluent Bit JSON structured record.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"log": "2023-08-11 19:56:44 W3SVC1 WIN-PC1 ::1 GET / - 80 ::1 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/115.0.0.0+Safari/537.36+Edg/115.0.1901.200 - - localhost 304 142 756 1078 -"}'
+          tag: 'iis.*'
+
+    filters:
+      - name: wasm
+        match: 'iis.*'
+        wasm_path: /plugins/flb_filter_iis_wasm.wasm
+        function_name: flb_filter_log_iis_w3c_custom
+        accessible_paths: .
+        
+    outputs:
+        - name: stdout
+          match: 'iis.*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -144,6 +197,9 @@ This filter takes the [Internet Information Services (IIS)](https://learn.micros
     name             stdout
     match            iis.*
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The incoming raw strings from an IIS log are composed of the following fields:
 
