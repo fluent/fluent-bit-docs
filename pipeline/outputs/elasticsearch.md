@@ -181,7 +181,7 @@ See [details](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e7
 
 Example configuration:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
