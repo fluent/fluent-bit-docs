@@ -4,9 +4,27 @@ You can test logging pipelines locally to observe how they handles log messages.
 
 ## Create a configuration file
 
-Start by creating a [Fluent Bit configuration file](../administration/configuring-fluent-bit/classic-mode/configuration-file) to test.
+Start by creating one of the corresponding Fluent Bit configuration files to start testing.
 
-{% code title="fluent-bit.conf" %}
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"top": {".dotted": "value"}}'
+          
+    outputs:       
+        - name: es
+          host: elasticsearch
+          replace_dots: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
   Name dummy
@@ -17,7 +35,9 @@ Start by creating a [Fluent Bit configuration file](../administration/configurin
   Host elasticsearch
   Replace_Dots On
 ```
-{% endcode %}
+
+{% endtab %}
+{% endtabs %}
 
 ## Use Docker Compose
 
