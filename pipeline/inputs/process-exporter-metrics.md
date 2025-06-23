@@ -105,6 +105,6 @@ docker run -ti -v /proc:/host/proc:ro \
 
 ## Enhancement requests
 
-Development prioritises a subset of the available collectors in the [third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter). To request others, open a Github issue by using the following template:
+Development prioritises a subset of the available collectors in the [third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter). To request others, open a GitHub issue by using the following template:
 
 - [`in_process_exporter_metrics`](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_process_exporter_metrics:%20add%20ABC%20collector)
