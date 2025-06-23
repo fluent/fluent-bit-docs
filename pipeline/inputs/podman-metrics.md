@@ -1,30 +1,37 @@
----
-description: The Podman Metrics input plugin allows you to collect metrics from podman containers, so they can be exposed later as, for example, Prometheus counters and gauges.
----
+# Podman metrics
 
-# Podman Metrics
+The Podman metrics input plugin allows Fluent Bit to gather Podman container metrics. The procedure for collecting container list and gathering data associated with them is based on filesystem data.
 
-## Configuration Parameters
+The metrics can be exposed later as, for example, Prometheus counters and gauges.
 
-| **Key**           | Description                                                | Default                                                        |
-| ----------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| scrape_interval   | Interval between each scrape of podman data (in seconds)   | 30                                                             |
-| scrape_on_start   | Should this plugin scrape podman data after it is started  | false                                                          |
-| path.config       | Custom path to podman containers configuration file        | /var/lib/containers/storage/overlay-containers/containers.json |
-| path.sysfs        | Custom path to sysfs subsystem directory                   | /sys/fs/cgroup                                                 |
-| path.procfs       | Custom path to proc subsystem directory                    | /proc                                                          |
-| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+## Configuration parameters
 
-## Getting Started
+| Key | Description | Default |
+| --- | ------------| ------- |
+| `scrape_interval`   | Interval between each scrape of Podman data (in seconds). | `30` |
+| `scrape_on_start`   | Sets whether this plugin scrapes Podman data on startup. | `false` |
+| `path.config`       | Custom path to the Podman containers configuration file. | `/var/lib/containers/storage/overlay-containers/containers.json` |
+| `path.sysfs`        | Custom path to the `sysfs` subsystem directory. | `/sys/fs/cgroup` |
+| `path.procfs`       | Custom path to the `proc` subsystem directory. | `/proc` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-The podman metrics input plugin allows Fluent Bit to gather podman container metrics. The entire procedure of collecting container list and gathering data associated with them bases on filesystem data.This plugin does not execute podman commands or send http requests to podman api - instead it reads podman configuration file and metrics exposed by */sys* and */proc* filesystems.
+## Get started
 
-This plugin supports and automatically detects both cgroups v1 and v2.
+This plugin doesn't execute `podman` commands or send HTTP requests to Podman API. It reads a Podman configuration file and metrics exposed by the `/sys` and `/proc` filesystems.
 
-**Example Curl message for one running container**
+This plugin supports and automatically detects both `cgroups v1` and `v2`.
 
+### Example `curl` message for one running container
+
+You can run the following `curl` command:
+
+```bash
+curl 0.0.0.0:2021/metrics
 ```
-$> curl 0.0.0.0:2021/metrics
+
+Which returns information like:
+
+```text
 # HELP fluentbit_input_bytes_total Number of input bytes.
 # TYPE fluentbit_input_bytes_total counter
 fluentbit_input_bytes_total{name="podman_metrics.0"} 0
@@ -75,9 +82,9 @@ fluentbit_input_storage_chunks_busy{name="podman_metrics.0"} 0
 fluentbit_input_storage_chunks_busy_bytes{name="podman_metrics.0"} 0
 ```
 
-### Configuration File
+### Configuration file
 
-```
+```python
 [INPUT]
     name podman_metrics
     scrape_interval 10
@@ -86,24 +93,25 @@ fluentbit_input_storage_chunks_busy_bytes{name="podman_metrics.0"} 0
     name prometheus_exporter
 ```
 
-### Command Line
+### Command line
 
-```
-$> fluent-bit -i podman_metrics -o prometheus_exporter
+```bash
+fluent-bit -i podman_metrics -o prometheus_exporter
 ```
 
 ### Exposed metrics
 
 Currently supported counters are:
-- container_memory_usage_bytes
-- container_memory_max_usage_bytes
-- container_memory_rss
-- container_spec_memory_limit_bytes
-- container_cpu_user_seconds_total
-- container_cpu_usage_seconds_total
-- container_network_receive_bytes_total
-- container_network_receive_errors_total
-- container_network_transmit_bytes_total
-- container_network_transmit_errors_total
 
-> This plugin mimics naming convetion of docker metrics exposed by [cadvisor](https://github.com/google/cadvisor) project
+- `container_memory_usage_bytes`
+- `container_memory_max_usage_bytes`
+- `container_memory_rss`
+- `container_spec_memory_limit_bytes`
+- `container_cpu_user_seconds_total`
+- `container_cpu_usage_seconds_total`
+- `container_network_receive_bytes_total`
+- `container_network_receive_errors_total`
+- `container_network_transmit_bytes_total`
+- `container_network_transmit_errors_total`
+
+This plugin mimics the naming convention of Docker metrics exposed by [`cadvisor`](https://github.com/google/cadvisor).
