@@ -4,7 +4,7 @@ description: An input plugin to ingest OpenTelemetry logs, metrics, and traces
 
 # OpenTelemetry
 
-The OpenTelemetry input plugin lets you receive data based on the OpenTelemetry specification, from various OpenTelemetry exporters, the OpenTelemetry Collector, or the Fluent Bit OpenTelemetry output plugin.
+The OpenTelemetry input plugin lets you receive data based on the OpenTelemetry specification from various OpenTelemetry exporters, the OpenTelemetry Collector, or the Fluent Bit OpenTelemetry output plugin.
 
 Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `OTLP/GRPC`. The single `port` configured defaults to `4318` and supports both transport methods.
 
@@ -19,7 +19,7 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `raw_traces`        | Route trace data as a log. | `false` |
 | `buffer_max_size`   | Specify the maximum buffer size in `KB`, `MB`, or `GB` to the HTTP payload. | `4M` |
 | `buffer_chunk_size` | Initial size and allocation strategy to store the payload (advanced users only)` | `512K` |
-| `successful_response_code` | Allows for setting a successful response code. Supported values: `200`, `201` and `204`.| `201` |
+| `successful_response_code` | Allows for setting a successful response code. Supported values: `200`, `201`, or `204`. | `201` |
 | `tag_from_uri` | By default, the tag will be created from the URI. For example, `v1_metrics` from `/v1/metrics`. This must be set to false if using `tag`. | `true` |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
