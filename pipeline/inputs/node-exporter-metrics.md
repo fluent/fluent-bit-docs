@@ -18,13 +18,13 @@ This plugin is generally supported on Linux-based operating systems, with macOS 
 
 `scrape_interval` sets the default for all scrapes. To set granular scrape intervals, set the specific interval. For example, `collector.cpu.scrape_interval`. When using a granular scrape interval, if a value greater than `0` is used, it overrides the global default. Otherwise the global default is used.
 
-The plugin top level `scrape_interval` setting is the global default. Any custom settings for individual `scrape_intervals` override that specific metric scraping interval.
+The plugin top-level `scrape_interval` setting is the global default. Any custom settings for individual `scrape_intervals` override that specific metric scraping interval.
 
 Each `collector.xxx.scrape_interval` option only overrides the interval for that specific collector and updates the associated set of provided metrics.
 
 Overridden intervals only change the collection interval, not the interval for publishing the metrics which is taken from the global setting.
 
-For example, if the global interval is set to `5` and an override interval of `60` is used, the published metrics will be reported every five seconds. However, the specific collector will stay the same for sixty seconds until it's collected again.
+For example, if the global interval is set to `5` and an override interval of `60` is used, the published metrics will be reported every five seconds. However, the specific collector will stay the same for 60 seconds until it's collected again.
 
 This helps with downsampling when collecting metrics.
 
@@ -90,7 +90,7 @@ This input always runs in its own [thread](../../administration/multithreading.m
 
 ### Configuration file
 
-In the following configuration file, the input plugin `node_exporter_metrics` collects metrics every 2 seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
+In the following configuration file, the input plugin `node_exporter_metrics` collects metrics every two seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -178,16 +178,16 @@ docker run -ti -v /proc:/host/proc \
 
 ### Fluent Bit with Prometheus and Grafana
 
-If you use dashboards for monitoring, Grafana is one options. The Fluent Bit source code repository contains a `docker-compose` example.
+If you use dashboards for monitoring, Grafana is one option. The Fluent Bit source code repository contains a `docker-compose` example.
 
-1. Download the Fluent Bit source code.
+1. Download the Fluent Bit source code:
 
    ```bash
    git clone https://github.com/fluent/fluent-bit
    cd fluent-bit/docker_compose/node-exporter-dashboard/
    ```
 
-1. Start the service and view your dashboard.
+1. Start the service and view your dashboard:
 
    ```bash
    docker-compose up --force-recreate -d --build
@@ -209,6 +209,6 @@ docker-compose down
 
 ## Enhancement requests
 
-The plugin implements a subset of the available collectors in the original Prometheus Node exporter. If you would like a specific collector prioritized, open a Github issue by using the following template:
+The plugin implements a subset of the available collectors in the original Prometheus Node exporter. If you would like a specific collector prioritized, open a GitHub issue by using the following template:
 
 - [`in_node_exporter_metrics`](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_node_exporter_metrics:%20add%20ABC%20collector)
