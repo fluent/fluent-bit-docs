@@ -114,6 +114,7 @@ pipeline:
         match: 'dummy.*'
         wasm_path: /path/to/built_filter.wasm
         function_name: super_awesome_filter
+        # Note: run Fluent Bit from the 'wasm_path' location.
         accessible_paths: /path/to/fluent-bit
         
     outputs:
