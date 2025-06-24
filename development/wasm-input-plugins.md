@@ -62,7 +62,29 @@ Wasm input plugins execute the function that has a WASI main function entrypoint
 
 Wasm programs should handle stdout for ingesting logs into Fluent Bit.
 
-Once built, a Wasm/WASI program will be available. Then you can execute that built program with the following Fluent Bit configuration:
+Once built, a Wasm/WASI program will be available. Then you can execute that program with one of the following Fluent Bit configurations:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: exec_wasi
+          tag: exec.wasi.local
+          wasi_path: /path/to/wasi_built_json.wasm
+          # For security reasons, WASM/WASI program cannot access its outer world
+          # without accessible permissions. Uncomment below 'accessible_paths' and 
+          # run Fluent Bit from the 'wasi_path' location:
+          # accessible_paths /path/to/fluent-bit
+        
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -70,12 +92,16 @@ Once built, a Wasm/WASI program will be available. Then you can execute that bui
     Tag  exec.wasi.local
     WASI_Path /path/to/wasi_built_json.wasm
     # For security reasons, WASM/WASI program cannot access its outer world
-    # without accessible permissions.
-    # accessible_paths .,/path/to/fluent-bit
+    # without accessible permissions. Uncomment below 'accessible_paths' and 
+    # run Fluent Bit from the 'wasi_path' location:
+    # accessible_paths /path/to/fluent-bit
 
 [OUTPUT]
     Name  stdout
     Match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 For an example that handles structured logs, see the [Rust `serde-json` example](https://github.com/fluent/fluent-bit/tree/master/examples/wasi_serde_json).
