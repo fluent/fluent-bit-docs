@@ -9,6 +9,8 @@ Vivo Exporter is an output plugin that exposes logs, metrics, and traces through
 | `empty_stream_on_read`   | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
 | `stream_queue_size`      | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
 | `http_cors_allow_origin` | Specify the value for the HTTP Access-Control-Allow-Origin header (CORS).                                                              |         |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+
 
 ### Getting Started
 
@@ -25,12 +27,12 @@ Here is a simple configuration of Vivo Exporter, note that this example is not b
     match                  *
     empty_stream_on_read   off
     stream_queue_size      20M
-     http_cors_allow_origin *
+    http_cors_allow_origin *
 ```
 
 ### How it works
 
-Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it’s appended to the end. If the buffer is full, it removes the older entries to make room for new data.
+Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
 
 The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
 

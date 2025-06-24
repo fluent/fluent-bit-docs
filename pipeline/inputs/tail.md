@@ -26,17 +26,57 @@ The plugin supports the following configuration parameters:
 | DB.sync | Set a default synchronization \(I/O\) method. Values: Extra, Full, Normal, Off. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option please refer to [this section](https://www.sqlite.org/pragma.html#pragma_synchronous). Most of workload scenarios will be fine with `normal` mode, but if you really need full synchronization after every write operation you should set `full` mode. Note that `full` has a high I/O performance cost. | normal |
 | DB.locking | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps to increase performance when accessing the database but it restrict any external tool to query the content.                                                                                                                                                                                                                                                                                                   | false |
 | DB.journal\_mode | sets the journal mode for databases \(WAL\). Enabling WAL provides higher performance. Note that WAL is not compatible with shared network file systems.                                                                                                                                                                                                                                                                                                                                                 | WAL |
+| DB.compare_filename | This option determines whether to check both the `inode` and the `filename` when retrieving stored file information from the database. 'true' verifies both the `inode` and `filename`, while 'false' checks only the `inode` (default). To check the inode and filename in the database, refer [here](#keep_state).                                                                                                                     | false |
 | Mem\_Buf\_Limit | Set a limit of memory that Tail plugin can use when appending data to the Engine. If the limit is reach, it will be paused; when the data is flushed it resumes.                                                                                                                                                                                                                                                                                                                                         |  |
 | Exit\_On\_Eof | When reading a file will exit as soon as it reach the end of the file. Useful for bulk load and tests                                                                                                                                                                                                                                                                                                                                                                                                    | false |
 | Parser | Specify the name of a parser to interpret the entry as a structured message.                                                                                                                                                                                                                                                                                                                                                                                                                             |  |
 | Key | When a message is unstructured \(no parser applied\), it's appended as a string under the key name _log_. This option allows to define an alternative name for that key.                                                                                                                                                                                                                                                                                                                                 | log |
 | Inotify_Watcher | Set to false to use file stat watcher instead of inotify.                                                                                                                                                                                                                                                                                                                                                                                                                                                | true |
-| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail-kubernetes-filter)\).                                                                                       |  |
-| Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-`                                                                                                                                                                                                                                                                                                                    |  |
+| Tag | Set a tag \(with regex-extract fields\) that will be placed on lines read. E.g. `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Note that "tag expansion" is supported: if the tag includes an asterisk \(\*\), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots \(also see [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter)\).                                                                                       |  |
+| Tag\_Regex | Set a regex to extract fields from the file name. E.g. `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`                                                                                                                                                                                                                                                                                                                    |  |
 | Static\_Batch\_Size | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exists upon Fluent Bit start).                                                                                                                                                                                                                                                                                                                                                               | 50M     |
+| File\_Cache\_Advise | Set the posix_fadvise in POSIX_FADV_DONTNEED mode. This will reduce the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                                                                              | On     |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
+{% hint style="info" %}
+If the database parameter `DB` is **not** specified, by default the plugin reads each target file from the beginning. This also might cause some unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+{% endhint %}
 
-Note that if the database parameter `DB` is **not** specified, by default the plugin will start reading each target file from the beginning. This also might cause some unwanted behavior, for example when a line is bigger that `Buffer_Chunk_Size` and `Skip_Long_Lines` is not turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+## Monitor a large number of files
+
+To monitor a large number of files, you can increase the inotify settings in your Linux environment by modifying the following sysctl parameters:
+
+```text
+sysctl fs.inotify.max_user_watches=LIMIT1
+sysctl fs.inotify.max_user_instances=LIMIT2
+```
+
+Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing. Higher values raise your inotify limit accordingly.
+
+However, these changes revert upon reboot unless you write them to the appropriate `inotify.conf` file, in which case they will persist across reboots. The specific name of this file might vary depending on how you built and installed Fluent Bit. For example, to write changes to a file named `fluent-bit_fs_inotify.conf`, run the following commands:
+
+```shell
+mkdir -p /etc/sysctl.d
+echo fs.inotify.max_user_watches = LIMIT1 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+echo fs.inotify.max_user_instances = LIMIT2 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+```
+
+Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing.
+
+You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf`. For example, you can add this snippet to your override file to raise the number of files that the Tail plugin can monitor:
+
+```text
+[Service]
+LimitNOFILE=LIMIT
+```
+
+Replace _`LIMIT`_ with the integer value of your choosing.
+
+If you don't already have an override file, you can use the following command to create one in the correct directory:
+
+```shell copy
+systemctl edit fluent-bit.service
+```
 
 ## Multiline Support
 
@@ -80,14 +120,18 @@ If you are running Fluent Bit to process logs coming from containers like Docker
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/containers/*.log
       multiline.parser: docker, cri
 ```
 {% endtab %}
 {% endtabs %}
 
-The two options separated by a comma means multi-format: try `docker` and `cri` multiline formats.
+The two options separated by a comma mean Fluent Bit will try each parser in the list in order, applying the first one that matches the log.
+
+It will use the first parser which has a `start_state` that matches the log.
+
+For example, it will first try `docker`, and if `docker` does not match, it will then try `cri`.
 
 We are **still working** on extending support to do multiline for nested stack traces and such. Over the Fluent Bit v1.8.x release cycle we will be updating the documentation.
 
@@ -126,14 +170,14 @@ $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections. 
+In your main configuration file, append the following `Input` and `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-```python
+```text
 [INPUT]
-    Name        tail
-    Path        /var/log/syslog
+    Name    tail
+    Path    /var/log/syslog
 
 [OUTPUT]
     Name   stdout
@@ -145,9 +189,9 @@ In your main configuration file append the following _Input_ & _Output_ sections
 ```yaml
 pipeline:
   inputs:
-    - tail:
+    - name: tail
       path: /var/log/syslog
-      
+
   outputs:
     - stdout:
       match: *
@@ -174,23 +218,41 @@ We need to specify a `Parser_Firstline` parameter that matches the first line of
 
 In the case above we can use the following parser, that extracts the Time as `time` and the remaining portion of the multiline as `log`
 
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [PARSER]
     Name multiline
     Format regex
-    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+parsers:
+  - name: multiline
+    format: regex
+    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+    time_key: time
+    time_format: '%b %d %H:%M:%S'
+```
+{% endtab %}
+{% endtabs %}
 
 If we want to further parse the entire event we can add additional parsers with `Parser_N` where N is an integer. The final Fluent Bit configuration looks like the following:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 # Note this is generally added to parsers.conf and referenced in [SERVICE]
 [PARSER]
     Name multiline
     Format regex
-    Regex /(?<time>Dec \d+ \d+\:\d+\:\d+)(?<message>.*)/
+    Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 
@@ -204,6 +266,31 @@ If we want to further parse the entire event we can add additional parsers with 
     Name             stdout
     Match            *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+parsers:
+  - name: multiline
+    format: regex
+    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+    time_key: time
+    time_format: '%b %d %H:%M:%S'
+
+pipeline:
+  inputs:
+    - name:  tail
+      multiline: on
+      read_from_head: true
+      parser_firstline: multiline
+      path: /var/log/java.log
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Our output will be as follows.
 
@@ -256,12 +343,26 @@ Fluent Bit keep the state or checkpoint of each file through using a SQLite data
 
 The SQLite journaling mode enabled is `Write Ahead Log` or `WAL`. This allows to improve performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
     name    tail
     path    /var/log/containers/*.log
     db      test.db
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name:  tail
+      path: /var/log/containers/*.log
+      db: test.db
+```
+{% endtab %}
+{% endtabs %}
 
 The above configuration enables a database file called `test.db` and in the same path for that file SQLite will create two additional files:
 

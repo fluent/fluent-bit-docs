@@ -1,27 +1,28 @@
 # Head
 
-The **head** input plugin, allows to read events from the head of file. It's behavior is similar to the _head_ command.
+The _Head_ input plugin reads events from the head of a file. Its behavior is similar to the `head` command.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description |
-| :--- | :--- |
-| File | Absolute path to the target file, e.g: /proc/uptime |
-| Buf\_Size | Buffer size to read the file. |
-| Interval\_Sec | Polling interval \(seconds\). |
-| Interval\_NSec | Polling interval \(nanosecond\). |
-| Add\_Path | If enabled, filepath is appended to each records. Default value is _false_. |
-| Key | Rename a key. Default: head. |
-| Lines | Line number to read. If the number N is set, in\_head reads first N lines like head\(1\) -n. |
-| Split\_line | If enabled, in\_head generates key-value pair per line. |
+| :-- | :---------- |
+| `File` | Absolute path to the target file. For example: `/proc/uptime`. |
+| `Buf_Size` | Buffer size to read the file. |
+| `Interval_Sec` | Polling interval (seconds). |
+| `Interval_NSec` | Polling interval (nanoseconds). |
+| `Add_Path` | If enabled, the path is appended to each records. Default: `false`. |
+| `Key` | Rename a key. Default: `head`. |
+| `Lines` | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`. |
+| `Split_line` | If enabled, `in_head` generates key-value pair per line. |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
-### Split Line Mode
+### Split line mode
 
-This mode is useful to get a specific line. This is an example to get CPU frequency from /proc/cpuinfo.
+Use this mode to get a specific line. The following example gets CPU frequency from `/proc/cpuinfo`.
 
-/proc/cpuinfo is a special file to get cpu information.
+`/proc/cpuinfo` is a special file to get CPU information.
 
 ```text
 processor    : 0
@@ -37,7 +38,10 @@ physical id  : 0
 siblings     : 1
 ```
 
-Cpu frequency is "cpu MHz : 2791.009". We can get the line with this configuration file.
+The CPU frequency is `cpu MHz : 2791.009`. The following configuration file gets the needed line:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [INPUT]
@@ -58,10 +62,39 @@ Cpu frequency is "cpu MHz : 2791.009". We can get the line with this configurati
     Match          *
 ```
 
-Output is
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: head
+          tag: head.cpu
+          file: /proc/cpuinfo
+          lines: 8
+          split_line: true
+    filters:
+        - name: record_modifier
+          match: '*'
+          whitelist_key: line7
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% endtabs %}
+
+If you run the following command:
 
 ```bash
-$ bin/fluent-bit -c head.conf 
+bin/fluent-bit -c head.conf
+```
+
+The output is something similar to;
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -75,16 +108,21 @@ Fluent Bit v1.x.x
 [3] head.cpu: [1498484308.008447978, {"line7"=>"cpu MHz        : 2791.009"}]
 ```
 
-## Getting Started
+## Get started
 
-In order to read the head of a file, you can run the plugin from the command line or through the configuration file:
+To read the head of a file, you can run the plugin from the command line or through the configuration file.
 
-### Command Line
+### Command line
 
-The following example will read events from the /proc/uptime file, tag the records with the _uptime_ name and flush them back to the _stdout_ plugin:
+The following example will read events from the `/proc/uptime` file, tag the records with the `uptime` name and flush them back to the `stdout` plugin:
 
 ```bash
-$ fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
+fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
+```
+
+The output will look similar to:
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -98,9 +136,12 @@ Fluent Bit v1.x.x
 [3] uptime: [1463543637, {"head"=>"133520.70 194879.72"}]
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [INPUT]
@@ -116,7 +157,29 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
+{% endtab %}
 
-e.g. 1.5s = 1s + 500000000ns
+{% tab title="fluent-bit.yaml" %}
 
+```yaml
+pipeline:
+    inputs:
+        - name: head
+          tag: uptime
+          file: /proc/uptime
+          buf_size: 256
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% endtabs %}
+
+The interval is calculated like this:
+
+`Total interval (sec) = Interval_Sec + (Interval_Nsec / 1000000000)`.
+
+For example: `1.5s = 1s + 500000000ns`.

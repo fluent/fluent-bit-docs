@@ -22,19 +22,22 @@ Before to get started with the plugin configuration, make sure to obtain the pro
 | job | An identifier for a grouping of related task, such as the name of a microservice or distributed batch. If the resource type is _generic\_task_, then this field is required. |  |
 | task\_id | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is _generic\_task_, then this field is required. |  |
 | export\_to\_project\_id | The GCP project that should receive these logs. | Defaults to the project ID of the google\_service\_credentials file, or the project\_id from Google's metadata.google.internal server. |
-| resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
+| resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _k8s\_cluster_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
-| labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | logging.googleapis.com/labels |
+| labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | `logging.googleapis.com/labels`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | labels | Optional list of comma separated of strings specifying `key=value` pairs. The resulting `labels` will be combined with the elements in obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`.|  |
-| log\_name\_key | The value of this field is used by the Stackdriver output plugin to extract logName from jsonPayload and set the logName field. | logging.googleapis.com/logName |
+| log\_name\_key | The value of this field is used by the Stackdriver output plugin to extract logName from jsonPayload and set the logName field. | `logging.googleapis.com/logName`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
-| severity\_key | Specify the name of the key from the original record that contains the severity information. |  |
+| severity\_key | Specify the name of the key from the original record that contains the severity information. | `logging.googleapis.com/severity`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
+| project_id_key | The value of this field is used by the Stackdriver output plugin to find the gcp project id from jsonPayload and then extract the value of it to set the PROJECT_ID within LogEntry logName, which controls the gcp project that should receive these logs. | `logging.googleapis.com/projectId`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
 | resource_labels | An optional list of comma separated strings specifying resource labels plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
 | compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression.|  |
+| cloud\_logging\_base\_url | Set the base Cloud Logging API URL to use for the `/v2/entries:write` API request. | https://logging.googleapis.com |
+
 
 ### Configuration File
 
@@ -52,7 +55,7 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
 
 Example configuration file for k8s resource type:
 
-local_resource_id is used by stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the local_resource_id field in the log entry. If there is no field logging.googleapis.com/local_resource_id in the log, the plugin will then construct it by using the tag value of the log.
+`local_resource_id` is used by the Stackdriver output plugin to set the labels field for different k8s resource types. Stackdriver plugin will try to find the `local_resource_id` field in the log entry. If there is no field `logging.googleapis.com/local_resource_id` in the log, the plugin will then construct it by using the tag value of the log.
 
 The local_resource_id should be in format:
 
@@ -140,7 +143,7 @@ This will produce the following log:
 }
 ```
 
-This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime. 
+This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime.
 
 For instance, for a K8s resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) to pack all six resource labels. Below is an example of what this could look like for a `k8s_container` resource:
 
@@ -154,6 +157,15 @@ For instance, for a K8s resource type, `resource_labels` can be used in tandem w
 ```
 
 `resource_labels` also supports validation for required labels based on the input resource type. This allows fluent-bit to check if all specified labels are present for a given configuration before runtime. If validation is not currently supported for a resource type that you would like to use this API with, we encourage you to open a pull request for it. Adding validation for a new resource type is simple - all that is needed is to specify the resources associated with the type alongside the required labels [here](https://github.com/fluent/fluent-bit/blob/master/plugins/out_stackdriver/stackdriver_resource_types.c#L27).
+
+## Log Name
+
+By default, the plugin will write to the following log name:
+```
+/projects/<project ID>/logs/<log tag>
+```
+You may be in a scenario where being more specific about the log name is important (for example [integration with Log Router rules](https://cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics]((https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series))). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field][StackdriverSpecialFields]. You can configure a `log_name_key` if you'd like to use something different than `logging.googleapis.com/logName`, i.e. if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
+
 ## Troubleshooting Notes
 
 ### Upstream connection error
@@ -184,8 +196,16 @@ Do following check:
 * If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
 *   If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
 
-    **Other implementations**
+### Occasional Crashing with >1 `Workers`
+
+> Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
+
+When the number of Workers is greater than 1, Fluent Bit may intermittently crash.
+
+## Other implementations
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
 We plan to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). Use cases of special fields is [here](./stackdriver_special_fields.md).
+
+[StackdriverSpecialFields]: ./stackdriver_special_fields.md#log-entry-fields

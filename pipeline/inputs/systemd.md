@@ -19,6 +19,7 @@ The plugin supports the following configuration parameters:
 | Read\_From\_Tail | Start reading new entries. Skip entries already stored in Journald. | Off |
 | Lowercase | Lowercase the Journald field \(key\). | Off |
 | Strip\_Underscores | Remove the leading underscore of the Journald field \(key\). For example the Journald field _\_PID_ becomes the key _PID_. | Off |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -40,6 +41,8 @@ $ fluent-bit -i systemd \
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```text
 [SERVICE]
     Flush        1
@@ -55,4 +58,22 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.conf
+pipeline:
+    inputs:
+        - name: systemd
+          tag: host.*
+          systemd_filter: _SYSTEMD_UNIT=docker.service
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}

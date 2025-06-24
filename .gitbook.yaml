@@ -57,6 +57,7 @@ redirects:
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
     output/datadog:        ./pipeline/outputs/datadog.md
     output/es:             ./pipeline/outputs/elasticsearch.md
+    output/fabric:         ./pipeline/outputs/azure_kusto.md
     output/file:           ./pipeline/outputs/file.md
     output/firehose:       ./pipeline/outputs/firehose.md
     output/flowcounter:    ./pipeline/outputs/flowcounter.md
@@ -76,3 +77,6 @@ redirects:
     output/stdout:         ./pipeline/outputs/standard-output.md
     output/tcp:            ./pipeline/outputs/tcp-and-tls.md
     output/td:             ./pipeline/outputs/treasure-data.md
+
+    # Processors
+    processor/metrics_selector:   ./pipeline/processors/metrics_selector.md

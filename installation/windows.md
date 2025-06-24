@@ -1,12 +1,18 @@
 # Windows
 
-Fluent Bit is distributed as **fluent-bit** package for Windows and as a [Windows container on Docker Hub](docker.md). Fluent Bit has two flavours of Windows installers: a ZIP archive (for quick testing) and an EXE installer (for system installation).
+Fluent Bit is distributed as the `fluent-bit` package for Windows and as a
+[Windows container on Docker Hub](docker.md). Fluent Bit provides two Windows
+installers: a `ZIP` archive and an `EXE` installer.
 
-Not all plugins are supported on Windows: the [CMake configuration](https://github.com/fluent/fluent-bit/blob/master/cmake/windows-setup.cmake) shows the default set of supported plugins.
+Not all plugins are supported on Windows. The
+[CMake configuration](https://github.com/fluent/fluent-bit/blob/master/cmake/windows-setup.cmake)
+shows the default set of supported plugins.
 
 ## Configuration
 
-Make sure to provide a valid Windows configuration with the installation, a sample one is shown below:
+Provide a valid Windows configuration with the installation.
+
+The following configuration is an example:
 
 ```python
 [SERVICE]
@@ -75,63 +81,78 @@ Make sure to provide a valid Windows configuration with the installation, a samp
 
 ## Migration to Fluent Bit
 
-From version 1.9, `td-agent-bit` is a deprecated package and was removed after 1.9.9. The correct package name to use now is `fluent-bit`.
+For version 1.9 and later, `td-agent-bit` is a deprecated package and was removed
+after 1.9.9. The correct package name to use now is `fluent-bit`.
 
-## Installation Packages
+## Installation packages
 
-The latest stable version is 2.1.4. Each version is available on the Github release as well as at:
+The latest stable version is 4.0.3.
+Each version is available from the following download URLs.
 
-| INSTALLERS                                                                                       | SHA256 CHECKSUMS                                                 |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [fluent-bit-2.1.9-win32.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win32.exe) | [c3c98449a8676d5f3f53ef09647fb71cf7eb63ae8f73260b2ab7394c6a419586](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win32.exe.sha256) |
-| [fluent-bit-2.1.9-win32.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win32.zip) | [1622ed416d1ffca3d3c1721a332fff9e80b8b700db47930d540ca640ecd18f8e](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win32.zip.sha256) |
-| [fluent-bit-2.1.9-win64.exe](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win64.exe) | [30556168954917cd40fa110da88f10bccc59aea7bc1018078522ac0eea90b1b8](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win64.exe.sha256) |
-| [fluent-bit-2.1.9-win64.zip](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win64.zip) | [291660a844d61d225055bfe1da8f10d95a27aa2f6d662db55744d47a716e85ff](https://releases.fluentbit.io/2.1/fluent-bit-2.1.9-win64.zip.sha256) |
+| INSTALLERS | SHA256 CHECKSUMS |
+|----------- | ---------------- |
+| [fluent-bit-4.0.3-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win32.exe) | [8739d87cc8ac1c4b776e8458e64f747719f4c38017e97c1e3abfdb90f1cfe801](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win32.exe.sha256) |
+| [fluent-bit-4.0.3-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win32.zip) | [055e054ea60a961c9372ab7283d150808f811afd44963f5031cbd224e9be59da](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win32.zip.sha256) |
+| [fluent-bit-4.0.3-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win64.exe) | [6817aecbd4d71679d1b32dcd466d81c2bce80978a6feecc44e037feab5f2f9ab](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win64.exe.sha256) |
+| [fluent-bit-4.0.3-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win64.zip) | [ce9e7d4175a124550b3609fac810077428467dfad443c85936b160277d1e7ba5](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win64.zip.sha256) |
+| [fluent-bit-4.0.3-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-winarm64.exe) | [cc539f92510659d437a1771bba9dbf42915a6dcf1b417faa32a7bad3d8d9729d](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-winarm64.exe.sha256) |
+| [fluent-bit-4.0.3-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-winarm64.zip) | [71b014f0937d9bc1e8965e12847b956294d6ce7331acad764de6874a55c3c3f7](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-winarm64.zip.sha256) |
 
-To check the integrity, use `Get-FileHash` cmdlet on PowerShell.
+These are now using the Github Actions built versions. Legacy AppVeyor builds are
+still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.
 
-```powershell
-PS> Get-FileHash fluent-bit-2.1.9-win32.exe
+MSI installers are also available:
+
+- [fluent-bit-4.0.3-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win32.msi)
+- [fluent-bit-4.0.3-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-win64.msi)
+- [fluent-bit-4.0.3-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.3-winarm64.msi)
+
+To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
+
+```text copy
+PS> Get-FileHash fluent-bit-4.0.3-win32.exe
 ```
 
-## Installing from ZIP archive
+## Installing from a ZIP archive
 
-Download a ZIP archive from above. There are installers for 32-bit and 64-bit environments, so choose one suitable for your environment.
+1. Download a ZIP archive. Choose the suitable installers for your 32-bit or 64-bit
+   environments.
 
-Then you need to expand the ZIP archive. You can do this by clicking "Extract All" on Explorer, or if you're using PowerShell, you can use `Expand-Archive` cmdlet.
+1. Expand the ZIP archive. You can do this by clicking **Extract All** in Explorer
+   or `Expand-Archive` in PowerShell.
 
-```powershell
-PS> Expand-Archive fluent-bit-2.1.9-win64.zip
-```
+   ```text
+   PS> Expand-Archive fluent-bit-4.0.3-win64.zip
+   ```
 
-The ZIP package contains the following set of files.
+   The ZIP package contains the following set of files.
 
-```
-fluent-bit
-├── bin
-│   ├── fluent-bit.dll
-│   └── fluent-bit.exe
-│   └── fluent-bit.pdb
-├── conf
-│   ├── fluent-bit.conf
-│   ├── parsers.conf
-│   └── plugins.conf
-└── include
-    │   ├── flb_api.h
-    │   ├── ...
-    │   └── flb_worker.h
-    └── fluent-bit.h
-```
+   ```text
+   fluent-bit
+   ├── bin
+   │   ├── fluent-bit.dll
+   │   └── fluent-bit.exe
+   │   └── fluent-bit.pdb
+   ├── conf
+   │   ├── fluent-bit.conf
+   │   ├── parsers.conf
+   │   └── plugins.conf
+   └── include
+       │   ├── flb_api.h
+       │   ├── ...
+       │   └── flb_worker.h
+       └── fluent-bit.h
+   ```
 
-Now, launch cmd.exe or PowerShell on your machine, and execute `fluent-bit.exe` as follows.
+1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:
 
-```powershell
-PS> .\bin\fluent-bit.exe -i dummy -o stdout
-```
+   ```text
+   PS> .\bin\fluent-bit.exe -i dummy -o stdout
+   ```
 
-If you see the following output, it's working fine!
+The following output indicates Fluent Bit is running:
 
-```powershell
+```text
 PS> .\bin\fluent-bit.exe  -i dummy -o stdout
 Fluent Bit v2.0.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
@@ -150,41 +171,49 @@ Fluent Bit v2.0.x
 [3] dummy.0: [1561684388.441405800, {"message"=>"dummy"}]
 ```
 
-To halt the process, press CTRL-C in the terminal.
+To halt the process, press `Control+C` in the terminal.
 
-## Installing from EXE installer
+## Installing from the EXE installer
 
-Download an EXE installer from the [download page](https://fluentbit.io/download/). It has both 32-bit and 64-bit builds. Choose one which is suitable for you.
+1. Download an EXE installer for the appropriate 32-bit or 64-bit build.
+1. Double-click the EXE installer you've downloaded. The installation wizard starts.
 
-Double-click the EXE installer you've downloaded. The installation wizard will automatically start.
+   ![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1) (1).png>)
 
-![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1) (1).png>)
+1. Click **Next** and finish the installation. By default, Fluent Bit is installed
+   in `C:\Program Files\fluent-bit\`.
 
-Click Next and proceed. By default, Fluent Bit is installed into `C:\Program Files\fluent-bit\`, so you should be able to launch fluent-bit as follows after installation.
+You should be able to launch Fluent Bit using the following PowerShell command:.
 
-```powershell
+```text
 PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
 ```
 
 ### Installer options
 
-The Windows installer is built by \[`CPack` using NSIS([https://cmake.org/cmake/help/latest/cpack\_gen/nsis.html](https://cmake.org/cmake/help/latest/cpack\_gen/nsis.html)) and so supports the [default options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1) that all NSIS installers do for silent installation and the directory to install to.
+The Windows installer is built by
+[`CPack` using NSIS](https://cmake.org/cmake/help/latest/cpack_gen/nsis.html)
+and supports the [default NSIS options](https://nsis.sourceforge.io/Docs/Chapter3.html#3.2.1)
+for silent installation and install directory.
 
 To silently install to `C:\fluent-bit` directory here is an example:
 
-```powershell
+```text
 PS> <installer exe> /S /D=C:\fluent-bit
 ```
 
-The uninstaller automatically provided also supports a silent un-install using the same `/S` flag. This may be useful for provisioning with automation like Ansible, Puppet, etc.
+The uninstaller also supports a silent uninstall using the same `/S` flag.
+This can be used for provisioning with automation like Ansible, Puppet, and so on.
 
-## Windows Service Support
+## Windows service support
 
-Windows services are equivalent to "daemons" in UNIX (i.e. long-running background processes). Since v1.5.0, Fluent Bit has the native support for Windows Service.
+Windows services are equivalent to daemons in UNIX (long-running background
+processes).
+For v1.5.0 and later, Fluent Bit has native support for Windows services.
 
-Suppose you have the following installation layout:
+For example, you have the following installation layout:
 
-```
+```text
 C:\fluent-bit\
 ├── conf
 │   ├── fluent-bit.conf
@@ -196,15 +225,16 @@ C:\fluent-bit\
     └── fluent-bit.pdb
 ```
 
-To register Fluent Bit as a Windows service, you need to execute the following command on Command Prompt. Please be careful that a single space is required after `binpath=`.
+To register Fluent Bit as a Windows service, execute the following command on
+at a command prompt. A single space is required after `binpath=`.
 
-```powershell
-% sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
+```text
+sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
 ```
 
-Now Fluent Bit can be started and managed as a normal Windows service.
+Fluent Bit can be started and managed as a normal Windows service.
 
-```powershell
+```text
 % sc.exe start fluent-bit
 % sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
@@ -213,45 +243,47 @@ SERVICE_NAME: fluent-bit
     ...
 ```
 
-To halt the Fluent Bit service, just execute the "stop" command.
+To halt the Fluent Bit service, use the `stop` command.
 
-```powershell
-% sc.exe stop fluent-bit
+```text
+sc.exe stop fluent-bit
 ```
 
 To start Fluent Bit automatically on boot, execute the following:
 
-```
-% sc.exe config fluent-bit start= auto
-```
-
-### \[FAQ] Fluent Bit fails to start up when installed under `C:\Program Files`
-
-Quotations are required if file paths contain spaces. Here is an example:
-
-```
-% sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
+```text
+sc.exe config fluent-bit start= auto
 ```
 
-### \[FAQ] How can I manage Fluent Bit service via PowerShell?
+## FAQs
+
+### Fluent Bit fails to start up when installed under `C:\Program Files`
+
+Quotations are required if file paths contain spaces. For example:
+
+```text
+sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
+```
+
+### Can you manage Fluent Bit service using PowerShell?
 
 Instead of `sc.exe`, PowerShell can be used to manage Windows services.
 
 Create a Fluent Bit service:
 
-```powershell
-PS> New-Service fluent-bit -BinaryPathName "C:\fluent-bit\bin\fluent-bit.exe -c C:\fluent-bit\conf\fluent-bit.conf" -StartupType Automatic
+```text
+PS> New-Service fluent-bit -BinaryPathName "`"C:\Program Files\fluent-bit\bin\fluent-bit.exe`" -c `"C:\Program Files\fluent-bit\conf\fluent-bit.conf`"" -StartupType Automatic -Description "This service runs Fluent Bit, a log collector that enables real-time processing and delivery of log data to centralized logging systems."
 ```
 
 Start the service:
 
-```powershell
+```text
 PS> Start-Service fluent-bit
 ```
 
 Query the service status:
 
-```powershell
+```text
 PS> get-Service fluent-bit | format-list
 Name                : fluent-bit
 DisplayName         : fluent-bit
@@ -266,82 +298,88 @@ ServiceType         : Win32OwnProcess
 
 Stop the service:
 
-```powershell
+```text
 PS> Stop-Service fluent-bit
 ```
 
 Remove the service (requires PowerShell 6.0 or later)
 
-```powershell
+```text
 PS> Remove-Service fluent-bit
 ```
 
 ## Compile from Source
 
-If you need to create a custom executable, you can use the following procedure to compile Fluent Bit by yourself.
+If you need to create a custom executable, use the following procedure to
+compile Fluent Bit by yourself.
 
 ### Preparation
 
-First, you need Microsoft Visual C++ to compile Fluent Bit. You can install the minimum toolkit by the following command:
+1. Install Microsoft Visual C++ to compile Fluent Bit. You can install the minimum
+   toolkit using the following command:
 
-```powershell
+```text
 PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
 PS> start vs.exe
 ```
 
-When asked which packages to install, choose "C++ Build Tools" (make sure that "C++ CMake tools for Windows" is selected too) and wait until the process finishes.
+1. Choose `C++ Build Tools` and `C++ CMake tools for Windows` and wait until the process finishes.
 
-Also you need to install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
+1. Install flex and bison. One way to install them on Windows is to use
+   [winflexbison](https://github.com/lexxmark/winflexbison).
 
-```powershell
-PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
-PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
-PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
-PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
-```
+   ```text
+   PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
+   PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
+   PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
+   PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
+   ```
 
-Add the path `C:\WinFlexBison` to your systems environment variable "Path". [Here's how to do that](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
+1. Add the path `C:\WinFlexBison` to your systems environment variable `Path`.
+   [Here's how to do that](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-It is important to have installed OpenSSL binaries, at least the library files and headers.
+1. Install OpenSSL binaries, at least the library files and headers.
 
-Also you need to install [git](https://git-scm.com/download/win) to pull the source code from the repository.
+1. Install [Git](https://git-scm.com/download/win) to pull the source code from the repository.
 
-```powershell
-PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
-PS> start git.exe
-```
+   ```text
+   PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
+   PS> start git.exe
+   ```
 
 ### Compilation
 
-Open the start menu on Windows and type "Command Prompt for VS". From the result list select the one  that corresponds to your target system ( x86 or x64).
+1. Open the **Start menu** on Windows and type `command Prompt for VS`. From the result
+   list, select the one that corresponds to your target system ( `x86` or `x64`).
 
-> **Note:** Check that  the  installed OpenSSL library files  match the selected target. You can check the library files by using the **dumpbin** command with the  **/headers** option .
+1. Verify the installed OpenSSL library files match the selected target. You can
+   examine the library files by using the `dumpbin` command with the  `/headers`
+   option .
 
+1. Clone the source code of Fluent Bit.
 
-Clone the source code of Fluent Bit.
+   ```text
+   % git clone https://github.com/fluent/fluent-bit
+   % cd fluent-bit/build
+   ```
 
-```powershell
-% git clone https://github.com/fluent/fluent-bit
-% cd fluent-bit/build
-```
+1. Compile the source code.
 
-Compile the source code.
-
-```powershell
-% cmake .. -G "NMake Makefiles"
-% cmake --build .
-```
+   ```text
+   % cmake .. -G "NMake Makefiles"
+   % cmake --build .
+   ```
 
 Now you should be able to run Fluent Bit:
 
-```powershell
-% .\bin\debug\fluent-bit.exe -i dummy -o stdout
+```text
+.\bin\debug\fluent-bit.exe -i dummy -o stdout
 ```
 
 ### Packaging
 
 To create a ZIP package, call `cpack` as follows:
 
-```powershell
-% cpack -G ZIP
+```text
+cpack -G ZIP
 ```

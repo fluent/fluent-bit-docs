@@ -6,7 +6,7 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| format | Specify data format, options available: json, msgpack. | json |
+| format | Specify data format, options available: json, msgpack, raw. | json |
 | message\_key | Optional key to store the message |  |
 | message\_key\_field | If set, the value of Message\_Key\_Field in the record will indicate the message key. If not set nor found in the record, Message\_Key will be used \(if set\). |  |
 | timestamp\_key | Set the key to store the record timestamp | @timestamp |
@@ -17,6 +17,8 @@ Kafka output plugin allows to ingest your records into an [Apache Kafka](https:/
 | dynamic\_topic | adds unknown topics \(found in Topic\_Key\) to Topics. So in Topics only a default topic needs to be configured | Off |
 | queue\_full\_retries | Fluent Bit queues data into rdkafka library, if for some reason the underlying library cannot flush the records the queue might fills up blocking new addition of records. The `queue_full_retries` option set the number of local retries to enqueue the data. The default value is 10 times, the interval between each retry is 1 second. Setting the `queue_full_retries` value to `0` set's an unlimited number of retries. | 10 |
 | rdkafka.{property} | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
+| raw\_log\_key | When using the raw format and set, the value of raw\_log\_key in the record will be send to kafka as the payload. | |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 > Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to 1 are examples of recommended settings of librdfkafka properties.
 
@@ -113,4 +115,29 @@ specific avro schema.
     Format avro
     rdkafka.log_level 7
     rdkafka.metadata.broker.list 192.168.1.3:9092
+```
+
+#### Kafka Configuration File with Raw format
+
+This example Fluent Bit configuration file creates example records with the
+_payloadkey_ and _msgkey_ keys. The _msgkey_ value is used as the Kafka message
+key, and the _payloadkey_ value as the payload.
+
+
+```text
+[INPUT]
+    Name example
+    Tag  example.data
+    Dummy {"payloadkey":"Data to send to kafka", "msgkey": "Key to use in the message"}
+
+
+[OUTPUT]
+    Name        kafka
+    Match       *
+    Brokers     192.168.1.3:9092
+    Topics      test
+    Format      raw
+
+    Raw_Log_Key       payloadkey
+    Message_Key_Field msgkey
 ```
