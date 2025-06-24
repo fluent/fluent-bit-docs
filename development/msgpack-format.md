@@ -8,7 +8,7 @@ MessagePack is a standard and well-defined format, refer to the official documen
 This section provides an overview of the specific types used by Fluent Bit within the format to help anyone consuming it.
 
 * The data structure used by Fluent Bit is a 2-length [`fixarray`](https://github.com/msgpack/msgpack/blob/master/spec.md#array-format-family) of the timestamp and the data.
-* The timestamp comes from [`flb_time_append_to_msgpack`])(https://github.com/fluent/fluent-bit/blob/2138cee8f4878733956d42d82f6dcf95f0aa9339/src/flb_time.c#L197), so it’s either a `uint64`, a `float64`, or a [`fixext`](https://github.com/msgpack/msgpack/blob/master/spec.md#ext-format-family) where the 4 MSBs are the seconds (big-endian `uint32`) and 4 LSBs are nanoseconds.
+* The timestamp comes from [`flb_time_append_to_msgpack`])(https://github.com/fluent/fluent-bit/blob/2138cee8f4878733956d42d82f6dcf95f0aa9339/src/flb_time.c#L197), so it's either a `uint64`, a `float64`, or a [`fixext`](https://github.com/msgpack/msgpack/blob/master/spec.md#ext-format-family) where the 4 MSBs are the seconds (big-endian `uint32`) and 4 LSBs are nanoseconds.
 * The data itself is just a [`msgpack` map](https://github.com/msgpack/msgpack/blob/master/spec.md#map-format-family) with the keys as strings.
 
 ## Example

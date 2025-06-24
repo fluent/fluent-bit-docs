@@ -1,51 +1,80 @@
 # Dummy
 
-The **dummy** input plugin, generates dummy events. It is useful for testing, debugging, benchmarking and getting started with Fluent Bit.
+The _Dummy_ input plugin, generates dummy events. Use this plugin for testing, debugging, benchmarking and getting started with Fluent Bit.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-## Getting Started
+| Key                | Description | Default |
+| :----------------- | :---------- | :------ |
+| `Dummy`              | Dummy JSON record. | `{"message":"dummy"}` |
+| `Metadata`           | Dummy JSON metadata. | `{}` |
+| `Start_time_sec`   | Dummy base timestamp, in seconds. | `0` |
+| `Start_time_nsec`  | Dummy base timestamp, in nanoseconds. | `0` |
+| `Rate`               | Rate at which messages are generated expressed in how many times per second. | `1` |
+| `Interval_sec`      | Set time interval, in seconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| `Interval_nsec`     | Set time interval, in nanoseconds, at which every message is generated. If set, `Rate` configuration is ignored. | `0` |
+| `Samples`            | If set, the events number will be limited. For example, if Samples=3, the plugin generates only three events and stops. | _none_ |
+| `Copies`             | Number of messages to generate each time messages generate. | `1` |
+| `Flush_on_startup` | If set to `true`, the first dummy event is generated at startup. | `false` |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+
+## Get started
 
 You can run the plugin from the command line or through the configuration file:
 
-| Key | Description |
-| :--- | :--- |
-| Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
-| Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
-| Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
-| Rate | Events number generated per second. Default: 1 |
-| Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
+### Command line
 
-### Command Line
+Run the plugin from the command line using the following command:
 
 ```bash
-$ fluent-bit -i dummy -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
+fluent-bit -i dummy -o stdout
+```
+
+which returns results like the following:
+
+```text
+Fluent Bit v2.x.x
+* Copyright (C) 2015-2022 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2017/07/06 21:55:29] [ info] [engine] started
-[0] dummy.0: [1499345730.015265366, {"message"=>"dummy"}]
-[1] dummy.0: [1499345731.002371371, {"message"=>"dummy"}]
-[2] dummy.0: [1499345732.000267932, {"message"=>"dummy"}]
-[3] dummy.0: [1499345733.000757746, {"message"=>"dummy"}]
+[0] dummy.0: [[1686451466.659962491, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1686451467.659679509, {}], {"message"=>"dummy"}]
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
+
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [INPUT]
     Name   dummy
-    Tag    dummy.log
+    Dummy {"message": "custom dummy"}
 
 [OUTPUT]
     Name   stdout
     Match  *
 ```
 
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message": "custom dummy"}'
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% endtabs %}

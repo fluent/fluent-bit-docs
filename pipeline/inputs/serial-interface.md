@@ -11,6 +11,7 @@ The **serial** input plugin, allows to retrieve messages/data from a _Serial_ in
 | Min\_Bytes | The serial interface will expect at least _Min\_Bytes_ to be available before to process the message \(default: 1\) |
 | Separator | Allows to specify a _separator_ string that's used to determinate when a message ends. |
 | Format | Specify the format of the incoming data stream. The only option available is 'json'. Note that _Format_ and _Separator_ cannot be used at the same time. |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ## Getting Started
 
@@ -125,4 +126,3 @@ When the module is loaded, it will interconnect the following virtual interfaces
 /dev/tnt4 <=> /dev/tnt5
 /dev/tnt6 <=> /dev/tnt7
 ```
-

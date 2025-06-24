@@ -1,44 +1,44 @@
-# C Library API
+# C library API
 
-[Fluent Bit](http://fluentbit.io) library is written in C language and can be used from any C or C++ application. Before digging into the specification it is recommended to understand the workflow involved in the runtime.
+Fluent Bit is written in C and can be used from any C or C++ application.
 
 ## Workflow
 
-[Fluent Bit](http://fluentbit.io) runs as a service, meaning that the API exposed for developers provide interfaces to create and manage a context, specify inputs/outputs, set configuration parameters and set routing paths for the event/records. A typical usage of the library involves:
+Fluent Bit runs as a service, which means that the exposed API provides interfaces to create and manage contexts, specify inputs and outputs, set configuration parameters, and set routing paths for events or records. A typical usage of this library involves:
 
-* Create library instance/context and set properties.
-* Enable _input_ plugin\(s\) and set properties.
-* Enable _output_ plugin\(s\) and set properties.
-* Start the library runtime.
-* Optionally ingest records manually.
-* Stop the library runtime.
-* Destroy library instance/context.
+* Creating library instance and contexts and setting their properties.
+* Enabling input plugins and setting their properties.
+* Enabling output plugins and setting their properties.
+* Starting the library runtime.
+* Optionally ingesting records manually.
+* Stopping the library runtime.
+* Destroying library instances and contexts.
 
-## Data Types
+## Data types
 
-Starting from Fluent Bit v0.9, there is only one data type exposed by the library, by convention prefixed with **flb\_**.
+There is only one data type exposed by the library. By convention, this data type is prefixed with `flb_`.
 
 | Type | Description |
 | :--- | :--- |
-| flb\_ctx\_t | Main library context. It aims to reference the context returned by _flb\_create\(\);_ |
+| `flb_ctx_t` | Main library context. This references the context returned by `flb_create();`. |
 
-## API Reference
+## API reference
 
-### Library Context Creation
+### Library context creation
 
-As described earlier, the first step to use the library is to create a context of it, for the purpose the function **flb\_create\(\)** is used.
+Use the `flb_create()` function to create library context.
 
-**Prototype**
+#### Prototype
 
 ```c
 flb_ctx_t *flb_create();
 ```
 
-**Return Value**
+#### Return value
 
-On success, **flb\_create\(\)** returns the library context; on error, it returns NULL.
+On success, this function returns the library context. On error, it returns `NULL`.
 
-**Usage**
+#### Usage
 
 ```c
 flb_ctx_t *ctx;
@@ -49,23 +49,23 @@ if (!ctx) {
 }
 ```
 
-### Set Service Properties
+### Set service properties
 
-Using the **flb\_service\_set\(\)** function is possible to set context properties.
+Use the `flb_service_set()` function to set context properties.
 
-**Prototype**
+#### Prototype
 
 ```c
 int flb_service_set(flb_ctx_t *ctx, ...);
 ```
 
-**Return Value**
+#### Return value
 
-On success it returns 0; on error it returns a negative number.
+On success, this function returns `0`. On error, it returns a negative number.
 
-**Usage**
+#### Usage
 
-The **flb\_service\_set\(\)** allows to set one or more properties in a key/value string mode, e.g:
+This function sets one or more properties as a key/value string. For example:
 
 ```c
 int ret;
@@ -73,29 +73,31 @@ int ret;
 ret = flb_service_set(ctx, "Flush", "1", NULL);
 ```
 
-The above example specified the values for the properties **Flush** , note that the value is always a string \(char \*\) and once there is no more parameters a NULL argument must be added at the end of the list.
+This example specified the values for the property `Flush`. Its value is always a string (`char *`), and after all parameters are listed, you must add a `NULL` argument at the end of the list.
 
-### Enable Input Plugin Instance
+### Enable input plugin instance
 
-When built, [Fluent Bit](http://fluentbit.io) library contains a certain number of built-in _input_ plugins. In order to enable an _input_ plugin, the function **flb\_input**\(\) is used to create an instance of it.
+The Fluent Bit library contains several input plugins. To enable an input plugin, use the `flb_input()` function to create an instance of it.
 
-> For plugins, an _instance_ means a context of the plugin enabled. You can create multiples instances of the same plugin.
+{% hint style="info" %}
+For plugins, an _instance_ means a context of the plugin enabled. You can create multiple instances of the same plugin.
+{% endhint %}
 
-**Prototype**
+#### Prototype
 
 ```c
 int flb_input(flb_ctx_t *ctx, char *name, void *data);
 ```
 
-The argument **ctx** represents the library context created by **flb\_create\(\)**, then **name** is the name of the input plugin that is required to enable.
+The argument `ctx` represents the library context created by `flb_create()`, and `name` is the name of the input plugin to enable.
 
-The third argument **data** can be used to pass a custom reference to the plugin instance, this is mostly used by custom or third party plugins, for generic plugins passing _NULL_ is OK.
+The argument `data` can be used to pass a custom reference to the plugin instance. This is mostly used by custom or third-party plugins. For generic plugins, it's okay to pass `NULL`.
 
-**Return Value**
+#### Return value
 
-On success, **flb\_input\(\)** returns an integer value &gt;= zero \(similar to a file descriptor\); on error, it returns a negative number.
+On success, this function returns an integer value greater than or equal to zero, similar to a file descriptor. On error, it returns a negative number.
 
-**Usage**
+#### Usage
 
 ```c
 int in_ffd;
@@ -103,23 +105,23 @@ int in_ffd;
 in_ffd = flb_input(ctx, "cpu", NULL);
 ```
 
-### Set Input Plugin Properties
+### Set input plugin properties
 
-A plugin instance created through **flb\_input\(\)**, may provide some configuration properties. Using the **flb\_input\_set\(\)** function is possible to set these properties.
+A plugin instance created through `flb_input()` can include configuration properties. Use the `flb_input_set()` function to set these properties.
 
-**Prototype**
+#### Prototype
 
 ```c
 int flb_input_set(flb_ctx_t *ctx, int in_ffd, ...);
 ```
 
-**Return Value**
+#### Return value
 
-On success it returns 0; on error it returns a negative number.
+On success, this function returns `0`. On error, it returns a negative number.
 
-**Usage**
+#### Usage
 
-The **flb\_input\_set\(\)** allows to set one or more properties in a key/value string mode, e.g:
+This function sets one or more properties as a key/value string. For example:
 
 ```c
 int ret;
@@ -130,31 +132,33 @@ ret = flb_input_set(ctx, in_ffd,
                     NULL);
 ```
 
-The argument **ctx** represents the library context created by **flb\_create\(\)**. The above example specified the values for the properties **tag** and **ssl**, note that the value is always a string \(char \*\) and once there is no more parameters a NULL argument must be added at the end of the list.
+The argument `ctx` represents the library context created by `flb_create()`. The previous example specified the values for the properties `tag` and `ssl`. Its value is always a string (`char *`), and after all parameters are listed, you must add a `NULL` argument at the end of the list.
 
-The properties allowed per input plugin are specified on each specific plugin documentation.
+The properties allowed per input plugin are specified in the documentation for each plugin.
 
-### Enable Output Plugin Instance
+### Enable output plugin instance
 
-When built, [Fluent Bit](http://fluentbit.io) library contains a certain number of built-in _output_ plugins. In order to enable an _output_ plugin, the function **flb\_output**\(\) is used to create an instance of it.
+The Fluent Bit library contains several output plugins. To enable an output plugin, use the `flb_output()` function to create an instance of it.
 
-> For plugins, an _instance_ means a context of the plugin enabled. You can create multiples instances of the same plugin.
+{% hint style="info" %}
+For plugins, an _instance_ means a context of the plugin enabled. You can create multiple instances of the same plugin.
+{% endhint %}
 
-**Prototype**
+#### Prototype
 
 ```c
 int flb_output(flb_ctx_t *ctx, char *name, void *data);
 ```
 
-The argument **ctx** represents the library context created by **flb\_create\(\)**, then **name** is the name of the output plugin that is required to enable.
+The argument `ctx` represents the library context created by `flb_create()`, and `name` is the name of the output plugin to enable.
 
-The third argument **data** can be used to pass a custom reference to the plugin instance, this is mostly used by custom or third party plugins, for generic plugins passing _NULL_ is OK.
+The argument `data` can be used to pass a custom reference to the plugin instance. This is mostly used by custom or third-party plugins. For generic plugins, it's okay to pass `NULL`.
 
-**Return Value**
+#### Return value
 
-On success, **flb\_output\(\)** returns the output plugin instance; on error, it returns a negative number.
+On success, this function returns the output plugin instance. On error, it returns a negative number.
 
-**Usage**
+#### Usage
 
 ```c
 int out_ffd;
@@ -162,23 +166,23 @@ int out_ffd;
 out_ffd = flb_output(ctx, "stdout", NULL);
 ```
 
-### Set Output Plugin Properties
+### Set output plugin properties
 
-A plugin instance created through **flb\_output\(\)**, may provide some configuration properties. Using the **flb\_output\_set\(\)** function is possible to set these properties.
+A plugin instance created through `flb_output()` can include configuration properties. Use the `flb_output_set()` function to set these properties.
 
-**Prototype**
+#### Prototype
 
 ```c
 int flb_output_set(flb_ctx_t *ctx, int out_ffd, ...);
 ```
 
-**Return Value**
+#### Return value
 
-On success it returns an integer value &gt;= zero \(similar to a file descriptor\); on error it returns a negative number.
+On success, this function returns and integer value greater than or equal to zero, similar to a file descriptor. On error, it returns a negative number.
 
-**Usage**
+#### Usage
 
-The **flb\_output\_set\(\)** allows to set one or more properties in a key/value string mode, e.g:
+This function sets one or more properties as a key/value string. For example:
 
 ```c
 int ret;
@@ -189,27 +193,27 @@ ret = flb_output_set(ctx, out_ffd,
                      NULL);
 ```
 
-The argument **ctx** represents the library context created by **flb\_create\(\)**. The above example specified the values for the properties **tag** and **ssl**, note that the value is always a string \(char \*\) and once there is no more parameters a NULL argument must be added at the end of the list.
+The argument `ctx` represents the library context created by `flb_create()`. The previous example specified the values for the properties `tag` and `ssl`. Its value is always a string (`char *`), and after all parameters are listed, you must add a `NULL` argument at the end of the list.
 
-The properties allowed per output plugin are specified on each specific plugin documentation.
+The properties allowed per output plugin are specified in the documentation for each plugin.
 
-## Start Fluent Bit Engine
+## Start Fluent Bit engine
 
-Once the library context has been created and the input/output plugin instances are set, the next step is to start the engine. When started, the engine runs inside a new thread \(POSIX thread\) without blocking the caller application. To start the engine the function **flb\_start\(\)** is used.
+After you create the library context and set input and output plugin instances, use the `flb_start()` function to start the engine. After the engine has started, it runs inside a new thread (POSIX thread) without blocking the caller application.
 
-**Prototype**
+### Prototype
 
 ```c
 int flb_start(flb_ctx_t *ctx);
 ```
 
-**Return Value**
+### Return value
 
-On success it returns 0; on error it returns a negative number.
+On success, this function returns `0`. On error, it returns a negative number.
 
-**Usage**
+### Usage
 
-This simple call only needs as argument **ctx** which is the reference to the context created at the beginning with **flb\_create\(\)**:
+This function uses the `ctx` argument, which is a reference to the context created by `flb_create()`.
 
 ```c
 int ret;
@@ -217,25 +221,25 @@ int ret;
 ret = flb_start(ctx);
 ```
 
-## Stop Fluent Bit Engine
+## Stop Fluent Bit engine
 
-To stop a running Fluent Bit engine, we provide the call **flb\_stop\(\)** for that purpose.
+To stop a running Fluent Bit engine, use `flb_stop()`.
 
-**Prototype**
+### Prototype
 
 ```c
 int flb_stop(flb_ctx_t *ctx);
 ```
 
-The argument **ctx** is a reference to the context created at the beginning with **flb\_create\(\)** and previously started with **flb\_start\(\)**.
+The argument `ctx` is a reference to the context created by `flb_create()` and started by `flb_start()`.
 
-When the call is invoked, the engine will wait a maximum of five seconds to flush buffers and release the resources in use. A stopped context can be re-started any time but without any data on it.
+When the call is invoked, the engine waits a maximum of five seconds to flush buffers and release any resources in use. A stopped context can be restarted at any time, but without any data on it.
 
-**Return Value**
+### Return value
 
-On success it returns 0; on error it returns a negative number.
+On success, this function returns `0`. On error, it returns a negative number.
 
-**Usage**
+### Usage
 
 ```c
 int ret;
@@ -243,45 +247,44 @@ int ret;
 ret = flb_stop(ctx);
 ```
 
-## Destroy Library Context
+## Destroy library context
 
-A library context must be destroyed after is not longer necessary, note that a previous **flb\_stop\(\)** call is mandatory. When destroyed all resources associated are released.
+You can destroy a library context after it's no longer necessary. A previous `flb_stop()` call is mandatory. After a library context is destroyed, all associated resources are released.
 
-**Prototype**
+### Prototype
 
 ```c
 void flb_destroy(flb_ctx_t *ctx);
 ```
 
-The argument **ctx** is a reference to the context created at the beginning with **flb\_create\(\)**.
+The argument `ctx` is a reference to the context created by `flb_create()`.
 
-**Return Value**
+### Return value
 
-No return value.
+This function doesn't return a value.
 
-**Usage**
+### Usage
 
 ```c
 flb_destroy(ctx);
 ```
 
-## Ingest Data Manually
+## Ingest data manually
 
-There are some cases where the caller application may want to ingest data into Fluent Bit, for this purpose exists the function **flb\_lib\_push\(\)**.
+In some cases, the caller application might want to ingest data into Fluent Bit. You can use the `flb_lib_push()` function to do so.
 
-**Prototype**
+### Prototype
 
 ```c
 int flb_lib_push(flb_ctx_t *ctx, int in_ffd, void *data, size_t len);
 ```
 
-The first argument is the context created previously through **flb\_create\(\)**. **in\_ffd** is the numeric reference of the input plugin \(for this case it should be an input of plugin **lib** type\), **data** is a reference to the message to be ingested and **len** the number of bytes to take from it.
+The first argument is the context created through `flb_create()`. The `in_ffd` argument is the numeric reference of the input plugin, which in this case is a `lib` input plugin. The `data` argument is a reference to the message to be ingested, and the `len` argument is the number of bytes to take from it.
 
-**Return Value**
+### Return value
 
-On success, it returns the number of bytes written; on error it returns -1.
+On success, this function returns the number of bytes written. On error, it returns `-1`.
 
-**Usage**
+### Usage
 
-For more details and an example about how to use this function properly please refer to the next section [Ingest Records Manually](ingest-records-manually.md).
-
+For more information about how to use this function, including examples, see [Ingest Records Manually](ingest-records-manually.md).

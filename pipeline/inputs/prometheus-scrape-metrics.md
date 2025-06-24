@@ -9,28 +9,53 @@ The initial release of the Prometheus Scrape metric allows you to collect metric
 | Key             | Description                                                                                                                                          | Default  |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | host            | The host of the prometheus metric endpoint that you want to scrape                                                                                   |          |
-| port            | The port of the promethes metric endpoint that you want to scrape                                                                                    |          |
+| port            | The port of the prometheus metric endpoint that you want to scrape                                                                                    |          |
 | scrape\_interval | The interval to scrape metrics                                                                                                                       | 10s      |
 | metrics\_path   | <p>The metrics URI endpoint, that must start with a forward slash.<br><br>Note: Parameters can also be added to the path by using <code>?</code></p> | /metrics |
+| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Example
 
 If an endpoint exposes Prometheus Metrics we can specify the configuration to scrape and then output the metrics. In the following example, we retrieve metrics from the HashiCorp Vault application.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: prometheus_scrape
+          host: 0.0.0.0
+          port: 8201
+          tag: vault
+          metrics_path: /v1/sys/metrics?format=prometheus
+          scrape_interval: 10s
+          
+    outputs:
+        - name: stdout
+          match: '*'
 ```
+
+{% endtab %}
+
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name prometheus_scrape
-    host 0.0.0.0 
+    host 0.0.0.0
     port 8201
-    tag vault 
-    metrics_path /v1/sys/metrics?format=prometheus 
+    tag vault
+    metrics_path /v1/sys/metrics?format=prometheus
     scrape_interval 10s
 
 [OUTPUT]
     name stdout
     match *
-
 ```
+
+{% endtab %}
+{% endtabs %}
 
 **Example Output**
 
@@ -78,6 +103,3 @@ If an endpoint exposes Prometheus Metrics we can specify the configuration to sc
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_pause_ns = 1917611
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_runs = 19
 ```
-
-
-

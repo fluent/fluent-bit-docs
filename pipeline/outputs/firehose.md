@@ -19,13 +19,16 @@ See [here](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b
 | region | The AWS region. |
 | delivery\_stream | The name of the Kinesis Firehose Delivery stream that you want log records sent to. |
 | time\_key | Add the timestamp to the record under this key. By default the timestamp from Fluent Bit will not be added to records sent to Kinesis. |
-| time\_key\_format | strftime compliant format string for the timestamp; for example, the default is '%Y-%m-%dT%H:%M:%S'. This option is used with time\_key. |
+| time\_key\_format | strftime compliant format string for the timestamp; for example, the default is '%Y-%m-%dT%H:%M:%S'. Supports millisecond precision with '%3N' and supports nanosecond precision with '%9N' and '%L'; for example, adding '%3N' to support millisecond '%Y-%m-%dT%H:%M:%S.%3N'. This option is used with time\_key. |
 | log\_key | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. |
 | compression | Compression type for Firehose records. Each log record is individually compressed and sent to Firehose. 'gzip' and 'arrow' are the supported values. 'arrow' is only an available if Apache Arrow was enabled at compile time. Defaults to no compression. |
 | role\_arn | ARN of an IAM role to assume \(for cross account access\). |
 | endpoint | Specify a custom endpoint for the Firehose API. |
 | sts\_endpoint | Custom endpoint for the STS API. |
 | auto\_retry\_requests | Immediately retry failed requests to AWS services once. This option does not affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which may help improve throughput when there are transient/random networking issues. This option defaults to `true`. |
+| external\_id | Specify an external ID for the STS API, can be used with the role_arn parameter if your role requires an external ID. |
+| profile | AWS profile name to use. Defaults to `default`. |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. Default: `1`. |
 
 ## Getting Started
 
@@ -130,4 +133,3 @@ aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
 For more see [the AWS for Fluent Bit github repo](https://github.com/aws/aws-for-fluent-bit#public-images).
-

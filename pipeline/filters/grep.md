@@ -1,27 +1,28 @@
 ---
-description: Select or exclude records per patterns
+description: Select or exclude records using regular expressions.
 ---
 
 # Grep
 
-The _Grep Filter_ plugin allows you to match or exclude specific records based on regular expression patterns for values or nested values.
+The _Grep_ filter plugin lets you match or exclude specific records based on regular expression patterns for values or nested values.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Value Format | Description |
-| :--- | :--- | :--- |
-| Regex | KEY  REGEX | Keep records in which the content of KEY matches the regular expression. |
-| Exclude | KEY REGEX | Exclude records in which the content of KEY matches the regular expression. |
+| Key          | Value Format | Description |
+| ------------ | ------------ | ----------- |
+| `Regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. |
+| `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
+| `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
 
-#### Record Accessor Enabled
+### Record Accessor Enabled
 
-This plugin enables the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the KEY. Using the _record accessor_ is suggested if you want to match values against nested values.
+Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the `KEY`. Use the record accessor to match values against nested values.
 
-## Getting Started
+## Filter records
 
-In order to start filtering records, you can run the filter from the command line or through the configuration file. The following example assumes that you have a file called `lines.txt` with the following content:
+To start filtering records, run the filter from the command line or through the configuration file. The following example assumes that you have a file named `lines.txt` with the following content:
 
 ```text
 {"log": "aaa"}
@@ -34,19 +35,25 @@ In order to start filtering records, you can run the filter from the command lin
 {"log": "ggg"}
 ```
 
-### Command Line
+### Command line
 
-> Note: using the command line mode need special attention to quote the regular expressions properly. It's suggested to use a configuration file.
+When using the command line, pay close attention to quote the regular expressions. Using a configuration file might be easier.
 
-The following command will load the _tail_ plugin and read the content of `lines.txt` file. Then the _grep_ filter will apply a regular expression rule over the _log_ field \(created by tail plugin\) and only _pass_ the records which field value starts with _aa_:
+The following command loads the [tail](../../pipeline/inputs/tail) plugin and reads the content of `lines.txt`. Then the `grep` filter applies a regular expression rule over the `log` field created by the `tail` plugin and only passes records with a field value starting with `aa`:
 
-```text
-$ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
+```shell
+bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
 ```
 
-### Configuration File
+### Configuration file
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
+[SERVICE]
+    parsers_file /path/to/parsers.conf
+
 [INPUT]
     name   tail
     path   lines.txt
@@ -62,11 +69,38 @@ $ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o
     match  *
 ```
 
-The filter allows to use multiple rules which are applied in order, you can have many _Regex_ and _Exclude_ entries as required.
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: /path/to/parsers.conf
+pipeline:
+    inputs:
+        - name: tail
+          path: lines.txt
+          parser: json
+    filters:
+        - name: grep
+          match: '*'
+          regex: log aa
+    outputs:
+        - name: stdout
+          match: '*'
+
+```
+
+{% endtab %}
+{% endtabs %}
+
+The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions).
 
 ### Nested fields example
 
-If you want to match or exclude records based on nested values, you can use a [Record Accessor ](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md)format as the KEY name. Consider the following record example:
+To match or exclude records based on nested values, you can use [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) format as the `KEY` name.
+
+Consider the following record example:
 
 ```javascript
 {
@@ -85,7 +119,10 @@ If you want to match or exclude records based on nested values, you can use a [R
 }
 ```
 
-if you want to exclude records that match given nested field \(for example `kubernetes.labels.app`\), you can use the following rule:
+For example, to exclude records that match the nested field `kubernetes.labels.app`, use the following rule:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [FILTER]
@@ -94,15 +131,32 @@ if you want to exclude records that match given nested field \(for example `kube
     Exclude $kubernetes['labels']['app'] myapp
 ```
 
-### Excluding records missing/invalid fields
+{% endtab %}
+{% tab title="fluent-bit.yaml" %}
 
-It may be that in your processing pipeline you want to drop records that are missing certain keys.
-
-A simple way to do this is just to `exclude` with a regex that matches anything, a missing key will fail this check.
-
-Here is an example that checks for a specific valid value for the key as well:
-
+```yaml
+    filters:
+        - name: grep
+          match: '*'
+          exclude: $kubernetes['labels']['app'] myapp
 ```
+
+{% endtab %}
+{% endtabs %}
+
+### Excluding records with missing or invalid fields
+
+You might want to drop records that are missing certain keys.
+
+One way to do this is to `exclude` with a regular expression that matches anything. A missing
+key fails this check.
+
+The following example checks for a specific valid value for the key:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+
+```python
 # Use Grep to verify the contents of the iot_timestamp value.
 # If the iot_timestamp key does not exist, this will fail
 # and exclude the row.
@@ -113,4 +167,95 @@ Here is an example that checks for a specific valid value for the key as well:
     Regex                    iot_timestamp ^\d{4}-\d{2}-\d{2}
 ```
 
-The specified key `iot_timestamp` must match the expected expression - if it does not or is missing/empty then it will be excluded.
+{% endtab %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+    filters:
+        - name: grep
+          alias: filter-iots-grep
+          match: iots_thread.*
+          regex: iot_timestamp ^\d{4}-\d{2}-\d{2}
+```
+
+{% endtab %}
+{% endtabs %}
+
+The specified key `iot_timestamp` must match the expected expression. If it doesn't,
+or is missing or empty, then it will be excluded.
+
+### Multiple conditions
+
+If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
+If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
+After, if there is no `Regex`, the ligne is send to the output.
+if there is a `Regex` and it match, the ligne is send to the output, else, it's blocked.
+
+If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjuction or disjunction.
+
+If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
+
+```python
+[INPUT]
+    Name dummy
+    Dummy {"endpoint":"localhost", "value":"something"}
+    Tag dummy
+
+[FILTER]
+    Name grep
+    Match *
+    Logical_Op or
+    Regex value something
+    Regex value error
+
+[OUTPUT]
+    Name stdout
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"endpoint":"localhost", "value":"something"}'
+          tag: dummy
+    filters:
+        - name: grep
+          match: '*'
+          logical_op: or
+          regex:
+            - value something
+            - value error
+    outputs:
+        - name: stdout
+```
+
+{% endtab %}
+{% endtabs %}
+
+The output looks similar to:
+
+```text
+Fluent Bit v2.0.9
+* Copyright (C) 2015-2022 The Fluent Bit Authors
+* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+* https://fluentbit.io
+
+[2023/01/22 09:46:49] [ info] [fluent bit] version=2.0.9, commit=16eae10786, pid=33268
+[2023/01/22 09:46:49] [ info] [storage] ver=1.2.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2023/01/22 09:46:49] [ info] [cmetrics] version=0.5.8
+[2023/01/22 09:46:49] [ info] [ctraces ] version=0.2.7
+[2023/01/22 09:46:49] [ info] [input:dummy:dummy.0] initializing
+[2023/01/22 09:46:49] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2023/01/22 09:46:49] [ info] [filter:grep:grep.0] OR mode
+[2023/01/22 09:46:49] [ info] [sp] stream processor started
+[2023/01/22 09:46:49] [ info] [output:stdout:stdout.0] worker #0 started
+[0] dummy: [1674348410.558341857, {"endpoint"=>"localhost", "value"=>"something"}]
+[0] dummy: [1674348411.546425499, {"endpoint"=>"localhost", "value"=>"something"}]
+```

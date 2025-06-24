@@ -23,7 +23,7 @@ Connectivity, transport and authentication configuration properties:
 | compress | Set payload compression mechanism. The only available option is `gzip`. |  |
 | channel | Specify X-Splunk-Request-Channel Header for the HTTP Event Collector interface. |  |
 | http_debug_bad_request | If the HTTP server response code is 400 (bad request) and this flag is enabled, it will print the full HTTP request and response to the stdout interface. This feature is available for debugging purposes. | |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 2 |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 Content and Splunk metadata \(fields\) handling configuration properties:
 
@@ -41,7 +41,8 @@ Content and Splunk metadata \(fields\) handling configuration properties:
 
 ### TLS / SSL
 
-Splunk output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+The Splunk output plugin supports TLS/SSL. 
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Getting Started
 
@@ -125,7 +126,7 @@ This will create a payload that looks like:
 }
 ```
 
-For more information on the Splunk HEC payload format and all event meatadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
+For more information on the Splunk HEC payload format and all event metadata Splunk accepts, see here: [http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC](http://docs.splunk.com/Documentation/Splunk/latest/Data/AboutHEC)
 
 ### Sending Raw Events
 
@@ -168,9 +169,9 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
     name cpu
     tag cpu
 
-# Move CPU metrics to be nested under "fields" and 
+# Move CPU metrics to be nested under "fields" and
 # add the prefix "metric_name:" to all metrics
-# NOTE: you can change Wildcard field to only select metric fields    
+# NOTE: you can change Wildcard field to only select metric fields
 [FILTER]
     Name nest
     Match cpu
@@ -183,19 +184,47 @@ The following configuration gathers CPU metrics, nests the appropriate field, ad
 [FILTER]
     Name    modify
     Match   cpu
-    Set index cpu-metrics 
+    Set index cpu-metrics
     Set source fluent-bit
     Set sourcetype custom
 
 # ensure splunk_send_raw is on
 [OUTPUT]
-    name splunk 
+    name splunk
     match *
     host <HOST>
     port 8088
     splunk_send_raw on
-    splunk_token f9bd5bdb-c0b2-4a83-bcff-9625e5e908db 
+    splunk_token f9bd5bdb-c0b2-4a83-bcff-9625e5e908db
     tls on
     tls.verify off
 ```
 
+## Send Metrics Events of Fluent Bit
+
+With Fluent Bit 2.0, you can also send Fluent Bit's metrics type of events into Splunk via Splunk HEC.
+This allows you to perform visualizations, metric queries, and analysis with directly sent Fluent Bit's metrics type of events.
+This is based off Splunk 8.0 support of multi metric support via single concatenated JSON payload.
+
+Sending Fluent Bit's metrics into Splunk requires the use of collecting Fluent Bit's metrics plugins.
+Note that whether events type of logs or metrics can be distinguished automatically.
+You don't need to pay attentions about the type of events.
+This example includes two specific operations
+
+* Collect node or Fluent Bit's internal metrics
+* Send metrics as single concatenated JSON payload
+
+```text
+[INPUT]
+    name node_exporter_metrics
+    tag node_exporter_metrics
+
+[OUTPUT]
+    name splunk
+    match *
+    host <HOST>
+    port 8088
+    splunk_token ee7edc62-19ad-4d1e-b957-448d3b326fb6
+    tls on
+    tls.verify off
+```

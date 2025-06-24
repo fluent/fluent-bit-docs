@@ -15,10 +15,12 @@ The **kafka-rest** output plugin, allows to flush your records into a [Kafka RES
 | Time\_Key\_Format | Defines the format of the timestamp. | %Y-%m-%dT%H:%M:%S |
 | Include\_Tag\_Key | Append the Tag name to the final record. | Off |
 | Tag\_Key | If Include\_Tag\_Key is enabled, this property defines the key name for the tag. | \_flb-key |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
-Kafka REST Proxy output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+The Kafka REST Proxy output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Getting Started
 
@@ -49,4 +51,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Topic       fluent-bit
     Message_Key my_key
 ```
-

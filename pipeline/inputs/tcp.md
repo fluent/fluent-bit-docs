@@ -1,19 +1,21 @@
 # TCP
 
-The **tcp** input plugin allows to retrieve structured JSON or raw messages over a TCP network interface \(TCP port\).
+The **tcp** input plugin allows to retrieve structured JSON or raw messages over a TCP network interface (TCP port).
 
 ## Configuration Parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Listen | Listener network interface. | 0.0.0.0 |
-| Port | TCP port where listening for connections | 5170 |
-| Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_. |  |
-| Chunk\_Size | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 \(32KB\). | 32 |
-| Format | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ \(option below\). | json |
-| Separator | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character `\n` \(LF or 0x10\). | \n |
+| Key          | Description | Default |
+| ------------ | ----------- | ------- |
+| Listen       | Listener network interface.                                                                                                                                                                                                                                    | 0.0.0.0 |
+| Port         | TCP port where listening for connections                                                                                                                                                                                                                       | 5170    |
+| Buffer\_Size | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of _Chunk\_Size_.                                                                                                                              |         |
+| Chunk\_Size  | By default the buffer to store the incoming JSON messages, do not allocate the maximum memory allowed, instead it allocate memory when is required. The rounds of allocations are set by _Chunk\_Size_ in KB. If not set, _Chunk\_Size_ is equal to 32 (32KB). | 32      |
+| Format       | Specify the expected payload format. It support the options _json_ and _none_. When using _json_, it expects JSON maps, when is set to _none_, it will split every record using the defined _Separator_ (option below).                                        | json    |
+| Separator    | When the expected _Format_ is set to _none_, Fluent Bit needs a separator string to split the records. By default it uses the breakline character  (LF or 0x10).                                                                                               |         |
+| Source\_Address\_Key| Specify the key where the source address will be injected.                                                                                                                                                                                              |         |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting Started
 
@@ -27,7 +29,7 @@ From the command line you can let Fluent Bit listen for _JSON_ messages with the
 $ fluent-bit -i tcp -o stdout
 ```
 
-By default the service will listen an all interfaces \(0.0.0.0\) through TCP port 5170, optionally you can change this directly, e.g:
+By default the service will listen an all interfaces (0.0.0.0) through TCP port 5170, optionally you can change this directly, e.g:
 
 ```bash
 $ fluent-bit -i tcp://192.168.3.2:9090 -o stdout
@@ -39,6 +41,8 @@ In the example the JSON messages will only arrive through network interface unde
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name        tcp
@@ -52,6 +56,24 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name        stdout
     Match       *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: tcp
+          listen: 0.0.0.0
+          port: 5170
+          chunk_size: 32
+          buffer_size: 64
+          format: json
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
@@ -84,4 +106,3 @@ Fluent Bit v1.x.x
 When receiving payloads in JSON format, there are high performance penalties. Parsing JSON is a very expensive task so you could expect your CPU usage increase under high load environments.
 
 To get faster data ingestion, consider to use the option `Format none` to avoid JSON parsing if not needed.
-

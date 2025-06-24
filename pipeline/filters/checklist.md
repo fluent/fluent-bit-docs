@@ -1,28 +1,23 @@
----
-description: >-
-  The following plugin looks up if a value in a specified list exists and then
-  allows the addition of a record to indicate if found. Introduced in version
-  1.8.4
----
-
 # CheckList
 
-## Configuration Parameters
+The CheckList plugin (introduced in version 1.8.4) looks up a value in a specified list to see if it exists. The plugin then allows the addition of a record to indicate if the value was found.
+
+## Configuration parameters
 
 The plugin supports the following configuration parameters
 
-| Key | Description |
-| :--- | :--- |
-| file | The single value file that Fluent Bit will use as a lookup table to determine if the specified `lookup_key` exists |
-| lookup\_key | The specific key to look up and determine if it exists, supports record accessor |
-| record | The record to add if the `lookup_key` is found in the specified `file`. Note you may add multiple record parameters. |
-| mode | Set the check mode. `exact` and `partial` are supported. Default : `exact`.|
-| print_query_time | Print to stdout the elapseed query time for every matched record. Default: false|
-| ignore_case | Compare strings by ignoring case. Default: false |
+| Key | Description | Default |
+| :-- | :---------- | :------ |
+| `file` | The single value file that Fluent Bit will use as a lookup table to determine if the specified `lookup_key` exists. | _none_ |
+| `lookup_key` | The specific key to look up and determine if it exists. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). | _none_ |
+| `record` | The record to add if the `lookup_key` is found in the specified `file`. You can add multiple record parameters. | _none_ |
+| `mode` | Set the check mode. `exact` and `partial` are supported. | `exact`|
+| `print_query_time` | Print to stdout the elapsed query time for every matched record. | `false` |
+| `ignore_case` | Compare strings by ignoring case. | `false` |
 
-## Example Configuration
+## Example configuration
 
-```text
+```python
 [INPUT]
     name           tail
     tag            test1
@@ -44,7 +39,7 @@ The plugin supports the following configuration parameters
     match      test1
 ```
 
-In the following configuration we will read a file `test1.log` that includes the following values 
+The following configuration reads a file `test1.log` that includes the following values:
 
 ```text
 {"remote_addr": true, "ioc":"false", "url":"https://badurl.com/payload.htm","badurl":"no"}
@@ -57,7 +52,7 @@ In the following configuration we will read a file `test1.log` that includes the
 
 ```
 
-Additionally, we will use the following lookup file which contains a list of malicious IPs \(`ip_list.txt`\)
+Additionally, it uses  the following lookup file which contains a list of malicious IP addresses (`ip_list.txt`).
 
 ```text
 1.2.3.4
@@ -65,9 +60,8 @@ Additionally, we will use the following lookup file which contains a list of mal
 7.7.7.7
 ```
 
-In the configuration we are using $remote\_addr as the lookup key and 7.7.7.7 is malicious. This means the record we would output for the last record would look like the following
+The configuration uses `$remote_addr` as the lookup key, and `7.7.7.7` is malicious. The record output for the last record would look like the following:
 
 ```text
 {"remote_addr": "7.7.7.7", "ioc":"abc", "url":"https://badurl.com/payload.htm","badurl":"null"}
 ```
-

@@ -6,7 +6,7 @@ The following instructions assumes that you have a fully operational Graylog ser
 
 ## Configuration Parameters
 
-According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
+According to [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are some mandatory and optional fields which are used by Graylog in GELF format. These fields are determined with _Gelf\\_\*\_Key\_ key in this plugin.
 
 | Key                    | Description                                                                                                                                                                 | default       |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -14,6 +14,7 @@ According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pag
 | Host                   | IP address or hostname of the target Graylog server                                                                                                                         | 127.0.0.1     |
 | Port                   | The port that your Graylog GELF input is listening on                                                                                                                       | 12201         |
 | Mode                   | The protocol to use (`tls`, `tcp` or `udp`)                                                                                                                                 | udp           |
+| Gelf\_Tag\_Key         | Key to be used for tag. (_Optional in GELF_)  |               |
 | Gelf_Short_Message_Key | A short descriptive message (**MUST be set in GELF**)                                                                                                                       | short_message |
 | Gelf_Timestamp_Key     | Your log timestamp (_SHOULD be set in GELF_)                                                                                                                                | timestamp     |
 | Gelf_Host_Key          | Key which its value is used as the name of the host, source or application that sent this message. (**MUST be set in GELF**)                                                | host          |
@@ -21,10 +22,12 @@ According to [GELF Payload Specification](https://docs.graylog.org/en/latest/pag
 | Gelf_Level_Key         | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between 0 and 7). (_Optional in GELF_) | level         |
 | Packet_Size            | If transport protocol is `udp`, you can set the size of packets to be sent.                                                                                                 | 1420          |
 | Compress               | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed.                                                                             | true          |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
-GELF output plugin supports TLS/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](../../administration/security.md) section.
+The GELF output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Notes
 
@@ -103,7 +106,7 @@ Now, this is what happens to this log:
 3. We used this `data` key as `Gelf_Short_Message_Key`; so GELF plugin changes it to `short_message`.
 4. [Kubernetes Filter](../filters/kubernetes.md) adds `host` name.
 5. Timestamp is generated.
-6. Any custom field (not present in [GELF Payload Specification](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification)) is prefixed by an underline.
+6. Any custom field (not present in [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification).) is prefixed by an underline.
 
 Finally, this is what our Graylog server input sees:
 

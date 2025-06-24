@@ -1,8 +1,7 @@
-# Introduction to Stream Processing
+# Introduction to stream processing
 
 ![](../.gitbook/assets/stream_processor.png)
 
-[Fluent Bit](https://fluentbit.io) is a fast and flexible Log processor that aims to collect, parse, filter and deliver logs to remote databases, so Data Analysis can be performed.
+Fluent Bit is a fast and flexible log processor that collects, parsers, filters, and delivers logs to remote databases, where data analysis can then be performed.
 
-Data Analysis usually happens after the data is stored and indexed in a database, but for real-time and complex analysis needs, process the data while it's still in motion in the Log processor brings a lot of advantages and this approach is called **Stream Processing on the Edge**.
-
+For real-time and complex analysis needs, you can also process the data while it's still in motion through _stream processing on the edge_.
