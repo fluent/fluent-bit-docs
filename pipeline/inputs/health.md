@@ -1,36 +1,40 @@
 # Health
 
-_Health_ input plugin allows you to check how _healthy_ a TCP server is. It does the check by issuing a TCP connection every a certain interval of time.
+The _Health_ input plugin lets you check how healthy a TCP server is. It checks by issuing a TCP connection at regular intervals.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
+| Key | Description | Default |
 | :--- | :--- |
-| Host | Name of the target host or IP address to check. |
-| Port | TCP port where to perform the connection check. |
-| Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
-| Internal\_Nsec | Specify a nanoseconds interval for service checks, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
-| Alert | If enabled, it will only generate messages if the target TCP service is down. By default this option is disabled. |
-| Add\_Host | If enabled, hostname is appended to each records. Default value is _false_. |
-| Add\_Port | If enabled, port number is appended to each records. Default value is _false_. |
+| `Host` | Name of the target host or IP address. | _none_ |
+| `Port` | TCP port where to perform the connection request. | _none_ |
+| `Interval_Sec` | Interval in seconds between the service checks.| `1` |
+| `Internal_Nsec` | Specify a nanoseconds interval for service checks. Works in conjunction with the `Interval_Sec` configuration key. | `0` |
+| `Alert` | If enabled, it generates messages if the target TCP service is down. | `false` |
+| `Add_Host` | If enabled, hostname is appended to each records. | `false` |
+| `Add_Port` | If enabled, port number is appended to each records. | `false` |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
-In order to start performing the checks, you can run the plugin from the command line or through the configuration file:
+To start performing the checks, you can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```bash
-$ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
+fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [INPUT]
@@ -44,6 +48,26 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
+
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: health
+          host: 127.0.0.1
+          port: 80
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
@@ -67,4 +91,3 @@ Fluent Bit v1.8.0
 [2] health.0: [1624145990.306498573, {"alive"=>true}]
 [3] health.0: [1624145991.305595498, {"alive"=>true}]
 ```
-

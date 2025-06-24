@@ -59,6 +59,7 @@ You must configure workload identity federation in GCP before using it with Flue
 | pool\_id | GCP workload identity pool where the identity provider was created. Used to construct the full resource name of the identity provider. |  |
 | provider\_id | GCP workload identity provider. Used to construct the full resource name of the identity provider. Currently only AWS accounts are supported. |  |
 | google\_service\_account | Email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources (e.g. `write` access to tables) |  |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 See Google's [official documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
@@ -77,4 +78,3 @@ If you are using a _Google Cloud Credentials File_, the following configuration 
     dataset_id my_dataset
     table_id   dummy_table
 ```
-

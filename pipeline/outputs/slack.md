@@ -17,6 +17,7 @@ Once you have obtained the Webhook address you can place it in the configuration
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | webhook | Absolute address of the Webhook provided by Slack |  |
+| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Configuration File
 
@@ -28,4 +29,3 @@ Get started quickly with this configuration file:
     match                *
     webhook              https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
-

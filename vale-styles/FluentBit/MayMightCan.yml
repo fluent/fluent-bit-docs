@@ -1,0 +1,7 @@
+---
+extends: existence
+message: "Use 'can' for permissions or 'might' for possibility."
+level: suggestion
+ignorecase: true
+tokens:
+  - may

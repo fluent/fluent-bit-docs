@@ -30,6 +30,7 @@ redirects:
     input/tail:            ./pipeline/inputs/tail.md
     input/tcp:             ./pipeline/inputs/tcp.md
     input/thermal:         ./pipeline/inputs/thermal.md
+    input/udp:             ./pipeline/inputs/udp.md
     input/winlog:          ./pipeline/inputs/windows-event-log.md
     input/winevtlog:       ./pipeline/inputs/windows-event-log-winevtlog.md
 
@@ -52,9 +53,11 @@ redirects:
     output/azure_kusto:    ./pipeline/outputs/azure_kusto.md
     output/bigquery:       ./pipeline/outputs/bigquery.md
     output/counter:        ./pipeline/outputs/counter.md
+    output/chronicle:      ./pipeline/outputs/chronicle.md
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
     output/datadog:        ./pipeline/outputs/datadog.md
     output/es:             ./pipeline/outputs/elasticsearch.md
+    output/fabric:         ./pipeline/outputs/azure_kusto.md
     output/file:           ./pipeline/outputs/file.md
     output/firehose:       ./pipeline/outputs/firehose.md
     output/flowcounter:    ./pipeline/outputs/flowcounter.md
@@ -74,3 +77,6 @@ redirects:
     output/stdout:         ./pipeline/outputs/standard-output.md
     output/tcp:            ./pipeline/outputs/tcp-and-tls.md
     output/td:             ./pipeline/outputs/treasure-data.md
+
+    # Processors
+    processor/metrics_selector:   ./pipeline/processors/metrics_selector.md

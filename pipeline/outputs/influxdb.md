@@ -19,10 +19,13 @@ The **influxdb** output plugin, allows to flush your records into a [InfluxDB](h
 | Tag\_Keys | Space separated list of keys that needs to be tagged |  |
 | Auto\_Tags | Automatically tag keys where value is _string_. This option takes a boolean value: True/False, On/Off. | Off |
 | Uri | Custom URI endpoint | |
+| Add\_Integer\_Suffix | Use integer type of [influxdb's line protocol](https://docs.influxdata.com/influxdb/v1/write_protocols/line_protocol_reference/). This option takes a boolean value: `True|False`, `On|Off`. | `Off` |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
-InfluxDB output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) section.
+The InfluxDB output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Getting Started
 
@@ -207,4 +210,3 @@ key    value
 method "MATCH"
 method "POST"
 ```
-

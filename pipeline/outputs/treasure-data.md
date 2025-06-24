@@ -12,6 +12,7 @@ The plugin supports the following configuration parameters:
 | Database | Specify the name of your target database. |  |
 | Table | Specify the name of your target table where the records will be stored. |  |
 | Region | Set the service region, available values: US and JP | US |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Getting Started
 
@@ -41,4 +42,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Database fluentbit
     Table    cpu_samples
 ```
-

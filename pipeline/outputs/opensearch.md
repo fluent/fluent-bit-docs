@@ -22,13 +22,14 @@ The following instructions assumes that you have a fully operational OpenSearch 
 | AWS\_Role\_ARN | AWS IAM Role to assume to put records to your Amazon cluster                                                                                                                                                                                                                                                                                                                                                                                                 |  |
 | AWS\_External\_ID | External ID for the AWS IAM Role specified with `aws_role_arn`                                                                                                                                                                                                                                                                                                                                                                                               |  |
 | AWS\_Service\_Name | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information.                                                                                                                                                                                                                                                                                                                                                                                              | es |
+| AWS\_Profile | AWS profile name | default |
 | HTTP\_User | Optional username credential for access                                                                                                                                                                                                                                                                                                                                                                                                                      |  |
 | HTTP\_Passwd | Password for user defined in HTTP\_User                                                                                                                                                                                                                                                                                                                                                                                                                      |  |
 | Index | Index name, supports [Record Accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) from 2.0.5 onwards.                                             | fluent-bit |
 | Type | Type name. This option is ignored if `Suppress_Type_Name` is enabled.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | \_doc |
 | Logstash\_Format | Enable Logstash format compatibility. This option takes a boolean value: True/False, On/Off                                                                                                                                                                                                                                                                                                                                                                  | Off |
 | Logstash\_Prefix | When Logstash\_Format is enabled, the Index name is composed using a prefix and the date, e.g: If Logstash\_Prefix is equals to 'mydata' your index will become 'mydata-YYYY.MM.DD'. The last string appended belongs to the date when the data is being generated.                                                                                                                                                                                          | logstash |
-| Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor). |  |
+| Logstash\_Prefix\_Key | When included: the value of the key in the record will be evaluated as key reference and overrides Logstash\_Prefix for index generation. If the key/value is not found in the record then the Logstash\_Prefix option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). |  |
 | Logstash\_Prefix\_Separator | Set a separator between logstash_prefix and date.                                                                                                           | - |
 | Logstash\_DateFormat | Time format \(based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html)\) to generate the second part of the Index name.                                                                                                                                                                                                                                                                                                                     | %Y.%m.%d |
 | Time\_Key | When Logstash\_Format is enabled, each record will get a new timestamp field. The Time\_Key property defines the name of that field.                                                                                                                                                                                                                                                                                                                         | @timestamp |
@@ -44,14 +45,15 @@ The following instructions assumes that you have a fully operational OpenSearch 
 | Trace\_Error | When enabled print the OpenSearch API calls to stdout when OpenSearch returns an error \(for diag only\)                                                                                                                                                                                                                                                                                                                                                     | Off |
 | Current\_Time\_Index | Use current time for index generation instead of message record                                                                                                                                                                                                                                                                                                                                                                                              | Off |
 | Suppress\_Type\_Name | When enabled, mapping types is removed and `Type` option is ignored.                                                                                                                                                                                                                        | Off |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0.                                                                                                                                                                                                                                                                                                                                          | 2 |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | Compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression. |  |
 
 > The parameters _index_ and _type_ can be confusing if you are new to OpenSearch, if you have used a common relational database before, they can be compared to the _database_ and _table_ concepts. Also see [the FAQ below](opensearch.md#faq)
 
 ### TLS / SSL
 
-OpenSearch output plugin supports TTL/SSL, for more details about the properties available and general configuration, please refer to the [TLS/SSL](tcp-and-tls.md) section.
+The OpenSearch output plugin supports TLS/SSL.
+For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### write\_operation
 
@@ -110,7 +112,7 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Type  my_type
 ```
 
-![example configuration visualization from config.calyptia.com](../../.gitbook/assets/image%20%282%29.png)
+![example configuration visualization from calyptia](../../.gitbook/assets/image%20%282%29.png)
 
 ## About OpenSearch field names
 
@@ -139,7 +141,7 @@ The following snippet demonstrates using the namespace name as extracted by the
     Match *
     # ...
     Logstash_Prefix logstash
-    Logstash_Prefix_Key $kubernetes["namespace_name"]
+    Logstash_Prefix_Key $kubernetes['namespace_name']
     # ...
 ```
 
@@ -198,7 +200,7 @@ With data access permissions, IAM policies are not needed to access the collecti
 
 ### Issues with the OpenSearch cluster
 
-Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with the service's log_level attribute set to [Debug](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file). 
+Occasionally the Fluent Bit service may generate errors without any additional detail in the logs to explain the source of the issue, even with the service's log_level attribute set to [Debug](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file).
 
 For example, in this scenario the logs show that a connection was successfully established with the OpenSearch domain, and yet an error is still returned:
 ```
@@ -217,9 +219,9 @@ This behavior could be indicative of a hard-to-detect issue with index shard usa
 
 While OpenSearch index shards and disk space are related, they are not directly tied to one another.
 
-OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data. 
+OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. And, importantly, shard usage is not proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data.
 
-In other words, depending on the way index creation and shard allocation are configured in the OpenSearch domain, all of the available index shards could be used long before the data nodes run out of disk space and begin exhibiting disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline). 
+In other words, depending on the way index creation and shard allocation are configured in the OpenSearch domain, all of the available index shards could be used long before the data nodes run out of disk space and begin exhibiting disk-related performance issues (e.g. nodes crashing, data corruption, or the dashboard going offline).
 
 The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (though logs can still be added to existing indexes).
 
@@ -230,7 +232,7 @@ When that happens, the Fluent Bit OpenSearch output may begin showing confusing 
 
 If any of those symptoms are present, consider using the OpenSearch domain's API endpoints to troubleshoot possible shard issues.
 
-Running this command will show both the shard count and disk usage on all of the nodes in the domain. 
+Running this command will show both the shard count and disk usage on all of the nodes in the domain.
 ```
 GET _cat/allocation?v
 ```

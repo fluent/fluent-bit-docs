@@ -24,6 +24,8 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | we.service.where           | Specify the WHERE clause for retrieving service metrics.  | `NULL`   |
 | we.service.include         | Specify the key value pairs for the include condition for the WHERE clause of service metrics. | `NULL`   |
 | we.service.exclude         | Specify the key value pairs for the exclude condition for the WHERE clause of service metrics. | `NULL`   |
+| we.process.allow\_process\_regex | Specify the regex covering the process metrics to  collect. Collect all by default. | "/.+/"    |
+| we.process.deny\_process\_regex  | Specify the regex for process metrics to prevent collection of/ignore. Allow all by default. | `NULL`    |
 | collector.cpu.scrape\_interval | The rate in seconds at which cpu metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.net.scrape\_interval | The rate in seconds at which net metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.logical_disk.scrape\_interval | The rate in seconds at which logical\_disk metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
@@ -34,6 +36,9 @@ The initial release of Windows Exporter Metrics contains a single collector avai
 | collector.logon.scrape\_interval    | The rate in seconds at which logon metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.system.scrape\_interval   | The rate in seconds at which system metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | collector.service.scrape\_interval   | The rate in seconds at which service metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.memory.scrape\_interval   | The rate in seconds at which memory metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.paging_file.scrape\_interval   | The rate in seconds at which paging_file metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
+| collector.process.scrape\_interval   | The rate in seconds at which process metrics are collected from the host operating system. If a value greater than 0 is used then it overrides the global default otherwise the global default is used. | 0 seconds |
 | metrics | To specify which metrics are collected from the host operating system. | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system,service"` |
 
 ## Collectors available
@@ -53,7 +58,14 @@ The following table describes the available collectors as part of this plugin. A
 | cpu\_info     | Exposes cpu\_info statistics.                                                                    | Windows | v2.0.8  |
 | logon         | Exposes logon statistics.                                                                        | Windows | v2.0.8  |
 | system        | Exposes system statistics.                                                                       | Windows | v2.0.8  |
-| service       | Exposes system statistics.                                                                       | Windows | v2.1.6  |
+| service       | Exposes service statistics.                                                                      | Windows | v2.1.6  |
+| memory        | Exposes memory statistics.                                                                       | Windows | v2.1.9  |
+| paging\_file   | Exposes paging\_file statistics.                                                                | Windows | v2.1.9  |
+| process       | Exposes process statistics.                                                                      | Windows | v2.1.9  |
+
+## Threading
+
+This input always runs in its own [thread](../../administration/multithreading.md#inputs).
 
 ## Getting Started
 

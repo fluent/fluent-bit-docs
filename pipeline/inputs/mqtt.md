@@ -1,26 +1,35 @@
 # MQTT
 
-The **MQTT** input plugin, allows to retrieve messages/data from MQTT control packets over a TCP connection. The incoming data to receive _must_ be a JSON map.
+The _MQTT_ input plugin retrieves messages and data from MQTT control packets over a TCP connection. The incoming data to receive must be a JSON map.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Listen | Listener network interface, default: 0.0.0.0 |
-| Port | TCP port where listening for connections, default: 1883 |
+| Key         | Description                                                    | Default |
+| :---------- | :------------------------------------------------------------- | :------ |
+| `Listen`      | Listener network interface. | `0.0.0.0` |
+| `Port`        | TCP port where listening for connections. | `1883` |
+| `Payload_Key` | Specify the key where the payload key/value will be preserved. | _none_ |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
-In order to start listening for MQTT messages, you can run the plugin from the command line or through the configuration file:
+To listen for MQTT messages, you can run the plugin from the command line or through the configuration file.
 
-### Command Line
+### Command line
 
-Since the **MQTT** input plugin let Fluent Bit behave as a server, we need to dispatch some messages using some MQTT client, in the following example _mosquitto_ tool is being used for the purpose:
+The MQTT input plugin lets Fluent Bit behave as a server. Dispatch some messages using a MQTT client. In the following example, the `mosquitto` tool is being used for the purpose:
+
+Running the following command:
 
 ```bash
-$ fluent-bit -i mqtt -t data -o stdout -m '*'
+fluent-bit -i mqtt -t data -o stdout -m '*'
+```
+
+Returns a response like the following:
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -31,15 +40,15 @@ Fluent Bit v1.x.x
 [0] data: [1463775773, {"topic"=>"some/topic", "key1"=>123, "key2"=>456}]
 ```
 
-The following command line will send a message to the **MQTT** input plugin:
+The following command line will send a message to the MQTT input plugin:
 
 ```bash
-$ mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
+mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and  `Output` sections:
 
 ```python
 [INPUT]
@@ -52,4 +61,3 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
-

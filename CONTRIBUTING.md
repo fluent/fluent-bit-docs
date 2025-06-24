@@ -1,76 +1,153 @@
-# Fluent Bit Documentation
+# Contributing to Fluent Bit docs
 
-First of all, thanks for taking the time to read this document. It means you are interested in contributing, and we highly appreciate the time you are investing.
+First of all, thanks for taking the time to read this guide. The fact that you're
+here means you're interested in contributing to Fluent Bit, and we highly appreciate
+your time.
 
-## Introduction
+This repository contains the files for the
+[Fluent Bit documentation library](https://docs.fluentbit.io/). Keeping these docs
+separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit)
+helps reduce the number of commits to the Fluent Bit source code and makes it
+easier to maintain both projects.
 
-[Fluent Bit Documentation](https://docs.fluentbit.io) source code lives in a separate repository called [fluent/fluent-bit-docs](https://github.com/fluent/fluent-bit-docs) on Github. The reason of this separate repository is to avoid extra commits on Fluent Bit source code project history that leads to more complexity when maintaining the core project: yes, we read the commit history every single day, and usually, we maintain separate branches and this separation simplify the process for us.
+Fluent Bit has a group of dedicated maintainers who oversee this repository,
+including several technical writers. These writers will review any pull requests
+you open, so don't be afraid to contribute—even if you're not a writer by trade.
+Your suggestions are valuable, and we'll help you wrangle any stray commas.
+
+## GitBook
+
+The Fluent Bit docs library is built and hosted through
+[GitBook](https://docs.gitbook.com/). Unfortunately, GitBook doesn't support
+local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook
+account can verify that things are formatted correctly after you open a new pull
+request.
+
+Each `.md` file in this repository is a single page. You can use
+[standard Markdown syntax](https://docs.gitbook.com/content-editor/editing-content/markdown)
+to edit existing pages, or create a new `.md` file to add an additional page to
+the docs library. If you create a new page, you'll also need to update
+[GitBook's `SUMMARY.md` file](https://docs.gitbook.com/integrations/git-sync/content-configuration#structure)
+(or ask a maintainer to update it for you).
 
 ## Workflow
 
-All documentation contributions arrives as Pull Requests (PR) on Github in the repository [fluent/fluent-bit-docs](https://github.com/fluent/fluent-bit-docs). Then some of the maintainers of Fluent Bit will review it, triage it, add comments if needed, or merge it.
+After you open a pull request in this repository, a Fluent Bit maintainer will review
+it, triage it, add comments or suggestions as needed, and then merge it. After
+your changes are successfully merged into `master`, the docs site will update
+within a few minutes.
 
-Once a PR is merged, a third-party service called [Gitbook](https://gitbook.com) will receive a notification and will grab the latest changes, render a new site and update the content of [docs.fluentbit.io](https://docs.fluentbit.io).
+### Stale pull requests
 
-## Source Code Structure
+If you open a pull request that requires ongoing discussion or review, the
+Fluent Bit maintainers will add a [`waiting-for-user` tag](#tags) to your pull
+request. This tag means that we're blocked from moving forward until you reply.
+To keep contributions from going stale, we'll wait 45 days for your response,
+but we may close the pull request if we don't hear back from you by then.
 
-Documentation source code structure depends on Fluent Bit source code structure and its versions. In Fluent Bit source code, we  have a stable branch and a development branch; as of now, these are:
+## Submit a contribution
 
-- stable branch: [1.8](https://github.com/fluent/fluent-bit/tree/1.8)
-- development branch: [master](https://github.com/fluent/fluent-bit/tree/master)
+When you open a pull request, make your changes against `master`, which is the
+active development branch. If your contribution also applies to the latest
+stable version, submit another PR for that versioned branch. However, if
+submitting multiple PRs at the same time adds too much complexity, you can instead
+create a single PR against `master` and specify that your changes need to be
+**backported** to other branches; one of our maintainers will take care of that
+process on your behalf.
 
-For Documentation, we follow the same pattern; we have branches for the stable and development versions.
+All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then **if** the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, please specify in the first PR as a comment (for master branch) that it needs to be *backported*. One of our maintainers will take care of that process.
 
-## Submitting Contributions
+As a contributor, we'll ask you to follow a few best practices related to Git:
 
-All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then **if** the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, please specify in the first PR as a comment (for master branch)  that it needs to be *backported*. One of our maintainers will take care of that process.
+### One file per commit
 
-### GIT email check
+Each commit you make should only modify one file or interface—we follow the same
+practice in the Fluent Bit source code.
 
-Most of the time GIT is not fully configured in your environment, and when cloning the repository and committing changes, the user email might not be set. Make sure your email is properly configured. You can check your current setting with:
+### Commit subjects
 
-```bash
-cd fluent-bit-docs/
-git config user.email 
-```
+Use descriptive commit subjects that describe which file or interface you're
+modifying.
 
-If you need to adjust your email, do this:
+For example, if you're modifying the Syslog output plugin doc, whose file is
+located at [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/syslog.md), this would be a descriptive commit subject:
 
-```
-git config user.email something@myemailprovider.com
-```
+`pipeline: outputs: syslog: fix grammar in examples`
 
-### Commit Subjects
+Since this commit is prefixed with the relevant file path, it helps our maintainers
+understand and prioritize your contribution.
 
-The subject must be representative enough to describe which `file` or `interface` is modifying when committing your changes. An everyday use case or example is:
+### Set your email in Git
 
-- User is enhancing the documentation for the Syslog output plugin
+Make sure your email address is configured in your local Git environment. This
+should be the same email address associated with your GitHub account.
 
-Considering that Syslog output plugin documentation resides in this address:
-
-- [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/syslog.md)
-
-the suggested commit will be:
-
-```
-pipeline: outputs: syslog: fix grammar in examples
-```
-
-As you can see, the commit is prefixed with the paths of the file being modified. For maintainers, this helps to understand and prioritize the review of the contributions.
-
-Usually, a PR can have multiple commits, but we enforce that every commit only touches one file or interface (we apply the same practice in Fluent Bit source code).
+For more information, refer to GitHub's guide to
+[setting your commit email address in Git](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-in-git).
 
 ### Sign off your commits
 
-Your commits must be **sign off**; this certifies who is the author of the commit. It might sound a bit redundant, but it is needed. If you don't sign-off your commits, our CI system will flag the PR with a [DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md) error and the PR will be blocked.
+You must sign off your commits to certify your identity as the commit author. If
+you don't sign off your commits, our CI system will flag the pull request with a
+[DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md)
+error and prevent your pull request from merging.
 
-The following link explains how to fix DCO error by signing your commits properly:
+To prevent DCO errors, refer to the following guide about
+[signing your commits properly](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md).
 
-- https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md
+> :bulb: For faster signing, you can use the `-s` flag in Git:
+>
+> `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
+>
+> If you're using VSCode, you can also enable the
+> [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047)
+> setting, which automatically appends a `Signed-off-by:` message to your commits.
 
-For short: always use `-s` when committing your changes, e.g.:
+## Style guidelines
 
+The Fluent Bit maintainers refer to the
+[Google developer documentation style guide](https://developers.google.com/style)
+for most topics related to grammar, style, and formatting. We don't expect you
+to memorize these style rules, but the technical writer who reviews your pull
+request may suggest changes accordingly.
+
+### URLs
+
+When cross-linking to a page in this repository, use a full absolute path whenever
+possible. For example:
+
+```text
+[LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
 ```
-git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"
-```
 
+### Vale
+
+The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which lints
+pull requests and adds suggestions to improve style and clarity. Most Vale tests are
+at the `suggestion` level and won't block merging.
+
+The following tests are at a `error` level and will prevent merging:
+
+- [AmSpelling](https://developers.google.com/style/word-list)
+- [Emdash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
+- [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
+- [Gender](https://developers.google.com/style/pronouns#gender-neutral-pronouns)
+- [GenderBias](https://developers.google.com/style/inclusive-documentation)
+- [HeadingPunctuation](https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings)
+- [LyHyphens](https://developers.google.com/style/hyphens)
+- [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
+  [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
+  By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
+  curly quotes. If you copy-paste from one of these tools, you must correct the quotes
+  back to straight quotes. You can also turn off smart quotes
+  in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en)
+  or [Microsoft Word](https://support.microsoft.com/en-us/office/smart-quotes-in-word-and-powerpoint-702fc92e-b723-4e3d-b2cc-71dedaf2f343)
+  to prevent this problem.
+- [Ordinal](https://developers.google.com/style/numbers)
+- [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
+  Checks for the same word used twice in succession.
+
+The following tests are at a `warning` level and won't prevent merging:
+
+- [Ampersand](https://developers.google.com/style/word-list#ampersand)

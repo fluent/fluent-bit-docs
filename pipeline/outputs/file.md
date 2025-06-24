@@ -12,7 +12,7 @@ The plugin supports the following configuration parameters:
 | File | Set file name to store the records. If not set, the file name will be the _tag_ associated with the records. |
 | Format | The format of the file content. See also Format section. Default: out\_file. |
 | Mkdir | Recursively create output directory if it does not exist. Permissions set to 0755. |
-| Workers | Enables dedicated thread(s) for this output. Default value is set since version 1.8.13. For previous versions is 0. | 1 |
+| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Format
 
@@ -75,6 +75,7 @@ For example, if you set up the configuration as below:
 
 [OUTPUT]
   Name file
+  Match *
   Format template
   Template {time} used={Mem.used} free={Mem.free} total={Mem.total}
 ```
@@ -111,4 +112,3 @@ In your main configuration file append the following Input & Output sections:
     Match *
     Path output_dir
 ```
-

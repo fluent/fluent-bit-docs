@@ -1,30 +1,33 @@
 # Exec Wasi
 
-The **exec_wasi** input plugin, allows to execute WASM program that is WASI target like as external program and collects event logs from there.
+The _Exec Wasi_ input plugin lets you execute Wasm programs that are WASI targets like external programs and collect event logs from there.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| WASI\_Path | The place of a WASM program file. |
-| Parser | Specify the name of a parser to interpret the entry as a structured message. |
-| Accessible\_Paths | Specify the whilelist of paths to be able to access paths from WASM programs. |
-| Interval\_Sec | Polling interval \(seconds\). |
-| Interval\_NSec | Polling interval \(nanosecond\). |
-| Buf\_Size | Size of the buffer \(check [unit sizes](https://docs.fluentbit.io/manual/configuration/unit_sizes) for allowed values\) |
-| Oneshot | Only run once at startup. This allows collection of data precedent to fluent-bit's startup (bool, default: false) |
+| `WASI_Path` | The location of a Wasm program file. |
+| `Parser` | Specify the name of a parser to interpret the entry as a structured message. |
+| `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from WASM programs. |
+| `Interval_Sec` | Polling interval (seconds). |
+| `Interval_NSec` | Polling interval (nanosecond). |
+| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Buf_Size` | Size of the buffer See [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Oneshot` | Only run once at startup. This allows collection of data precedent to the Fluent Bit startup (Boolean, default: `false`). |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
-## Configuration Examples
+## Configuration examples
 
 Here is a configuration example.
-in\_exec\_wasi can handle parser.
-To retrieve from structured data from WASM program, you have to create parser.conf:
 
-Note that `Time_Format` should be aligned for the format of your using timestamp.
-In this documents, we assume that WASM program should write JSON style strings into stdout.
+`in_exec_wasi` can handle parsers. To retrieve from structured data from a WASM program, you must create a `parser.conf`:
 
+The `Time_Format` should be aligned for the format of your using timestamp.
+
+This example assumes the WASM program writes JSON style strings to `stdout`.
 
 ```python
 [PARSER]
@@ -34,7 +37,7 @@ In this documents, we assume that WASM program should write JSON style strings i
     Time_Format %Y-%m-%dT%H:%M:%S.%L %z
 ```
 
-Then, you can specify the above parsers.conf in the main fluent-bit configuration:
+Then, you can specify the `parsers.conf` in the main Fluent Bit configuration:
 
 ```python
 [SERVICE]

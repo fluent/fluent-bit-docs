@@ -1,27 +1,35 @@
-# Disk I/O Metrics
+# Disk I/O metrics
 
-The **disk** input plugin, gathers the information about the disk throughput of the running system every certain interval of time and reports them.
+The _Disk_ input plugin gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 
-The Disk I/O metrics plugin creates metrics that are log-based \(I.e. JSON payload\). If you are looking for Prometheus-based metrics please see the Node Exporter Metrics input plugin. 
+The _Disk I/O metrics_ plugin creates metrics that are log-based, such as JSON payload. For Prometheus-based metrics, see the Node Exporter Metrics input plugin.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| Interval\_Sec | Polling interval \(seconds\).  | 1 |
-| Interval\_NSec | Polling interval \(nanosecond\). | 0 |
-| Dev\_Name | Device name to limit the target. \(e.g. sda\). If not set, _in\_disk_ gathers information from all of disks and partitions. | all disks |
+| `Interval_Sec` | Polling interval (seconds).  | `1` |
+| `Interval_NSec` | Polling interval (nanosecond). | `0` |
+| `Dev_Name` | Device name to limit the target (for example, `sda`). If not set, `in_disk` gathers information from all of disks and partitions. | all disks |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
 In order to get disk usage from your system, you can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
+
+You can run the plugin from the command line:
 
 ```bash
-$ fluent-bit -i disk -o stdout
+fluent-bit -i disk -o stdout
+```
+
+Which returns information like the following:
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -35,9 +43,12 @@ Fluent Bit v1.x.x
 [3] disk.0: [1485590300, {"read_size"=>0, "write_size"=>11997184}]
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following `Input` and `Output` sections:
+
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 
 ```python
 [INPUT]
@@ -50,7 +61,25 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-Note: Total interval \(sec\) = Interval\_Sec + \(Interval\_Nsec / 1000000000\).
+{% endtab %}
 
-e.g. 1.5s = 1s + 500000000ns
+{% tab title="fluent-bit.yaml" %}
 
+```yaml
+pipeline:
+    inputs:
+        - name: disk
+          tag: disk
+          interval_sec: 1
+          interval_nsec: 0
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% endtabs %}
+
+Total interval (sec) = `Interval_Sec` + `(Interval_Nsec` / 1000000000)
+
+For example: `1.5s` = `1s` + `500000000ns`

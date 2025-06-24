@@ -2,18 +2,19 @@
 
 Configuration files must be flexible enough for any deployment need, but they must keep a clean and readable format.
 
-Fluent Bit _Commands_ extends a configuration file with specific built-in features. The list of commands available as of Fluent Bit 0.12 series are:
+Fluent Bit `Commands` extends a configuration file with specific built-in features.
+The following commands are available:
 
 | Command | Prototype | Description |
 | :--- | :--- | :--- |
-| [@INCLUDE](commands.md#cmd_include) | @INCLUDE FILE | Include a configuration file |
-| [@SET](commands.md#cmd_set) | @SET KEY=VAL | Set a configuration variable |
+| [`@INCLUDE`](commands.md#cmd_include) | `@INCLUDE FILE` | Include a configuration file. |
+| [`@SET`](commands.md#cmd_set) | `@SET KEY=VAL` | Set a configuration variable. |
 
-## @INCLUDE Command <a id="cmd_include"></a>
+## `@INCLUDE` <a id="cmd_include"></a>
 
-Configuring a logging pipeline might lead to an extensive configuration file. In order to maintain a human-readable configuration, it's suggested to split the configuration in multiple files.
+Configuring a logging pipeline might lead to an extensive configuration file. In order to maintain a human-readable configuration, split the configuration in multiple files.
 
-The @INCLUDE command allows the configuration reader to include an external configuration file, e.g:
+The `@INCLUDE` command allows the configuration reader to include an external configuration file:
 
 ```text
 [SERVICE]
@@ -23,9 +24,19 @@ The @INCLUDE command allows the configuration reader to include an external conf
 @INCLUDE outputs.conf
 ```
 
-The above example defines the main service configuration file and also include two files to continue the configuration:
+This example defines the main service configuration file and also includes two files to continue the configuration.
 
-### inputs.conf
+Fluent Bit will respects the following order when including:
+
+- Service
+- Inputs
+- Filters
+- Outputs
+
+### `inputs.conf`
+
+The following is an example of an `inputs.conf` file, like the one called in the
+previous example.
 
 ```text
 [INPUT]
@@ -40,6 +51,9 @@ The above example defines the main service configuration file and also include t
 
 ### outputs.conf
 
+The following is an example of an `outputs.conf` file, like the one called in the
+previous example.
+
 ```text
 [OUTPUT]
     Name   stdout
@@ -53,20 +67,14 @@ The above example defines the main service configuration file and also include t
     Logstash_Format On
 ```
 
-Note that despites the order of inclusion, Fluent Bit will **ALWAYS** respect the following order:
+## `@SET` <a id="cmd_set"></a>
 
-* Service
-* Inputs
-* Filters
-* Outputs
+Fluent Bit supports [configuration variables](variables.md). One way to expose this variables to Fluent Bit is through setting a shell environment variable, the other is through the `@SET` command.
 
-## @SET Command <a id="cmd_set"></a>
-
-Fluent Bit supports [configuration variables](variables.md), one way to expose this variables to Fluent Bit is through setting a Shell environment variable, the other is through the _@SET_ command.
-
-The @SET command can only be used at root level of each line, meaning it cannot be used inside a section, e.g:
+The `@SET` command can only be used at root level of each line. It can't be used inside a section:
 
 ```text
+// DO NOT USE
 @SET my_input=cpu
 @SET my_output=stdout
 
@@ -79,4 +87,3 @@ The @SET command can only be used at root level of each line, meaning it cannot 
 [OUTPUT]
     Name ${my_output}
 ```
-

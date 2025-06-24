@@ -17,7 +17,7 @@ If no parser is configured for the stdin plugin, it expects *valid JSON* input d
 1. A JSON object with one or more key-value pairs: `{ "key": "value", "key2": "value2" }`
 3. A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#event-or-record) format, which may be:
   * `[TIMESTAMP, { "key": "value" }]` where TIMESTAMP is a floating point value representing a timestamp in seconds; or
-  * from Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where TIMESTAMP has the same meaning as above and and METADATA is a JSON object.
+  * from Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where TIMESTAMP has the same meaning as above and METADATA is a JSON object.
 
 Multi-line input JSON is supported.
 
@@ -152,6 +152,8 @@ could use a `parser.conf` that captures the whole message line:
 
 then use that in the `parser` clause of the stdin plugin in the `fluent-bit.conf`:
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```
 [INPUT]
     Name    stdin
@@ -162,6 +164,21 @@ then use that in the `parser` clause of the stdin plugin in the `fluent-bit.conf
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+    inputs:
+        - name: stdin
+          tag: stdin
+          parser: stringify_message
+    outputs:
+        - name: stdout
+          match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Fluent Bit will now read each line and emit a single message for each input
 line:
@@ -187,3 +204,4 @@ The plugin supports the following configuration parameters:
 | :--- | :--- | :--- |
 | Buffer\_Size | Set the buffer size to read data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | 16k |
 | Parser | The name of the parser to invoke instead of the default JSON input parser | |
+| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |

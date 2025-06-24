@@ -1,21 +1,27 @@
-# Raspbian / Raspberry Pi
+# Raspbian and Raspberry Pi
 
-Fluent Bit is distributed as **fluent-bit** package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution, the following versions are supported:
+Fluent Bit is distributed as the `fluent-bit` package and is available for the
+Raspberry, specifically for [Raspbian](http://raspbian.org) distribution. The
+following versions are supported:
 
-* Raspbian Bullseye \(11\)
-* Raspbian Buster \(10\)
+* Raspbian Bookworm (12)
+* Raspbian Bullseye (11)
+* Raspbian Buster (10)
 
 ## Server GPG key
 
-The first step is to add our server GPG key to your keyring, on that way you can get our signed packages:
+The first step is to add the Fluent Bit server GPG key to your keyring so you
+can get FLuent Bit signed packages:
 
-```text
+```shell
 curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 ```
 
 ### Updated key from March 2022
 
-From the 1.9.0 and 1.8.15 releases please note that the GPG key has been updated at [https://packages.fluentbit.io/fluentbit.key](https://packages.fluentbit.io/fluentbit.key) so ensure this new one is added.
+For the 1.9.0 and 1.8.15 and later releases, the
+[GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure
+this new one is added.
 
 The GPG Key fingerprint of the new key is:
 
@@ -24,7 +30,8 @@ C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
 
-The previous key is still available at [https://packages.fluentbit.io/fluentbit-legacy.key](https://packages.fluentbit.io/fluentbit-legacy.key) and may be required to install previous versions.
+The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key)
+and might be required to install previous versions.
 
 The GPG Key fingerprint of the old key is:
 
@@ -32,19 +39,29 @@ The GPG Key fingerprint of the old key is:
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
-Refer to the [supported platform documentation](./../supported-platforms.md) to see which platforms are supported in each release.
+Refer to the [supported platform documentation](./../supported-platforms.md) to see
+which platforms are supported in each release.
 
 ## Update your sources lists
 
-On Debian and derivative systems such as Raspbian, you need to add our APT server entry to your sources lists, please add the following content at bottom of your **/etc/apt/sources.list** file.
+On Debian and derivative systems such as Raspbian, you need to add the Fluent Bit
+APT server entry to your sources lists.
 
-### Raspbian 11 \(Bullseye\)
+Add the following content at bottom of your `/etc/apt/sources.list` file.
+
+### Raspbian 12 (Bookworm)
+
+```text
+deb https://packages.fluentbit.io/raspbian/bookworm bookworm main
+```
+
+### Raspbian 11 (Bullseye)
 
 ```text
 deb https://packages.fluentbit.io/raspbian/bullseye bullseye main
 ```
 
-### Raspbian 10 \(Buster\)
+### Raspbian 10 (Buster)
 
 ```text
 deb https://packages.fluentbit.io/raspbian/buster buster main
@@ -52,29 +69,30 @@ deb https://packages.fluentbit.io/raspbian/buster buster main
 
 ### Update your repositories database
 
-Now let your system update the _apt_ database:
+Now let your system update the `apt` database:
 
 ```bash
 sudo apt-get update
 ```
 
 {% hint style="info" %}
-We recommend upgrading your system (```sudo apt-get upgrade```). This could avoid potential issues with expired certificates.
+Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`) to avoid
+potential issues with expired certificates.
 {% endhint %}
 
 ## Install Fluent Bit
 
-Using the following _apt-get_ command you are able now to install the latest _fluent-bit_:
+1. Use the following `apt-get` command to install the latest Fluent Bit:
 
-```text
-sudo apt-get install fluent-bit
-```
+   ```shell
+   sudo apt-get install fluent-bit
+   ```
 
-Now the following step is to instruct _systemd_ to enable the service:
+1. Instruct `systemd` to enable the service:
 
-```bash
-sudo service fluent-bit start
-```
+   ```bash
+   sudo service fluent-bit start
+   ```
 
 If you do a status check, you should see a similar output like this:
 
@@ -92,4 +110,6 @@ sudo service fluent-bit status
 ...
 ```
 
-The default configuration of **fluent-bit** is collecting metrics of CPU usage and sending the records to the standard output, you can see the outgoing data in your _/var/log/syslog_ file.
+The default configuration of Fluent Bit collects metrics for CPU usage and
+sends the records to the standard output. You can see the outgoing data in your
+`/var/log/syslog` file.

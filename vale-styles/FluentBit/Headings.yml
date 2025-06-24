@@ -1,0 +1,73 @@
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+link: 'https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings'
+level: suggestion
+scope: heading
+match: $sentence
+indicators:
+  - ':'
+exceptions:
+  - Amazon
+  - Amazon CloudWatch
+  - Amazon Kinesis Firehose
+  - Amazon Kinesis Streams
+  - API
+  - APIs
+  - Azure
+  - BuildKite
+  - CircleCI
+  - CLI
+  - CloudWatch
+  - Code
+  - Collector
+  - Cosmos
+  - Crowdstrike
+  - cURL
+  - Datadog
+  - Docker
+  - DogStatsD
+  - Elastic Cloud
+  - Emmet
+  - EventBridge
+  - Fluent Bit
+  - GCP
+  - GitLab
+  - GitHub
+  - Google
+  - Google Cloud
+  - Google Cloud Platform
+  - Grafana
+  - gRPC
+  - I
+  - InfluxDB
+  - Kinesis
+  - Kubernetes
+  - LaunchDarkly
+  - Linux
+  - macOS
+  - Marketplace
+  - MongoDB
+  - New Relic
+  - Observability Platform
+  - Okta
+  - OpenMetrics
+  - OpenTelemetry
+  - Opsgenie
+  - PagerDuty
+  - Prometheus
+  - PromQL
+  - REPL
+  - ServiceMonitor
+  - SignalFx
+  - Slack
+  - StatsD
+  - Studio
+  - Tanzu
+  - Telemetry Pipeline
+  - Terraform
+  - TypeScript
+  - URLs
+  - VictorOps
+  - Visual
+  - VS
+  - Windows
