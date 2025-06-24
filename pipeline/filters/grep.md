@@ -94,7 +94,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The filter lets you use multiple rules which are applied in order. You can have as many `Regex` and `Exclude` entries as required.
+The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions).
 
 ### Nested fields example
 
@@ -186,8 +186,12 @@ or is missing or empty, then it will be excluded.
 
 ### Multiple conditions
 
-If you want to set multiple `Regex` or `Exclude`, use the `Logical_Op` property
-to use a logical conjunction or disjunction.
+If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
+If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
+After, if there is no `Regex`, the ligne is send to the output.
+if there is a `Regex` and it match, the ligne is send to the output, else, it's blocked.
+
+If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjuction or disjunction.
 
 If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
 
