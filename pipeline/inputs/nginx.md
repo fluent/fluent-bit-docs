@@ -79,6 +79,7 @@ In your main configuration file append the following `Input` and `Output` sectio
 ```python
 [INPUT]
     Name          nginx_metrics
+    Nginx_Plus    off
     Host          127.0.0.1
     Port          80
     Status_URL    /status
