@@ -57,20 +57,43 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
    Run Fluent Bit with elevated permissions (for example, `sudo`). Loading eBPF programs requires root access or appropriate privileges.
 
    ```bash
-   sudo ./bin/fluent-bit -c path/to/your_config.conf
+   # For YAML configuration.
+   $ sudo ./bin/fluent-bit --config fluent-bit.yaml
+   
+   # For classic configuration.
+   $ sudo ./bin/fluent-bit --config fluent-bit.conf
    ```
 
 ## Configuration example
 
 Here's a basic example of how to configure the plugin:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: ebpf
+        trace: 
+          - trace_signal
+          - trace_malloc
+          - trace_bind
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name          ebpf
     Trace         trace_signal
     Trace         trace_malloc
     Trace         trace_bind
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The configuration enables tracing for:
 
