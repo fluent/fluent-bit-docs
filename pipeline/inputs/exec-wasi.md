@@ -29,7 +29,21 @@ The `Time_Format` should be aligned for the format of your using timestamp.
 
 This example assumes the WASM program writes JSON style strings to `stdout`.
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: wasi
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L %z'
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name        wasi
     Format      json
@@ -37,9 +51,41 @@ This example assumes the WASM program writes JSON style strings to `stdout`.
     Time_Format %Y-%m-%dT%H:%M:%S.%L %z
 ```
 
+{% endtab %}
+{% endtabs %}
+
 Then, you can specify the `parsers.conf` in the main Fluent Bit configuration:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    daemon: off
+    parsers_file: parsers.yaml
+    log_level: info
+    http_server: off
+    http_listen: 0.0.0.0
+    http_port: 2020
+    
+pipeline:
+    inputs:
+      - name: exec_wasi
+        tag: exec.wasi.local
+        wasi_path: /path/to/wasi/program.wasm
+        # Note: run from the 'wasi_path' location.
+        accessible_paths: /path/to/accessible
+        
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Flush        1
     Daemon       Off
@@ -61,3 +107,6 @@ Then, you can specify the `parsers.conf` in the main Fluent Bit configuration:
     Match *
 
 ```
+
+{% endtab %}
+{% endtabs %}
