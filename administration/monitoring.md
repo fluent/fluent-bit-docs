@@ -71,10 +71,10 @@ Start Fluent bit with the corresponding configuration chosen above:
 
 ```shell
 # For YAML configuration.
-bin/fluent-bit -c fluent-bit.conf
+$ ./bin/fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-bin/fluent-bit -c fluent-bit.conf
+$ ./bin/fluent-bit --config fluent-bit.conf
 ```
 
 Fluent Bit starts and generates output in your terminal:
@@ -94,8 +94,8 @@ Use `curl` to gather information about the HTTP server. The following command se
 the command output to the `jq` program, which outputs human-readable JSON data to the
 terminal.
 
-```bash
-curl -s http://127.0.0.1:2020 | jq
+```shell
+$ curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
     "version": "0.13.0",
@@ -264,8 +264,8 @@ layer.
 
 Query the service uptime with the following command:
 
-```bash
-curl -s http://127.0.0.1:2020/api/v1/uptime | jq
+```shell
+$ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 The command prints a similar output like this:
@@ -281,8 +281,8 @@ The command prints a similar output like this:
 
 Query internal metrics in JSON format with the following command:
 
-```bash
-curl -s http://127.0.0.1:2020/api/v1/metrics | jq
+```shell
+$ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 ```
 
 The command prints a similar output like this:
@@ -311,8 +311,8 @@ The command prints a similar output like this:
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
-```bash
-curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
+```shell
+$ curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 ```
 
 This command returns the same metrics in Prometheus format instead of JSON:
@@ -361,7 +361,7 @@ pipeline:
 
 {% tab title="fluent-bit.conf" %}
 
-```yaml
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -482,7 +482,7 @@ pipeline:
 
 {% tab title="fluent-bit.conf" %}
 
-```yaml
+```text
 [SERVICE]
     HTTP_Server  On
     HTTP_Listen  0.0.0.0
@@ -505,8 +505,8 @@ pipeline:
 
 Use the following command to call the health endpoint:
 
-```bash
-curl -s http://127.0.0.1:2020/api/v1/health
+```shell
+$ curl -s http://127.0.0.1:2020/api/v1/health
 ```
 
 With the example configuration, the health status is determined by the following equation:
