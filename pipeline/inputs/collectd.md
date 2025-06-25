@@ -17,7 +17,26 @@ The plugin supports the following configuration parameters:
 
 Here is a basic configuration example:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: collectd
+          listen: 0.0.0.0
+          port: 25826
+          typesdb: '/user/share/collectd/types.db,/etc/collectd/custom.db'
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name         collectd
     Listen       0.0.0.0
