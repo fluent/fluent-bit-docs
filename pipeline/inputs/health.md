@@ -7,7 +7,7 @@ The _Health_ input plugin lets you check how healthy a TCP server is. It checks 
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
-| :--- | :--- |
+| :--- | :--- | :--- |
 | `Host` | Name of the target host or IP address. | _none_ |
 | `Port` | TCP port where to perform the connection request. | _none_ |
 | `Interval_Sec` | Interval in seconds between the service checks.| `1` |
