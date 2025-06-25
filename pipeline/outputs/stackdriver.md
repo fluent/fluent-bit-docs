@@ -1,40 +1,43 @@
 # Stackdriver
 
-Stackdriver output plugin allows to ingest your records into [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
+Stackdriver output plugin allows to ingest your records into the [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
 
-Before to get started with the plugin configuration, make sure to obtain the proper credentials to get access to the service. We strongly recommend to use a common JSON credentials file, reference link:
+Before getting started with the plugin configuration, make sure to obtain the proper credentials to get access to the service. We strongly recommend using a common JSON credentials file, reference link:
 
 * [Creating a Google Service Account for Stackdriver](https://cloud.google.com/logging/docs/agent/authorization#create-service-account)
 
 > Your goal is to obtain a credentials JSON file that will be used later by Fluent Bit Stackdriver output plugin.
 
+Refer to the [Google Cloud `LogEntry` API documentation](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) for information on the meaning of some of the parameters below.
+
 ## Configuration Parameters
 
 | Key | Description | default |
 | :--- | :--- | :--- |
-| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable _$GOOGLE\_APPLICATION\_CREDENTIALS_ |
-| service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
-| service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
-| metadata\_server | Prefix for a metadata server. Can also set environment variable _$METADATA\_SERVER_. | [http://metadata.google.internal](http://metadata.google.internal) |
+| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file | Value of environment variable `$GOOGLE_APPLICATION_CREDENTIALS` |
+| service\_account\_email | Account email associated to the service. Only available if **no credentials file** has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
+| service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
+| metadata\_server | Prefix for a metadata server. | Value of environment variable `$METADATA_SERVER`, or http://metadata.google.internal if unset. |
 | location | The GCP or AWS region in which to store data about the resource. If the resource type is one of the _generic\_node_ or _generic\_task_, then this field is required. |  |
 | namespace | A namespace identifier, such as a cluster name or environment. If the resource type is one of the _generic\_node_ or _generic\_task_, then this field is required. |  |
 | node\_id | A unique identifier for the node within the namespace, such as hostname or IP address. If the resource type is _generic\_node_, then this field is required. |  |
 | job | An identifier for a grouping of related task, such as the name of a microservice or distributed batch. If the resource type is _generic\_task_, then this field is required. |  |
 | task\_id | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is _generic\_task_, then this field is required. |  |
-| export\_to\_project\_id | The GCP project that should receive these logs. | Defaults to the project ID of the google\_service\_credentials file, or the project\_id from Google's metadata.google.internal server. |
-| resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _k8s\_cluster_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
+| export\_to\_project\_id | The GCP project that should receive these logs. | The `project_id` in the google\_service\_credentials file, or the `project_id` from Google's metadata.google.internal server. |
+| resource | Set resource type of data. Supported resource types: _k8s\_container_, _k8s\_node_, _k8s\_pod_, _global_, _generic\_node_, _generic\_task_, and _gce\_instance_. | global, gce\_instance |
 | k8s\_cluster\_name | The name of the cluster that the container \(node or pod based on the resource type\) is running in. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
 | k8s\_cluster\_location | The physical location of the cluster that contains \(node or pod based on the resource type\) the container. If the resource type is one of the _k8s\_container_, _k8s\_node_ or _k8s\_pod_, then this field is required. |  |
-| labels\_key | The value of this field is used by the Stackdriver output plugin to find the related labels from jsonPayload and then extract the value of it to set the LogEntry Labels. | `logging.googleapis.com/labels`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
-| labels | Optional list of comma separated of strings specifying `key=value` pairs. The resulting `labels` will be combined with the elements in obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`.|  |
-| log\_name\_key | The value of this field is used by the Stackdriver output plugin to extract logName from jsonPayload and set the logName field. | `logging.googleapis.com/logName`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
+| labels\_key | The name of the key from the original record that contains the LogEntry's `labels`. | logging.googleapis.com/labels |
+| labels | Optional list of comma-separated of strings specifying `key=value` pairs. The resulting labels will be combined with the elements obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`.|  |
+| log\_name\_key | The name of the key from the original record that contains the logName value. | logging.googleapis.com/logName |
 | tag\_prefix | Set the tag\_prefix used to validate the tag of logs with k8s resource type. Without this option, the tag of the log must be in format of k8s\_container\(pod/node\).\* in order to use the k8s\_container resource type. Now the tag prefix is configurable by this option \(note the ending dot\). | k8s\_container., k8s\_pod., k8s\_node. |
-| severity\_key | Specify the name of the key from the original record that contains the severity information. | `logging.googleapis.com/severity`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
+| severity\_key | The name of the key from the original record that contains the severity. | logging.googleapis.com/severity |
 | project_id_key | The value of this field is used by the Stackdriver output plugin to find the gcp project id from jsonPayload and then extract the value of it to set the PROJECT_ID within LogEntry logName, which controls the gcp project that should receive these logs. | `logging.googleapis.com/projectId`. See [Stackdriver Special Fields][StackdriverSpecialFields] for more info. |
 | autoformat\_stackdriver\_trace | Rewrite the _trace_ field to include the projectID and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the traceID (usually 32 characters). | false |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 | custom\_k8s\_regex | Set a custom regex to extract field like pod\_name, namespace\_name, container\_name and docker\_id from the local\_resource\_id in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
-| resource_labels | An optional list of comma separated strings specifying resource labels plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
+| resource_labels | An optional list of comma-separated strings specifying resource label plaintext assignments (`new=value`) and/or mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, *all* resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | |
+| http_request_key | The name of the key from the original record that contains the LogEntry's `httpRequest`. Note that the default value erroneously uses an underscore; users will likely need to set this to `logging.googleapis.com/httpRequest`. | logging.googleapis.com/http_request |
 | compress | Set payload compression mechanism. The only available option is `gzip`. Default = "", which means no compression.|  |
 | cloud\_logging\_base\_url | Set the base Cloud Logging API URL to use for the `/v2/entries:write` API request. | https://logging.googleapis.com |
 
@@ -178,7 +181,7 @@ An upstream connection error means Fluent Bit was not able to reach Google servi
 [2019/01/07 23:24:09] [error] [oauth2] could not get an upstream connection
 ```
 
-This belongs to a network issue by the environment where Fluent Bit is running, make sure that from the Host, Container or Pod you can reach the following Google end-points:
+This is due to a network issue in the environment where Fluent Bit is running. Make sure that the Host, Container or Pod can reach the following Google end-points:
 
 * [https://www.googleapis.com](https://www.googleapis.com)
 * [https://logging.googleapis.com](https://logging.googleapis.com)
@@ -191,18 +194,12 @@ The error looks like this:
 [2020/08/04 14:43:03] [error] [output:stackdriver:stackdriver.0] fail to process local_resource_id from log entry for k8s_container
 ```
 
-Do following check:
+Check the following:
 
 * If the log entry does not contain the local_resource_id field, does the tag of the log match for format?
-*   If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
+* If tag_prefix is configured, does the prefix of tag specified in the input plugin match the tag_prefix?
 
-### Occasional Crashing with >1 `Workers`
-
-> Github reference: [#7552](https://github.com/fluent/fluent-bit/issues/7552)
-
-When the number of Workers is greater than 1, Fluent Bit may intermittently crash.
-
-## Other implementations
+## Other Implementations
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
