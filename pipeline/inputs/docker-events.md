@@ -20,28 +20,15 @@ This plugin supports the following configuration parameters:
 
 You can run this plugin from the command line:
 
-```bash
-fluent-bit -i docker_events -o stdout
+```shell
+$ fluent-bit -i docker_events -o stdout
 ```
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```yaml
-[INPUT]
-    Name   docker_events
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -52,6 +39,18 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name   docker_events
+
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
