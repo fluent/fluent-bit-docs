@@ -39,8 +39,8 @@ In order to get the statistics of the CPU usage of your system, you can run the 
 
 You can run this filter from the command line using a command like the following:
 
-```bash
-build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
+```shell
+$ build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
 ```
 
 The command returns results similar to the following:
@@ -63,23 +63,9 @@ As described previously, the CPU input plugin gathers the overall usage every on
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name cpu
-    Tag  my_cpu
-
-[OUTPUT]
-    Name  stdout
-    Match *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -92,6 +78,19 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```shell
+[INPUT]
+    Name cpu
+    Tag  my_cpu
+
+[OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}
