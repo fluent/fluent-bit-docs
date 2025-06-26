@@ -28,8 +28,8 @@ You can run the plugin from the command line or through the configuration file:
 
 Run the plugin from the command line using the following command:
 
-```bash
-fluent-bit -i dummy -o stdout
+```shell
+$ fluent-bit -i dummy -o stdout
 ```
 
 which returns results like the following:
@@ -46,13 +46,26 @@ Fluent Bit v2.x.x
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
-
+In your main configuration file append the following:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"message": "custom dummy"}'
+  
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name   dummy
     Dummy {"message": "custom dummy"}
@@ -60,20 +73,6 @@ In your main configuration file append the following `Input` and `Output` sectio
 [OUTPUT]
     Name   stdout
     Match  *
-```
-
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"message": "custom dummy"}'
-  outputs:
-    - name: stdout
-      match: '*'
 ```
 
 {% endtab %}
