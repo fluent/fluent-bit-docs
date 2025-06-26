@@ -28,30 +28,15 @@ In order to start performing the checks, you can run the plugin from the command
 
 From the command line you can configure Fluent Bit to handle Bulk API requests with the following options:
 
-```bash
-fluent-bit -i elasticsearch -p port=9200 -o stdout
+```shell
+$ fluent-bit -i elasticsearch -p port=9200 -o stdout
 ```
 
 ### Configuration file
 
-In your configuration file append the following `Input` and `Output` sections:
+In your configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    name elasticsearch
-    listen 0.0.0.0
-    port 9200
-
-[OUTPUT]
-    name stdout
-    match *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -67,21 +52,13 @@ pipeline:
 ```
 
 {% endtab %}
-{% endtabs %}
-
-As described previously, the plugin will handle ingested Bulk API requests.
-For large bulk ingestion, you might have to increase buffer size using the `buffer_max_size` and `buffer_chunk_size` parameters:
-
-{% tabs %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name elasticsearch
     listen 0.0.0.0
     port 9200
-    buffer_max_size 20M
-    buffer_chunk_size 5M
 
 [OUTPUT]
     name stdout
@@ -89,7 +66,12 @@ For large bulk ingestion, you might have to increase buffer size using the `buff
 ```
 
 {% endtab %}
+{% endtabs %}
 
+As described previously, the plugin will handle ingested Bulk API requests.
+For large bulk ingestion, you might have to increase buffer size using the `buffer_max_size` and `buffer_chunk_size` parameters:
+
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -104,6 +86,22 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    name elasticsearch
+    listen 0.0.0.0
+    port 9200
+    buffer_max_size 20M
+    buffer_chunk_size 5M
+
+[OUTPUT]
+    name stdout
+    match *
 ```
 
 {% endtab %}
