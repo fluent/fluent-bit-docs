@@ -23,8 +23,8 @@ In order to get disk usage from your system, you can run the plugin from the com
 
 You can run the plugin from the command line:
 
-```bash
-fluent-bit -i disk -o stdout
+```shell
+$ fluent-bit -i disk -o stdout
 ```
 
 Which returns information like the following:
@@ -45,24 +45,9 @@ Fluent Bit v1.x.x
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name          disk
-    Tag           disk
-    Interval_Sec  1
-    Interval_NSec 0
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -72,9 +57,25 @@ pipeline:
           tag: disk
           interval_sec: 1
           interval_nsec: 0
+
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name          disk
+    Tag           disk
+    Interval_Sec  1
+    Interval_NSec 0
+
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
