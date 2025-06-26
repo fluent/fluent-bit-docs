@@ -33,6 +33,8 @@ Note that if you do not set _db_, the plugin will tail channels on each startup.
 
 Here is a minimum configuration example.
 
+{% tabs %}
+{% tab title="fluent-bit.conf" %}
 ```python
 [INPUT]
     Name         winevtlog
@@ -44,6 +46,22 @@ Here is a minimum configuration example.
     Name   stdout
     Match  *
 ```
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: winevtlog
+      channels: Setup,Windows PowerShell
+      interval_sec: 1
+      db: winevtlog.sqllite
+  outputs:
+    - name: stdout
+      match: '*'
+```
+{% endtab %}
+{% endtabs %}
 
 Note that some Windows Event Log channels \(like `Security`\) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
 
