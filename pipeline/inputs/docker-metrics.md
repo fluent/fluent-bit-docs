@@ -21,19 +21,6 @@ If you set neither `Include` nor `Exclude`, the plugin will try to get metrics f
 The following example configuration collects metrics from two docker instances (`6bab19c3a0f9` and `14159be4ca2c`).
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name         docker
-    Include      6bab19c3a0f9 14159be4ca2c
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -45,6 +32,18 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name         docker
+    Include      6bab19c3a0f9 14159be4ca2c
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
