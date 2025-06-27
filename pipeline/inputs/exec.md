@@ -6,11 +6,11 @@ The _Exec_ input plugin lets you execute external programs and collects event lo
 
 This plugin invokes commands using a shell. Its inputs are subject to shell metacharacter substitution. Careless use of untrusted input in command arguments could lead to malicious command execution.
 
-{% end hint %}
+{% endhint %}
 
 ## Container support
 
-This plugin needs a functional `/bin/sh` and won't function in all the distroless production images.
+This plugin needs a functional `/bin/sh` and won't function in all the distro-less production images.
 
 The debug images use the same binaries so even though they have a shell, there is no support for this plugin as it's compiled out.
 
@@ -38,8 +38,8 @@ You can run the plugin from the command line or through the configuration file:
 
 The following example will read events from the output of _ls_.
 
-```bash
-fluent-bit -i exec -p 'command=ls /var/log' -o stdout
+```shell
+$ fluent-bit -i exec -p 'command=ls /var/log' -o stdout
 ```
 
 which should return something like the following:
@@ -63,28 +63,9 @@ Fluent Bit v1.x.x
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name          exec
-    Tag           exec_ls
-    Command       ls /var/log
-    Interval_Sec  1
-    Interval_NSec 0
-    Buf_Size      8mb
-    Oneshot       false
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -104,23 +85,17 @@ pipeline:
 ```
 
 {% endtab %}
-{% endtabs %}
-
-## Use as a command wrapper
-
-To use Fluent Bit with the `exec` plugin to wrap another command, use the `Exit_After_Oneshot` and `Propagate_Exit_Code` options:
-
-{% tabs %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
-    Name                exec
-    Tag                 exec_oneshot_demo
-    Command             for s in $(seq 1 10); do echo "count: $s"; sleep 1; done; exit 1
-    Oneshot             true
-    Exit_After_Oneshot  true
-    Propagate_Exit_Code true
+    Name          exec
+    Tag           exec_ls
+    Command       ls /var/log
+    Interval_Sec  1
+    Interval_NSec 0
+    Buf_Size      8mb
+    Oneshot       false
 
 [OUTPUT]
     Name   stdout
@@ -128,7 +103,13 @@ To use Fluent Bit with the `exec` plugin to wrap another command, use the `Exit_
 ```
 
 {% endtab %}
+{% endtabs %}
 
+## Use as a command wrapper
+
+To use Fluent Bit with the `exec` plugin to wrap another command, use the `Exit_After_Oneshot` and `Propagate_Exit_Code` options:
+
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -144,6 +125,23 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name                exec
+    Tag                 exec_oneshot_demo
+    Command             for s in $(seq 1 10); do echo "count: $s"; sleep 1; done; exit 1
+    Oneshot             true
+    Exit_After_Oneshot  true
+    Propagate_Exit_Code true
+
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
@@ -176,11 +174,11 @@ By default the `exec` plugin emits one message per command output line, with a s
 
 {% hint style="warning" %}
 
-Take great care with shell quoting and escaping when wrapping commands**.
+Take great care with shell quoting and escaping when wrapping commands.
 
 {% endhint %}
 
-A script like
+A script like the following can ruin your day if someone passes it the argument `$(rm -rf /my/important/files; echo "deleted your stuff!")'`
 
 ```bash
 #!/bin/bash
@@ -192,9 +190,6 @@ exec fluent-bit \
   -p propagate_exit_code=true \
   -p command='myscript $*'
 ```
-
-can ruin your day if someone passes it the argument
-`$(rm -rf /my/important/files; echo "deleted your stuff!")'`
 
 The previous script would be safer if written with:
 
