@@ -31,40 +31,23 @@ To receive Forward messages, you can run the plugin from the command line or thr
 
 From the command line you can let Fluent Bit listen for Forward messages with the following options:
 
-```bash
-fluent-bit -i forward -o stdout
+```shell
+$ fluent-bit -i forward -o stdout
 ```
 
 By default, the service listens on all interfaces (`0.0.0.0`) through TCP port `24224`. You can change this by passing parameters to the command:
 
-```bash
-fluent-bit -i forward -p listen="192.168.3.2" -p port=9090 -o stdout
+```shell
+$ fluent-bit -i forward -p listen="192.168.3.2" -p port=9090 -o stdout
 ```
 
 In the example, the Forward messages arrive only through network interface `192.168.3.2` address and TCP Port `9090`.
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name              forward
-    Listen            0.0.0.0
-    Port              24224
-    Buffer_Chunk_Size 1M
-    Buffer_Max_Size   6M
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -75,9 +58,26 @@ pipeline:
           port: 24224
           buffer_chunk_size: 1M
           buffer_max_size: 6M
+          
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name              forward
+    Listen            0.0.0.0
+    Port              24224
+    Buffer_Chunk_Size 1M
+    Buffer_Max_Size   6M
+
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
@@ -92,9 +92,29 @@ For using shared key, specify `shared_key` in both of forward output and forward
 `self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
 
 {% tabs %}
+{% tab title="fluent-bit-secure-forward.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: forward
+          listen: 0.0.0.0
+          port: 24224
+          buffer_chunk_size: 1M
+          buffer_max_size: 6M
+          security.users: fluentbit changeme
+          shared_key: secret
+          self_hostname: flb.server.local
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit-secure-forward.conf" %}
 
-```python
+```text
 [INPUT]
     Name              forward
     Listen            0.0.0.0
@@ -111,40 +131,20 @@ For using shared key, specify `shared_key` in both of forward output and forward
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit-secure-forward.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: forward
-          listen: 0.0.0.0
-          port: 24224
-          buffer_chunk_size: 1M
-          buffer_max_size: 6M
-          security.users: fluentbit changeme
-          shared_key: secret
-          self_hostname: flb.server.local
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% endtabs %}
 
 ## Testing
 
 After Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](http://www.fluentd.org):
 
-```bash
-echo '{"key 1": 123456789, "key 2": "abcdefg"}' | fluent-cat my_tag
+```shell
+$ echo '{"key 1": 123456789, "key 2": "abcdefg"}' | fluent-cat my_tag
 ```
 
 When you run the plugin with the following command:
 
-```bash
-bin/fluent-bit -i forward -o stdout
+```shell
+$ fluent-bit -i forward -o stdout
 ```
 
 In [Fluent Bit](http://fluentbit.io) you should see the following output:
