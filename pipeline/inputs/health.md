@@ -25,18 +25,35 @@ To start performing the checks, you can run the plugin from the command line or 
 
 From the command line you can let Fluent Bit generate the checks with the following options:
 
-```bash
-fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
+```shell
+$ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
 ```
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: health
+          host: 127.0.0.1
+          port: 80
+          interval_sec: 1
+          interval_nsec: 0
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name          health
     Host          127.0.0.1
@@ -50,42 +67,37 @@ In your main configuration file append the following `Input` and `Output` sectio
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: health
-          host: 127.0.0.1
-          port: 80
-          interval_sec: 1
-          interval_nsec: 0
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% endtabs %}
 
 ## Testing
 
 Once Fluent Bit is running, you will see some random values in the output interface similar to this:
 
-```bash
+```shell
 $ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
-Fluent Bit v1.8.0
-* Copyright (C) 2019-2021 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
+
+Fluent Bit v4.0.0
+* Copyright (C) 2015-2025 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2021/06/20 08:39:47] [ info] [engine] started (pid=4621)
-[2021/06/20 08:39:47] [ info] [storage] version=1.1.1, initializing...
-[2021/06/20 08:39:47] [ info] [storage] in-memory
-[2021/06/20 08:39:47] [ info] [storage] normal synchronization mode, checksum disabled, max_chunks_up=128
-[2021/06/20 08:39:47] [ info] [sp] stream processor started
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+
+[2025/06/30 16:12:06] [ info] [fluent bit] version=4.0.0, commit=3a91b155d6, pid=91577
+[2025/06/30 16:12:06] [ info] [storage] ver=1.5.2, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/06/30 16:12:06] [ info] [simd    ] disabled
+[2025/06/30 16:12:06] [ info] [cmetrics] version=0.9.9
+[2025/06/30 16:12:06] [ info] [ctraces ] version=0.6.2
+[2025/06/30 16:12:06] [ info] [input:health:health.0] initializing
+[2025/06/30 16:12:06] [ info] [input:health:health.0] storage_strategy='memory' (memory only)
+[2025/06/30 16:12:06] [ info] [sp] stream processor started
+[2025/06/30 16:12:06] [ info] [output:stdout:stdout.0] worker #0 started
 [0] health.0: [1624145988.305640385, {"alive"=>true}]
 [1] health.0: [1624145989.305575360, {"alive"=>true}]
 [2] health.0: [1624145990.306498573, {"alive"=>true}]
