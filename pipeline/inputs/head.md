@@ -41,9 +41,31 @@ siblings     : 1
 The CPU frequency is `cpu MHz : 2791.009`. The following configuration file gets the needed line:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: head
+          tag: head.cpu
+          file: /proc/cpuinfo
+          lines: 8
+          split_line: true
+          
+    filters:
+        - name: record_modifier
+          match: '*'
+          whitelist_key: line7
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name           head
     Tag            head.cpu
@@ -63,33 +85,12 @@ The CPU frequency is `cpu MHz : 2791.009`. The following configuration file gets
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: head
-          tag: head.cpu
-          file: /proc/cpuinfo
-          lines: 8
-          split_line: true
-    filters:
-        - name: record_modifier
-          match: '*'
-          whitelist_key: line7
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% endtabs %}
 
 If you run the following command:
 
-```bash
-bin/fluent-bit -c head.conf
+```shell
+$ fluent-bit -c head.conf
 ```
 
 The output is something similar to;
@@ -116,8 +117,8 @@ To read the head of a file, you can run the plugin from the command line or thro
 
 The following example will read events from the `/proc/uptime` file, tag the records with the `uptime` name and flush them back to the `stdout` plugin:
 
-```bash
-fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
+```shell
+$ fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
 ```
 
 The output will look similar to:
@@ -138,27 +139,9 @@ Fluent Bit v1.x.x
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name          head
-    Tag           uptime
-    File          /proc/uptime
-    Buf_Size      256
-    Interval_Sec  1
-    Interval_NSec 0
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -170,9 +153,27 @@ pipeline:
           buf_size: 256
           interval_sec: 1
           interval_nsec: 0
+          
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```shell
+[INPUT]
+    Name          head
+    Tag           uptime
+    File          /proc/uptime
+    Buf_Size      256
+    Interval_Sec  1
+    Interval_NSec 0
+
+[OUTPUT]
+    Name   stdout
+    Match  *
 ```
 
 {% endtab %}
