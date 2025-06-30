@@ -1,58 +1,59 @@
 ---
-description: >-
-  A plugin based on Process Exporter to collect process level of metrics of system
+description: A plugin based on Process Exporter to collect process level of metrics of system
   metrics
 ---
 
-# Process Exporter Metrics
+# Process Exporter metrics
 
-[Prometheus Node Exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU / Disk / Network / Process statistics.
-Fluent Bit 2.2 onwards includes a process exporter plugin that builds off the Prometheus design to collect process level metrics without having to manage two separate processes or agents.
+[Prometheus Node exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems such as CPU, disk, network, and process statistics.
+
+Fluent Bit 2.2 and later includes a process exporter plugin that builds off the Prometheus design to collect process level metrics without having to manage two separate processes or agents.
 
 The Process Exporter Metrics plugin implements collecting of the various metrics available from [the third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and these will be expanded over time as needed.
 
-**Important note:** All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters do not operate on top of metrics.
+{% hint style="info" %}
+ All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't operate on top of metrics.
+{% endhint %}
 
 This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to access the relevant metrics.
 
-macOS does not have the `proc` filesystem so this plugin will not work for it.
-
+macOS doesn't have the `proc` filesystem so this plugin won't work for it.
 
 ## Configuration
 
-| Key                       | Description                                                                            | Default   |
-| ------------------------- | -------------------------------------------------------------------------------------- | --------- |
-| scrape\_interval          | The rate at which metrics are collected.                                               | 5 seconds |
-| path.procfs               | The mount point used to collect process information and metrics. Read-only is enough   | /proc/    |
-| process\_include\_pattern | regex to determine which names of processes are included in the metrics produced by this plugin | It is applied for all process unless explicitly set. Default is `.+`. |
-| process\_exclude\_pattern | regex to determine which names of processes are excluded in the metrics produced by this plugin | It is not applied unless explicitly set. Default is `NULL`. |
-| metrics                   | To specify which process level of metrics are collected from the host operating system. These metrics depend on `/proc` fs. The actual values of metrics will be read from `/proc` when needed. cpu, io, memory, state, context\_switches, fd, start\_time, thread\_wchan, thread depend on procfs. | `cpu,io,memory,state,context_switches,fd,start_time,thread_wchan,thread` |
+| Key | Description | Default   |
+| ----| ----------- | --------- |
+| `scrape_interval` | The rate, in seconds, at which metrics are collected.  | `5` |
+| `path.procfs` | The mount point used to collect process information and metrics. Read-only permissions are enough. | `/proc/` |
+| `process_include_pattern` | Regular expression to determine which names of processes are included in the metrics produced by this plugin. It's applied for all process unless explicitly set. | `.+` |
+| `process_exclude_pattern` | Regular expression to determine which names of processes are excluded in the metrics produced by this plugin. It's not applied unless explicitly set. | `NULL` |
+| `metrics` | Specify which process level of metrics are collected from the host operating system. Actual values of metrics will be read from `/proc` when needed. `cpu`, `io`, `memory`, `state`, `context_switches`, `fd,` `start_time`, `thread_wchan`, and `thread` metrics depend on `procfs`. | `cpu,io,memory,state,context_switches,fd,start_time,thread_wchan,thread` |
 
-## Metrics Available
+## Available  metrics
 
-| Name              | Description                                                                                      |
+| Name              | Description |
 | ----------------- | -------------------------------------------------- |
-| cpu               | Exposes CPU statistics from `/proc`.               |
-| io                | Exposes I/O statistics from `/proc`.               |
-| memory            | Exposes memory statistics from `/proc`.            |
-| state             | Exposes process state statistics from `/proc`.     |
-| context\_switches | Exposes context\_switches statistics from `/proc`. |
-| fd                | Exposes file descriptors statistics from `/proc`.  |
-| start\_time       | Exposes start\_time statistics from `/proc`.       |
-| thread\_wchan     | Exposes thread\_wchan from `/proc`.                |
-| thread            | Exposes thread statistics from `/proc`.            |
+| `cpu`               | Exposes CPU statistics from `/proc`.               |
+| `io`                | Exposes I/O statistics from `/proc`.               |
+| `memory`            | Exposes memory statistics from `/proc`.            |
+| `state`             | Exposes process state statistics from `/proc`.     |
+| `context_switches` | Exposes `context_switches` statistics from `/proc`. |
+| `fd`                | Exposes file descriptors statistics from `/proc`.  |
+| `start_time`       | Exposes `start_time` statistics from `/proc`.       |
+| `thread_wchan`     | Exposes `thread_wchan` from `/proc`.                |
+| `thread`            | Exposes thread statistics from `/proc`.            |
 
 ## Threading
 
 This input always runs in its own [thread](../../administration/multithreading.md#inputs).
 
-## Getting Started
+## Getting started
 
-### Simple Configuration File
+### Configuration file
 
-In the following configuration file, the input plugin _process\_exporter\_metrics collects _metrics every 2 seconds and exposes them through our [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
+In the following configuration file, the input plugin `process_exporter_metrics` collects metrics every 2 seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
-```
+```python
 # Process Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
@@ -78,20 +79,21 @@ In the following configuration file, the input plugin _process\_exporter\_metric
     port            2021
 ```
 
-You can see the metrics by using _curl:_
+You can see the metrics by using `curl`:
 
 ```bash
 curl http://127.0.0.1:2021/metrics
 ```
 
-### Container to Collect Host Metrics
+### Container to collect host metrics
 
 When deploying Fluent Bit in a container you will need to specify additional settings to ensure that Fluent Bit has access to the process details.
+
 The following `docker` command deploys Fluent Bit with a specific mount path for
 `procfs` and settings enabled to ensure that Fluent Bit can collect from the host.
 These are then exposed over port 2021.
 
-```
+```bash
 docker run -ti -v /proc:/host/proc:ro \
                -p 2021:2021        \
                fluent/fluent-bit:2.2 \
@@ -101,8 +103,8 @@ docker run -ti -v /proc:/host/proc:ro \
                          -f 1
 ```
 
-## Enhancement Requests
+## Enhancement requests
 
-Development prioritises a subset of the available collectors in the [the third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter), to request others please open a Github issue by using the following template:\
-\
-\- [in_process_exporter_metrics](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_process_exporter_metrics:%20add%20ABC%20collector)
+Development prioritises a subset of the available collectors in the [third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter). To request others, open a GitHub issue by using the following template:
+
+- [`in_process_exporter_metrics`](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_process_exporter_metrics:%20add%20ABC%20collector)
