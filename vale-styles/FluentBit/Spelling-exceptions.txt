@@ -81,6 +81,7 @@ grpc_method
 grpc_service
 gzip
 HashiCorp
+HEC
 hostname
 Hostname
 Ingester

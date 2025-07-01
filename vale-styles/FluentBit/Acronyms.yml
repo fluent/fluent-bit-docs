@@ -39,6 +39,7 @@ exceptions:
   - GTK
   - GUI
   - GZIP
+  - HEC
   - HPA
   - IAM
   - HTML
