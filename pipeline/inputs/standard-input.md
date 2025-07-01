@@ -7,7 +7,7 @@ To use it, specify the plugin name as the input. For example:
  fluent-bit -i stdin -o stdout
 ```
 
-If the `stdin` stream is closed (`end-of-file`), the plugin instruct Fluent Bit to exit with success (`0`) after flushing any pending output.
+If the `stdin` stream is closed (`end-of-file`), the plugin instructs Fluent Bit to exit with success (`0`) after flushing any pending output.
 
 ## Configuration parameters
 
@@ -47,8 +47,7 @@ The Fluent Bit event timestamp will be set from the input record if the two-elem
 
 ### JSON input
 
-To demonstrate how the plugin works, you can use a `bash` script that generates
-messages and writes them to [Fluent Bit](http://fluentbit.io).
+To demonstrate how the plugin works, you can use a `bash` script that generates messages and writes them to [Fluent Bit](http://fluentbit.io).
 
 1. Write the following content in a file named `test.sh`:
 
@@ -117,8 +116,7 @@ Which returns the following:
 
 ### JSON input with metadata
 
-Additional metadata is supported in Fluent Bit v2.1.0 and later by replacing the timestamp
-with a two-element object. For example:
+Additional metadata is supported in Fluent Bit v2.1.0 and later by replacing the timestamp with a two-element object. For example:
 
 ```bash
 #!/bin/sh
@@ -165,7 +163,7 @@ On older Fluent Bit versions records in this format will be discarded. If the lo
 
 To capture inputs in other formats, specify a parser configuration for the `stdin` plugin.
 
-For example, if you want to read raw messages line byline and forward them you could use a `parser.conf` that captures the whole message line:
+For example, if you want to read raw messages line by line and forward them, you could use a `parser.conf` that captures the whole message line:
 
 ```text
 [PARSER]
@@ -175,7 +173,7 @@ For example, if you want to read raw messages line byline and forward them you c
     regex       ^(?<message>.*)
 ```
 
-YOu can then use that in the `parser` clause of the `stdin` plugin in the `fluent-bit.conf`:
+You can then use that in the `parser` clause of the `stdin` plugin in the `fluent-bit.conf` file:
 
 {% tabs %}
 
@@ -211,7 +209,6 @@ pipeline:
 {% endtabs %}
 
 Fluent Bit will now read each line and emit a single message for each input
-line, using the following command:
 
 ```shell
 seq 1 5 | /opt/fluent-bit/bin/fluent-bit -c fluent-bit.conf -R parser.conf -q
