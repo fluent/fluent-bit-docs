@@ -17,11 +17,11 @@ This plugin has the following configuration parameters:
 
 ## Get started
 
-To retrieve messages over the Serial interface, you can run the plugin from the command line or through the configuration file:
+To retrieve messages by using the Serial interface, you can run the plugin from the command line or through the configuration file:
 
 ### Command line
 
-The following example loads the input serial plugin where it set a `Bitrate` of `9600`, listens from the `/dev/tnt0` interface and uses the custom tag `data` to route the message.
+The following example loads the input serial plugin where it set a `Bitrate` of `9600`, listens from the `/dev/tnt0` interface, and uses the custom tag `data` to route the message.
 
 ```shell
 fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
@@ -102,26 +102,26 @@ You can emulate a serial interface on your Linux system and test the serial inpu
 
 ### Build and install the `tty0tty` module
 
-1. Download the sources
+1. Download the sources:
 
    ```bash
    git clone https://github.com/freemed/tty0tty
    ```
 
-1. Unpack and compile
+1. Unpack and compile:
 
    ```bash
    cd tty0tty/module
    make
    ```
 
-1. Copy the new kernel module into the kernel modules directory
+1. Copy the new kernel module into the kernel modules directory:
 
    ```bash
    sudo cp tty0tty.ko /lib/modules/$(uname -r)/kernel/drivers/misc/
    ```
 
-1. Load the module
+1. Load the module:
 
    ```bash
    sudo depmod
