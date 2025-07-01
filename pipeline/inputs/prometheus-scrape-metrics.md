@@ -1,6 +1,6 @@
 # Prometheus Scrape metrics
 
-Fluent Bit 1.9 and later includes additional metrics features to let you collect logs and metrics from a Prometheus-based endpoint at a set interval. These metrics can be routed to metric supported endpoints such as [Prometheus Exporter](../outputs/prometheus-exporter.md), [InfluxDB](../outputs/influxdb.md) or [Prometheus Remote Write](../outputs/prometheus-remote-write.md)
+Fluent Bit 1.9 and later includes additional metrics features to let you collect logs and metrics from a Prometheus-based endpoint at a set interval. These metrics can be routed to metric supported endpoints such as [Prometheus Exporter](../outputs/prometheus-exporter.md), [InfluxDB](../outputs/influxdb.md) or [Prometheus Remote Write](../outputs/prometheus-remote-write.md).
 
 ## Configuration
 
