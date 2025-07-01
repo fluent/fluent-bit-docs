@@ -98,7 +98,7 @@ In your main configuration file append the following sections:
 
 ## Emulating a serial interface on Linux
 
-You can emulate a serial interface on your Linux system and test the serial input plugin locally when you don't have an interface in your computer. The following procedure has been tested on Ubuntu 15.04 running a Linux Kernel 4.0.
+You can emulate a serial interface on your Linux system and test the serial input plugin locally when you don't have an interface in your computer. The following procedure has been tested on Ubuntu 15.04 running Linux Kernel 4.0.
 
 ### Build and install the `tty0tty` module
 
