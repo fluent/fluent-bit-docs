@@ -1,40 +1,47 @@
-# Serial Interface
+# Serial interface
 
-The **serial** input plugin, allows to retrieve messages/data from a _Serial_ interface.
+The _Serial_ input plugin lets you retrieve messages and data from a serial interface.
 
-## Configuration Parameters
+## Configuration parameters
 
-| Key | Description |
-| :--- | :--- |
-| File | Absolute path to the device entry, e.g: /dev/ttyS0 |
-| Bitrate | The bitrate for the communication, e.g: 9600, 38400, 115200, etc |
-| Min\_Bytes | The serial interface will expect at least _Min\_Bytes_ to be available before to process the message \(default: 1\) |
-| Separator | Allows to specify a _separator_ string that's used to determinate when a message ends. |
-| Format | Specify the format of the incoming data stream. The only option available is 'json'. Note that _Format_ and _Separator_ cannot be used at the same time. |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
+This plugin has the following configuration parameters:
 
-## Getting Started
+| Key | Description | Default |
+| :--- | :--- | ---------|
+| `File` | Absolute path to the device entry. For example, `/dev/ttyS0`. | _none_ |
+| `Bitrate` | The bit rate for the communication. For example: `9600`, `38400`, `115200`. | _none_ |
+| `Min_Bytes` | The serial interface expects at least `Min_Bytes` to be available before processing the message. | `1` |
+| `Separator` | Specify a separator string that's used to determinate when a message ends. | _none_ |
+| `Format` | Specify the format of the incoming data stream. `Format` and `Separator` can't be used at the same time. | `json` (no other options available) |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-In order to retrieve messages over the _Serial_ interface, you can run the plugin from the command line or through the configuration file:
+## Get started
 
-### Command Line
+To retrieve messages over the Serial interface, you can run the plugin from the command line or through the configuration file:
 
-The following example loads the input _serial_ plugin where it set a Bitrate of 9600, listen from the _/dev/tnt0_ interface and use the custom tag _data_ to route the message.
+### Command line
 
-```text
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+The following example loads the input serial plugin where it set a `Bitrate` of `9600`, listens from the `/dev/tnt0` interface and uses the custom tag `data` to route the message.
+
+```shell
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
 ```
 
-The above interface \(/dev/tnt0\) is an emulation of the serial interface \(more details at bottom\), for demonstrative purposes we will write some message to the other end of the interface, in this case _/dev/tnt1_, e.g:
+The interface (`/dev/tnt0`) is an emulation of the serial interface. Further examples will write some message to the other end of the interface. For example, `/dev/tnt1`.
 
-```text
-$ echo 'this is some message' > /dev/tnt1
+```shell
+echo 'this is some message' > /dev/tnt1
 ```
 
-In Fluent Bit you should see an output like this:
+In Fluent Bit you can run the command:
 
 ```bash
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+```
+
+Which should produce output like:
+
+```text
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -45,14 +52,23 @@ Fluent Bit v1.x.x
 [0] data: [1463780680, {"msg"=>"this is some message"}]
 ```
 
-Now using the _Separator_ configuration, we could send multiple messages at once \(run this command after starting Fluent Bit\):
+Using the `Separator` configuration, you can send multiple messages at once.
 
-```text
-$ echo 'aaXbbXccXddXee' > /dev/tnt1
+Run this command after starting Fluent Bit:
+
+```shell
+echo 'aaXbbXccXddXee' > /dev/tnt1
 ```
 
+Then, run Fluent Bit:
+
+```shell
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
+```
+
+This should produce results similar to the following:
+
 ```text
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
 Fluent-Bit v0.8.0
 Copyright (C) Treasure Data
 
@@ -63,9 +79,9 @@ Copyright (C) Treasure Data
 [3] data: [1463781902, {"msg"=>"dd"}]
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following sections:
 
 ```python
 [INPUT]
@@ -80,43 +96,45 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Match  *
 ```
 
-## Emulating Serial Interface on Linux
+## Emulating a serial interface on Linux
 
-The following content is some extra information that will allow you to emulate a serial interface on your Linux system, so you can test this _Serial_ input plugin locally in case you don't have such interface in your computer. The following procedure has been tested on Ubuntu 15.04 running a Linux Kernel 4.0.
+You can emulate a serial interface on your Linux system and test the serial input plugin locally when you don't have an interface in your computer. The following procedure has been tested on Ubuntu 15.04 running a Linux Kernel 4.0.
 
-## Build and install the tty0tty module
+### Build and install the `tty0tty` module
 
-Download the sources
+1. Download the sources
 
-```bash
-$ git clone https://github.com/freemed/tty0tty
-```
+   ```bash
+   git clone https://github.com/freemed/tty0tty
+   ```
 
-Unpack and compile
+1. Unpack and compile
 
-```bash
-$ cd tty0tty/module
-$ make
-```
+   ```bash
+   cd tty0tty/module
+   make
+   ```
 
-Copy the new kernel module into the kernel modules directory
+1. Copy the new kernel module into the kernel modules directory
 
-```bash
-$ sudo cp tty0tty.ko /lib/modules/$(uname -r)/kernel/drivers/misc/
-```
+   ```bash
+   sudo cp tty0tty.ko /lib/modules/$(uname -r)/kernel/drivers/misc/
+   ```
 
-Load the module
+1. Load the module
 
-```bash
-$ sudo depmod
-$ sudo modprobe tty0tty
-```
+   ```bash
+   sudo depmod
+   sudo modprobe tty0tty
+   ```
 
-You should see new serial ports in /dev/ \(ls /dev/tnt\*\) Give appropriate permissions to the new serial ports:
+   You should see new serial ports in `dev` (`ls /dev/tnt\*\`).
 
-```bash
-$ sudo chmod 666 /dev/tnt*
-```
+1. Give appropriate permissions to the new serial ports:
+
+   ```bash
+   sudo chmod 666 /dev/tnt*
+   ```
 
 When the module is loaded, it will interconnect the following virtual interfaces:
 
