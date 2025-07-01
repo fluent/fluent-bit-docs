@@ -37,15 +37,30 @@ The tag for the HTTP input plugin is set by adding the tag to the end of the req
 For example, in the following curl message the tag set is `app.log**. **` because the end path is `/app_log`:
 
 ```shell
-curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+          
+    outputs:
+        - name: stdout
+          match: app.log
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name http
     listen 0.0.0.0
@@ -57,7 +72,17 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 ```
 
 {% endtab %}
+{% endtabs %}
 
+### Configuration file `http.0` example
+
+If you don't set the tag, `http.0` is automatically used. If you have multiple HTTP inputs then they will follow a pattern of `http.N` where `N` is an integer representing the input.
+
+```shell
+$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888
+```
+
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -66,26 +91,16 @@ pipeline:
         - name: http
           listen: 0.0.0.0
           port: 8888
+
     outputs:
         - name: stdout
-          match: app.log
+          match: http.0
 ```
 
 {% endtab %}
-{% endtabs %}
-
-### Configuration file `http.0` example
-
-If you don't set the tag, `http.0` is automatically used. If you have multiple HTTP inputs then they will follow a pattern of `http.N` where `N` is an integer representing the input.
-
-```shell
-curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888
-```
-
-{% tabs %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name http
     listen 0.0.0.0
@@ -94,21 +109,6 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 [OUTPUT]
     name  stdout
     match  http.0
-```
-
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
-    outputs:
-        - name: stdout
-          match: http.0
 ```
 
 {% endtab %}
@@ -121,15 +121,31 @@ The `tag_key` configuration option lets you specify the key name that will be us
 ### Curl request
 
 ```shell
-curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file `tag_key` example
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          listen: 0.0.0.0
+          port: 8888
+          tag_key: key1
+
+    outputs:
+        - name: stdout
+          match: value1
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name http
     listen 0.0.0.0
@@ -142,22 +158,6 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
-          tag_key: key1
-    outputs:
-        - name: stdout
-          match: value1
-```
-
-{% endtab %}
 {% endtabs %}
 
 #### Set multiple custom HTTP headers on success
@@ -165,24 +165,25 @@ pipeline:
 The `success_header` parameter lets you set multiple HTTP headers on success. The format is:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: http
+          success_header: 
+            - X-Custom custom-answer
+            - X-Another another-answer
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name http
     success_header X-Custom custom-answer
     success_header X-Another another-answer
-```
-
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-    inputs:
-        - name: http
-          success_header: X-Custom custom-answer
-          success_header: X-Another another-answer
 ```
 
 {% endtab %}
@@ -191,27 +192,12 @@ The `success_header` parameter lets you set multiple HTTP headers on success. Th
 #### Example curl message
 
 ```shell
-curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+$ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file example 3
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    name http
-    listen 0.0.0.0
-    port 8888
-
-[OUTPUT]
-    name stdout
-    match *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -227,10 +213,24 @@ pipeline:
 ```
 
 {% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    name http
+    listen 0.0.0.0
+    port 8888
+
+[OUTPUT]
+    name stdout
+    match *
+```
+
+{% endtab %}
 {% endtabs %}
 
 ### Command line
 
 ```shell
- fluent-bit -i http -p port=8888 -o stdout
+ $ fluent-bit -i http -p port=8888 -o stdout
 ```
