@@ -20,19 +20,38 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 
 ## Get started
 
-To subscribe to or collect messages from Apache Kafka, run the plugin from the command line or through the configuration file:
+To subscribe to or collect messages from Apache Kafka, run the plugin from the command line or through the configuration file as shown below.
 
 ### Command line
 
 The Kafka plugin can read parameters through the `-p` argument (property):
 
 ```shell
-fluent-bit -i kafka -o stdout -p brokers=192.168.1.3:9092 -p topics=some-topic
+$ fluent-bit -i kafka -o stdout -p brokers=192.168.1.3:9092 -p topics=some-topic
 ```
 
 ### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: kafka
+          brokers: 192.168.1.3:9092
+          topics: some-topic
+          poll_ms: 100
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -43,11 +62,42 @@ In your main configuration file append the following `Input` and `Output` sectio
 
 [OUTPUT]
     Name        stdout
+    Match       *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Example of using Kafka input and output plugins
 
 The Fluent Bit source repository contains a full example of using Fluent Bit to process Kafka records:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: kafka
+          brokers: kafka-broker:9092
+          topics: fb-source
+          poll_ms: 100
+          format: json
+          
+    filters:
+        - name: lua
+          match: '*'
+          script: kafka.lua
+          call: modify_kafka_message
+          
+    outputs:
+        - name: kafka
+          brokers: kafka-broker:9092
+          topics: fb-sink
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -68,6 +118,9 @@ The Fluent Bit source repository contains a full example of using Fluent Bit to 
     brokers kafka-broker:9092
     topics fb-sink
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The previous example will connect to the broker listening on `kafka-broker:9092` and subscribe to the `fb-source` topic, polling for new messages every 100 milliseconds.
 
