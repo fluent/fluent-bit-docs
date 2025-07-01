@@ -8,7 +8,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Mode` | Defines transport protocol mode: UDP over Unix socket (`unix_udp`) , TCP over Unix socket (`unix_tcp`) , `tcp`, or `udp` | `unix_udp` |
+| `Mode` | Defines transport protocol mode: UDP over Unix socket (`unix_udp`), TCP over Unix socket (`unix_tcp`), `tcp`, or `udp` | `unix_udp` |
 | `Listen` | If `Mode` is set to `tcp` or `udp`, specify the network interface to bind. | `0.0.0.0` |
 | `Port` | If `Mode` is set to `tcp` or `udp`, specify the TCP port to listen for incoming connections. | `5140` |
 | `Path` | If `Mode` is set to `unix_tcp` or `unix_udp`, set the absolute path to the Unix socket file. | _none_ |
@@ -16,14 +16,14 @@ The plugin supports the following configuration parameters:
 | `Parser` | Specify an alternative parser for the message. If `Mode` is set to `tcp` or `udp` then the default parser is `syslog-rfc5424`. Otherwise, `syslog-rfc3164-local` is used. If your syslog` messages have fractional seconds set this parser value to `syslog-rfc5424` instead. | _none_ |
 | `Buffer_Chunk_Size` | By default, the buffer to store the incoming `syslog` messages. Doesn't allocate the maximum memory allowed, instead it allocates memory when required. The rounds of allocations are set by `Buffer_Chunk_Size`. There are considerations when using `udp` or `unix_udp` mode. | `32KB` (set in code) |
 | `Buffer_Max_Size` | Specify the maximum buffer size to receive a `syslog` message. If not set, the default size is the value of `Buffer_Chunk_Size`. | _none_ |
-| `Receive_Buffer_Size` | Specify the maximum socket receive buffer size. If not set, the default value is OS-dependant, but generally too low to accept thousands of syslog messages per second without loss on `udp` or `unix_udp` sockets. For Linux, the value is capped by `sysctl net.core.rmem_max`.| _none_|
+| `Receive_Buffer_Size` | Specify the maximum socket receive buffer size. If not set, the default value is OS-dependant, but generally too low to accept thousands of syslog messages per second without loss on `udp` or `unix_udp` sockets. For Linux, the value is capped by `sysctl net.core.rmem_max`. | _none_ |
 | `Source_Address_Key` | Specify the key where the source address will be injected. | _none_ |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ### Considerations
 
-- When using Syslog input plugin, Fluent Bit requires access to the `parsers.conf` file. The path to this file can be specified with the option `-R` or through the `Parsers_File` key in the `[SERVICE]` section .
-- When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `Buffer_Chunk_Size` option which defaults to 32kb.
+- When using the Syslog input plugin, Fluent Bit requires access to the `parsers.conf` file. The path to this file can be specified with the option `-R` or through the `Parsers_File` key in the `[SERVICE]` section.
+- When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `Buffer_Chunk_Size` option, which defaults to 32kb.
 
 ## Get started
 
@@ -37,7 +37,7 @@ From the command line you can let Fluent Bit listen for `Forward` messages with 
 fluent-bit -R /path/to/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
 ```
 
-By default the service will create and listen for Syslog messages on the Unix socket `_/tmp/in_syslog_`.
+By default the service will create and listen for Syslog messages on the Unix socket `/tmp/in_syslog`.
 
 ### Configuration file
 
@@ -90,7 +90,7 @@ pipeline:
 
 ### Testing
 
-Once Fluent Bit is running, you can send some messages using the logger tool:
+When Fluent Bit is running, you can send some messages using the logger tool:
 
 ```bash
 logger -u /tmp/in_syslog my_ident my_message
