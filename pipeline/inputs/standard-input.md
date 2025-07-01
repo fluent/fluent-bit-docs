@@ -208,7 +208,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Fluent Bit will now read each line and emit a single message for each input
+Fluent Bit will now read each line and emit a single message for each input line, using the following command:
 
 ```shell
 seq 1 5 | /opt/fluent-bit/bin/fluent-bit -c fluent-bit.conf -R parser.conf -q
