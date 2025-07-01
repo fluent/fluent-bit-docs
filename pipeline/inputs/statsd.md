@@ -1,6 +1,6 @@
 # StatsD
 
-The _StatsD_ input plugin lets you receive metrics using StatsD protocol.
+The _StatsD_ input plugin lets you receive metrics using the StatsD protocol.
 
 ## Configuration parameters
 
