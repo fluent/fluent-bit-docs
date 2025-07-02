@@ -9,10 +9,11 @@ description: A plugin based on Prometheus Node Exporter to collect system and ho
 The _Node exporter metrics_ plugin contains a subset of collectors and metrics available from Prometheus Node exporter.
 
 {% hint style="info" %}
-Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
-{% endhint %}
 
+Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
 This plugin is generally supported on Linux-based operating systems, with macOS offering a reduced subset of metrics.
+
+{% endhint %}
 
 ## Configuration
 
@@ -108,11 +109,13 @@ In the following configuration file, the input plugin `node_exporter_metrics` co
 service:
     flush: 1
     log_level: info
+    
 pipeline:
     inputs:
         - name: node_exporter_metrics
           tag:  node_metrics
           scrape_interval: 2
+          
     outputs:
         - name: prometheus_exporter
           match: node_metrics
@@ -123,7 +126,7 @@ pipeline:
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 
 # Node Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
@@ -157,8 +160,8 @@ pipeline:
 
 You can test the expose of the metrics by using `curl`:
 
-```bash
-curl http://127.0.0.1:2021/metrics
+```shell
+$ curl http://127.0.0.1:2021/metrics
 ```
 
 ### Container to collect host metrics
@@ -166,14 +169,17 @@ curl http://127.0.0.1:2021/metrics
 When deploying Fluent Bit in a container you will need to specify additional settings to ensure that Fluent Bit has access to the host operating system. The following Docker command deploys Fluent Bit with specific mount paths and settings enabled to ensure that Fluent Bit can collect from the host. These are then exposed over port `2021`.
 
 ```shell
-docker run -ti -v /proc:/host/proc \
-               -v /sys:/host/sys   \
-               -p 2021:2021        \
-               fluent/fluent-bit:1.8.0 \
-               /fluent-bit/bin/fluent-bit \
-                         -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys \
-                         -o prometheus_exporter -p "add_label=host $HOSTNAME" \
-                         -f 1
+$ docker run -ti -v /proc:/host/proc \
+                 -v /sys:/host/sys   \
+                 -p 2021:2021        \
+                 fluent/fluent-bit:1.8.0 \
+                 /fluent-bit/bin/fluent-bit \
+                 -i node_exporter_metrics \
+                 -p path.procfs=/host/proc \
+                 -p path.sysfs=/host/sys \
+                 -o prometheus_exporter \
+                 -p "add_label=host $HOSTNAME" \
+                 -f 1
 ```
 
 ### Fluent Bit with Prometheus and Grafana
@@ -182,19 +188,21 @@ If you use dashboards for monitoring, Grafana is one option. The Fluent Bit sour
 
 1. Download the Fluent Bit source code:
 
-   ```bash
-   git clone https://github.com/fluent/fluent-bit
-   cd fluent-bit/docker_compose/node-exporter-dashboard/
+   ```shell
+   $ git clone https://github.com/fluent/fluent-bit
+   
+   $ cd fluent-bit/docker_compose/node-exporter-dashboard/
    ```
 
-1. Start the service and view your dashboard:
+2. Start the service and view your dashboard:
 
-   ```bash
-   docker-compose up --force-recreate -d --build
+   ```shell
+   $ docker-compose up --force-recreate -d --build
    ```
 
-1. Open your browser and use the address `http://127.0.0.1:3000`.
-1. When asked for the credentials to access Grafana, use `admin` for the username and
+3. Open your browser and use the address `http://127.0.0.1:3000`.
+
+4. When asked for the credentials to access Grafana, use `admin` for the username and
    password. See [Sign in to Grafana](https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/).
 
 ![An example Grafana dashboard](../../.gitbook/assets/updated.png)
@@ -203,8 +211,8 @@ By default, Grafana dashboard plots the data from the last 24 hours. Change it t
 
 #### Stop the Service
 
-```bash
-docker-compose down
+```shell
+$ docker-compose down
 ```
 
 ## Enhancement requests
