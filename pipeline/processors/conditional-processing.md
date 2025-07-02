@@ -13,7 +13,8 @@ You can turn a standard processor into a conditional processor by adding a
 `condition` block to the processor's YAML configuration settings.
 
 {% hint style="info" %}
-Conditional processing is only available for [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
+- Conditional processing is only available for [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
+- Conditional Processing feature is not supported when using [Filter as Processor](./filters.md).
 {% endhint %}
 
 
