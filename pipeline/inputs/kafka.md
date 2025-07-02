@@ -20,15 +20,6 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) | _none_ |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-
-## Configuration parameters for AWS MSK clusters based on IAM authentication
-
-| Property | Description | Type | Required |
-|----------|-------------|------|----------|
-| `aws_msk_iam` | Enable AWS MSK IAM authentication | Boolean | No (default: false) |
-| `aws_msk_iam_cluster_arn` | Full ARN of the MSK cluster for region extraction | String | Yes (when `aws_msk_iam` is true) |
-
-
 ## Get started
 
 To subscribe to or collect messages from Apache Kafka, run the plugin from the command line or through the configuration file as shown below.
@@ -173,6 +164,23 @@ If you are compiling Fluent Bit from source, ensure the following requirements a
 |---------------------------|-----------------------------------------------------|---------|-------------------------------|
 | `aws_msk_iam`             | Enable AWS MSK IAM authentication                   | Boolean | No (default: false)           |
 | `aws_msk_iam_cluster_arn` | Full ARN of the MSK cluster for region extraction   | String  | Yes (if `aws_msk_iam` is true)|
+
+
+### Configuration Example
+
+```yaml
+pipeline:
+  inputs:
+    - name: kafka
+      brokers: my-cluster.abcdef.c1.kafka.us-east-1.amazonaws.com:9098
+      topics: my-topic
+      aws_msk_iam: true
+      aws_msk_iam_cluster_arn: arn:aws:kafka:us-east-1:123456789012:cluster/my-cluster/abcdef-1234-5678-9012-abcdefghijkl-s3
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
 
 ### Example AWS IAM Policy
 
