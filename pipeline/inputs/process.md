@@ -19,7 +19,7 @@ The plugin supports the following configuration parameters:
 | `Mem` | If enabled, memory usage of the process is appended to each record. | `true` |
 | `Threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting started
+## Get started
 
 To start performing the checks, you can run the plugin from the command line or through the configuration file:
 
