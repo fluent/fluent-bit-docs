@@ -1,23 +1,23 @@
 # Windows Event Log
 
-The **winlog** input plugin allows you to read Windows Event Log.
+The _Windows Event Log_ (`winlog`) input plugin lets you read the Windows Event Log.
 
-## Configuration Parameters <a href="config" id="config"></a>
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key          | Description                                           | Default |
 | ------------ | ----------------------------------------------------- | ------- |
-| Channels     | A comma-separated list of channels to read from.      |         |
-| Interval_Sec | Set the polling interval for each channel. (optional) | 1       |
-| DB           | Set the path to save the read offsets. (optional)     |         |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `Channels`     | A comma-separated list of channels to read from.      | _none_ |
+| `Interval_Sec` | Set the polling interval for each channel. (optional) | `1`    |
+| `DB`           | Set the path to save the read offsets. (optional)     | _none_ |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-Note that if you do not set _db_, the plugin will read channels from the beginning on each startup.
+If `db` isn't set, the plugin will read channels from the beginning on each startup.
 
-## Configuration Examples <a href="config_example" id="config_example"></a>
+## Configuration examples
 
-### Configuration File
+### Configuration file
 
 Here is a minimum configuration example.
 
@@ -33,12 +33,12 @@ Here is a minimum configuration example.
     Match  *
 ```
 
-Note that some Windows Event Log channels (like `Security`) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
+Some Windows Event Log channels, like `Security` require administrative privileges for reading. In this case, you need to run Fluent Bit as an administrator.
 
-### Command Line
+### Command line
 
-If you want to do a quick test, you can run this plugin from the command line.
+If you want to do a test, you can run this plugin from the command line.
 
 ```bash
-$ fluent-bit -i winlog -p 'channels=Setup' -o stdout
+fluent-bit -i winlog -p 'channels=Setup' -o stdout
 ```
