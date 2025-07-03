@@ -18,7 +18,7 @@ The plugin supports the following configuration parameters:
 | `Ignore_Missing_Channels` | Optional. Whether to ignore event channels not present in the event log, and continue running with subscribed channels. | `False` |
 | `Use_ANSI` | Optional. Use ANSI encoding on `eventlog` messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to `True` might solve the problem. | `False` |
 | `Event_Query` | Specify XML query for filtering events. | `*` |
-| `Read_Limit_Per_Cycle` | Specify read limit per cycle.  | `512KiB` |
+| `Read_Limit_Per_Cycle` | Specify read limit per cycle. | `512KiB` |
 | Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 | `Remote.Server` | Specify server name of remote access for Windows EventLog. | _none_ |
 | `Remote.Domain` | Specify domain name of remote access for Windows EventLog. | _none_ |
@@ -80,11 +80,11 @@ For further details, refer to [Microsoft's documentation](https://learn.microsof
 
 ### Command line
 
-If you want to do a test, you can run this plugin from the command line.
+If you want to do a test, you can run this plugin from the command line:
 
 ```bash
 fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
 ```
 
 The `winevtlog` plugin will tail channels on each startup.
-If you want to confirm whether this plugin is working or not, specify `-p 'Read_Existing_Events=true'` parameter.
+If you want to confirm whether this plugin is working or not, specify the `-p 'Read_Existing_Events=true'` parameter.
