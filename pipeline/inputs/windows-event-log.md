@@ -21,7 +21,26 @@ If `db` isn't set, the plugin will read channels from the beginning on each star
 
 Here is a minimum configuration example.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: winlog
+          channels: setup,Windows Powershell
+          interval_sec: 1
+          db: winlog.sqlite
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name         winlog
     Channels     Setup,Windows PowerShell

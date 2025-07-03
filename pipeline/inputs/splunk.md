@@ -41,15 +41,33 @@ To use the other tags for multiple instantiating input Splunk plugins, you must 
 
 From the command line you can configure Fluent Bit to handle HTTP HEC requests with the following options:
 
-```bash
-fluent-bit -i splunk -p port=8088 -o stdout
+```shell
+$ fluent-bit -i splunk -p port=8088 -o stdout
 ```
 
 ### Configuration file
 
 In your main configuration file append the following sections:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: splunk
+          listen: 0.0.0.0
+          port: 8088
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name splunk
     listen 0.0.0.0
@@ -59,3 +77,6 @@ In your main configuration file append the following sections:
     name stdout
     match *
 ```
+
+{% endtab %}
+{% endtabs %}

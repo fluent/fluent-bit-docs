@@ -87,8 +87,7 @@ pipeline:
           host: 127.0.0.1
           port: 80
           status_URL: /status
-          
-          
+           
     outputs:
         - name: stdout
           match: '*'
