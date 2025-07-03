@@ -58,6 +58,7 @@ exceptions:
   - MQTT
   - NET
   - NGINX
+  - NIC
   - NOTE
   - NVDA
   - OSS
@@ -98,6 +99,7 @@ exceptions:
   - UTF
   - UUID
   - WASI
+  - WMI
   - XML
   - XSS
   - YAML
