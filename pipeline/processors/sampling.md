@@ -204,6 +204,7 @@ pipeline:
 
 With this tail-based sampling configuration, a sample set of ingested traces will select only the spans with status codes marked as `ERROR` to the standard output.
 
+
 ### Condition: string_attribute
 
 This conditional allows traces to be sampled based on specific span or resource attributes. Users can define key-value filters (e.g., http.method=POST) to selectively capture relevant traces.
@@ -212,7 +213,13 @@ This conditional allows traces to be sampled based on specific span or resource 
 | :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------: |
 | `key`              | Specifies the span or resource attribute to match (e.g., "service.name").                                                                                                                 |               |
 | `values`           | Defines an array of accepted values for the attribute. A trace is sampled if any span contains a matching key-value pair: `["payment-processing"]`                                        |               |
-| `match_type`       | Defines how attributes are compared: `strict` ensures exact value matching, while `exists` checks if the attribute is present regardless of its value (note that string type is enforced) |   `strict`    |
+| `match_type`       | Defines how attributes are compared: `strict` ensures exact value matching, `exists` checks if the attribute is present regardless of its value, and `regex` enables regular expression pattern matching |   `strict`    |
+
+#### Match Types
+
+- **`strict`**: Exact value matching (case-sensitive)
+- **`exists`**: Checks if the attribute key is present, regardless of its value
+- **`regex`**: Matches values using regular expression patterns
 
 **fluent-bit.yaml**
 
@@ -235,20 +242,40 @@ pipeline:
             sampling_settings:
               decision_wait: 2s
             conditions:
+              # Exact matching
               - type: string_attribute
                 match_type: strict
                 key: "http.method"
                 values: ["GET"]
+
+              # Check if attribute exists
               - type: string_attribute
                 match_type: exists
                 key: "service.name"
+
+              # Regex pattern matching
+              - type: string_attribute
+                match_type: regex
+                key: "http.url"
+                values: ["^https://api\\..*", ".*\\/health$"]
+
+              # Multiple regex patterns for error conditions
+              - type: string_attribute
+                match_type: regex
+                key: "error.message"
+                values: ["timeout.*", "connection.*failed", ".*rate.?limit.*"]
 
   outputs:
     - name: stdout
       match: "*"
 ```
 
-This tail-based sampling configuration waits 2 seconds before making a decision. It samples traces based on string matching key value pairs. Traces are sampled if the key `http.method` is set to `GET` or if spans or resources have a key `service.name`.
+This tail-based sampling configuration waits 2 seconds before making a decision. It samples traces based on string matching key value pairs:
+
+- Traces with `http.method` exactly equal to `GET`
+- Traces that have a `service.name` attribute (any value)
+- Traces with `http.url` starting with `https://api.` or ending with `/health`
+- Traces with `error.message` containing timeout, connection failed, or rate limit patterns
 
 ### Condition: numeric_attribute
 
