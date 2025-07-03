@@ -9,6 +9,7 @@ second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
   - ACL
+  - ANSI
   - API
   - ARN
   - ASC
@@ -17,6 +18,7 @@ exceptions:
   - CIDR
   - CLI
   - CPU
+  - CRI
   - CRD
   - CSS
   - CSV

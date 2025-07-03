@@ -94,13 +94,11 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
     match           node_metrics
     host            0.0.0.0
     port            2021
-
-
 ```
 
 You can test the expose of the metrics by using `curl`:
 
-```bash
+```shell
 curl http://127.0.0.1:2021/metrics
 ```
 
@@ -123,9 +121,9 @@ For example, when a user specifies the parameter as follows:
 we.service.where Status!='OK'
 ```
 
-This creates a WMI query like:
+This creates a WMI query like so:
 
-```text
+```sql
 SELECT * FROM Win32_Service WHERE Status!='OK'
 ```
 
@@ -138,7 +136,7 @@ If multiple key-value pairs are specified, the values will be concatenated with 
 Also, if the values contain `%` character then a `LIKE` operator will be used in the clause instead of the `=` operator.
 When a user specifies the parameter as follows:
 
-```python
+```text
 we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
 ```
 
@@ -150,7 +148,7 @@ The parameter will be interpreted as:
 
 The WMI query will be called with the translated parameter as:
 
-```text
+```sql
 SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
 ```
 
@@ -162,19 +160,19 @@ If multiple key-value pairs are specified, the values will be concatenated with 
 Also, if the values contain `%` character then a `LIKE` operator will be used in the translated clause instead of the `!=` operator.
 When a user specifies the parameter as follows:
 
-```python
+```text
 we.service.exclude {"Name":"UdkUserSvc%","Name":"webthreatdefusersvc%","Name":"XboxNetApiSvc"}
 ```
 
 The parameter will be interpreted as:
 
-```text
+```sql
 (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
 The WMI query will be called with the translated parameter as:
 
-```text
+```sql
 SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
@@ -183,7 +181,7 @@ SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE
 `we.service.where`, `we.service.include`, and `we.service.exclude` can all be used at the same time subject to the following rules.
 
 1. `we.service.include` translated and applied into the where clause in the service collector
-1. `we.service.exclude` translated and applied into the where clause in the service collector
+2. `we.service.exclude` translated and applied into the where clause in the service collector
     1. If the `we.service.include` is applied, translated `we.service.include` and `we.service.exclude` conditions are concatenated with `AND`.
 1. `we.service.where` is handled as-is into the where clause in the service collector .
     1. If either of the previous parameters is applied, the clause will be applied with `AND (` _the value of `we.service.where`_ `)`.
@@ -198,7 +196,7 @@ we.service.where NOT Name LIKE 'webthreatdefusersvc%'
 
 The WMI query will be called with the translated parameter as:
 
-```text
+```sql
  SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service') AND (NOT Name LIKE 'UdkUserSvc%' AND Name!='XboxNetApiSvc') AND (NOT Name LIKE 'webthreatdefusersvc%')
 ```
 
