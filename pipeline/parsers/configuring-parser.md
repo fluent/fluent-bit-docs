@@ -4,16 +4,16 @@ You can use parsers to transform unstructured log entries into structured log en
 
 The parser engine is fully configurable and can process log entries based in two formats:
 
-* [JSON maps](json.md)
-* [Regular expressions](regular-expression.md) (named capture)
+- [JSON maps](json.md)
+- [Regular expressions](regular-expression.md) (named capture)
 
 By default, Fluent Bit provides a set of pre-configured parsers that can be used for different use cases, such as logs from:
 
-* Apache
-* NGINX
-* Docker
-* Syslog rfc5424
-* Syslog rfc3164
+- Apache
+- NGINX
+- Docker
+- Syslog rfc5424
+- Syslog rfc3164
 
 Parsers are defined in one or more configuration files that are loaded at start time, either from the command line or through the main Fluent Bit configuration file.
 
@@ -43,7 +43,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 
 ## Parsers configuration file
 
-All parsers **must** be defined in a _parsers.conf_ file, **not** in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+All parsers must be defined in a `parsers.conf` file, not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
 
 ```text
 [PARSER]
@@ -69,7 +69,7 @@ For more information about the parsers available, refer to the [default parsers 
 
 Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function.
 
-In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. Since Fluent Bit v0.12, it supports nanosecond resolution, and the `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
+In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
 
 {% hint style="info" %}
 The option `%L` is only valid when used after seconds (`%S`) or seconds since the epoch (`%s`). For example, `%S.%L` and `%s.%L` are valid strings.
