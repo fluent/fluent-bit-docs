@@ -14,7 +14,7 @@ The _Prometheus remote write_ input plugin lets you ingest a payload in the Prom
 | `port` | The port to listen on. | `8080` |
 | `buffer_max_size` | Specifies the maximum buffer size in KB to receive a JSON message. | `4M` |
 | `buffer_chunk_size` | Sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space specified by `buffer_max_size`. | `512K` |
-| `successful_response_code` | Specifies the success response code. Supported values are `200`, `201`, and `204`.| `201` |
+| `successful_response_code` | Specifies the success response code. Supported values are `200`, `201`, and `204`. | `201` |
 | `tag_from_uri` | If true, a tag will be created from the `uri` parameter (for example, `api_prom_push` from `/api/prom/push`), and any tag specified in the configuration will be ignored. If false, you must provide a tag in the configuration for this plugin. | `true` |
 | `uri` | Specifies an optional HTTP URI for the target web server listening for Prometheus remote write payloads (for example, `/api/prom/push`). | _none_ |
 | `threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
