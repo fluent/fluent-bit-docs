@@ -12,7 +12,7 @@ The plugin supports the following configuration parameters:
 | `Max_Fields` | Set a maximum number of fields (keys) allowed per record. | `8000` |
 | `Max_Entries` | When Fluent Bit starts, the Journal might have a high number of logs in the queue. To avoid delays and reduce memory usage, use this option to specify the maximum number of log entries that can be processed per round. Once the limit is reached, Fluent Bit will continue processing the remaining log entries once `journald` performs the notification. | `5000` |
 | `Systemd_Filter` | Perform a query over logs that contain specific `journald` key/value pairs. For example, `_SYSTEMD_UNIT=UNIT`. The `Systemd_Filter` option can be specified multiple times in the input section to apply multiple filters. | _none_ |
-| `Systemd_Filter_Type` | Define the filter type when `Systemd_Filter` is specified multiple times. Allowed values:`And`, `Or`. With _And_ a record is matched only when all of the `Systemd_Filter` have a match. With `Or` a record is matched when any `Systemd_Filter` has a match. | `Or` |
+| `Systemd_Filter_Type` | Define the filter type when `Systemd_Filter` is specified multiple times. Allowed values:`And`, `Or`. With `And` a record is matched only when all of the `Systemd_Filter` have a match. With `Or` a record is matched when any `Systemd_Filter` has a match. | `Or` |
 | `Tag` | The tag is used to route messages but on Systemd plugin there is an additional capability: if the tag includes a wildcard (`*`), it will be expanded with the Systemd Unit file (`_SYSTEMD_UNIT`, like `host.\* =&gt; host.UNIT_NAME`) or `unknown` (`host.unknown`) if `_SYSTEMD_UNIT` is missing. | _none_ |
 | `DB` | Specify the absolute path of a database file to keep track of the `journald` cursor. | _none_ |
 | `DB.Sync` | Set a default synchronization (I/O) method. Values: `Extra`, `Full`, `Normal`, and `Off`. This flag affects how the internal SQLite engine synchronizes to disk. For more details [SQL lite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Available in Fluent Bit v1.4.6 and later. | `Full` |
@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-To receive Systemd messages, you can run the plugin from the command line or through the configuration file:
+To receive Systemd messages, you can run the plugin from the command line or through the configuration file.
 
 ### Command line
 
