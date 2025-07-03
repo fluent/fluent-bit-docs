@@ -14,7 +14,7 @@ The plugin supports the following configuration parameters:
 | `Buffer_Max_Size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
 | `Path` | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_ |
 | `Path_Key` | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
-| `Exclude_Path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `Exclude_Path *.gz,*.zip` | _none_ |
+| `Exclude_Path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `Exclude_Path *.gz,*.zip`. | _none_ |
 | `Offset_Key` | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
 | `Read_from_Head` | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail. | `False` |
 | `Refresh_Interval` | The interval of refreshing the list of watched files in seconds. | `60` |
@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 | `Skip_Long_Lines` | When a monitored file reaches its buffer capacity due to a very long line (`Buffer_Max_Size`), the default behavior is to stop monitoring that file. `Skip_Long_Lines` alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `Off` |
 | `Skip_Empty_Lines` | Skips empty lines in the log file from any further processing or output. | `Off` |
 | `DB` | Specify the database file to keep track of monitored files and offsets. | _none_ |
-| `DB.sync` | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most  scenarios will be fine with `normal` mode. If you need full synchronization after every write operation set `full` mode. `full` has a high I/O performance cost. Values: `Extra`, `Full`, `Normal`, `Off`. | `normal` |
+| `DB.sync` | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most scenarios will be fine with `normal` mode. If you need full synchronization after every write operation set `full` mode. `full` has a high I/O performance cost. Values: `Extra`, `Full`, `Normal`, `Off`. | `normal` |
 | `DB.locking` | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts externals tool from querying the content. | `false` |
 | `DB.journal_mode` | Sets the journal mode for databases (`WAL`). Enabling `WAL` provides higher performance. `WAL` isn't compatible with shared network file systems. | `WAL` |
 | `DB.compare_filename` | This option determines whether to review both `inode` and `filename` when retrieving stored file information from the database. `true` verifies both `inode` and `filename`, while `false` checks only the `inode`. To review the `inode` and `filename` in the database, refer [see `keep_state`](#tailing-files-keeping-state). | `false` |
@@ -33,7 +33,7 @@ The plugin supports the following configuration parameters:
 | `Key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
 | `Inotify_Watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
 | `Tag` | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter). | _none_ |
-| `Tag_Regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$` | _none_ |
+| `Tag_Regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
 | `Static_Batch_Size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
 | `File_Cache_Advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `On` |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
@@ -44,7 +44,7 @@ If the database parameter `DB` isn't specified, by default the plugin reads each
 
 ## Monitor a large number of files
 
-To monitor a large number of files, you can increase the inotify settings in your Linux environment by modifying the following `sysctl` parameters:
+To monitor a large number of files, you can increase the `inotify` settings in your Linux environment by modifying the following `sysctl` parameters:
 
 ```text
 sysctl fs.inotify.max_user_watches=LIMIT1
@@ -157,8 +157,8 @@ For the old multiline configuration, the following options exist to configure th
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `Multiline` | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used. | `Off` |
-| `Multiline_Flush` | Wait period time in seconds to process queued multiline messages | `4` |
-| `Parser_Firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string | _none_ |
+| `Multiline_Flush` | Wait period time in seconds to process queued multiline messages. | `4` |
+| `Parser_Firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_ |
 | `Parser_N` | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `Parser_1 ab1`, `Parser_2 ab2`, `Parser_N abN`. | _none_ |
 
 ### Old Docker mode configuration parameters
@@ -173,7 +173,7 @@ Docker mode exists to recombine JSON log lines split by the Docker daemon due to
 
 ## Get started
 
-To tail text or log files, you can run the plugin from the command line or through the configuration file:
+To tail text or log files, you can run the plugin from the command line or through the configuration file.
 
 ### Command line
 
@@ -221,7 +221,7 @@ pipeline:
 
 When using multiline configuration you need to first specify `Multiline On` in the configuration and use the `Parser_Firstline` and additional parser parameters `Parser_N` if needed.
 
-For example, you might be trying to read the following Java stack trace as a single event
+For example, you might be trying to read the following Java stack trace as a single event:
 
 ```text
 Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
@@ -232,7 +232,7 @@ Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something
     at com.myproject.module.MyProject.main(MyProject.java:6)
 ```
 
-Specify a `Parser_Firstline` parameter that matches the first line of a multiline event. Once a match is made Fluent Bit reads all future lines until another match with `Parser_Firstline` is made.
+Specify a `Parser_Firstline` parameter that matches the first line of a multiline event. When a match is made, Fluent Bit reads all future lines until another match with `Parser_Firstline` is made.
 
 In this case you can use the following parser, which extracts the time as `time` and the remaining portion of the multiline as `log`.
 
@@ -335,7 +335,7 @@ For example:
 fluent-bit -i tail -p path=/var/log/syslog -p db=/path/to/logs.db -o stdout
 ```
 
-When Fluent Bit runs, the database file `_/path/to/logs.db` will be created. This database is backed by SQLite3. f you are interested in exploring the content, you can open it with the SQLite client tool:
+When Fluent Bit runs, the database file `_/path/to/logs.db` will be created. This database is backed by SQLite3. If you are interested in exploring the content, you can open it with the SQLite client tool:
 
 ```shell
 sqlite3 tail.db
@@ -418,7 +418,7 @@ While file rotation is handled, there are risks of potential log loss when using
 
 - Race conditions: logs can be lost in the brief window between copying and truncating the file.
 - Backpressure: if Fluent Bit is under backpressure, logs might be dropped if `copyttruncate` occurs before they can be processed and sent.
-- See `logroate man page`: There is a very small time slice between copying the file and truncating it, so some logging data might be lost.
+- See `logroate man page`: there is a very small time slice between copying the file and truncating it, so some logging data might be lost.
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
