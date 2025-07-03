@@ -56,26 +56,41 @@ Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing. High
 However, these changes revert upon reboot unless you write them to the appropriate `inotify.conf` file, in which case they will persist across reboots. The specific name of this file might vary depending on how you built and installed Fluent Bit. For example, to write changes to a file named `fluent-bit_fs_inotify.conf`, run the following commands:
 
 ```shell
-mkdir -p /etc/sysctl.d
-echo fs.inotify.max_user_watches = LIMIT1 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
-echo fs.inotify.max_user_instances = LIMIT2 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+$ mkdir -p /etc/sysctl.d
+$ echo fs.inotify.max_user_watches = LIMIT1 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
+$ echo fs.inotify.max_user_instances = LIMIT2 >> /etc/sysctl.d/fluent-bit_fs_inotify.conf
 ```
 
 Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing.
 
-You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf`. For example, you can add this snippet to your override file to raise the number of files that the Tail plugin can monitor:
+You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf` or `/etc/systemd/system/fluent-bit.service.d/override.yaml` depending
+on the configuration you choose. For example, you can add one of these snippets to your override file to raise the number of files that the Tail plugin can monitor:
+
+{% tabs %}
+{% tab title="override.yaml" %}
+
+```yaml
+service:
+    limitnofile: LIMIT
+```
+
+{% endtab %}
+{% tab title="override.conf" %}
 
 ```text
 [Service]
 LimitNOFILE=LIMIT
 ```
 
+{% endtab %}
+{% endtabs %}
+
 Replace _`LIMIT`_ with the integer value of your choosing.
 
 If you don't already have an override file, you can use the following command to create one in the correct directory:
 
-```shell copy
-systemctl edit fluent-bit.service
+```shell
+$ systemctl edit fluent-bit.service
 ```
 
 ## Multiline Support
@@ -107,23 +122,26 @@ As stated in the [Multiline Parser documentation](../../administration/configuri
 If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the new built-in modes for such purposes. This will help to reassembly multiline messages originally split by Docker or CRI:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          path: /var/log/containers/*.log
+          multiline.parser: docker, cri
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
     name              tail
     path              /var/log/containers/*.log
     multiline.parser  docker, cri
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-  inputs:
-    - name: tail
-      path: /var/log/containers/*.log
-      multiline.parser: docker, cri
-```
 {% endtab %}
 {% endtabs %}
 
@@ -164,16 +182,31 @@ In order to tail text or log files, you can run the plugin from the command line
 
 From the command line you can let Fluent Bit parse text files with the following options:
 
-```bash
+```shell
 $ fluent-bit -i tail -p path=/var/log/syslog -o stdout
 ```
 
 ### Configuration File
 
-In your main configuration file, append the following `Input` and `Output` sections:
+Append the following in your main configuration file:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: tail
+        path: /var/log/syslog
+
+    outputs:
+      - stdout:
+        match: *
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
     Name    tail
@@ -183,23 +216,9 @@ In your main configuration file, append the following `Input` and `Output` secti
     Name   stdout
     Match  *
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-  inputs:
-    - name: tail
-      path: /var/log/syslog
-
-  outputs:
-    - stdout:
-      match: *
-```
 {% endtab %}
 {% endtabs %}
-
-![](../../.gitbook/assets/image%20%286%29.png)
 
 ### Old Multi-line example
 
@@ -220,7 +239,20 @@ In the case above we can use the following parser, that extracts the Time as `ti
 
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+parsers:
+    - name: multiline
+      format: regex
+      regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+      time_key: time
+      time_format: '%b %d %H:%M:%S'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 [PARSER]
     Name multiline
@@ -229,24 +261,39 @@ In the case above we can use the following parser, that extracts the Time as `ti
     Time_Key  time
     Time_Format %b %d %H:%M:%S
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-parsers:
-  - name: multiline
-    format: regex
-    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
-    time_key: time
-    time_format: '%b %d %H:%M:%S'
-```
 {% endtab %}
 {% endtabs %}
 
 If we want to further parse the entire event we can add additional parsers with `Parser_N` where N is an integer. The final Fluent Bit configuration looks like the following:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+parsers:
+    - name: multiline
+      format: regex
+      regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
+      time_key: time
+      time_format: '%b %d %H:%M:%S'
+
+pipeline:
+    inputs:
+        - name:  tail
+          multiline: on
+          read_from_head: true
+          parser_firstline: multiline
+          path: /var/log/java.log
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 # Note this is generally added to parsers.conf and referenced in [SERVICE]
 [PARSER]
@@ -266,29 +313,7 @@ If we want to further parse the entire event we can add additional parsers with 
     Name             stdout
     Match            *
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-parsers:
-  - name: multiline
-    format: regex
-    regex: '/(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/'
-    time_key: time
-    time_format: '%b %d %H:%M:%S'
-
-pipeline:
-  inputs:
-    - name:  tail
-      multiline: on
-      read_from_head: true
-      parser_firstline: multiline
-      path: /var/log/java.log
-
-  outputs:
-    - name: stdout
-      match: '*'
-```
 {% endtab %}
 {% endtabs %}
 
@@ -306,7 +331,7 @@ Our output will be as follows.
 
 The _tail_ input plugin a feature to save the state of the tracked files, is strongly suggested you enabled this. For this purpose the **db** property is available, e.g:
 
-```bash
+```shell
 $ fluent-bit -i tail -p path=/var/log/syslog -p db=/path/to/logs.db -o stdout
 ```
 
@@ -344,23 +369,26 @@ Fluent Bit keep the state or checkpoint of each file through using a SQLite data
 The SQLite journaling mode enabled is `Write Ahead Log` or `WAL`. This allows to improve performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name:  tail
+        path: /var/log/containers/*.log
+        db: test.db
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
     name    tail
     path    /var/log/containers/*.log
     db      test.db
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-  inputs:
-    - name:  tail
-      path: /var/log/containers/*.log
-      db: test.db
-```
 {% endtab %}
 {% endtabs %}
 
@@ -379,4 +407,13 @@ The `WAL` mechanism give us higher performance but also might increase the memor
 
 File rotation is properly handled, including logrotate's _copytruncate_ mode.
 
-Note that the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
+{% hint style="warning" %}
+
+Note that while file rotation is handled, there are risks of potential log loss when using `logrotate` with `copytruncate` mode:
+
+ - race conditions: logs can be lost in the brief window between copying and truncating the file.
+ - backpressure: if Fluent Bit is under backpressure, logs might be dropped if `copyttruncate` occurs before they can be processed and sent.
+ - see `logroate man page`: "Note that there is a very small time slice between copying the file and truncating it, so some logging data might be lost."
+ - final note: the `Path` patterns **cannot** match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
+
+{% endhint %}

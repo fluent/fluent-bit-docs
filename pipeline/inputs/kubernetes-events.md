@@ -43,7 +43,30 @@ The Kubernetes service account used by Fluent Bit must have `get`, `list`, and `
 
 In the following configuration file, the Kubernetes events plugin collects events every `5` seconds (default for `interval_nsec`) and exposes them through the [standard output plugin](../outputs/standard-output.md) on the console:
 
-```python
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: kubernetes_events
+          tag: k8s_events
+          kube_url: https://kubernetes.default.svc
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush           1
     log_level       info
@@ -58,10 +81,13 @@ In the following configuration file, the Kubernetes events plugin collects event
     match           *
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Event timestamp
 
 Event timestamps are created from the first existing field, based on the following order of precedence:
 
 1. `lastTimestamp`
-1. `firstTimestamp`
-1. `metadata.creationTimestamp`
+2. `firstTimestamp`
+3. `metadata.creationTimestamp`

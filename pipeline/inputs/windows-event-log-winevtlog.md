@@ -34,8 +34,24 @@ Note that if you do not set _db_, the plugin will tail channels on each startup.
 Here is a minimum configuration example.
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name: winevtlog
+        channels: Setup,Windows PowerShell
+        interval_sec: 1
+        db: winevtlog.sqllite
+    outputs:
+      - name: stdout
+        match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
-```python
+
+```text
 [INPUT]
     Name         winevtlog
     Channels     Setup,Windows PowerShell
@@ -46,20 +62,7 @@ Here is a minimum configuration example.
     Name   stdout
     Match  *
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-  inputs:
-    - name: winevtlog
-      channels: Setup,Windows PowerShell
-      interval_sec: 1
-      db: winevtlog.sqllite
-  outputs:
-    - name: stdout
-      match: '*'
-```
 {% endtab %}
 {% endtabs %}
 
@@ -79,8 +82,8 @@ For further details, please refer to [the MSDN doc](https://learn.microsoft.com/
 
 If you want to do a quick test, you can run this plugin from the command line.
 
-```bash
-$ fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
+```shell
+$ ./fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
 ```
 
 Note that `winevtlog` plugin will tail channels on each startup.
