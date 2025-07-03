@@ -1,6 +1,5 @@
 ---
-description: A plugin based on Prometheus Windows Exporter to collect system and host level
-  metrics
+description: A plugin based on Prometheus Windows Exporter to collect system and host level metrics
 ---
 
 # Windows Exporter metrics
@@ -18,7 +17,7 @@ Metrics collected with Windows Exporter metrics flow through a separate pipeline
 | `scrape_interval` | The rate at which metrics are collected. | `5 seconds` |
 | `we.logical_disk.allow_disk_regex` | Specify the regular expression for logical disk metrics to allow collection of.  | `"/.+/"` (all) |
 | `we.logical_disk.deny_disk_regex` | Specify the regular expression for logical disk metrics to prevent collection of or ignore.  | `NULL` (all) |
-| `we.net.allow_nic_regex` | Specify the regular expression for network metrics captured by the name of the NIC | `"/.+/"` (all) |
+| `we.net.allow_nic_regex` | Specify the regular expression for network metrics captured by the name of the NIC. | `"/.+/"` (all) |
 | `we.service.where` | Specify the `WHERE` clause for retrieving service metrics.  | `NULL` |
 | `we.service.include` | Specify the key value pairs for the include condition for the `WHERE` clause of service metrics. | `NULL`   |
 | `we.service.exclude` | Specify the key value pairs for the exclude condition for the `WHERE` clause of service metrics. | `NULL`   |
@@ -69,7 +68,7 @@ This input always runs in its own [thread](../../administration/multithreading.m
 
 ### Configuration file
 
-In the following configuration file, the input plugin `windows_exporter_metrics` collects `metrics` every 2 seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
+In the following configuration file, the input plugin `windows_exporter_metrics` collects `metrics` every two seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
 
 ```text
 # Node Exporter Metrics + Prometheus Exporter
