@@ -65,6 +65,7 @@ Replace _`LIMIT1`_ and _`LIMIT2`_ with the integer values of your choosing.
 
 You can also provide a custom systemd configuration file that overrides the default systemd settings for Fluent Bit. This override file must be located at `/etc/systemd/system/fluent-bit.service.d/override.conf` or `/etc/systemd/system/fluent-bit.service.d/override.yaml` depending
 on the configuration you choose. For example, you can add one of these snippets to your override file to raise the number of files that the Tail plugin can monitor:
+
 {% tabs %}
 {% tab title="override.yaml" %}
 
