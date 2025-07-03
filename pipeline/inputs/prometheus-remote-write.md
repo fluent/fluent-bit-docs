@@ -63,7 +63,7 @@ These sample configurations configure Fluent Bit to listen for data on port `808
 
 ### Communicate with TLS
 
-Prometheus Remote Write input plugin supports TLS and SSL. For more details about the properties available and general configuration, refer to the [Transport security](../../administration/transport-security.md) documentation.
+The Prometheus remote write input plugin supports TLS and SSL. For more details about the properties available and general configuration, refer to the [Transport security](../../administration/transport-security.md) documentation.
 
 To communicate with TLS, you must use these TLS-related parameters:
 
