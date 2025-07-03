@@ -19,7 +19,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-To receive JSON messages over UDP, you can run the plugin from the command line or through the configuration file:
+To receive JSON messages over UDP, you can run the plugin from the command line or through the configuration file.
 
 ### Command line
 
@@ -39,7 +39,7 @@ fluent-bit -i udp -pport=9090 -o stdout
 
 ### Configuration file
 
-In your main configuration file append the following  sections:
+In your main configuration file append the following sections:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
