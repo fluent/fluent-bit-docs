@@ -38,20 +38,20 @@ Here is a minimum configuration example.
 
 ```yaml
 pipeline:
-  inputs:
-    - name: winevtlog
-      channels: Setup,Windows PowerShell
-      interval_sec: 1
-      db: winevtlog.sqllite
-  outputs:
-    - name: stdout
-      match: '*'
+    inputs:
+      - name: winevtlog
+        channels: Setup,Windows PowerShell
+        interval_sec: 1
+        db: winevtlog.sqllite
+    outputs:
+      - name: stdout
+        match: '*'
 ```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name         winevtlog
     Channels     Setup,Windows PowerShell
