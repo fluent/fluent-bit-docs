@@ -17,6 +17,7 @@ exceptions:
   - CIDR
   - CLI
   - CPU
+  - CRI
   - CRD
   - CSS
   - CSV

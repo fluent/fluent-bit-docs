@@ -21,7 +21,26 @@ Note that if you do not set _db_, the plugin will read channels from the beginni
 
 Here is a minimum configuration example.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: winlog
+          channels: setup,Windows Powershell
+          interval_sec: 1
+          db: winlog.sqlite
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name         winlog
     Channels     Setup,Windows PowerShell
@@ -33,12 +52,15 @@ Here is a minimum configuration example.
     Match  *
 ```
 
+{% endtab %}
+{% endtabs %}
+
 Note that some Windows Event Log channels (like `Security`) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
 
 ### Command Line
 
 If you want to do a quick test, you can run this plugin from the command line.
 
-```bash
-$ fluent-bit -i winlog -p 'channels=Setup' -o stdout
+```shell
+$ ./fluent-bit -i winlog -p 'channels=Setup' -o stdout
 ```
