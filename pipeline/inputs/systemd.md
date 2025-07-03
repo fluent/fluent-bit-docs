@@ -29,7 +29,7 @@ In order to receive Systemd messages, you can run the plugin from the command li
 
 From the command line you can let Fluent Bit listen for _Systemd_ messages with the following options:
 
-```bash
+```shell
 $ fluent-bit -i systemd \
              -p systemd_filter=_SYSTEMD_UNIT=docker.service \
              -p tag='host.*' -o stdout
@@ -42,7 +42,27 @@ $ fluent-bit -i systemd \
 In your main configuration file append the following _Input_ & _Output_ sections:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    parsers_file: parsers.yaml
+
+pipeline:
+    inputs:
+        - name: systemd
+          tag: host.*
+          systemd_filter: _SYSTEMD_UNIT=docker.service
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
+
 ```text
 [SERVICE]
     Flush        1
@@ -58,22 +78,6 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Name   stdout
     Match  *
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers.conf
-pipeline:
-    inputs:
-        - name: systemd
-          tag: host.*
-          systemd_filter: _SYSTEMD_UNIT=docker.service
-    outputs:
-        - name: stdout
-          match: '*'
-```
 {% endtab %}
 {% endtabs %}
