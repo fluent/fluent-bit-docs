@@ -19,13 +19,28 @@ The _Prometheus remote write_ input plugin lets you ingest a payload in the Prom
 | `uri` | Specifies an optional HTTP URI for the target web server listening for Prometheus remote write payloads (for example, `/api/prom/push`). | _none_ |
 | `threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Configuration file
-
-The following examples are sample configuration files for this input plugin:
+A sample config file to get started will look something like the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: prometheus_remote_write
+          listen: 127.0.0.1
+          port: 8080
+          uri: /api/prom/push
+
+    outputs:
+        - name: stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name prometheus_remote_write
     listen 127.0.0.1
@@ -36,20 +51,7 @@ The following examples are sample configuration files for this input plugin:
     name stdout
     match *
 ```
-{% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-    inputs:
-        - name: prometheus_remote_write
-          listen: 127.0.0.1
-          port: 8080
-          uri: /api/prom/push
-    outputs:
-        - name: stdout
-          match: '*'
-```
 {% endtab %}
 {% endtabs %}
 
@@ -63,7 +65,25 @@ Prometheus Remote Write input plugin supports TLS and SSL. For more details abou
 
 To communicate with TLS, you must use these TLS-related parameters:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: prometheus_remote_write
+          listen: 127.0.0.1
+          port: 8080
+          uri: /api/prom/push
+          tls: on
+          tls.crt_file: /path/to/certificate.crt
+          tls.key_file: /path/to/certificate.key
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name prometheus_remote_write
     Listen 127.0.0.1
@@ -73,5 +93,8 @@ To communicate with TLS, you must use these TLS-related parameters:
     tls.crt_file /path/to/certificate.crt
     tls.key_file /path/to/certificate.key
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Now, you should be able to send data over TLS to the remote-write input.
