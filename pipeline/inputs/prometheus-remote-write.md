@@ -19,7 +19,9 @@ The _Prometheus remote write_ input plugin lets you ingest a payload in the Prom
 | `uri` | Specifies an optional HTTP URI for the target web server listening for Prometheus remote write payloads (for example, `/api/prom/push`). | _none_ |
 | `threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-A sample config file to get started will look something like the following:
+## Configuration file
+
+The following examples are sample configuration files for this input plugin:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -61,7 +63,7 @@ These sample configurations configure Fluent Bit to listen for data on port `808
 
 ### Communicate with TLS
 
-Prometheus Remote Write input plugin supports TLS and SSL. For more details about the properties available and general configuration, refer to the [Transport security](../../administration/transport-security.md) documentation.
+The Prometheus remote write input plugin supports TLS and SSL. For more details about the properties available and general configuration, refer to the [Transport security](../../administration/transport-security.md) documentation.
 
 To communicate with TLS, you must use these TLS-related parameters:
 

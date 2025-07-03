@@ -13,7 +13,7 @@ The plugin supports the following configuration parameters:
 | --- | ----------- | ------- |
 | `Proc_Name` | The name of the target process to check. | _none_ |
 | `Interval_Sec` | Specifies the interval between service checks, in seconds. | `1` |
-| `Interval_Nsec` | Specify the interval between service checks, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0` |
+| `Interval_Nsec` | Specifies the interval between service checks, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0` |
 | `Alert` | If enabled, the plugin will only generate messages if the target process is down. | `false` |
 | `Fd` | If enabled, a number of `fd` is appended to each record. | `true` |
 | `Mem` | If enabled, memory usage of the process is appended to each record. | `true` |
@@ -45,7 +45,7 @@ pipeline:
           interval_nsec: 0
           fd: true
           mem: true
-          
+
     outputs:
         - name: stdout
           match: '*'

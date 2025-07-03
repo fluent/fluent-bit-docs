@@ -1,33 +1,33 @@
 # Random
 
-_Random_ input plugin generate very simple random value samples using the device interface _/dev/urandom_, if not available it will use a unix timestamp as value.
+The _Random_ input plugin generates random value samples using the device interface `/dev/urandom`. If that interface is unavailable, it uses a Unix timestamp as a value.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Samples | If set, it will only generate a specific number of samples. By default this value is set to _-1_, which will generate unlimited samples. |
-| Interval\_Sec | Interval in seconds between samples generation. Default value is _1_. |
-| Interval\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `Samples` | Specifies the number of samples to generate. The default value of `-1` generates unlimited samples. | `-1` |
+| `Interval_Sec` | Specifies the interval between generated samples, in seconds. | `1` |
+| `Interval_Nsec` | Specifies the interval between generated samples, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0` |
+| `Threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
-In order to start generating random samples, you can run the plugin from the command line or through the configuration file:
+To start generating random samples, you can either run the plugin from the command line or through a configuration file.
 
-### Command Line
+### Command line
 
-From the command line you can let Fluent Bit generate the samples with the following options:
+Use the following command line options to generate samples.
 
 ```shell
 $ fluent-bit -i random -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following:
+The following examples are sample configuration files for this input plugin:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -65,7 +65,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you will see the reports in the output interface similar to this:
+After Fluent Bit starts running, it generates reports in the output interface:
 
 ```shell
 $ fluent-bit -i random -o stdout
