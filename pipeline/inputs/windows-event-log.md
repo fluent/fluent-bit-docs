@@ -33,11 +33,11 @@ Here is a minimum configuration example.
     Match  *
 ```
 
-Some Windows Event Log channels, like `Security` require administrative privileges for reading. In this case, you need to run Fluent Bit as an administrator.
+Some Windows Event Log channels, like `Security`, require administrative privileges for reading. In this case, you need to run Fluent Bit as an administrator.
 
 ### Command line
 
-If you want to do a test, you can run this plugin from the command line.
+If you want to do a test, you can run this plugin from the command line:
 
 ```bash
 fluent-bit -i winlog -p 'channels=Setup' -o stdout
