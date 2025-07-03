@@ -1,37 +1,37 @@
-# Process Metrics
-_Process_ input plugin allows you to check how healthy a process is. It does so by performing a service check at every certain interval of time specified by the user.
+# Process metrics
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=91b97a84-1cd9-41fb-9189-a4f3b30b6bce" />
 
-The Process metrics plugin creates metrics that are log-based, such as JSON payload.
+The _Process metrics_ input plugin lets you check how healthy a process is. It does so by performing service checks at specified intervals.
 
-For Prometheus-based metrics, see the [Node Exporter Metrics input plugin](node-exporter-metrics).
+This plugin creates metrics that are log-based, such as JSON payloads. For Prometheus-based metrics, see the [Node exporter metrics](../pipeline/inputs/node-exporter-metrics) input plugin.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Proc\_Name | Name of the target Process to check. |
-| Interval\_Sec | Interval in seconds between the service checks. Default value is _1_. |
-| Interval\_Nsec | Specify a nanoseconds interval for service checks, it works in conjunction with the Interval\_Sec configuration key. Default value is _0_. |
-| Alert | If enabled, it will only generate messages if the target process is down. By default this option is disabled. |
-| Fd | If enabled, a number of fd is appended to each records. Default value is true. |
-| Mem | If enabled, memory usage of the process is appended to each records. Default value is true. |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `Proc_Name` | The name of the target process to check. | _none_ |
+| `Interval_Sec` | Specifies the interval between service checks, in seconds. | `1` |
+| `Interval_Nsec` | Specify the interval between service checks, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0` |
+| `Alert` | If enabled, the plugin will only generate messages if the target process is down. | `false` |
+| `Fd` | If enabled, a number of `fd` is appended to each record. | `true` |
+| `Mem` | If enabled, memory usage of the process is appended to each record. | `true` |
+| `Threaded` | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
-In order to start performing the checks, you can run the plugin from the command line or through the configuration file:
+To start performing the checks, you can run the plugin from the command line or through the configuration file:
 
-The following example will check the health of _crond_ process.
+The following example checks the health of `crond` process.
 
 ```shell
 $ fluent-bit -i proc -p proc_name=crond -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following:
+In your main configuration file, append the following `Input` & `Output` sections:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -73,7 +73,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you will see the health of process:
+After Fluent Bit starts running, it outputs the health of the process:
 
 ```shell
 $ fluent-bit -i proc -p proc_name=fluent-bit -o stdout
