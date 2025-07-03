@@ -12,14 +12,14 @@ The plugin supports the following configuration parameters:
 | `Port`       | TCP port to listen for connections. | `5170` |
 | `Buffer_Size` | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default is the value of `Chunk_Size`. | `Chunk_Size` |
 | `Chunk_Size` | The default buffer to store the incoming JSON messages. It doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `Chunk_Size`. If not set, `Chunk_Size` is equal to 32 (32KB). | `32` |
-| `Format`     | Specify the expected payload format. Supported values: `json` and `none`. `json` it expects JSON maps. When set to `none`, every record splits using the defined `Separator`. | `json` |
+| `Format`     | Specify the expected payload format. Supported values: `json` and `none`. When set to `json` it expects JSON maps. When set to `none`, every record splits using the defined `Separator`. | `json` |
 | `Separator`  | When `Format` is set to `none`, Fluent Bit needs a separator string to split the records. | `LF` or `0x10` (break line) |
 | `Source_Address_Key`| Specify the key to inject the source address. | _none_ |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Get started
 
-To receive JSON messages over TCP, you can run the plugin from the command line or through the configuration file:
+To receive JSON messages over TCP, you can run the plugin from the command line or through the configuration file.
 
 ### Command line
 
@@ -39,7 +39,7 @@ In the example the JSON messages will only arrive through the network interface 
 
 ### Configuration file
 
-In your main configuration file append  the following sections:
+In your main configuration file append the following sections:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
