@@ -25,8 +25,8 @@ This plugin supports and automatically detects both `cgroups v1` and `v2`.
 
 You can run the following `curl` command:
 
-```bash
-curl 0.0.0.0:2021/metrics
+```shell
+$ curl 0.0.0.0:2021/metrics
 ```
 
 Which returns information like:
@@ -84,19 +84,41 @@ fluentbit_input_storage_chunks_busy_bytes{name="podman_metrics.0"} 0
 
 ### Configuration file
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: podman_metrics
+          scrape_interval: 10
+          scrape_on_start: true
+          
+    outputs:
+        - name: prometheus_exporter
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+
+```text
 [INPUT]
     name podman_metrics
     scrape_interval 10
     scrape_on_start true
+    
 [OUTPUT]
     name prometheus_exporter
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Command line
 
-```bash
-fluent-bit -i podman_metrics -o prometheus_exporter
+```shell
+$ fluent-bit -i podman_metrics -o prometheus_exporter
 ```
 
 ### Exposed metrics
