@@ -43,8 +43,24 @@ Fluent Bit v1.x.x
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2019/08/18 13:39:43] [ info] [storage] initializing...
-...
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+
+[2025/07/01 14:44:47] [ info] [fluent bit] version=4.0.3, commit=f5f5f3c17d, pid=1
+[2025/07/01 14:44:47] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/07/01 14:44:47] [ info] [simd    ] disabled
+[2025/07/01 14:44:47] [ info] [cmetrics] version=1.0.3
+[2025/07/01 14:44:47] [ info] [ctraces ] version=0.6.6
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] initializing
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] storage_strategy='memory' (memory only)
+[2025/07/01 14:44:47] [ info] [sp] stream processor started
+[2025/07/01 14:44:47] [ info] [engine] Shutdown Grace Period=5, Shutdown Input Grace Period=2
+[2025/07/01 14:44:47] [ info] [output:stdout:stdout.0] worker #0 started
 [0] my_thermal: [1566099584.000085820, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>60.000000}]
 [1] my_thermal: [1566099585.000136466, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
 [2] my_thermal: [1566099586.000083156, {"name"=>"thermal_zone0", "type"=>"x86_pkg_temp", "temp"=>59.000000}]
@@ -62,15 +78,31 @@ Which returns output similar to:
 Fluent Bit v1.3.0
 Copyright (C) Treasure Data
 
-[2019/08/18 13:39:43] [ info] [storage] initializing...
-...
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+
+[2025/07/01 14:44:47] [ info] [fluent bit] version=4.0.3, commit=f5f5f3c17d, pid=1
+[2025/07/01 14:44:47] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/07/01 14:44:47] [ info] [simd    ] disabled
+[2025/07/01 14:44:47] [ info] [cmetrics] version=1.0.3
+[2025/07/01 14:44:47] [ info] [ctraces ] version=0.6.6
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] initializing
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] storage_strategy='memory' (memory only)
+[2025/07/01 14:44:47] [ info] [sp] stream processor started
+[2025/07/01 14:44:47] [ info] [engine] Shutdown Grace Period=5, Shutdown Input Grace Period=2
+[2025/07/01 14:44:47] [ info] [output:stdout:stdout.0] worker #0 started
 [0] my_temp: [1565759542.001053749, {"name"=>"thermal_zone0", "type"=>"pch_skylake", "temp"=>48.500000}]
 [0] my_temp: [1565759602.001661061, {"name"=>"thermal_zone0", "type"=>"pch_skylake", "temp"=>48.500000}]
 ```
 
 ### Configuration file
 
-In your main configuration file append the following sections:
+In your main configuration file append the following:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -80,6 +112,7 @@ pipeline:
     inputs:
         - name: thermal
           tag: my_thermal
+
     outputs:
         - name: stdout
           match: '*'
@@ -88,7 +121,7 @@ pipeline:
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name thermal
     Tag  my_thermal

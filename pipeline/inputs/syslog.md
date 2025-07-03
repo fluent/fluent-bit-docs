@@ -22,8 +22,8 @@ The plugin supports the following configuration parameters:
 
 ### Considerations
 
-- When using the Syslog input plugin, Fluent Bit requires access to the `parsers.conf` file. The path to this file can be specified with the option `-R` or through the `Parsers_File` key in the `[SERVICE]` section.
-- When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `Buffer_Chunk_Size` option, which defaults to 32kb.
+- When using the Syslog input plugin, Fluent Bit requires access to the parsers configuration file. The path to this file can be specified with the option `-R` or through the `parsers_file` key in the service section.
+- When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `buffer_chunk_size` option, which defaults to 32kb.
 
 ## Get started
 
@@ -33,8 +33,12 @@ To receive `syslog` messages, you can run the plugin from the command line or th
 
 From the command line you can let Fluent Bit listen for `Forward` messages with the following options:
 
-```bash
-fluent-bit -R /path/to/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
+```shell
+# For YAML configuration
+$ ./fluent-bit -R /path/to/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
+
+# For classic configuration.
+$ ./fluent-bit -R /path/to/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
 ```
 
 By default the service will create and listen for Syslog messages on the Unix socket `/tmp/in_syslog`.
@@ -44,14 +48,14 @@ By default the service will create and listen for Syslog messages on the Unix so
 In your main configuration file append the following sections:
 
 {% tabs %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 service:
     flush: 1
     log_level: info
-    parsers_file: parsers.conf
+    parsers_file: parsers.yaml
+    
 pipeline:
     inputs:
         - name: syslog
@@ -59,6 +63,7 @@ pipeline:
           buffer_chunk_size: 32000
           buffer_max_size: 64000
           receive_buffer_size: 512000
+          
     outputs:
         - name: stdout
           match: '*'
@@ -66,7 +71,8 @@ pipeline:
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
-```python
+
+```text
 [SERVICE]
     Flush               1
     Log_Level           info
@@ -85,33 +91,52 @@ pipeline:
 ```
 
 {% endtab %}
-
 {% endtabs %}
 
 ### Testing
 
 When Fluent Bit is running, you can send some messages using the logger tool:
 
-```bash
-logger -u /tmp/in_syslog my_ident my_message
+```shell
+$ logger -u /tmp/in_syslog my_ident my_message
 ```
 
 Then run Fluent bit using the following command:
 
-```bash
-bin/fluent-bit -R ../conf/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
+```shell
+# For YAML ocnfiguration.
+$ ./fluent-bit -R ../conf/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
+
+# For classic configuration.
+$ ./fluent-bit -R ../conf/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
 ```
 
 You should see the following output:
 
 ```text
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
+Fluent Bit v4.0.3
+* Copyright (C) 2015-2025 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2017/03/09 02:23:27] [ info] [engine] started
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+
+[2025/07/01 14:44:47] [ info] [fluent bit] version=4.0.3, commit=f5f5f3c17d, pid=1
+[2025/07/01 14:44:47] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/07/01 14:44:47] [ info] [simd    ] disabled
+[2025/07/01 14:44:47] [ info] [cmetrics] version=1.0.3
+[2025/07/01 14:44:47] [ info] [ctraces ] version=0.6.6
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] initializing
+[2025/07/01 14:44:47] [ info] [input:mem:mem.0] storage_strategy='memory' (memory only)
+[2025/07/01 14:44:47] [ info] [sp] stream processor started
+[2025/07/01 14:44:47] [ info] [engine] Shutdown Grace Period=5, Shutdown Input Grace Period=2
+[2025/07/01 14:44:47] [ info] [output:stdout:stdout.0] worker #0 started
 [0] syslog.0: [1489047822, {"pri"=>"13", "host"=>"edsiper:", "ident"=>"my_ident", "pid"=>"", "message"=>"my_message"}]
 ```
 
@@ -131,7 +156,8 @@ Put the following content in your configuration file:
 ```yaml
 service:
     flush: 1
-    parsers_file: parsers.conf
+    parsers_file: parsers.yaml
+    
 pipeline:
     inputs:
         - name: syslog
@@ -139,13 +165,13 @@ pipeline:
           listen: 0.0.0.0
           port: 5140
           mode: tcp
+          
     outputs:
         - name: stdout
           match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
@@ -180,15 +206,15 @@ action(type="omfwd" Target="127.0.0.1" Port="5140" Protocol="tcp")
 
 Then, restart your `rsyslog` daemon:
 
-```bash
-sudo service rsyslog restart
+```shell
+$ sudo service rsyslog restart
 ```
 
 ### `rsyslog` to Fluent Bit: Unix socket mode over UDP
 
 #### Fluent Bit configuration
 
-Put the following content in your `fluent-bit.conf` file:
+Put the following content in your Fluent Bit configuration:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -196,7 +222,8 @@ Put the following content in your `fluent-bit.conf` file:
 ```yaml
 service:
     flush: 1
-    parsers_file: parsers.conf
+    parsers_file: parsers.yaml
+    
 pipeline:
     inputs:
         - name: syslog
@@ -204,6 +231,7 @@ pipeline:
           path: /tmp/fluent-bit.sock
           mode: unix_udp
           unix_perm: 0644
+          
     outputs:
         - name: stdout
           match: '*'
