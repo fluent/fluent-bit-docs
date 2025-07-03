@@ -6,12 +6,15 @@ description: >-
 
 # Windows Exporter Metrics
 
-[Prometheus Windows Exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from microsoft windows, such as CPU / Disk / Network / Process statistics. Fluent Bit 1.9.0 includes windows exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
+[Prometheus Windows Exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from microsoft windows, such as CPU / Disk / Network / Process statistics. Included since Fluent Bit 1.9.0, windows exporter metrics plugin builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
-The initial release of Windows Exporter Metrics contains a single collector available from Prometheus Windows Exporter and we plan to expand it over time.
+The initial release of Windows Exporter Metrics contains a single collector available from Prometheus Windows Exporter.
+
+{% hint style="warning" %}
 
 **Important note:** Metrics collected with Windows Exporter Metrics flow through a separate pipeline from logs and current filters do not operate on top of metrics.
 
+{% endhint %}
 
 ## Configuration
 
@@ -73,7 +76,39 @@ This input always runs in its own [thread](../../administration/multithreading.m
 
 In the following configuration file, the input plugin _windows_exporter_metrics collects _metrics every 2 seconds and exposes them through our [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+# Node Exporter Metrics + Prometheus Exporter
+# -------------------------------------------
+# The following example collect host metrics on Linux and expose
+# them through a Prometheus HTTP end-point.
+#
+# After starting the service try it with:
+#
+# $ curl http://127.0.0.1:2021/metrics
+#
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: windows_exporter_metrics
+          tag: node_metrics
+          scrape_interval: 2
+
+    outputs:
+        - name: prometheus_exporter
+          match: node_metrics
+          port: 2021
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 # Node Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
@@ -97,14 +132,15 @@ In the following configuration file, the input plugin _windows_exporter_metrics 
     match           node_metrics
     host            0.0.0.0
     port            2021
-
-
 ```
+
+{% endtab %}
+{% endtabs %}
 
 You can test the expose of the metrics by using _curl:_
 
-```bash
-curl http://127.0.0.1:2021/metrics
+```shell
+$ curl http://127.0.0.1:2021/metrics
 ```
 
 ### Service where clause
@@ -122,12 +158,13 @@ Here is how these parameters should work:
 `we.service.where` is handled as a raw WHERE clause.
 For example, when a user specifies the parameter as follows:
 
-```
+```text
 we.service.where Status!='OK'
 ```
 
 This creates a WMI query like so:
-```
+
+```sql
 SELECT * FROM Win32_Service WHERE Status!='OK'
 ```
 
@@ -140,18 +177,19 @@ If multiple key-value pairs are specified, the values will be concatenated with 
 Also, if the values contain `%` character then a `LIKE` operator will be used in the clause instead of the `=` operator.
 When a user specifies the parameter as follows:
 
-```python
+```text
 we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
 ```
 
 The parameter will be interpreted as:
-```
+
+```text
 (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
 ```
 
 The WMI query will be called with the translated parameter as:
 
-```
+```sql
 SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service')
 ```
 
@@ -163,18 +201,19 @@ If multiple key-value pairs are specified, the values will be concatenated with 
 Also, if the values contain `%` character then a `LIKE` operator will be used in the translated clause instead of the `!=` operator.
 When a user specifies the parameter as follows:
 
-```python
+```text
 we.service.exclude {"Name":"UdkUserSvc%","Name":"webthreatdefusersvc%","Name":"XboxNetApiSvc"}
 ```
 
 The parameter will be interpreted as:
-```
+
+```sql
 (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
 The WMI query will be called with the translated parameter as:
 
-```
+```sql
 SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE 'webthreatdefusersvc%' AND Name!='XboxNetApiSvc')
 ```
 
@@ -183,14 +222,14 @@ SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE
 `we.service.where`, `we.service.include`, and `we.service.exclude` can all be used at the same time subject to the following rules.
 
 1. `we.service.include` translated and applied into the where clause in the service collector
-1. `we.service.exclude` translated and applied into the where clause in the service collector
+2. `we.service.exclude` translated and applied into the where clause in the service collector
     1. If the `we.service.include` is applied, translated `we.service.include` and `we.service.exclude` conditions are concatenated with `AND`.
-1. `we.service.where` is just handled as-is into the where clause in the service collector .
+3. `we.service.where` is just handled as-is into the where clause in the service collector .
     1. If either of the above parameters is applied, the clause will be applied with `AND (` _the value of `we.service.where`_ `)`.
 
 For example, when a user specifies the parameter as follows:
 
-```
+```text
 we.service.include {"Name":"docker","Name":"%Svc%", "Name":"%Service"}
 we.service.exclude {"Name":"UdkUserSvc%","Name":"XboxNetApiSvc"}
 we.service.where NOT Name LIKE 'webthreatdefusersvc%'
@@ -198,10 +237,9 @@ we.service.where NOT Name LIKE 'webthreatdefusersvc%'
 
 The WMI query will be called with the translated parameter as:
 
-```
+```sql
  SELECT * FROM Win32_Service WHERE (Name='docker' OR Name LIKE '%Svc%' OR Name LIKE '%Service') AND (NOT Name LIKE 'UdkUserSvc%' AND Name!='XboxNetApiSvc') AND (NOT Name LIKE 'webthreatdefusersvc%')
 ```
-
 
 ## Enhancement Requests
 

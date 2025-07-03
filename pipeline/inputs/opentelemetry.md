@@ -63,7 +63,6 @@ The OpenTelemetry input plugin supports the following telemetry data types:
 A sample configuration file to get started will look something like the following:
 
 {% tabs %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -72,16 +71,16 @@ pipeline:
         - name: opentelemetry
           listen: 127.0.0.1
           port: 4318
+          
     outputs:
         - name: stdout
           match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name opentelemetry
     listen 127.0.0.1
@@ -93,13 +92,12 @@ pipeline:
 ```
 
 {% endtab %}
-
 {% endtabs %}
 
 With this configuration, Fluent Bit listens on port `4318` for data. You can now send telemetry data to the endpoints `/v1/metrics` for metrics, `/v1/traces` for traces, and `/v1/logs` for logs.
 
 A sample curl request to POST JSON encoded log data would be:
 
-```bash
-curl --header "Content-Type: application/json" --request POST --data '{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1660296023390371588","body":{"stringValue":"{\"message\":\"dummy\"}"},"traceId":"","spanId":""}]}]}]}'   http://0.0.0.0:4318/v1/logs
+```shell
+$ curl --header "Content-Type: application/json" --request POST --data '{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1660296023390371588","body":{"stringValue":"{\"message\":\"dummy\"}"},"traceId":"","spanId":""}]}]}]}'   http://0.0.0.0:4318/v1/logs
 ```

@@ -12,12 +12,12 @@ Fluent Bit 2.2 and later includes a process exporter plugin that builds off the 
 The Process Exporter Metrics plugin implements collecting of the various metrics available from [the third party implementation of Prometheus Process Exporter](https://github.com/ncabatoff/process-exporter) and these will be expanded over time as needed.
 
 {% hint style="info" %}
- All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't operate on top of metrics.
+
+All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't 
+operate on top of metrics. This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to 
+access the relevant metrics. MacOS doesn't have the `proc` filesystem so this plugin won't work for it.
+
 {% endhint %}
-
-This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to access the relevant metrics.
-
-macOS doesn't have the `proc` filesystem so this plugin won't work for it.
 
 ## Configuration
 
@@ -53,7 +53,40 @@ This input always runs in its own [thread](../../administration/multithreading.m
 
 In the following configuration file, the input plugin `process_exporter_metrics` collects metrics every 2 seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port 2021.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+# Process Exporter Metrics + Prometheus Exporter
+# -------------------------------------------
+# The following example collect host metrics on Linux and expose
+# them through a Prometheus HTTP end-point.
+#
+# After starting the service try it with:
+#
+# $ curl http://127.0.0.1:2021/metrics
+#
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: process_exporter_metrics
+          tag:  process_metrics
+          scrape_interval: 2
+          
+    outputs:
+        - name: prometheus_exporter
+          match: process_metrics
+          host: 0.0.0.0
+          port: 2021
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 # Process Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
@@ -79,10 +112,13 @@ In the following configuration file, the input plugin `process_exporter_metrics`
     port            2021
 ```
 
+{% endtab %}
+{% endtabs %}
+
 You can see the metrics by using `curl`:
 
-```bash
-curl http://127.0.0.1:2021/metrics
+```shell
+$ curl http://127.0.0.1:2021/metrics
 ```
 
 ### Container to collect host metrics
@@ -93,14 +129,15 @@ The following `docker` command deploys Fluent Bit with a specific mount path for
 `procfs` and settings enabled to ensure that Fluent Bit can collect from the host.
 These are then exposed over port 2021.
 
-```bash
-docker run -ti -v /proc:/host/proc:ro \
-               -p 2021:2021        \
-               fluent/fluent-bit:2.2 \
-               /fluent-bit/bin/fluent-bit \
-                         -i process_exporter_metrics -p path.procfs=/host/proc  \
-                         -o prometheus_exporter \
-                         -f 1
+```shell
+$ docker run -ti -v /proc:/host/proc:ro \
+                 -p 2021:2021        \
+                 fluent/fluent-bit:2.2 \
+                 /fluent-bit/bin/fluent-bit \
+                 -i process_exporter_metrics \
+                 -p path.procfs=/host/proc  \
+                 -o prometheus_exporter \
+                 -f 1
 ```
 
 ## Enhancement requests
