@@ -80,7 +80,7 @@ pipeline:
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     name opentelemetry
     listen 127.0.0.1
