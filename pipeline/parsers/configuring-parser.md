@@ -18,7 +18,9 @@ By default, Fluent Bit provides a set of pre-configured parsers that can be used
 Parsers are defined in one or more configuration files that are loaded at start time, either from the command line or through the main Fluent Bit configuration file.
 
 {% hint style="info" %}
+
 Fluent Bit uses Ruby-based regular expressions. You can use [Rubular](http://www.rubular.com) to test your regular expressions for Ruby compatibility.
+
 {% endhint %}
 
 ## Configuration parameters
@@ -43,7 +45,30 @@ Multiple parsers can be defined and each section has it own properties. The foll
 
 ## Parsers configuration file
 
-All parsers must be defined in a `parsers.conf` file, not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+All parsers must be defined in a parsers file (see below for examples), not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: docker
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L'
+      time_keep: on
+
+    - name: syslog-rfc5424
+      format: regex
+      regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L'
+      time_keep: on
+      types: 'pid:integer'
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
 
 ```text
 [PARSER]
@@ -63,6 +88,9 @@ All parsers must be defined in a `parsers.conf` file, not in the Fluent Bit glob
     Types pid:integer
 ```
 
+{% endtab %}
+{% endtabs %}
+
 For more information about the parsers available, refer to the [default parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) distributed with Fluent Bit source code.
 
 ## Time resolution and fractional seconds
@@ -72,7 +100,9 @@ Time resolution and its format supported are handled by using the [strftime\(3\)
 In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
 
 {% hint style="info" %}
+
 The option `%L` is only valid when used after seconds (`%S`) or seconds since the epoch (`%s`). For example, `%S.%L` and `%s.%L` are valid strings.
+
 {% endhint %}
 
 ## Supported time zone abbreviations
@@ -172,7 +202,9 @@ The following time zone abbreviations are supported.
 ### Military time zones
 
 {% hint style="info" %}
+
 These are single-letter UTC offset designators. `J` (Juliet) represents local time and is not included. `Z` represents Zulu Time, as listed in the [Universal time zones](#universal-time-zones) list.
+
 {% endhint %}
 
 | Abbreviation | UTC Offset (`HH:MM`) | Offset (seconds) | Is DST | Description                                             |
