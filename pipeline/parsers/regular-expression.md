@@ -8,10 +8,11 @@ across multiple lines from a `tail`. The [Tail](../inputs/tail.md) input plugin
 treats each line as a separate entity.
 
 {% hint style="warning" %}
+
 Security Warning: Onigmo is a backtracking regex engine. When using expensive
 regex patterns Onigmo can take a long time to perform pattern matching. Read
-["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
-on OWASP for additional information.
+["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) on OWASP for additional information.
+
 {% end hint %}
 
 Setting the format to **regex** requires a `regex` configuration key.
@@ -34,7 +35,23 @@ character. Use the [Rubular](http://rubular.com/) web editor to test your expres
 The following parser configuration example provides rules that can be applied to an
 Apache HTTP Server log entry:
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: apache
+      format: regex
+      regex: '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$'
+      time_key: time
+      time_format: '%d/%b/%Y:%H:%M:%S %z'
+      types: pid:integer size:integer
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name   apache
     Format regex
@@ -43,6 +60,9 @@ Apache HTTP Server log entry:
     Time_Format %d/%b/%Y:%H:%M:%S %z
     Types code:integer size:integer
 ```
+
+{% endtab %}
+{% endtabs %}
 
 As an example, review the following Apache HTTP Server log entry:
 
