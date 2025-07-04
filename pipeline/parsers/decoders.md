@@ -31,6 +31,24 @@ definition can optionally set one or more decoders. There are two types of decod
 
 Our pre-defined Docker parser has the following definition:
 
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: docker
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L'
+      time_keep: on
+      # Command   |  Decoder | Field | Optional Action   |
+      # ==========|==========|=======|===================|
+      decode_field_as: escaped log
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
 ```text
 [PARSER]
     Name         docker
@@ -95,11 +113,32 @@ Example output:
 ", "stream"=>"stdout", "time"=>"2018-02-19T23:25:29.1845622Z"}]
 ```
 
-Decoder configuration file:
+Decoder example Fluent Bit configuration files:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: parsers.yaml
+    
+pipeline:
+    inputs:
+        - name: tail
+          parser: docker
+          path: /path/to/log.log
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    Parsers_File fluent-bit-parsers.conf
+    Parsers_File parsers.conf
 
 [INPUT]
     Name        tail
@@ -111,7 +150,25 @@ Decoder configuration file:
     Match  *
 ```
 
-The `fluent-bit-parsers.conf` file:
+{% endtab %}
+{% endtabs %}
+
+The example parsers file:
+
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: docker
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S %z'
+      decode_field_as: escaped_utf8 log
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
 
 ```text
 [PARSER]
@@ -121,3 +178,6 @@ The `fluent-bit-parsers.conf` file:
     Time_Format %Y-%m-%dT%H:%M:%S %z
     Decode_Field_as escaped_utf8 log
 ```
+
+{% endtab %}
+{% endtabs %}

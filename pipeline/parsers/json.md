@@ -4,7 +4,21 @@ The _JSON_ parser transforms JSON logs by converting them to internal binary rep
 
 For example, the default parsers configuration file includes a parser for parsing Docker logs (when the Tail input plugin is used):
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: docker
+      format: json
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S %z'
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name        docker
     Format      json
@@ -12,9 +26,12 @@ For example, the default parsers configuration file includes a parser for parsin
     Time_Format %Y-%m-%dT%H:%M:%S %z
 ```
 
+{% endtab %}
+{% endtabs %}
+
 The following log entry is valid content for the previously defined parser:
 
-```javascript
+```text
 {"key1": 12345, "key2": "abc", "time": "2006-07-28T13:22:04Z"}
 ```
 
