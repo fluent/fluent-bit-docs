@@ -17,14 +17,16 @@ You can turn a standard processor into a conditional processor by adding a
 - Conditional Processing feature is not supported when using [Filter as Processor](./filters.md).
 {% endhint %}
 
-
 These `condition` blocks use the following syntax:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-  inputs:
-  <...>
-      processors:
+    inputs:
+        <...>
+          processors:
         logs:
           - name: {processor_name}
             <...>
