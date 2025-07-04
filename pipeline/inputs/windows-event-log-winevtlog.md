@@ -42,7 +42,7 @@ pipeline:
       - name: winevtlog
         channels: Setup,Windows PowerShell
         interval_sec: 1
-        db: winevtlog.sqllite
+        db: winevtlog.sqlite
     outputs:
       - name: stdout
         match: '*'
