@@ -11,6 +11,13 @@ The `pipeline` section defines the flow of how data is collected, processed, and
 
 ## Example configuration
 
+{% hint style="info" %}
+
+**Note:** Processors can be enabled only by using the YAML configuration format. Classic mode configuration format 
+doesn't support processors.
+
+{% endhint %}
+
 Here's an example of a pipeline configuration:
 
 ```yaml
