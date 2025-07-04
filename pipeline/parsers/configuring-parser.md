@@ -64,7 +64,7 @@ parsers:
       time_key: time
       time_format: '%Y-%m-%dT%H:%M:%S.%L'
       time_keep: on
-      types: 'pid:integer'
+      types: pid:integer
 ```
 
 {% endtab %}
