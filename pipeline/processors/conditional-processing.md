@@ -17,28 +17,33 @@ You can turn a standard processor into a conditional processor by adding a
 - Conditional Processing feature is not supported when using [Filter as Processor](./filters.md).
 {% endhint %}
 
-
 These `condition` blocks use the following syntax:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-  inputs:
-  <...>
-      processors:
-        logs:
-          - name: {processor_name}
-            <...>
-            condition:
-	      op: {and|or}
-              rules:
-                - field: {field_name1}
-                  op: {comparison_operator}
-                  value: {comparison_value1}
-                - field: {field_name2}
-                  op: {comparison_operator}
-                  value: {comparison_value2}
-            <...>
+    inputs:
+    <...>
+        processors:
+            logs:
+                - name: processor_name
+                  <...>
+                  condition:
+	                  op: {and|or}
+                      rules:
+                          - field: {field_name1}
+                            op: {comparison_operator}
+                            value: {comparison_value1}
+                          - field: {field_name2}
+                            op: {comparison_operator}
+                            value: {comparison_value2}
+                  <...>
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Each processor can only have a single `condition` block, but that condition can
 include multiple rules. These rules are stored as items in the `condition.rules`
@@ -49,7 +54,7 @@ array.
 The `condition.op` parameter specifies the condition's evaluation logic. It has
 two possible values:
 
-- `and`: A log entry meets this condition when all of the rules in the `condition.rules`
+- `and`: A log entry meets this condition when all the rules in the `condition.rules`
   are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
 - `or`: A log entry meets this condition when one or more rules in the `condition.rules`
   array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
@@ -102,146 +107,179 @@ The `conditions.rules.op` parameter has the following possible values:
 This example applies a condition that only processes logs that contain the
 string `{"request": {"method": "POST"`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
-      tag: request.log
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: modified_if_post
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$request['method']"
-                  op: eq
-                  value: "POST"
+    inputs:
+        - name: dummy
+          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
+          tag: request.log
+          
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: modified_if_post
+                    value: true
+                    condition:
+                        op: and
+                        rules:
+                            - field: "$request['method']"
+                              op: eq
+                              value: "POST"
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Multiple conditions with `and`
 
-This example applies a condition that only processes logs when all of the
-specified rules are met:
+This example applies a condition that only processes logs when all the specified rules are met:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
-      tag: request.log
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: requires_audit
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$request['method']"
-                  op: eq
-                  value: "POST"
-                - field: "$request['path']"
-                  op: regex
-                  value: "\/sensitive-.*"
+    inputs:
+        - name: dummy
+          dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
+          tag: request.log
+          
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: requires_audit
+                    value: true
+                    condition:
+                        op: and
+                        rules:
+                            - field: "$request['method']"
+                              op: eq
+                              value: "POST"
+                            - field: "$request['path']"
+                              op: regex
+                              value: "\/sensitive-.*"
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Multiple conditions with `or`
 
-This example applies a condition that only processes logs when one or more of
-the specified rules are met:
+This example applies a condition that only processes logs when one or more of the specified rules are met:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
-      tag: request.log
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: requires_performance_check
-            value: true
-            condition:
-              op: or
-              rules:
-                - field: "$request['response_time']"
-                  op: gt
-                  value: 100
-                - field: "$request['status_code']"
-                  op: gte
-                  value: 400
+    inputs:
+        - name: dummy
+          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
+          tag: request.log
+          
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: requires_performance_check
+                    value: true
+                    condition:
+                        op: or
+                        rules:
+                            - field: "$request['response_time']"
+                              op: gt
+                              value: 100
+                            - field: "$request['status_code']"
+                              op: gte
+                              value: 400
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Array of values
 
 This example uses an array for the value of `condition.rules.value`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
-      tag: request.log
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: high_priority_method
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$request['method']"
-                  op: in
-                  value: ["POST", "PUT", "DELETE"]
+    inputs:
+        - name: dummy
+          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
+          tag: request.log
+          
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: high_priority_method
+                    value: true
+                    condition:
+                        op: and
+                        rules:
+                            - field: "$request['method']"
+                              op: in
+                              value: ["POST", "PUT", "DELETE"]
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Multiple processors with conditions
 
 This example uses multiple processors with conditional processing enabled for each:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
-      tag: app.log
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: alert
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$level"
-                  op: eq
-                  value: "error"
-                - field: "$service"
-                  op: in
-                  value: ["api-gateway", "authentication", "database"]
-
-          - name: content_modifier
-            action: insert
-            key: paging_required
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$log"
-                  op: regex
-                  value: "(?i)(connection refused|timeout|crash)"
-                - field: "$level"
-                  op: in
-                  value: ["error", "fatal"]
+    inputs:
+        - name: dummy
+          dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
+          tag: app.log
+      
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: alert
+                    value: true
+                    condition:
+                        op: and
+                        rules:
+                            - field: "$level"
+                              op: eq
+                              value: "error"
+                            - field: "$service"
+                              op: in
+                              value: ["api-gateway", "authentication", "database"]
+          
+                  - name: content_modifier
+                    action: insert
+                    key: paging_required
+                    value: true
+                    condition:
+                        op: and
+                        rules:
+                            - field: "$log"
+                              op: regex
+                              value: "(?i)(connection refused|timeout|crash)"
+                            - field: "$level"
+                              op: in
+                              value: ["error", "fatal"]
 ```
+
+{% endtab %}
+{% endtabs %}
 
 This configuration adds an `alert` field to error logs from critical services,
 and adds a `paging_required` field to errors that contain specific critical patterns.

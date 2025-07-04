@@ -2,11 +2,14 @@
 
 The **content_modifier** processor allows you to manipulate the messages, metadata/attributes and content of Logs and Traces.
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
-
 Similar to the functionality exposed by filters, this processor presents a unified mechanism to perform such operations for data manipulation. The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
 
-Note that processors and this specific component can only be enabled using the new YAML configuration format. Classic mode configuration format doesn't support processors.
+{% hint style="info" %}
+
+**Note:** Both processors and this specific component can be enabled only by using
+the YAML configuration format. Classic mode configuration format doesn't support processors.
+
+{% endhint %}
 
 ## Contexts
 
@@ -63,172 +66,209 @@ The actions specify the type of operation to run on top of a specific key or con
 
 The following example appends the key `color` with the value `blue` to the log stream.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"key1": "123.4"}'
+    inputs:
+        - name: dummy
+          dummy: '{"key1": "123.4"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: "color"
-            value: "blue"
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: insert
+                    key: "color"
+                    value: "blue"
+            
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Upsert example
 
 Update the value of `key1` and insert `key2`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"key1": "123.4"}'
+    inputs:
+        - name: dummy
+          dummy: '{"key1": "123.4"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: upsert
-            key: "key1"
-            value: "5678"
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: upsert
+                    key: "key1"
+                    value: "5678"
 
-          - name: content_modifier
-            action: upsert
-            key: "key2"
-            value: "example"
+                  - name: content_modifier
+                    action: upsert
+                    key: "key2"
+                    value: "example"
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
-
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
 
+{% endtab %}
+{% endtabs %}
 
 #### Delete example
 
 Delete `key2` from the stream:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"key1": "123.4", "key2": "example"}'
+    inputs:
+        - name: dummy
+          dummy: '{"key1": "123.4", "key2": "example"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: delete
-            key: "key2"
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: delete
+                    key: "key2"
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Rename example
 
 Change the name of `key2` to `test`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"key1": "123.4", "key2": "example"}'
+    inputs:
+        - name: dummy
+          dummy: '{"key1": "123.4", "key2": "example"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: rename
-            key: "key2"
-            value: "test"
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: rename
+                    key: "key2"
+                    value: "test"
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Hash example
 
 Apply the SHA-256 algorithm for the value of the key `password`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"username": "bob", "password": "12345"}'
+    inputs:
+        - name: dummy
+          dummy: '{"username": "bob", "password": "12345"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: hash
-            key: "password"
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: hash
+                    key: "password"
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
 
-
+{% endtab %}
+{% endtabs %}
 
 #### Extract example
 
 By using a domain address, perform a extraction of the components of it as a list of key value pairs:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"http.url": "https://fluentbit.io/docs?q=example"}'
+    inputs:
+        - name: dummy
+          dummy: '{"http.url": "https://fluentbit.io/docs?q=example"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: extract
-            key: "http.url"
-            pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: extract
+                    key: "http.url"
+                    pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
 
-
+{% endtab %}
+{% endtabs %}
 
 #### Convert example
 
 Both keys in the example are strings. Convert the `key1` to a double/float type and `key2` to a boolean:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: dummy
-      dummy: '{"key1": "123.4", "key2": "true"}'
+    inputs:
+        - name: dummy
+          dummy: '{"key1": "123.4", "key2": "true"}'
 
-      processors:
-        logs:
-          - name: content_modifier
-            action: convert
-            key: key1
-            converted_type: int
+          processors:
+              logs:
+                  - name: content_modifier
+                    action: convert
+                    key: key1
+                    converted_type: int
 
-          - name: content_modifier
-            action: convert
-            key: key2
-            converted_type: boolean
+                  - name: content_modifier
+                    action: convert
+                    key: key2
+                    converted_type: boolean
 
-  outputs:
-    - name : stdout
-      match: '*'
-      format: json_lines
+    outputs:
+        - name : stdout
+          match: '*'
+          format: json_lines
 ```
+
+{% endtab %}
+{% endtabs %}

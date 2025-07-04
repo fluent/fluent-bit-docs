@@ -1,6 +1,4 @@
 # Labels
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1e9a2474-00c3-4d8d-b170-79996be7af79" />
-
 The **labels** processor lets you manipulate the labels of metrics.
 
 Similar to filters, this processor presents a enriching/modifying mechanism to
@@ -9,9 +7,11 @@ that processors perform better than filters, and when chaining them there are no
 encoding or decoding performance penalties.
 
 {% hint style="info" %}
+
 **Note:** Both processors and this specific component can be enabled only by using
 the YAML configuration format. Classic mode configuration format doesn't support
 processors.
+
 {% endhint %}
 
 ## Configuration Parameters
@@ -28,84 +28,120 @@ processors.
 
 Change the value of the `name` to `fluentbit`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: fluentbit_metrics
-      processors:
-        metrics:
-          - name: labels
-            update: name fluentbit
-  outputs:
-    - name : stdout
-      match: '*'
+    inputs:
+        - name: fluentbit_metrics
+      
+          processors:
+              metrics:
+                  - name: labels
+                    update: name fluentbit
+    outputs:
+        - name : stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Insert example
 
 The following example appends the key `agent` with the value `fluentbit` as the label
 of metrics:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: fluentbit_metrics
-      processors:
-        metrics:
-          - name: labels
-            insert: agent fluentbit
-  outputs:
-    - name : stdout
-      match: '*'
+    inputs:
+        - name: fluentbit_metrics
+          
+          processors:
+              metrics:
+                  - name: labels
+                    insert: agent fluentbit
+  
+    outputs:
+        - name : stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Upsert example
 
 Upsert the value of `name` and insert `fluentbit`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: fluentbit_metrics
-      processors:
-        metrics:
-          - name: labels
-            upsert: name fluentbit
-  outputs:
-    - name : stdout
-      match: '*'
+    inputs:
+        - name: fluentbit_metrics
+          
+          processors:
+              metrics:
+                  - name: labels
+                    upsert: name fluentbit
+    outputs:
+        - name : stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Delete example
 
 Delete containing `name` key from metrics:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: fluentbit_metrics
-      processors:
-        metrics:
-          - name: labels
-            delete: name
-  outputs:
-    - name : stdout
-      match: '*'
+    inputs:
+        - name: fluentbit_metrics
+      
+          processors:
+              metrics:
+                  - name: labels
+                    delete: name
+    outputs:
+        - name : stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Hash example
 
 Apply the SHA-1 algorithm for the value of the key `hostname`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-  inputs:
-    - name: fluentbit_metrics
-      processors:
-        metrics:
-          - name: labels
-            hash: hostname
-  outputs:
-    - name : stdout
-      match: '*'
+    inputs:
+        - name: fluentbit_metrics
+          
+          processors:
+              metrics:
+                  - name: labels
+                    hash: hostname
+    outputs:
+        - name : stdout
+          match: '*'
 ```
+
+{% endtab %}
+{% endtabs %}

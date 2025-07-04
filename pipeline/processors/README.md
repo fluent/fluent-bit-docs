@@ -8,6 +8,13 @@ creating a performance bottleneck.
 Additionally, filters can be implemented in a way that mimics the behavior of
 processors, but processors can't be implemented in a way that mimics filters.
 
+{% hint style="info" %}
+
+**Note:** Processors can be enabled only by using the YAML configuration format. Classic mode configuration format 
+doesn't support processors.
+
+{% endhint %}
+
 ## Available processors
 
 Fluent Bit offers the following processors:
