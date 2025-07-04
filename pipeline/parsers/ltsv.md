@@ -13,9 +13,24 @@ LogFormat "host:%h\tident:%l\tuser:%u\ttime:%t\treq:%r\tstatus:%>s\tsize:%b\tref
 CustomLog "logs/access_log" combined_ltsv
 ```
 
-The parser.conf:
+The following is an example parsers configuration file:
 
-```python
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+    - name: access_log_ltsv
+      format: ltsv
+      time_key: time
+      time_format: '[%d/%b/%Y:%H:%M:%S %z]'
+      types: status:integer size:integer
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
 [PARSER]
     Name        access_log_ltsv
     Format      ltsv
@@ -23,6 +38,9 @@ The parser.conf:
     Time_Format [%d/%b/%Y:%H:%M:%S %z]
     Types       status:integer size:integer
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The following log entry is a valid content for the parser defined above:
 
@@ -43,4 +61,3 @@ After processing, it internal representation will be:
 ```
 
 The time has been converted to Unix timestamp \(UTC\).
-
