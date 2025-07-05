@@ -81,3 +81,24 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+### Parsing the MESSAGE field
+
+By default, the _Systemd_ plugin logs all fields in the journal verbatim. If you want to parse the `MESSAGE` field, you can configure your service to specify a parser. For example, to parse the `MESSAGE` field as JSON, you can use something like the following systemd configuration:
+
+```yaml
+[Unit]
+Description=my-service
+After=network.target
+
+[Service]
+WorkingDirectory=/var/lib/my-service
+ExecStart=/usr/sbin/my-service
+Restart=always
+LogExtraFields=FLUENT_BIT_PARSER=json
+
+[Install]
+WantedBy=multi-user.target
+```
+
+`LogExtraFields` will make the specified fields appear in the log output. The `Systemd` plugin will look for a `FLUENT_BIT_PARSER` field and use it to parse the `MESSAGE` field. If the parser is not found or parsing fails, the unparsed message is added to the log entry as if no parser was specified.
