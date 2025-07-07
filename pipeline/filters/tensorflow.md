@@ -25,33 +25,33 @@ The plugin supports the following configuration parameters:
 To create a Tensorflow Lite shared library:
 
 1. Clone the [Tensorflow repository](https://github.com/tensorflow/tensorflow).
-2. Install the [Bazel](https://bazel.build/) package manager.
-3. Run the following command to create the shared library:
+1. Install the [Bazel](https://bazel.build/) package manager.
+1. Run the following command to create the shared library:
 
    ```shell
-   $ ./bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
+   bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
    ```
 
    The script creates the shared library
    `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
-4. Copy the library to a location such as `/usr/lib` that can be used by Fluent Bit.
+1. Copy the library to a location such as `/usr/lib` that can be used by Fluent Bit.
 
 ## Building Fluent Bit with Tensorflow filter plugin
 
 The Tensorflow filter plugin is disabled by default. You must build Fluent Bit with the Tensorflow plugin enabled. In addition, it requires access to Tensorflow Lite header files to compile. Therefore, you must pass the address of the Tensorflow source code on your machine to the [build script](https://github.com/fluent/fluent-bit#build-from-scratch):
 
 ```shell
-$ ./cmake -DFLB_FILTER_TENSORFLOW=On -DTensorflow_DIR=<AddressOfTensorflowSourceCode> ...
+cmake -DFLB_FILTER_TENSORFLOW=On -DTensorflow_DIR=<AddressOfTensorflowSourceCode> ...
 ```
 
 ### Command line
 
-If Tensorflow plugin initializes correctly, it reports successful creation of the interpreter, and prints a summary of model's input and output types and dimensions.
+If the Tensorflow plugin initializes correctly, it reports successful creation of the interpreter, and prints a summary of model's input and output types and dimensions.
 
 The command:
 
 ```shell
-$ ./fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
+fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
 ```
 
 produces an output like:
@@ -75,12 +75,12 @@ service:
     flush: 1
     daemon: off
     log_level: info
-    
+
 pipeline:
     inputs:
         - name: mqtt
           tag: mqtt.data
-    
+
     filters:
         - name: tensorflow
           match: mqtt.data
@@ -88,7 +88,7 @@ pipeline:
           model_file: /home/m/model.tflite
           include_input_fields: false
           normalization_value: 255
-    
+
     outputs:
         - name: stdout
           match: '*'

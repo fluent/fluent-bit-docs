@@ -35,8 +35,8 @@ The following template variables can be used for values with the `ADD` option. S
 
 ### Configuration file
 
-Below configurations assume a properly configured parsers file and 'storage.path' variable defined in the services
-section of the fluent bit configuration (not shown below).
+The following configurations assume a properly configured parsers file and 'storage.path' variable defined in the services
+section of the Fluent Bit configuration (not shown).
 
 #### Example 1: Attach Task ID and cluster name to container logs
 
@@ -65,10 +65,10 @@ pipeline:
         - name: ecs
           match: '*'
           ecs_tag_prefix: ecs.var.lib.docker.containers.
-          add: 
+          add:
             - ecs_task_id $TaskID
             - cluster $ClusterName
-          
+
     outputs:
         - name: stdout
           match: '*'
@@ -150,7 +150,7 @@ pipeline:
           match: '*'
           ecs_tag_prefix: ecs.var.lib.docker.containers.
           add: resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
-          
+
     outputs:
         - name: stdout
           match: '*'
@@ -207,7 +207,7 @@ The template variables in the value for the `resource` key are separated by dot 
 
 #### Example 3: Attach cluster metadata to non-container logs
 
-This examples shows a use case for the `Cluster_Metadata_Only` option attaching cluster metadata to ECS Agent logs.
+This example shows a use case for the `Cluster_Metadata_Only` option attaching cluster metadata to ECS Agent logs.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -232,7 +232,7 @@ pipeline:
           match: '*'
           cluster_metadata_only: on
           add: cluster $ClusterName
-          
+
     outputs:
         - name: stdout
           match: '*'
