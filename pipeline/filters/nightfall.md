@@ -27,32 +27,6 @@ The plugin supports the following configuration parameters:
 
 The following is an example of a configuration file for the Nightfall filter:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: http
-          host: 0.0.0.0
-          port: 8000
-
-    filters:
-        - name: nightfall
-          match: '*'
-          nightfall_api_key: <API key>
-          policy_id: 5991946b-1cc8-4c38-9240-72677029a3f7
-          sampling_rate: 1
-          tls.ca_path: /etc/ssl/certs
-    
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
 ```text
 [INPUT]
     name http
@@ -69,22 +43,15 @@ pipeline:
 
 [OUTPUT]
     Name stdout
-    Match *
 ```
-
-{% endtab %}
-{% endtabs %}
 
 ### Command line
 
-After you configure the filter, you can use it from the command line by running a command like:
+After you configure the filter, you can use the it from the command line by running a
+command like:
 
 ```shell
-# For YAML configuration.
-$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.yaml
-
-# For classic configuration.
-$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
+bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
 Replace _`PATH_TO_CONF_FILE`_ with the path for where your filter configuration file
