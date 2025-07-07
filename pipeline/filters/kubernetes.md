@@ -65,24 +65,9 @@ The plugin supports the following configuration parameters:
 
 ## Processing the `log` value
 
-Kubernetes filter provides several ways to process the data contained in the `log` key. The following explanation of the workflow assumes that your original Docker parser defined in a `parsers` file is as follows:
+Kubernetes filter provides several ways to process the data contained in the `log` key. The following explanation of the workflow assumes that your original Docker parser defined in `parsers.conf` is as follows:
 
-{% tabs %}
-{% tab title="parsers.yaml" %}
-
-```yaml
-parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S.%L'
-      time_keep: on
-```
-
-{% endtab %}
-{% tab title="parsers.conf" %}
-
-```text
+```python
 [PARSER]
     Name         docker
     Format       json
@@ -90,9 +75,6 @@ parsers:
     Time_Format  %Y-%m-%dT%H:%M:%S.%L
     Time_Keep    On
 ```
-
-{% endtab %}
-{% endtabs %}
 
 To avoid data-type conflicts in Fluent Bit v1.2 or greater, don't use decoders (`Decode_Field_As`) if you're using Elasticsearch database in the output.
 
@@ -191,32 +173,7 @@ For example:
 
 Kubernetes Filter depends on either [Tail](../inputs/tail.md) or [Systemd](../inputs/systemd.md) input plugins to process and enrich records with Kubernetes metadata. Consider the following configuration example:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          tag: kube.*
-          path: /var/log/containers/*.log
-          multiline.parser: docker,cri
-
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_url: https://kubernetes.default.svc:443
-          kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-          kube_tag_prefix: kube.var.log.containers.
-          merge_log: on
-          merge_log_key: log_processed
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [INPUT]
     Name    tail
     Tag     kube.*
@@ -233,9 +190,6 @@ pipeline:
     Merge_Log        On
     Merge_Log_Key    log_processed
 ```
-
-{% endtab %}
-{% endtabs %}
 
 In the input section, the [Tail](../inputs/tail.md) plugin monitors all files ending in `.log` in the path `/var/log/containers/`. For every file it will read every line and apply the Docker parser. The records are emitted to the next step with an expanded tag.
 
@@ -295,36 +249,7 @@ Under some uncommon conditions, a user might want to alter that hard-coded regul
 
 One such use case involves splitting logs by namespace, pods, containers or container ID. The tag is restructured within the tail input using match groups. Restructuring can simplify the filtering by those match groups later in the pipeline. Since the tag no longer follows the original filename, a custom `Regex_Parser` that matches the new tag structure is required:
 
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-parsers:
-    - name: custom-tag
-      format: regex
-      regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
-      
-pipeline:
-    inputs:
-        - name: tail
-          tag: kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
-          path: /var/log/containers/*.log
-          tag_regex: '(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$'
-          parser: cri
-
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_tag_prefix: kube.
-          regex_parser: custom-tag
-          merge_log: on
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [PARSER]
     Name    custom-tag
     Format  regex
@@ -344,9 +269,6 @@ pipeline:
     Regex_Parser        custom-tag
     Merge_Log           On
 ```
-
-{% endtab %}
-{% endtabs %}
 
 The filter can now gather the values of `pod_name` and `namespace`. With that information, it will check in the local cache (internal hash table) if some metadata for that key pair exists. If it exists, it will enrich the record with the metadata value. Otherwise, it connects to the Kubernetes Master/API Server and retrieves that information.
 
@@ -404,37 +326,6 @@ For Fluent Bit configuration, you must set the `Use_Kubelet` to `true` to enable
 
 Fluent Bit configuration example:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          tag: kube.*
-          path: /var/log/containers/*.log
-          db: /var/log/flb_kube.db
-          parser: docker
-          docker_mode: on
-          mem_buf_limit: 50MB
-          skip_login_lines: on
-          refresh_interval: 10
-
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_url: https://kubernetes.default.svc.cluster.local:443
-          kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-          merge_log: on
-          buffer_size: 0
-          use_kubelet: ture
-          kubelet_port: 10250
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
 ```yaml
 [INPUT]
     Name              tail
@@ -458,10 +349,6 @@ pipeline:
     Use_Kubelet         true
     Kubelet_Port        10250
 ```
-
-{% endtab %}
-{% endtabs %}
-
 
 DaemonSet configuration example:
 

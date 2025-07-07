@@ -35,50 +35,9 @@ The following template variables can be used for values with the `ADD` option. S
 
 ### Configuration file
 
-Below configurations assume a properly configured parsers file and 'storage.path' variable defined in the services
-section of the fluent bit configuration (not shown below).
-
 #### Example 1: Attach Task ID and cluster name to container logs
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          tag: ecs.*
-          path: /var/lib/docker/containers/*/*.log
-          docker_mode: on
-          docker_mode_flush: 5
-          docker_mode_parser: container_firstline
-          parser: docker
-          db: /var/fluent-bit/state/flb_container.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-          read_from_head: off
-
-    filters:
-        - name: ecs
-          match: '*'
-          ecs_tag_prefix: ecs.var.lib.docker.containers.
-          add: 
-            - ecs_task_id $TaskID
-            - cluster $ClusterName
-          
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [INPUT]
     Name                tail
     Tag                 ecs.*
@@ -108,9 +67,6 @@ pipeline:
     Format json_lines
 ```
 
-{% endtab %}
-{% endtabs %}
-
 The output log should be similar to:
 
 ```text
@@ -123,42 +79,6 @@ The output log should be similar to:
 ```
 
 #### Example 2: Attach customized resource name to container logs
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          tag: ecs.*
-          path: /var/lib/docker/containers/*/*.log
-          docker_mode: on
-          docker_mode_flush: 5
-          docker_mode_parser: container_firstline
-          parser: docker
-          db: /var/fluent-bit/state/flb_container.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-          read_from_head: off
-
-    filters:
-        - name: ecs
-          match: '*'
-          ecs_tag_prefix: ecs.var.lib.docker.containers.
-          add: resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
-          
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -189,9 +109,6 @@ pipeline:
     Format json_lines
 ```
 
-{% endtab %}
-{% endtabs %}
-
 The output log would be similar to:
 
 ```text
@@ -207,42 +124,9 @@ The template variables in the value for the `resource` key are separated by dot 
 
 #### Example 3: Attach cluster metadata to non-container logs
 
-This examples shows a use case for the `Cluster_Metadata_Only` option attaching cluster metadata to ECS Agent logs.
+This examples shows a use case for the `Cluster_Metadata_Only` option- attaching cluster metadata to ECS Agent logs.
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          tag: ecsagent.*
-          path: /var/log/ecs/*
-          db: /var/fluent-bit/state/flb_ecs.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-         # Collect all logs on instance
-          read_from_head: on
-
-    filters:
-        - name: ecs
-          match: '*'
-          cluster_metadata_only: on
-          add: cluster $ClusterName
-          
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [INPUT]
     Name                tail
     Tag                 ecsagent.*
@@ -267,6 +151,3 @@ pipeline:
     Match *
     Format json_lines
 ```
-
-{% endtab %}
-{% endtabs %}

@@ -31,30 +31,9 @@ The following configuration file appends a product name and hostname to a record
 using an environment variable:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-          
-    filters:
-        - name: record_modifier
-          match: '*'
-          record:
-             - hostname ${HOSTNAME}
-             - product Awesome_Tool
-
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```text
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
@@ -71,17 +50,37 @@ pipeline:
 ```
 
 {% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml copy
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          record:
+             - hostname ${HOSTNAME}
+             - product Awesome_Tool
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% endtabs %}
 
 You can run the filter from command line:
 
-```shell
-$ ./fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
 ```
 
 The output looks something like:
 
-```text
+```python copy
 [0] mem.local: [1492436882.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>299352, "Swap.total"=>2064380, "Swap.used"=>32656, "Swap.free"=>2031724, "hostname"=>"localhost.localdomain", "product"=>"Awesome_Tool"}]
 ```
 
@@ -90,31 +89,9 @@ The output looks something like:
 The following configuration file removes `Swap.*` fields:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-          
-    filters:
-        - name: record_modifier
-          match: '*'
-          remove_key:
-             - Swap.total
-             - Swap.used
-             - Swap.free
-    
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```text
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
@@ -132,17 +109,38 @@ pipeline:
 ```
 
 {% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml copy
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          remove_key:
+             - Swap.total
+             - Swap.used
+             - Swap.free
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% endtabs %}
 
 You can also run the filter from command line.
 
-```shell
-$ ./fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
 ```
 
 The output looks something like:
 
-```text
+```python
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```
 
@@ -151,34 +149,16 @@ The output looks something like:
 The following configuration file retains `Mem.*` fields.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    
-    filters:
-        - name: record_modifier
-          match: '*'
-          Allowlist_key:
-             - Mem.total
-             - Mem.used
-             - Mem.free
-    
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```text
+```python copy
 [INPUT]
     Name mem
     Tag  mem.local
+
+[OUTPUT]
+    Name  stdout
+    Match *
 
 [FILTER]
     Name record_modifier
@@ -186,10 +166,27 @@ pipeline:
     Allowlist_key Mem.total
     Allowlist_key Mem.used
     Allowlist_key Mem.free
-    
- [OUTPUT]
-    Name  stdout
-    Match *
+```
+
+{% endtab %}
+
+{% tab title="fluent-bit.yaml" %}
+
+```yaml copy
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+    filters:
+        - name: record_modifier
+          match: '*'
+          Allowlist_key:
+             - Mem.total
+             - Mem.used
+             - Mem.free
+    outputs:
+        - name: stdout
+          match: '*'
 ```
 
 {% endtab %}
@@ -197,12 +194,12 @@ pipeline:
 
 You can also run the filter from command line:
 
-```shell
-$ ./fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
+```shell copy
+fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
 ```
 
 The output looks something like:
 
-```text
+```python
 [0] mem.local: [1492436998.000000000, {"Mem.total"=>1016024, "Mem.used"=>716672, "Mem.free"=>295332}]
 ```

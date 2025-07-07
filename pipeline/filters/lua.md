@@ -2,6 +2,8 @@
 
 The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
+
 A Lua-based filter requires two steps:
 
 1. Configure the filter in the main configuration.
@@ -30,38 +32,17 @@ To test the Lua filter, you can run the plugin from the command line or through 
 
 From the command line you can use the following options:
 
-```shell
-$ ./fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
+```bash
+fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 ```
 
 ### Configuration file
 
 In your main configuration file, append the following `Input`, `Filter`, and `Output` sections:
 
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: dummy
-
-    filters:
-        - name: lua
-          match: '*'
-          script: test.lua
-          call: cb_print
-
-    outputs:
-        - name: null
-          match: '*'
-```
-
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [INPUT]
     Name    dummy
 
@@ -75,9 +56,25 @@ pipeline:
     Name    null
     Match   *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call:  cb_print
+  outputs:
+    - name: null
+      match: '*'
+```
 {% endtab %}
 {% endtabs %}
+
 
 ## Lua script filter API
 
@@ -124,39 +121,7 @@ Each callback must return three values:
 The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/packaging/testing/smoke/container) include examples to verify during CI.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-service:
-    flush: 1
-    daemon: off
-    log_level: info
-
-pipeline:
-    inputs:
-        - name: random
-          tag: test
-          samples: 10
-
-    filters:
-        - name: lua
-          match: '*'
-          call: append_tag
-          code: |
-            function append_tag(tag, timestamp, record)
-                new_record = record
-                new_record["tag"] = tag
-                return 1, timestamp, new_record
-            end
-
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
-
 ```
 [SERVICE]
 	flush 1
@@ -178,7 +143,36 @@ pipeline:
 	Name stdout
 	Match *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+service:
+    flush:           1
+    daemon:          off
+    log_level:       info
+
+pipeline:
+    inputs:
+        - name:    random
+          tag:     test
+          samples: 10
+
+    filters:
+        - name:  lua
+          match: "*"
+          call:  append_tag
+          code:  |
+              function append_tag(tag, timestamp, record)
+                 new_record = record
+                 new_record["tag"] = tag
+                 return 1, timestamp, new_record
+              end
+
+    outputs:
+        - name:  stdout
+          match: "*"
+```
 {% endtab %}
 {% endtabs %}
 
@@ -207,24 +201,8 @@ The environment variable is set as `KUBERNETES_SERVICE_HOST: api.sandboxbsh-a.pr
 The goal of this example is to extract the `sandboxbsh` name and add it to the record as a special key.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  
-  
-    filters:
-        - name: lua
-          alias: filter-iots-lua
-          match: iots_thread.*
-          script: filters.lua
-          call: set_landscape_deployment
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
-
-```text
+```
 [FILTER]
 Name                lua
 Alias               filter-iots-lua
@@ -232,9 +210,20 @@ Match               iots_thread.*
 Script              filters.lua
 Call                set_landscape_deployment
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+  filters:
+    - name: lua
+      alias: filter-iots-lua
+      match: iots_thread.*
+      script: filters.lua
+      call:  set_landscape_deployment
+```
 {% endtab %}
 {% endtabs %}
+
 
 filters.lua:
 ```lua
@@ -283,27 +272,8 @@ end
 #### Configuration
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: stdin
-  
-    filters:
-        - name: lua
-          match: '*'
-          script: test.lua
-          call: cb_split
-  
-    outputs:
-        - name: stdout
-          match: '*'
-```
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [Input]
     Name    stdin
 
@@ -317,13 +287,28 @@ pipeline:
     Name    stdout
     Match   *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: stdin
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call: cb_split
+  outputs:
+    - name: stdout
+      match: '*'
+```
 {% endtab %}
 {% endtabs %}
 
 #### Input
 
-```text
+```
 {"x": [ {"a1":"aa", "z1":"zz"}, {"b1":"bb", "x1":"xx"}, {"c1":"cc"} ]}
 {"x": [ {"a2":"aa", "z2":"zz"}, {"b2":"bb", "x2":"xx"}, {"c2":"cc"} ]}
 {"a3":"aa", "z3":"zz", "b3":"bb", "x3":"xx", "c3":"cc"}
@@ -331,7 +316,7 @@ pipeline:
 
 #### Output
 
-```text
+```
 [0] stdin.0: [1538435928.310583591, {"a1"=>"aa", "z1"=>"zz"}]
 [1] stdin.0: [1538435928.310583591, {"x1"=>"xx", "b1"=>"bb"}]
 [2] stdin.0: [1538435928.310583591, {"c1"=>"cc"}]
@@ -369,33 +354,8 @@ end
 Configuration to get Istio logs and apply response code filter to them.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: tail
-          path: /var/log/containers/*_istio-proxy-*.log
-          multiline.parser: 'docker, cri'
-          tag: istio.*
-          mem_buf_limit: 64MB
-          skip_long_lines: off
-  
-    filters:
-        - name: lua
-          match: istio.*
-          script: response_code_filter.lua
-          call: cb_response_code_filter
-  
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
-
-```text
+```ini
 [INPUT]
     Name                tail
     Path                /var/log/containers/*_istio-proxy-*.log
@@ -414,7 +374,27 @@ pipeline:
     Name                stdout
     Match               *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/containers/*_istio-proxy-*.log
+      multiline.parser: 'docker, cri'
+      tag: istio.*
+      mem_buf_limit: 64MB
+      skip_long_lines: off
+  filters:
+    - name: lua
+      match: istio.*
+      script: response_code_filter.lua
+      call: cb_response_code_filter
+  outputs:
+    - name: stdout
+      match: '*'
+```
 {% endtab %}
 {% endtabs %}
 
@@ -492,51 +472,8 @@ end
 Use this configuration to obtain a JSON key with `datetime`, and then convert it to another format.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
-          tag: event_category_a
-
-        - name: dummy
-          dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
-          tag: event_category_b
-
-    filters:
-        - name: lua
-          match: '*'
-          code: |
-            function convert_to_utc(tag, timestamp, record)
-                local date_time = record["pub_date"]
-                local new_record = record
-                if date_time then
-                    if string.find(date_time, ",") then
-                        local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
-                        local date_part, zone_part = date_time:match(pattern)
-                        if date_part and zone_part then
-                            local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
-                            local handle = io.popen(command)
-                            local result = handle:read("*a")
-                            handle:close()
-                            new_record["pub_date"] = result:match("%S+")
-                        end
-                    end
-                end
-                return 1, timestamp, new_record
-            end
-          call: convert_to_utc
-
-    outputs:
-        - name: stdout
-          match: '*'
-```
-{% endtab %}
 {% tab title="fluent-bit.conf" %}
-
-```text
+```ini
 [INPUT]
     Name    dummy
     Dummy   {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
@@ -546,6 +483,7 @@ pipeline:
     Name    dummy
     Dummy   {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
     Tag     event_category_b
+
 
 [FILTER]
     Name                lua
@@ -557,7 +495,48 @@ pipeline:
     Name                stdout
     Match               *
 ```
+{% endtab %}
 
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
+      tag: event_category_a
+
+    - name: dummy
+      dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
+      tag: event_category_b
+
+  filters:
+    - name: lua
+      match: '*'
+      code: |
+        function convert_to_utc(tag, timestamp, record)
+          local date_time = record["pub_date"]
+          local new_record = record
+          if date_time then
+              if string.find(date_time, ",") then
+                  local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+                  local date_part, zone_part = date_time:match(pattern)
+                  if date_part and zone_part then
+                      local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                      local handle = io.popen(command)
+                      local result = handle:read("*a")
+                      handle:close()
+                      new_record["pub_date"] = result:match("%S+")
+                  end
+              end
+          end
+          return 1, timestamp, new_record
+        end
+      call: convert_to_utc
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
 {% endtab %}
 {% endtabs %}
 
@@ -577,7 +556,7 @@ Which are handled by dummy in this example.
 
 The output of this process shows the conversion of the `datetime` of two timezones to ISO 8601 format in UTC.
 
-```text
+```ini
 ...
 [2024/08/01 00:56:25] [ info] [output:stdout:stdout.0] worker #0 started
 [0] event_category_a: [[1722452186.727104902, {}], {"event"=>"Restock", "pub_date"=>"2024-07-30T18:01:06Z"}]
@@ -589,23 +568,14 @@ The output of this process shows the conversion of the `datetime` of two timezon
 
 Fluent Bit supports definition of configuration variables, which can be done in the following way:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
 ```yaml
 env:
   myvar1: myvalue1
 ```
 
-{% endtab %}
-{% endtabs %}
-
-These variables can be accessed from the Lua code by referring to the `FLB_ENV` Lua table. Since this is a Lua table, you can access its sub-records through the same syntax (for example, `FLB_ENV['A']`).
+These variables can be accessed from the Lua code by referring to the `FLB_ENV` Lua table. Since this is a Lua table, you can access its subrecords through the same syntax (for example, `FLB_ENV['A']`).
 
 #### Configuration
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 env:
@@ -614,19 +584,19 @@ env:
   C: ccc
 
 service:
-    flush: 1
-    log_level: info
+    flush:           1
+    log_level:       info
 
 pipeline:
     inputs:
-        - name: random
-          tag: test
+        - name:    random
+          tag:     test
           samples: 10
 
     filters:
-        - name: lua
-          match: '*'
-          call: append_tag
+        - name:  lua
+          match: "*"
+          call:  append_tag
           code:  |
               function append_tag(tag, timestamp, record)
                  new_record = record
@@ -635,15 +605,12 @@ pipeline:
               end
 
     outputs:
-        - name: stdout
-          match: '*'
+        - name:  stdout
+          match: "*"
 ```
-
-{% endtab %}
-{% endtabs %}
 
 #### Output
 
-```text
+```shell
 test: [[1731990257.781970977, {}], {"my_env"=>{"A"=>"aaa", "C"=>"ccc", "HOSTNAME"=>"monox-2.lan", "B"=>"bbb"}, "rand_value"=>4805047635809401856}]
 ```

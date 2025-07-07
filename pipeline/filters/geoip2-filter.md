@@ -22,33 +22,7 @@ This plugin supports the following configuration parameters:
 
 The following configuration processes the incoming `remote_addr` and appends country information retrieved from the GeoLite2 database.
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: dummy
-          dummy: {"remote_addr": "8.8.8.8"}
-
-    filters:
-        - name: gioip2
-          match: '*'
-          database: GioLite2-City.mmdb
-          lookup_key: remote_addr
-          record:
-              - country remote_addr %{country.names.en}
-              - isocode remote_addr %{country.iso_code}
-
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
+```python
 [INPUT]
     Name   dummy
     Dummy  {"remote_addr": "8.8.8.8"}
@@ -66,9 +40,6 @@ pipeline:
     Match  *
 ```
 
-{% endtab %}
-{% endtabs %}
-
 Each `Record` parameter specifies the following triplet:
 
 - `country`: The field name to be added to records.
@@ -77,6 +48,6 @@ Each `Record` parameter specifies the following triplet:
 
 By running Fluent Bit with this configuration, you will see the following output:
 
-```text
+```javascript
 {"remote_addr": "8.8.8.8", "country": "United States", "isocode": "US"}
 ```
