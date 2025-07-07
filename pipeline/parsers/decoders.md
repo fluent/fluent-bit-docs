@@ -61,6 +61,9 @@ parsers:
     Decode_Field_As    escaped     log
 ```
 
+{% endtab %}
+{% endtabs %}
+
 Each line in the parser with a key `Decode_Field` instructs the parser to apply
 a specific decoder on a given field. Optionally, it offers the option to take an
 extra action if the decoder doesn't succeed.
