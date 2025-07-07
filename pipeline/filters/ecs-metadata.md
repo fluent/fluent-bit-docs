@@ -36,7 +36,7 @@ The following template variables can be used for values with the `ADD` option. S
 ### Configuration file
 
 The following configurations assume a properly configured parsers file and 'storage.path' variable defined in the services
-section of the Fluent bit Configuration (not shown).
+section of the Fluent Bit configuration (not shown).
 
 #### Example 1: Attach Task ID and cluster name to container logs
 
