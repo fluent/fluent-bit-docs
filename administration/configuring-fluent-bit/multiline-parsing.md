@@ -189,9 +189,10 @@ multiline_parsers:
       rules:
         - state: start_state
           regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
-          next_state:  cont
+          next_state: cont
         - state: cont
           regex: '/^\s+at.*/'
+          next_state: cont
 ```
 
 
