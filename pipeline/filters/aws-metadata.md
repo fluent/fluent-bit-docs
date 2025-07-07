@@ -29,12 +29,12 @@ If you run Fluent Bit in a container, you might need to use instance metadata v1
 Run Fluent Bit from the command line:
 
 ```shell
-bin/fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
+$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
 You should see results like this:
 
-```shell
+```text
 [2020/01/17 07:57:17] [ info] [engine] started (pid=32744)
 [0] dummy: [1579247838.000171227, {"message"=>"dummy", "az"=>"us-west-2c", "ec2_instance_id"=>"i-0c862eca9038f5aae", "ec2_instance_type"=>"t2.medium", "private_ip"=>"172.31.6.59", "vpc_id"=>"vpc-7ea11c06", "ami_id"=>"ami-0841edc20334f9287", "account_id"=>"YOUR_ACCOUNT_ID", "hostname"=>"ip-172-31-6-59.us-west-2.compute.internal"}]
 [0] dummy: [1601274509.970235760, {"message"=>"dummy", "az"=>"us-west-2c", "ec2_instance_id"=>"i-0c862eca9038f5aae", "ec2_instance_type"=>"t2.medium", "private_ip"=>"172.31.6.59", "vpc_id"=>"vpc-7ea11c06", "ami_id"=>"ami-0841edc20334f9287", "account_id"=>"YOUR_ACCOUNT_ID", "hostname"=>"ip-172-31-6-59.us-west-2.compute.internal"}]
@@ -44,7 +44,38 @@ You should see results like this:
 
 The following is an example of a configuration file:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          tag: dummy
+
+    filters:
+        - name: aws
+          match: '*'
+          imds_version: v1
+          az: true
+          ec2_instance_id: true
+          ec2_instance_type: true
+          private_ip: true
+          ami_id: true
+          account_id: true
+          hostname: true
+          vpc_id: true
+          tags_enabled: true
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name dummy
     Tag dummy
@@ -68,6 +99,9 @@ The following is an example of a configuration file:
     Match *
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ## EC2 tags
 
 EC2 Tags let you label and organize your EC2 instances by creating custom-defined key-value pairs. These tags are commonly used for resource management, cost allocation, and automation. Including them in the Fluent Bit-generated logs is almost essential.
@@ -84,13 +118,32 @@ To use the `tags_enabled true` feature in Fluent Bit, the [instance-metadata-tag
 
 Assume the EC2 instance has many tags, some of which have lengthy values that are irrelevant to the logs you want to collect. Only two tags, `department` and `project`, are valuable for your purpose. The following configuration reflects this requirement:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+
+    filters:
+        - name: aws
+          match: '*'
+          tags_enabled: true
+          tags_include: department,project
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [FILTER]
     Name aws
     Match *
     tags_enabled true
     tags_include department,project
 ```
+
+{% endtab %}
+{% endtabs %}
 
 If you run Fluent Bit logs might look like the following:
 
@@ -104,7 +157,23 @@ Suppose the EC2 instance has three tags: `Name:fluent-bit-docs-example`, `projec
 
 Here is an example configuration that achieves this:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+
+    filters:
+        - name: aws
+          match: '*'
+          tags_enabled: true
+          tags_exclude: department
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [FILTER]
     Name aws
     Match *
@@ -112,8 +181,11 @@ Here is an example configuration that achieves this:
     tags_exclude department
 ```
 
+{% endtab %}
+{% endtabs %}
+
 The resulting logs might look like this:
 
-```shell
+```text
 {"log"=>"aws is awesome", "az"=>"us-east-1a", "ec2_instance_id"=>"i-0e66fc7f9809d7168", "Name"=>"fluent-bit-docs-example", "project"=>"fluentbit"}
 ```
