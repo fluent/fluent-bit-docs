@@ -39,7 +39,7 @@ After processing, its internal representation will be:
               "key3"=>true}]
 ```
 
-If you want to be more strict than the logfmt standard and not parse lines where certain attributes lack values (such as `key3` in the previoue example), you can configure the parser as follows:
+If you want to be more strict than the logfmt standard and not parse lines where certain keys lack values (such as `key3` in the previous example), you can configure the parser as follows:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
