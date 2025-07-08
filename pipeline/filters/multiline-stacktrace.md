@@ -246,7 +246,7 @@ one more line, no multiline
 Running Fluent Bit with the given configuration file:
 
 ```shell
-$ ./fluent-bit -c fluent-bit.conf
+./fluent-bit -c fluent-bit.conf
 ```
 
 Should return something like the following:

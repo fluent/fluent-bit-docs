@@ -81,10 +81,10 @@ After you configure the filter, you can use it from the command line by running 
 
 ```shell
 # For YAML configuration.
-$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.yaml
+./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.yaml
 
 # For classic configuration.
-$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
+./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
 Replace _`PATH_TO_CONF_FILE`_ with the path for where your filter configuration file
