@@ -94,49 +94,24 @@ which outputs data similar to the following:
 
 Using the command line mode requires quotes parse the wildcard properly. The use of a configuration file is recommended.
 
-```text
-bin/fluent-bit -i mem \
-  -p 'tag=mem.local' \
-  -F modify \
-  -p 'Add=Service1 SOMEVALUE' \
-  -p 'Add=Service2 SOMEVALUE3' \
-  -p 'Add=Mem.total2 TOTALMEM2' \
-  -p 'Rename=Mem.free MEMFREE' \
-  -p 'Rename=Mem.used MEMUSED' \
-  -p 'Rename=Swap.total SWAPTOTAL' \
-  -p 'Add=Mem.total TOTALMEM' \
-  -m '*' \
-  -o stdout
+```shell
+$ ./fluent-bit -i mem \
+              -p 'tag=mem.local' \
+              -F modify \
+              -p 'Add=Service1 SOMEVALUE' \
+              -p 'Add=Service2 SOMEVALUE3' \
+              -p 'Add=Mem.total2 TOTALMEM2' \
+              -p 'Rename=Mem.free MEMFREE' \
+              -p 'Rename=Mem.used MEMUSED' \
+              -p 'Rename=Swap.total SWAPTOTAL' \
+              -p 'Add=Mem.total TOTALMEM' \
+              -m '*' \
+              -o stdout
 ```
 
 ### Configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name mem
-    Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-[FILTER]
-    Name modify
-    Match *
-    Add Service1 SOMEVALUE
-    Add Service3 SOMEVALUE3
-    Add Mem.total2 TOTALMEM2
-    Rename Mem.free MEMFREE
-    Rename Mem.used MEMUSED
-    Rename Swap.total SWAPTOTAL
-    Add Mem.total TOTALMEM
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -144,6 +119,7 @@ pipeline:
     inputs:
         - name: mem
           tag: mem.local
+
     filters:
         - name: modify
           match: '*'
@@ -156,9 +132,34 @@ pipeline:
             - Mem.free MEMFREE
             - Mem.used MEMUSED
             - Swap.total SWAPTOTAL
+
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name mem
+    Tag  mem.local
+
+[FILTER]
+    Name modify
+    Match *
+    Add Service1 SOMEVALUE
+    Add Service3 SOMEVALUE3
+    Add Mem.total2 TOTALMEM2
+    Rename Mem.free MEMFREE
+    Rename Mem.used MEMUSED
+    Rename Swap.total SWAPTOTAL
+    Add Mem.total TOTALMEM
+
+[OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}
@@ -181,48 +182,6 @@ The output of both the command line and configuration invocations should be iden
 ### Use a configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name mem
-    Tag  mem.local
-    Interval_Sec 1
-
-[FILTER]
-    Name    modify
-    Match   mem.*
-
-    Condition Key_Does_Not_Exist cpustats
-    Condition Key_Exists Mem.used
-
-    Set cpustats UNKNOWN
-
-[FILTER]
-    Name    modify
-    Match   mem.*
-
-    Condition Key_Value_Does_Not_Equal cpustats KNOWN
-
-    Add sourcetype memstats
-
-[FILTER]
-    Name    modify
-    Match   mem.*
-
-    Condition Key_Value_Equals cpustats UNKNOWN
-
-    Remove_wildcard Mem
-    Remove_wildcard Swap
-    Add cpustats_more STILL_UNKNOWN
-
-[OUTPUT]
-    Name           stdout
-    Match          *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -231,27 +190,66 @@ pipeline:
         - name: mem
           tag: mem.local
           interval_sec: 1
+
     filters:
         - name: modify
           match: mem.*
           Condition:
-            - Key_Does_Not_Exist cpustats
-            - Key_Exists Mem.used
+              - Key_Does_Not_Exist cpustats
+              - Key_Exists Mem.used
           Set: cpustats UNKNOWN
+
         - name: modify
           match: mem.*
           Condition: Key_Value_Does_Not_Equal cpustats KNOWN
           Add: sourcetype memstats
+
         - name: modify
           match: mem.*
           Condition: Key_Value_Equals cpustats UNKNOWN
           Remove_wildcard:
-            - Mem
-            - Swap
+              - Mem
+              - Swap
           Add: cpustats_more STILL_UNKNOWN
+    
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name mem
+    Tag  mem.local
+    Interval_Sec 1
+
+[FILTER]
+    Name    modify
+    Match   mem.*
+    Condition Key_Does_Not_Exist cpustats
+    Condition Key_Exists Mem.used
+    Set cpustats UNKNOWN
+
+[FILTER]
+    Name    modify
+    Match   mem.*
+    Condition Key_Value_Does_Not_Equal cpustats KNOWN
+    Add sourcetype memstats
+
+[FILTER]
+    Name    modify
+    Match   mem.*
+    Condition Key_Value_Equals cpustats UNKNOWN
+    Remove_wildcard Mem
+    Remove_wildcard Swap
+    Add cpustats_more STILL_UNKNOWN
+
+[OUTPUT]
+    Name           stdout
+    Match          *
 ```
 
 {% endtab %}
@@ -272,33 +270,6 @@ pipeline:
 ### Emoji configuration File
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name mem
-    Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-[FILTER]
-    Name modify
-    Match *
-
-    Remove_Wildcard Mem
-    Remove_Wildcard Swap
-    Set This_plugin_is_on 🔥
-    Set 🔥 is_hot
-    Copy 🔥 💦
-    Rename  💦 ❄️
-    Set ❄️ is_cold
-    Set 💦 is_wet
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -307,23 +278,49 @@ pipeline:
         - name: mem
           tag: mem.local
           interval_sec: 1
+
     filters:
         - name: modify
           match: mem.*
           Remove_wildcard:
             - Mem
             - Swap
-          Set:
+          set:
             - This_plugin_is_on 🔥
             - 🔥 is_hot
-          Copy: 🔥 💦
-          Rename:  💦 ❄️
-          Set:
             - ❄️ is_cold
             - 💦 is_wet
+          copy: 🔥 💦
+          rename:  💦 ❄️
+          
     outputs:
         - name: stdout
           match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name mem
+    Tag  mem.local
+
+[FILTER]
+    Name modify
+    Match *
+    Remove_Wildcard Mem
+    Remove_Wildcard Swap
+    Set This_plugin_is_on 🔥
+    Set 🔥 is_hot
+    Copy 🔥 💦
+    Rename  💦 ❄️
+    Set ❄️ is_cold
+    Set 💦 is_wet
+    
+[OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}
