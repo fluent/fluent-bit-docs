@@ -17,7 +17,37 @@ The plugin supports the following configuration parameters
 
 ## Example configuration
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          tag: test1
+          path: test1.log
+          read_from_head: true
+          parser: json
+    
+    filters:
+        - name: checklist
+          match: test1
+          file: ip_list.txt
+          lookup_key: $remote_addr
+          record:
+              - ioc abc
+              - badurl null
+          log_level: debug
+    
+    outputs:
+        - name: stdout
+          match: test1
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     name           tail
     tag            test1
@@ -38,6 +68,9 @@ The plugin supports the following configuration parameters
     name       stdout
     match      test1
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The following configuration reads a file `test1.log` that includes the following values:
 

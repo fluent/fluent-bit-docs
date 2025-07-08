@@ -90,23 +90,41 @@ The following command loads the _mem_ plugin. Then the _nest_ filter matches the
 wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
 `NEST`.
 
-```shell copy
-bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
+```shell
+$ ./fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
 ```
 
 ### Nest configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+
+    filters:
+        - name: nest
+          match: '*'
+          operation: nest
+          wildcard: Mem.*
+          nest_under: Memstats
+          remove_prefix: Mem.
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python copy
+```text
 [INPUT]
     Name mem
     Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
 
 [FILTER]
     Name nest
@@ -115,27 +133,10 @@ bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcar
     Wildcard Mem.*
     Nest_under Memstats
     Remove_prefix Mem.
-```
-
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          operation: nest
-          wildcard: Mem.*
-          nest_under: Memstats
-          remove_prefix: Mem.
-    outputs:
-        - name: stdout
-          match: '*'
+    
+ [OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}
@@ -157,16 +158,42 @@ This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then
 ### `nest` and `lift` undo configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard:
+            - Mem.*
+            - Swap.*
+          Nest_under: Stats
+          Add_prefix: NESTED
+
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Stats
+          Remove_prefix: NESTED
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python copy
+```text
 [INPUT]
     Name mem
     Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
 
 [FILTER]
     Name nest
@@ -183,33 +210,10 @@ This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then
     Operation lift
     Nested_under Stats
     Remove_prefix NESTED
-```
-
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard:
-            - Mem.*
-            - Swap.*
-          Nest_under: Stats
-          Add_prefix: NESTED
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Stats
-          Remove_prefix: NESTED
-    outputs:
-        - name: stdout
-          match: '*'
+    
+[OUTPUT]
+    Name  stdout
+    Match *    
 ```
 
 {% endtab %}
@@ -230,16 +234,45 @@ which is then nested under `LAYER2`, which is nested under `LAYER3`.
 ### Deep `nest` configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: Mem.*
+          Nest_under: LAYER1
+
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER1*
+          Nest_under: LAYER2
+
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER2*
+          Nest_under: LAYER3
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python copy
+```text
 [INPUT]
     Name mem
     Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
 
 [FILTER]
     Name nest
@@ -261,35 +294,10 @@ which is then nested under `LAYER2`, which is nested under `LAYER3`.
     Operation nest
     Wildcard LAYER2*
     Nest_under LAYER3
-```
 
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
-    outputs:
-        - name: stdout
-          match: '*'
+[OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}
@@ -324,16 +332,63 @@ This example uses the 3-level deep nesting of Example 2 and applies the `lift` f
 ### `nest` and `lift` prefix configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem.local
+
+    filters:
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: Mem.*
+          Nest_under: LAYER1
+
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER1*
+          Nest_under: LAYER2
+
+        - name: nest
+          match: '*'
+          Operation: nest
+          Wildcard: LAYER2*
+          Nest_under: LAYER3
+
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: LAYER3
+          Add_prefix: Lifted3_
+
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Lifted3_LAYER2
+          Add_prefix: Lifted3_Lifted2_
+
+        - name: nest
+          match: '*'
+          Operation: lift
+          Nested_under: Lifted3_Lifted2_LAYER1
+          Add_prefix: Lifted3_Lifted2_Lifted1_
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python copy
+```text
 [INPUT]
     Name mem
     Tag  mem.local
-
-[OUTPUT]
-    Name  stdout
-    Match *
 
 [FILTER]
     Name nest
@@ -376,51 +431,10 @@ This example uses the 3-level deep nesting of Example 2 and applies the `lift` f
     Operation lift
     Nested_under Lifted3_Lifted2_LAYER1
     Add_prefix Lifted3_Lifted2_Lifted1_
-```
 
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: LAYER3
-          Add_prefix: Lifted3_
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_LAYER2
-          Add_prefix: Lifted3_Lifted2_
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_Lifted2_LAYER1
-          Add_prefix: Lifted3_Lifted2_Lifted1_
-    outputs:
-        - name: stdout
-          match: '*'
+[OUTPUT]
+    Name  stdout
+    Match *
 ```
 
 {% endtab %}

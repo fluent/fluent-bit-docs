@@ -38,9 +38,30 @@ The plugin outputs `uint` values and `filter_type_converter` converts them into 
 ### Convert `uint` to string
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: mem
+    
+    filters:
+        - name: type_converter
+          match: '*'
+          uint_key:
+            - Mem.total Mem.total_str string
+            - Mem.used  Mem.used_str  string
+            - Mem.free  Mem.free_str  string
+    
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name mem
 
@@ -57,36 +78,16 @@ The plugin outputs `uint` values and `filter_type_converter` converts them into 
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: mem
-    filters:
-        - name: type_converter
-          match: '*'
-          uint_key:
-            - Mem.total Mem.total_str string
-            - Mem.used  Mem.used_str  string
-            - Mem.free  Mem.free_str  string
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
 {% endtabs %}
 
 You can also run the filter from command line.
 
 ```shell
-fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
+$ ./fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
 ```
 
 The output will be
 
-```python
+```text
 [0] mem.0: [1639915154.160159749, {"Mem.total"=>8146052, "Mem.used"=>4513564, "Mem.free"=>3632488, "Swap.total"=>1918356, "Swap.used"=>0, "Swap.free"=>1918356, "Mem.total_str"=>"8146052", "Mem.used_str"=>"4513564", "Mem.free_str"=>"3632488"}]
 ```
