@@ -79,14 +79,9 @@ If no database file is present, positioning behavior depends on the value of `re
 The database file essentially stores `inode=offset` so it should be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
 
 {% hint style="info" %}
-Note that `Unicode.Encoding` depends on simdutf library which is written in C++11 or above.
-So, the older platforms are not supported for this feature.
-In addition, `Unicode.Encoding auto` is not covered for the all of the usages.
-This is because sometimes this auto-detecting for character encodings makes a mistake to guess the correct encoding.
+The `Unicode.Encoding` parameter is dependent on the simdutf library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
 
-We recommend to use `UTF-16LE` or `UTF-16BE` if the target file encoding is pre-determined or known beforehand.
-In details, this parameter requests to use 2-bytes aligned chunk and buffer sizes.
-If they are not aligned for 2 bytes, Fluent Bit will use 2-bytes alignments automatically to avoid character breakages on consuming boundaries.
+Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
 
 ## Monitor a large number of files
