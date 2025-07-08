@@ -58,7 +58,7 @@ pipeline:
           match: '*'
 ```
 
-{% tabs %}
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
 ```text
@@ -157,7 +157,7 @@ pipeline:
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```
+```text
 [SERVICE]
 	flush 1
 	daemon off
