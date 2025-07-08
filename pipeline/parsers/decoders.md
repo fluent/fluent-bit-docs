@@ -18,7 +18,7 @@ The original message is handled as an escaped string. Fluent Bit wants to use th
 
 ## Get started
 
-Decoders are a built-in feature available through the `parsers.conf` file. Each parser definition can optionally set one or more decoders. There are two types of decoders:
+Decoders are a built-in feature of parsers in Fluent Bit. Each parser definition can optionally set one or more decoders. There are two types of decoders:
 
 - `Decode_Field`: If the content can be decoded in a structured message, append
   the structured message (keys and values) to the original log message.
