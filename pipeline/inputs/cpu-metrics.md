@@ -40,7 +40,7 @@ In order to get the statistics of the CPU usage of your system, you can run the 
 You can run this filter from the command line using a command like the following:
 
 ```shell
-$ build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
+build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
 ```
 
 The command returns results similar to the following:

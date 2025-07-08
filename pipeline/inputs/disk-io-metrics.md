@@ -24,7 +24,7 @@ In order to get disk usage from your system, you can run the plugin from the com
 You can run the plugin from the command line:
 
 ```shell
-$ fluent-bit -i disk -o stdout
+fluent-bit -i disk -o stdout
 ```
 
 Which returns information like the following:

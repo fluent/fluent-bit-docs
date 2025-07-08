@@ -58,10 +58,10 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
 
    ```bash
    # For YAML configuration.
-   $ sudo ./bin/fluent-bit --config fluent-bit.yaml
+   sudo ./bin/fluent-bit --config fluent-bit.yaml
    
    # For classic configuration.
-   $ sudo ./bin/fluent-bit --config fluent-bit.conf
+   sudo ./bin/fluent-bit --config fluent-bit.conf
    ```
 
 ## Configuration example

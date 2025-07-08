@@ -97,7 +97,7 @@ The following configuration example, will emit a dummy example record and ingest
 run Fluent Bit with the new configuration file:
 
 ```text
-$ fluent-bit -c newrelic.conf
+fluent-bit -c newrelic.conf
 ```
 
 Fluent Bit output:

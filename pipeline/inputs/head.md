@@ -90,7 +90,7 @@ pipeline:
 If you run the following command:
 
 ```shell
-$ fluent-bit -c head.conf
+fluent-bit -c head.conf
 ```
 
 The output is something similar to;
@@ -118,7 +118,7 @@ To read the head of a file, you can run the plugin from the command line or thro
 The following example will read events from the `/proc/uptime` file, tag the records with the `uptime` name and flush them back to the `stdout` plugin:
 
 ```shell
-$ fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
+fluent-bit -i head -t uptime -p File=/proc/uptime -o stdout -m '*'
 ```
 
 The output will look similar to:

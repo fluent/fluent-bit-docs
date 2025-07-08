@@ -29,7 +29,7 @@ You can run the plugin from the command line or through the configuration file:
 Run the plugin from the command line using the following command:
 
 ```shell
-$ fluent-bit -i dummy -o stdout
+fluent-bit -i dummy -o stdout
 ```
 
 which returns results like the following:

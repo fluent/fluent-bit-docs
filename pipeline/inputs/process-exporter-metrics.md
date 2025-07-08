@@ -118,7 +118,7 @@ pipeline:
 You can see the metrics by using `curl`:
 
 ```shell
-$ curl http://127.0.0.1:2021/metrics
+curl http://127.0.0.1:2021/metrics
 ```
 
 ### Container to collect host metrics
@@ -130,7 +130,7 @@ The following `docker` command deploys Fluent Bit with a specific mount path for
 These are then exposed over port 2021.
 
 ```shell
-$ docker run -ti -v /proc:/host/proc:ro \
+docker run -ti -v /proc:/host/proc:ro \
                  -p 2021:2021        \
                  fluent/fluent-bit:2.2 \
                  /fluent-bit/bin/fluent-bit \

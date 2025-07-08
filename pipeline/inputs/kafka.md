@@ -29,7 +29,7 @@ To subscribe to or collect messages from Apache Kafka, run the plugin from the c
 The Kafka plugin can read parameters through the `-p` argument (property):
 
 ```shell
-$ fluent-bit -i kafka -o stdout -p brokers=192.168.1.3:9092 -p topics=some-topic
+fluent-bit -i kafka -o stdout -p brokers=192.168.1.3:9092 -p topics=some-topic
 ```
 
 ### Configuration file (recommended)

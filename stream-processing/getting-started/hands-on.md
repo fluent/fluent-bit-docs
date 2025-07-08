@@ -19,7 +19,7 @@ These steps use the official Fluent Bit Docker image.
 Run the following command to confirm that Fluent Bit is installed and up-to-date:
 
 ```bash
-$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
+docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
 Fluent Bit v1.8.2
 ```
 
@@ -28,7 +28,7 @@ Fluent Bit v1.8.2
 The sample file contains JSON records. Run the following command to append the `parsers.conf` file and instruct the Tail input plugin to parse content as JSON:
 
 ```bash
-$ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
+docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
      fluent/fluent-bit:1.8.2                                          \
      /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf     \
                                 -i tail -p path=/sp-samples-1k.log  \
@@ -64,7 +64,7 @@ Fluent Bit v1.8.2
 Run the following command to create a stream processor query using the `-T` flag and change the output to the Null plugin. This obtains the stream processing results in the standard output interface and avoids confusion in the terminal.
 
 ```bash
-$ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
+docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
      fluent/fluent-bit:1.2                                               \
      /fluent-bit/bin/fluent-bit                                          \
          -R /fluent-bit/etc/parsers.conf                                 \
@@ -91,7 +91,7 @@ The previous query aims to retrieve all records for which the `country` key cont
 Run the following command to use the `AVG` aggregation function to get the average value of ingested records:
 
 ```bash
-$ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
+docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log           \
      fluent/fluent-bit:1.8.2                                             \
      /fluent-bit/bin/fluent-bit                                          \
          -R /fluent-bit/etc/parsers.conf                                 \
@@ -122,7 +122,7 @@ The resulting output contains multiple records because Fluent Bit processes data
 Grouping results within a time window simplifies data processing. Run the following command to group results by `country` and calculate the average of `num` with a one-second processing window:
 
 ```bash
-$ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
+docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
      fluent/fluent-bit:1.8.2                                        \
      /fluent-bit/bin/fluent-bit                                     \
          -R /fluent-bit/etc/parsers.conf                            \
@@ -150,7 +150,7 @@ Next, instruct the stream processor to ingest results as part of the Fluent Bit 
 Run the following command, which uses a `CREATE STREAM` statement to tag results with the `sp-results` tag, then outputs records with that tag to standard output:
 
 ```bash
-$ docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
+docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log      \
      fluent/fluent-bit:1.8.2                                        \
      /fluent-bit/bin/fluent-bit                                     \
          -R /fluent-bit/etc/parsers.conf                            \

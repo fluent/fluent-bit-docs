@@ -56,7 +56,7 @@ In order to insert records into the OCI Logging Analytics service, you can run t
 The OCI Logging Analytics plugin can read the parameters from the command line in two ways, through the -p argument (property), e.g:
 
 ```text
-$ fluent-bit -i dummy -t dummy -o oci_logan -p config_file_location=<location> -p namespace=<namespace> \
+fluent-bit -i dummy -t dummy -o oci_logan -p config_file_location=<location> -p namespace=<namespace> \
   -p oci_la_log_group_id=<lg_id> -p oci_la_log_source_name=<ls_name> -p tls=on -p tls.verify=off -m '*'
 ```
 

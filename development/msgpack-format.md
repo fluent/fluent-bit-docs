@@ -16,7 +16,7 @@ This section provides an overview of the specific types used by Fluent Bit withi
 Set up Fluent Bit to send in `msgpack` format to a specific port.
 
 ```bash
-$ docker run --rm -it --network=host fluent/fluent-bit /fluent-bit/bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=msgpack -v
+docker run --rm -it --network=host fluent/fluent-bit /fluent-bit/bin/fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=msgpack -v
 
 ```
 

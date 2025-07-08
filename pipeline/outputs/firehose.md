@@ -39,7 +39,7 @@ In order to send records into Amazon Kinesis Data Firehose, you can run the plug
 The **firehose** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -o kinesis_firehose -p delivery_stream=my-stream -p region=us-west-2 -m '*' -f 1
+fluent-bit -i cpu -o kinesis_firehose -p delivery_stream=my-stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File

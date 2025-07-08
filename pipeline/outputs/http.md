@@ -55,7 +55,7 @@ http://host:port/something
 Using the format specified, you could start Fluent Bit through:
 
 ```
-$ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -m '*'
+fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something -m '*'
 ```
 
 ### Configuration File

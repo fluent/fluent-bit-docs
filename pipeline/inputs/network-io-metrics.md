@@ -26,7 +26,7 @@ To monitor network traffic from your system, you can run the plugin from the com
 Run Fluent Bit using a command similar to the following:
 
 ```shell
-$ fluent-bit -i netif -p interface=eth0 -o stdout
+fluent-bit -i netif -p interface=eth0 -o stdout
 ```
 
 Which returns something the following:

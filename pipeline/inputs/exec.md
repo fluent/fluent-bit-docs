@@ -39,7 +39,7 @@ You can run the plugin from the command line or through the configuration file:
 The following example will read events from the output of _ls_.
 
 ```shell
-$ fluent-bit -i exec -p 'command=ls /var/log' -o stdout
+fluent-bit -i exec -p 'command=ls /var/log' -o stdout
 ```
 
 which should return something like the following:

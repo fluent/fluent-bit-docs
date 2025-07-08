@@ -62,14 +62,14 @@ server {
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```shell
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -p nginx_plus=off -o stdout
+fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p status_url=/status -p nginx_plus=off -o stdout
 ```
 
 To gather metrics from the command line with the NGINX Plus REST API you need to turn on the
 `nginx_plus` property:
 
 ```shell
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p nginx_plus=on -p status_url=/api -o stdout
+fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p nginx_plus=on -p status_url=/api -o stdout
 ```
 
 ### Configuration File
@@ -156,7 +156,7 @@ pipeline:
 You can test against the NGINX server running on localhost by invoking it directly from the command line:
 
 ```shell
-$ fluent-bit -i nginx_metrics -p host=127.0.0.1 -p nginx_plus=off -o stdout -p match=* -f 1
+fluent-bit -i nginx_metrics -p host=127.0.0.1 -p nginx_plus=off -o stdout -p match=* -f 1
 ```
 
 Which should return something like the following:

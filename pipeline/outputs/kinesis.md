@@ -41,7 +41,7 @@ In order to send records into Amazon Kinesis Data Streams, you can run the plugi
 The **kinesis\_streams** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -o kinesis_streams -p stream=my-stream -p region=us-west-2 -m '*' -f 1
+fluent-bit -i cpu -o kinesis_streams -p stream=my-stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File

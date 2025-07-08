@@ -15,7 +15,7 @@ You can run the plugin from the command line or through the configuration file:
 From the command line you can let Fluent Bit throws away events with the following options:
 
 ```bash
-$ fluent-bit -i cpu -o null
+fluent-bit -i cpu -o null
 ```
 
 ### Configuration File

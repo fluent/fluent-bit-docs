@@ -42,7 +42,7 @@ influxdb://host:port
 Using the format specified, you could start Fluent Bit through:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o influxdb://127.0.0.1:8086 -m '*'
+fluent-bit -i cpu -t cpu -o influxdb://127.0.0.1:8086 -m '*'
 ```
 
 ### Configuration File
@@ -152,7 +152,7 @@ fluentbit
 The following command will gather CPU metrics from the system and send the data to InfluxDB database every five seconds:
 
 ```text
-$ bin/fluent-bit -i cpu -t cpu -o influxdb -m '*'
+bin/fluent-bit -i cpu -t cpu -o influxdb -m '*'
 ```
 
 Note that all records coming from the _cpu_ input plugin, have a tag _cpu_, this tag is used to generate the measurement in InfluxDB

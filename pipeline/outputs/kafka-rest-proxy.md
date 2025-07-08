@@ -31,7 +31,7 @@ In order to insert records into a Kafka REST Proxy service, you can run the plug
 The **kafka-rest** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o kafka-rest -p host=127.0.0.1 -p port=8082 -m '*'
+fluent-bit -i cpu -t cpu -o kafka-rest -p host=127.0.0.1 -p port=8082 -m '*'
 ```
 
 ### Configuration File

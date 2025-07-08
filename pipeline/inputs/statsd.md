@@ -61,9 +61,9 @@ pipeline:
 Now you can input metrics through the UDP port as follows:
 
 ```shell
-$ echo "click:10|c|@0.1" | nc -q0 -u 127.0.0.1 8125
+echo "click:10|c|@0.1" | nc -q0 -u 127.0.0.1 8125
 
-$ echo "active:99|g"     | nc -q0 -u 127.0.0.1 8125
+echo "active:99|g"     | nc -q0 -u 127.0.0.1 8125
 ```
 
 Fluent Bit will produce the following records:
@@ -114,11 +114,11 @@ pipeline:
 Now you can input metrics as metrics type of events through the UDP port as follows:
 
 ```shell
-$ echo "click:+10|c|@0.01|#hello:tag"              | nc -q0 -u 127.0.0.1 8125
+echo "click:+10|c|@0.01|#hello:tag"              | nc -q0 -u 127.0.0.1 8125
 
-$ echo "active:+99|g|@0.01"                        | nc -q0 -u 127.0.0.1 8125
+echo "active:+99|g|@0.01"                        | nc -q0 -u 127.0.0.1 8125
 
-$ echo "inactive:29|g|@0.0125|#hi:from_fluent-bit" | nc -q0 -u 127.0.0.1 8125
+echo "inactive:29|g|@0.0125|#hi:from_fluent-bit" | nc -q0 -u 127.0.0.1 8125
 ```
 
 Fluent Bit will produce the following metrics events:

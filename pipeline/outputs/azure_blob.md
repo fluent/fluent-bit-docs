@@ -88,7 +88,7 @@ After you run the configuration file above, you will be able to query the data u
 The quickest way to get started is to install Azurite using npm:
 
 ```bash
-$ npm install -g azurite
+npm install -g azurite
 ```
 
 then run the service:

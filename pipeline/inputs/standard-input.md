@@ -4,7 +4,7 @@ The _Standard input_ plugin supports retrieving a message stream from the standa
 To use it, specify the plugin name as the input. For example:
 
 ```shell
-$ fluent-bit -i stdin -o stdout
+fluent-bit -i stdin -o stdout
 ```
 
 If the `stdin` stream is closed (`end-of-file`), the plugin instructs Fluent Bit to exit with success (`0`) after flushing any pending output.
@@ -63,7 +63,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 2. Start the script and [Fluent Bit](http://fluentbit.io):
 
    ```shell
-   $ bash test.sh | fluent-bit -q -i stdin -o stdout
+   bash test.sh | fluent-bit -q -i stdin -o stdout
    ```
 
 3. The command should return output like the following:
@@ -100,7 +100,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 2. Re-run the sample command. Timestamps output by Fluent Bit are now one day old because Fluent Bit used the input message timestamp.
 
     ```shell
-    $ bash test.sh | fluent-bit -q -i stdin -o stdout
+    bash test.sh | fluent-bit -q -i stdin -o stdout
     ```
 
 3. Which returns the following:
@@ -139,7 +139,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 2. Run test using the command:
 
     ```shell
-    $ bash ./test.sh | fluent-bit -q -i stdin -o stdout
+    bash ./test.sh | fluent-bit -q -i stdin -o stdout
     ```
 
 3. Which returns results like the following:
@@ -234,10 +234,10 @@ Fluent Bit will now read each line and emit a single message for each input line
 
 ```shell
 # For YAML configuration.
-$ seq 1 5 | ./fluent-bit --config fluent-bit.yaml
+seq 1 5 | ./fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-$ seq 1 5 | ./fluent-bit --config fluent-bit.conf
+seq 1 5 | ./fluent-bit --config fluent-bit.conf
 ```
 
 Which returns output similar to:

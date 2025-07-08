@@ -95,7 +95,7 @@ You can run the plugin from the command line or through the configuration file:
 From the command line you can let Fluent Bit count up a data with the following options:
 
 ```bash
-$ fluent-bit -i cpu -o file -p path=output.txt
+fluent-bit -i cpu -o file -p path=output.txt
 ```
 
 ### Configuration File

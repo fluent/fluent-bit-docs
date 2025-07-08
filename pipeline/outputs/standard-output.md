@@ -14,7 +14,7 @@ The **stdout** output plugin allows to print to the standard output the data rec
 ### Command Line
 
 ```bash
-$ bin/fluent-bit -i cpu -o stdout -v
+bin/fluent-bit -i cpu -o stdout -v
 ```
 
 We have specified to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree/ddc1cf3d996966b9db39f8784596c8b7132b4d5b/pipeline/input/cpu.md) usage metrics and print them out to the standard output in a human readable way:

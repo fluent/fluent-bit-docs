@@ -35,9 +35,9 @@ Currently, Fluent Bit supports the following Wasm tool chains:
 As described in the general options in the [source installation](../installation/sources/build-and-install.md) guide, Wasm support is enabled by default. Compile Fluent Bit with Wasm support, for example:
 
 ```text
-$ cd build/
-$ cmake .. [-DFLB_WAMRC=On]
-$ make
+cd build/
+cmake .. [-DFLB_WAMRC=On]
+make
 ```
 
 To support AOT-compiled Wasm execution as filter plugins, build Fluent Bit with `-DFLB_WAMRC=On`.
@@ -65,7 +65,7 @@ The Fluent Bit Wasm filter assumes C ABI, also known as `wasm32-unknown-unknown`
 TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-unknown-unknown` target, you must install `wasm32-unknown-unknown` by using [rustup](https://rustup.rs/). Then, install the target components as follows:
 
 ```text
-$ rustup target add wasm32-unknown-unknown
+rustup target add wasm32-unknown-unknown
 ```
 
 ### Requirements of Wasm programs
@@ -228,13 +228,13 @@ To optimize Wasm program execution, there is the option of using `flb-wamrc`. Th
 This tool will be built when the `-DFLB_WAMRC=On` CMake option is specified and LLVM infrastructure is installed on the building box.
 
 ```shell
-$ flb-wamrc -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
+flb-wamrc -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
 ```
 
 For further optimizations to the specific CPU, such as Cortex-A57 series:
 
 ```text
-$ flb-wamrc --size-level=3 --target=aarch64v8 --cpu=cortex-a57 -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
+flb-wamrc --size-level=3 --target=aarch64v8 --cpu=cortex-a57 -o /path/to/built_wasm.aot /path/to/built_wasm.wasm
 ```
 
 Then, when AOT (Ahead Of Time) compiling has succeeded:

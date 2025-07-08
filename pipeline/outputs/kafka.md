@@ -33,7 +33,7 @@ In order to insert records into Apache Kafka, you can run the plugin from the co
 The **kafka** plugin can read parameters through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -o kafka -p brokers=192.168.1.3:9092 -p topics=test
+fluent-bit -i cpu -o kafka -p brokers=192.168.1.3:9092 -p topics=test
 ```
 
 ### Configuration File
