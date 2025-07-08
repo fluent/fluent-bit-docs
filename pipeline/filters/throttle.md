@@ -112,7 +112,7 @@ It's suggested to use a configuration file.
 The following command will load the Tail plugin and read the content of the `lines.txt` file. Then, the Throttle filter will apply a rate limit and only pass the records which are read below the `rate`:
 
 ```shell
-bin/fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
+$ ./fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
 ```
 
 ### Configuration File
