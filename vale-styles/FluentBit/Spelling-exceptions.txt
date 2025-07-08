@@ -119,6 +119,7 @@ Nginx
 NGINX
 OAuth
 Okta
+Onigmo
 Oniguruma
 OpenTelemetry
 Opsgenie
@@ -149,6 +150,7 @@ Rollup
 rollups
 Rollups
 routable
+Rubular
 runbook
 runbooks
 Scalyr
