@@ -42,15 +42,38 @@ When using the command line, pay close attention to quote the regular expression
 The following command loads the [tail](../../pipeline/inputs/tail) plugin and reads the content of `lines.txt`. Then the `grep` filter applies a regular expression rule over the `log` field created by the `tail` plugin and only passes records with a field value starting with `aa`:
 
 ```shell
-bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
+$ ./fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
 ```
 
 ### Configuration file
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    parsers_file: /path/to/parsers.conf
+    
+pipeline:
+    inputs:
+        - name: tail
+          path: lines.txt
+          parser: json
+          
+    filters:
+        - name: grep
+          match: '*'
+          regex: log aa
+          
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [SERVICE]
     parsers_file /path/to/parsers.conf
 
@@ -70,28 +93,6 @@ bin/fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o s
 ```
 
 {% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-service:
-    parsers_file: /path/to/parsers.conf
-pipeline:
-    inputs:
-        - name: tail
-          path: lines.txt
-          parser: json
-    filters:
-        - name: grep
-          match: '*'
-          regex: log aa
-    outputs:
-        - name: stdout
-          match: '*'
-
-```
-
-{% endtab %}
 {% endtabs %}
 
 The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions).
@@ -102,7 +103,7 @@ To match or exclude records based on nested values, you can use [Record Accessor
 
 Consider the following record example:
 
-```javascript
+```text
 {
     "log": "something",
     "kubernetes": {
@@ -122,23 +123,25 @@ Consider the following record example:
 For example, to exclude records that match the nested field `kubernetes.labels.app`, use the following rule:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[FILTER]
-    Name    grep
-    Match   *
-    Exclude $kubernetes['labels']['app'] myapp
-```
-
-{% endtab %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
+pipeline: 
+  
     filters:
         - name: grep
           match: '*'
           exclude: $kubernetes['labels']['app'] myapp
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[FILTER]
+    Name    grep
+    Match   *
+    Exclude $kubernetes['labels']['app'] myapp
 ```
 
 {% endtab %}
@@ -154,9 +157,25 @@ key fails this check.
 The following example checks for a specific valid value for the key:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+ 
+    filters:
+        # Use Grep to verify the contents of the iot_timestamp value.
+        # If the iot_timestamp key does not exist, this will fail
+        # and exclude the row.
+        - name: grep
+          alias: filter-iots-grep
+          match: iots_thread.*
+          regex: iot_timestamp ^\d{4}-\d{2}-\d{2}
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 # Use Grep to verify the contents of the iot_timestamp value.
 # If the iot_timestamp key does not exist, this will fail
 # and exclude the row.
@@ -165,17 +184,6 @@ The following example checks for a specific valid value for the key:
     Alias                    filter-iots-grep
     Match                    iots_thread.*
     Regex                    iot_timestamp ^\d{4}-\d{2}-\d{2}
-```
-
-{% endtab %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-    filters:
-        - name: grep
-          alias: filter-iots-grep
-          match: iots_thread.*
-          regex: iot_timestamp ^\d{4}-\d{2}-\d{2}
 ```
 
 {% endtab %}
@@ -196,9 +204,32 @@ If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` prope
 If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"endpoint":"localhost", "value":"something"}'
+          tag: dummy
+          
+    filters:
+        - name: grep
+          match: '*'
+          logical_op: or
+          regex:
+            - value something
+            - value error
+
+    outputs:
+        - name: stdout
+          match: '*'
+```
+
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```python
+```text
 [INPUT]
     Name dummy
     Dummy {"endpoint":"localhost", "value":"something"}
@@ -213,27 +244,7 @@ If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
 
 [OUTPUT]
     Name stdout
-```
-
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"endpoint":"localhost", "value":"something"}'
-          tag: dummy
-    filters:
-        - name: grep
-          match: '*'
-          logical_op: or
-          regex:
-            - value something
-            - value error
-    outputs:
-        - name: stdout
+    Match *
 ```
 
 {% endtab %}
@@ -242,20 +253,28 @@ pipeline:
 The output looks similar to:
 
 ```text
-Fluent Bit v2.0.9
-* Copyright (C) 2015-2022 The Fluent Bit Authors
+Fluent Bit v4.0.3
+* Copyright (C) 2015-2025 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
 * https://fluentbit.io
 
-[2023/01/22 09:46:49] [ info] [fluent bit] version=2.0.9, commit=16eae10786, pid=33268
-[2023/01/22 09:46:49] [ info] [storage] ver=1.2.0, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2023/01/22 09:46:49] [ info] [cmetrics] version=0.5.8
-[2023/01/22 09:46:49] [ info] [ctraces ] version=0.2.7
-[2023/01/22 09:46:49] [ info] [input:dummy:dummy.0] initializing
-[2023/01/22 09:46:49] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
-[2023/01/22 09:46:49] [ info] [filter:grep:grep.0] OR mode
-[2023/01/22 09:46:49] [ info] [sp] stream processor started
-[2023/01/22 09:46:49] [ info] [output:stdout:stdout.0] worker #0 started
+______ _                  _    ______ _ _             ___  _____
+|  ___| |                | |   | ___ (_) |           /   ||  _  |
+| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
+|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
+| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
+\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
+
+
+[2025/07/03 16:15:34] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=23196
+[2025/07/03 16:15:34] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
+[2025/07/03 16:15:34] [ info] [simd    ] disabled
+[2025/07/03 16:15:34] [ info] [cmetrics] version=1.0.3
+[2025/07/03 16:15:34] [ info] [ctraces ] version=0.6.6
+[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] initializing
+[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
+[2025/07/03 16:15:34] [ info] [output:stdout:stdout.0] worker #0 started
+[2025/07/03 16:15:34] [ info] [sp] stream processor started
 [0] dummy: [1674348410.558341857, {"endpoint"=>"localhost", "value"=>"something"}]
 [0] dummy: [1674348411.546425499, {"endpoint"=>"localhost", "value"=>"something"}]
 ```
