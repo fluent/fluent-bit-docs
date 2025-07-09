@@ -1,39 +1,30 @@
-# Regular Expression
+# Regular expression
 
-The **Regex** parser lets you define a custom Ruby regular expression that uses
-a named capture feature to define which content belongs to which key name.
+The _Regular expression_ parser lets you define a custom Ruby regular expression that uses named capture to define which content belongs to which key name.
 
-Use [Tail Multiline](../inputs/tail.md#multiline) when you need to support regexes
-across multiple lines from a `tail`. The [Tail](../inputs/tail.md) input plugin
-treats each line as a separate entity.
+Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
 
 {% hint style="warning" %}
 
-Security Warning: Onigmo is a backtracking regex engine. When using expensive
-regex patterns Onigmo can take a long time to perform pattern matching. Read
-["ReDoS"](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) on OWASP for additional information.
+This parser uses Onigmo, which is a backtracking regular expressions engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
 {% end hint %}
 
-Setting the format to **regex** requires a `regex` configuration key.
+Setting the format to regular expressions requires a `regex` configuration key.
 
-## Configuration Parameters
+## Configuration parameters
 
-The regex parser supports the following configuration parameters:
+The `regex` parser supports the following configuration parameters:
 
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
 | `Skip_Empty_Values` | If enabled, the parser ignores empty value of the record. | `True` |
 
-Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression
-library on Ruby mode.
+Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression library in Ruby mode.
 
-You can use only alphanumeric characters and underscore in group names. For example,
-a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`)
-character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
+You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
 
-The following parser configuration example provides rules that can be applied to an
-Apache HTTP Server log entry:
+The following parser configuration example provides rules that can be applied to an Apache HTTP Server log entry:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -70,8 +61,7 @@ As an example, review the following Apache HTTP Server log entry:
 192.168.2.20 - - [29/Jul/2015:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-This log entry doesn't provide a defined structure for Fluent Bit. Enabling the
-proper parser can help to make a structured representation of the entry:
+This log entry doesn't provide a defined structure for Fluent Bit. Enabling the proper parser can help to make a structured representation of the entry:
 
 ```text
 [1154104030, {"host"=>"192.168.2.20",
