@@ -6,7 +6,7 @@ LTSV is a variant of the Tab-separated Values (TSV) format. Each record in an LT
 
 Here is an example how to use this format in the Apache access log.
 
-Config this in `httpd.conf`:
+Configure this in `httpd.conf`:
 
 ```text
 LogFormat "host:%h\tident:%l\tuser:%u\ttime:%t\treq:%r\tstatus:%>s\tsize:%b\treferer:%{Referer}i\tua:%{User-Agent}i" combined_ltsv
