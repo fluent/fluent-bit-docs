@@ -31,7 +31,7 @@ In order to insert records into an Azure Log Analytics instance, you can run the
 The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
+fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 ```
 
 ### Configuration File

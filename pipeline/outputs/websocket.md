@@ -30,7 +30,7 @@ http://host:port/something
 Using the format specified, you could start Fluent Bit through:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o websocket://192.168.2.3:80/something -m '*'
+fluent-bit -i cpu -t cpu -o websocket://192.168.2.3:80/something -m '*'
 ```
 
 ### Configuration File
@@ -80,7 +80,7 @@ Websocket plugin is working with tcp keepalive mode, please refer to [networking
 Once Fluent Bit is running, you can send some messages using the _netcat_:
 
 ```bash
-$ echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170; sleep 35; echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170
+echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170; sleep 35; echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170
 ```
 
 In [Fluent Bit](http://fluentbit.io) we should see the following output:

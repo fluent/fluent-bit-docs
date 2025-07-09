@@ -35,10 +35,10 @@ From the command line you can let Fluent Bit listen for `Forward` messages with 
 
 ```shell
 # For YAML configuration
-$ ./fluent-bit -R /path/to/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
+./fluent-bit -R /path/to/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
 
 # For classic configuration.
-$ ./fluent-bit -R /path/to/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
+./fluent-bit -R /path/to/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
 ```
 
 By default the service will create and listen for Syslog messages on the Unix socket `/tmp/in_syslog`.
@@ -98,17 +98,17 @@ pipeline:
 When Fluent Bit is running, you can send some messages using the logger tool:
 
 ```shell
-$ logger -u /tmp/in_syslog my_ident my_message
+logger -u /tmp/in_syslog my_ident my_message
 ```
 
 Then run Fluent bit using the following command:
 
 ```shell
 # For YAML ocnfiguration.
-$ ./fluent-bit -R ../conf/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
+./fluent-bit -R ../conf/parsers.yaml -i syslog -p path=/tmp/in_syslog -o stdout
 
 # For classic configuration.
-$ ./fluent-bit -R ../conf/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
+./fluent-bit -R ../conf/parsers.conf -i syslog -p path=/tmp/in_syslog -o stdout
 ```
 
 You should see the following output:
@@ -207,7 +207,7 @@ action(type="omfwd" Target="127.0.0.1" Port="5140" Protocol="tcp")
 Then, restart your `rsyslog` daemon:
 
 ```shell
-$ sudo service rsyslog restart
+sudo service rsyslog restart
 ```
 
 ### `rsyslog` to Fluent Bit: Unix socket mode over UDP

@@ -95,7 +95,7 @@ which outputs data similar to the following:
 Using the command line mode requires quotes parse the wildcard properly. The use of a configuration file is recommended.
 
 ```shell
-$ ./fluent-bit -i mem \
+./fluent-bit -i mem \
               -p 'tag=mem.local' \
               -F modify \
               -p 'Add=Service1 SOMEVALUE' \

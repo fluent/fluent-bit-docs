@@ -21,7 +21,7 @@ This plugin supports the following configuration parameters:
 You can run this plugin from the command line:
 
 ```shell
-$ fluent-bit -i docker_events -o stdout
+fluent-bit -i docker_events -o stdout
 ```
 
 ### Configuration file

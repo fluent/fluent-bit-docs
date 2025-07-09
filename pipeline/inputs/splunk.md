@@ -42,7 +42,7 @@ To use the other tags for multiple instantiating input Splunk plugins, you must 
 From the command line you can configure Fluent Bit to handle HTTP HEC requests with the following options:
 
 ```shell
-$ fluent-bit -i splunk -p port=8088 -o stdout
+fluent-bit -i splunk -p port=8088 -o stdout
 ```
 
 ### Configuration file

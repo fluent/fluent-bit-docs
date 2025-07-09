@@ -37,7 +37,7 @@ The tag for the HTTP input plugin is set by adding the tag to the end of the req
 For example, in the following curl message the tag set is `app.log**. **` because the end path is `/app_log`:
 
 ```shell
-$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file
@@ -79,7 +79,7 @@ pipeline:
 If you don't set the tag, `http.0` is automatically used. If you have multiple HTTP inputs then they will follow a pattern of `http.N` where `N` is an integer representing the input.
 
 ```shell
-$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888
+curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888
 ```
 
 {% tabs %}
@@ -121,7 +121,7 @@ The `tag_key` configuration option lets you specify the key name that will be us
 ### Curl request
 
 ```shell
-$ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file `tag_key` example
@@ -192,7 +192,7 @@ pipeline:
 #### Example curl message
 
 ```shell
-$ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:8888/app.log
+curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
 
 ### Configuration file example 3
@@ -232,5 +232,5 @@ pipeline:
 ### Command line
 
 ```shell
- $ fluent-bit -i http -p port=8888 -o stdout
+ fluent-bit -i http -p port=8888 -o stdout
 ```

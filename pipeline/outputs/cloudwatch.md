@@ -46,7 +46,7 @@ In order to send records into Amazon Cloudwatch, you can run the plugin from the
 The **cloudwatch** plugin, can read the parameters from the command line through the **-p** argument (property), e.g:
 
 ```
-$ fluent-bit -i cpu -o cloudwatch_logs -p log_group_name=group -p log_stream_name=stream -p region=us-west-2 -m '*' -f 1
+fluent-bit -i cpu -o cloudwatch_logs -p log_group_name=group -p log_stream_name=stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File

@@ -209,7 +209,7 @@ The `rewrite_tag` filter emits new records that go through the beginning of the 
 Using the previously provided configuration, when you query the metrics exposed in the HTTP interface:
 
 ```shell
-$ ./curl  http://127.0.0.1:2020/api/v1/metrics/ | jq
+./curl  http://127.0.0.1:2020/api/v1/metrics/ | jq
 ```
 
 You will see metrics output similar to the following:

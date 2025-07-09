@@ -26,7 +26,7 @@ To start performing the checks, you can run the plugin from the command line or 
 The following example checks the health of `crond` process.
 
 ```shell
-$ fluent-bit -i proc -p proc_name=crond -o stdout
+fluent-bit -i proc -p proc_name=crond -o stdout
 ```
 
 ### Configuration file

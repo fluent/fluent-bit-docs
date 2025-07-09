@@ -24,7 +24,7 @@ The MQTT input plugin lets Fluent Bit behave as a server. Dispatch some messages
 Running the following command:
 
 ```shell
-$ fluent-bit -i mqtt -t data -o stdout -m '*'
+fluent-bit -i mqtt -t data -o stdout -m '*'
 ```
 
 Returns a response like the following:
@@ -59,7 +59,7 @@ ______ _                  _    ______ _ _             ___  _____
 The following command line will send a message to the MQTT input plugin:
 
 ```shell
-$ mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
+mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
 ```
 
 ### Configuration file

@@ -16,7 +16,7 @@ To start getting the Linux Kernel messages, you can run the plugin from the comm
 ### Command line
 
 ```shell
-$ fluent-bit -i kmsg -t kernel -o stdout -m '*'
+fluent-bit -i kmsg -t kernel -o stdout -m '*'
 ```
 
 Which returns output similar to:

@@ -53,7 +53,7 @@ In order to insert records into a Splunk service, you can run the plugin from th
 The **splunk** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o splunk -p host=127.0.0.1 -p port=8088 \
+fluent-bit -i cpu -t cpu -o splunk -p host=127.0.0.1 -p port=8088 \
   -p tls=on -p tls.verify=off -m '*'
 ```
 

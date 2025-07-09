@@ -91,7 +91,7 @@ wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
 `NEST`.
 
 ```shell
-$ ./fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
+./fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
 ```
 
 ### Nest configuration file

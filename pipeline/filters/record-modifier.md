@@ -76,7 +76,7 @@ pipeline:
 You can run the filter from command line:
 
 ```shell
-$ ./fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
+./fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
 ```
 
 The output looks something like:
@@ -137,7 +137,7 @@ pipeline:
 You can also run the filter from command line.
 
 ```shell
-$ ./fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
+./fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
 ```
 
 The output looks something like:
@@ -198,7 +198,7 @@ pipeline:
 You can also run the filter from command line:
 
 ```shell
-$ ./fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
+./fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
 ```
 
 The output looks something like:

@@ -25,9 +25,9 @@ Fluent Bit supports the following Wasm toolchains:
 Compile Fluent Bit with Wasm support. For example:
 
 ```text
-$ cd build/
-$ cmake ..
-$ make
+cd build/
+cmake ..
+make
 ```
 
 Once compiled, you can see new plugins that handle `wasm`. For example:
@@ -53,7 +53,7 @@ Wasm input in Fluent Bit assumes WASI ABI, also known as `wasm32-wasi` on Rust t
 TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-wasi` target, you must install `wasm32-wasi` by using [rustup](https://rustup.rs/). Then, install the target components as:
 
 ```text
-$ rustup target add wasm32-wasi
+rustup target add wasm32-wasi
 ```
 
 ### Requirements of Wasm/WASI programs

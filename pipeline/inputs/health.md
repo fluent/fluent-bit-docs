@@ -26,7 +26,7 @@ To start performing the checks, you can run the plugin from the command line or 
 From the command line you can let Fluent Bit generate the checks with the following options:
 
 ```shell
-$ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
+fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
 ```
 
 ### Configuration file

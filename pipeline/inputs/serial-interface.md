@@ -24,19 +24,19 @@ To retrieve messages by using the Serial interface, you can run the plugin from 
 The following example loads the input serial plugin where it set a `Bitrate` of `9600`, listens from the `/dev/tnt0` interface, and uses the custom tag `data` to route the message.
 
 ```shell
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
 ```
 
 The interface (`/dev/tnt0`) is an emulation of the serial interface. Further examples will write some message to the other end of the interface. For example, `/dev/tnt1`.
 
 ```shell
-$ echo 'this is some message' > /dev/tnt1
+echo 'this is some message' > /dev/tnt1
 ```
 
 In Fluent Bit you can run the command:
 
 ```shell
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
 ```
 
 Which should produce output like:
@@ -73,13 +73,13 @@ Using the `Separator` configuration, you can send multiple messages at once.
 Run this command after starting Fluent Bit:
 
 ```shell
-$ echo 'aaXbbXccXddXee' > /dev/tnt1
+echo 'aaXbbXccXddXee' > /dev/tnt1
 ```
 
 Then, run Fluent Bit:
 
 ```shell
-$ fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
+fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
 ```
 
 This should produce results similar to the following:
@@ -163,29 +163,29 @@ You can emulate a serial interface on your Linux system and test the serial inpu
 1. Download the sources:
 
    ```shell
-   $ git clone https://github.com/freemed/tty0tty
+   git clone https://github.com/freemed/tty0tty
    ```
 
 2. Unpack and compile:
 
    ```shell
-   $ cd tty0tty/module
+   cd tty0tty/module
    
-   $ make
+   make
    ```
 
 3. Copy the new kernel module into the kernel modules directory:
 
    ```shell
-   $ sudo cp tty0tty.ko /lib/modules/$(uname -r)/kernel/drivers/misc/
+   sudo cp tty0tty.ko /lib/modules/$(uname -r)/kernel/drivers/misc/
    ```
 
 4. Load the module:
 
    ```shell
-   $ sudo depmod
+   sudo depmod
    
-   $ sudo modprobe tty0tty
+   sudo modprobe tty0tty
    ```
 
    You should see new serial ports in `dev` (`ls /dev/tnt\*\`).
@@ -193,7 +193,7 @@ You can emulate a serial interface on your Linux system and test the serial inpu
 5. Give appropriate permissions to the new serial ports:
 
    ```shell
-   $ sudo chmod 666 /dev/tnt*
+   sudo chmod 666 /dev/tnt*
    ```
 
 When the module is loaded, it will interconnect the following virtual interfaces:

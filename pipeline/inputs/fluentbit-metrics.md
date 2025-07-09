@@ -83,5 +83,5 @@ pipeline:
 You can test the expose of the metrics by using `curl`:
 
 ```shell
-$ curl http://127.0.0.1:2021/metrics
+curl http://127.0.0.1:2021/metrics
 ```

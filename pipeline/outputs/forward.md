@@ -114,7 +114,7 @@ Keep in mind that **TAG** is important for routing rules inside [Fluentd](http:/
 Using the [CPU](../inputs/cpu-metrics.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org) with tag _fluent_bit_:
 
 ```bash
-$ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
+bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
 ```
 
 Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gathered in the last seconds:
@@ -202,13 +202,13 @@ If you're using Fluentd v1, set up it as below:
 Start Fluentd:
 
 ```
-$ fluentd -c fld.conf
+fluentd -c fld.conf
 ```
 
 Start Fluent Bit:
 
 ```
-$ fluent-bit -c flb.conf
+fluent-bit -c flb.conf
 ```
 
 After five seconds, Fluent Bit will write records to Fluentd.

@@ -29,7 +29,7 @@ If you run Fluent Bit in a container, you might need to use instance metadata v1
 Run Fluent Bit from the command line:
 
 ```shell
-$ ./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
+./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
 You should see results like this:

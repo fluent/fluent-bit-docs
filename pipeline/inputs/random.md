@@ -22,7 +22,7 @@ To start generating random samples, you can either run the plugin from the comma
 Use the following command line options to generate samples.
 
 ```shell
-$ fluent-bit -i random -o stdout
+fluent-bit -i random -o stdout
 ```
 
 ### Configuration file

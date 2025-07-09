@@ -26,7 +26,7 @@ This plugin supports and automatically detects both `cgroups v1` and `v2`.
 You can run the following `curl` command:
 
 ```shell
-$ curl 0.0.0.0:2021/metrics
+curl 0.0.0.0:2021/metrics
 ```
 
 Which returns information like:
@@ -118,7 +118,7 @@ pipeline:
 ### Command line
 
 ```shell
-$ fluent-bit -i podman_metrics -o prometheus_exporter
+fluent-bit -i podman_metrics -o prometheus_exporter
 ```
 
 ### Exposed metrics

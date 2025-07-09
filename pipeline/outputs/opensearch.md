@@ -83,14 +83,14 @@ es://host:port/index/type
 Using the format specified, you could start Fluent Bit through:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o es://192.168.2.3:9200/my_index/my_type \
+fluent-bit -i cpu -t cpu -o es://192.168.2.3:9200/my_index/my_type \
     -o stdout -m '*'
 ```
 
 which is similar to do:
 
 ```text
-$ fluent-bit -i cpu -t cpu -o opensearch -p Host=192.168.2.3 -p Port=9200 \
+fluent-bit -i cpu -t cpu -o opensearch -p Host=192.168.2.3 -p Port=9200 \
     -p Index=my_index -p Type=my_type -o stdout -m '*'
 ```
 

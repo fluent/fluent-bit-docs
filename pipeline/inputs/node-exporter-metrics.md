@@ -161,7 +161,7 @@ pipeline:
 You can test the expose of the metrics by using `curl`:
 
 ```shell
-$ curl http://127.0.0.1:2021/metrics
+curl http://127.0.0.1:2021/metrics
 ```
 
 ### Container to collect host metrics
@@ -169,7 +169,7 @@ $ curl http://127.0.0.1:2021/metrics
 When deploying Fluent Bit in a container you will need to specify additional settings to ensure that Fluent Bit has access to the host operating system. The following Docker command deploys Fluent Bit with specific mount paths and settings enabled to ensure that Fluent Bit can collect from the host. These are then exposed over port `2021`.
 
 ```shell
-$ docker run -ti -v /proc:/host/proc \
+docker run -ti -v /proc:/host/proc \
                  -v /sys:/host/sys   \
                  -p 2021:2021        \
                  fluent/fluent-bit:1.8.0 \
@@ -189,15 +189,15 @@ If you use dashboards for monitoring, Grafana is one option. The Fluent Bit sour
 1. Download the Fluent Bit source code:
 
    ```shell
-   $ git clone https://github.com/fluent/fluent-bit
+   git clone https://github.com/fluent/fluent-bit
    
-   $ cd fluent-bit/docker_compose/node-exporter-dashboard/
+   cd fluent-bit/docker_compose/node-exporter-dashboard/
    ```
 
 2. Start the service and view your dashboard:
 
    ```shell
-   $ docker-compose up --force-recreate -d --build
+   docker-compose up --force-recreate -d --build
    ```
 
 3. Open your browser and use the address `http://127.0.0.1:3000`.
@@ -212,7 +212,7 @@ By default, Grafana dashboard plots the data from the last 24 hours. Change it t
 #### Stop the Service
 
 ```shell
-$ docker-compose down
+docker-compose down
 ```
 
 ## Enhancement requests

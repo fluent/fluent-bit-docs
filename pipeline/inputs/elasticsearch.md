@@ -29,7 +29,7 @@ In order to start performing the checks, you can run the plugin from the command
 From the command line you can configure Fluent Bit to handle Bulk API requests with the following options:
 
 ```shell
-$ fluent-bit -i elasticsearch -p port=9200 -o stdout
+fluent-bit -i elasticsearch -p port=9200 -o stdout
 ```
 
 ### Configuration file

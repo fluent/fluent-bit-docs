@@ -31,7 +31,7 @@ To test the Lua filter, you can run the plugin from the command line or through 
 From the command line you can use the following options:
 
 ```shell
-$ ./fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
+./fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 ```
 
 ### Configuration file

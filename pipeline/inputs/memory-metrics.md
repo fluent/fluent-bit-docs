@@ -11,7 +11,7 @@ To get memory and swap usage from your system, you can run the plugin from the c
 Run the following command from the command line, noting this is for a Linux machine:
 
 ```shell
-$ fluent-bit -i mem -t memory -o stdout -m '*'
+fluent-bit -i mem -t memory -o stdout -m '*'
 ```
 
 Which outputs information similar to:
