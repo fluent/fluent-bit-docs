@@ -1,20 +1,16 @@
 # Conditional processing
 
-Conditional processing lets you selectively apply [processors](README.md) to
-logs based on the value of fields that those logs contain. This feature lets you
-create processing pipelines that only process records that meet certain
-criteria, and ignore the rest.
+Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields that those logs contain. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
 
 Conditional processing is available in Fluent Bit version 4.0 and greater.
 
 ## Configuration
 
-You can turn a standard processor into a conditional processor by adding a
-`condition` block to the processor's YAML configuration settings.
+You can turn a standard processor into a conditional processor by adding a `condition` block to the processor's YAML configuration settings.
 
 {% hint style="info" %}
-- Conditional processing is only available for [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
-- Conditional Processing feature is not supported when using [Filter as Processor](./filters.md).
+- Conditional processing is only available for [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../administration/configuring-fluent-bit/classic-mode/README.md).
+- Conditional processing isn't supported if you're using a [filter as a processor](../pipeline/processors/filters).
 {% endhint %}
 
 These `condition` blocks use the following syntax:
@@ -45,19 +41,14 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Each processor can only have a single `condition` block, but that condition can
-include multiple rules. These rules are stored as items in the `condition.rules`
-array.
+Each processor can only have a single `condition` block, but that condition can include multiple rules. These rules are stored as items in the `condition.rules` array.
 
 ### Condition evaluation
 
-The `condition.op` parameter specifies the condition's evaluation logic. It has
-two possible values:
+The `condition.op` parameter specifies the condition's evaluation logic. It can have one of the following values:
 
-- `and`: A log entry meets this condition when all the rules in the `condition.rules`
-  are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
-- `or`: A log entry meets this condition when one or more rules in the `condition.rules`
-  array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
+- `and`: A log entry meets this condition when all the rules in the `condition.rules` array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
+- `or`: A log entry meets this condition when one or more rules in the `condition.rules` array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
 
 ### Rules
 
@@ -104,8 +95,7 @@ The `conditions.rules.op` parameter has the following possible values:
 
 ### Basic condition
 
-This example applies a condition that only processes logs that contain the
-string `{"request": {"method": "POST"`:
+This example applies a condition that only processes logs that contain the string `{"request": {"method": "POST"`:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -116,7 +106,7 @@ pipeline:
         - name: dummy
           dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
           tag: request.log
-          
+
           processors:
               logs:
                   - name: content_modifier
@@ -147,7 +137,7 @@ pipeline:
         - name: dummy
           dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
           tag: request.log
-          
+
           processors:
               logs:
                   - name: content_modifier
@@ -181,7 +171,7 @@ pipeline:
         - name: dummy
           dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
           tag: request.log
-          
+
           processors:
               logs:
                   - name: content_modifier
@@ -215,7 +205,7 @@ pipeline:
         - name: dummy
           dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
           tag: request.log
-          
+
           processors:
               logs:
                   - name: content_modifier
@@ -246,7 +236,7 @@ pipeline:
         - name: dummy
           dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
           tag: app.log
-      
+
           processors:
               logs:
                   - name: content_modifier
@@ -262,7 +252,7 @@ pipeline:
                             - field: "$service"
                               op: in
                               value: ["api-gateway", "authentication", "database"]
-          
+
                   - name: content_modifier
                     action: insert
                     key: paging_required
@@ -281,5 +271,4 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-This configuration adds an `alert` field to error logs from critical services,
-and adds a `paging_required` field to errors that contain specific critical patterns.
+This configuration adds an `alert` field to error logs from critical services, and adds a `paging_required` field to errors that contain specific critical patterns.
