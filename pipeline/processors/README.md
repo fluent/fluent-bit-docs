@@ -6,7 +6,7 @@ Additionally, filters can be implemented in a way that mimics the behavior of pr
 
 {% hint style="info" %}
 
-Processors are only compatible with the YAML configuration format. Classic mode configuration files don't support processors.
+Processors are compatible only with the YAML configuration format. Classic mode configuration files don't support processors.
 
 {% endhint %}
 
