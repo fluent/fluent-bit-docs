@@ -1,6 +1,6 @@
 # Conditional processing
 
-Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields that those logs contain. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
+Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields within those logs. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
 
 Conditional processing is available in Fluent Bit version 4.0 and greater.
 
