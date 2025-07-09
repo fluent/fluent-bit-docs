@@ -55,6 +55,7 @@ exceptions:
   - LLDB
   - LLVM
   - LTS
+  - LTSV
   - MQTT
   - NET
   - NGINX
