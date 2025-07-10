@@ -40,6 +40,8 @@ Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tag(s)       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 4.0.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 4.0.4 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.4](https://fluentbit.io/announcements/v4.0.4/) |
 | 4.0.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
 | 4.0.3 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.3](https://fluentbit.io/announcements/v4.0.3/) |
 | 4.0.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
