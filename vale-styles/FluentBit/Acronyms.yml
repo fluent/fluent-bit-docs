@@ -43,14 +43,15 @@ exceptions:
   - GZIP
   - HEC
   - HPA
-  - IAM
   - HTML
   - HTTP
   - HTTPS
+  - IAM
   - IDE
   - JAR
   - JSON
   - JSX
+  - KQL
   - LESS
   - LLDB
   - LLVM
