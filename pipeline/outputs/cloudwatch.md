@@ -45,15 +45,33 @@ In order to send records into Amazon Cloudwatch, you can run the plugin from the
 
 The **cloudwatch** plugin, can read the parameters from the command line through the **-p** argument (property), e.g:
 
-```
+```shell
 fluent-bit -i cpu -o cloudwatch_logs -p log_group_name=group -p log_stream_name=stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Output_ section:
+In your main configuration file append the following:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    
+    outputs:
+        - name: cloudwatch_logs
+          match: '*'
+          region: us-east-1
+          log_group_name: fluent-bit-cloudwatch
+          log_stream_prefix: from-fluent-bit-
+          auto_create_group: on
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name cloudwatch_logs
     Match   *
@@ -62,14 +80,48 @@ In your main configuration file append the following _Output_ section:
     log_stream_prefix from-fluent-bit-
     auto_create_group On
 ```
-#### Intergration with Localstack (Cloudwatch Logs)
 
-For an instance of Localstack running at `http://localhost:4566`, the following configuration needs to be added to the `[OUTPUT]` section:
+{% endtab %}
+{% endtabs %}
+
+#### Integration with Localstack (Cloudwatch Logs)
+
+For an instance of `Localstack` running at `http://localhost:4566`, the following configuration is needed:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    
+    outputs:
+        - name: cloudwatch_logs
+          match: '*'
+          region: us-east-1
+          log_group_name: fluent-bit-cloudwatch
+          log_stream_prefix: from-fluent-bit-
+          auto_create_group: on
+          endpoint: localhost
+          port: 4566
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
-endpoint localhost
-port 4566
+[OUTPUT]
+    Name cloudwatch_logs
+    Match   *
+    region us-east-1
+    log_group_name fluent-bit-cloudwatch
+    log_stream_prefix from-fluent-bit-
+    auto_create_group On
+    endpoint localhost
+    port 4566
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Any testing credentials can be exported as local variables, such as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
@@ -77,7 +129,7 @@ Any testing credentials can be exported as local variables, such as `AWS_ACCESS_
 
 The following AWS IAM permissions are required to use this plugin:
 
-```
+```json
 {
 	"Version": "2012-10-17",
 	"Statement": [{
@@ -100,7 +152,7 @@ Here is an example usage, for a common use case- templating log group and stream
 
 Recall that the kubernetes filter can add metadata which will look like the following:
 
-```
+```text
 kubernetes: {
     annotations: {
         "kubernetes.io/psp": "eks.privileged"
@@ -121,9 +173,29 @@ kubernetes: {
 
 Using record\_accessor, we can build a template based on this object.
 
-Here is our output configuration:
+Here is our configuration:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    
+    outputs:
+        - name: cloudwatch_logs
+          match: '*'
+          region: us-east-1
+          log_group_name: fallback-group
+          log_stream_prefix: fallback-stream
+          auto_create_group: on
+          log_group_template: application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+          log_stream_template: $kubernetes['pod_name'].$kubernetes['container_name']
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
     Name cloudwatch_logs
     Match   *
@@ -135,17 +207,20 @@ Here is our output configuration:
     log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
+{% endtab %}
+{% endtabs %}
+
 With the above kubernetes metadata, the log group name will be `application-logs-ip-10-1-128-166.us-east-2.compute.internal.my-namespace`. And the log stream name will be `myapp-5468c5d4d7-n2swr.myapp`.
 
 If the kubernetes structure is not found in the log record, then the `log_group_name` and `log_stream_prefix` will be used instead, and Fluent Bit will log an error like:
 
-```
+```text
 [2022/06/30 06:09:29] [ warn] [record accessor] translation failed, root key=kubernetes
 ```
 
 #### Limitations of record\_accessor syntax
 
-Notice in the example above, that the template values are separated by dot characters. This is important; the Fluent Bit record\_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+Notice in the example above, that the template values are separated by dot characters. This is important; the Fluent Bit record\_accessor library has a limitation in the characters that can separate template variables; only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
 Assume that your log records contain the metadata keys `container_name` and `task`. The following would be invalid templates because the two template variables are not separated by commas or dots:
 
@@ -168,20 +243,51 @@ And the following are valid since they only contain one template variable with n
 
 ### Metrics Tutorial
 
-Fluent Bit has different input plugins (cpu, mem, disk, netif) to collect host resource usage metrics. `cloudwatch_logs` output plugin can be used to send these host metrics to CloudWatch in Embedded Metric Format (EMF). If data comes from any of the above mentioned input plugins, `cloudwatch_logs` output plugin will convert them to EMF format and sent to CloudWatch as JSON log. Additionally, if we set `json/emf` as the value of `log_format` config option, CloudWatch will extract custom metrics from embedded JSON payload.
+Fluent Bit has different input plugins (cpu, mem, disk, netif) to collect host resource usage metrics. `cloudwatch_logs` output plugin can be used to send these host metrics to CloudWatch in Embedded Metric Format (EMF). If data comes from any of the above-mentioned input plugins, `cloudwatch_logs` output plugin will convert them to EMF format and sent to CloudWatch as JSON log. Additionally, if we set `json/emf` as the value of `log_format` config option, CloudWatch will extract custom metrics from embedded JSON payload.
 
 Note: Right now, only `cpu` and `mem` metrics can be sent to CloudWatch.
 
 For using the `mem` input plugin and sending memory usage metrics to CloudWatch, we can consider the following example config file. Here, we use the `aws` filter which adds `ec2_instance_id` and `az` (availability zone) to the log records. Later, in the output config section, we set `ec2_instance_id` as our metric dimension.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem
+          
+    filters:
+        - name: aws
+          match: '*'
+          
+    outputs:
+        - name: cloudwatch_logs
+          match: '*'
+          region: us-west-2
+          log_stream_name: fluent-bit-cloudwatch
+          log_group_name: fluent-bit-cloudwatch
+          log_format: json/emf
+          metric_namespace: fluent-bit-metrics
+          metric_dimensions: ec2_instance_id
+          auto_create_group: true
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     Log_Level info
 
 [INPUT]
     Name mem
     Tag mem
-
+    
 [FILTER]
     Name aws
     Match *
@@ -189,18 +295,59 @@ For using the `mem` input plugin and sending memory usage metrics to CloudWatch,
 [OUTPUT]
     Name cloudwatch_logs
     Match *
+    region us-west-2
     log_stream_name fluent-bit-cloudwatch
     log_group_name fluent-bit-cloudwatch
-    region us-west-2
     log_format json/emf
     metric_namespace fluent-bit-metrics
     metric_dimensions ec2_instance_id
     auto_create_group true
 ```
 
+{% endtab %}
+{% endtabs %}
+
 The following config will set two dimensions to all of our metrics- `ec2_instance_id` and `az`.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: mem
+          tag: mem
+          
+    filters:
+        - name: aws
+          match: '*'
+          
+    outputs:
+        - name: cloudwatch_logs
+          match: '*'
+          region: us-west-2
+          log_stream_name: fluent-bit-cloudwatch
+          log_group_name: fluent-bit-cloudwatch
+          log_format: json/emf
+          metric_namespace: fluent-bit-metrics
+          metric_dimensions: ec2_instance_id,az
+          auto_create_group: true
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+    Log_Level info
+
+[INPUT]
+    Name mem
+    Tag mem
+    
 [FILTER]
     Name aws
     Match *
@@ -208,14 +355,17 @@ The following config will set two dimensions to all of our metrics- `ec2_instanc
 [OUTPUT]
     Name cloudwatch_logs
     Match *
+    region us-west-2
     log_stream_name fluent-bit-cloudwatch
     log_group_name fluent-bit-cloudwatch
-    region us-west-2
     log_format json/emf
     metric_namespace fluent-bit-metrics
     metric_dimensions ec2_instance_id,az
     auto_create_group true
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### AWS for Fluent Bit
 
@@ -231,19 +381,19 @@ Amazon distributes a container image with Fluent Bit and these plugins.
 
 Our images are available in Amazon ECR Public Gallery. You can download images with different tags by following command:
 
-```
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:<tag>
 ```
 
 For example, you can pull the image with latest version by:
 
-```
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
 ```
 
 If you see errors for image pull limits, try log into public ECR with your AWS credentials:
 
-```
+```shell
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
@@ -257,8 +407,8 @@ You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/A
 
 You can use our SSM Public Parameters to find the Amazon ECR image URI in your region:
 
-```
+```shell
 aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
-For more see [the AWS for Fluent Bit github repo](https://github.com/aws/aws-for-fluent-bit#public-images).
+For more see [the AWS for Fluent Bit GitHub repo](https://github.com/aws/aws-for-fluent-bit#public-images).
