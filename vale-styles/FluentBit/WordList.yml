@@ -37,9 +37,6 @@ swap:
   cellular data: mobile data
   cellular network: mobile network
   chapter: documents|pages|sections
-  check box: checkbox
-  check: select
-  click on: click|click in
   Container Engine: Kubernetes Engine
   content type: media type
   curated roles: predefined roles
@@ -58,7 +55,6 @@ swap:
   in order to: to
   # ingest: import|load
   k8s: Kubernetes
-  long press: touch & hold
   network IP address: internal IP address
   omnibox: address bar
   open-source: open source
@@ -72,7 +68,6 @@ swap:
   synch: sync
   tablename: table name
   tablet: device
-  touch: tap
   url:  URL
   vs\.: versus
   whitelist: allowlist
