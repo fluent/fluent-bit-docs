@@ -194,6 +194,7 @@ Timeshift
 tolerations
 tooltip
 tooltips
+truthy
 uber
 unaggregated
 unary
