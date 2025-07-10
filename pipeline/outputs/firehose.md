@@ -4,8 +4,6 @@ description: Send logs to Amazon Kinesis Firehose
 
 # Amazon Kinesis Data Firehose
 
-![](../../.gitbook/assets/image%20%288%29.png)
-
 The Amazon Kinesis Data Firehose output plugin allows to ingest your records into the [Firehose](https://aws.amazon.com/kinesis/data-firehose/) service.
 
 This is the documentation for the core Fluent Bit Firehose plugin written in C. It can replace the [aws/amazon-kinesis-firehose-for-fluent-bit](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit) Golang Fluent Bit plugin released last year. The Golang plugin was named `firehose`; this new high performance and highly efficient firehose plugin is called `kinesis_firehose` to prevent conflicts/confusion.
@@ -38,13 +36,29 @@ In order to send records into Amazon Kinesis Data Firehose, you can run the plug
 
 The **firehose** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
 
-```text
+```shell
 fluent-bit -i cpu -o kinesis_firehose -p delivery_stream=my-stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Output_ section:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+          
+    outputs:
+        - name: kinesis_firehose
+          match: '*'
+          region: us-east-1
+          delivery_stream: my-stream
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
@@ -54,11 +68,14 @@ In your main configuration file append the following _Output_ section:
     delivery_stream my-stream
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Permissions
 
 The following AWS IAM permissions are required to use this plugin:
 
-```
+```json
 {
 	"Version": "2012-10-17",
 	"Statement": [{
@@ -77,6 +94,23 @@ Fluent Bit 1.7 adds a new feature called `workers` which enables outputs to have
 
 Example:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+          
+    outputs:
+        - name: kinesis_firehose
+          match: '*'
+          region: us-east-1
+          delivery_stream: my-stream
+          workers: 2
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [OUTPUT]
     Name  kinesis_firehose
@@ -86,7 +120,14 @@ Example:
     workers 2
 ```
 
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+
 If you enable a single worker, you are enabling a dedicated thread for your Firehose output. We recommend starting with without workers, evaluating the performance, and then adding workers one at a time until you reach your desired/needed throughput. For most users, no workers or a single worker will be sufficient.
+
+{% endhint %}
 
 ### AWS for Fluent Bit
 
@@ -102,19 +143,19 @@ Amazon distributes a container image with Fluent Bit and these plugins.
 
 Our images are available in Amazon ECR Public Gallery. You can download images with different tags by following command:
 
-```text
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:<tag>
 ```
 
 For example, you can pull the image with latest version by:
 
-```text
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
 ```
 
 If you see errors for image pull limits, try log into public ECR with your AWS credentials:
 
-```text
+```shell
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
@@ -128,8 +169,8 @@ You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/A
 
 You can use our SSM Public Parameters to find the Amazon ECR image URI in your region:
 
-```text
+```shell
 aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
-For more see [the AWS for Fluent Bit github repo](https://github.com/aws/aws-for-fluent-bit#public-images).
+For more see [the AWS for Fluent Bit GitHub repo](https://github.com/aws/aws-for-fluent-bit#public-images).
