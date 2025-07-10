@@ -1,55 +1,53 @@
 ---
-description: Official and Microsoft Certified Azure Storage Blob connector
+description: Microsoft certified Azure Storage Blob connector
 ---
 
 # Azure Blob
 
 The Azure Blob output plugin allows ingesting your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the Append Blob and Block Blob API.
 
-Our plugin works with the official Azure Service and also can be configured to be used with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
+The Fluent Bit plugin works with the official Azure Service and can be configured to be used with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
 
-## Azure Storage Account
+## Azure Storage account
 
-Before getting started, make sure you already have an Azure Storage account. As a reference, the following link explains step-by-step how to set up your account:
+Ensure you have an Azure Storage account. [Azure Blob Storage Tutorial \(Video\)](https://www.youtube.com/watch?v=-sCKnOm8G_g) explains how to set up your account.
 
-* [Azure Blob Storage Tutorial \(Video\)](https://www.youtube.com/watch?v=-sCKnOm8G_g)
+## Configuration parameters
 
-## Configuration Parameters
+Fluent Bit exposes the following configuration properties.
 
-We expose different configuration properties. The following table lists all the options available, and the next section has specific configuration details for the official service or the emulator.
-
-| Key | Description | default |
+| Key | Description | Default |
 | :--- | :--- | :--- |
-| account\_name | Azure Storage account name. This configuration property is mandatory |  |
-| auth\_type | Specify the type to authenticate against the service. Fluent Bit supports `key` and `sas`. | key |
-| shared\_key | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`. |  |
-| sas\_token | Specify the Azure Storage shared access signatures to authenticate against the service. This configuration property is mandatory when `auth_type` is `sas`. |  |
-| container\_name | Name of the container that will contain the blobs. This configuration property is mandatory |  |
-| blob\_type | Specify the desired blob type. Fluent Bit supports `appendblob` and `blockblob`. | appendblob |
-| auto\_create\_container | If `container_name` does not exist in the remote service, enabling this option will handle the exception and auto-create the container. | on |
-| path | Optional path to store your blobs. If your blob name is `myblob`, you can specify sub-directories where to store it using path, so setting path to `/logs/kubernetes` will store your blob in `/logs/kubernetes/myblob`. |  |
-| compress | Sets payload compression in network transfer. Only value supported is: `gzip` | |
-| compress\_blob | Enables GZIP compression in the final `blockblob` file. This option is not compatible when `blob_type` = `appendblob`  | |
-| emulator\_mode | If you want to send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option so the plugin will format the requests to the expected format. | off |
-| endpoint | If you are using an emulator, this option allows you to specify the absolute HTTP address of such service. e.g: [http://127.0.0.1:10000](http://127.0.0.1:10000). |  |
-| tls | Enable or disable TLS encryption. Note that Azure service requires this to be turned on. | off |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
-| buffering\_enabled | Enable buffering into disk before ingesting into Azure Blob. | false |
-| buffer\_dir | Specifies the location of directory where the buffered data will be stored. | /tmp/fluent-bit/azure-blob/ |
-| upload\_timeout | Optionally specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached upload_file_size limit yet. | 30m |
-| upload\_file\_size | Specifies the size of files to be uploaded in MBs. | 200M |
-| azure\_blob\_buffer\_key | Set the azure blob buffer key which needs to be specified when using multiple instances of azure blob output plugin and buffering is enabled. | key |
-| store\_dir\_limit\_size | Set the max size of the buffer directory. | 8G |
-| buffer\_file\_delete\_early | Whether to delete the buffered file early after successful blob creation. | false |
-| blob\_uri\_length | Set the length of generated blob uri before ingesting to Azure Kusto. | 64 |
-| unify\_tag | Whether to create a single buffer file when buffering mode is enabled. | false |
-| scheduler\_max\_retries | Maximum number of retries for the scheduler send blob. | 3 |
-| delete\_on\_max\_upload\_error | Whether to delete the buffer file on maximum upload errors. | false |
-| io\_timeout | HTTP IO timeout. | 60s |
+| `account_name` | Azure Storage account name. | _none_ |
+| `auth_type` | Specify the type to authenticate against the service. Supported values: `key`, `sas`. | `key` |
+| `shared_key` | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`. | _none_ |
+| `sas_token` | Specify the Azure Storage shared access signatures to authenticate against the service. This configuration property is mandatory when `auth_type` is `sas`. | _none_ |
+| `container_name` | Name of the container that will contain the blobs. | _none_ |
+| `blob_type` | Specify the desired blob type. Supported values: `appendblob`, `blockblob`. | `appendblob` |
+| `auto_create_container` | If `container_name` doesn't exist in the remote service, enabling this option handles the exception and auto-creates the container. | `on` |
+| `path` | Optional. The path to store your blobs. If your blob name is `myblob`, specify subdirectories for storage using `path`. For example, setting `path` to `/logs/kubernetes` will store your blob in `/logs/kubernetes/myblob`. | _none_ |
+| `compress` | Sets payload compression in network transfer. Supported value: `gzip` | _none_ |
+| `compress_blob` | Enables GZIP compression in the final `blockblob` file. This option isn't compatible when `blob_type` = `appendblob`. | _none_ |
+| `emulator_mode` | To send data to an Azure emulator service like [Azurite](https://github.com/Azure/Azurite), enable this option to format the requests in the expected format. | `off` |
+| `endpoint` | When using an emulator, this option lets you specify the absolute HTTP address of such service. For example, `http://127.0.0.1:10000`. | _none_ |
+| `tls` | Enable or disable TLS encryption. Azure service requires this to be set to `on`. | `off` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `buffering_enabled` | Enable buffering into disk before ingesting into Azure Blob. | `false` |
+| `buffer_dir` | Specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-blob/` |
+| `upload_timeout` | Optional. Specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than `x` minutes and ago haven't reached `upload_file_size` limit yet. | `30m` |
+| `upload_file_size` | Specifies the size of files to be uploaded in MB. | `200M` |
+| `azure_blob_buffer_key` | Set the Azure Blob buffer key which needs to be specified when using multiple instances of Azure Blob output plugin and buffering is enabled. | `key` |
+| `store_dir_limit_size` | Set the max size of the buffer directory. | `8G` |
+| `buffer_file_delete_early` | Whether to delete the buffered file early after successful blob creation. | `false` |
+| `blob_uri_length` | Set the length of generated blob URI before ingesting to Azure Kusto. | `64` |
+| `unify_tag` | Whether to create a single buffer file when buffering mode is enabled. | `false` |
+| `scheduler_max_retries` | Maximum number of retries for the scheduler send blob. | `3` |
+| `delete_on_max_upload_error` | Whether to delete the buffer file on maximum upload errors. | `false` |
+| `io_timeout` | HTTP IO timeout. | `60s` |
 
-## Getting Started
+## Get started
 
-As mentioned above, you can either deliver records to the official service or an emulator. Below we have an example for each use case.
+Fluent Bit can deliver records to the official service or an emulator.
 
 ### Configuration for Azure Storage Service
 
@@ -77,33 +75,38 @@ The following configuration example generates a random message with a custom tag
     tls                   on
 ```
 
-After you run the configuration file above, you will be able to query the data using the Azure Storage Explorer. The example above will generate the following content in the explorer:
+After you run the configuration file, you will be able to query the data using the Azure Storage Explorer. The example generates the following content in the explorer:
 
-![](../../.gitbook/assets/azure_blob.png)
+![Azure Blob](../../.gitbook/assets/azure_blob.png)
 
 ### Configuring and using Azure Emulator: Azurite
 
 #### Install and run Azurite
 
-The quickest way to get started is to install Azurite using npm:
+1. Install Azurite using `npm`:
 
-```bash
-npm install -g azurite
-```
+   ```bash
+   npm install -g azurite
+   ```
 
-then run the service:
+1. Run the service:
 
-```bash
-$ azurite
-Azurite Blob service is starting at http://127.0.0.1:10000
-Azurite Blob service is successfully listening at http://127.0.0.1:10000
-Azurite Queue service is starting at http://127.0.0.1:10001
-Azurite Queue service is successfully listening at http://127.0.0.1:10001
-```
+   ```bash
+   azurite
+   ```
+
+   The command should return results similar to:
+
+   ```text
+    Azurite Blob service is starting at http://127.0.0.1:10000
+    Azurite Blob service is successfully listening at http://127.0.0.1:10000
+    Azurite Queue service is starting at http://127.0.0.1:10001
+    Azurite Queue service is successfully listening at http://127.0.0.1:10001
+   ```
 
 #### Configuring Fluent Bit for Azurite
 
-[Azurite](https://github.com/Azure/Azurite) comes with a default `account_name` and `shared_key`, so make sure to use the specific values provided in the example below \(do an exact copy/paste\):
+[Azurite](https://github.com/Azure/Azurite) comes with a default `account_name` and `shared_key`. Instead of the defaults, be sure to use the specific values provided in the following example:
 
 ```python
 [SERVICE]
@@ -129,7 +132,7 @@ Azurite Queue service is successfully listening at http://127.0.0.1:10001
     endpoint              http://127.0.0.1:10000
 ```
 
-after running that Fluent Bit configuration you will see the data flowing into Azurite:
+After running the Fluent Bit configuration, you will see the data flowing into Azurite:
 
 ```text
 $ azurite
