@@ -200,6 +200,7 @@ unary
 Unary
 unmuted
 unsort
+upsert
 UUIDs
 Vectra
 Vercel
