@@ -4,8 +4,6 @@ description: Send logs to Amazon Kinesis Streams
 
 # Amazon Kinesis Data Streams
 
-![](../../.gitbook/assets/image%20%288%29.png)
-
 The Amazon Kinesis Data Streams output plugin allows to ingest your records into the [Kinesis](https://aws.amazon.com/kinesis/data-streams/) service.
 
 This is the documentation for the core Fluent Bit Kinesis plugin written in C. It has all the core features of the [aws/amazon-kinesis-streams-for-fluent-bit](https://github.com/aws/amazon-kinesis-streams-for-fluent-bit) Golang Fluent Bit plugin released in 2019. The Golang plugin was named `kinesis`; this new high performance and highly efficient kinesis plugin is called `kinesis_streams` to prevent conflicts/confusion.
@@ -40,13 +38,29 @@ In order to send records into Amazon Kinesis Data Streams, you can run the plugi
 
 The **kinesis\_streams** plugin, can read the parameters from the command line through the **-p** argument \(property\), e.g:
 
-```text
+```shell
 fluent-bit -i cpu -o kinesis_streams -p stream=my-stream -p region=us-west-2 -m '*' -f 1
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Output_ section:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+          
+    outputs:
+        - name: kinesis_steams
+          match: '*'
+          region: us-east-1
+          stream: my-stream
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
@@ -56,11 +70,14 @@ In your main configuration file append the following _Output_ section:
     stream my-stream
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Permissions
 
 The following AWS IAM permissions are required to use this plugin:
 
-```
+```json
 {
 	"Version": "2012-10-17",
 	"Statement": [{
@@ -87,19 +104,19 @@ Amazon distributes a container image with Fluent Bit and these plugins.
 
 Our images are available in Amazon ECR Public Gallery. You can download images with different tags by following command:
 
-```text
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:<tag>
 ```
 
 For example, you can pull the image with latest version by:
 
-```text
+```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
 ```
 
 If you see errors for image pull limits, try log into public ECR with your AWS credentials:
 
-```text
+```shell
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
@@ -113,7 +130,7 @@ You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/A
 
 You can use our SSM Public Parameters to find the Amazon ECR image URI in your region:
 
-```text
+```shell
 aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
