@@ -9,7 +9,7 @@ Conditional processing is available in Fluent Bit version 4.0 and greater.
 You can turn a standard processor into a conditional processor by adding a `condition` block to the processor's YAML configuration settings.
 
 {% hint style="info" %}
-- Conditional processing is only available for [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../administration/configuring-fluent-bit/classic-mode/README.md).
+- Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors, including conditional processors.
 - Conditional processing isn't supported if you're using a [filter as a processor](../pipeline/processors/filters).
 {% endhint %}
 
