@@ -74,7 +74,7 @@ located at [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-doc
 
 `pipeline: outputs: syslog: fix grammar in examples`
 
-Since this commit is prefixed with the relevant file's path, it helps the maintainers
+Because this commit is prefixed with the relevant file's path, it helps the maintainers
 understand and prioritize your contribution.
 
 ### Set your email in Git
@@ -99,7 +99,7 @@ To prevent DCO errors, refer to the following guide about
 >
 > `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 >
-> If you're using VSCode, enabling the
+> If you're using VSCode, enable the
 > [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047)
 > setting, which automatically appends a `Signed-off-by:` message to your commits.
 
