@@ -4,9 +4,7 @@ description: 'Send logs to Azure Log Analytics using Logs Ingestion API with DCE
 
 # Azure Logs Ingestion API
 
-![](../../.gitbook/assets/image%20%287%29.png)
-
-Azure Logs Ingestion plugin allows you ingest your records using [Logs Ingestion API in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview) to supported [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or to [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table) that you create.
+Azure Logs Ingestion plugin allows you to ingest your records using [Logs Ingestion API in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview) to supported [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or to [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table) that you create.
 
 The Logs ingestion API requires the following components:
 
@@ -17,9 +15,10 @@ The Logs ingestion API requires the following components:
 > Note: According to [this document](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/azure-monitor/logs/logs-ingestion-api-overview.md#components), all resources should be in the same region.
 
 To visualize basic Logs Ingestion operation, see the following image:
+
 ![](../../.gitbook/assets/azure-logs-ingestion-overview.png)
 
-To get more details about how to setup these components, please refer to the following documentations:
+To get more details about how to set up these components, please refer to the following documentations:
 
 - [Azure Logs Ingestion API](https://docs.microsoft.com/en-us/azure/log-analytics/)
 - [Send data to Azure Monitor Logs with Logs ingestion API (setup DCE, DCR and Log Analytics)](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal)
@@ -48,19 +47,61 @@ To send records into an Azure Log Analytics using Logs Ingestion API the followi
 - Either an [Azure tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/logs-ingestion-api-overview#supported-tables) or [custom tables](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/create-custom-table#create-a-custom-table)
 - An app registration with client secrets (for DCR access).
 
-You can follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal) to setup the DCE, DCR, app registration and a custom table.
+You can follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal) to set up the DCE, DCR, app registration and a custom table.
 
 ### Configuration File
 
 Use this configuration to quickly get started:
 
-```ini
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          path: /path/to/your/sample.log
+          tag: sample
+          key: RawData      
+        
+        # Or use other plugins  
+        #- name: cpu
+        #  tag: sample
+
+    filters:
+        - name: modify
+          match: sample
+          # Add a json key named "Application":"fb_log"
+          add: Application fb_log
+          
+    outputs:
+        # Enable this section to see your json-log format
+        #- name: stdout
+        #  match: '*'
+        
+        - name: azure_logs_ingestion
+          match: sample
+          client_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+          client_secret: some.secret.xxxzzz
+          tenant_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+          dce_url: https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+          dcr_id: dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          table_name: ladcr_CL
+          time_generated: true
+          time_key: Time
+          compress: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name    tail
     Path    /path/to/your/sample.log
     Tag     sample
     Key     RawData
-# Or use other plugins Plugin
+# Or use other plugins
 # [INPUT]
 #     Name    cpu
 #     Tag     sample
@@ -75,6 +116,7 @@ Use this configuration to quickly get started:
 #[OUTPUT]
 #    Name stdout
 #    Match *
+
 [OUTPUT]
     Name            azure_logs_ingestion
     Match           sample
@@ -89,4 +131,7 @@ Use this configuration to quickly get started:
     Compress        true
 ```
 
-Setup your DCR transformation accordingly based on the json output from fluent-bit's pipeline (input, parser, filter, output).
+{% endtab %}
+{% endtabs %}
+
+Set up your DCR transformation accordingly based on the json output from fluent-bit's pipeline (input, parser, filter, output).
