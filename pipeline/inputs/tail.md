@@ -37,9 +37,16 @@ The plugin supports the following configuration parameters:
 | `Static_Batch_Size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
 | `File_Cache_Advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `On` |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `Unicode.Encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data is not aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
 
 {% hint style="info" %}
 If the database parameter `DB` isn't specified, by default the plugin reads each target file from the beginning. This might cause unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` isn't turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+{% endhint %}
+
+{% hint style="info" %}
+The `Unicode.Encoding` parameter is dependent on the simdutf library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
+
+Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
 
 ## Monitor a large number of files
