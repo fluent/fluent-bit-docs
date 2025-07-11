@@ -44,7 +44,7 @@ A table with the expected schema must exist in order for data to be ingested pro
 
 ## Optional - Creating an Ingestion Mapping
 
-By default, Kusto will insert incoming ingestion's into a table by inferring the mapped table columns, from the payload properties. However, this mapping can be customized by creating a [JSON ingestion mapping](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/mappings#json-mapping). The plugin can be configured to use an ingestion mapping via the `ingestion_mapping_reference` configuration key.
+By default, Kusto will insert incoming ingestions into a table by inferring the mapped table columns, from the payload properties. However, this mapping can be customized by creating a [JSON ingestion mapping](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/mappings#json-mapping). The plugin can be configured to use an ingestion mapping via the `ingestion_mapping_reference` configuration key.
 
 ## Configuration Parameters
 
