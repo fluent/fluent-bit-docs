@@ -38,8 +38,40 @@ The plugin supports the following configuration parameters:
 | `File_Cache_Advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `On` |
 | `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
+## Buffers and memory management
+
+The Tail plugin uses buffers to efficiently read and process log files. Understanding how these buffers work helps optimize memory usage and performance.
+
+### File buffers vs Fluent Bit chunks
+
+When a file is opened for monitoring, the Tail plugin allocates a buffer in memory of `buffer_chunk_size` bytes (defaults to 32KB). This buffer is used to read data from the file. If a single record (line) is longer than `buffer_chunk_size`, the buffer will grow up to `buffer_max_size` to accommodate it.
+
+> **Note:** These buffers are per-file. If you're monitoring many files, each file gets its own buffer, which can significantly increase memory usage.
+
+### From buffers to chunks
+
+Inside each file buffer, multiple lines/records might exist. The plugin processes these records and converts them to msgpack format (binary serialization). This msgpack data is then appended to what Fluent Bit calls a **Chunk** - a collection of serialized records that belong to the same tag.
+
+While Fluent Bit has a soft limit of 2MB for chunks, input plugins like Tail can generate msgpack buffers larger than 2MB, and the final chunk can exceed this soft limit.
+
+### Memory protection with `mem_buf_limit`
+
+If Fluent Bit is not configured to use filesystem buffering, it needs mechanisms to protect against high memory consumption during backpressure scenarios (e.g., when destination endpoints are down or network issues occur). The `mem_buf_limit` option restricts how much memory in chunks an input plugin can use.
+
+When filesystem buffering is enabled, memory management works differently. For more details, see [Buffering and Storage](../../administration/buffering-and-storage.md).
+
+## Database file
+
 {% hint style="info" %}
-If the database parameter `DB` isn't specified, by default the plugin reads each target file from the beginning. This might cause unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` isn't turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+**File positioning behavior:**
+
+- **With database file**: The plugin restores the last known position (offset) from the database. If no previous position exists and `read_from_head` is false, it starts monitoring from the end of the file.
+
+- **Without database file**:
+  - If `read_from_head` is true: The plugin reads from the beginning of the file
+  - If `read_from_head` is false: The plugin starts monitoring from the end of the file (classic "tail" behavior)
+
+This means that without a database and with `read_from_head` set to false, only new content written after Fluent Bit starts will be monitored.
 {% endhint %}
 
 ## Monitor a large number of files
