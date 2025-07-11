@@ -38,13 +38,13 @@ Fluent-Bit ingests the event data into Kusto in a JSON format, that by default w
 
 A table with the expected schema must exist in order for data to be ingested properly.
 
-```kql
+```sql
 .create table FluentBit (log:dynamic, tag:string, timestamp:datetime)
 ```
 
 ## Optional - Creating an Ingestion Mapping
 
-By default, Kusto will insert incoming ingestions into a table by inferring the mapped table columns, from the payload properties. However, this mapping can be customized by creatng a [JSON ingestion mapping](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/mappings#json-mapping). The plugin can be configured to use an ingestion mapping via the `ingestion_mapping_reference` configuration key.
+By default, Kusto will insert incoming ingestion's into a table by inferring the mapped table columns, from the payload properties. However, this mapping can be customized by creating a [JSON ingestion mapping](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/mappings#json-mapping). The plugin can be configured to use an ingestion mapping via the `ingestion_mapping_reference` configuration key.
 
 ## Configuration Parameters
 
@@ -84,10 +84,55 @@ By default, Kusto will insert incoming ingestions into a table by inferring the 
 
 Get started quickly with this configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"name": "Fluent Bit", "year": 2020}'
+          samples: 1
+          tag: var.log.containers.app-default-96cbdef2340.log      
+          
+    outputs:
+        - name: azure_kusto
+          match: '*'
+          tenant_id: <app_tenant_id>
+          client_id: <app_client_id>
+          client_secret: <app_secret>
+          ingestion_endpoint: https://ingest-<cluster>.<region>.kusto.windows.net
+          database_name: <database_name>
+          table_name: <table_name>
+          ingestion_mapping_reference: <mapping_name>
+          ingestion_endpoint_connect_timeout: <ingestion_endpoint_connect_timeout>
+          compression_enabled: <compression_enabled>
+          ingestion_resources_refresh_interval: <ingestion_resources_refresh_interval>
+          buffering_enabled: on
+          upload_timeout: 2m
+          upload_file_size: 125M
+          azure_kusto_buffer_key: kusto1
+          buffer_file_delete_early: off
+          unify_tag: on
+          buffer_dir: /var/log/
+          store_dir_limit_size: 16GB
+          blob_uri_length: 128
+          scheduler_max_retries: 3
+          delete_on_max_upload_error: off
+          io_timeout: 60s 
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
-    Match *
     Name azure_kusto
+    Match *
     Tenant_Id <app_tenant_id>
     Client_Id <app_client_id>
     Client_Secret <app_secret>
@@ -110,7 +155,11 @@ Get started quickly with this configuration file:
     scheduler_max_retries 3
     delete_on_max_upload_error Off
     io_timeout 60s
+
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Troubleshooting
 
