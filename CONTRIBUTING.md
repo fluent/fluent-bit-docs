@@ -28,7 +28,7 @@ Each `.md` file in this repository is a single page. You can use
 to edit existing pages, or create a new `.md` file to add an additional page to
 the docs library. If you create a new page, you'll also need to update
 [GitBook's `SUMMARY.md` file](https://docs.gitbook.com/integrations/git-sync/content-configuration#structure)
-(or ask a maintainer to update it for you).
+(or request that a maintainer to update it for you).
 
 ## Workflow
 
@@ -39,11 +39,11 @@ within a few minutes.
 
 ### Stale pull requests
 
-If you open a pull request that requires ongoing discussion or review, the
-Fluent Bit maintainers will add a [`waiting-for-user` tag](#tags) to your pull
-request. This tag means that we're blocked from moving forward until you reply.
-To keep contributions from going stale, we'll wait 45 days for your response,
-but we may close the pull request if we don't hear back from you by then.
+If you open a pull request that requires ongoing discussion or review, the Fluent Bit
+maintainers will add a `waiting-for-user` to your pull request. This tag means that
+we're blocked from moving forward until you reply. To keep contributions from going
+stale, we'll wait 45 days for your response, but we may close the pull request if we
+don't hear back from you by then.
 
 ## Submit a contribution
 
@@ -55,14 +55,14 @@ create a single PR against `master` and specify that your changes need to be
 **backported** to other branches; one of our maintainers will take care of that
 process on your behalf.
 
-All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then **if** the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, please specify in the first PR as a comment (for master branch) that it needs to be *backported*. One of our maintainers will take care of that process.
+All contributions must be made **first** against [master branch](https://github.com/fluent/fluent-bit-docs/tree/master) which is the active development branch, and then if the contribution also applies for the current stable branch, submit another PR for that specific branch, if submitting another PR adds some complexity, specify in the first PR as a comment (for master branch) that it needs to be backported. One of the maintainers will take care of that process.
 
 As a contributor, we'll ask you to follow a few best practices related to Git:
 
 ### One file per commit
 
-Each commit you make should only modify one file or interface—we follow the same
-practice in the Fluent Bit source code.
+Each commit you make should only modify one file or interface, following the same
+practice as commits to the Fluent Bit source code.
 
 ### Commit subjects
 
@@ -74,7 +74,7 @@ located at [pipeline/outputs/syslog.md](https://github.com/fluent/fluent-bit-doc
 
 `pipeline: outputs: syslog: fix grammar in examples`
 
-Since this commit is prefixed with the relevant file path, it helps our maintainers
+Since this commit is prefixed with the relevant file's path, it helps the maintainers
 understand and prioritize your contribution.
 
 ### Set your email in Git
@@ -88,7 +88,7 @@ For more information, refer to GitHub's guide to
 ### Sign off your commits
 
 You must sign off your commits to certify your identity as the commit author. If
-you don't sign off your commits, our CI system will flag the pull request with a
+you don't sign off your commits, the CI system will flag the pull request with a
 [DCO](https://github.com/src-d/guide/blob/master/developer-community/fix-DCO.md)
 error and prevent your pull request from merging.
 
@@ -99,7 +99,7 @@ To prevent DCO errors, refer to the following guide about
 >
 > `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 >
-> If you're using VSCode, you can also enable the
+> If you're using VSCode, enabling the
 > [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047)
 > setting, which automatically appends a `Signed-off-by:` message to your commits.
 
@@ -109,7 +109,7 @@ The Fluent Bit maintainers refer to the
 [Google developer documentation style guide](https://developers.google.com/style)
 for most topics related to grammar, style, and formatting. We don't expect you
 to memorize these style rules, but the technical writer who reviews your pull
-request may suggest changes accordingly.
+request can suggest changes accordingly.
 
 ### URLs
 
@@ -120,11 +120,21 @@ possible. For example:
 [LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
 ```
 
+## Additional testing
+
+Fluent Bit uses additional tests for style and consistency. Your maintainers
+suggest installing and applying the suggestions from these linters.
+
 ### Vale
 
 The Fluent Bit maintainers use the [Vale](https://vale.sh/docs/) plugin, which lints
-pull requests and adds suggestions to improve style and clarity. Most Vale tests are
-at the `suggestion` level and won't block merging.
+the prose of your pull requests and adds suggestions to improve style and clarity.
+There is a [VSCode plugin for Vale](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
+which outputs suggestions to the problems pane in the IDE.
+
+[See the Vale tests for Fluent Bit](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles).
+
+Most Vale tests are at the `suggestion` level and won't block merging.
 
 The following tests are at a `error` level and will prevent merging:
 
@@ -151,3 +161,12 @@ The following tests are at a `error` level and will prevent merging:
 The following tests are at a `warning` level and won't prevent merging:
 
 - [Ampersand](https://developers.google.com/style/word-list#ampersand)
+
+### Markdownlint
+
+[Markdownlint](https://github.com/markdownlint/markdownlint) checks markdown in a
+file and makes suggestions for improvements. Most markdownlint tests are enabled.
+[See the configuration file](https://github.com/fluent/fluent-bit-docs/blob/master/.markdownlint.json).
+
+Line wrap tests are off due to a GitBook decision that hard wraps the rendered page
+on line wraps in the markdown. This leads to rendered pages with awkward line wraps.
