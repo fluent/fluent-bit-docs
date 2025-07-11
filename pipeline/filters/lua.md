@@ -44,18 +44,18 @@ In your main configuration file, append the following `Input`, `Filter`, and `Ou
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
+  inputs:
+    - name: dummy
 
-    filters:
-        - name: lua
-          match: '*'
-          script: test.lua
-          call: cb_print
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call: cb_print
 
-    outputs:
-        - name: null
-          match: '*'
+  outputs:
+    - name: null
+      match: '*'
 ```
 
 {% endtab %}
@@ -117,6 +117,153 @@ Each callback must return three values:
 | `timestamp` | double | If `code` equals `1`, the original record timestamp will be replaced with this new value. |
 | `record` | table | If `code` equals `1`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
 
+## Lua Extended callback with Groups and Metadata support
+
+{% hint style="info" %}
+This feature is available in Fluent Bit version 4.0.4 and later.
+{% endhint %}
+
+For more advanced use cases, especially when working with structured formats like OpenTelemetry Logs, Fluent Bit supports an extended callback prototype that provides access to group metadata and record metadata.
+
+### Extended function signature
+
+```lua
+function cb_metadata(tag, timestamp, group, metadata, record)
+    ...
+    return code, timestamp, metadata, record
+end
+```
+
+#### Extended function arguments
+
+| Name | Description |
+| ---- | ----------- |
+| `tag` | Name of the tag associated with the incoming record. |
+| `timestamp` | Unix timestamp with nanoseconds associated with the incoming record. |
+| `group` | A read-only table containing group-level metadata (e.g., OpenTelemetry resource or scope info). This will be an empty table if the log is not part of a group. |
+| `metadata` | A table representing the record-specific metadata. You may modify this if needed. |
+| `record` | Lua table with the record content. |
+
+#### Extended return values
+
+Each extended callback must return four values:
+
+| Name | Data type | Description |
+| ---- | --------- | ----------- |
+| `code` | integer | The code return value: `-1` (drop record), `0` (no modification), or `1` (record was modified). |
+| `timestamp` | double | The updated timestamp. |
+| `metadata` | table | A new or modified metadata table. |
+| `record` | table | A new or modified log record. This can be an array of tables for splitting records. |
+
+### Function signature detection
+
+At load time, the Lua filter automatically detects which callback prototype to use based on the number of parameters:
+
+- **3 arguments**: Uses the classic mode (`tag`, `timestamp`, `record`)
+- **5 arguments**: Uses the metadata-aware mode (`tag`, `timestamp`, `group`, `metadata`, `record`)
+
+This ensures backward compatibility with existing Lua scripts.
+
+### Multiple records with metadata
+
+When using the extended prototype, you can return multiple records with their respective metadata:
+
+```lua
+function cb_metadata(tag, ts, group, metadata, record)
+    -- first record with its metadata
+    m1 = {foo = "meta1"}
+    r1 = {msg = "first log", old_record = record}
+
+    -- second record with its metadata
+    m2 = {foo = "meta2"}
+    r2 = {msg = "second log", old_record = record}
+
+    return 1, ts, {m1, m2}, {r1, r2}
+end
+```
+
+> **Note:** The metadata and record arrays must have the same length.
+
+### OpenTelemetry example
+
+This example demonstrates processing OpenTelemetry logs with group metadata access:
+
+#### Configuration
+
+```yaml
+pipeline:
+  inputs:
+    - name: opentelemetry
+      port: 4318
+      processors:
+        logs:
+          - name: lua
+            call: cb_groups_and_metadata
+            code: |
+              function cb_groups_and_metadata(tag, timestamp, group, metadata, record)
+                -- copy the OTLP metadata 'service.name' to the record
+                if group['resource']['attributes']['service.name'] then
+                  record['service_name'] = group['resource']['attributes']['service.name']
+                end
+
+                -- change OTLP Log severity by modifying the record metadata
+                if metadata['otlp']['severity_number'] then
+                  if metadata['otlp']['severity_number'] == 9 then
+                    -- change severity 9 to 13
+                    metadata['otlp']['severity_number'] = 13
+                    metadata['otlp']['severity_text'] = 'WARN'
+                  end
+                end
+
+                return 1, timestamp, metadata, record
+              end
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+#### Input JSON
+
+```json
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "my-app" } },
+          { "key": "host.name", "value": { "stringValue": "localhost" } }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "example-logger",
+            "version": "1.0.0"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1717920000000000000",
+              "severityNumber": 9,
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "User logged in successfully"
+              },
+              "attributes": [
+                { "key": "user.id", "value": { "stringValue": "12345" } },
+                { "key": "env", "value": { "stringValue": "prod" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+> **Important:** Group metadata is read-only and should not be modified. If you don't need group or metadata support, you can continue using the 3-argument prototype.
+
 ## Features
 
 ### Inline configuration
@@ -128,30 +275,30 @@ The [Fluent Bit smoke tests](https://github.com/fluent/fluent-bit/tree/master/pa
 
 ```yaml
 service:
-    flush: 1
-    daemon: off
-    log_level: info
+  flush: 1
+  daemon: off
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: random
-          tag: test
-          samples: 10
+  inputs:
+    - name: random
+      tag: test
+      samples: 10
 
-    filters:
-        - name: lua
-          match: '*'
-          call: append_tag
-          code: |
-            function append_tag(tag, timestamp, record)
-                new_record = record
-                new_record["tag"] = tag
-                return 1, timestamp, new_record
-            end
+  filters:
+    - name: lua
+      match: '*'
+      call: append_tag
+      code:  |
+          function append_tag(tag, timestamp, record)
+             new_record = record
+             new_record["my_env"] = FLB_ENV
+             return 1, timestamp, new_record
+          end
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -211,14 +358,12 @@ The goal of this example is to extract the `sandboxbsh` name and add it to the r
 
 ```yaml
 pipeline:
-  
-  
-    filters:
-        - name: lua
-          alias: filter-iots-lua
-          match: iots_thread.*
-          script: filters.lua
-          call: set_landscape_deployment
+  filters:
+    - name: lua
+      alias: filter-iots-lua
+      match: iots_thread.*
+      script: filters.lua
+      call: set_landscape_deployment
 ```
 
 {% endtab %}
@@ -238,28 +383,28 @@ Call                set_landscape_deployment
 
 filters.lua:
 ```lua
-    -- Use a Lua function to create some additional entries based
-    -- on substrings from the kubernetes properties.
-    function set_landscape_deployment(tag, timestamp, record)
-        local landscape = os.getenv("KUBERNETES_SERVICE_HOST")
-        if landscape then
-            -- Strip the landscape name from this field, KUBERNETES_SERVICE_HOST
-            -- Should be of this format
-            -- api.sandboxbsh-a.project.domain.com
-            -- Take off the leading "api."
-            -- sandboxbsh-a.project.domain.com
-            --print("landscape1:" .. landscape)
-            landscape = landscape:gsub("^[^.]+.", "")
-            --print("landscape2:" .. landscape)
-            -- Take off everything including and after the - in the cluster name
-            -- sandboxbsh
-            landscape = landscape:gsub("-.*$", "")
-            -- print("landscape3:" .. landscape)
-            record["iot_landscape"] = landscape
-        end
-        -- 2 - replace existing record with this update
-        return 2, timestamp, record
+-- Use a Lua function to create some additional entries based
+-- on substrings from the kubernetes properties.
+function set_landscape_deployment(tag, timestamp, record)
+    local landscape = os.getenv("KUBERNETES_SERVICE_HOST")
+    if landscape then
+        -- Strip the landscape name from this field, KUBERNETES_SERVICE_HOST
+        -- Should be of this format
+        -- api.sandboxbsh-a.project.domain.com
+        -- Take off the leading "api."
+        -- sandboxbsh-a.project.domain.com
+        --print("landscape1:" .. landscape)
+        landscape = landscape:gsub("^[^.]+.", "")
+        --print("landscape2:" .. landscape)
+        -- Take off everything including and after the - in the cluster name
+        -- sandboxbsh
+        landscape = landscape:gsub("-.*$", "")
+        -- print("landscape3:" .. landscape)
+        record["iot_landscape"] = landscape
     end
+    -- 2 - replace existing record with this update
+    return 2, timestamp, record
+end
 ```
 
 ### Record split
@@ -287,18 +432,18 @@ end
 
 ```yaml
 pipeline:
-    inputs:
-        - name: stdin
-  
-    filters:
-        - name: lua
-          match: '*'
-          script: test.lua
-          call: cb_split
-  
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: stdin
+
+  filters:
+    - name: lua
+      match: '*'
+      script: test.lua
+      call: cb_split
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
@@ -373,23 +518,23 @@ Configuration to get Istio logs and apply response code filter to them.
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          path: /var/log/containers/*_istio-proxy-*.log
-          multiline.parser: 'docker, cri'
-          tag: istio.*
-          mem_buf_limit: 64MB
-          skip_long_lines: off
-  
-    filters:
-        - name: lua
-          match: istio.*
-          script: response_code_filter.lua
-          call: cb_response_code_filter
-  
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: tail
+      path: /var/log/containers/*_istio-proxy-*.log
+      multiline.parser: 'docker, cri'
+      tag: istio.*
+      mem_buf_limit: 64MB
+      skip_long_lines: off
+
+  filters:
+    - name: lua
+      match: istio.*
+      script: response_code_filter.lua
+      call: cb_response_code_filter
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -496,42 +641,42 @@ Use this configuration to obtain a JSON key with `datetime`, and then convert it
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
-          tag: event_category_a
+  inputs:
+    - name: dummy
+      dummy: '{"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}'
+      tag: event_category_a
 
-        - name: dummy
-          dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
-          tag: event_category_b
+    - name: dummy
+      dummy: '{"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}'
+      tag: event_category_b
 
-    filters:
-        - name: lua
-          match: '*'
-          code: |
-            function convert_to_utc(tag, timestamp, record)
-                local date_time = record["pub_date"]
-                local new_record = record
-                if date_time then
-                    if string.find(date_time, ",") then
-                        local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
-                        local date_part, zone_part = date_time:match(pattern)
-                        if date_part and zone_part then
-                            local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
-                            local handle = io.popen(command)
-                            local result = handle:read("*a")
-                            handle:close()
-                            new_record["pub_date"] = result:match("%S+")
-                        end
-                    end
-                end
-                return 1, timestamp, new_record
-            end
-          call: convert_to_utc
+  filters:
+    - name: lua
+      match: '*'
+      code: |
+          function convert_to_utc(tag, timestamp, record)
+              local date_time = record["pub_date"]
+              local new_record = record
+              if date_time then
+                  if string.find(date_time, ",") then
+                      local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+                      local date_part, zone_part = date_time:match(pattern)
+                      if date_part and zone_part then
+                          local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                          local handle = io.popen(command)
+                          local result = handle:read("*a")
+                          handle:close()
+                          new_record["pub_date"] = result:match("%S+")
+                      end
+                  end
+              end
+              return 1, timestamp, new_record
+           end
+      call: convert_to_utc
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
@@ -614,29 +759,29 @@ env:
   C: ccc
 
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: random
-          tag: test
-          samples: 10
+  inputs:
+    - name: random
+      tag: test
+      samples: 10
 
-    filters:
-        - name: lua
-          match: '*'
-          call: append_tag
-          code:  |
-              function append_tag(tag, timestamp, record)
-                 new_record = record
-                 new_record["my_env"] = FLB_ENV
-                 return 1, timestamp, new_record
-              end
+  filters:
+    - name: lua
+      match: '*'
+      call: append_tag
+      code:  |
+          function append_tag(tag, timestamp, record)
+             new_record = record
+             new_record["my_env"] = FLB_ENV
+             return 1, timestamp, new_record
+          end
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
