@@ -53,7 +53,36 @@ Fluent Bit can deliver records to the official service or an emulator.
 
 The following configuration example generates a random message with a custom tag:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"name": "Fluent Bit", "year": 2020}'
+          samples: 1
+          tag: var.log.containers.app-default-96cbdef2340.log      
+          
+    outputs:
+        - name: azure_blog
+          match: '*'
+          account_name: YOUR_ACCOUNT_NAME
+          shared_key: YOUR_SHARED_KEY
+          path: kubernetes
+          container_name: logs
+          auto_create_container: on
+          tls: on      
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush     1
     log_level info
@@ -75,6 +104,9 @@ The following configuration example generates a random message with a custom tag
     tls                   on
 ```
 
+{% endtab %}
+{% endtabs %}
+
 After you run the configuration file, you will be able to query the data using the Azure Storage Explorer. The example generates the following content in the explorer:
 
 ![Azure Blob](../../.gitbook/assets/azure_blob.png)
@@ -85,13 +117,13 @@ After you run the configuration file, you will be able to query the data using t
 
 1. Install Azurite using `npm`:
 
-   ```bash
+   ```shell
    npm install -g azurite
    ```
 
 1. Run the service:
 
-   ```bash
+   ```shell
    azurite
    ```
 
@@ -108,7 +140,38 @@ After you run the configuration file, you will be able to query the data using t
 
 [Azurite](https://github.com/Azure/Azurite) comes with a default `account_name` and `shared_key`. Instead of the defaults, be sure to use the specific values provided in the following example:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+    flush: 1
+    log_level: info
+    
+pipeline:
+    inputs:
+        - name: dummy
+          dummy: '{"name": "Fluent Bit", "year": 2020}'
+          samples: 1
+          tag: var.log.containers.app-default-96cbdef2340.log      
+          
+    outputs:
+        - name: azure_blog
+          match: '*'
+          account_name: devstoreaccount1
+          shared_key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz
+          path: kubernetes
+          container_name: logs
+          auto_create_container: on
+          tls: off
+          emulator_mode: on
+          endpoint: http://127.0.0.1:10000
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush     1
     log_level info
@@ -123,7 +186,7 @@ After you run the configuration file, you will be able to query the data using t
     name                  azure_blob
     match                 *
     account_name          devstoreaccount1
-    shared_key            Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+    shared_key            Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz
     path                  kubernetes
     container_name        logs
     auto_create_container on
@@ -132,10 +195,14 @@ After you run the configuration file, you will be able to query the data using t
     endpoint              http://127.0.0.1:10000
 ```
 
+{% endtab %}
+{% endtabs %}
+
 After running the Fluent Bit configuration, you will see the data flowing into Azurite:
 
-```text
+```shell
 $ azurite
+
 Azurite Blob service is starting at http://127.0.0.1:10000
 Azurite Blob service is successfully listening at http://127.0.0.1:10000
 Azurite Queue service is starting at http://127.0.0.1:10001
