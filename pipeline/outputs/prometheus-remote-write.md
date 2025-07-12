@@ -26,6 +26,7 @@ Important Note: The prometheus exporter only works with metric plugins, such as 
 | log_response_payload | Log the response payload within the Fluent Bit log                                                                                                                                                                                                                     | false     |
 | add_label            | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields                                                                                                                                     |           |
 | workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
+| compression          | Payload compression algorithm. Supported options are `snappy`, `gzip` and `zstd`. | `snappy` |
 
 ## Getting Started
 
