@@ -39,18 +39,17 @@ Get started quickly with this configuration file:
 ```yaml
 pipeline:
           
-    outputs:
-        - name: datadog
-          match: '*'
-          host: http-intake.logs.datadoghq.com
-          tls: on
-          compress: gzip
-          apikey: <my-datadog-api-key>
-          dd_service: <my-app-service>
-          dd_source: <my-app-source>
-          dd_tags: team:logs,foo:bar
-          dd_hostname: myhost
-      
+  outputs:
+    - name: datadog
+      match: '*'
+      host: http-intake.logs.datadoghq.com
+      tls: on
+      compress: gzip
+      apikey: <my-datadog-api-key>
+      dd_service: <my-app-service>
+      dd_source: <my-app-source>
+      dd_tags: team:logs,foo:bar
+      dd_hostname: myhost  
 ```
 
 {% endtab %}
@@ -58,16 +57,16 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name        datadog
-    Match       *
-    Host        http-intake.logs.datadoghq.com
-    TLS         on
-    compress    gzip
-    apikey      <my-datadog-api-key>
-    dd_service  <my-app-service>
-    dd_source   <my-app-source>
-    dd_tags     team:logs,foo:bar
-    dd_hostname myhost
+  Name        datadog
+  Match       *
+  Host        http-intake.logs.datadoghq.com
+  TLS         on
+  compress    gzip
+  apikey      <my-datadog-api-key>
+  dd_service  <my-app-service>
+  dd_source   <my-app-source>
+  dd_tags     team:logs,foo:bar
+  dd_hostname myhost
 ```
 
 {% endtab %}
