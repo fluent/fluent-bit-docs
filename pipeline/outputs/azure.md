@@ -41,14 +41,14 @@ In your main configuration file append the following _Input_ & _Output_ sections
 
 ```yaml
 pipeline:
-    inputs:
-        - name: cpu
-          
-    outputs:
-        - name: azure
-          match: '*'
-          customer_id: abc
-          shared_key: def      
+  inputs:
+    - name: cpu
+      
+  outputs:
+    - name: azure
+      match: '*'
+      customer_id: abc
+      shared_key: def      
 ```
 
 {% endtab %}
@@ -56,13 +56,13 @@ pipeline:
 
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Customer_ID abc
+  Shared_Key  def
 ```
 
 {% endtab %}
@@ -75,15 +75,15 @@ Another example using the `Log_Type_Key` with [record-accessor](https://docs.flu
 
 ```yaml
 pipeline:
-    inputs:
-        - name: cpu
-          
-    outputs:
-        - name: azure
-          match: '*'
-          log_type_key: $kubernetes['labels']['app']
-          customer_id: abc
-          shared_key: def      
+  inputs:
+    - name: cpu
+      
+  outputs:
+    - name: azure
+      match: '*'
+      log_type_key: $kubernetes['labels']['app']
+      customer_id: abc
+      shared_key: def      
 ```
 
 {% endtab %}
@@ -91,14 +91,14 @@ pipeline:
 
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Log_Type_Key $kubernetes['labels']['app']
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Log_Type_Key $kubernetes['labels']['app']
+  Customer_ID abc
+  Shared_Key  def
 ```
 
 {% endtab %}
