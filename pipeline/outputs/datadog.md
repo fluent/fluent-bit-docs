@@ -33,19 +33,44 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 
 Get started quickly with this configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+          
+  outputs:
+    - name: datadog
+      match: '*'
+      host: http-intake.logs.datadoghq.com
+      tls: on
+      compress: gzip
+      apikey: <my-datadog-api-key>
+      dd_service: <my-app-service>
+      dd_source: <my-app-source>
+      dd_tags: team:logs,foo:bar
+      dd_hostname: myhost  
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [OUTPUT]
-    Name        datadog
-    Match       *
-    Host        http-intake.logs.datadoghq.com
-    TLS         on
-    compress    gzip
-    apikey      <my-datadog-api-key>
-    dd_service  <my-app-service>
-    dd_source   <my-app-source>
-    dd_tags     team:logs,foo:bar
-    dd_hostname myhost
+  Name        datadog
+  Match       *
+  Host        http-intake.logs.datadoghq.com
+  TLS         on
+  compress    gzip
+  apikey      <my-datadog-api-key>
+  dd_service  <my-app-service>
+  dd_source   <my-app-source>
+  dd_tags     team:logs,foo:bar
+  dd_hostname myhost
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Troubleshooting
 
