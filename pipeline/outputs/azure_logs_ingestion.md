@@ -58,38 +58,38 @@ Use this configuration to quickly get started:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          path: /path/to/your/sample.log
-          tag: sample
-          key: RawData      
-        
-        # Or use other plugins  
-        #- name: cpu
-        #  tag: sample
+  inputs:
+    - name: tail
+      path: /path/to/your/sample.log
+      tag: sample
+      key: RawData      
+    
+    # Or use other plugins  
+    #- name: cpu
+    #  tag: sample
 
-    filters:
-        - name: modify
-          match: sample
-          # Add a json key named "Application":"fb_log"
-          add: Application fb_log
-          
-    outputs:
-        # Enable this section to see your json-log format
-        #- name: stdout
-        #  match: '*'
-        
-        - name: azure_logs_ingestion
-          match: sample
-          client_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-          client_secret: some.secret.xxxzzz
-          tenant_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-          dce_url: https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
-          dcr_id: dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-          table_name: ladcr_CL
-          time_generated: true
-          time_key: Time
-          compress: true
+  filters:
+    - name: modify
+      match: sample
+      # Add a json key named "Application":"fb_log"
+      add: Application fb_log
+      
+  outputs:
+    # Enable this section to see your json-log format
+    #- name: stdout
+    #  match: '*'
+    
+    - name: azure_logs_ingestion
+      match: sample
+      client_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+      client_secret: some.secret.xxxzzz
+      tenant_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+      dce_url: https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+      dcr_id: dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      table_name: ladcr_CL
+      time_generated: true
+      time_key: Time
+      compress: true
 ```
 
 {% endtab %}
@@ -97,38 +97,39 @@ pipeline:
 
 ```text
 [INPUT]
-    Name    tail
-    Path    /path/to/your/sample.log
-    Tag     sample
-    Key     RawData
+  Name    tail
+  Path    /path/to/your/sample.log
+  Tag     sample
+  Key     RawData
+
 # Or use other plugins
-# [INPUT]
-#     Name    cpu
-#     Tag     sample
+#[INPUT]
+#  Name    cpu
+#  Tag     sample
 
 [FILTER]
-    Name modify
-    Match sample
-    # Add a json key named "Application":"fb_log"
-    Add Application fb_log
+  Name modify
+  Match sample
+  # Add a json key named "Application":"fb_log"
+  Add Application fb_log
 
 # Enable this section to see your json-log format
 #[OUTPUT]
-#    Name stdout
-#    Match *
+#  Name stdout
+#  Match *
 
 [OUTPUT]
-    Name            azure_logs_ingestion
-    Match           sample
-    client_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-    client_secret   some.secret.xxxzzz
-    tenant_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-    dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
-    dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    table_name      ladcr_CL
-    time_generated  true
-    time_key        Time
-    Compress        true
+  Name            azure_logs_ingestion
+  Match           sample
+  client_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+  client_secret   some.secret.xxxzzz
+  tenant_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+  dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+  dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  table_name      ladcr_CL
+  time_generated  true
+  time_key        Time
+  Compress        true
 ```
 
 {% endtab %}
