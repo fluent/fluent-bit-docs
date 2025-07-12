@@ -59,13 +59,13 @@ In your main configuration file append the following:
 ```yaml
 pipeline:
     
-    outputs:
-        - name: cloudwatch_logs
-          match: '*'
-          region: us-east-1
-          log_group_name: fluent-bit-cloudwatch
-          log_stream_prefix: from-fluent-bit-
-          auto_create_group: on
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-east-1
+      log_group_name: fluent-bit-cloudwatch
+      log_stream_prefix: from-fluent-bit-
+      auto_create_group: on
 ```
 
 {% endtab %}
@@ -73,12 +73,12 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name cloudwatch_logs
-    Match   *
-    region us-east-1
-    log_group_name fluent-bit-cloudwatch
-    log_stream_prefix from-fluent-bit-
-    auto_create_group On
+  Name cloudwatch_logs
+  Match   *
+  region us-east-1
+  log_group_name fluent-bit-cloudwatch
+  log_stream_prefix from-fluent-bit-
+  auto_create_group On
 ```
 
 {% endtab %}
@@ -94,15 +94,15 @@ For an instance of `Localstack` running at `http://localhost:4566`, the followin
 ```yaml
 pipeline:
     
-    outputs:
-        - name: cloudwatch_logs
-          match: '*'
-          region: us-east-1
-          log_group_name: fluent-bit-cloudwatch
-          log_stream_prefix: from-fluent-bit-
-          auto_create_group: on
-          endpoint: localhost
-          port: 4566
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-east-1
+      log_group_name: fluent-bit-cloudwatch
+      log_stream_prefix: from-fluent-bit-
+      auto_create_group: on
+      endpoint: localhost
+      port: 4566
 ```
 
 {% endtab %}
@@ -110,14 +110,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name cloudwatch_logs
-    Match   *
-    region us-east-1
-    log_group_name fluent-bit-cloudwatch
-    log_stream_prefix from-fluent-bit-
-    auto_create_group On
-    endpoint localhost
-    port 4566
+  Name cloudwatch_logs
+  Match   *
+  region us-east-1
+  log_group_name fluent-bit-cloudwatch
+  log_stream_prefix from-fluent-bit-
+  auto_create_group On
+  endpoint localhost
+  port 4566
 ```
 
 {% endtab %}
@@ -131,16 +131,16 @@ The following AWS IAM permissions are required to use this plugin:
 
 ```json
 {
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Effect": "Allow",
-		"Action": [
-			"logs:CreateLogStream",
-			"logs:CreateLogGroup",
-			"logs:PutLogEvents"
-		],
-		"Resource": "*"
-	}]
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+      "logs:CreateLogStream",
+      "logs:CreateLogGroup",
+      "logs:PutLogEvents"
+    ],
+    "Resource": "*"
+  }]
 }
 ```
 
@@ -154,20 +154,20 @@ Recall that the kubernetes filter can add metadata which will look like the foll
 
 ```text
 kubernetes: {
-    annotations: {
-        "kubernetes.io/psp": "eks.privileged"
-    },
-    container_hash: "<some hash>",
-    container_name: "myapp",
-    docker_id: "<some id>",
-    host: "ip-10-1-128-166.us-east-2.compute.internal",
-    labels: {
-        app: "myapp",
-        "pod-template-hash": "<some hash>"
-    },
-    namespace_name: "my-namespace",
-    pod_id: "198f7dd2-2270-11ea-be47-0a5d932f5920",
-    pod_name: "myapp-5468c5d4d7-n2swr"
+  annotations: {
+    "kubernetes.io/psp": "eks.privileged"
+  },
+  container_hash: "<some hash>",
+  container_name: "myapp",
+  docker_id: "<some id>",
+  host: "ip-10-1-128-166.us-east-2.compute.internal",
+  labels: {
+    app: "myapp",
+    "pod-template-hash": "<some hash>"
+  },
+  namespace_name: "my-namespace",
+  pod_id: "198f7dd2-2270-11ea-be47-0a5d932f5920",
+  pod_name: "myapp-5468c5d4d7-n2swr"
 }
 ```
 
@@ -181,15 +181,15 @@ Here is our configuration:
 ```yaml
 pipeline:
     
-    outputs:
-        - name: cloudwatch_logs
-          match: '*'
-          region: us-east-1
-          log_group_name: fallback-group
-          log_stream_prefix: fallback-stream
-          auto_create_group: on
-          log_group_template: application-logs-$kubernetes['host'].$kubernetes['namespace_name']
-          log_stream_template: $kubernetes['pod_name'].$kubernetes['container_name']
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-east-1
+      log_group_name: fallback-group
+      log_stream_prefix: fallback-stream
+      auto_create_group: on
+      log_group_template: application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+      log_stream_template: $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
 {% endtab %}
@@ -197,14 +197,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name cloudwatch_logs
-    Match   *
-    region us-east-1
-    log_group_name fallback-group
-    log_stream_prefix fallback-stream
-    auto_create_group On
-    log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
-    log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
+  Name cloudwatch_logs
+  Match   *
+  region us-east-1
+  log_group_name fallback-group
+  log_stream_prefix fallback-stream
+  auto_create_group On
+  log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+  log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
 {% endtab %}
@@ -254,27 +254,27 @@ For using the `mem` input plugin and sending memory usage metrics to CloudWatch,
 
 ```yaml
 service:
-    log_level: info
+  log_level: info
     
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem
+  inputs:
+    - name: mem
+      tag: mem
           
-    filters:
-        - name: aws
-          match: '*'
+  filters:
+    - name: aws
+      match: '*'
           
-    outputs:
-        - name: cloudwatch_logs
-          match: '*'
-          region: us-west-2
-          log_stream_name: fluent-bit-cloudwatch
-          log_group_name: fluent-bit-cloudwatch
-          log_format: json/emf
-          metric_namespace: fluent-bit-metrics
-          metric_dimensions: ec2_instance_id
-          auto_create_group: true
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-west-2
+      log_stream_name: fluent-bit-cloudwatch
+      log_group_name: fluent-bit-cloudwatch
+      log_format: json/emf
+      metric_namespace: fluent-bit-metrics
+      metric_dimensions: ec2_instance_id
+      auto_create_group: true
 ```
 
 {% endtab %}
@@ -282,26 +282,26 @@ pipeline:
 
 ```text
 [SERVICE]
-    Log_Level info
+  Log_Level info
 
 [INPUT]
-    Name mem
-    Tag mem
+  Name mem
+  Tag mem
     
 [FILTER]
-    Name aws
-    Match *
+  Name aws
+  Match *
 
 [OUTPUT]
-    Name cloudwatch_logs
-    Match *
-    region us-west-2
-    log_stream_name fluent-bit-cloudwatch
-    log_group_name fluent-bit-cloudwatch
-    log_format json/emf
-    metric_namespace fluent-bit-metrics
-    metric_dimensions ec2_instance_id
-    auto_create_group true
+  Name cloudwatch_logs
+  Match *
+  region us-west-2
+  log_stream_name fluent-bit-cloudwatch
+  log_group_name fluent-bit-cloudwatch
+  log_format json/emf
+  metric_namespace fluent-bit-metrics
+  metric_dimensions ec2_instance_id
+  auto_create_group true
 ```
 
 {% endtab %}
@@ -314,27 +314,27 @@ The following config will set two dimensions to all of our metrics- `ec2_instanc
 
 ```yaml
 service:
-    log_level: info
+  log_level: info
     
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem
+  inputs:
+    - name: mem
+      tag: mem
           
-    filters:
-        - name: aws
-          match: '*'
+  filters:
+    - name: aws
+      match: '*'
           
-    outputs:
-        - name: cloudwatch_logs
-          match: '*'
-          region: us-west-2
-          log_stream_name: fluent-bit-cloudwatch
-          log_group_name: fluent-bit-cloudwatch
-          log_format: json/emf
-          metric_namespace: fluent-bit-metrics
-          metric_dimensions: ec2_instance_id,az
-          auto_create_group: true
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-west-2
+      log_stream_name: fluent-bit-cloudwatch
+      log_group_name: fluent-bit-cloudwatch
+      log_format: json/emf
+      metric_namespace: fluent-bit-metrics
+      metric_dimensions: ec2_instance_id,az
+      auto_create_group: true
 ```
 
 {% endtab %}
@@ -342,26 +342,26 @@ pipeline:
 
 ```text
 [SERVICE]
-    Log_Level info
+  Log_Level info
 
 [INPUT]
-    Name mem
-    Tag mem
+  Name mem
+  Tag mem
     
 [FILTER]
-    Name aws
-    Match *
+  Name aws
+  Match *
 
 [OUTPUT]
-    Name cloudwatch_logs
-    Match *
-    region us-west-2
-    log_stream_name fluent-bit-cloudwatch
-    log_group_name fluent-bit-cloudwatch
-    log_format json/emf
-    metric_namespace fluent-bit-metrics
-    metric_dimensions ec2_instance_id,az
-    auto_create_group true
+  Name cloudwatch_logs
+  Match *
+  region us-west-2
+  log_stream_name fluent-bit-cloudwatch
+  log_group_name fluent-bit-cloudwatch
+  log_format json/emf
+  metric_namespace fluent-bit-metrics
+  metric_dimensions ec2_instance_id,az
+  auto_create_group true
 ```
 
 {% endtab %}
