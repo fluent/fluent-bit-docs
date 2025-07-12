@@ -40,21 +40,21 @@ To get started with sending logs to Dynatrace:
       ```yaml
       pipeline:
              
-          outputs:
-              - name: http
-                match: '*'
-                header:
-                    - 'Content-Type application/json; charset=utf-8'
-                    - 'Authorization Api-Token {your-API-token-here}'
-                allow_duplicated_headers: false
-                host: {your-environment-id}.live.dynatrace.com
-                port: 443
-                uri: /api/v2/logs/ingest
-                format: json
-                json_date_format: iso8601
-                json_date_key: timestamp
-                tls: on
-                tls.verify: on      
+        outputs:
+          - name: http
+            match: '*'
+            header:
+              - 'Content-Type application/json; charset=utf-8'
+              - 'Authorization Api-Token {your-API-token-here}'
+            allow_duplicated_headers: false
+            host: {your-environment-id}.live.dynatrace.com
+            port: 443
+            uri: /api/v2/logs/ingest
+            format: json
+            json_date_format: iso8601
+            json_date_key: timestamp
+            tls: on
+            tls.verify: on      
       ```
    
       {% endtab %}
@@ -62,19 +62,19 @@ To get started with sending logs to Dynatrace:
    
       ```text
       [OUTPUT]
-          name         http
-          match        *
-          header       Content-Type application/json; charset=utf-8
-          header       Authorization Api-Token {your-API-token-here}
-          allow_duplicated_headers false
-          host         {your-environment-id}.live.dynatrace.com
-          Port         443
-          URI          /api/v2/logs/ingest
-          Format       json
-          json_date_format iso8601
-          json_date_key timestamp
-          tls          On
-          tls.verify   On
+        name         http
+        match        *
+        header       Content-Type application/json; charset=utf-8
+        header       Authorization Api-Token {your-API-token-here}
+        allow_duplicated_headers false
+        host         {your-environment-id}.live.dynatrace.com
+        Port         443
+        URI          /api/v2/logs/ingest
+        Format       json
+        json_date_format iso8601
+        json_date_key timestamp
+        tls          On
+        tls.verify   On
       ```
    
       {% endtab %}
