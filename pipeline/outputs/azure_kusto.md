@@ -89,41 +89,41 @@ Get started quickly with this configuration file:
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
     
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"name": "Fluent Bit", "year": 2020}'
-          samples: 1
-          tag: var.log.containers.app-default-96cbdef2340.log      
-          
-    outputs:
-        - name: azure_kusto
-          match: '*'
-          tenant_id: <app_tenant_id>
-          client_id: <app_client_id>
-          client_secret: <app_secret>
-          ingestion_endpoint: https://ingest-<cluster>.<region>.kusto.windows.net
-          database_name: <database_name>
-          table_name: <table_name>
-          ingestion_mapping_reference: <mapping_name>
-          ingestion_endpoint_connect_timeout: <ingestion_endpoint_connect_timeout>
-          compression_enabled: <compression_enabled>
-          ingestion_resources_refresh_interval: <ingestion_resources_refresh_interval>
-          buffering_enabled: on
-          upload_timeout: 2m
-          upload_file_size: 125M
-          azure_kusto_buffer_key: kusto1
-          buffer_file_delete_early: off
-          unify_tag: on
-          buffer_dir: /var/log/
-          store_dir_limit_size: 16GB
-          blob_uri_length: 128
-          scheduler_max_retries: 3
-          delete_on_max_upload_error: off
-          io_timeout: 60s 
+  inputs:
+    - name: dummy
+      dummy: '{"name": "Fluent Bit", "year": 2020}'
+      samples: 1
+      tag: var.log.containers.app-default-96cbdef2340.log      
+      
+  outputs:
+    - name: azure_kusto
+      match: '*'
+      tenant_id: <app_tenant_id>
+      client_id: <app_client_id>
+      client_secret: <app_secret>
+      ingestion_endpoint: https://ingest-<cluster>.<region>.kusto.windows.net
+      database_name: <database_name>
+      table_name: <table_name>
+      ingestion_mapping_reference: <mapping_name>
+      ingestion_endpoint_connect_timeout: <ingestion_endpoint_connect_timeout>
+      compression_enabled: <compression_enabled>
+      ingestion_resources_refresh_interval: <ingestion_resources_refresh_interval>
+      buffering_enabled: on
+      upload_timeout: 2m
+      upload_file_size: 125M
+      azure_kusto_buffer_key: kusto1
+      buffer_file_delete_early: off
+      unify_tag: on
+      buffer_dir: /var/log/
+      store_dir_limit_size: 16GB
+      blob_uri_length: 128
+      scheduler_max_retries: 3
+      delete_on_max_upload_error: off
+      io_timeout: 60s 
 ```
 
 {% endtab %}
@@ -131,20 +131,20 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name azure_kusto
-    Match *
-    Tenant_Id <app_tenant_id>
-    Client_Id <app_client_id>
-    Client_Secret <app_secret>
-    Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
-    Database_Name <database_name>
-    Table_Name <table_name>
-    Ingestion_Mapping_Reference <mapping_name>
-    ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
-    compression_enabled <compression_enabled>
-    ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
-    buffering_enabled On
-    upload_timeout 2m
+  Name azure_kusto
+  Match *
+  Tenant_Id <app_tenant_id>
+  Client_Id <app_client_id>
+  Client_Secret <app_secret>
+  Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+  Database_Name <database_name>
+  Table_Name <table_name>
+  Ingestion_Mapping_Reference <mapping_name>
+  ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
+  compression_enabled <compression_enabled>
+  ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
+  buffering_enabled On
+  upload_timeout 2m
     upload_file_size 125M
     azure_kusto_buffer_key kusto1
     buffer_file_delete_early Off
