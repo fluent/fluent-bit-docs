@@ -35,29 +35,29 @@ To get started with sending logs to Dash0:
 ```yaml
 pipeline:
     
-    outputs:
-        - name: opentelemetry      
-          match: '*'
-          host: ingress.eu-west-1.aws.dash0.com
-          port: 443
-          header: Authorization Bearer {your-Auth-token-here}
-          metrics_uri: /v1/metrics
-          logs_uri: /v1/logs
-          traces_uri: /v1/traces
+  outputs:
+    - name: opentelemetry      
+      match: '*'
+      host: ingress.eu-west-1.aws.dash0.com
+      port: 443
+      header: Authorization Bearer {your-Auth-token-here}
+      metrics_uri: /v1/metrics
+      logs_uri: /v1/logs
+      traces_uri: /v1/traces
 ```
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-   Name         opentelemetry
-   Match        *
-   Host         ingress.eu-west-1.aws.dash0.com
-   Port         443
-   Header       Authorization Bearer {your-Auth-token-here}
-   Metrics_uri  /v1/metrics
-   Logs_uri     /v1/logs
-   Traces_uri   /v1/traces
+  Name         opentelemetry
+  Match        *
+  Host         ingress.eu-west-1.aws.dash0.com
+  Port         443
+  Header       Authorization Bearer {your-Auth-token-here}
+  Metrics_uri  /v1/metrics
+  Logs_uri     /v1/logs
+  Traces_uri   /v1/traces
 ```
 
 {% endtab %}
