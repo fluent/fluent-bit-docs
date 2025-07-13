@@ -67,14 +67,36 @@ See Google's [official documentation](https://cloud.google.com/bigquery/docs/ref
 
 If you are using a _Google Cloud Credentials File_, the following configuration is enough to get you started:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+          
+  outputs:
+    - name: bigquery
+      match: '*'
+      dataset_id: my_dataset
+      table_id: dummy_table
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name  dummy
-    Tag   dummy
+  Name dummy
+  Tag  dummy
 
 [OUTPUT]
-    Name       bigquery
-    Match      *
-    dataset_id my_dataset
-    table_id   dummy_table
+  Name         bigquery
+  Match        *
+  dataset_id   my_dataset
+  table_id     dummy_table
 ```
+
+{% endtab %}
+{% endtabs %}
