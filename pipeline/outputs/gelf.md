@@ -46,7 +46,54 @@ For more details about the properties available and general configuration, see [
 
 If you're using Fluent Bit for shipping Kubernetes logs, you can use something like this as your configuration file:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+parsers:
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: off
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: kube.*
+      path: /var/log/containers/*.log
+      parser: docker
+      db: /var/log/flb_kube.db
+      mem_buf_limit: 5MB
+      refresh_interval: 10
+  
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      merge_log_key: log
+      merge_log: on
+      keep_log: off
+      annotations: off
+      labels: off
+      
+    - name: nest
+      match: '*'
+      operation: lift
+      nested_under: log
+      
+  outputs:
+    - name: gelf
+      match: 'kube.*'
+      host: <your-graylog-server>
+      port: 12201
+      mode: tcp
+      gelf_short_message_key: data
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name                    tail
     Tag                     kube.*
@@ -87,16 +134,23 @@ If you're using Fluent Bit for shipping Kubernetes logs, you can use something l
     Time_Keep               Off
 ```
 
+{% endtab %}
+{% endtabs %}
+
 By default, GELF tcp uses port 12201 and Docker places your logs in `/var/log/containers` directory. The logs are placed in value of the `log` key. For example, this is a log saved by Docker:
 
-```javascript
+```text
+...
 {"log":"{\"data\": \"This is an example.\"}","stream":"stderr","time":"2019-07-21T12:45:11.273315023Z"}
+...
 ```
 
 If you use [Tail Input](../inputs/tail.md) and use a Parser like the `docker` parser shown above, it decodes your message and extracts `data` (and any other present) field. This is how this log in [stdout](standard-output.md) looks like after decoding:
 
-```
+```text
+...
 [0] kube.log: [1565770310.000198491, {"log"=>{"data"=>"This is an example."}, "stream"=>"stderr", "time"=>"2019-07-21T12:45:11.273315023Z"}]
+...
 ```
 
 Now, this is what happens to this log:
@@ -110,6 +164,8 @@ Now, this is what happens to this log:
 
 Finally, this is what our Graylog server input sees:
 
-```javascript
+```text
+...
 {"version":"1.1", "short_message":"This is an example.", "host": "<Your Node Name>", "_stream":"stderr", "timestamp":1565770310.000199}
+...
 ```
