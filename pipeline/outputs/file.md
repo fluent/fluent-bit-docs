@@ -121,7 +121,7 @@ fluent-bit -i cpu -o file -p path=output.txt
 
 ### Configuration File
 
-In your main configuration file append the following Input & Output sections:
+In your main configuration file append the following:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
