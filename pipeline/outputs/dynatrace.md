@@ -32,23 +32,53 @@ To get started with sending logs to Dynatrace:
    token with the `logs.ingest` (Ingest Logs) scope.
 1. Determine your Dynatrace
    [environment ID](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id).
-1. In your main Fluent Bit configuration file, append the following `Output` section:
+   1. In your main Fluent Bit configuration file, append the following `Output` section:
 
-   ```text
-   [OUTPUT]
-       name         http
-       match        *
-       header       Content-Type application/json; charset=utf-8
-       header       Authorization Api-Token {your-API-token-here}
-       allow_duplicated_headers false
-       host         {your-environment-id}.live.dynatrace.com
-       Port         443
-       URI          /api/v2/logs/ingest
-       Format       json
-       json_date_format iso8601
-       json_date_key timestamp
-       tls          On
-       tls.verify   On
+      {% tabs %}
+      {% tab title="fluent-bit.yaml" %}
+
+      ```yaml
+      pipeline:
+             
+        outputs:
+          - name: http
+            match: '*'
+            header:
+              - 'Content-Type application/json; charset=utf-8'
+              - 'Authorization Api-Token {your-API-token-here}'
+            allow_duplicated_headers: false
+            host: {your-environment-id}.live.dynatrace.com
+            port: 443
+            uri: /api/v2/logs/ingest
+            format: json
+            json_date_format: iso8601
+            json_date_key: timestamp
+            tls: on
+            tls.verify: on      
+      ```
+   
+      {% endtab %}
+      {% tab title="fluent-bit.conf" %}
+   
+      ```text
+      [OUTPUT]
+        name         http
+        match        *
+        header       Content-Type application/json; charset=utf-8
+        header       Authorization Api-Token {your-API-token-here}
+        allow_duplicated_headers false
+        host         {your-environment-id}.live.dynatrace.com
+        Port         443
+        URI          /api/v2/logs/ingest
+        Format       json
+        json_date_format iso8601
+        json_date_key timestamp
+        tls          On
+        tls.verify   On
+      ```
+   
+      {% endtab %}
+      {% endtabs %}
 
 ## References
 
