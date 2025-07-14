@@ -158,8 +158,8 @@ pipeline:
   outputs:
     - name: azure_blog
       match: "*"
-      account_name: devstoreaccount1
-      shared_key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz
+      account_name: INSERT_ACCOUNT_NAME
+      shared_key: INSERT_SHARED_KEY
       path: kubernetes
       container_name: logs
       auto_create_container: on
@@ -185,8 +185,8 @@ pipeline:
 [OUTPUT]
   name                  azure_blob
   match                 *
-  account_name          devstoreaccount1
-  shared_key            Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz
+  account_name          INSERT_ACCOUNT_NAME
+  shared_key            INSERT_SHARED_KEY
   path                  kubernetes
   container_name        logs
   auto_create_container on
