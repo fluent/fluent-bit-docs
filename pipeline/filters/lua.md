@@ -99,7 +99,7 @@ function cb_print(tag, timestamp, record)
 end
 ```
 
-#### Function arguments
+### Function arguments
 
 | Name | Description |
 | ---- | ----------- |
@@ -107,7 +107,7 @@ end
 | `timestamp` | Unix timestamp with nanoseconds associated with the incoming record. The original format is a double (`seconds.nanoseconds`). |
 | `record` | Lua table with the record content. |
 
-#### Return values
+### Return values
 
 Each callback must return three values:
 
@@ -117,13 +117,13 @@ Each callback must return three values:
 | `timestamp` | double | If `code` equals `1`, the original record timestamp will be replaced with this new value. |
 | `record` | table | If `code` equals `1`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
 
-## Lua Extended callback with Groups and Metadata support
+## Lua extended callback with groups and metadata support
 
 {% hint style="info" %}
-This feature is available in Fluent Bit version 4.0.4 and later.
+This feature requires Fluent Bit version 4.0.4 or later.
 {% endhint %}
 
-For more advanced use cases, especially when working with structured formats like OpenTelemetry Logs, Fluent Bit supports an extended callback prototype that provides access to group metadata and record metadata.
+For more advanced use cases, especially when working with structured formats like OpenTelemetry logs, Fluent Bit supports an extended callback prototype that provides access to group metadata and record metadata.
 
 ### Extended function signature
 
@@ -140,8 +140,8 @@ end
 | ---- | ----------- |
 | `tag` | Name of the tag associated with the incoming record. |
 | `timestamp` | Unix timestamp with nanoseconds associated with the incoming record. |
-| `group` | A read-only table containing group-level metadata (e.g., OpenTelemetry resource or scope info). This will be an empty table if the log is not part of a group. |
-| `metadata` | A table representing the record-specific metadata. You may modify this if needed. |
+| `group` | A read-only table containing group-level metadata (for example, OpenTelemetry resource or scope info). This will be an empty table if the log is not part of a group. |
+| `metadata` | A table representing the record-specific metadata. You can modify this if needed. |
 | `record` | Lua table with the record content. |
 
 #### Extended return values
@@ -159,8 +159,8 @@ Each extended callback must return four values:
 
 At load time, the Lua filter automatically detects which callback prototype to use based on the number of parameters:
 
-- **3 arguments**: Uses the classic mode (`tag`, `timestamp`, `record`)
-- **5 arguments**: Uses the metadata-aware mode (`tag`, `timestamp`, `group`, `metadata`, `record`)
+- **Three arguments**: Uses the classic mode (`tag`, `timestamp`, `record`)
+- **Five arguments**: Uses the metadata-aware mode (`tag`, `timestamp`, `group`, `metadata`, `record`)
 
 This ensures backward compatibility with existing Lua scripts.
 
@@ -182,7 +182,11 @@ function cb_metadata(tag, ts, group, metadata, record)
 end
 ```
 
-> **Note:** The metadata and record arrays must have the same length.
+{% hint style="info" %}
+
+The metadata and record arrays must have the same length.
+
+{% endhint %}
 
 ### OpenTelemetry example
 
@@ -262,7 +266,11 @@ pipeline:
 }
 ```
 
-> **Important:** Group metadata is read-only and should not be modified. If you don't need group or metadata support, you can continue using the 3-argument prototype.
+{% hint style="info" %}
+
+Group metadata is read-only and should not be modified. If you don't need group or metadata support, you can continue using the three-argument prototype.
+
+{% endhint %}
 
 ## Features
 
