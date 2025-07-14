@@ -4,8 +4,6 @@ description: 'Send logs, metrics to Azure Log Analytics'
 
 # Azure Log Analytics
 
-![](../../.gitbook/assets/image%20%287%29.png)
-
 Azure output plugin allows to ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
 
 To get more details about how to setup Azure Log Analytics, please refer to the following documentation: [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/)
@@ -30,7 +28,7 @@ In order to insert records into an Azure Log Analytics instance, you can run the
 
 The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
-```text
+```shell
 fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 ```
 
@@ -38,27 +36,70 @@ fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 
 In your main configuration file append the following _Input_ & _Output_ sections:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      
+  outputs:
+    - name: azure
+      match: '*'
+      customer_id: abc
+      shared_key: def      
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Customer_ID abc
+  Shared_Key  def
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Another example using the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor), which will read the table name (or event type) dynamically from kubernetes label `app`, instead of `Log_Type`:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      
+  outputs:
+    - name: azure
+      match: '*'
+      log_type_key: $kubernetes['labels']['app']
+      customer_id: abc
+      shared_key: def      
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Log_Type_Key $kubernetes['labels']['app']
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Log_Type_Key $kubernetes['labels']['app']
+  Customer_ID abc
+  Shared_Key  def
 ```
+
+{% endtab %}
+{% endtabs %}
