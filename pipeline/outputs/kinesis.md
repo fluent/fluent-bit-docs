@@ -52,11 +52,11 @@ In your main configuration file append the following:
 ```yaml
 pipeline:
           
-    outputs:
-        - name: kinesis_steams
-          match: '*'
-          region: us-east-1
-          stream: my-stream
+  outputs:
+    - name: kinesis_steams
+      match: '*'
+      region: us-east-1
+      stream: my-stream
 ```
 
 {% endtab %}
@@ -64,10 +64,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name  kinesis_streams
-    Match *
-    region us-east-1
-    stream my-stream
+  Name  kinesis_streams
+  Match *
+  region us-east-1
+  stream my-stream
 ```
 
 {% endtab %}
@@ -78,15 +78,15 @@ pipeline:
 The following AWS IAM permissions are required to use this plugin:
 
 ```json
-{
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Effect": "Allow",
-		"Action": [
-			"kinesis:PutRecords"
-		],
-		"Resource": "*"
-	}]
+{	  
+  "Version": "2012-10-17",	  
+  "Statement": [{	    
+    "Effect": "Allow",
+    "Action": [
+      "kinesis:PutRecords"
+    ],
+    "Resource": "*"
+  }]
 }
 ```
 

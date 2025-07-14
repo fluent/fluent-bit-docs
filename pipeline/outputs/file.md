@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 
 Output time, tag and json records. There is no configuration parameters for out\_file.
 
-```javascript
+```text
 tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 ```
 
@@ -28,7 +28,7 @@ tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
 
 Output the records as JSON \(without additional `tag` and `timestamp` attributes\). There is no configuration parameters for plain format.
 
-```javascript
+```json
 {"key1":"value1", "key2":"value2", "key3":"value3"}
 ```
 
@@ -40,7 +40,7 @@ Output the records as csv. Csv supports an additional configuration parameter.
 | :--- | :--- |
 | Delimiter | The character to separate each data. Accepted values are "\t" (or "tab"), "space" or "comma". Other values are ignored and will use default silently. Default: ',' |
 
-```python
+```text
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 ```
 
@@ -53,7 +53,7 @@ Output the records as LTSV. LTSV supports an additional configuration parameter.
 | Delimiter | The character to separate each pair. Default: '\t'\(TAB\) |
 | Label\_Delimiter | The character to separate label and the value. Default: ':' |
 
-```python
+```text
 field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
 ```
 
@@ -69,6 +69,24 @@ This accepts a formatting template and fills placeholders using corresponding va
 
 For example, if you set up the configuration as below:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: mem
+          
+  outputs:
+    - name: file
+      match: '*'
+      format: template
+      template: '{time} used={Mem.used} free={Mem.free} total={Mem.total}'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
   Name mem
@@ -79,6 +97,9 @@ For example, if you set up the configuration as below:
   Format template
   Template {time} used={Mem.used} free={Mem.free} total={Mem.total}
 ```
+
+{% endtab %}
+{% endtabs %}
 
 You will get the following output:
 
@@ -94,21 +115,42 @@ You can run the plugin from the command line or through the configuration file:
 
 From the command line you can let Fluent Bit count up a data with the following options:
 
-```bash
+```shell
 fluent-bit -i cpu -o file -p path=output.txt
 ```
 
 ### Configuration File
 
-In your main configuration file append the following Input & Output sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+          
+  outputs:
+    - name: file
+      match: '*'
+      path: output_dir
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name cpu
-    Tag  cpu
+  Name cpu
+  Tag  cpu
 
 [OUTPUT]
-    Name file
-    Match *
-    Path output_dir
+  Name  file
+  Match *
+  Path  output_dir
 ```
+
+{% endtab %}
+{% endtabs %}

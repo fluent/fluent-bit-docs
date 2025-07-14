@@ -19,37 +19,52 @@ You can run the plugin from the command line or through the configuration file:
 
 From the command line you can let Fluent Bit count up a data with the following options:
 
-```bash
+```shell
 fluent-bit -i cpu -o flowcounter
 ```
 
 ### Configuration File
 
-In your main configuration file append the following Input & Output sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+          
+  outputs:
+    - name: flowcounter
+      match: '*'
+      unit: second
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name cpu
-    Tag  cpu
+  Name cpu
+  Tag  cpu
 
 [OUTPUT]
-    Name flowcounter
-    Match *
-    Unit second
+  Name  flowcounter
+  Match *
+  Unit second
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
 Once Fluent Bit is running, you will see the reports in the output interface similar to this:
 
-```bash
-$ fluent-bit -i cpu -o flowcounter
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-[2016/12/23 11:01:20] [ info] [engine] started
+```text
+...
 [out_flowcounter] cpu.0:[1482458540, {"counts":60, "bytes":7560, "counts/minute":1, "bytes/minute":126 }]
+...
 ```

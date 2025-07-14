@@ -42,14 +42,36 @@ See Google's [official documentation](https://cloud.google.com/chronicle/docs/re
 
 If you are using a _Google Cloud Credentials File_, the following configuration is enough to get you started:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+          
+  outputs:
+    - name: chronicle
+      match: '*'
+      customer_id: my_customer_id
+      log_type: my_super_awesome_type
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name  dummy
-    Tag   dummy
+  Name dummy
+  Tag  dummy
 
 [OUTPUT]
-    Name       chronicle
-    Match      *
-    customer_id my_customer_id
-    log_type my_super_awesome_type
+  Name         chronicle
+  Match        *
+  customer_id  my_customer_id
+  log_type     my_super_awesome_type
 ```
+
+{% endtab %}
+{% endtabs %}

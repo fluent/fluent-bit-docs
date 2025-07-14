@@ -4,33 +4,33 @@ description: Send logs to Azure Data Explorer (Kusto)
 
 # Azure Data Explorer (Kusto)
 
-The Kusto output plugin allows to ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/services/data-explorer/) cluster, via the [Queued Ingestion](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/api/netfx/about-kusto-ingest#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
+The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/services/data-explorer/) cluster, using the [Queued Ingestion](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/api/netfx/about-kusto-ingest#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
 
-## For ingesting into Azure Data Explorer:  Creating a Kusto Cluster and Database
+## Ingest into Azure Data Explorer: create a Kusto cluster and database
 
-You can create an Azure Data Explorer cluster in one of the following ways:
+Create an Azure Data Explorer cluster in one of the following ways:
 
 - [Create a free-tier cluster](https://dataexplorer.azure.com/freecluster)
 - [Create a fully featured cluster](https://docs.microsoft.com/en-us/azure/data-explorer/create-cluster-database-portal)
 
-## For ingesting into Microsoft Fabric Real Time Analytics : Creating an Eventhouse Cluster and KQL Database
+## Ingest into Microsoft Fabric real time analytics: Creating an Eventhouse cluster and KQL database
 
-You can create an Eventhouse cluster and a KQL database follow the following steps:
+Create an Eventhouse cluster and a KQL database using the following steps:
 
 - [Create an Eventhouse cluster](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-eventhouse-cluster)
 - [Create a KQL database](https://docs.microsoft.com/en-us/azure/data-explorer/eventhouse/create-database)
 
-## Creating an Azure Registered Application
+## Create an Azure registered application
 
-Fluent-Bit will use the application's credentials, to ingest data into your cluster.
+Fluent Bit uses the application's credentials to ingest data into your cluster.
 
-- [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 - [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
 
-## Creating a Table
+## Create a table
 
-Fluent-Bit ingests the event data into Kusto in a JSON format, that by default will include 3 properties:
+Fluent Bit ingests the event data into Kusto in a JSON format. By default, the table includes 3 properties:
 
 - `log` - the actual event payload.
 - `tag` - the event tag.
@@ -131,31 +131,30 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name azure_kusto
-  Match *
-  Tenant_Id <app_tenant_id>
-  Client_Id <app_client_id>
-  Client_Secret <app_secret>
-  Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
-  Database_Name <database_name>
-  Table_Name <table_name>
-  Ingestion_Mapping_Reference <mapping_name>
-  ingestion_endpoint_connect_timeout <ingestion_endpoint_connect_timeout>
-  compression_enabled <compression_enabled>
-  ingestion_resources_refresh_interval <ingestion_resources_refresh_interval>
-  buffering_enabled On
-  upload_timeout 2m
-    upload_file_size 125M
-    azure_kusto_buffer_key kusto1
-    buffer_file_delete_early Off
-    unify_tag On
-    buffer_dir /var/log/
-    store_dir_limit_size 16GB
-    blob_uri_length 128
-    scheduler_max_retries 3
-    delete_on_max_upload_error Off
-    io_timeout 60s
-
+  Name                                  azure_kusto
+  Match                                 *
+  Tenant_Id                             <app_tenant_id>
+  Client_Id                             <app_client_id>
+  Client_Secret                         <app_secret>
+  Ingestion_Endpoint                    https://ingest-<cluster>.<region>.kusto.windows.net
+  Database_Name                         <database_name>
+  Table_Name                            <table_name>
+  Ingestion_Mapping_Reference           <mapping_name>
+  ingestion_endpoint_connect_timeout    <ingestion_endpoint_connect_timeout>
+  compression_enabled                   <compression_enabled>
+  ingestion_resources_refresh_interval  <ingestion_resources_refresh_interval>
+  buffering_enabled                     On
+  upload_timeout                        2m
+  upload_file_size                      125M
+  azure_kusto_buffer_key                kusto1
+  buffer_file_delete_early              Off
+  unify_tag                             On
+  buffer_dir                            /var/log/
+  store_dir_limit_size                  16GB
+  blob_uri_length                       128
+  scheduler_max_retries                 3
+  delete_on_max_upload_error            Off
+  io_timeout                            60s
 ```
 
 {% endtab %}

@@ -10,36 +10,68 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :-- | :---------- | :------ |
-| `Buffer_Chunk_Size` | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
-| `Buffer_Max_Size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
-| `Path` | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_ |
-| `Path_Key` | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
-| `Exclude_Path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `Exclude_Path *.gz,*.zip`. | _none_ |
-| `Offset_Key` | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
-| `Read_from_Head` | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail. | `False` |
-| `Refresh_Interval` | The interval of refreshing the list of watched files in seconds. | `60` |
-| `Rotate_Wait` | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | `5` |
-| `Ignore_Older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax.  | Read all. |
-| `Skip_Long_Lines` | When a monitored file reaches its buffer capacity due to a very long line (`Buffer_Max_Size`), the default behavior is to stop monitoring that file. `Skip_Long_Lines` alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `Off` |
-| `Skip_Empty_Lines` | Skips empty lines in the log file from any further processing or output. | `Off` |
-| `DB` | Specify the database file to keep track of monitored files and offsets. | _none_ |
-| `DB.sync` | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most scenarios will be fine with `normal` mode. If you need full synchronization after every write operation set `full` mode. `full` has a high I/O performance cost. Values: `Extra`, `Full`, `Normal`, `Off`. | `normal` |
-| `DB.locking` | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts externals tool from querying the content. | `false` |
-| `DB.journal_mode` | Sets the journal mode for databases (`WAL`). Enabling `WAL` provides higher performance. `WAL` isn't compatible with shared network file systems. | `WAL` |
-| `DB.compare_filename` | This option determines whether to review both `inode` and `filename` when retrieving stored file information from the database. `true` verifies both `inode` and `filename`, while `false` checks only the `inode`. To review the `inode` and `filename` in the database, refer [see `keep_state`](#tailing-files-keeping-state). | `false` |
-| `Mem_Buf_Limit` | Set a memory limit that Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed it resumes. | _none_ |
-| `Exit_On_Eof` | When reading a file will exit as soon as it reach the end of the file. Used for bulk load and tests. | `false` |
-| `Parser` | Specify the name of a parser to interpret the entry as a structured message. | _none_ |
-| `Key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
-| `Inotify_Watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
-| `Tag` | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter). | _none_ |
-| `Tag_Regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
-| `Static_Batch_Size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
-| `File_Cache_Advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `On` |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `buffer_chunk_size` | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
+| `buffer_max_size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
+| `path` | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_ |
+| `path_key` | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
+| `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `exclude_path *.gz,*.zip`. | _none_ |
+| `offset_key` | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
+| `read_from_head` | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail. | `false` |
+| `refresh_interval` | The interval of refreshing the list of watched files in seconds. | `60` |
+| `rotate_wait` | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed. | `5` |
+| `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax.  | Read all. |
+| `skip_long_lines` | When a monitored file reaches its buffer capacity due to a very long line (`buffer_max_size`), the default behavior is to stop monitoring that file. `skip_long_lines` alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `off` |
+| `skip_empty_lines` | Skips empty lines in the log file from any further processing or output. | `off` |
+| `db` | Specify the database file to keep track of monitored files and offsets. | _none_ |
+| `db.sync` | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most scenarios will be fine with `normal` mode. If you need full synchronization after every write operation set `full` mode. `full` has a high I/O performance cost. Values: `extra`, `full`, `normal`, `off`. | `normal` |
+| `db.locking` | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts externals tool from querying the content. | `false` |
+| `db.journal_mode` | Sets the journal mode for databases (`wal`). Enabling `wal` provides higher performance. `wal` isn't compatible with shared network file systems. | `wal` |
+| `db.compare_filename` | This option determines whether to review both `inode` and `filename` when retrieving stored file information from the database. `true` verifies both `inode` and `filename`, while `false` checks only the `inode`. To review the `inode` and `filename` in the database, refer [see `keep_state`](#tailing-files-keeping-state). | `false` |
+| `mem_buf_limit` | Set a memory limit that Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed it resumes. | _none_ |
+| `exit_on_eof` | When reading a file will exit as soon as it reach the end of the file. Used for bulk load and tests. | `false` |
+| `parser` | Specify the name of a parser to interpret the entry as a structured message. | _none_ |
+| `key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
+| `inotify_watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
+| `tag` | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter). | _none_ |
+| `tag_regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
+| `static_batch_size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
+| `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `on` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+
+## Buffers and memory management
+
+The Tail plugin uses buffers to efficiently read and process log files. Understanding how these buffers work helps optimize memory usage and performance.
+
+### File buffers vs Fluent Bit chunks
+
+When a file is opened for monitoring, the Tail plugin allocates a buffer in memory of `buffer_chunk_size` bytes (defaults to 32KB). This buffer is used to read data from the file. If a single record (line) is longer than `buffer_chunk_size`, the buffer will grow up to `buffer_max_size` to accommodate it.
+
+> **Note:** These buffers are per-file. If you're monitoring many files, each file gets its own buffer, which can significantly increase memory usage.
+
+### From buffers to chunks
+
+Inside each file buffer, multiple lines/records might exist. The plugin processes these records and converts them to msgpack format (binary serialization). This msgpack data is then appended to what Fluent Bit calls a **Chunk** - a collection of serialized records that belong to the same tag.
+
+While Fluent Bit has a soft limit of 2MB for chunks, input plugins like Tail can generate msgpack buffers larger than 2MB, and the final chunk can exceed this soft limit.
+
+### Memory protection with `mem_buf_limit`
+
+If Fluent Bit is not configured to use filesystem buffering, it needs mechanisms to protect against high memory consumption during backpressure scenarios (e.g., when destination endpoints are down or network issues occur). The `mem_buf_limit` option restricts how much memory in chunks an input plugin can use.
+
+When filesystem buffering is enabled, memory management works differently. For more details, see [Buffering and Storage](../../administration/buffering-and-storage.md).
+
+## Database file
 
 {% hint style="info" %}
-If the database parameter `DB` isn't specified, by default the plugin reads each target file from the beginning. This might cause unwanted behavior. For example, when a line is bigger than `Buffer_Chunk_Size` and `Skip_Long_Lines` isn't turned on, the file will be read from the beginning of each `Refresh_Interval` until the file is rotated.
+**File positioning behavior:**
+
+- **With database file**: The plugin restores the last known position (offset) from the database. If no previous position exists and `read_from_head` is false, it starts monitoring from the end of the file.
+
+- **Without database file**:
+  - If `read_from_head` is true: The plugin reads from the beginning of the file
+  - If `read_from_head` is false: The plugin starts monitoring from the end of the file (classic "tail" behavior)
+
+This means that without a database and with `read_from_head` set to false, only new content written after Fluent Bit starts will be monitored.
 {% endhint %}
 
 ## Monitor a large number of files
@@ -99,7 +131,7 @@ Fluent Bit 1.8 and later supports multiline core capabilities for the Tail input
 - Multiline Core
 - Old Multiline
 
-### Multiline Core (v1.8)
+### Multiline Core
 
 The new multiline core is exposed by the following configuration:
 
@@ -116,7 +148,7 @@ The new multiline core is exposed by the following configuration:
 - `multiline_flush`
 - `docker_mode`
 
-### Multiline and containers (v1.8)
+### Multiline and containers
 
 If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the built-in modes. This helps reassemble multiline messages originally split by Docker or CRI:
 
@@ -156,10 +188,10 @@ For the old multiline configuration, the following options exist to configure th
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Multiline` | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used. | `Off` |
-| `Multiline_Flush` | Wait period time in seconds to process queued multiline messages. | `4` |
-| `Parser_Firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_ |
-| `Parser_N` | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `Parser_1 ab1`, `Parser_2 ab2`, `Parser_N abN`. | _none_ |
+| `multiline` | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used. | `off` |
+| `multiline_flush` | Wait period time in seconds to process queued multiline messages. | `4` |
+| `parser_firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_ |
+| `parser_N` | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `parser_1 ab1`, `parser_2 ab2`, `parser_N abN`. | _none_ |
 
 ### Old Docker mode configuration parameters
 
@@ -167,9 +199,9 @@ Docker mode exists to recombine JSON log lines split by the Docker daemon due to
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Docker_Mode` | If enabled, the plugin will recombine split Docker log lines before passing them to any parser. This mode can't be used at the same time as Multiline. | `Off` |
-| `Docker_Mode_Flush` | Wait period time in seconds to flush queued unfinished split lines. | `4` |
-| `Docker_Mode_Parser` | Specify an optional parser for the first line of the Docker multiline mode. The parser name to be specified must be registered in the `parsers.conf` file. | _none_ |
+| `docker_mode` | If enabled, the plugin will recombine split Docker log lines before passing them to any parser. This mode can't be used at the same time as Multiline. | `Off` |
+| `docker_mode_flush` | Wait period time in seconds to flush queued unfinished split lines. | `4` |
+| `docker_mode_parser` | Specify an optional parser for the first line of the Docker multiline mode. The parser name to be specified must be registered in the `parsers.conf` file. | _none_ |
 
 ## Get started
 
@@ -232,7 +264,7 @@ Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something
     at com.myproject.module.MyProject.main(MyProject.java:6)
 ```
 
-Specify a `Parser_Firstline` parameter that matches the first line of a multiline event. When a match is made, Fluent Bit reads all future lines until another match with `Parser_Firstline` is made.
+Specify a `parser_firstline` parameter that matches the first line of a multiline event. When a match is made, Fluent Bit reads all future lines until another match with `parser_firstline` is made.
 
 In this case you can use the following parser, which extracts the time as `time` and the remaining portion of the multiline as `log`.
 

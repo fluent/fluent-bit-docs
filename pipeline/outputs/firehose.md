@@ -50,11 +50,11 @@ In your main configuration file append the following:
 ```yaml
 pipeline:
           
-    outputs:
-        - name: kinesis_firehose
-          match: '*'
-          region: us-east-1
-          delivery_stream: my-stream
+  outputs:
+    - name: kinesis_firehose
+      match: '*'
+      region: us-east-1
+      delivery_stream: my-stream
 ```
 
 {% endtab %}
@@ -62,10 +62,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name  kinesis_firehose
-    Match *
-    region us-east-1
-    delivery_stream my-stream
+  Name  kinesis_firehose
+  Match *
+  region us-east-1
+  delivery_stream my-stream
 ```
 
 {% endtab %}
@@ -77,14 +77,14 @@ The following AWS IAM permissions are required to use this plugin:
 
 ```json
 {
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Effect": "Allow",
-		"Action": [
-			"firehose:PutRecordBatch"
-		],
-		"Resource": "*"
-	}]
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+	"Action": [
+      "firehose:PutRecordBatch"
+    ],
+    "Resource": "*"
+  }]
 }
 ```
 
@@ -100,12 +100,12 @@ Example:
 ```yaml
 pipeline:
           
-    outputs:
-        - name: kinesis_firehose
-          match: '*'
-          region: us-east-1
-          delivery_stream: my-stream
-          workers: 2
+  outputs:
+    - name: kinesis_firehose
+      match: '*'
+      region: us-east-1
+      delivery_stream: my-stream
+      workers: 2
 ```
 
 {% endtab %}
@@ -113,11 +113,11 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name  kinesis_firehose
-    Match *
-    region us-east-1
-    delivery_stream my-stream
-    workers 2
+  Name  kinesis_firehose
+  Match *
+  region us-east-1
+  delivery_stream my-stream
+  workers 2
 ```
 
 {% endtab %}

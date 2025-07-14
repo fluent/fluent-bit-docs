@@ -22,6 +22,7 @@ exceptions:
   - CRD
   - CSS
   - CSV
+  - DCO
   - DEBUG
   - DESC
   - DOM
@@ -43,14 +44,15 @@ exceptions:
   - GZIP
   - HEC
   - HPA
-  - IAM
   - HTML
   - HTTP
   - HTTPS
+  - IAM
   - IDE
   - JAR
   - JSON
   - JSX
+  - KQL
   - LESS
   - LLDB
   - LLVM

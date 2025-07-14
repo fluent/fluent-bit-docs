@@ -64,6 +64,7 @@ endcode
 endhint
 endtab
 endtabs
+Eventhouse
 Exabeam
 Fargate
 Firehose
@@ -202,6 +203,7 @@ Unary
 unmuted
 unsort
 upsert
+upserts
 UUIDs
 Vectra
 Vercel

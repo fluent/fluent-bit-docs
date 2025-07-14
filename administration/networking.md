@@ -71,6 +71,12 @@ For example, if you have five workers and `net.max_worker_connections` is set
 to 10, a maximum of 50 connections is allowed. If the limit is reached, the output
 plugin issues a retry.
 
+### Listener backlog
+
+When Fluent Bit listens for incoming connections (for example, in input plugins like HTTP, TCP, OpenTelemetry, Forward, Syslog, etc.), the operating system maintains a queue of pending connections. The `net.backlog` option controls the maximum number of pending connections that can be queued before new connection attempts are refused. Increasing this value can help Fluent Bit handle bursts of incoming connections more gracefully. The default value is `128`.
+
+> **Note:** On Linux, the effective backlog value may be capped by the kernel parameter `net.core.somaxconn`. If you need to allow a higher number of pending connections, you may need to increase this system setting.
+
 ## Configuration options
 
 The following table describes the network configuration properties available and
@@ -89,6 +95,7 @@ that rely on networking I/O:
 | `net.keepalive_max_recycle` | Set maximum number of times a keepalive connection can be used before it's retired. | `2000` |
 | `net.max_worker_connections` | Set maximum number of TCP connections that can be established per worker. | `0` (unlimited) |
 | `net.source_address` | Specify network address to bind for data traffic. | _none_ |
+| `net.backlog` | Set the maximum number of pending connections for listening sockets. This option is vailable on versions >= 4.0.4. | `128` |
 
 ## Example
 

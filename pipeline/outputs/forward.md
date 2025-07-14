@@ -50,7 +50,7 @@ Before proceeding, make sure that [Fluentd](http://fluentd.org) is installed, if
 
 Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
 
-```
+```text
 <source>
   type forward
   bind 0.0.0.0
@@ -67,10 +67,12 @@ Then for every message with a _fluent_bit_ **TAG**, will print the message to th
 
 In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created:
 
-```bash
+```shell
 $ fluentd -c test.conf
+
+...
 2017-03-23 11:50:43 -0600 [info]: reading config file path="test.conf"
-2017-03-23 11:50:43 -0600 [info]: starting fluentd-0.12.33
+...
 2017-03-23 11:50:43 -0600 [info]: gem 'fluent-mixin-config-placeholders' version '0.3.1'
 2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-docker' version '0.1.0'
 2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-elasticsearch' version '1.4.0'
@@ -98,14 +100,15 @@ $ fluentd -c test.conf
   </match>
 </ROOT>
 2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
+...
 ```
 
 ## Fluent Bit + Forward Setup <a href="forward_setup" id="forward_setup"></a>
 
 Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
 
-```
-bin/fluent-bit -i INPUT -o forward://HOST:PORT
+```shell
+fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
 If the **TAG** parameter is not set, the plugin will retain the tag.
@@ -113,17 +116,19 @@ Keep in mind that **TAG** is important for routing rules inside [Fluentd](http:/
 
 Using the [CPU](../inputs/cpu-metrics.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org) with tag _fluent_bit_:
 
-```bash
-bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
+```shell
+fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
 ```
 
 Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gathered in the last seconds:
 
-```bash
+```text
+...
 2017-03-23 11:53:06 -0600 fluent_bit: {"cpu_p":0.0,"user_p":0.0,"system_p":0.0,"cpu0.p_cpu":0.0,"cpu0.p_user":0.0,"cpu0.p_system":0.0,"cpu1.p_cpu":0.0,"cpu1.p_user":0.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
 2017-03-23 11:53:07 -0600 fluent_bit: {"cpu_p":2.25,"user_p":2.0,"system_p":0.25,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":1.0,"cpu1.p_user":1.0,"cpu1.p_system":0.0,"cpu2.p_cpu":1.0,"cpu2.p_user":1.0,"cpu2.p_system":0.0,"cpu3.p_cpu":3.0,"cpu3.p_user":2.0,"cpu3.p_system":1.0}
 2017-03-23 11:53:08 -0600 fluent_bit: {"cpu_p":1.75,"user_p":1.0,"system_p":0.75,"cpu0.p_cpu":2.0,"cpu0.p_user":1.0,"cpu0.p_system":1.0,"cpu1.p_cpu":3.0,"cpu1.p_user":1.0,"cpu1.p_system":2.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":2.0,"cpu3.p_user":1.0,"cpu3.p_system":1.0}
 2017-03-23 11:53:09 -0600 fluent_bit: {"cpu_p":4.75,"user_p":3.5,"system_p":1.25,"cpu0.p_cpu":4.0,"cpu0.p_user":3.0,"cpu0.p_system":1.0,"cpu1.p_cpu":5.0,"cpu1.p_user":4.0,"cpu1.p_system":1.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":5.0,"cpu3.p_user":4.0,"cpu3.p_system":1.0}
+...
 ```
 
 So we gathered [CPU](../inputs/cpu-metrics.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
@@ -136,34 +141,65 @@ Secure Forward aims to provide a secure channel of communication with the remote
 
 ### Fluent Bit
 
-Paste this content in a file called _flb.conf_:
+Paste this content in a file called `flb` :
 
+{% tabs %}
+{% tab title="flb.yaml" %}
+
+```yaml
+service:
+  flush: 5
+  daemon: off
+  log_level: info
+  
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu_usage
+          
+  outputs:
+    - name: forward
+      match: '*'
+      host: 127.0.0.1
+      port: 24284
+      shared_key: secret
+      self_hostname: flb.local
+      tls: on
+      tls.verify: off
 ```
+
+{% endtab %}
+{% tab title="flb.conf" %}
+
+```text
 [SERVICE]
-    Flush      5
-    Daemon     off
-    Log_Level  info
+  Flush      5
+  Daemon     off
+  Log_Level  info
 
 [INPUT]
-    Name       cpu
-    Tag        cpu_usage
+  Name       cpu
+  Tag        cpu_usage
 
 [OUTPUT]
-    Name          forward
-    Match         *
-    Host          127.0.0.1
-    Port          24284
-    Shared_Key    secret
-    Self_Hostname flb.local
-    tls           on
-    tls.verify    off
+  Name          forward
+  Match         *
+  Host          127.0.0.1
+  Port          24284
+  Shared_Key    secret
+  Self_Hostname flb.local
+  tls           on
+  tls.verify    off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Fluentd
 
-Paste this content in a file called _fld.conf_:
+Paste this content in a file called `fld.conf`:
 
-```
+```text
 <source>
   @type         secure_forward
   self_hostname myserver.local
@@ -176,45 +212,29 @@ Paste this content in a file called _fld.conf_:
 </match>
 ```
 
-If you're using Fluentd v1, set up it as below:
-
-```
-<source>
-  @type forward
-  <transport tls>
-    cert_path /etc/td-agent/certs/fluentd.crt
-    private_key_path /etc/td-agent/certs/fluentd.key
-    private_key_passphrase password
-  </transport>
-  <security>
-    self_hostname myserver.local
-    shared_key secret
-  </security>
-</source>
-
-<match **>
- @type stdout
-</match>
-```
-
 ### Test Communication
 
 Start Fluentd:
 
-```
+```shell
 fluentd -c fld.conf
 ```
 
 Start Fluent Bit:
 
-```
-fluent-bit -c flb.conf
+```shell
+# For YAML configuration.
+fluent-bit --config flb.yaml
+
+# For classic configuration
+fluent-bit --config flb.conf
 ```
 
 After five seconds, Fluent Bit will write records to Fluentd.
 In Fluentd output you will see a message like this:
 
-```
+```text
+...
 2017-03-23 13:34:40 -0600 [info]: using configuration file: <ROOT>
   <source>
     @type secure_forward
@@ -230,4 +250,5 @@ In Fluentd output you will see a message like this:
 2017-03-23 13:34:42 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.75,"system_p":0.0,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
 2017-03-23 13:34:43 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.25,"system_p":0.5,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":0.0,"cpu3.p_system":1.0}
 2017-03-23 13:34:44 -0600 cpu_usage: {"cpu_p":5.0,"user_p":3.25,"system_p":1.75,"cpu0.p_cpu":4.0,"cpu0.p_user":2.0,"cpu0.p_system":2.0,"cpu1.p_cpu":8.0,"cpu1.p_user":5.0,"cpu1.p_system":3.0,"cpu2.p_cpu":4.0,"cpu2.p_user":3.0,"cpu2.p_system":1.0,"cpu3.p_cpu":4.0,"cpu3.p_user":2.0,"cpu3.p_system":2.0}
+...
 ```

@@ -96,14 +96,14 @@ es://host:port/index/type
 
 Using the format specified, you could start Fluent Bit through:
 
-```shell copy
+```shell
 fluent-bit -i cpu -t cpu -o es://192.168.2.3:9200/my_index/my_type \
     -o stdout -m '*'
 ```
 
 Which is similar to the following command:
 
-```shell copy
+```shell
 fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
     -p Index=my_index -p Type=my_type -o stdout -m '*'
 ```
@@ -117,17 +117,17 @@ In your main configuration file append the following `Input` and `Output` sectio
 
 ```yaml
 pipeline:
-    inputs:
-        - name: cpu
-          tag: cpu
-          
-    outputs:
-        - name: es
-          match: '*'
-          host: 192.168.2.3
-          port: 9200
-          index: my_index
-          type: my_type
+  inputs:
+    - name: cpu
+      tag: cpu
+      
+  outputs:
+    - name: es
+      match: '*'
+      host: 192.168.2.3
+      port: 9200
+      index: my_index
+      type: my_type
 ```
 
 {% endtab %}
@@ -136,16 +136,16 @@ pipeline:
 
 ```text
 [INPUT]
-    Name  cpu
-    Tag   cpu
+  Name  cpu
+  Tag   cpu
 
 [OUTPUT]
-    Name  es
-    Match *
-    Host  192.168.2.3
-    Port  9200
-    Index my_index
-    Type  my_type
+  Name  es
+  Match *
+  Host  192.168.2.3
+  Port  9200
+  Index my_index
+  Type  my_type
 ```
 
 {% endtab %}
@@ -186,36 +186,33 @@ Example configuration:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
-          
-    outputs:
-        - name: es
-          match: '*'
-          host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
-          port: 443
-          index: my_index
-          type: my_type
-          aws_auth: on
-          aws_region: us-west-2
-          tls: on
+      
+  outputs:
+    - name: es
+      match: '*'
+      host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+      port: 443
+      index: my_index
+      type: my_type
+      aws_auth: on
+      aws_region: us-west-2
+      tls: on
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name  es
-    Match *
-    Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
-    Port  443
-    Index my_index
-    Type  my_type
-    AWS_Auth On
-    AWS_Region us-west-2
-    tls     On
+  Name  es
+  Match *
+  Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+  Port  443
+  Index my_index
+  Type  my_type
+  AWS_Auth On
+  AWS_Region us-west-2
+  tls     On
 ```
 
 {% endtab %}
@@ -239,17 +236,15 @@ Example configuration:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
-          
-    outputs:
-        - name: es
-          include_tag_key: true
-          tag_key: tags
-          tls: on
-          tls.verify: off
-          cloud_id: 'elastic-obs-deployment:ZXVybxxxxxxxxxxxg=='
-          cloud_auth: 'elastic:2vxxxxxxxxYV'
+      
+  outputs:
+    - name: es
+      include_tag_key: true
+      tag_key: tags
+      tls: on
+      tls.verify: off
+      cloud_id: 'elastic-obs-deployment:ZXVybxxxxxxxxxxxg=='
+      cloud_auth: 'elastic:2vxxxxxxxxYV'
 ```
 
 {% endtab %}
@@ -258,14 +253,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name es
-    Include_Tag_Key true
-    Tag_Key tags
-    tls On
-    tls.verify Off
-    Suppress_Type_Name On
-    cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
-    cloud_auth elastic:2vxxxxxxxxYV
+  Name es
+  Include_Tag_Key true
+  Tag_Key tags
+  tls On
+  tls.verify Off
+  Suppress_Type_Name On
+  cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
+  cloud_auth elastic:2vxxxxxxxxYV
 ```
 
 {% endtab %}
@@ -301,37 +296,34 @@ This means that you can't set up your configuration like the following:.
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: es
-          match: 'foo.*'
-          index: search
-          type: type1
+  outputs:
+    - name: es
+      match: 'foo.*'
+      index: search
+      type: type1
 
-        - name: es
-          match: 'bar.*'
-          index: search
-          type: type2
+    - name: es
+      match: 'bar.*'
+      index: search
+      type: type2
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name  es
-    Match foo.*
-    Index search
-    Type  type1
+  Name  es
+  Match foo.*
+  Index search
+  Type  type1
 
 [OUTPUT]
-    Name  es
-    Match bar.*
-    Index search
-    Type  type2
+  Name  es
+  Match bar.*
+  Index search
+  Type  type2
 ```
 
 {% endtab %}
@@ -357,36 +349,33 @@ as seen on the last line:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: es
-          match: '*'
-          host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
-          port: 443
-          index: my_index
-          aws_auth: on
-          aws_region: us-west-2
-          tls: on
-          type: doc
+  outputs:
+    - name: es
+      match: '*'
+      host: vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+      port: 443
+      index: my_index
+      aws_auth: on
+      aws_region: us-west-2
+      tls: on
+      type: doc
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name  es
-    Match *
-    Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
-    Port  443
-    Index my_index
-    AWS_Auth On
-    AWS_Region us-west-2
-    tls   On
-    Type  doc
+  Name  es
+  Match *
+  Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+  Port  443
+  Index my_index
+  AWS_Auth On
+  AWS_Region us-west-2
+  tls   On
+  Type  doc
 ```
 
 {% endtab %}
@@ -411,26 +400,23 @@ as follows:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
-          
-    outputs:
-        - name: es
-          match: '*'
-          host: 192.168.12.1
-          generate_id: on
+  
+  outputs:
+    - name: es
+      match: '*'
+      host: 192.168.12.1
+      generate_id: on
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name es
-    Match *
-    Host  192.168.12.1
-    Generate_ID on
+  Name es
+  Match *
+  Host  192.168.12.1
+  Generate_ID on
 ```
 
 {% endtab %}
@@ -446,30 +432,27 @@ The following snippet demonstrates using the namespace name as extracted by the
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: es
-          match: '*'
-          # ...
-          logstash_prefix: logstash
-          logstash_prefix_key: $kubernetes['namespace_name'] 
-          # ...
+  outputs:
+    - name: es
+      match: '*'
+      # ...
+      logstash_prefix: logstash
+      logstash_prefix_key: $kubernetes['namespace_name'] 
+      # ...
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name es
-    Match *
-    # ...
-    Logstash_Prefix logstash
-    Logstash_Prefix_Key $kubernetes['namespace_name']
-    # ...
+  Name es
+  Match *
+  # ...
+  Logstash_Prefix logstash
+  Logstash_Prefix_Key $kubernetes['namespace_name']
+  # ...
 ```
 
 {% endtab %}
