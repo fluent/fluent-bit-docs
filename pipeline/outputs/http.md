@@ -208,7 +208,7 @@ pipeline:
       match: '*'
       host: collectors.au.sumologic.com
       port: 443
-      URI: /receiver/v1/http/[PrivateKey]
+      uri: /receiver/v1/http/[PrivateKey]
       format: json_lines
       json_date_key: timestamp
       json_date_format: iso8601
