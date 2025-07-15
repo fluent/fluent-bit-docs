@@ -109,8 +109,8 @@ MSI installers are also available:
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
-```text copy
-PS> Get-FileHash fluent-bit-4.0.4-win32.exe
+```shell copy
+Get-FileHash fluent-bit-4.0.4-win32.exe
 ```
 
 ## Installing from a ZIP archive
@@ -121,8 +121,8 @@ PS> Get-FileHash fluent-bit-4.0.4-win32.exe
 1. Expand the ZIP archive. You can do this by clicking **Extract All** in Explorer
    or `Expand-Archive` in PowerShell.
 
-   ```text
-   PS> Expand-Archive fluent-bit-4.0.4-win64.zip
+   ```shell
+   Expand-Archive fluent-bit-4.0.4-win64.zip
    ```
 
    The ZIP package contains the following set of files.
@@ -146,14 +146,14 @@ PS> Get-FileHash fluent-bit-4.0.4-win32.exe
 
 1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:
 
-   ```text
-   PS> .\bin\fluent-bit.exe -i dummy -o stdout
+   ```shell
+   .\bin\fluent-bit.exe -i dummy -o stdout
    ```
 
 The following output indicates Fluent Bit is running:
 
-```text
-PS> .\bin\fluent-bit.exe  -i dummy -o stdout
+```shell
+.\bin\fluent-bit.exe  -i dummy -o stdout
 Fluent Bit v2.0.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -178,15 +178,11 @@ To halt the process, press `Control+C` in the terminal.
 1. Download an EXE installer for the appropriate 32-bit or 64-bit build.
 1. Double-click the EXE installer you've downloaded. The installation wizard starts.
 
-   ![Installation wizard screenshot](<../.gitbook/assets/windows\_installer (1) (1).png>)
-
 1. Click **Next** and finish the installation. By default, Fluent Bit is installed
    in `C:\Program Files\fluent-bit\`.
 
-You should be able to launch Fluent Bit using the following PowerShell command:.
-
-```text
-PS> C:\Program Files\fluent-bit\bin\fluent-bit.exe -i dummy -o stdout
+```shell
+& "C:\Program Files\fluent-bit\bin\fluent-bit.exe" -i dummy -o stdout
 ```
 
 ### Installer options
@@ -198,8 +194,8 @@ for silent installation and install directory.
 
 To silently install to `C:\fluent-bit` directory here is an example:
 
-```text
-PS> <installer exe> /S /D=C:\fluent-bit
+```shell
+<installer exe> /S /D=C:\fluent-bit
 ```
 
 The uninstaller also supports a silent uninstall using the same `/S` flag.
@@ -228,15 +224,15 @@ C:\fluent-bit\
 To register Fluent Bit as a Windows service, execute the following command on
 at a command prompt. A single space is required after `binpath=`.
 
-```text
+```shell
 sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit\conf\fluent-bit.conf"
 ```
 
 Fluent Bit can be started and managed as a normal Windows service.
 
-```text
-% sc.exe start fluent-bit
-% sc.exe query fluent-bit
+```shell
+sc.exe start fluent-bit
+sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
     TYPE               : 10  WIN32_OWN_PROCESS
     STATE              : 4 Running
@@ -245,25 +241,17 @@ SERVICE_NAME: fluent-bit
 
 To halt the Fluent Bit service, use the `stop` command.
 
-```text
+```shell
 sc.exe stop fluent-bit
 ```
 
 To start Fluent Bit automatically on boot, execute the following:
 
-```text
+```shell
 sc.exe config fluent-bit start= auto
 ```
 
 ## FAQs
-
-### Fluent Bit fails to start up when installed under `C:\Program Files`
-
-Quotations are required if file paths contain spaces. For example:
-
-```text
-sc.exe create fluent-bit binpath= "\"C:\Program Files\fluent-bit\bin\fluent-bit.exe\" -c \"C:\Program Files\fluent-bit\conf\fluent-bit.conf\""
-```
 
 ### Can you manage Fluent Bit service using PowerShell?
 
@@ -271,20 +259,20 @@ Instead of `sc.exe`, PowerShell can be used to manage Windows services.
 
 Create a Fluent Bit service:
 
-```text
-PS> New-Service fluent-bit -BinaryPathName "`"C:\Program Files\fluent-bit\bin\fluent-bit.exe`" -c `"C:\Program Files\fluent-bit\conf\fluent-bit.conf`"" -StartupType Automatic -Description "This service runs Fluent Bit, a log collector that enables real-time processing and delivery of log data to centralized logging systems."
+```shell
+New-Service fluent-bit -BinaryPathName "`"C:\Program Files\fluent-bit\bin\fluent-bit.exe`" -c `"C:\Program Files\fluent-bit\conf\fluent-bit.conf`"" -StartupType Automatic -Description "This service runs Fluent Bit, a log collector that enables real-time processing and delivery of log data to centralized logging systems."
 ```
 
 Start the service:
 
-```text
-PS> Start-Service fluent-bit
+```shell
+Start-Service fluent-bit
 ```
 
 Query the service status:
 
-```text
-PS> get-Service fluent-bit | format-list
+```shell
+get-Service fluent-bit | format-list
 Name                : fluent-bit
 DisplayName         : fluent-bit
 Status              : Running
@@ -298,14 +286,14 @@ ServiceType         : Win32OwnProcess
 
 Stop the service:
 
-```text
-PS> Stop-Service fluent-bit
+```shell
+Stop-Service fluent-bit
 ```
 
 Remove the service (requires PowerShell 6.0 or later)
 
-```text
-PS> Remove-Service fluent-bit
+```shell
+Remove-Service fluent-bit
 ```
 
 ## Compile from Source
@@ -318,9 +306,9 @@ compile Fluent Bit by yourself.
 1. Install Microsoft Visual C++ to compile Fluent Bit. You can install the minimum
    toolkit using the following command:
 
-```text
-PS> wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
-PS> start vs.exe
+```shell
+wget -o vs.exe https://aka.ms/vs/16/release/vs_buildtools.exe
+start vs.exe
 ```
 
 1. Choose `C++ Build Tools` and `C++ CMake tools for Windows` and wait until the process finishes.
@@ -328,11 +316,11 @@ PS> start vs.exe
 1. Install flex and bison. One way to install them on Windows is to use
    [winflexbison](https://github.com/lexxmark/winflexbison).
 
-   ```text
-   PS> wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
-   PS> Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
-   PS> cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
-   PS> cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
+   ```shell
+   wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip
+   Expand-Archive winflexbison.zip -Destination C:\WinFlexBison
+   cp -Path C:\WinFlexBison\win_bison.exe C:\WinFlexBison\bison.exe
+   cp -Path C:\WinFlexBison\win_flex.exe C:\WinFlexBison\flex.exe
    ```
 
 1. Add the path `C:\WinFlexBison` to your systems environment variable `Path`.
@@ -342,9 +330,9 @@ PS> start vs.exe
 
 1. Install [Git](https://git-scm.com/download/win) to pull the source code from the repository.
 
-   ```text
-   PS> wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
-   PS> start git.exe
+   ```shell
+   wget -o git.exe https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/Git-2.28.0-64-bit.exe
+   start git.exe
    ```
 
 ### Compilation
@@ -358,21 +346,21 @@ PS> start vs.exe
 
 1. Clone the source code of Fluent Bit.
 
-   ```text
-   % git clone https://github.com/fluent/fluent-bit
-   % cd fluent-bit/build
+   ```shell
+   git clone https://github.com/fluent/fluent-bit
+   cd fluent-bit/build
    ```
 
 1. Compile the source code.
 
-   ```text
-   % cmake .. -G "NMake Makefiles"
-   % cmake --build .
+   ```shell
+   cmake .. -G "NMake Makefiles"
+   cmake --build .
    ```
 
 Now you should be able to run Fluent Bit:
 
-```text
+```shell
 .\bin\debug\fluent-bit.exe -i dummy -o stdout
 ```
 
