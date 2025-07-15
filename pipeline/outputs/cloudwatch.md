@@ -8,14 +8,9 @@ description: Send logs and metrics to Amazon CloudWatch
 
 The _Amazon CloudWatch_ output plugin lets you ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided using [Embedded Metric Format (EMF)](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
 
-This is the documentation for the core Fluent Bit CloudWatch plugin written in C. It
-can replace the
-[aws/amazon-cloudwatch-logs-for-fluent-bit](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit)
-Golang Fluent Bit plugin (`cloudwatch`). This CloudWatch plugin is called `cloudwatch_logs` to prevent
-conflicts/confusion. Check the amazon repository for the Golang plugin for details on the
-deprecation/migration plan for the original plugin.
+This is the documentation for the core Fluent Bit CloudWatch plugin written in C. It can replace the [aws/amazon-cloudwatch-logs-for-fluent-bit](https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit) Golang Fluent Bit plugin (`cloudwatch`). This CloudWatch plugin is called `cloudwatch_logs` to prevent conflicts or confusion. Check the Amazon repository for the Golang plugin for details about the deprecation and migration plan for the original plugin.
 
-See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-credentials) for details how AWS credentials are fetched.
+See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-credentials) for details about how AWS credentials are fetched.
 
 ## Configuration parameters
 
@@ -23,9 +18,9 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 |----- |------------------ |
 | `region`         | The AWS region.   |
 | `log_group_name` | The name of the CloudWatch log group that you want log records sent to.               |
-| `log_group_template`  | Optional. Template for the log group name using Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. If configured, this field overrides the `log_group_name`. If the template translation fails, an error is logged and the `log_group_name` is used instead. See the tutorial for an example.|
+| `log_group_template`  | Optional. Template for the log group name using Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. If configured, this field overrides the `log_group_name`. If the template translation fails, an error is logged and the `log_group_name` is used instead. See the tutorial for an example. |
 | `log_stream_name`     | The name of the CloudWatch log stream that you want log records sent to.              |
-| `log_stream_prefix`   | Prefix for the log stream name. The tag is appended to the prefix to construct the full log stream name. Not compatible with the `log_stream_name` option.|
+| `log_stream_prefix`   | Prefix for the log stream name. The tag is appended to the prefix to construct the full log stream name. Not compatible with the `log_stream_name` option. |
 | `log_stream_template` | Optional. Template for log stream name using Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. If configured, it overrides other log stream options. If the template translation fails, an error is logged and `log_stream_name` or `log_stream_prefix` are used instead (one of those fields must be configured). See the tutorial for an example.           |
 | `log_key`              | By default, the whole log record will be sent to CloudWatch. If you specify a key name with this option, then only the value of that key will be sent to CloudWatch. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to CloudWatch.                |
 | `log_format`           | Optional. A parameter that can be used to tell CloudWatch the format of the data. A value of `json/emf` enables CloudWatch to extract custom metrics embedded in a JSON payload. See the [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html) specification.            |
@@ -44,7 +39,7 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 
 ## Get started
 
-In order to send records into Amazon CloudWatch, you can run the plugin from the command line or through the configuration file.
+To send records into Amazon CloudWatch, you can run the plugin from the command line or through the configuration file.
 
 ### Command line
 
@@ -153,7 +148,7 @@ The following AWS IAM permissions are required to use this plugin:
 
 You might want the log group or stream name to be based on the contents of the log record itself. This plugin supports templating log group and stream names using Fluent Bit [`record_accessor`](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor) syntax.
 
-The following example outlines a common use case - templating log group and stream names based on Kubernetes metadata.
+The following example outlines a common use case-templating log group and stream names based on Kubernetes metadata.
 
 The Kubernetes filter can add metadata which will look like the following:
 
@@ -225,7 +220,7 @@ If the Kubernetes structure isn't found in the log record, then the `log_group_n
 
 #### Limitations of `record_accessor` syntax
 
-In the previous example, the template values are separated by dot (`.`) characters. The Fluent Bit `record_accessor` library has a limitation in the characters that can separate template variables; only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+In the previous example, the template values are separated by dot (`.`) characters. The Fluent Bit `record_accessor` library has a limitation in the characters that can separate template variables. Only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
 Assume that your log records contain the metadata keys `container_name` and `task`. The following would be invalid templates because the two template variables aren't separated by commas or dots:
 
