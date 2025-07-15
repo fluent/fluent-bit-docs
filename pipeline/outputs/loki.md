@@ -41,18 +41,18 @@ Fluent Bit implements a flexible mechanism to set labels by using fixed key/valu
 
 Consider the following JSON record (pretty printed for readability):
 
-```javascript
+```json
 {
-    "key": 1,
-    "sub": {
-        "stream": "stdout",
-        "id": "some id"
-    },
-    "kubernetes": {
-        "labels": {
-            "team": "Santiago Wanderers"
-        }
+  "key": 1,
+  "sub": {
+    "stream": "stdout",
+    "id": "some id"
+  },
+  "kubernetes": {
+    "labels": {
+      "team": "Santiago Wanderers"
     }
+  }
 }
 ```
 
@@ -63,24 +63,21 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit, $sub['stream']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name   loki
-    match  *
-    labels job=fluentbit, $sub['stream']
+  name   loki
+  match  *
+  labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -103,24 +100,21 @@ Another feature of Labels management is the ability to provide custom key names.
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit, mystream=$sub['stream']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit, mystream=$sub['stream']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name   loki
-    match  *
-    labels job=fluentbit, mystream=$sub['stream']
+  name   loki
+  match  *
+  labels job=fluentbit, mystream=$sub['stream']
 ```
 
 {% endtab %}
@@ -144,14 +138,12 @@ The following configuration examples generate the same Stream Labels:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit
-          label_keys: $sub['stream']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit
+      label_keys: $sub['stream']
 ```
 
 {% endtab %}
@@ -160,10 +152,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-    name       loki
-    match      *
-    labels     job=fluentbit
-    label_keys $sub['stream']
+  name       loki
+  match      *
+  labels     job=fluentbit
+  label_keys $sub['stream']
 ```
 
 {% endtab %}
@@ -176,24 +168,21 @@ The previous configuration accomplishes the same as this one:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit, $sub['stream']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name   loki
-    match  *
-    labels job=fluentbit, $sub['stream']
+  name   loki
+  match  *
+  labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -217,9 +206,9 @@ The following configuration examples generate the same Stream Labels:
 
 ```json
 {
-    "sub": {
-           "stream": "stream"
-    }
+  "sub": {
+    "stream": "stream"
+  }
 }
 ```
 
@@ -230,24 +219,21 @@ Add the JSON path to the plugin output configuration:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          label_map_path: /path/to/map.json
+  outputs:
+    - name: loki
+      match: '*'
+      label_map_path: /path/to/map.json
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name   loki
-    match  *
-    label_map_path /path/to/map.json
+  name   loki
+  match  *
+  label_map_path /path/to/map.json
 ```
 
 {% endtab %}
@@ -260,24 +246,21 @@ The previous configurations accomplish the same as this one:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit, $sub['stream']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name   loki
-    match  *
-    labels job=fluentbit, $sub['stream']
+  name   loki
+  match  *
+  labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -291,33 +274,30 @@ job="fluentbit", stream="stdout"
 
 #### Kubernetes and labels
 
-If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which auto-populates the streams with the Pod labels for you. Consider the following configuration:
+If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which autopopulates the streams with the Pod labels for you. Consider the following configuration:
 
 % tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: job=fluentbit
-          auto_kubernetes_labels: on
+  outputs:
+    - name: loki
+      match: '*'
+      labels: job=fluentbit
+      auto_kubernetes_labels: on
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name                   loki
-    match                  *
-    labels                 job=fluentbit
-    auto_kubernetes_labels on
+  name                   loki
+  match                  *
+  labels                 job=fluentbit
+  auto_kubernetes_labels on
 ```
 
 {% endtab %}
@@ -346,26 +326,23 @@ If the value is a string, `line_format` is `json`, and `drop_single_key` is `tru
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          drop_single_key: on
-          line_format: json
+  outputs:
+    - name: loki
+      match: '*'
+      drop_single_key: on
+      line_format: json
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name            loki
-    match           *
-    drop_single_key on
-    line_format     json
+  name            loki
+  match           *
+  drop_single_key on
+  line_format     json
 ```
 
 {% endtab %}
@@ -373,7 +350,7 @@ pipeline:
 
 The outputted line would show in Loki as:
 
-```json
+```text
 "value"
 ```
 
@@ -386,7 +363,7 @@ value
 If you want both structured JSON and plain text logs in Loki, set `drop_single_key` to `raw` and `line_format` to `json`.
 Loki doesn't interpret a quoted string as valid JSON. To remove the quotes without `drop_single_key` set to `raw`, use a query like this:
 
-```C
+```text
 {"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
 ```
 
@@ -398,7 +375,7 @@ If `drop_single_key` is `off`, it will show in Loki as:
 
 You can get the same behavior this flag provides in Loki with `drop_single_key` set to `off` with this query:
 
-```C
+```text
 {"job"="fluent-bit"} | json | line_format "{{.log}}"
 ```
 
@@ -418,26 +395,23 @@ The following configuration:
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
-          structured_metadata: pod=$kubernetes['pod_name']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
+      structured_metadata: pod=$kubernetes['pod_name']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name                loki
-    match               *
-    labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
-    structured_metadata pod=$kubernetes['pod_name']
+  name                loki
+  match               *
+  labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
+  structured_metadata pod=$kubernetes['pod_name']
 ```
 
 {% endtab %}
@@ -459,26 +433,23 @@ The following configuration is similar to the previous example, except now all e
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-      - name: loki
-        match: '*'
-        labels: cluster=my-k8s-cluster, region=us-east-1
-        structured_metadata_map_keys: $kubernetes
+  outputs:
+    - name: loki
+      match: '*'
+      labels: cluster=my-k8s-cluster, region=us-east-1
+      structured_metadata_map_keys: $kubernetes
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name                         loki
-    match                        *
-    labels                       cluster=my-k8s-cluster, region=us-east-1
-    structured_metadata_map_keys $kubernetes
+  name                         loki
+  match                        *
+  labels                       cluster=my-k8s-cluster, region=us-east-1
+  structured_metadata_map_keys $kubernetes
 ```
 
 {% endtab %}
@@ -491,26 +462,23 @@ Assuming the value `$kubernetes` is a map containing two entries `namespace_name
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          labels: cluster=my-k8s-cluster, region=us-east-1
-          structured_metadata: $kubernetes['namespace_name'], $kubernetes['pod_name']
+  outputs:
+    - name: loki
+      match: '*'
+      labels: cluster=my-k8s-cluster, region=us-east-1
+      structured_metadata: $kubernetes['namespace_name'], $kubernetes['pod_name']
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    name                loki
-    match               *
-    labels              cluster=my-k8s-cluster, region=us-east-1
-    structured_metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
+  name                loki
+  match               *
+  labels              cluster=my-k8s-cluster, region=us-east-1
+  structured_metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
 ```
 
 {% endtab %}
@@ -536,34 +504,31 @@ Below is an example configuration, be sure to set the credentials (shown here wi
 
 ```yaml
 pipeline:
-    inputs:
-        ...
           
-    outputs:
-        - name: loki
-          match: '*'
-          host: logs-prod-eu-west-0.grafana.net
-          port: 433
-          tls: on
-          tls.verify: on
-          http_user: XXX
-          http_password: XXX
+  outputs:
+    - name: loki
+      match: '*'
+      host: logs-prod-eu-west-0.grafana.net
+      port: 433
+      tls: on
+      tls.verify: on
+      http_user: XXX
+      http_password: XXX
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
-    [OUTPUT]
-        Name        loki
-        Match       *
-        Host        logs-prod-eu-west-0.grafana.net
-        port        443
-        tls         on
-        tls.verify  on
-        http_user   XXX
-        http_passwd XXX
+[OUTPUT]
+  Name        loki
+  Match       *
+  Host        logs-prod-eu-west-0.grafana.net
+  port        443
+  tls         on
+  tls.verify  on
+  http_user   XXX
+  http_passwd XXX
 ```
 
 {% endtab %}
@@ -579,47 +544,46 @@ Copy and paste the corresponding content below into a file `out_loki.yaml` or `o
 
 ```yaml
 service: 
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
     
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}'
-          samples: 1
+  inputs:
+    - name: dummy
+      dummy: '{"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}'
+      samples: 1
           
-    outputs:
-        - name: loki
-          match: '*'
-          host: 127.0.0.1
-          port: 3100
-          labels: job=fluentbit
-          label_keys: $sub['stream']
-          auto_kubernetes_labels: on
+  outputs:
+    - name: loki
+      match: '*'
+      host: 127.0.0.1
+      port: 3100
+      labels: job=fluentbit
+      label_keys: $sub['stream']
+      auto_kubernetes_labels: on
 ```
 
 {% endtab %}
-
 {% tab title="out-loki.conf" %}
 
 ```text
 [SERVICE]
-    flush     1
-    log_level info
+  flush     1
+  log_level info
 
 [INPUT]
-    name      dummy
-    dummy     {"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}
-    samples   1
+  name      dummy
+  dummy     {"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}
+  samples   1
 
 [OUTPUT]
-    name                   loki
-    match                  *
-    host                   127.0.0.1
-    port                   3100
-    labels                 job=fluentbit
-    label_keys             $sub['stream']
-    auto_kubernetes_labels on
+  name                   loki
+  match                  *
+  host                   127.0.0.1
+  port                   3100
+  labels                 job=fluentbit
+  label_keys             $sub['stream']
+  auto_kubernetes_labels on
 ```
 
 {% endtab %}
@@ -628,36 +592,17 @@ pipeline:
 Run Fluent Bit with the corresponding new configuration file:
 
 ```shell
-#For YAML configuration.
-fluent-bit -c out_loki.yaml
+# For YAML configuration.
+fluent-bit --config out_loki.yaml
 
 # For classic configuration.
-fluent-bit -c out_loki.conf
+fluent-bit --config out_loki.conf
 ```
 
 Which returns output that similar to the following:
 
 ```text
-Fluent Bit v4.0.0
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/06/18 13:33:58] [ info] [fluent bit] version=4.0.0, commit=3a91b155d6, pid=58429
-[2025/06/18 13:33:58] [ info] [storage] ver=1.5.2, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/06/18 13:33:58] [ info] [simd    ] disabled
-[2025/06/18 13:33:58] [ info] [cmetrics] version=0.9.9
-[2025/06/18 13:33:58] [ info] [ctraces ] version=0.6.2
-[2025/06/18 13:33:58] [ info] [input:random:random.0] initializing
-[2025/06/18 13:33:58] [ info] [input:random:random.0] storage_strategy='memory' (memory only)
-[2025/06/18 13:33:58] [ info] [sp] stream processor started
+...
 [2020/10/14 20:57:46] [ info] [output:loki:loki.0] 127.0.0.1:3100, HTTP status=204
+...
 ```
