@@ -73,11 +73,11 @@ plugin issues a retry.
 
 ### Listener backlog
 
-When Fluent Bit listens for incoming connections (for example, in input plugins like HTTP, TCP, OpenTelemetry, Forward, Syslog, and so on), the operating system maintains a queue of pending connections. The `net.backlog` option controls the maximum number of pending connections that can be queued before new connection attempts are refused. Increasing this value can help Fluent Bit handle bursts of incoming connections more gracefully. The default value is `128`.
+When Fluent Bit listens for incoming connections (for example, in input plugins like HTTP, TCP, OpenTelemetry, Forward, and Syslog), the operating system maintains a queue of pending connections. The `net.backlog` option controls the maximum number of pending connections that can be queued before new connection attempts are refused. Increasing this value can help Fluent Bit handle bursts of incoming connections more gracefully. The default value is `128`.
 
 {% hint style="info" %}
 
-On Linux, the effective backlog value might be capped by the kernel parameter `net.core.somaxconn`. If you need to allow a higher number of pending connections, you might need to increase this system setting.
+On Linux, the effective backlog value might be capped by the kernel parameter `net.core.somaxconn`. If you need to allow a greater number of pending connections, you can increase this system setting.
 
 {% endhint %}
 

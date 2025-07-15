@@ -54,7 +54,7 @@ These buffers are per-file. If you're monitoring many files, each file gets its 
 
 ### From buffers to chunks
 
-Inside each file buffer, multiple lines or records might exist. The plugin processes these records and converts them to MessagePack format (binary serialization). This MessagePack data is then appended to what Fluent Bit calls a _chunk_: a collection of serialized records that belong to the same tag.
+Inside each file buffer, multiple lines or records might exist. The plugin processes these records and converts them to MessagePack format (binary serialization). This MessagePack data is then appended to what Fluent Bit calls a _chunk_, which is a collection of serialized records that belong to the same tag.
 
 Although Fluent Bit has a soft limit of 2&nbsp;MB for chunks, input plugins like Tail can generate MessagePack buffers larger than 2&nbsp;MB, and the final chunk can exceed this soft limit.
 

@@ -159,8 +159,8 @@ Each extended callback must return four values:
 
 At load time, the Lua filter automatically detects which callback prototype to use based on the number of parameters:
 
-- **Three arguments**: Uses the classic mode (`tag`, `timestamp`, `record`)
-- **Five arguments**: Uses the metadata-aware mode (`tag`, `timestamp`, `group`, `metadata`, `record`)
+- Three arguments: Uses the classic mode (`tag`, `timestamp`, `record`)
+- Five arguments: Uses the metadata-aware mode (`tag`, `timestamp`, `group`, `metadata`, `record`)
 
 This ensures backward compatibility with existing Lua scripts.
 
