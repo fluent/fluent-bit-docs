@@ -106,9 +106,36 @@ When the plugin process each record \(or log\), it tries to lookup for specific 
 
 ## Getting Started
 
-The following configuration example, will emit a dummy example record and ingest it on LogDNA. Copy and paste the following content in a file called `logdna.conf`:
+The following configuration example, will emit a dummy example record and ingest it on LogDNA. In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+  
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}'
+      samples: 1
+      
+  outputs:
+    - name: logdna
+      match: '*'
+      api_key: YOUR_API_KEY_HERE
+      hostname: my-hostname
+      ip: 192.168.1.2
+      mac: aa:bb:cc:dd:ee:ff
+      tags: aa, bb
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
     flush     1
     log_level info
@@ -128,29 +155,29 @@ The following configuration example, will emit a dummy example record and ingest
     tags      aa, bb
 ```
 
-run Fluent Bit with the new configuration file:
+{% endtab %}
+{% endtabs %}
 
-```text
-fluent-bit -c logdna.conf
+Run Fluent Bit with the new configuration file:
+
+```shell
+# For YAML configuration.
+fluent-bit --config fluent-bit.yaml
+
+# For classic configuration.
+fluent-bit --config fluent-bit.conf
 ```
 
 Fluent Bit output:
 
 ```text
-Fluent Bit v1.5.0
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-[2020/04/07 17:44:37] [ info] [storage] version=1.0.3, initializing...
-[2020/04/07 17:44:37] [ info] [storage] in-memory
-[2020/04/07 17:44:37] [ info] [storage] normal synchronization mode, checksum disabled, max_chunks_up=128
+...
 [2020/04/07 17:44:37] [ info] [engine] started (pid=2157706)
 [2020/04/07 17:44:37] [ info] [output:logdna:logdna.0] configured, hostname=monox-fluent-bit-2
 [2020/04/07 17:44:37] [ info] [sp] stream processor started
 [2020/04/07 17:44:38] [ info] [output:logdna:logdna.0] logs.logdna.com:443, HTTP status=200
 {"status":"ok","batchID":"f95849a8-ec6c-4775-9d52-30763604df9b:40710:ld72"}
+...
 ```
 
 Your record will be available and visible in your LogDNA dashboard after a few seconds.
