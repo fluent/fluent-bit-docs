@@ -214,7 +214,7 @@ The following configuration examples generate the same Stream Labels:
 
 Add the JSON path to the plugin output configuration:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -241,7 +241,7 @@ pipeline:
 
 The previous configurations accomplish the same as this one:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -276,7 +276,7 @@ job="fluentbit", stream="stdout"
 
 If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which autopopulates the streams with the Pod labels for you. Consider the following configuration:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -321,7 +321,7 @@ Consider this JSON example:
 
 If the value is a string, `line_format` is `json`, and `drop_single_key` is `true`, it will be sent as a quoted string.
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -390,7 +390,7 @@ The following configuration:
   determined by the Kubernetes metadata filter (not shown).
 - Uses a structured metadata field to hold the Kubernetes pod name.
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -428,7 +428,7 @@ In addition to the `structured_metadata` configuration parameter, a `structured_
 
 The following configuration is similar to the previous example, except now all entries in the log record map value `$kubernetes` will be used as structured metadata entries:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -457,7 +457,7 @@ pipeline:
 
 Assuming the value `$kubernetes` is a map containing two entries `namespace_name` and `pod_name`, the previous configuration is equivalent to:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -499,7 +499,7 @@ Fluent Bit supports sending logs and metrics to [Grafana Cloud](https://grafana.
 
 Below is an example configuration, be sure to set the credentials (shown here with XXX) and ensure the host URL matches the correct one for your deployment:
 
-% tabs %}
+{% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
@@ -539,7 +539,7 @@ pipeline:
 The following configuration example emits a dummy example record and ingests it on Loki .
 Copy and paste the corresponding content below into a file `out_loki.yaml` or `out_loki.conf`:
 
-% tabs %}
+{% tabs %}
 {% tab title="out-loki.yaml" %}
 
 ```yaml

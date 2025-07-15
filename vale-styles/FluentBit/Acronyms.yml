@@ -29,6 +29,7 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - ECR
   - ECS
   - FAQ
   - FIPS
@@ -89,6 +90,7 @@ exceptions:
   - SSH
   - SSL
   - SSO
+  - STS
   - SVG
   - TBD
   - TCP

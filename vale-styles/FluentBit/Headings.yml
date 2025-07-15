@@ -9,12 +9,14 @@ indicators:
 exceptions:
   - Amazon
   - Amazon CloudWatch
+  - Amazon ECR Public Gallery
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - API
   - APIs
   - Azure
   - Azure Logs Ingestion API
+  - Azure Log Analytics
   - BuildKite
   - CircleCI
   - CLI
@@ -26,6 +28,7 @@ exceptions:
   - cURL
   - Datadog
   - Docker
+  - Docker Hub
   - DogStatsD
   - Elastic Cloud
   - Emmet
@@ -36,6 +39,7 @@ exceptions:
   - GitHub
   - Google
   - Google Cloud
+  - Google Cloud BigQuery
   - Google Cloud Platform
   - Grafana
   - gRPC
