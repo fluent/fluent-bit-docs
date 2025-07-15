@@ -1,6 +1,6 @@
 # HTTP
 
-The **http** output plugin allows to flush your records into a HTTP endpoint. For now the functionality is pretty basic and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
+The **http** output plugin allows to flush your records into an HTTP endpoint. For now the functionality is pretty basic, and it issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
 
 ## Configuration Parameters
 
@@ -21,7 +21,7 @@ The **http** output plugin allows to flush your records into a HTTP endpoint. Fo
 | compress                   | Set payload compression mechanism. Option available is 'gzip'                                                                                                                                                                                                                                                                      |           |
 | format                     | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_.                                                                                                                                                        | msgpack   |
 | allow\_duplicated\_headers | Specify if duplicated headers are allowed. If a duplicated header is found, the latest key/value set is preserved.                                                                                                                                                                                                                 | true      |
-| log\_response\_payload     | Specify if the response paylod should be logged or not.                                                                                                                                                                                                                                                                            | true      |
+| log\_response\_payload     | Specify if the response payload should be logged or not.                                                                                                                                                                                                                                                                            | true      |
 | header\_tag                | Specify an optional HTTP header field for the original message tag.                                                                                                                                                                                                                                                                |           |
 | header                     | Add a HTTP header key/value pair. Multiple headers can be set.                                                                                                                                                                                                                                                                     |           |
 | json\_date\_key            | Specify the name of the time key in the output record. To disable the time key just set the value to `false`.                                                                                                                                                                                                                      | date      |
@@ -42,7 +42,7 @@ For more details about the properties available and general configuration, see [
 
 ## Getting Started
 
-In order to insert records into a HTTP server, you can run the plugin from the command line or through the configuration file:
+In order to insert records into an HTTP server, you can run the plugin from the command line or through the configuration file:
 
 ### Command Line
 
