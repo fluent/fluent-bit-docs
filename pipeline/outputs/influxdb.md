@@ -41,75 +41,154 @@ influxdb://host:port
 
 Using the format specified, you could start Fluent Bit through:
 
-```text
+```shell
 fluent-bit -i cpu -t cpu -o influxdb://127.0.0.1:8086 -m '*'
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+      
+  outputs:
+    - name: influxdb
+      match: '*'
+      host: 127.0.0.1
+      port: 8086
+      database: fluentbit
+      sequence_tag: _seq
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name  cpu
-    Tag   cpu
+  Name  cpu
+  Tag   cpu
 
 [OUTPUT]
-    Name          influxdb
-    Match         *
-    Host          127.0.0.1
-    Port          8086
-    Database      fluentbit
-    Sequence_Tag  _seq
+  Name          influxdb
+  Match         *
+  Host          127.0.0.1
+  Port          8086
+  Database      fluentbit
+  Sequence_Tag  _seq
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Tagging
 
 Basic example of `Tag_Keys` usage:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      tag: apache.access
+      parser: apache2
+      path: /var/log/apache2/access.log
+      
+  outputs:
+    - name: influxdb
+      match: '*'
+      host: 127.0.0.1
+      port: 8086
+      database: fluentbit
+      sequence_tag: _seq
+      # make tags from method and path fields
+      tag_keys: method path
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name            tail
-    Tag             apache.access
-    parser          apache2
-    path            /var/log/apache2/access.log
+  Name            tail
+  Tag             apache.access
+  parser          apache2
+  path            /var/log/apache2/access.log
 
 [OUTPUT]
-    Name          influxdb
-    Match         *
-    Host          127.0.0.1
-    Port          8086
-    Database      fluentbit
-    Sequence_Tag  _seq
-    # make tags from method and path fields
-    Tag_Keys      method path
+  Name          influxdb
+  Match         *
+  Host          127.0.0.1
+  Port          8086
+  Database      fluentbit
+  Sequence_Tag  _seq
+  # make tags from method and path fields
+  Tag_Keys      method path
 ```
+
+{% endtab %}
+{% endtabs %}
 
 With **Auto\_Tags=On** in this example cause error, because every parsed field value type is _string_. Best usage of this option in metrics like record where one or more field value is not _string_ typed.
 
 Basic example of `Tags_List_Key` usage:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      # tagged fields: level, ID, businessObjectID, status
+      dummy: '{"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}'
+      
+  outputs:
+    - name: influxdb
+      match: '*'
+      host: 127.0.0.1
+      port: 8086
+      database: fluentbit
+      sequence_tag: _seq
+      # make tags from method and path fields
+      tag_keys: method path
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name              dummy
-    # tagged fields: level, ID, businessObjectID, status
-    Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
+  Name              dummy
+  # tagged fields: level, ID, businessObjectID, status
+  Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
 
 [OUTPUT]
-    Name          influxdb
-    Match         *
-    Host          127.0.0.1
-    Port          8086
-    Bucket        My_Bucket
-    Org           My_Org
-    Sequence_Tag  _seq
-    HTTP_Token    My_Token
-    # tag all fields inside tags string array
-    Tags_List_Enabled True
-    Tags_List_Key tags
-    # tag level, status fields
-    Tag_Keys level status
+  Name          influxdb
+  Match         *
+  Host          127.0.0.1
+  Port          8086
+  Bucket        My_Bucket
+  Org           My_Org
+  Sequence_Tag  _seq
+  HTTP_Token    My_Token
+  # tag all fields inside tags string array
+  Tags_List_Enabled True
+  Tags_List_Key tags
+  # tag level, status fields
+  Tag_Keys level status
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Testing
 
@@ -119,8 +198,9 @@ Before to start Fluent Bit, make sure the target database exists on InfluxDB, us
 
 Log into InfluxDB console:
 
-```text
+```shell
 $ influx
+
 Visit https://enterprise.influxdata.com to register for updates, InfluxDB server management, and monitoring.
 Connected to http://localhost:8086 version 1.1.0
 InfluxDB shell version: 1.1.0
@@ -151,8 +231,8 @@ fluentbit
 
 The following command will gather CPU metrics from the system and send the data to InfluxDB database every five seconds:
 
-```text
-bin/fluent-bit -i cpu -t cpu -o influxdb -m '*'
+```shell
+fluent-bit -i cpu -t cpu -o influxdb -m '*'
 ```
 
 Note that all records coming from the _cpu_ input plugin, have a tag _cpu_, this tag is used to generate the measurement in InfluxDB

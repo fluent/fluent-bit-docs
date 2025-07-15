@@ -32,26 +32,45 @@ In order to insert records into Apache Kafka, you can run the plugin from the co
 
 The **kafka** plugin can read parameters through the **-p** argument \(property\), e.g:
 
-```text
+```shell
 fluent-bit -i cpu -o kafka -p brokers=192.168.1.3:9092 -p topics=test
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      
+  outputs:
+    - name: kafka
+      match: '*'
+      host: 192.1681.3:9092
+      topics: test
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        kafka
-    Match       *
-    Brokers     192.168.1.3:9092
-    Topics      test
+  Name        kafka
+  Match       *
+  Brokers     192.168.1.3:9092
+  Topics      test
 ```
 
-
+{% endtab %}
+{% endtabs %}
 
 ### Avro Support
 
@@ -66,7 +85,7 @@ example which activates:
 * debugging support
 * builds the test suites
 
-```
+```shell
 cmake -DFLB_DEV=On -DFLB_OUT_KAFKA=On -DFLB_TLS=On -DFLB_TESTS_RUNTIME=On -DFLB_TESTS_INTERNAL=On -DCMAKE_BUILD_TYPE=Debug -DFLB_HTTP_SERVER=true -DFLB_AVRO_ENCODER=On ../
 ```
 
@@ -77,49 +96,101 @@ log lines with kubernetes metadata via the kubernetes filter, and then
 sends the fully decorated log lines to a kafka broker encoded with a
 specific avro schema.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      tag: kube.*
+      alias: some-alias
+      path: /logdir/*.log
+      db: /dbdir/some.db
+      skip_long_lines: on
+      refresh_interval: 10
+      parser: some-parser
+      
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      kube_url: https://some_kube_api:443
+      kube_ca_file: /certs/ca.crt
+      kube_token_file: /tokens/token
+      kube_tag_prefix: kube.var.log.containers.
+      merge_log: on
+      merge_log_key: log_processed
+      
+  outputs:
+    - name: kafka
+      match: '*'
+      brokers: 192.168.1.3:9092
+      topics: test
+      schema_str:  '{"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}'
+      schema_id: some_schema_id
+      rdkafka.client.id: some_client_id
+      rdkafka.debug: all
+      rdkafka.enable.ssl.certificate.verification: true  
+      rdkafka.ssl.certificate.location: /certs/some.cert
+      rdkafka.ssl.key.location: /certs/some.key
+      rdkafka.ssl.ca.location: /certs/some-bundle.crt
+      rdkafka.security.protocol: ssl
+      rdkafka.request.required.acks: 1
+      rdkafka.log.connection.close: false
+      format: avro
+      rdkafka.log_level: 7
+      rdkafka.metadata.broker.list: 192.168.1.3:9092
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name              tail
-    Tag               kube.*
-    Alias             some-alias
-    Path              /logdir/*.log
-    DB                /dbdir/some.db
-    Skip_Long_Lines   On
-    Refresh_Interval  10
-    Parser some-parser
+  Name              tail
+  Tag               kube.*
+  Alias             some-alias
+  Path              /logdir/*.log
+  DB                /dbdir/some.db
+  Skip_Long_Lines   On
+  Refresh_Interval  10
+  Parser some-parser
 
 [FILTER]
-    Name                kubernetes
-    Match               kube.*
-    Kube_URL            https://some_kube_api:443
-    Kube_CA_File        /certs/ca.crt
-    Kube_Token_File     /tokens/token
-    Kube_Tag_Prefix     kube.var.log.containers.
-    Merge_Log           On
-    Merge_Log_Key       log_processed
+  Name                kubernetes
+  Match               kube.*
+  Kube_URL            https://some_kube_api:443
+  Kube_CA_File        /certs/ca.crt
+  Kube_Token_File     /tokens/token
+  Kube_Tag_Prefix     kube.var.log.containers.
+  Merge_Log           On
+  Merge_Log_Key       log_processed
 
 [OUTPUT]
-    Name        kafka
-    Match       *
-    Brokers     192.168.1.3:9092
-    Topics      test
-    Schema_str  {"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}
-    Schema_id some_schema_id
-    rdkafka.client.id some_client_id
-    rdkafka.debug All
-    rdkafka.enable.ssl.certificate.verification true
+  Name        kafka
+  Match       *
+  Brokers     192.168.1.3:9092
+  Topics      test
+  Schema_str  {"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}
+  Schema_id some_schema_id
+  rdkafka.client.id some_client_id
+  rdkafka.debug All
+  rdkafka.enable.ssl.certificate.verification true
 
-    rdkafka.ssl.certificate.location /certs/some.cert
-    rdkafka.ssl.key.location /certs/some.key
-    rdkafka.ssl.ca.location /certs/some-bundle.crt
-    rdkafka.security.protocol ssl
-    rdkafka.request.required.acks 1
-    rdkafka.log.connection.close false
+  rdkafka.ssl.certificate.location /certs/some.cert
+  rdkafka.ssl.key.location /certs/some.key
+  rdkafka.ssl.ca.location /certs/some-bundle.crt
+  rdkafka.security.protocol ssl
+  rdkafka.request.required.acks 1
+  rdkafka.log.connection.close false
 
-    Format avro
-    rdkafka.log_level 7
-    rdkafka.metadata.broker.list 192.168.1.3:9092
+  Format avro
+  rdkafka.log_level 7
+  rdkafka.metadata.broker.list 192.168.1.3:9092
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Kafka Configuration File with Raw format
 
@@ -127,24 +198,48 @@ This example Fluent Bit configuration file creates example records with the
 _payloadkey_ and _msgkey_ keys. The _msgkey_ value is used as the Kafka message
 key, and the _payloadkey_ value as the payload.
 
+% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: example.data
+      dummy: '{"payloadkey":"Data to send to kafka", "msgkey": "Key to use in the message"}'
+      
+  outputs:
+    - name: kafka
+      match: '*'
+      host: 192.1681.3:9092
+      topics: test
+      format: raw
+      raw_log_key: payloadkey
+      message_key_field: msgkey
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name example
-    Tag  example.data
-    Dummy {"payloadkey":"Data to send to kafka", "msgkey": "Key to use in the message"}
+  Name dummy
+  Tag  example.data
+  Dummy {"payloadkey":"Data to send to kafka", "msgkey": "Key to use in the message"}
 
 
 [OUTPUT]
-    Name        kafka
-    Match       *
-    Brokers     192.168.1.3:9092
-    Topics      test
-    Format      raw
-
-    Raw_Log_Key       payloadkey
-    Message_Key_Field msgkey
+  Name        kafka
+  Match       *
+  Brokers     192.168.1.3:9092
+  Topics      test
+  Format      raw
+  Raw_Log_Key       payloadkey
+  Message_Key_Field msgkey
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## AWS MSK IAM Authentication
 
@@ -180,6 +275,10 @@ If you are compiling Fluent Bit from source, ensure the following requirements a
 
 ### Configuration Example
 
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
   inputs:
@@ -187,12 +286,15 @@ pipeline:
 
   outputs:
     - name: kafka
-      match: "*"
+      match: '*'
       brokers: my-cluster.abcdef.c1.kafka.us-east-1.amazonaws.com:9098
       topics: my-topic
       aws_msk_iam: true
       aws_msk_iam_cluster_arn: arn:aws:kafka:us-east-1:123456789012:cluster/my-cluster/abcdef-1234-5678-9012-abcdefghijkl-s3
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Example AWS IAM Policy
 
