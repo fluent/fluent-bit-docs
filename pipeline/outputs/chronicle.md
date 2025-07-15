@@ -10,11 +10,11 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 
    To stream security logs into Google Chronicle, create a [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) for Fluent Bit:
 
-1. Create a tenant of Google Chronicle
+1. Create a tenant of Google Chronicle.
 
    Fluent Bit doesn't create a tenant of Google Chronicle for your security logs, so you must create this ahead of time.
 
-1. Retrieve service account credentials
+1. Retrieve service account credentials.
 
    The Fluent Bit Chronicle output plugin uses a JSON credentials file for authentication credentials. Download the credentials file by following the instructions for [Creating and Managing Service Account Keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
@@ -22,9 +22,9 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS`. |
-| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL`. |
-| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET`. |
+| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS` |
+| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
+| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
 | `project_id` | The project id containing the tenant of Google Chronicle to stream into. | The value of the `project_id` in the credentials file |
 | `customer_id` | The customer id to identify the tenant of Google Chronicle to stream into. The value of the `customer_id` should be specified in the configuration file. | _none_ |
 | `log_type` | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). | _none_ |
