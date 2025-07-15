@@ -15,6 +15,7 @@ exceptions:
   - API
   - APIs
   - Azure
+  - Azure Logs Ingestion API
   - Azure Log Analytics
   - BuildKite
   - CircleCI
