@@ -153,7 +153,7 @@ Get-FileHash fluent-bit-4.0.4-win32.exe
 The following output indicates Fluent Bit is running:
 
 ```shell
-$ .\bin\fluent-bit.exe  -i dummy -o stdout
+.\bin\fluent-bit.exe  -i dummy -o stdout
 Fluent Bit v2.0.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -231,8 +231,8 @@ sc.exe create fluent-bit binpath= "\fluent-bit\bin\fluent-bit.exe -c \fluent-bit
 Fluent Bit can be started and managed as a normal Windows service.
 
 ```shell
-$ sc.exe start fluent-bit
-$ sc.exe query fluent-bit
+sc.exe start fluent-bit
+sc.exe query fluent-bit
 SERVICE_NAME: fluent-bit
     TYPE               : 10  WIN32_OWN_PROCESS
     STATE              : 4 Running
@@ -272,7 +272,7 @@ Start-Service fluent-bit
 Query the service status:
 
 ```shell
-$ get-Service fluent-bit | format-list
+get-Service fluent-bit | format-list
 Name                : fluent-bit
 DisplayName         : fluent-bit
 Status              : Running
@@ -354,7 +354,7 @@ start vs.exe
 1. Compile the source code.
 
    ```shell
-   $ cmake .. -G "NMake Makefiles"
+   cmake .. -G "NMake Makefiles"
    cmake --build .
    ```
 
