@@ -42,6 +42,7 @@ datapoints
 Datastream
 declaratively
 deduplicate
+deduplication
 Deployer
 deprovision
 deprovisioned

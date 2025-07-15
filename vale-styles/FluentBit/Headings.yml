@@ -36,6 +36,7 @@ exceptions:
   - GitHub
   - Google
   - Google Cloud
+  - Google Cloud BigQuery
   - Google Cloud Platform
   - Grafana
   - gRPC
