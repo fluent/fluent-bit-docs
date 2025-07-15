@@ -30,15 +30,36 @@ In order to insert records into a Kafka REST Proxy service, you can run the plug
 
 The **kafka-rest** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
 
-```text
+```shell
 fluent-bit -i cpu -t cpu -o kafka-rest -p host=127.0.0.1 -p port=8082 -m '*'
 ```
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu 
+      
+  outputs:
+    - name: kafka-rest
+      match: '*'
+      host: 127.0.0.1
+      port: 8082
+      topic: fluent-bit
+      message_key: my_key
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
     Name  cpu
     Tag   cpu
@@ -51,3 +72,6 @@ In your main configuration file append the following _Input_ & _Output_ sections
     Topic       fluent-bit
     Message_Key my_key
 ```
+
+{% endtab %}
+{% endtabs %}
