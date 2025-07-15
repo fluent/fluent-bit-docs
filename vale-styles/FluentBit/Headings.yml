@@ -9,6 +9,7 @@ indicators:
 exceptions:
   - Amazon
   - Amazon CloudWatch
+  - Amazon ECR Public Gallery
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - API
@@ -26,6 +27,7 @@ exceptions:
   - cURL
   - Datadog
   - Docker
+  - Docker Hub
   - DogStatsD
   - Elastic Cloud
   - Emmet
