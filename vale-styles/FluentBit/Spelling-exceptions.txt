@@ -148,6 +148,7 @@ Queryable
 Raspbian
 rdkafka
 Redpanda
+reindexed
 rollup
 Rollup
 rollups

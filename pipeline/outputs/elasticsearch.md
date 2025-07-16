@@ -4,11 +4,11 @@ description: Send logs to Elasticsearch (including Amazon OpenSearch Service)
 
 # Elasticsearch
 
-The **es** output plugin lets you ingest your records into an
-[Elasticsearch](http://www.elastic.co) database. To use this plugin, you must have an
-operational Elasticsearch service running in your environment.
+The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [Elasticsearch](http://www.elastic.co) database. To use this plugin, you must have an operational Elasticsearch service running in your environment.
 
-## Configuration Parameters
+## Configuration parameters
+
+This plugin has the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
@@ -56,7 +56,7 @@ be compared to the `database` and `table` concepts.
 
 ### TLS / SSL
 
-The Elasticsearch output plugin supports TLS/SSL. 
+The Elasticsearch output plugin supports TLS/SSL.
 For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### `write_operation`
@@ -78,12 +78,11 @@ The `write_operation` can be any of:
 
 ## Get started
 
-To insert records into an Elasticsearch service, you run the plugin from the
-command line or through the configuration file:
+To insert records into an Elasticsearch service, run the plugin from the command line or through the configuration file.
 
-### Command Line
+### Command line
 
-The **es** plugin can read the parameters from the command line in two ways:
+The `es` plugin can read the parameters from the command line in the following ways:
 
 - Through the `-p` argument (property).
 - Setting them directly through the service URI.
@@ -108,9 +107,9 @@ fluent-bit -i cpu -t cpu -o es -p Host=192.168.2.3 -p Port=9200 \
     -p Index=my_index -p Type=my_type -o stdout -m '*'
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following `Input` and `Output` sections.
+In your main configuration file append the following sections.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -120,7 +119,7 @@ pipeline:
   inputs:
     - name: cpu
       tag: cpu
-      
+
   outputs:
     - name: es
       match: '*'
@@ -151,7 +150,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## About Elasticsearch field names
+## Elasticsearch field names
 
 Some input plugins can generate messages where the field names contains dots. For
 Elasticsearch 2.0, this isn't allowed. The current **es** plugin replaces
@@ -173,9 +172,7 @@ Connect to Amazon OpenSearch or Elastic Cloud with the ElasticSearch plugin.
 
 ### Amazon OpenSearch Service
 
-The Amazon OpenSearch Service adds an extra security layer where HTTP requests must
-be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon
-OpenSearch Service with IAM Authentication.
+The Amazon OpenSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon OpenSearch Service with IAM Authentication.
 
 See [details](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) on how AWS credentials are fetched.
 
@@ -186,7 +183,7 @@ Example configuration:
 
 ```yaml
 pipeline:
-      
+
   outputs:
     - name: es
       match: '*'
@@ -222,13 +219,7 @@ Be aware that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is 
 
 ### Use Fluent Bit with Elastic Cloud
 
-Fluent Bit supports connecting to
-[Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html)
-by providing the `cloud_id` and the `cloud_auth` settings. `cloud_auth` uses the
-`elastic` user and password provided when the cluster was created. For details refer
-to the
-[Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
-
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) by providing the `cloud_id` and the `cloud_auth` settings. `cloud_auth` uses the `elastic` user and password provided when the cluster was created. For details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
 Example configuration:
 
 {% tabs %}
@@ -236,7 +227,7 @@ Example configuration:
 
 ```yaml
 pipeline:
-      
+
   outputs:
     - name: es
       include_tag_key: true
@@ -281,9 +272,7 @@ Use the following information to help resolve errors using the ElasticSearch plu
 
 ### Using multiple types in a single index
 
-Elasticsearch 6.0 can't create multiple types in a single index. An error message
-like the following indicates you need to update your configuration to use a single
-type on each index.
+Elasticsearch 6.0 can't create multiple types in a single index. An error message like the following indicates you need to update your configuration to use a single type on each index.
 
 ```text
 Rejecting mapping update to [products] as the final mapping would have more than 1 type:
@@ -296,7 +285,7 @@ This means that you can't set up your configuration like the following:.
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: es
       match: 'foo.*'
@@ -333,23 +322,18 @@ For details, read [the official blog post on that issue](https://www.elastic.co/
 
 ### Mapping type names can't start with underscores (`_`)
 
-Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, matching
-the recommendation from Elasticsearch for version 6.2 and greater
-([see commit with
-rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)).
+Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, matching the recommendation from Elasticsearch for version 6.2 and greater ([see commit with rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)).
 
-This doesn't work in Elasticsearch versions 5.6 through 6.1
-([discussion and fix](https://discuss.elastic.co/t/cant-use-doc-as-type-despite-it-being-declared-the-preferred-method/113837/9)).
+This doesn't work in Elasticsearch versions 5.6 through 6.1 ([discussion and fix](https://discuss.elastic.co/t/cant-use-doc-as-type-despite-it-being-declared-the-preferred-method/113837/9)).
 
-Ensure you set an explicit map such as `doc` or `flb_type` in the configuration,
-as seen on the last line:
+Ensure you set an explicit map such as `doc` or `flb_type` in the configuration, as seen on the last line:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: es
       match: '*'
@@ -383,24 +367,20 @@ pipeline:
 
 ### Validation failures
 
-In Fluent Bit v1.8.2 and greater, Fluent Bit started using `create` method (instead
-of `index`) for data submission. This makes Fluent Bit compatible with `Datastream`,
-introduced in Elasticsearch 7.9. You might see errors like:
+In Fluent Bit v1.8.2 and greater, Fluent Bit started using `create` method (instead of `index`) for data submission. This makes Fluent Bit compatible with `Datastream`, introduced in Elasticsearch 7.9. You might see errors like:
 
 ```text
 Validation Failed: 1: an id must be provided if version type or value are set
 ```
 
-If you see `action_request_validation_exception` errors on your pipeline with
-Fluent Bit versions greater than v1.8.2, correct them  by turning on `Generate_ID`
-as follows:
+If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit versions greater than v1.8.2, correct them  by turning on `Generate_ID` as follows:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-  
+
   outputs:
     - name: es
       match: '*'
@@ -424,21 +404,20 @@ pipeline:
 
 ### `Logstash_Prefix_Key`
 
-The following snippet demonstrates using the namespace name as extracted by the
-`kubernetes` filter as `logstash` prefix:
+The following snippet demonstrates using the namespace name as extracted by the `kubernetes` filter as `logstash` prefix:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: es
       match: '*'
       # ...
       logstash_prefix: logstash
-      logstash_prefix_key: $kubernetes['namespace_name'] 
+      logstash_prefix_key: $kubernetes['namespace_name']
       # ...
 ```
 
@@ -458,5 +437,4 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-For records that don't have the field `kubernetes.namespace_name`, the default prefix
-`logstash` will be used.
+For records that don't have the field `kubernetes.namespace_name`, the default prefix `logstash` will be used.
