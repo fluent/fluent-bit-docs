@@ -8,13 +8,19 @@ following versions are supported:
 * Raspbian Bullseye (11)
 * Raspbian Buster (10)
 
-## Server GPG key
+## Server GPG key (old style)
 
 The first step is to add the Fluent Bit server GPG key to your keyring so you
 can get FLuent Bit signed packages:
 
 ```shell
 curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+```
+
+## Server GPG key (new style)
+
+```text
+sudo bash -lc "curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg"
 ```
 
 ### Updated key from March 2022
@@ -57,8 +63,10 @@ deb https://packages.fluentbit.io/raspbian/bookworm bookworm main
 
 ### Raspbian 11 (Bullseye)
 
+For Raspbian 11, we recommend to use new style of storing GPG key and:
+
 ```text
-deb https://packages.fluentbit.io/raspbian/bullseye bullseye main
+deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/raspbian/bullseye bullseye main
 ```
 
 ### Raspbian 10 (Buster)
