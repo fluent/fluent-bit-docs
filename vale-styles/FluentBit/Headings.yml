@@ -65,6 +65,7 @@ exceptions:
   - ServiceMonitor
   - SignalFx
   - Slack
+  - SQL
   - SSL
   - StatsD
   - Studio
