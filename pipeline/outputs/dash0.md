@@ -22,7 +22,7 @@ Stream logs to [Dash0](https://www.dash0.com) by utilizing the [OpenTelemetry pl
 The OpenTelemetry output plugin supports TLS/SSL.
 For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
-## Getting started
+## Get started
 
 To get started with sending logs to Dash0:
 
@@ -34,9 +34,9 @@ To get started with sending logs to Dash0:
 
 ```yaml
 pipeline:
-    
+
   outputs:
-    - name: opentelemetry      
+    - name: opentelemetry
       match: '*'
       host: ingress.eu-west-1.aws.dash0.com
       port: 443
@@ -45,6 +45,7 @@ pipeline:
       logs_uri: /v1/logs
       traces_uri: /v1/traces
 ```
+
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
