@@ -151,7 +151,7 @@ Multiline core is exposed by the following configuration:
 
 ### Multiline and containers
 
-If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the built-in modes. This helps reassemble multiline messages originally split by Docker or CRI:
+If you are running Fluent Bit to process logs coming from containers like Docker or CRI, you can use the built-in modes. This helps reassemble large messages originally split by Docker or CRI:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
