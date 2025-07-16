@@ -55,7 +55,7 @@ services:
     depends_on:
       - elasticsearch
   elasticsearch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.17.6
     ports:
       - "9200:9200"
     environment:
