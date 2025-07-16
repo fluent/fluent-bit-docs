@@ -1,24 +1,24 @@
 # Counter
 
-_Counter_ is a very simple plugin that counts how many records it's getting upon flush time. Plugin output is as follows:
+_Counter_ is a plugin that counts how many records it's getting upon flush time. Plugin output is as follows:
 
 ```text
 [TIMESTAMP, NUMBER_OF_RECORDS_NOW] (total = RECORDS_SINCE_IT_STARTED)
 ```
 
-## Getting Started
+## Get started
 
-You can run the plugin from the command line or through the configuration file:
+You can run the plugin from the command line or through the configuration file.
 
-### Command Line
+### Command line
 
-From the command line you can let Fluent Bit count up a data with the following options:
+From the command line you can let Fluent Bit count data with the following options:
 
 ```shell
 fluent-bit -i cpu -o counter
 ```
 
-### Configuration File
+### Configuration file
 
 In your main configuration file append the following:
 
@@ -30,7 +30,7 @@ pipeline:
   inputs:
     - name: cpu
       tag: cpu
-      
+
   outputs:
     - name: counter
       match: '*'
@@ -54,9 +54,9 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you will see the reports in the output interface similar to this:
+Once Fluent Bit is running, you will see the reports similar to this in the output interface:
 
-```shell
+```text
 ...
 1500484743,1 (total = 1)
 1500484744,1 (total = 2)
