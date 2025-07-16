@@ -4,9 +4,7 @@ description: Send logs to Dynatrace
 
 # Dynatrace
 
-Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the **http**
-plugin to send data to the
-[Dynatrace generic log ingest API](https://docs.dynatrace.com/docs/shortlink/lma-generic-log-ingestion).
+Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the `http` plugin to send data to the [Dynatrace generic log ingest API](https://docs.dynatrace.com/docs/shortlink/lma-generic-log-ingestion).
 
 ## Configuration parameters
 
@@ -20,26 +18,24 @@ plugin to send data to the
 | `uri`                      | Specify the HTTP URI for Dynatrace log ingest API. | `/api/v2/logs/ingest` |
 | `format`                   | The data format to be used in the HTTP request body. | `json` |
 | `json_date_format`         | Date format standard for JSON. | `iso8601` |
-| `json_date_key`            | Fieldname specifying message timestamp. | `timestamp` |
+| `json_date_key`            | Field name specifying message timestamp. | `timestamp` |
 | `tls`                      | Specify to use TLS. | `on` |
 | `tls.verify`               | TLS verification. | `on` |
 
-## Getting started
+## Get started
 
 To get started with sending logs to Dynatrace:
 
-1. Get a [Dynatrace API](https://docs.dynatrace.com/docs/shortlink/api-authentication)
-   token with the `logs.ingest` (Ingest Logs) scope.
-1. Determine your Dynatrace
-   [environment ID](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id).
-   1. In your main Fluent Bit configuration file, append the following `Output` section:
+1. Get a [Dynatrace API](https://docs.dynatrace.com/docs/shortlink/api-authentication) token with the `logs.ingest` (Ingest Logs) scope.
+1. Determine your Dynatrace [environment ID](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id).
+1. In your main Fluent Bit configuration file, append the following `Output` section:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
    ```yaml
    pipeline:
-          
+
      outputs:
        - name: http
          match: '*'
@@ -54,12 +50,12 @@ To get started with sending logs to Dynatrace:
          json_date_format: iso8601
          json_date_key: timestamp
          tls: on
-         tls.verify: on      
+         tls.verify: on
    ```
-   
+
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
-   
+
    ```text
    [OUTPUT]
      name         http
@@ -76,13 +72,14 @@ To get started with sending logs to Dynatrace:
      tls          On
      tls.verify   On
    ```
-   
+
 {% endtab %}
 {% endtabs %}
 
 ## References
 
 - [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/shortlink/lma-stream-logs-with-fluent-bit)
-- [Fluent Bit integration in Dynatrace Hub](https://www.dynatrace.com/hub/detail/fluent-bit/?filter=log-management-and-analytics) 
+- [Fluent Bit integration in Dynatrace Hub](https://www.dynatrace.com/hub/detail/fluent-bit/?filter=log-management-and-analytics)
 - [Video: Stream a Log File to Dynatrace using Fluent Bit](https://www.youtube.com/watch?v=JJJNxhtJ6R0)
-- [Blog: Easily stream logs from Fluent Bit to Dynatrace](https://www.dynatrace.com/news/blog/easily-stream-logs-with-fluent-bit-to-dynatrace/)
+- [Blog: Easily stream logs from Fluent Bit to
+  Dynatrace](https://www.dynatrace.com/news/blog/easily-stream-logs-with-fluent-bit-to-dynatrace/)
