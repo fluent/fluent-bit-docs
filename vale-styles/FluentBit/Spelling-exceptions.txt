@@ -134,6 +134,7 @@ Podman
 Postgres
 PowerShell
 prepopulate
+preprocessor
 Profiler
 Prometheus
 PromQL
@@ -148,6 +149,7 @@ Queryable
 Raspbian
 rdkafka
 Redpanda
+remapper
 rollup
 Rollup
 rollups
