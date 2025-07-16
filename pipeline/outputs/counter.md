@@ -54,7 +54,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you will see the reports similar to this in the output interface:
+When Fluent Bit is running, you will see the reports similar to this in the output interface:
 
 ```text
 ...
