@@ -34,6 +34,7 @@ exceptions:
   - Emmet
   - EventBridge
   - Fluent Bit
+  - Forward
   - GCP
   - GitLab
   - GitHub
