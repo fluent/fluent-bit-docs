@@ -10,6 +10,7 @@ exceptions:
   - Amazon
   - Amazon CloudWatch
   - Amazon ECR Public Gallery
+  - Amazon Kinesis Data Firehose
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - API
