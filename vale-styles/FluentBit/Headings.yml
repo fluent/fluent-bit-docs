@@ -10,8 +10,10 @@ exceptions:
   - Amazon
   - Amazon CloudWatch
   - Amazon ECR Public Gallery
+  - Amazon Kinesis Data Firehose
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
+  - Amazon OpenSearch Service
   - API
   - APIs
   - Azure
@@ -25,6 +27,7 @@ exceptions:
   - Collector
   - Cosmos
   - Crowdstrike
+  - CSV
   - cURL
   - Datadog
   - Docker
@@ -33,7 +36,9 @@ exceptions:
   - Elastic Cloud
   - Emmet
   - EventBridge
+  - FlowCounter
   - Fluent Bit
+  - Forward
   - GCP
   - GitLab
   - GitHub
@@ -49,6 +54,7 @@ exceptions:
   - Kubernetes
   - LaunchDarkly
   - Linux
+  - LTSV
   - macOS
   - Marketplace
   - MongoDB
@@ -65,11 +71,13 @@ exceptions:
   - ServiceMonitor
   - SignalFx
   - Slack
+  - SSL
   - StatsD
   - Studio
   - Tanzu
   - Telemetry Pipeline
   - Terraform
+  - TLS
   - TypeScript
   - URLs
   - VictorOps

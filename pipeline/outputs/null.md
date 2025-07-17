@@ -14,21 +14,39 @@ You can run the plugin from the command line or through the configuration file:
 
 From the command line you can let Fluent Bit throws away events with the following options:
 
-```bash
+```shell
 fluent-bit -i cpu -o null
 ```
 
 ### Configuration File
 
-In your main configuration file append the following Input & Output sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+
+  outputs:
+    - name: null
+      match: '*'
+```
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name cpu
-    Tag  cpu
+  Name cpu
+  Tag  cpu
 
 [OUTPUT]
-    Name null
-    Match *
+  Name null
+  Match *
 ```
 
+{% endtab %}
+{% endtabs %}

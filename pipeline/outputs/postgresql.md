@@ -10,7 +10,11 @@ PostgreSQL 9.4 or higher is required.
 
 According to the parameters you have set in the configuration file, the plugin will create the table defined by the `table` option in the database defined by the `database` option hosted on the server defined by the `host` option. It will use the PostgreSQL user defined by the `user` option, which needs to have the right privileges to create such a table in that database.
 
-> **NOTE:** If you are not familiar with how PostgreSQL's users and grants system works, you might find useful reading the recommended links in the "References" section at the bottom.
+{% hint style="info" %}
+
+If you are not familiar with how PostgreSQL's users and grants system works, you might find useful reading the recommended links in the "References" section at the bottom.
+
+{% endhint %}
 
 A typical installation normally consists of a self-contained database for Fluent Bit in which you can store the output of one or more pipelines. Ultimately, it is your choice to store them in the same table, or in separate tables, or even in separate databases based on several factors, including workload, scalability, data protection and security.
 
@@ -20,7 +24,7 @@ In this example, for the sake of simplicity, we use a single table called `fluen
 
 Generate a robust random password \(e.g. `pwgen 20 1`\) and store it safely. Then, as `postgres` system user on the server where PostgreSQL is installed, execute:
 
-```bash
+```shell
 createuser -P fluentbit
 ```
 
@@ -34,7 +38,7 @@ If you prefer, instead of the `createuser` application, you can directly use the
 
 As `postgres` system user, please run:
 
-```bash
+```shell
 createdb -O fluentbit fluentbit
 ```
 
@@ -48,21 +52,21 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 
 ## Configuration Parameters
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Host` | Hostname/IP address of the PostgreSQL instance | - \(127.0.0.1\) |
-| `Port` | PostgreSQL port | - \(5432\) |
-| `User` | PostgreSQL username | - \(current user\) |
-| `Password` | Password of PostgreSQL username | - |
-| `Database` | Database name to connect to | - \(current user\) |
-| `Table` | Table name where to store data | - |
-| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS) | - |
-| `Timestamp_Key` | Key in the JSON object containing the record timestamp | date |
-| `Async` | Define if we will use async or sync connections | false |
-| `min_pool_size` | Minimum number of connection in async mode | 1 |
-| `max_pool_size` | Maximum amount of connections in async mode | 4 |
-| `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB | false |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| Key                  | Description                                                                                                                         | Default            |
+|:---------------------|:------------------------------------------------------------------------------------------------------------------------------------|:-------------------|
+| `Host`               | Hostname/IP address of the PostgreSQL instance                                                                                      | - \(127.0.0.1\)    |
+| `Port`               | PostgreSQL port                                                                                                                     | - \(5432\)         |
+| `User`               | PostgreSQL username                                                                                                                 | - \(current user\) |
+| `Password`           | Password of PostgreSQL username                                                                                                     | -                  |
+| `Database`           | Database name to connect to                                                                                                         | - \(current user\) |
+| `Table`              | Table name where to store data                                                                                                      | -                  |
+| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS) | -                  |
+| `Timestamp_Key`      | Key in the JSON object containing the record timestamp                                                                              | date               |
+| `Async`              | Define if we will use async or sync connections                                                                                     | false              |
+| `min_pool_size`      | Minimum number of connection in async mode                                                                                          | 1                  |
+| `max_pool_size`      | Maximum amount of connections in async mode                                                                                         | 4                  |
+| `cockroachdb`        | Set to `true` if you will connect the plugin with a CockroachDB                                                                     | false              |
+| `workers`            | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                | `0`                |
 
 ### Libpq
 
@@ -74,19 +78,44 @@ For security reasons, it is advised to follow the directives included in the [pa
 
 In your main configuration file add the following section:
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  
+  outputs:
+    - name: pgsql
+      match: '*'
+      host: 172.17.0.2
+      port: 5432
+      user: fluentbit
+      password: YourCrazySecurePassword
+      database: fluentbit
+      table: fluentbit
+      connection_options: '-c statement_timeout=0'
+      timestamp_key: ts 
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [OUTPUT]
-    Name                pgsql
-    Match               *
-    Host                172.17.0.2
-    Port                5432
-    User                fluentbit
-    Password            YourCrazySecurePassword
-    Database            fluentbit
-    Table               fluentbit
-    Connection_Options  -c statement_timeout=0
-    Timestamp_Key       ts
+  Name                pgsql
+  Match               *
+  Host                172.17.0.2
+  Port                5432
+  User                fluentbit
+  Password            YourCrazySecurePassword
+  Database            fluentbit
+  Table               fluentbit
+  Connection_Options  -c statement_timeout=0
+  Timestamp_Key       ts
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## The output table
 
@@ -96,7 +125,7 @@ The output plugin automatically creates a table with the name specified by the `
 * `time TIMESTAMP WITHOUT TIMEZONE`
 * `data JSONB`
 
-As you can see, the timestamp does not contain any information about the time zone and it is therefore referred to the time zone used by the connection to PostgreSQL \(`timezone` setting\).
+As you can see, the timestamp does not contain any information about the time zone, and it is therefore referred to the time zone used by the connection to PostgreSQL \(`timezone` setting\).
 
 For more information on the `JSONB` data type in PostgreSQL, please refer to the [JSON types](https://www.postgresql.org/docs/current/datatype-json.html) page in the official documentation, where you can find instructions on how to index or query the objects \(including `jsonpath` introduced in PostgreSQL 12\).
 

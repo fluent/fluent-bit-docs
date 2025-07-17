@@ -150,6 +150,7 @@ Raspbian
 rdkafka
 Redpanda
 remapper
+reindexed
 rollup
 Rollup
 rollups
