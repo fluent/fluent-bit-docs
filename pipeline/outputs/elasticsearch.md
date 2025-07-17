@@ -56,8 +56,7 @@ be compared to the `database` and `table` concepts.
 
 ### TLS / SSL
 
-The Elasticsearch output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### `write_operation`
 
@@ -152,8 +151,7 @@ pipeline:
 
 ## Elasticsearch field names
 
-Some input plugins can generate messages where the field names contains dots. For
-Elasticsearch 2.0, this isn't allowed. The current **es** plugin replaces
+Some input plugins can generate messages where the field names contains dots. For Elasticsearch 2.0, this isn't allowed. The current **es** plugin replaces
 them with an underscore:
 
 ```text
