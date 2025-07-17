@@ -26,6 +26,7 @@ exceptions:
   - Collector
   - Cosmos
   - Crowdstrike
+  - CSV
   - cURL
   - Datadog
   - Docker
@@ -52,6 +53,7 @@ exceptions:
   - Kubernetes
   - LaunchDarkly
   - Linux
+  - LTSV
   - macOS
   - Marketplace
   - MongoDB
