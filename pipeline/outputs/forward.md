@@ -5,12 +5,12 @@ There are no configuration steps required besides specifying where [Fluentd](htt
 
 This plugin offers the following transports and modes:
 
-- Forward (TCP): It uses a plain TCP connection.
-- Secure Forward (TLS): when TLS is enabled, the plugin switch to Secure Forward mode.
+- Forward (TCP): Uses a plain TCP connection.
+- Secure Forward (TLS): When TLS is enabled, the plugin switches to Secure Forward mode.
 
 ## Configuration parameters
 
-The following parameters are mandatory for either Forward for Secure Forward modes:
+The following parameters are mandatory for both Forward and Secure Forward modes:
 
 | Key | Description | Default   |
 | --- | ------------ | --------- |
