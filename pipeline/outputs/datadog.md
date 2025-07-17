@@ -21,7 +21,7 @@ This plugin uses the following configuration parameters:
 | `Proxy` | Optional. Specifies an HTTP proxy. The expected format of this value is `http://host:port`. HTTPS isn't supported. | _none_ |
 | `provider` | To activate remapping, specify the configuration flag provider with the value `ecs`. | _none_ |
 | `json_date_key` | Date key name for output. | `timestamp` |
-| `include_tag_key` | If enabled, a tag is appended to output. The key name is used `tag_key` property. | `false` |
+| `include_tag_key` | If enabled, a tag is appended to the output. The key name is used `tag_key` property. | `false` |
 | `tag_key` | The key name of tag. If `include_tag_key` is `false`, this property is ignored. | `tagkey` |
 | `dd_service` | Recommended. The human readable name for your service generating the logs. For example, the name of your application or database. If not set, Datadog looks for the service using [service remapper](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=service#service-attribute). | _none_ |
 | `dd_source` | Recommended. A human-readable name for the underlying technology of your service like `postgres` or `nginx`. If unset, Datadog looks for the source in the [`ddsource` attribute](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source#source-attribute). | _none_ |
