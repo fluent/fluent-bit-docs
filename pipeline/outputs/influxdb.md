@@ -1,6 +1,6 @@
 # InfluxDB
 
-The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) time series database. The following instructions assumes that you have an operational InfluxDB service running in your system.
+The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) time series database. The following instructions assume that you have an operational InfluxDB service running in your system.
 
 ## Configuration parameters
 
@@ -10,7 +10,7 @@ This plugin supports the following parameters:
 | :--- | :--- | :--- |
 | `Host` | IP address or hostname of the target InfluxDB service. | `127.0.0.1` |
 | `Port` | TCP port of the target InfluxDB service. | `8086` |
-| `Database` | InfluxDB database name where records will be inserted | `fluentbit` |
+| `Database` | InfluxDB database name where records will be inserted. | `fluentbit` |
 | `Bucket` | InfluxDB bucket name where records will be inserted. If specified, `database` is ignored and v2 of API is used. | _none_ |
 | `Org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
 | `Sequence_Tag` | The name of the tag whose value is incremented for the consecutive simultaneous events. | `_seq` |
@@ -194,7 +194,7 @@ pipeline:
 
 ### Testing
 
-Before starting Fluent Bit, make sure the target database exists on InfluxDB. Using the previous example, insert the data into a `fluentbit` database.
+Before starting Fluent Bit, ensure the target database exists on InfluxDB. Using the previous example, insert the data into a `fluentbit` database.
 
 1. Log into the InfluxDB console:
 
