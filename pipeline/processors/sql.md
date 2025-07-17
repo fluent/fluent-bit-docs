@@ -18,7 +18,7 @@ Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/RE
 
 ## Basic selection example
 
-The following example generates a sample message with two keys: `key` and `http.url`, then uses a SQL statement to select only the key `http.url`.
+The following example generates a sample message with the keys `key` and `http.url`, and then uses a SQL statement to select only the key `http.url`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
