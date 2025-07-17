@@ -4,11 +4,11 @@ description: Send logs to Oracle Cloud Infrastructure Logging Analytics Service
 
 # Oracle Cloud Infrastructure Logging Analytics
 
-Oracle Cloud Infrastructure Logging Analytics output plugin allows you to ingest your log records into [OCI Logging Analytics](https://www.oracle.com/manageability/logging-analytics) service.
+Oracle Cloud Infrastructure Logging Analytics output plugin allows you to ingest your log records into [OCI Logging Analytics](https://www.oracle.com/manageability/logging-analytics/) service.
 
 Oracle Cloud Infrastructure Logging Analytics is a machine learning-based cloud service that monitors, aggregates, indexes, and analyzes all log data from on-premises and multicloud environments. Enabling users to search, explore, and correlate this data to troubleshoot and resolve problems faster and derive insights to make better operational decisions.
 
-For details about OCI Logging Analytics refer to https://docs.oracle.com/en-us/iaas/logging-analytics/index.html
+For details about OCI Logging Analytics refer to [the documentation](https://docs.oracle.com/en-us/iaas/logging-analytics/index.html).
 
 ## Configuration Parameters
 
@@ -20,7 +20,7 @@ Following are the top level configuration properties of the plugin:
 | profile_name         | OCI Config Profile Name to be used from the configuration file                                                                                                                                                                       | DEFAULT |
 | namespace            | OCI Tenancy Namespace in which the collected log data is to be uploaded                                                                                                                                                              |         |
 | proxy                | define proxy if required, in http://host:port format, supports only http protocol                                                                                                                                                    |         |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| workers              | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                 | `1`     |
 
 The following parameters are to set the Logging Analytics resources that must be used to process your logs by OCI Logging Analytics.
 
@@ -44,7 +44,7 @@ For more details about the properties available and general configuration, see [
 
 ### Prerequisites
 
-- OCI Logging Analytics service must be onboarded with the minumum required policies, in the OCI region where you want to monitor. Refer [Logging Analytics Quick Start](https://docs.oracle.com/en-us/iaas/logging-analytics/doc/quick-start.html) for details.
+- OCI Logging Analytics service must be onboarded with the minimum required policies, in the OCI region where you want to monitor. Refer [Logging Analytics Quick Start](https://docs.oracle.com/en-us/iaas/logging-analytics/doc/quick-start.html) for details.
 - Create OCI Logging Analytics LogGroup(s) if not done already. Refer [Create Log Group](https://docs.oracle.com/en-us/iaas/logging-analytics/doc/create-logging-analytics-resources.html#GUID-D1758CFB-861F-420D-B12F-34D1CC5E3E0E) for details.
 
 ### Running the output plugin
@@ -55,80 +55,173 @@ In order to insert records into the OCI Logging Analytics service, you can run t
 
 The OCI Logging Analytics plugin can read the parameters from the command line in two ways, through the -p argument (property), e.g:
 
-```text
+```shell
 fluent-bit -i dummy -t dummy -o oci_logan -p config_file_location=<location> -p namespace=<namespace> \
   -p oci_la_log_group_id=<lg_id> -p oci_la_log_source_name=<ls_name> -p tls=on -p tls.verify=off -m '*'
 ```
 
 #### Configuration file
 
-In your main configuration file append the following Input & Output sections:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  outputs:
+    - name: oracle_log_analytics
+      match: '*'
+      namespace: <namespace>
+      config_file_location: <location>
+      profile_name: ADMIN
+      oci_la_log_source_name: <log-source-name>
+      oci_la_log_group_id: <log-group-ocid>
+      tls: on
+      tls.verify: off
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
+  Name dummy
+  Tag dummy
+    
 [Output]
-    Name oracle_log_analytics
-    Match *
-    Namespace <namespace>
-    config_file_location <location>
-    profile_name ADMIN
-    oci_la_log_source_name <log-source-name>
-    oci_la_log_group_id <log-group-ocid>
-    tls On
-    tls.verify Off
+  Name oracle_log_analytics
+  Match *
+  Namespace <namespace>
+  config_file_location <location>
+  profile_name ADMIN
+  oci_la_log_source_name <log-source-name>
+  oci_la_log_group_id <log-group-ocid>
+  tls On
+  tls.verify Off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Insert oci_la configs in the record
 
-In case of multiple inputs, where oci_la_* properties can differ, you can add the properties in the record itself and instruct the plugin to read these properties from the record. The option oci_config_in_record, when set to true in the output config, will make the plugin read the mandatory and optional oci_la properties from the incoming record. The user must ensure that the necessary configs have been inserted using relevant filters, otherwise the respective chunk will be dropped. Below is an example to insert oci_la_log_source_name and oci_la_log_group_id in the record:
+In case of multiple inputs, where `oci_la_*` properties can differ, you can add the properties in the record itself and instruct the plugin to read these properties from the record. The option `oci_config_in_record`, when set to true in the output config, will make the plugin read the mandatory and optional `oci_la` properties from the incoming record. The user must ensure that the necessary configs have been inserted using relevant filters, otherwise the respective chunk will be dropped. Below is an example to insert `oci_la_log_source_name` and `oci_la_log_group_id` in the record:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  filters:
+    - name: modify
+      match: '*'
+      add:
+        - oci_la_log_source_name <LOG_SOURCE_NAME>
+        - oci_la_log_group_id <LOG_GROUP_OCID>
+          
+  outputs:
+    - name: oracle_log_analytics
+      match: '*'
+      config_file_location: <oci_file_path>
+      profile_name: ADMIN
+      oci_config_in_record: true
+      tls: on
+      tls.verify: off
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
+  Name dummy
+  Tag dummy
 
 [Filter]
-    Name modify
-    Match *
-    Add oci_la_log_source_name <LOG_SOURCE_NAME>
-    Add oci_la_log_group_id <LOG_GROUP_OCID>
+  Name modify
+  Match *
+  Add oci_la_log_source_name <LOG_SOURCE_NAME>
+  Add oci_la_log_group_id <LOG_GROUP_OCID>
 
 [Output]
-    Name oracle_log_analytics
-    Match *
-    config_file_location <oci_file_path>
-    profile_name ADMIN
-    oci_config_in_record true
-    tls On
-    tls.verify Off
+  Name oracle_log_analytics
+  Match *
+  config_file_location <oci_file_path>
+  profile_name ADMIN
+  oci_config_in_record true
+  tls On
+  tls.verify Off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Add optional metadata
 
 You can attach certain metadata to the log events collected from various inputs.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  outputs:
+    - name: oracle_log_analytics
+      match: '*'
+      namespace: example_namespace
+      config_file_location: /Users/example_file_location
+      profile_name: ADMIN
+      oci_la_log_source_name: example_log_source
+      oci_la_log_group_id: ocid.xxxxxx
+      oci_la_global_metadata: 
+        - glob_key1 value1
+        - glob_key2 value2
+      oci_la_metadata: 
+        - key1 value1
+        - key2 value2
+      tls: on
+      tls.verify: off
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
-
+  Name dummy
+  Tag dummy
+    
 [Output]
-    Name oracle_log_analytics
-    Match *
-    Namespace example_namespace
-    config_file_location /Users/example_file_location
-    profile_name ADMIN
-    oci_la_log_source_name example_log_source
-    oci_la_log_group_id ocid.xxxxxx
-    oci_la_global_metadata glob_key1 value1
-    oci_la_global_metadata glob_key2 value2
-    oci_la_metadata key1 value1
-    oci_la_metadata key2 value2
-    tls On
-    tls.verify Off
+  Name oracle_log_analytics
+  Match *
+  Namespace example_namespace
+  config_file_location /Users/example_file_location
+  profile_name ADMIN
+  oci_la_log_source_name example_log_source
+  oci_la_log_group_id ocid.xxxxxx
+  oci_la_global_metadata glob_key1 value1
+  oci_la_global_metadata glob_key2 value2
+  oci_la_metadata key1 value1
+  oci_la_metadata key2 value2
+  tls On
+  tls.verify Off
 ```
+
+{% endtab %}
+{% endtabs %}
 
 The above configuration will generate a payload that looks like this
 
@@ -153,44 +246,90 @@ The above configuration will generate a payload that looks like this
 }
 ```
 
-The multiple oci_la_global_metadata and oci_la_metadata options are turned into a JSON object of key value pairs, nested under the key metadata.
+The multiple `oci_la_global_metadata` and `oci_la_metadata` options are turned into a JSON object of key value pairs, nested under the key metadata.
 
-With oci_config_in_record option set to true, the metadata key-value pairs will need to be injected in the record as an object of key value pair nested under the respective metadata field. Below is an example of one such configuration
+With `oci_config_in_record` option set to true, the metadata key-value pairs will need to be injected in the record as an object of key value pair nested under the respective metadata field. Below is an example of one such configuration
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  filters:
+    - name: modify
+      match: '*'
+      add:
+        - olgm.key1 val1
+        - olgm.key2 val2
+          
+    - name: nest
+      match: '*'
+      operation: olgm.*
+      wildcard: olgm.*
+      nest_under: oci_la_global_metadata
+      remove_prefix: olgm.
+
+    - name: modify
+      match: '*'
+      add:
+        - oci_la_log_source_name <LOG_SOURCE_NAME>
+        - oci_la_log_group_id <LOG_GROUP_OCID>
+        
+  outputs:
+    - name: oracle_log_analytics
+      match: '*'
+      config_file_location: <oci_file_path>
+      namespace: <oci_tenancy_namespace>
+      profile_name: ADMIN
+      oci_config_in_record: true
+      tls: on
+      tls.verify: off
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
+  Name dummy
+  Tag dummy
 
 [FILTER]
-    Name Modify
-    Match *
-    Add olgm.key1 val1
-    Add olgm.key2 val2
+  Name Modify
+  Match *
+  Add olgm.key1 val1
+  Add olgm.key2 val2
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard olgm.*
-    Nest_under oci_la_global_metadata
-    Remove_prefix olgm.
+  Name nest
+  Match *
+  Operation nest
+  Wildcard olgm.*
+  Nest_under oci_la_global_metadata
+  Remove_prefix olgm.
 
 [Filter]
-    Name modify
-    Match *
-    Add oci_la_log_source_name <LOG_SOURCE_NAME>
-    Add oci_la_log_group_id <LOG_GROUP_OCID>
+  Name modify
+  Match *
+  Add oci_la_log_source_name <LOG_SOURCE_NAME>
+  Add oci_la_log_group_id <LOG_GROUP_OCID>
 
 [Output]
-    Name oracle_log_analytics
-    Match *
-    config_file_location <oci_file_path>
-    namespace <oci_tenancy_namespace>
-    profile_name ADMIN
-    oci_config_in_record true
-    tls On
-    tls.verify Off
+  Name oracle_log_analytics
+  Match *
+  config_file_location <oci_file_path>
+  namespace <oci_tenancy_namespace>
+  profile_name ADMIN
+  oci_config_in_record true
+  tls On
+  tls.verify Off    
 ```
 
-The above configuration first injects the necessary metadata keys and values in the record directly, with a prefix olgm. attached to the keys in order to segregate the metadata keys from rest of the record keys. Then, using a nest filter only the metadata keys are selected by the filter and nested under oci_la_global_metadata key in the record, and the prefix olgm. is removed from the metadata keys.
+{% endtab %}
+{% endtabs %}
+
+The above configuration first injects the necessary metadata keys and values in the record directly, with a prefix olgm. attached to the keys in order to segregate the metadata keys from rest of the record keys. Then, using a nest filter only the metadata keys are selected by the filter and nested under `oci_la_global_metadata` key in the record, and the prefix `olgm`. is removed from the metadata keys.
