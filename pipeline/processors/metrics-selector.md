@@ -18,7 +18,7 @@ The metrics selector processor supports the following configuration parameters:
 
 ## Matching operations
 
-The metrics selector processor has two matching operations: prefix matching and substring matching.
+The metrics selector processor has these matching operations: prefix matching and substring matching.
 
 ### Prefix matching
 
@@ -28,7 +28,7 @@ If no `operation_type` value is specified, and if the value of `metric_name` is 
 
 ### Substring matching
 
-Substring matching treats the value of `metric_name` as a regular expression pattern, and compares this pattern against each incoming metric name accordingly. This pattern can appear anywhere within the name of the incoming metric. For example, the value `bytes` results in a match for metrics named `bytes_total` as well as metrics named `input_bytes_count`.
+Substring matching treats the value of `metric_name` as a regular expression pattern, and compares this pattern against each incoming metric name accordingly. This pattern can appear anywhere within the name of the incoming metric. For example, the value `bytes` results in a match for both metrics named `bytes_total` and metrics named `input_bytes_count`.
 
 If the value of `metric_name` is a string wrapped in forward slashes (for example, `metric_name: /storage..*/`), the metrics selector processor defaults to substring matching, regardless of whether an `operation_type` value is specified. This means that a `metric_name` value wrapped in forward slashes will always use substring matching, even if `operation_type` is set to `PREFIX`.
 
