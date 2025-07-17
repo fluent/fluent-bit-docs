@@ -18,7 +18,7 @@ This plugin supports the following parameters:
 | `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ |
 | `HTTP_Token` | Authentication token used with InfluxDB v2. If specified, both `HTTP_User` and `HTTP_Passwd` are ignored. | _none_ |
 | `HTTP_Header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `Tag_Keys` | Space separated list of keys that needs to be tagged | _none_ |
+| `Tag_Keys` | Space separated list of keys that needs to be tagged. | _none_ |
 | `Auto_Tags` | Automatically tag keys where value is `string`.  This option takes a Boolean value: `True`/`False`, `On`/`Off`. | `Off` |
 | `Uri` | Custom URI endpoint. | _none_ |
 | `Add_Integer_Suffix` | Use integer type of [InfluxDB's line protocol](https://docs.influxdata.com/influxdb/v1/write_protocols/line_protocol_reference/). This option takes a Boolean value: `True`/`False`, `On`/`Off`. | `Off` |
