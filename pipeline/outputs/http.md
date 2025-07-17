@@ -199,7 +199,7 @@ pipeline:
 
 #### Sumo Logic HTTP collector
 
-Suggested configuration for Sumo Logic using `json_lines` with `iso8601` timestamps. The `PrivateKey` is specific to a configured HTTP collector.
+The following is a suggested configuration for Sumo Logic using `json_lines` with `iso8601` timestamps. The `PrivateKey` is specific to a configured HTTP collector.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
