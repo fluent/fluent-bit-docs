@@ -1,6 +1,6 @@
 # File
 
-The _File_ output plugin lets you write the data received through the `input` plugin to file.
+The _File_ output plugin lets you write the data received through the input plugin to file.
 
 ## Configuration parameters
 
@@ -36,7 +36,7 @@ Output the records as JSON (without additional `tag` and `timestamp` attributes)
 
 ### CSV
 
-Output the records as `csv`. CSV supports an additional configuration parameter.
+Output the records in CSV format. CSV mode supports an additional configuration parameter.
 
 | Key | Description |
 | :--- | :--- |
@@ -48,7 +48,7 @@ time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 
 ### LTSV
 
-Output the records as LTSV. LTSV supports an additional configuration parameter.
+Output the records in LTSV format. LTSV mode supports an additional configuration parameter.
 
 | Key | Description |
 | :--- | :--- |
