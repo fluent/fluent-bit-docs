@@ -151,8 +151,8 @@ pipeline:
 
 ## Elasticsearch field names
 
-Some input plugins can generate messages where the field names contains dots. For Elasticsearch 2.0, this isn't allowed. The current **es** plugin replaces
-them with an underscore:
+Some input plugins can generate messages where the field names contains dots (`.`). For Elasticsearch 2.0, this isn't allowed. The current `es` plugin replaces
+a dot with an underscore (`_`):
 
 ```text
 {"cpu0.p_cpu"=>17.000000}
