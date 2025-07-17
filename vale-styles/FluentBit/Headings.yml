@@ -51,6 +51,7 @@ exceptions:
   - Grafana
   - Graylog Extended Log Format
   - gRPC
+  - HTTP
   - I
   - InfluxDB
   - Kafka
@@ -80,6 +81,7 @@ exceptions:
   - SSL
   - StatsD
   - Studio
+  - Sumo Logic
   - Tanzu
   - Telemetry Pipeline
   - Terraform
