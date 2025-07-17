@@ -10,6 +10,7 @@ autoscaler
 autoscaling
 backoff
 backpressure
+backtrace
 Bazel
 BitBake
 Blackhole
@@ -77,7 +78,7 @@ Golang
 golib
 Grafana
 Graphite
-Greylog
+Graylog
 grpc_code
 grpc_method
 grpc_service
@@ -205,6 +206,7 @@ unaggregated
 unary
 Unary
 unmuted
+unnests
 unsort
 upsert
 upserts
