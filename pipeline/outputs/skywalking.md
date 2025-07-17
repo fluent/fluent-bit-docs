@@ -1,17 +1,17 @@
 # Apache SkyWalking
 
-The **Apache SkyWalking** output plugin, allows to flush your records to a [Apache SkyWalking](https://skywalking.apache.org/) OAP. The following instructions assumes that you have a fully operational Apache SkyWalking OAP in place.
+The **Apache SkyWalking** output plugin, allows to flush your records to an [Apache SkyWalking](https://skywalking.apache.org/) OAP. The following instructions assumes that you have a fully operational Apache SkyWalking OAP in place.
 
 ## Configuration Parameters
 
-| parameter | description | default |
-| :--- | :--- | :--- |
-| host | Hostname of Apache SkyWalking OAP | 127.0.0.1 |
-| port | TCP port of the Apache SkyWalking OAP | 12800 |
-| auth_token | Authentication token if needed for Apache SkyWalking OAP | None |
-| svc_name | Service name that fluent-bit belongs to | sw-service |
-| svc_inst_name | Service instance name of fluent-bit | fluent-bit |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| parameter     | description                                                                                                          | default    |
+|:--------------|:---------------------------------------------------------------------------------------------------------------------|:-----------|
+| host          | Hostname of Apache SkyWalking OAP                                                                                    | 127.0.0.1  |
+| port          | TCP port of the Apache SkyWalking OAP                                                                                | 12800      |
+| auth_token    | Authentication token if needed for Apache SkyWalking OAP                                                             | None       |
+| svc_name      | Service name that fluent-bit belongs to                                                                              | sw-service |
+| svc_inst_name | Service instance name of fluent-bit                                                                                  | fluent-bit |
+| workers       | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0`        |
 
 ### TLS / SSL
 
@@ -24,17 +24,37 @@ In order to start inserting records into an Apache SkyWalking service, you can r
 
 ### Configuration File
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: skywalking
+      svc_name: dummy-service
+      svc_inst_name: dummy-service-fluentbit
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name cpu
+  Name cpu
 
 [OUTPUT]
-    Name skywalking
-    svc_name dummy-service
-    svc_inst_name dummy-service-fluentbit
+  Name          skywalking
+  svc_name      dummy-service
+  svc_inst_name dummy-service-fluentbit
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Output Format
 
@@ -42,15 +62,15 @@ The format of the plugin output follows the [data collect protocol](https://gith
 
 For example, if we get log as follows,
 
-```text
+```json
 {
-   "log": "This is the original log message"
+  "log": "This is the original log message"
 }
 ```
 
 This message is packed into the following protocol format and written to the OAP via the REST API.
 
-```text
+```json
 [{
   "timestamp": 123456789,
   "service": "dummy-service",
