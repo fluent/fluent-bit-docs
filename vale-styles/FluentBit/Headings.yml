@@ -42,6 +42,7 @@ exceptions:
   - Google Cloud BigQuery
   - Google Cloud Platform
   - Grafana
+  - Graylog Extended Log Format
   - gRPC
   - I
   - InfluxDB
