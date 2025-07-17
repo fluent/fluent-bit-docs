@@ -8,6 +8,7 @@ Appname
 autoscale
 autoscaler
 autoscaling
+Avro
 backoff
 backpressure
 backtrace
