@@ -11,12 +11,12 @@ This plugin supports the following parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `format` | Specify data format. Available formats: `json`, `msgpack`, `raw`. | `json` |
-| `message_key` | Optional key to store the message | _none_ |
+| `message_key` | Optional key to store the message. | _none_ |
 | `message_key_field` | If set, the value of `message_key_field` in the record will indicate the message key. If not set nor found in the record, `message_key` will be used if set. | _none_ |
 | `timestamp_key` | Set the key to store the record timestamp | `@timestamp` |
 | `timestamp_format` | Specify timestamp format. Allowed values:`double`, `[iso8601](https://en.wikipedia.org/wiki/ISO_8601)` (seconds precision) or `iso8601_ns` (fractional seconds precision). | `double` |
 | `brokers` | Single or multiple list of Kafka Brokers. For example, `192.168.1.3:9092`, `192.168.1.4:9092`. | _none_ |
-| `topics` | Single entry or list of topics separated by comma (,) that Fluent Bit will use to send messages to Kafka. If only one topic is set, that one will be used for all records. Instead if multiple topics exists, the one set in the record by `Topic_Key` will be used. | fluent-bit |
+| `topics` | Single entry or list of topics separated by comma (,) that Fluent Bit will use to send messages to Kafka. If only one topic is set, that one will be used for all records. Instead if multiple topics exists, the one set in the record by `Topic_Key` will be used. | `fluent-bit` |
 | `topic_key` | If multiple `topics` exist, the value of `Topic_Key` in the record will indicate the topic to use. For example, if `Topic_Key` is `router` and the record is `{"key1": 123, "router": "route_2"}`, Fluent Bit will use `topic _route_2_`. If the value of `Topic_Key` isn't present in `topics`, then the first topic in the `topics` list will indicate the topic to be used. | _none_ |
 | `dynamic_topic` | Adds unknown topics (found in `Topic_Key`) to `topics`. In `topics`, only a default topic needs to be configured. | `Off` |
 | `queue_full_retries` | Fluent Bit queues data into `rdkafka` library. If the underlying library can't flush the records the queue might fill up, blocking new addition of records. `queue_full_retries` sets the number of local retries to enqueue the data. The interval between retries is 1 second. Setting the `queue_full_retries` value to `0` sets an unlimited number of retries. | `10` |
@@ -76,10 +76,7 @@ pipeline:
 
 ### Avro support
 
-Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin.
-Avro support is optional and must be activated at build time by using a
-build def with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following
-example which activates:
+Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin. Avro support is optional and must be activated at build time by using a build def with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
 
 - `out_kafka` with Avro encoding
 - Fluent Bit Prometheus
@@ -244,7 +241,7 @@ Fluent Bit 4.0.4 and later supports authentication to Amazon MSK (Managed Stream
 
 ### Prerequisites
 
-  If you are compiling Fluent Bit from source, ensure the following requirements are met to enable AWS MSK IAM support:
+If you are compiling Fluent Bit from source, ensure the following requirements are met to enable AWS MSK IAM support:
 
 - Build Requirements
 
