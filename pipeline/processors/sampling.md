@@ -1,6 +1,6 @@
 # Sampling
 
-The _Sampling_ processor uses an extendable architecture that supports multiple trace sampling strategies and backends. It provides you with the ability to apply head or tail sampling to incoming trace telemetry data.
+The _sampling_ processor uses an extendable architecture that supports multiple trace sampling strategies and backends. It provides you with the ability to apply head or tail sampling to incoming trace telemetry data.
 
 {% hint style="info" %}
 
