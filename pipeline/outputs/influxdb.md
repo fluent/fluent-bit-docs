@@ -250,7 +250,7 @@ Before starting Fluent Bit, ensure the target database exists on InfluxDB. Using
    Using database fluentbit
    ```
 
-1. query some specific fields:
+1. Query some specific fields:
 
    ```text
    > SELECT cpu_p, system_p, user_p FROM cpu
@@ -270,9 +270,7 @@ Before starting Fluent Bit, ensure the target database exists on InfluxDB. Using
    > SELECT * FROM cpu
    ```
 
-1. View tags:
-
-   Query tagged keys:
+1. View tags by querying tagged keys:
 
    ```text
    > SHOW TAG KEYS ON fluentbit FROM "apache.access"
