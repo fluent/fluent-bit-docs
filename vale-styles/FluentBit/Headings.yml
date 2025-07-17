@@ -13,6 +13,7 @@ exceptions:
   - Amazon Kinesis Data Firehose
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
+  - Amazon OpenSearch Service
   - API
   - APIs
   - Azure
