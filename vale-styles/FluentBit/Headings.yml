@@ -16,6 +16,8 @@ exceptions:
   - Amazon OpenSearch Service
   - API
   - APIs
+  - AWS MSK IAM
+  - AWS IAM
   - Azure
   - Azure Logs Ingestion API
   - Azure Log Analytics
@@ -51,6 +53,9 @@ exceptions:
   - gRPC
   - I
   - InfluxDB
+  - Kafka
+  - Kafka Producer
+  - Kafka REST
   - Kinesis
   - Kubernetes
   - LaunchDarkly
@@ -72,7 +77,6 @@ exceptions:
   - ServiceMonitor
   - SignalFx
   - Slack
-  - SQL
   - SSL
   - StatsD
   - Studio
