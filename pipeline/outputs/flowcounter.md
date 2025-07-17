@@ -1,6 +1,6 @@
-# FlowCounter
+# Flow counter
 
-The _FlowCounter_ output plugin lets you count up records and their size.
+The _Flow counter_ output plugin lets you count up records and their size.
 
 ## Configuration parameters
 
