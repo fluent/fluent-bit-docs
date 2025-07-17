@@ -33,6 +33,7 @@ exceptions:
   - Elastic Cloud
   - Emmet
   - EventBridge
+  - FlowCounter
   - Fluent Bit
   - Forward
   - GCP
