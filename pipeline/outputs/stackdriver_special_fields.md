@@ -10,7 +10,7 @@ Currently, we support some special fields in fluent-bit for setting fields on th
 | `logging.googleapis.com/logName` | `logName` | `string` | The log name to write this log to. |
 | `logging.googleapis.com/labels` | `labels` | `object<string, string>` | The labels for this log. |
 | `logging.googleapis.com/severity` | `severity` | [`LogSeverity` enum](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogSeverity) | The severity of this log. |
-| `logging.googleapis.com/monitored_resource` | `resource` | [`MonitoredResource`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) (without `type`) | Resource labels for this log. See [caveats](#monitored-resource). |
+| `logging.googleapis.com/monitored_resource` | `resource` | [`MonitoredResource`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) (without `type`) | Resource labels for this log. |
 | `logging.googleapis.com/operation` | `operation` | [`LogEntryOperation`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntryOperation) | Additional information about a potentially long-running operation. |
 | `logging.googleapis.com/insertId` | `insertId` | `string` | A unique identifier for the log entry. It is used to order logEntries. |
 | `logging.googleapis.com/sourceLocation` | `sourceLocation` | [`LogEntrySourceLocation`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation) | Additional information about the source code location that produced the log entry. |
@@ -23,76 +23,90 @@ Currently, we support some special fields in fluent-bit for setting fields on th
 
 ## Other Special Fields
 
-| JSON log field | Description |
-| :--- | :--- |
-| `logging.googleapis.com/projectId` | Changes the project ID that this log will be written to. Ensure that you are authenticated to write logs to this project. |
-| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](./stackdriver.md#resource-labels). |
+| JSON log field                             | Description                                                                                                               |
+|:-------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|
+| `logging.googleapis.com/projectId`         | Changes the project ID that this log will be written to. Ensure that you are authenticated to write logs to this project. |
+| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](./stackdriver.md#resource-labels).                                         |
 
 ## Using Special Fields
 
 To use a special field, you must add a field with the right name and value to your log. Given an example structured log (internally in MessagePack but shown in JSON for demonstration):
+
 ```json
 {
-    "log": "Hello world!"
+  "log": "Hello world!"
 }
 ```
+
 To use the `logging.googleapis.com/logName` special field, you would add it to your structured log as follows:
+
 ```json
 {
-    "log": "Hello world!",
-    "logging.googleapis.com/logName": "my_log"
+  "log": "Hello world!",
+  "logging.googleapis.com/logName": "my_log"
 }
 ```
-For the special fields that map to `LogEntry` protos, you will need to add them as objects with field names that match the proto. For example, to use the `logging.googleapis.com/operation`:
+
+For the special fields that map to `LogEntry` prototypes, you will need to add them as objects with field names that match the proto. For example, to use the `logging.googleapis.com/operation`:
+
 ```json
 {
-    "log": "Hello world!",
-    "logging.googleapis.com/operation": {
-        "id": "test_id",
-        "producer": "test_producer",
-        "first": true,
-        "last": true
-    }
+  "log": "Hello world!",
+  "logging.googleapis.com/operation": {
+    "id": "test_id",
+    "producer": "test_producer",
+    "first": true,
+    "last": true
+  }
 }
 ```
+
 Adding special fields to logs is best done through the [`modify` filter](https://docs.fluentbit.io/manual/pipeline/filters/modify) for simple fields, or [a Lua script using the `lua` filter](https://docs.fluentbit.io/manual/pipeline/filters/lua) for more complex fields.
 
 ## Simple Type Special Fields
 
-For special fields with simple types (with the exception of the [`logging.googleapis.com/insertId` field](#insert-id)), they will follow this pattern (demonstrated with the `logging.googleapis.com/logName` field):
+For special fields with simple types (except for the [`logging.googleapis.com/insertId` field](#insert-id)), they will follow this pattern (demonstrated with the `logging.googleapis.com/logName` field):
 
 1. If the special field matches the type, it will be moved to the corresponding LogEntry field. For example:
+
 ```text
 {
-    "logging.googleapis.com/logName": "my_log"
-    ...
+  ...
+  "logging.googleapis.com/logName": "my_log"
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        ...
-    }
-    "logName": "my_log"
+  "jsonPayload": {
     ...
+  }
+  "logName": "my_log"
+  ...
 }
 ```
 
 2. If the field is non-empty but an invalid, it will be left in the jsonPayload. For example:
+
 ```text
 {
-    "logging.googleapis.com/logName": 12345
-    ...
+  ...
+  "logging.googleapis.com/logName": 12345
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        "logging.googleapis.com/logName": 12345
-        ...
-    }
+  "jsonPayload": {
+    "logging.googleapis.com/logName": 12345
+    ...
+  }
 }
 ```
 
@@ -107,20 +121,26 @@ If the `logging.googleapis.com/insertId` field has an invalid type, the log will
 If the [`autoformat_stackdriver_trace` plugin configuration option]() is set to `true`, the value provided in the `trace` field will be formatted into the format that Cloud Logging expects along with the detected Project ID (from the Google Metadata server, configured in the plugin, or provided via special field).
 
 For example, if `autoformat_stackdriver_trace` is enabled, this:
+
 ```text
 {
-    "logging.googleapis.com/projectId": "my-project-id",
-    "logging.googleapis.com/trace": "12345"
+  ...
+  "logging.googleapis.com/projectId": "my-project-id",
+  "logging.googleapis.com/trace": "12345"
+  ...
 }
 ```
+
 Will become this:
+
 ```text
 {
-    "jsonPayload": {
-        ...
-    },
-    "projectId": "my-project-id",
-    "trace": "/projects/my-project-id/traces/12345"
+  "jsonPayload": {
+    ...
+  },
+  "projectId": "my-project-id",
+  "trace": "/projects/my-project-id/traces/12345"
+  ...
 }
 ```
 
@@ -130,86 +150,96 @@ The `timestampSecond` and `timestampNano` fields don't map directly to the `time
 
 ## Proto Special Fields
 
-For special fields that expect the format of a proto type from the `LogEntry` (with the exception of the `logging.googleapis.com/monitored_resource` field) will follow this pattern (demonstrated with the `logging.googleapis.com/operation` field):
+For special fields that expect the format of a prototype from the `LogEntry` (except for the `logging.googleapis.com/monitored_resource` field) will follow this pattern (demonstrated with the `logging.googleapis.com/operation` field):
 
 If any subfields of the proto are empty or in incorrect type, the plugin will set these subfields empty. For example:
+
 ```text
 {
-    "logging.googleapis.com/operation": {
-        "id": 123, #incorrect type
-        # no producer here
-        "first": true,
-        "last": true
-    }
-    ...
+  "logging.googleapis.com/operation": {
+    "id": 123, #incorrect type
+    # no producer here
+    "first": true,
+    "last": true
+  }
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        ...
-    }
-    "operation": {
-        "first": true,
-        "last": true
-    }
+  "jsonPayload": {
     ...
+  }
+  "operation": {
+    "first": true,
+    "last": true
+  }
+  ...
 }
 ```
 
 If the field itself is not a map, the plugin will leave this field untouched. For example:
+
 ```text
 {
-    "logging.googleapis.com/operation": "some string",
-    ...
+  ...
+  "logging.googleapis.com/operation": "some string",
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        "logging.googleapis.com/operation": "some string",
-        ...
-    }
+  "jsonPayload": {
+    "logging.googleapis.com/operation": "some string",
     ...
+  }
+  ...
 }
 ```
 
 If there are extra subfields, the plugin will add the recognized fields to the corresponding field in the LogEntry, and preserve the extra subfields in jsonPayload. For example:
+
 ```text
 {
-    "logging.googleapis.com/operation": {
-        "id": "test_id",
-        "producer": "test_producer",
-        "first": true,
-        "last": true,
-
-        "extra1": "some string",
-        "extra2": 123,
-        "extra3": true
-    }
-    ...
+  ...
+  "logging.googleapis.com/operation": {
+    "id": "test_id",
+    "producer": "test_producer",
+    "first": true,
+    "last": true,
+    "extra1": "some string",
+    "extra2": 123,
+    "extra3": true
+  }
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        "logging.googleapis.com/operation": {
-            "extra1": "some string",
-            "extra2": 123,
-            "extra3": true
-        }
-        ...
-    }
-    "operation": {
-        "id": "test_id",
-        "producer": "test_producer",
-        "first": true,
-        "last": true
+  "jsonPayload": {
+    "logging.googleapis.com/operation": {
+      "extra1": "some string",
+      "extra2": 123,
+      "extra3": true
     }
     ...
+  }
+  "operation": {
+    "id": "test_id",
+    "producer": "test_producer",
+    "first": true,
+    "last": true
+  }
+  ...
 }
 ```
 
@@ -223,7 +253,7 @@ The `type` field from the [`MonitoredResource` proto]() is not parsed out of the
 
 The `labels` field is expected to be an `object<string, string>`. If any fields have a value that is not a string, the value is ignored and not preserved. The plugin logs an error and drops the field.
 
-If no valid `labels` field is found, or if all of entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
+If no valid `labels` field is found, or if all entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
 
 ## Timestamp
 
@@ -231,6 +261,7 @@ We support two formats of time-related fields:
 
 Format 1 - timestamp:
 Log body contains a `timestamp` field that includes the seconds and nanos fields.
+
 ```text
 {
   "timestamp": {
@@ -239,14 +270,15 @@ Log body contains a `timestamp` field that includes the seconds and nanos fields
   }
 }
 ```
+
 Format 2 - timestampSeconds/timestampNanos:
 Log body contains both the `timestampSeconds` and `timestampNanos` fields.
+
 ```text
 {
-   "timestampSeconds": CURRENT_SECONDS,
-   "timestampNanos": CURRENT_NANOS
+  "timestampSeconds": CURRENT_SECONDS,
+  "timestampNanos": CURRENT_NANOS
 }
-
 ```
 
 If one of the following JSON timestamp representations is present in a structured record, the plugin collapses them into a single representation in the timestamp field in the `LogEntry` object.
@@ -258,21 +290,23 @@ Without time-related fields, the plugin will set the current time as timestamp.
 Set the input log as followed:
 ```text
 {
-    "timestamp": {
-        "seconds": 1596149787,
-        "nanos": 12345
-    }
-    ...
+  "timestamp": {
+    "seconds": 1596149787,
+    "nanos": 12345
+  }
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        ...
-    }
-    "timestamp": "2020-07-30T22:56:27.000012345Z"
+  "jsonPayload": {
     ...
+  }
+  "timestamp": "2020-07-30T22:56:27.000012345Z"
+  ...
 }
 ```
 
@@ -281,19 +315,21 @@ the logEntry will be:
 Set the input log as followed:
 ```text
 {
-    "timestampSeconds":1596149787,
-    "timestampNanos": 12345
-    ...
+  "timestampSeconds":1596149787,
+  "timestampNanos": 12345
+  ...
 }
 ```
+
 the logEntry will be:
+
 ```text
 {
-    "jsonPayload": {
-        ...
-    }
-    "timestamp": "2020-07-30T22:56:27.000012345Z"
+  "jsonPayload": {
     ...
+  }
+  "timestamp": "2020-07-30T22:56:27.000012345Z"
+  ...
 }
 ```
 
