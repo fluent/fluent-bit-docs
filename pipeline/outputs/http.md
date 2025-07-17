@@ -8,8 +8,8 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | --- | ----------- | -------- |
-| `host` | IP address or hostname of the target HTTP Server | `127.0.0.1` |
-| `http_User` | Basic Auth username | _none_ |
+| `host` | IP address or hostname of the target HTTP Server. | `127.0.0.1` |
+| `http_User` | Basic Auth username. | _none_ |
 | `http_Passwd` | Basic Auth password. Requires `HTTP_User` to be set. | _none_ |
 | `AWS_Auth` | Enable AWS SigV4 authentication. | `false` |
 | `AWS_Service` | Specify the AWS service code of your service, used by SigV4 authentication (for example, `es`, `xray`.) Usually found in the service endpoint's subdomains, `protocol://service-code.region-code.amazonaws.com`. | _none_ |
