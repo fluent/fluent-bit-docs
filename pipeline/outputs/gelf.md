@@ -6,7 +6,7 @@ The following instructions assume that you have a fully operational Graylog serv
 
 ## Configuration parameters
 
-According to the [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are mandatory and optional fields used by Graylog in GELF format. These fields are determined with `Gelf\_*_Key` key in this plugin.
+According to the [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are mandatory and optional fields used by Graylog in GELF format. These fields are determined by the `Gelf\_*_Key` key in this plugin.
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
@@ -35,7 +35,7 @@ Be aware that the following items can require changes to your configuration.
 
 ### Docker logs
 
-If you're using Fluent Bit to collect Docker logs, be aware that Docker places your log in JSON under key `log`. Set `log` as your `Gelf_Short_Message_Key` to send everything in Docker logs to Graylog. In this case, you need your `log` value to be a string, so don't parse it using JSON parser.
+If you're using Fluent Bit to collect Docker logs, Docker places your log in JSON under key `log`. Set `log` as your `Gelf_Short_Message_Key` to send everything in Docker logs to Graylog. In this case, your `log` value must be a string, so don't parse it using JSON parser.
 
 ### Timestamps
 
