@@ -51,6 +51,8 @@ exceptions:
   - gRPC
   - I
   - InfluxDB
+  - Kafka
+  - Kafka REST
   - Kinesis
   - Kubernetes
   - LaunchDarkly
