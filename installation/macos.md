@@ -32,7 +32,7 @@ brew install fluent-bit
 Run the following brew command in your terminal to retrieve the dependencies:
 
 ```bash
-brew install git cmake openssl bison
+brew install git cmake openssl bison libyaml
 ```
 
 ## Download and build the source
