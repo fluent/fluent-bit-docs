@@ -36,7 +36,9 @@ Metrics collected with Windows Exporter metrics flow through a separate pipeline
 | `collector.memory.scrape_interval`       | The rate in seconds at which `memory` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.       | `0 seconds`                                                              |
 | `collector.paging_file.scrape_interval`  | The rate in seconds at which `paging_file` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.  | `0 seconds`                                                              |
 | `collector.process.scrape_interval`      | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0 seconds`                                                              |
-| `metrics`                                | Specify which metrics are collected.                                                                                                                           | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system,service"` |
+| `collector.tcp.scrape_interval`          | The rate in seconds at which `tcp` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0 seconds`                                                              |
+| `collector.cache.scrape_interval`        | The rate in seconds at which `cache` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.        | `0 seconds`                                                              |
+| `metrics`                                | Specify which metrics are collected.                                                                                                                           | `"cpu,cpu_info,os,net,logical_disk,cs,cache,thermalzone,logon,system,service,tcp"` |
 
 ## Collectors available
 
@@ -59,6 +61,8 @@ The Version column specifies the Fluent Bit version where the collector is avail
 | `memory`       | Exposes `memory` statistics.       | Windows | v2.1.9  |
 | `paging_file`  | Exposes `paging_file` statistics.  | Windows | v2.1.9  |
 | `process`      | Exposes `process` statistics.      | Windows | v2.1.9  |
+| `tcp`          | Exposes `tcp` statistics.          | Windows | v4.1.0  |
+| `cache`        | Exposes `cache` statistics.        | Windows | v4.1.0  |
 
 ## Threading
 
