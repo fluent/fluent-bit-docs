@@ -45,6 +45,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
 | `provider_id` | GCP workload identity provider. Used to construct the full resource name of the identity provider. Currently only AWS accounts are supported. | _none_ |
 | `google_service_account` | The email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources ( `write` access to tables) | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| buffer_size | Sets the upper limit for the HTTP client buffer size (in bytes) when reading API responses from BigQuery. The buffer grows dynamically as needed until it reaches this limit; if a response exceeds this size, any additional data is discarded and a warning is logged. | `4192` |
 
 See Google's [official documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
