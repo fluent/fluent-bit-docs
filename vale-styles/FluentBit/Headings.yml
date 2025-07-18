@@ -11,6 +11,7 @@ exceptions:
   - Amazon CloudWatch
   - Amazon ECR Public Gallery
   - Amazon Kinesis Data Firehose
+  - Amazon Kinesis Data Streams
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
