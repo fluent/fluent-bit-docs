@@ -22,15 +22,15 @@ Here is a basic configuration example:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: collectd
-          listen: 0.0.0.0
-          port: 25826
-          typesdb: '/user/share/collectd/types.db,/etc/collectd/custom.db'
+  inputs:
+    - name: collectd
+      listen: 0.0.0.0
+      port: 25826
+      typesdb: '/user/share/collectd/types.db,/etc/collectd/custom.db'
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -38,14 +38,14 @@ pipeline:
 
 ```text
 [INPUT]
-    Name         collectd
-    Listen       0.0.0.0
-    Port         25826
-    TypesDB      /usr/share/collectd/types.db,/etc/collectd/custom.db
+  Name         collectd
+  Listen       0.0.0.0
+  Port         25826
+  TypesDB      /usr/share/collectd/types.db,/etc/collectd/custom.db
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
