@@ -107,7 +107,7 @@ app-backend-123,Operations
 no-match-host,Should Not Appear
 ```
 
-Where a match is found the filter adds new key (name of which is set by the `result_key` input) with the value from the second column of the CSV file of the matched row.
+When the filter finds a match, it adds a new key with the name specified by `result_key` and a value from the second column of the CSV file of the row where `lookup_key` was found.
 
 For above configuration the following output can be expected (when matching case is ignored as `ignore_case` is set to true):
 
