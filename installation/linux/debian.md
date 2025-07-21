@@ -30,7 +30,7 @@ Follow the official
 [Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
 
 ```bash copy
-curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg
+sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg'
 ```
 
 ### Updated key from March 2022
@@ -61,10 +61,10 @@ which platforms are supported in each release.
 ## Update your sources lists
 
 For Debian, you must add the Fluent Bit APT server entry to your sources lists.
-Add the following content at bottom of your `/etc/apt/sources.list` file.
+
 
 ```bash copy
-deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/debian/${CODENAME} ${CODENAME} main
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 Replace _`CODENAME`_ with your specific
