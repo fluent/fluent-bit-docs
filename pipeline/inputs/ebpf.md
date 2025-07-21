@@ -20,7 +20,7 @@ To enable `in_ebpf`, ensure the following dependencies are installed on your sys
 
 ### Installing dependencies on Ubuntu
 
-```bash
+```shell
 sudo apt update
 sudo apt install libbpf-dev linux-tools-common cmake
 ```
@@ -31,7 +31,7 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
 
 1. Clone the Fluent Bit repository:
 
-   ```bash
+   ```shell
    git clone https://github.com/fluent/fluent-bit.git
    cd fluent-bit
    ```
@@ -40,7 +40,7 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
 
    Create a build directory and run `cmake` with the `-DFLB_IN_EBPF=On` flag to enable the `in_ebpf` plugin:
 
-   ```bash
+   ```shell
    mkdir build
    cd build
    cmake .. -DFLB_IN_EBPF=On
@@ -48,7 +48,7 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
 
 1. Compile the source:
 
-   ```bash
+   ```shell
    make
    ```
 
@@ -56,12 +56,12 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
 
    Run Fluent Bit with elevated permissions (for example, `sudo`). Loading eBPF programs requires root access or appropriate privileges.
 
-   ```bash
+   ```shell
    # For YAML configuration.
-   sudo ./bin/fluent-bit --config fluent-bit.yaml
+   sudo fluent-bit --config fluent-bit.yaml
    
    # For classic configuration.
-   sudo ./bin/fluent-bit --config fluent-bit.conf
+   sudo fluent-bit --config fluent-bit.conf
    ```
 
 ## Configuration example
