@@ -73,12 +73,12 @@ Here's a basic example of how to configure the plugin:
 
 ```yaml
 pipeline:
-    inputs:
-      - name: ebpf
-        trace: 
-          - trace_signal
-          - trace_malloc
-          - trace_bind
+  inputs:
+    - name: ebpf
+      trace: 
+        - trace_signal
+        - trace_malloc
+        - trace_bind
 ```
 
 {% endtab %}
@@ -86,10 +86,10 @@ pipeline:
 
 ```text
 [INPUT]
-    Name          ebpf
-    Trace         trace_signal
-    Trace         trace_malloc
-    Trace         trace_bind
+  Name          ebpf
+  Trace         trace_signal
+  Trace         trace_malloc
+  Trace         trace_bind
 ```
 
 {% endtab %}
