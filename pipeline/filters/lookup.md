@@ -4,7 +4,7 @@ The Lookup plugin looks up a key value from a record in a specified CSV file and
 
 ## Configuration parameters
 
-The plugin supports the following configuration parameters
+The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :-- | :---------- | :------ |
