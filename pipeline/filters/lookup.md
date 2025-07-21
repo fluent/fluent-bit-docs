@@ -109,7 +109,7 @@ no-match-host,Should Not Appear
 
 When the filter finds a match, it adds a new key with the name specified by `result_key` and a value from the second column of the CSV file of the row where `lookup_key` was found.
 
-For above configuration the following output can be expected (when matching case is ignored as `ignore_case` is set to true):
+This results in output that resembles the following:
 
 ```text
 {"hostname"=>"server-prod-001", "business_line"=>"Finance"}
