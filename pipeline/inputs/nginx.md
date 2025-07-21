@@ -6,13 +6,13 @@ The _NGINX Exporter metrics_ input plugin scrapes metrics from the NGINX stub st
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Host` | Name of the target host or IP address. | `localhost` |
-| `Port` | Port of the target Nginx service to connect to. | `80` |
-| `Status_URL` | The URL of the stub status Handler. | `/status` |
-| `Nginx_Plus` | Turn on NGINX plus mode. | `true` |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key          | Description                                                                                             | Default     |
+|:-------------|:--------------------------------------------------------------------------------------------------------|:------------|
+| `Host`       | Name of the target host or IP address.                                                                  | `localhost` |
+| `Port`       | Port of the target Nginx service to connect to.                                                         | `80`        |
+| `Status_URL` | The URL of the stub status Handler.                                                                     | `/status`   |
+| `Nginx_Plus` | Turn on NGINX plus mode.                                                                                | `true`      |
+| `Threaded`   | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`     |
 
 ## Get started
 
