@@ -127,8 +127,9 @@ This results in output that resembles the following:
 
 ## CSV import
 
-The CSV is used to create an in-memory key value lookup table. Column 1 of the CSV is always used as key, while column 2 is assumed to be the value. All other columns in the CSV are ignored.
 
-This filter is intended for static datasets. CSV is loaded once when Fluent Bit starts and is not reloaded.
+Fluent Bit creates an in-memory key/value lookup table from the CSV file that you provide. The first column of this CSV is always treated as a key, and its second column as a value. Any other columns are ignored.
 
-Multiline values in CSV file are not currently supported.
+This filter is intended for static datasets. After Fluent Bit loads the CSV file, it won't reload that file, which means the filter's lookup table won't update to reflect any changes.
+
+This filter doesn't support multiline values in CSV files.
