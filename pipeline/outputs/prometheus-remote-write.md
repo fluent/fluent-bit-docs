@@ -49,7 +49,7 @@ service:
   log_level: info
 
 pipeline:
- inputs:
+  inputs:
     - name: node_exporter_metrics
       tag: node_metrics
       scrape_interval: 2
