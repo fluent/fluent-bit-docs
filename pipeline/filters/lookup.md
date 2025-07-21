@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 | :-- | :---------- | :------ |
 | `file` | The CSV file that Fluent Bit will use as a lookup table. The file should contain two columns (key and value), with the first row as an optional header that is skipped. Supports quoted fields and escaped quotes. | _none_ |
 | `lookup_key` | Specifies the key to search for in the CSV file's first column. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor) syntax. | _none_ |
-| `result_key` | The name of the key to add to the output record with the matched value from the CSV file's second column if a match is found. | _none_ |
+| `result_key` | If `lookup_key` is found, sets the name of the new key to add to the output record. This new key uses the corresponding value from the second column of the CSV file in the same row where `lookup_key` was found.  | _none_ |
 | `ignore_case` | Ignore case when matching the lookup key against the CSV keys. | `false` |
 
 ## Example configuration
