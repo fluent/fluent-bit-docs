@@ -8,12 +8,12 @@ The _Disk I/O metrics_ plugin creates metrics that are log-based, such as JSON p
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Interval_Sec` | Polling interval (seconds).  | `1` |
-| `Interval_NSec` | Polling interval (nanosecond). | `0` |
-| `Dev_Name` | Device name to limit the target (for example, `sda`). If not set, `in_disk` gathers information from all of disks and partitions. | all disks |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key             | Description                                                                                                                       | Default   |
+|:----------------|:----------------------------------------------------------------------------------------------------------------------------------|:----------|
+| `Interval_Sec`  | Polling interval (seconds).                                                                                                       | `1`       |
+| `Interval_NSec` | Polling interval (nanosecond).                                                                                                    | `0`       |
+| `Dev_Name`      | Device name to limit the target (for example, `sda`). If not set, `in_disk` gathers information from all of disks and partitions. | all disks |
+| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                           | `false`   |
 
 ## Get started
 
