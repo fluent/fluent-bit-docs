@@ -52,6 +52,7 @@ exceptions:
   - IAM
   - IDE
   - IMDS
+  - ISO
   - JAR
   - JSON
   - JSX
