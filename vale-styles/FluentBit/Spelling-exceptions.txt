@@ -102,6 +102,7 @@ Kube
 Kubernetes
 Kusto
 labelset
+libpq
 librdkafka
 loadgenerator
 logfmt
@@ -134,6 +135,7 @@ performant
 persistable
 Podman
 Postgres
+PostgreSQL
 PowerShell
 prepopulate
 preprocessor

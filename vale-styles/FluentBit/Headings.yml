@@ -60,6 +60,7 @@ exceptions:
   - Kinesis
   - Kubernetes
   - LaunchDarkly
+  - Libpq
   - Linux
   - LTSV
   - macOS
@@ -72,6 +73,7 @@ exceptions:
   - OpenTelemetry
   - Opsgenie
   - PagerDuty
+  - PostgreSQL
   - Prometheus
   - PromQL
   - REPL
