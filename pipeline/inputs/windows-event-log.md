@@ -58,6 +58,6 @@ Some Windows Event Log channels, like `Security`, require administrative privile
 
 If you want to do a test, you can run this plugin from the command line:
 
-```bash
+```shell
 fluent-bit -i winlog -p 'channels=Setup' -o stdout
 ```
