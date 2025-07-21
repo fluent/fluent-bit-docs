@@ -15,25 +15,27 @@ To get started with reloading over HTTP, enable the HTTP Server
 in the configuration file:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-```text
-[SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
-    Hot_Reload   On
-...
-```
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 service:
-    http_server: on
-    http_listen: 0.0.0.0
-    http_port: 2020
-    hot_reload: on
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
+  hot_reload: on
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
+  Hot_Reload   On
+```
+
 {% endtab %}
 {% endtabs %}
 
@@ -51,7 +53,7 @@ Use the following HTTP endpoints to perform a hot reload:
 
 For using curl to reload Fluent Bit, users must specify an empty request body as:
 
-```text
+```shell
 curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
