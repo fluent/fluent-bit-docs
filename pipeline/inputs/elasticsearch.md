@@ -6,15 +6,15 @@ The _Elasticsearch_ input plugin handles both Elasticsearch and OpenSearch Bulk 
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default value |
-| :--- | :--- | :--- |
-| `buffer_max_size` | Set the maximum size of buffer. | `4M` |
-| `buffer_chunk_size` | Set the buffer chunk size. | `512K` |
-| `tag_key` | Specify a key name for extracting as a tag. | `NULL` |
-| `meta_key` | Specify a key name for meta information. | "@meta" |
-| `hostname` | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost" |
-| `version`  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key                 | Description                                                                                                                              | Default value |
+|:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
+| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
+| `buffer_chunk_size` | Set the buffer chunk size.                                                                                                               | `512K`        |
+| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
+| `meta_key`          | Specify a key name for meta information.                                                                                                 | "@meta"       |
+| `hostname`          | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost"   |
+| `version`           | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version.     | "8.0.0"       |
+| `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
 
 The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients.
 Elasticsearch can build its cluster and dynamically generate a connection list which is called "sniffing".
