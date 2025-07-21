@@ -35,13 +35,10 @@ fluent-bit -i dummy -o stdout
 which returns results like the following:
 
 ```text
-Fluent Bit v2.x.x
-* Copyright (C) 2015-2022 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
+...
 [0] dummy.0: [[1686451466.659962491, {}], {"message"=>"dummy"}]
 [0] dummy.0: [[1686451467.659679509, {}], {"message"=>"dummy"}]
+...
 ```
 
 ### Configuration file
@@ -53,13 +50,13 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"message": "custom dummy"}'
-  
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: dummy
+      dummy: '{"message": "custom dummy"}'
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -67,12 +64,12 @@ pipeline:
 
 ```text
 [INPUT]
-    Name   dummy
-    Dummy {"message": "custom dummy"}
+  Name   dummy
+  Dummy {"message": "custom dummy"}
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
