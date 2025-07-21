@@ -7,21 +7,21 @@ This plugin implements the input service to listen for Forward messages.
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-|:----|:------------| :------ |
-| `Listen` | Listener network interface. | `0.0.0.0` |
-| `Port` | TCP port to listen for incoming connections. | `24224` |
-| `Unix_Path` | Specify the path to Unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored. | _none_ |
-| `Unix_Perm` | Set the permission of the Unix socket file. If `Unix_Path` isn't set, this parameter is ignored. | _none_ |
-| `Buffer_Max_Size` | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `6144000` |
+| Key                 | Description                                                                                                                                                                                                                                                                                                                                | Default   |
+|:--------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------|
+| `Listen`            | Listener network interface.                                                                                                                                                                                                                                                                                                                | `0.0.0.0` |
+| `Port`              | TCP port to listen for incoming connections.                                                                                                                                                                                                                                                                                               | `24224`   |
+| `Unix_Path`         | Specify the path to Unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored.                                                                                                                                                                                                                                     | _none_    |
+| `Unix_Perm`         | Set the permission of the Unix socket file. If `Unix_Path` isn't set, this parameter is ignored.                                                                                                                                                                                                                                           | _none_    |
+| `Buffer_Max_Size`   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification.                                                                                                                                         | `6144000` |
 | `Buffer_Chunk_Size` | By default the buffer to store the incoming Forward messages, don't allocate the maximum memory allowed, instead it allocate memory when it's required. The rounds of allocations are set by `Buffer_Chunk_Size`. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | `1024000` |
-| `Tag_Prefix` | Prefix incoming tag with the defined value.| _none_ |
-| `Tag` | Override the tag of the forwarded events with the defined value.| _none_ |
-| `Shared_Key` | Shared key for secure forward authentication. | _none_ |
-| `Empty_Shared_Key` | Use this option to connect to Fluentd with a zero-length shared key. | `false` |
-| `Self_Hostname` | Hostname for secure forward authentication. | _none_ |
-| `Security.Users` | Specify the username and password pairs for secure forward authentication. | |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `Tag_Prefix`        | Prefix incoming tag with the defined value.                                                                                                                                                                                                                                                                                                | _none_    |
+| `Tag`               | Override the tag of the forwarded events with the defined value.                                                                                                                                                                                                                                                                           | _none_    |
+| `Shared_Key`        | Shared key for secure forward authentication.                                                                                                                                                                                                                                                                                              | _none_    |
+| `Empty_Shared_Key`  | Use this option to connect to Fluentd with a zero-length shared key.                                                                                                                                                                                                                                                                       | `false`   |
+| `Self_Hostname`     | Hostname for secure forward authentication.                                                                                                                                                                                                                                                                                                | _none_    |
+| `Security.Users`    | Specify the username and password pairs for secure forward authentication.                                                                                                                                                                                                                                                                 |           |
+| `Threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                    | `false`   |
 
 ## Get started
 
@@ -87,7 +87,7 @@ pipeline:
 
 In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
 
-For using user-password authentication, specify `security.users` at least an one-pair.
+For using user-password authentication, specify `security.users` in at least a one-pair.
 For using shared key, specify `shared_key` in both of forward output and forward input.
 `self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
 
@@ -96,19 +96,19 @@ For using shared key, specify `shared_key` in both of forward output and forward
 
 ```yaml
 pipeline:
-    inputs:
-        - name: forward
-          listen: 0.0.0.0
-          port: 24224
-          buffer_chunk_size: 1M
-          buffer_max_size: 6M
-          security.users: fluentbit changeme
-          shared_key: secret
-          self_hostname: flb.server.local
-          
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+      buffer_chunk_size: 1M
+      buffer_max_size: 6M
+      security.users: fluentbit changeme
+      shared_key: secret
+      self_hostname: flb.server.local
+      
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -116,18 +116,18 @@ pipeline:
 
 ```text
 [INPUT]
-    Name              forward
-    Listen            0.0.0.0
-    Port              24224
-    Buffer_Chunk_Size 1M
-    Buffer_Max_Size   6M
-    Security.Users fluentbit changeme
-    Shared_Key secret
-    Self_Hostname flb.server.local
+  Name              forward
+  Listen            0.0.0.0
+  Port              24224
+  Buffer_Chunk_Size 1M
+  Buffer_Max_Size   6M
+  Security.Users fluentbit changeme
+  Shared_Key secret
+  Self_Hostname flb.server.local
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
@@ -150,10 +150,7 @@ fluent-bit -i forward -o stdout
 In [Fluent Bit](http://fluentbit.io) you should see the following output:
 
 ```text
-Fluent-Bit v0.9.0
-Copyright (C) Treasure Data
-
-[2016/10/07 21:49:40] [ info] [engine] started
-[2016/10/07 21:49:40] [ info] [in_fw] binding 0.0.0.0:24224
+...
 [0] my_tag: [1475898594, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
+...
 ```
