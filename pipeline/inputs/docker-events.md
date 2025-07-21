@@ -33,12 +33,12 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: docker_events
+  inputs:
+    - name: docker_events
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -46,11 +46,11 @@ pipeline:
 
 ```text
 [INPUT]
-    Name   docker_events
+  Name   docker_events
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
