@@ -45,30 +45,29 @@ The Prometheus remote write plugin only works with metrics collected by one of t
 # them through the Prometheus remote write plugin to new relic :
 #
 service:
- flush: 1
- log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
  inputs:
- - name: node_exporter_metrics
- tag: node_metrics
- scrape_interval: 2
+    - name: node_exporter_metrics
+      tag: node_metrics
+      scrape_interval: 2
 
- outputs:
- - name: prometheus_remote_write
- match: node_metrics
- host: metric-api.newrelic.com
- port: 443
- uri: /prometheus/v1/write?prometheus_server=YOUR_DATA_SOURCE_NAME
- header: 'Authorization Bearer YOUR_LICENSE_KEY'
- log_response_payload: true
- tls: on
- tls.verify: on
- # add user-defined labels
- add_label:
- - app fluent-bit
- - color blue
-
+  outputs:
+    - name: prometheus_remote_write
+      match: node_metrics
+      host: metric-api.newrelic.com
+      port: 443
+      uri: /prometheus/v1/write?prometheus_server=YOUR_DATA_SOURCE_NAME
+      header: 'Authorization Bearer YOUR_LICENSE_KEY'
+      log_response_payload: true
+      tls: on
+      tls.verify: on
+      # add user-defined labels
+      add_label:
+        - app fluent-bit
+        - color blue
 # Note : it would be necessary to replace both YOUR_DATA_SOURCE_NAME and YOUR_LICENSE_KEY
 # with real values for this example to work.
 ```
@@ -83,27 +82,27 @@ pipeline:
 # them through the Prometheus remote write plugin to new relic :
 #
 [SERVICE]
- Flush 1
- Log_level info
+  Flush                1
+  Log_level            info
 
 [INPUT]
- Name node_exporter_metrics
- Tag node_metrics
- Scrape_interval 2
+  Name                 node_exporter_metrics
+  Tag                  node_metrics
+  Scrape_interval      2
 
 [OUTPUT]
- Name prometheus_remote_write
- Match node_metrics
- Host metric-api.newrelic.com
- Port 443
- Uri /prometheus/v1/write?prometheus_server=YOUR_DATA_SOURCE_NAME
- Header Authorization Bearer YOUR_LICENSE_KEY
- Log_response_payload True
- Tls On
- Tls.verify On
- # add user-defined labels
- add_label app fluent-bit
- add_label color blue
+  Name                 prometheus_remote_write
+  Match                node_metrics
+  Host                 metric-api.newrelic.com
+  Port                 443
+  Uri                  /prometheus/v1/write?prometheus_server=YOUR_DATA_SOURCE_NAME
+  Header               Authorization Bearer YOUR_LICENSE_KEY
+  Log_response_payload True
+  Tls                  On
+  Tls.verify           On
+  # add user-defined labels
+  add_label            app fluent-bit
+  add_label            color blue
 
 # Note : it would be necessary to replace both YOUR_DATA_SOURCE_NAME and YOUR_LICENSE_KEY
 # with real values for this example to work.
@@ -126,16 +125,16 @@ With [Grafana Cloud](https://grafana.com/products/cloud/) hosted metrics you wil
 ```yaml
 pipeline:
 
- outputs:
- - name: prometheus_remote_write
- match: '*'
- host: prometheus-us-central1.grafana.net
- uri: /api/prom/push
- port: 443
- tls: on
- tls.verify: on
- http_user: <GRAFANA Username>
- http_passwd: <GRAFANA Password>
+  outputs:
+    - name: prometheus_remote_write
+      match: '*'
+      host: prometheus-us-central1.grafana.net
+      uri: /api/prom/push
+      port: 443
+      tls: on
+      tls.verify: on
+      http_user: <GRAFANA Username>
+      http_passwd: <GRAFANA Password>
 ```
 
 {% endtab %}
@@ -143,15 +142,15 @@ pipeline:
 
 ```text
 [OUTPUT]
- name prometheus_remote_write
- match *
- host prometheus-us-central1.grafana.net
- uri /api/prom/push
- port 443
- tls on
- tls.verify on
- http_user <GRAFANA Username>
- http_passwd <GRAFANA Password>
+  name        prometheus_remote_write
+  match       *
+  host        prometheus-us-central1.grafana.net
+  uri         /api/prom/push
+  port        443
+  tls         on
+  tls.verify  on
+  http_user   <GRAFANA Username>
+  http_passwd <GRAFANA Password>
 ```
 
 {% endtab %}
@@ -167,14 +166,14 @@ With Logz.io [hosted Prometheus](https://logz.io/solutions/infrastructure-monito
 ```yaml
 pipeline:
 
- outputs:
- - name: prometheus_remote_write
- match: '*'
- host: listener.logz.io
- port: 8053
- tls: on
- tls.verify: on
- log_response_payload: true
+  outputs:
+    - name: prometheus_remote_write
+      match: '*'
+      host: listener.logz.io
+      port: 8053
+      tls: on
+      tls.verify: on
+      log_response_payload: true
 ```
 
 {% endtab %}
@@ -182,14 +181,14 @@ pipeline:
 
 ```text
 [OUTPUT]
- name prometheus_remote_write
- match *
- host listener.logz.io
- port 8053
- header Authorization Bearer <LOGZIO Key>
- tls on
- tls.verify on
- log_response_payload true
+  name                  prometheus_remote_write
+  match                 *
+  host                  listener.logz.io
+  port                  8053
+  header                Authorization Bearer <LOGZIO Key>
+  tls                   on
+  tls.verify            on
+  log_response_payload true
 ```
 
 {% endtab %}
@@ -205,15 +204,15 @@ With [Coralogix Metrics](https://coralogix.com/platform/metrics/) you might need
 ```yaml
 pipeline:
 
- outputs:
- - name: prometheus_remote_write
- match: '*'
- host: metrics-api.coralogix.com
- uri: prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity
- port: 443
- header: 'Authorization Bearer <CORALOGIX Key>'
- tls: on
- tls.verify: on
+  outputs:
+    - name: prometheus_remote_write
+      match: '*'
+      host: metrics-api.coralogix.com
+      uri: prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity
+      port: 443
+      header: 'Authorization Bearer <CORALOGIX Key>'
+      tls: on
+      tls.verify: on
 ```
 
 {% endtab %}
@@ -221,14 +220,14 @@ pipeline:
 
 ```text
 [OUTPUT]
- name prometheus_remote_write
- match *
- host metrics-api.coralogix.com
- uri prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity
- port 443
- header Authorization Bearer <CORALOGIX Key>
- tls on
- tls.verify on
+  name                  prometheus_remote_write
+  match                 *
+  host                  metrics-api.coralogix.com
+  uri                   prometheus/api/v1/write?appLabelName=path&subSystemLabelName=path&severityLabelName=severity
+  port                  443
+  header                Authorization Bearer <CORALOGIX Key>
+  tls                   on
+  tls.verify            on
 ```
 
 {% endtab %}
@@ -244,16 +243,16 @@ With [Levitate](https://last9.io/levitate-tsdb), you must use the Levitate clust
 ```yaml
 pipeline:
 
- outputs:
- - name: prometheus_remote_write
- match: '*'
- host: app-tsdb.last9.io
- uri: /v1/metrics/82xxxx/sender/org-slug/write
- port: 443
- tls: on
- tls.verify: on
- http_user: <Levitate Cluster Username>
- http_passwd: <Levitate Cluster Password>
+  outputs:
+    - name: prometheus_remote_write
+      match: '*'
+      host: app-tsdb.last9.io
+      uri: /v1/metrics/82xxxx/sender/org-slug/write
+      port: 443
+      tls: on
+      tls.verify: on
+      http_user: <Levitate Cluster Username>
+      http_passwd: <Levitate Cluster Password>
 ```
 
 {% endtab %}
@@ -261,15 +260,15 @@ pipeline:
 
 ```text
 [OUTPUT]
- name prometheus_remote_write
- match *
- host app-tsdb.last9.io
- uri /v1/metrics/82xxxx/sender/org-slug/write
- port 443
- tls on
- tls.verify on
- http_user <Levitate Cluster Username>
- http_passwd <Levitate Cluster Password>
+  name        prometheus_remote_write
+  match       *
+  host        app-tsdb.last9.io
+  uri         /v1/metrics/82xxxx/sender/org-slug/write
+  port        443
+  tls         on
+  tls.verify  on
+  http_user   <Levitate Cluster Username>
+  http_passwd <Levitate Cluster Password>
 ```
 
 {% endtab %}
@@ -285,20 +284,20 @@ Ordinary Prometheus clients add some of the following labels:
 ```yaml
 pipeline:
 
- outputs:
- - name: prometheus_remote_write
- match: your.metric
- host: xxxxxxx.yyyyy.zzzz
- port: 443
- uri: /api/v1/write
- header: 'Authorization Bearer YOUR_LICENSE_KEY'
- log_response_payload: true
- tls: on
- tls.verify: on
- # add user-defined labels
- add_label:
- - instance ${HOSTNAME}
- - job fluent-bit
+  outputs:
+    - name: prometheus_remote_write
+      match: your.metric
+      host: xxxxxxx.yyyyy.zzzz
+      port: 443
+      uri: /api/v1/write
+      header: 'Authorization Bearer YOUR_LICENSE_KEY'
+      log_response_payload: true
+      tls: on
+      tls.verify: on
+      # add user-defined labels
+      add_label:
+        - instance ${HOSTNAME}
+        - job fluent-bit
 ```
 
 {% endtab %}
@@ -306,21 +305,21 @@ pipeline:
 
 ```text
 [OUTPUT]
- Name prometheus_remote_write
- Match your.metric
- Host xxxxxxx.yyyyy.zzzz
- Port 443
- Uri /api/v1/write
- Header Authorization Bearer YOUR_LICENSE_KEY
- Log_response_payload True
- Tls On
- Tls.verify On
- # add user-defined labels
- add_label instance ${HOSTNAME}
- add_label job fluent-bit
+  Name                 prometheus_remote_write
+  Match                your.metric
+  Host                 xxxxxxx.yyyyy.zzzz
+  Port                 443
+  Uri                  /api/v1/write
+  Header               Authorization Bearer YOUR_LICENSE_KEY
+  Log_response_payload True
+  Tls                  On
+  Tls.verify           On
+  # add user-defined labels
+  add_label instance ${HOSTNAME}
+  add_label job fluent-bit
 ```
 
 {% endtab %}
 {% endtabs %}
 
-`instance` label can be emulated with `add_label instance ${HOSTNAME}`. And other labels can be added with `add_label <key> <value>` setting.
+The `instance` label can be emulated with `add_label instance ${HOSTNAME}`. And other labels can be added with `add_label <key> <value>` setting.
