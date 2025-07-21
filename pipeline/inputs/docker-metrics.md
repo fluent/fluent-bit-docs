@@ -25,13 +25,13 @@ The following example configuration collects metrics from two docker instances (
 
 ```yaml
 pipeline:
-    inputs:
-        - name: docker
-          include: 6bab19c3a0f9 14159be4ca2c
+  inputs:
+    - name: docker
+      include: 6bab19c3a0f9 14159be4ca2c
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -39,11 +39,12 @@ pipeline:
 
 ```text
 [INPUT]
-    Name         docker
-    Include      6bab19c3a0f9 14159be4ca2c
+  Name         docker
+  Include      6bab19c3a0f9 14159be4ca2c
+  
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
