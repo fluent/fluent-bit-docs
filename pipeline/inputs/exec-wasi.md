@@ -6,18 +6,18 @@ The _Exec Wasi_ input plugin lets you execute Wasm programs that are WASI target
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| `WASI_Path` | The location of a Wasm program file. |
-| `Parser` | Specify the name of a parser to interpret the entry as a structured message. |
-| `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from WASM programs. |
-| `Interval_Sec` | Polling interval (seconds). |
-| `Interval_NSec` | Polling interval (nanosecond). |
-| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| `Buf_Size` | Size of the buffer See [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| `Oneshot` | Only run once at startup. This allows collection of data precedent to the Fluent Bit startup (Boolean, default: `false`). |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
+| Key                | Description                                                                                                                                  |
+|:-------------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
+| `WASI_Path`        | The location of a Wasm program file.                                                                                                         |
+| `Parser`           | Specify the name of a parser to interpret the entry as a structured message.                                                                 |
+| `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from WASM programs.                                                             |
+| `Interval_Sec`     | Polling interval (seconds).                                                                                                                  |
+| `Interval_NSec`    | Polling interval (nanosecond).                                                                                                               |
+| `Wasm_Heap_Size`   | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.  |
+| `Wasm_Stack_Size`  | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Buf_Size`         | Size of the buffer See [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.                           |
+| `Oneshot`          | Only run once at startup. This allows collection of data precedent to the Fluent Bit startup (Boolean, default: `false`).                    |
+| `Threaded`         | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`.                    |
 
 ## Configuration examples
 

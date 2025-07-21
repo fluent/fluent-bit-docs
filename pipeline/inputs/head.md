@@ -6,17 +6,17 @@ The _Head_ input plugin reads events from the head of a file. Its behavior is si
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :-- | :---------- |
-| `File` | Absolute path to the target file. For example: `/proc/uptime`. |
-| `Buf_Size` | Buffer size to read the file. |
-| `Interval_Sec` | Polling interval (seconds). |
-| `Interval_NSec` | Polling interval (nanoseconds). |
-| `Add_Path` | If enabled, the path is appended to each records. Default: `false`. |
-| `Key` | Rename a key. Default: `head`. |
-| `Lines` | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`. |
-| `Split_line` | If enabled, `in_head` generates key-value pair per line. |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
+| Key             | Description                                                                                                               |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------------|
+| `File`          | Absolute path to the target file. For example: `/proc/uptime`.                                                            |
+| `Buf_Size`      | Buffer size to read the file.                                                                                             |
+| `Interval_Sec`  | Polling interval (seconds).                                                                                               |
+| `Interval_NSec` | Polling interval (nanoseconds).                                                                                           |
+| `Add_Path`      | If enabled, the path is appended to each records. Default: `false`.                                                       |
+| `Key`           | Rename a key. Default: `head`.                                                                                            |
+| `Lines`         | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`.                             |
+| `Split_line`    | If enabled, `in_head` generates key-value pair per line.                                                                  |
+| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`. |
 
 ### Split line mode
 

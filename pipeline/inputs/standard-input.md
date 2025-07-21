@@ -13,11 +13,11 @@ If the `stdin` stream is closed (`end-of-file`), the plugin instructs Fluent Bit
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `16k` |
-| `Parser` | The name of the parser to invoke instead of the default JSON input parser. | _none_ |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key           | Description                                                                                                                                                                                         | Default |
+|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `16k`   |
+| `Parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
+| `Threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
 
 ## Input formats
 
@@ -41,7 +41,7 @@ To handle inputs in other formats, a parser must be explicitly specified in the 
 
 ## Log event timestamps
 
-The Fluent Bit event timestamp will be set from the input record if the two-element event input is used or a custom parser configuration supplies a timestamp. Otherwise the event timestamp will be set to the timestamp at which the record is read by the `stdin` plugin.
+The Fluent Bit event timestamp will be set from the input record if the two-element event input is used or a custom parser configuration supplies a timestamp. Otherwise, the event timestamp will be set to the timestamp at which the record is read by the `stdin` plugin.
 
 ## Examples
 
@@ -170,10 +170,10 @@ For example, if you want to read raw messages line by line and forward them, you
 
 ```yaml
 parsers:
-    - name: stringify_message
-      format: regex
-      key_name: message
-      regex: '^(?<message>.*)'
+  - name: stringify_message
+    format: regex
+    key_name: message
+    regex: '^(?<message>.*)'
 ```
 
 {% endtab %}
@@ -181,10 +181,10 @@ parsers:
 
 ```text
 [PARSER]
-    name        stringify_message
-    format      regex
-    Key_Name    message
-    regex       ^(?<message>.*)
+  name        stringify_message
+  format      regex
+  Key_Name    message
+  regex       ^(?<message>.*)
 ```
 
 {% endtab %}
@@ -197,17 +197,17 @@ You can then use the parsers file in a `stdin` plugin in the main Fluent Bit con
 
 ```yaml
 service:
-    parsers_file: parsers.yaml
+  parsers_file: parsers.yaml
     
 pipeline:
-    inputs:
-        - name: stdin
-          tag: stdin
-          parser: stringify_message
-          
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: stdin
+      tag: stdin
+      parser: stringify_message
+       
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -215,16 +215,16 @@ pipeline:
 
 ```text
 [SERVICE]
-    parsers_file parsers.conf
+  parsers_file parsers.conf
     
 [INPUT]
-    Name    stdin
-    Tag     stdin
-    Parser  stringify_message
+  Name    stdin
+  Tag     stdin
+  Parser  stringify_message
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
@@ -243,36 +243,13 @@ seq 1 5 | ./fluent-bit --config fluent-bit.conf
 Which returns output similar to:
 
 ```text
-Fluent Bit v4.0.3
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/07/03 14:32:54] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=18569
-[2025/07/03 14:32:54] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/07/03 14:32:54] [ info] [simd    ] disabled
-[2025/07/03 14:32:54] [ info] [cmetrics] version=1.0.3
-[2025/07/03 14:32:54] [ info] [ctraces ] version=0.6.6
-[2025/07/03 14:32:54] [ info] [input:stdin:stdin.0] initializing
-[2025/07/03 14:32:54] [ info] [input:stdin:stdin.0] storage_strategy='memory' (memory only)
-[2025/07/03 14:32:54] [ info] [sp] stream processor started
-[2025/07/03 14:32:54] [ info] [output:stdout:stdout.0] worker #0 started
-[2025/07/03 14:32:54] [ info] [engine] Shutdown Grace Period=5, Shutdown Input Grace Period=2
-[2025/07/03 14:32:54] [ warn] [input:stdin:stdin.0] end of file (stdin closed by remote end)
-[2025/07/03 14:32:54] [ warn] [engine] service will shutdown in max 5 seconds
+...
 [0] stdin: [[1751545974.960182000, {}], {"message"=>"1"}]
 [1] stdin: [[1751545974.960246000, {}], {"message"=>"2"}]
 [2] stdin: [[1751545974.960255000, {}], {"message"=>"3"}]
 [3] stdin: [[1751545974.960262000, {}], {"message"=>"4"}]
 [4] stdin: [[1751545974.960268000, {}], {"message"=>"5"}]
+...
 ```
 
 In production deployments it's best to use a parser that splits messages into real fields and adds appropriate tags.
