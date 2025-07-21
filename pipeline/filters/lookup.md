@@ -77,7 +77,7 @@ pipeline:
 
 The previous configuration reads log records from `devices.log` that includes the following values for device hostnames:
 
-```text
+```shell
 {"hostname": "server-prod-001"}
 {"hostname": "Server-Prod-001"}
 {"hostname": "db-test-abc"}
@@ -111,7 +111,7 @@ When the filter finds a match, it adds a new key with the name specified by `res
 
 This results in output that resembles the following:
 
-```text
+```shell
 {"hostname"=>"server-prod-001", "business_line"=>"Finance"}
 {"hostname"=>"Server-Prod-001", "business_line"=>"Finance"}
 {"hostname"=>"db-test-abc", "business_line"=>"Marketing"}
