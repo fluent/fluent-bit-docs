@@ -41,14 +41,14 @@ In your configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: elasticsearch
-          listen: 0.0.0.0
-          port: 9200
+  inputs:
+    - name: elasticsearch
+      listen: 0.0.0.0
+      port: 9200
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -56,13 +56,13 @@ pipeline:
 
 ```text
 [INPUT]
-    name elasticsearch
-    listen 0.0.0.0
-    port 9200
+  name   elasticsearch
+  listen 0.0.0.0
+  port   9200
 
 [OUTPUT]
-    name stdout
-    match *
+  name  stdout
+  match *
 ```
 
 {% endtab %}
@@ -76,16 +76,16 @@ For large bulk ingestion, you might have to increase buffer size using the `buff
 
 ```yaml
 pipeline:
-    inputs:
-        - name: elasticsearch
-          listen: 0.0.0.0
-          port: 9200
-          buffer_max_size: 20M
-          buffer_chunk_size: 5M
+  inputs:
+    - name: elasticsearch
+      listen: 0.0.0.0
+      port: 9200
+      buffer_max_size: 20M
+      buffer_chunk_size: 5M
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -93,15 +93,15 @@ pipeline:
 
 ```text
 [INPUT]
-    name elasticsearch
-    listen 0.0.0.0
-    port 9200
-    buffer_max_size 20M
-    buffer_chunk_size 5M
+  name              elasticsearch
+  listen            0.0.0.0
+  port              9200
+  buffer_max_size   20M
+  buffer_chunk_size 5M
 
 [OUTPUT]
-    name stdout
-    match *
+  name  stdout
+  match *
 ```
 
 {% endtab %}
