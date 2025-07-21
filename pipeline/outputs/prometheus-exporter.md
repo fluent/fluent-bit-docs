@@ -2,22 +2,27 @@
 description: An output plugin to expose Prometheus Metrics
 ---
 
-# Prometheus Exporter
+# Prometheus exporter
 
-The prometheus exporter allows you to take metrics from Fluent Bit and expose them such that a Prometheus instance can scrape them.
+The _Prometheus_ exporter lets you take metrics from Fluent Bit and expose them so a Prometheus instance can scrape them.
 
-Important Note: The prometheus exporter only works with metric  plugins, such as Node Exporter Metrics
+The Prometheus exporter only works with metric plugins such as Node Exporter Metrics.
 
-| Key        | Description                                                                                                                        | Default |
-|:-----------|:-----------------------------------------------------------------------------------------------------------------------------------|:--------|
-| host       | This is address Fluent Bit will bind to when hosting prometheus metrics. Note: `listen` parameter is deprecated from v1.9.0.       | 0.0.0.0 |
-| port       | This is the port Fluent Bit will bind to when hosting prometheus metrics                                                           | 2021    |
-| add\_label | This allows you to add custom labels to all metrics exposed through the prometheus exporter. You may have multiple of these fields |         |
-| workers    | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.               | `1`     |
 
-## Getting Started
+## Configuration parameters
 
-The Prometheus exporter only works with metrics captured from metric plugins. In the following example, host metrics are captured by the node exporter metrics plugin and then are routed to prometheus exporter. Within the output plugin two labels are added `app="fluent-bit"`and `color="blue"`
+This plugin supports the following parameters:
+
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `host` | This is address Fluent Bit will bind to when hosting Prometheus metrics. The `listen` parameter is deprecated in 1.9.0 and later. | `0.0.0.0` |
+| `port` | This is the port Fluent Bit will bind to when hosting Prometheus metrics. | `2021` |
+| `add_label` | This lets you add custom labels to all metrics exposed through the Prometheus exporter. You can have multiple of these fields. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+
+## Get started
+
+The Prometheus exporter only works with metrics captured from metric plugins. In the following example, host metrics are captured by the node exporter metrics plugin and then are routed to Prometheus exporter. In the output plugin, two labels are added `app="fluent-bit"`and `color="blue"`
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
