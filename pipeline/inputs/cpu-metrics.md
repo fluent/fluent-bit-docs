@@ -46,17 +46,12 @@ build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
 The command returns results similar to the following:
 
 ```text
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-[2019/09/02 10:46:29] [ info] starting engine
+...
 [0] [1452185189, {"cpu_p"=>7.00, "user_p"=>5.00, "system_p"=>2.00, "cpu0.p_cpu"=>10.00, "cpu0.p_user"=>8.00, "cpu0.p_system"=>2.00, "cpu1.p_cpu"=>6.00, "cpu1.p_user"=>4.00, "cpu1.p_system"=>2.00}]
 [1] [1452185190, {"cpu_p"=>6.50, "user_p"=>5.00, "system_p"=>1.50, "cpu0.p_cpu"=>6.00, "cpu0.p_user"=>5.00, "cpu0.p_system"=>1.00, "cpu1.p_cpu"=>7.00, "cpu1.p_user"=>5.00, "cpu1.p_system"=>2.00}]
 [2] [1452185191, {"cpu_p"=>7.50, "user_p"=>5.00, "system_p"=>2.50, "cpu0.p_cpu"=>7.00, "cpu0.p_user"=>3.00, "cpu0.p_system"=>4.00, "cpu1.p_cpu"=>6.00, "cpu1.p_user"=>6.00, "cpu1.p_system"=>0.00}]
 [3] [1452185192, {"cpu_p"=>4.50, "user_p"=>3.50, "system_p"=>1.00, "cpu0.p_cpu"=>6.00, "cpu0.p_user"=>5.00, "cpu0.p_system"=>1.00, "cpu1.p_cpu"=>5.00, "cpu1.p_user"=>3.00, "cpu1.p_system"=>2.00}]
+...
 ```
 
 As described previously, the CPU input plugin gathers the overall usage every one second and flushed the information to the output on the fifth second. This example uses the `stdout` plugin to demonstrate the output records. In a real use-case you might want to flush this information to some central aggregator such as [Fluentd](http://fluentd.org) or [Elasticsearch](http://elastic.co).
@@ -71,13 +66,13 @@ In your main configuration file append the following:
 ```yaml
 
 pipeline:
-    inputs:
-        - name: cpu
-          tag: my_cpu
+  inputs:
+    - name: cpu
+      tag: my_cpu
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -85,12 +80,12 @@ pipeline:
 
 ```shell
 [INPUT]
-    Name cpu
-    Tag  my_cpu
+  Name cpu
+  Tag  my_cpu
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
