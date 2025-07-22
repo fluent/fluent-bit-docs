@@ -14,6 +14,7 @@ exceptions:
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
+  - Apache SkyWalking
   - API
   - APIs
   - AWS MSK IAM
