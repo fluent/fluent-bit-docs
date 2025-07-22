@@ -17,7 +17,7 @@ This plugin supports the following parameters:
 | `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
 | `http_user` | Basic Auth username. | _none_ |
 | `http_passwd` | Basic Auth Password. Requires `HTTP_user` to be set. | _none_ |
-| `AWS_Auth` | Enable AWS SigV4 authentication | `false` |
+| `AWS_Auth` | Enable AWS SigV4 authentication. | `false` |
 | `AWS_Service` | For Amazon Managed Service for Prometheus, the service name is `aps`. | `aps` |
 | `AWS_Region` | Region of your Amazon Managed Service for Prometheus workspace. | _none_ |
 | `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API, used with the `AWS_Role_ARN` option, used by SigV4 authentication. | _none_ |
