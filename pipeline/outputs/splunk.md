@@ -189,7 +189,7 @@ This will create a payload that looks like:
 
 ### Sending raw events
 
-If the option `splunk_send_raw` has been enabled, the user must add all log details in the event field, and only specify fields known to Splunk in the top level event. If there is a mismatch, Splunk returns an HTTP error `400`.
+If the option `splunk_send_raw` has been enabled, the user must add all log details in the event field, and only specify fields known to Splunk in the top level event. If there is a mismatch, Splunk returns an HTTP `400 Bad Request` status code.
 
 Consider the following examples:
 
@@ -211,7 +211,7 @@ For up-to-date information about the valid keys, see [Getting Data In](https://d
 
 With Splunk version 8.0 and later, you can use the Fluent Bit Splunk output plugin to send data to metric indices. This lets you perform visualizations, metric queries, and analysis with other metrics you might be collecting. This is based off of Splunk 8.0 support of multi metric support using single JSON payload, more details can be found in [Splunk metrics documentation](https://docs.splunk.com/Documentation/Splunk/9.4.2/Metrics/GetMetricsInOther#The_multiple-metric_JSON_format)
 
-Sending to a Splunk metric index requires the use of `Splunk_send_raw` option being enabled and formatting the message properly. This includes three specific operations
+Sending to a Splunk metric index requires the use of `Splunk_send_raw` option being enabled and formatting the message properly. This includes these specific operations:
 
 - Nest metric events under a `fields` property
 - Add `metric_name:` to all metrics
@@ -303,9 +303,7 @@ pipeline:
 
 ## Send metrics events of Fluent Bit
 
-In Fluent Bit 2.0 or later, you can also send Fluent Bit metrics the `events` type into Splunk using Splunk HEC.
-This lets you perform visualizations, metric queries, and analysis with directly sent using Fluent Bit metrics.
-This is based off Splunk 8.0 support of multi metric support using a single concatenated JSON payload.
+In Fluent Bit 2.0 or later, you can send Fluent Bit metrics the `events` type into Splunk using Splunk HEC. This lets you perform visualizations, metric queries, and analysis with directly sent using Fluent Bit metrics. This is based off Splunk 8.0 support of multi metric support using a single concatenated JSON payload.
 
 Sending Fluent Bit metrics into Splunk requires the use of collecting Fluent Bit metrics plugins, whether events type of logs or metrics can be distinguished automatically.
 You don't need to pay attentions about the type of events.
