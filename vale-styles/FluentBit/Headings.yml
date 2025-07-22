@@ -62,6 +62,7 @@ exceptions:
   - Kubernetes
   - LaunchDarkly
   - Linux
+  - LogDNA
   - LTSV
   - macOS
   - Marketplace
