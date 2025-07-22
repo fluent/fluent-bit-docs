@@ -73,6 +73,8 @@ Fargate
 Firehose
 FluentBit
 Fluentd
+formatter
+formatters
 github
 glibc
 Golang
