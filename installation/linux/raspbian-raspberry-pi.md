@@ -14,7 +14,7 @@ The first step is to add the Fluent Bit server GPG key to your keyring so you
 can get FLuent Bit signed packages:
 
 ```shell
-curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add - '
 ```
 
 ### Updated key from March 2022
@@ -52,19 +52,19 @@ Add the following content at bottom of your `/etc/apt/sources.list` file.
 ### Raspbian 12 (Bookworm)
 
 ```text
-deb https://packages.fluentbit.io/raspbian/bookworm bookworm main
+echo "deb https://packages.fluentbit.io/raspbian/bookworm bookworm main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Raspbian 11 (Bullseye)
 
 ```text
-deb https://packages.fluentbit.io/raspbian/bullseye bullseye main
+echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Raspbian 10 (Buster)
 
 ```text
-deb https://packages.fluentbit.io/raspbian/buster buster main
+echo "deb https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database
