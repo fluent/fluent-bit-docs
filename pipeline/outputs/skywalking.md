@@ -10,7 +10,7 @@ This plugin supports the following parameters:
 |:--------- |:----------- |:-----------|
 | `host` | Hostname of Apache SkyWalking OAP. |` 127.0.0.1` |
 | `port` | TCP port of the Apache SkyWalking OAP. | `12800` |
-| `auth_token` | Authentication token if needed for Apache SkyWalking OAP.  | _none_ |
+| `auth_token` | Authentication token if needed for Apache SkyWalking OAP. | _none_ |
 | `svc_name` | Service name that Fluent Bit belongs to. | `sw-service` |
 | `svc_inst_name` | Service instance name of Fluent Bit. | `fluent-bit` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
