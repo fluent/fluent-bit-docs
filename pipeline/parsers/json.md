@@ -9,10 +9,10 @@ For example, the default parsers configuration file includes a parser for parsin
 
 ```yaml
 parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S %z'
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S %z'
 ```
 
 {% endtab %}
@@ -20,10 +20,10 @@ parsers:
 
 ```text
 [PARSER]
-    Name        docker
-    Format      json
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S %z
+  Name        docker
+  Format      json
+  Time_Key    time
+  Time_Format %Y-%m-%dT%H:%M:%S %z
 ```
 
 {% endtab %}
