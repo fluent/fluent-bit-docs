@@ -12,11 +12,11 @@ According to the parameters set in the configuration file, the plugin creates th
 
 {% hint style="info" %}
 
-If you're not familiar with how PostgreSQL's users and grants system works, the links in the [References](#references) section at might be helpful.
+If you're not familiar with how PostgreSQL's users and grants system works, the links in the [References](#references) section might be helpful.
 
 {% endhint %}
 
-A typical installation normally consists of a self-contained database for Fluent Bit in which you can store the output of one or more pipelines. You can store them in the same table, or in separate tables, or even in separate databases based on several factors, including workload, scalability, data protection and security.
+A typical installation consists of a self-contained database for Fluent Bit in which you can store the output of one or more pipelines. You can store them in the same table, or in separate tables, or even in separate databases based on several factors, including workload, scalability, data protection, and security.
 
 This example uses a single table called `fluentbit` in a database called `fluentbit`, owned by the user `fluentbit`.  In your environment, use names appropriate to your needs. For security reasons, don't use the `postgres` user which has `SUPERUSER` privileges.
 
@@ -60,7 +60,7 @@ This plugin supports the following parameters:
 | `Port` | PostgreSQL port. | `- (5432)` |
 | `User` | PostgreSQL username. | `- (current user)` |
 | `Password` | Password of PostgreSQL username. | `-` |
-| `Database` | Database name to connect to.  | `- (current user)` |
+| `Database` | Database name to connect to. | `- (current user)` |
 | `Table` | Table name where to store data. | `-` |
 | `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `-` |
 | `Timestamp_Key` | Key in the JSON object containing the record timestamp. | `date` |
@@ -129,11 +129,11 @@ The output plugin automatically creates a table with the name specified by the `
 
 The timestamp doesn't contain any information about the time zone, and it's therefore referred to the time zone used by the connection to PostgreSQL (`timezone` setting).
 
-For more information on the `JSONB` data type in PostgreSQL, refer to the [JSON types](https://www.postgresql.org/docs/current/datatype-json.html) page in the official documentation. You can find instructions on how to index or query the objects (including `jsonpath` introduced in PostgreSQL 12).
+For more information about the `JSONB` data type in PostgreSQL, refer to the [JSON types](https://www.postgresql.org/docs/current/datatype-json.html) page in the official documentation. You can find instructions on how to index or query the objects (including `jsonpath` introduced in PostgreSQL 12).
 
 ## Scalability
 
-PostgreSQL includes support for declarative partitioning. To improve vertical scalability of the database, you can partition your tables on time ranges, such as on a monthly basis. PostgreSQL supports also sub-partitions, allowing you to partition your records by hash and default partitions.
+PostgreSQL includes support for declarative partitioning. To improve vertical scalability of the database, you can partition your tables on time ranges, such as on a monthly basis. PostgreSQL supports also sub-partitions, which let you partition your records by hash and default partitions.
 
 For more information on horizontal partitioning in PostgreSQL, refer to the [Table partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html) page in the official documentation.
 
@@ -143,11 +143,11 @@ Choose the latest major version of PostgreSQL if you're starting now.
 
 PostgreSQL is a powerful and extensible database engine. More expert users can take advantage of `BEFORE INSERT` triggers on the main table and reroute records on normalised tables, depending on tags and content of the actual JSON objects.
 
-For example, you can use Fluent Bit to send HTTP log records to the `landing` table defined in the configuration file. This table contains a `BEFORE INSERT` trigger  (a function in `plpgsql` language) that normalizes the content of the JSON object and that inserts the record in another table (with its own structure and partitioning model). This kind of trigger lets you discard the record from the landing table by returning `NULL`.
+For example, you can use Fluent Bit to send HTTP log records to the `landing` table defined in the configuration file. This table contains a `BEFORE INSERT` trigger (a function in `plpgsql` language) that normalizes the content of the JSON object and that inserts the record in another table (with its own structure and partitioning model). This kind of trigger lets you discard the record from the landing table by returning `NULL`.
 
 ## References
 
-The following a list of resources from the PostgreSQL documentation:
+Refer to the following a list of resources from the PostgreSQL documentation:
 
 - [Database Roles](https://www.postgresql.org/docs/current/user-manag.html)
 - [`GRANT`](https://www.postgresql.org/docs/current/sql-grant.html)
