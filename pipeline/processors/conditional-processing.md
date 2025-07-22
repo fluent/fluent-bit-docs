@@ -20,22 +20,23 @@ These `condition` blocks use the following syntax:
 
 ```yaml
 pipeline:
-    inputs:
+  inputs:
     <...>
-        processors:
-            logs:
-                - name: processor_name
-                  <...>
-                  condition:
-	                  op: {and|or}
-                      rules:
-                          - field: {field_name1}
-                            op: {comparison_operator}
-                            value: {comparison_value1}
-                          - field: {field_name2}
-                            op: {comparison_operator}
-                            value: {comparison_value2}
-                  <...>
+  
+  processors:
+    logs:
+      - name: processor_name
+        <...>
+        condition:
+          op: {and|or}
+          rules:
+          - field: {field_name1}
+            op: {comparison_operator}
+            value: {comparison_value1}
+          - field: {field_name2}
+            op: {comparison_operator}
+            value: {comparison_value2}
+        <...>
 ```
 
 {% endtab %}
@@ -62,10 +63,11 @@ Each item in the `condition.rules` array must include values for the following p
 
 Rules are evaluated against each log that passes through your data pipeline. For example, given a rule with these parameters:
 
-```
-- field: "$status"
-   op: eq
-   value: 200
+```yaml
+rules:
+  - field: "$status"
+    op: eq
+    value: 200
 ```
 
 This rule evaluates to `true` for a log that contains the string `'status':200`, but evaluates to `false` for a log that contains the string `'status':403`.
@@ -102,23 +104,23 @@ This example applies a condition that only processes logs that contain the strin
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
-          tag: request.log
+  inputs:
+    - name: dummy
+      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
+      tag: request.log
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: modified_if_post
-                    value: true
-                    condition:
-                        op: and
-                        rules:
-                            - field: "$request['method']"
-                              op: eq
-                              value: "POST"
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: modified_if_post
+            value: true
+            condition:
+              op: and
+              rules:
+                - field: "$request['method']"
+                  op: eq
+                  value: "POST"
 ```
 
 {% endtab %}
@@ -133,26 +135,26 @@ This example applies a condition that only processes logs when all the specified
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
-          tag: request.log
+  inputs:
+    - name: dummy
+      dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
+      tag: request.log
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: requires_audit
-                    value: true
-                    condition:
-                        op: and
-                        rules:
-                            - field: "$request['method']"
-                              op: eq
-                              value: "POST"
-                            - field: "$request['path']"
-                              op: regex
-                              value: "\/sensitive-.*"
+      processors:
+          logs:
+            - name: content_modifier
+              action: insert
+              key: requires_audit
+              value: true
+              condition:
+                op: and
+                rules:
+                  - field: "$request['method']"
+                    op: eq
+                    value: "POST"
+                  - field: "$request['path']"
+                    op: regex
+                    value: "\/sensitive-.*"
 ```
 
 {% endtab %}
@@ -167,26 +169,26 @@ This example applies a condition that only processes logs when one or more of th
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
-          tag: request.log
+  inputs:
+    - name: dummy
+      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
+      tag: request.log
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: requires_performance_check
-                    value: true
-                    condition:
-                        op: or
-                        rules:
-                            - field: "$request['response_time']"
-                              op: gt
-                              value: 100
-                            - field: "$request['status_code']"
-                              op: gte
-                              value: 400
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: requires_performance_check
+            value: true
+            condition:
+              op: or
+              rules:
+                - field: "$request['response_time']"
+                  op: gt
+                  value: 100
+                - field: "$request['status_code']"
+                  op: gte
+                  value: 400
 ```
 
 {% endtab %}
@@ -201,23 +203,23 @@ This example uses an array for the value of `condition.rules.value`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
-          tag: request.log
+  inputs:
+    - name: dummy
+      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
+      tag: request.log
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: high_priority_method
-                    value: true
-                    condition:
-                        op: and
-                        rules:
-                            - field: "$request['method']"
-                              op: in
-                              value: ["POST", "PUT", "DELETE"]
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: high_priority_method
+            value: true
+            condition:
+              op: and
+              rules:
+                - field: "$request['method']"
+                  op: in
+                  value: ["POST", "PUT", "DELETE"]
 ```
 
 {% endtab %}
@@ -232,40 +234,40 @@ This example uses multiple processors with conditional processing enabled for ea
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
-          tag: app.log
+  inputs:
+    - name: dummy
+      dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
+      tag: app.log
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: alert
-                    value: true
-                    condition:
-                        op: and
-                        rules:
-                            - field: "$level"
-                              op: eq
-                              value: "error"
-                            - field: "$service"
-                              op: in
-                              value: ["api-gateway", "authentication", "database"]
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: alert
+            value: true
+            condition:
+              op: and
+              rules:
+                - field: "$level"
+                  op: eq
+                  value: "error"
+                - field: "$service"
+                  op: in
+                  value: ["api-gateway", "authentication", "database"]
 
-                  - name: content_modifier
-                    action: insert
-                    key: paging_required
-                    value: true
-                    condition:
-                        op: and
-                        rules:
-                            - field: "$log"
-                              op: regex
-                              value: "(?i)(connection refused|timeout|crash)"
-                            - field: "$level"
-                              op: in
-                              value: ["error", "fatal"]
+          - name: content_modifier
+            action: insert
+            key: paging_required
+            value: true
+            condition:
+              op: and
+              rules:
+                - field: "$log"
+                  op: regex
+                  value: "(?i)(connection refused|timeout|crash)"
+                - field: "$level"
+                  op: in
+                  value: ["error", "fatal"]
 ```
 
 {% endtab %}
