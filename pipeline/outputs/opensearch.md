@@ -325,8 +325,7 @@ This behavior could be indicative of a hard-to-detect issue with index shard usa
 
 Depending index creation and shard allocation configuration in the OpenSearch domain, all the available index shards could be used before the data nodes run out of disk space. This can result in exhibition disk-related performance issues (nodes crashing, data corruption, or the dashboard going offline). The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (although logs can still be added to existing indexes).
 
-When that happens, the Fluent Bit OpenSearch output can show confusing behavior. For
-example:
+When that happens, the Fluent Bit OpenSearch output can show confusing behavior. For example:
 
 - Errors suddenly appear (outputs were previously working and there were no changes to the Fluent Bit configuration when the errors began)
 - Errors aren't consistently occurring (some logs are still reaching the OpenSearch domain)
