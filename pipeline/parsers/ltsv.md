@@ -20,11 +20,11 @@ The following is an example parsers configuration file:
 
 ```yaml
 parsers:
-    - name: access_log_ltsv
-      format: ltsv
-      time_key: time
-      time_format: '[%d/%b/%Y:%H:%M:%S %z]'
-      types: status:integer size:integer
+  - name: access_log_ltsv
+    format: ltsv
+    time_key: time
+    time_format: '[%d/%b/%Y:%H:%M:%S %z]'
+    types: status:integer size:integer
 ```
 
 {% endtab %}
@@ -32,11 +32,11 @@ parsers:
 
 ```text
 [PARSER]
-    Name        access_log_ltsv
-    Format      ltsv
-    Time_Key    time
-    Time_Format [%d/%b/%Y:%H:%M:%S %z]
-    Types       status:integer size:integer
+  Name        access_log_ltsv
+  Format      ltsv
+  Time_Key    time
+  Time_Format [%d/%b/%Y:%H:%M:%S %z]
+  Types       status:integer size:integer
 ```
 
 {% endtab %}
@@ -45,19 +45,23 @@ parsers:
 The following log entry is valid content for the previously defined parser:
 
 ```text
+...
 host:127.0.0.1  ident:- user:-  time:[10/Jul/2018:13:27:05 +0200]       req:GET / HTTP/1.1      status:200      size:16218      referer:http://127.0.0.1/       ua:Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0
 host:127.0.0.1  ident:- user:-  time:[10/Jul/2018:13:27:05 +0200]       req:GET /assets/plugins/bootstrap/css/bootstrap.min.css HTTP/1.1        status:200      size:121200     referer:http://127.0.0.1/       ua:Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0
 host:127.0.0.1  ident:- user:-  time:[10/Jul/2018:13:27:05 +0200]       req:GET /assets/css/headers/header-v6.css HTTP/1.1      status:200      size:37706      referer:http://127.0.0.1/       ua:Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0
 host:127.0.0.1  ident:- user:-  time:[10/Jul/2018:13:27:05 +0200]       req:GET /assets/css/style.css HTTP/1.1  status:200      size:1279       referer:http://127.0.0.1/       ua:Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0
+...
 ```
 
 After processing, it internal representation will be:
 
 ```text
+...
 [1531222025.000000000, {"host"=>"127.0.0.1", "ident"=>"-", "user"=>"-", "req"=>"GET / HTTP/1.1", "status"=>200, "size"=>16218, "referer"=>"http://127.0.0.1/", "ua"=>"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0"}]
 [1531222025.000000000, {"host"=>"127.0.0.1", "ident"=>"-", "user"=>"-", "req"=>"GET /assets/plugins/bootstrap/css/bootstrap.min.css HTTP/1.1", "status"=>200, "size"=>121200, "referer"=>"http://127.0.0.1/", "ua"=>"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0"}]
 [1531222025.000000000, {"host"=>"127.0.0.1", "ident"=>"-", "user"=>"-", "req"=>"GET /assets/css/headers/header-v6.css HTTP/1.1", "status"=>200, "size"=>37706, "referer"=>"http://127.0.0.1/", "ua"=>"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0"}]
 [1531222025.000000000, {"host"=>"127.0.0.1", "ident"=>"-", "user"=>"-", "req"=>"GET /assets/css/style.css HTTP/1.1", "status"=>200, "size"=>1279, "referer"=>"http://127.0.0.1/", "ua"=>"Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0"}]
+...
 ```
 
 The time was converted to Unix timestamp (UTC).
