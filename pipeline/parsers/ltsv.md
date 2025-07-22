@@ -53,7 +53,7 @@ host:127.0.0.1  ident:- user:-  time:[10/Jul/2018:13:27:05 +0200]       req:GET 
 ...
 ```
 
-After processing, it internal representation will be:
+After processing, its internal representation will be:
 
 ```text
 ...
