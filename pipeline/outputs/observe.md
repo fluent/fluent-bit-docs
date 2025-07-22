@@ -8,7 +8,7 @@ The following HTTP configuration parameters are relevant to Observe:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `host` | IP address or hostname of the Observe data collection endpoint. Replace `$(OBSERVE_CUSTOMER)` with your [Customer ID](https://docs.observeinc.com/en/latest/content/common-topics/HelpfulHints.html?highlight=customer%20id#customer-id) | `OBSERVE_CUSTOMER.collect.observeinc.com` |
+| `host` | IP address or hostname of the Observe data collection endpoint. Replace `$(OBSERVE_CUSTOMER)` with your [Customer ID](https://docs.observeinc.com/en/latest/content/common-topics/HelpfulHints.html?highlight=customer%20id#customer-id). | `OBSERVE_CUSTOMER.collect.observeinc.com` |
 | `port` | TCP port to use when sending data to Observe. | `443` |
 | `tls` | Specifies whether to use TLS. | `on` |
 | `uri` | Specifies the HTTP URI for Observe. | `/v1/http/fluentbit` |
