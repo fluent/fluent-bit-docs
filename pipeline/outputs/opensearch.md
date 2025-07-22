@@ -4,8 +4,8 @@ description: Send logs to Amazon OpenSearch Service
 
 # OpenSearch
 
-The _OpenSearch output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database.
-The following instructions assumes that you have an operational OpenSearch service running in your environment.
+The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database.
+The following instructions assume you have an operational OpenSearch service running in your environment.
 
 ## Configuration parameters
 
@@ -50,7 +50,7 @@ This plugin supports the following parameters:
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | `Compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ (no compression) |
 
-The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq)
+The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq).
 
 ### TLS / SSL
 
@@ -195,7 +195,7 @@ For records that do nor have the field `kubernetes.namespace_name`, the default 
 
 The Amazon OpenSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. This plugin supports Amazon OpenSearch Service with IAM Authentication.
 
-See [AWS credentials](../../administration/aws-credentials.md) for details on how AWS credentials are fetched.
+For details about how AWS credentials are fetched, see [AWS credentials](../../administration/aws-credentials.md).
 
 Example configuration:
 
@@ -321,9 +321,9 @@ For example, in this scenario the logs show that a connection was successfully e
 ...
 ```
 
-This behavior could be indicative of a hard-to-detect issue with index shard usage in the OpenSearch domain. While OpenSearch index shards and disk space are related, they're not directly tied to one another. OpenSearch domains are limited to 1000 index shards per data node, regardless of the size of the nodes. Shard usage isn't proportional to disk usage: an individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data.
+This behavior could be indicative of a hard-to-detect issue with index shard usage in the OpenSearch domain. Although OpenSearch index shards and disk space are related, they're not directly tied to one another. OpenSearch domains are limited to 1,000 index shards per data node, regardless of the size of the nodes. Shard usage isn't proportional to disk usage. An individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data.
 
-Depending index creation and shard allocation configuration in the OpenSearch domain, all the available index shards could be used before the data nodes run out of disk space. This can result in exhibition disk-related performance issues (nodes crashing, data corruption, or the dashboard going offline). The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (though logs can still be added to existing indexes).
+Depending index creation and shard allocation configuration in the OpenSearch domain, all the available index shards could be used before the data nodes run out of disk space. This can result in exhibition disk-related performance issues (nodes crashing, data corruption, or the dashboard going offline). The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (although logs can still be added to existing indexes).
 
 When that happens, the Fluent Bit OpenSearch output can show confusing behavior. For
 example:
@@ -340,7 +340,7 @@ Running this command will show both the shard count and disk usage on all the no
 GET _cat/allocation?v
 ```
 
-Index creation issues can appear if any hot data nodes have around 1000 shards. Creation issues can also occur if the total number of shards spread across hot and ultra warm data nodes in the cluster is greater than 1000 times the total number of nodes. For example, in a cluster with 6 nodes, the maximum shard count would be `6000`.
+Index creation issues can appear if any hot data nodes have around 1,000 shards. Creation issues can also occur if the total number of shards spread across hot and ultra warm data nodes in the cluster is greater than 1,000 times the total number of nodes. For example, in a cluster with six nodes, the maximum shard count would be `6000`.
 
 Alternately, running this command to manually create a new index will return an explicit error related to shard count if the maximum has been exceeded:
 
@@ -348,4 +348,4 @@ Alternately, running this command to manually create a new index will return an 
 PUT <index-name>
 ```
 
-There are multiple ways to resolve excessive shard usage in an OpenSearch domain. Deleting or combining indexes, adding more data nodes to the cluster, or updating the domain's index creation and sharding strategy can resolve this issue. Consult the OpenSearch documentation for more information on how to use these strategies.
+There are multiple ways to resolve excessive shard usage in an OpenSearch domain. Deleting or combining indexes, adding more data nodes to the cluster, or updating the domain's index creation and sharding strategy can resolve this issue. Consult the OpenSearch documentation for more information about how to use these strategies.
