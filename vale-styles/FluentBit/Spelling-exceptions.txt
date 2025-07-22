@@ -73,6 +73,8 @@ Fargate
 Firehose
 FluentBit
 Fluentd
+formatter
+formatters
 github
 glibc
 Golang
@@ -102,6 +104,7 @@ Kube
 Kubernetes
 Kusto
 labelset
+libpq
 librdkafka
 loadgenerator
 logfmt
@@ -126,6 +129,8 @@ OAuth
 Okta
 Onigmo
 Oniguruma
+OpenSearch
+OpenObserve
 OpenTelemetry
 Opsgenie
 OTel
@@ -134,6 +139,7 @@ performant
 persistable
 Podman
 Postgres
+PostgreSQL
 PowerShell
 prepopulate
 preprocessor

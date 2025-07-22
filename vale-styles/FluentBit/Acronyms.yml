@@ -36,6 +36,7 @@ exceptions:
   - FIPS
   - GCC
   - GCP
+  - GCS
   - GDB
   - GET
   - GNU
@@ -45,6 +46,7 @@ exceptions:
   - GUI
   - GZIP
   - HEC
+  - HMAC
   - HPA
   - HTML
   - HTTP
@@ -52,6 +54,7 @@ exceptions:
   - IAM
   - IDE
   - IMDS
+  - ISO
   - JAR
   - JSON
   - JSX
@@ -61,6 +64,8 @@ exceptions:
   - LLVM
   - LTS
   - LTSV
+  - MIME
+  - MAC
   - MQTT
   - MSK
   - NET
@@ -93,6 +98,7 @@ exceptions:
   - SQL
   - SSH
   - SSL
+  - SSM
   - SSO
   - STS
   - SVG
