@@ -17,18 +17,19 @@ In this example, the [Grep](../filters/grep.md) filter is an output processor th
 
 ```yaml
 pipeline:
-      inputs:
-          - name: tail
-            path: lines.txt
-            parser: json
-      outputs:
-          - name: stdout
-            match: '*'
+  inputs:
+    - name: tail
+      path: lines.txt
+      parser: json
 
-            processors:
-                logs:
-                    - name: grep
-                      regex: log aa
+  outputs:
+    - name: stdout
+      match: '*'
+
+      processors:
+        logs:
+          - name: grep
+            regex: log aa
 ```
 
 {% endtab %}
