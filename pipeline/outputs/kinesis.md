@@ -36,7 +36,7 @@ To send records into Amazon Kinesis Data Streams, you can run the plugin from th
 
 ### Command line
 
-The *`kinesis_streams` plugin can read the parameters from the command line through the `-p` (property) argument. For example:
+The `kinesis_streams` plugin can read the parameters from the command line through the `-p` (property) argument. For example:
 
 ```shell
 fluent-bit -i cpu -o kinesis_streams -p stream=my-stream -p region=us-west-2 -m '*' -f 1
@@ -100,7 +100,7 @@ The [aws-for-fluent-bit](https://github.com/aws/aws-for-fluent-bit) container im
 
 ### Amazon ECR Public Gallery
 
-The [aws-for-fluent-bit](https://gallery.ecr.aws/aws-observability/aws-for-fluent-bit) container image is available on the Amazon ECR Public Gallery. You can use the following command to download images with different tags:
+The [aws-for-fluent-bit](https://gallery.ecr.aws/aws-observability/aws-for-fluent-bit) container image is available on the Amazon ECR Public Gallery. Use the following command to download images with different tags:
 
 ```shell
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:TAG
