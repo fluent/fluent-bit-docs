@@ -63,6 +63,7 @@ exceptions:
   - LaunchDarkly
   - Linux
   - LogDNA
+  - LogEntry
   - LTSV
   - macOS
   - Marketplace
