@@ -67,6 +67,7 @@ exceptions:
   - macOS
   - Marketplace
   - MongoDB
+  - NATS
   - New Relic
   - Observability Platform
   - Okta

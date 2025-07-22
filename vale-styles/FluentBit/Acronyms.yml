@@ -64,6 +64,7 @@ exceptions:
   - MAC
   - MQTT
   - MSK
+  - NATS
   - NET
   - NGINX
   - NIC

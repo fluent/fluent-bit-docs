@@ -1,24 +1,24 @@
 # NATS
 
-The **nats** output plugin, allows to flush your records into a [NATS Server](https://docs.nats.io/nats-concepts/intro) end point. The following instructions assumes that you have a fully operational NATS Server in place.
+The _NATS_ output plugin lets you flush your records into a [NATS Server](https://docs.nats.io/) server endpoint.
 
 ## Configuration parameters
 
-| parameter | description                                                                                                          | default   |
-|:----------|:---------------------------------------------------------------------------------------------------------------------|:----------|
-| host      | IP address or hostname of the NATS Server                                                                            | 127.0.0.1 |
-| port      | TCP port of the target NATS Server                                                                                   | 4222      |
-| workers   | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0`       |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `host` | The IP address or hostname of the NATS server. | `127.0.0.1` |
+| `port` | The TCP port of the target NATS server. | `4222` |
+| `workers` | The number of [workers](../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-In order to override the default configuration values, the plugin uses the optional Fluent Bit network address format, e.g:
+{% hint style="info" %}
 
-```text
-nats://host:port
-```
+To override the default configuration values, this plugin uses the optional Fluent Bit network address format (for example, `nats://host:port`).
 
-## Running
+{% endhint %}
 
-[Fluent Bit](http://fluentbit.io) only requires to know that it needs to use the **nats** output plugin, if no extra information is given, it will use the default values specified in the above table.
+## Get started
+
+You can get started with the NATS output plugin through the command line. If you use the following command without specifying parameter values, Fluent Bit uses the default values defined in the previous section.
 
 ```shell
 $ fluent-bit -i cpu -o nats -V -f 5
@@ -38,11 +38,9 @@ cpu[i=3] all=6.000000 user=5.000000 system=1.000000
 ...
 ```
 
-As described above, the target service and storage point can be changed, e.g:
-
 ## Data format
 
-For every set of records flushed to a NATS Server, Fluent Bit uses the following format:
+For every set of records flushed to a NATS server, Fluent Bit uses the following format:
 
 ```text
 [
@@ -52,7 +50,7 @@ For every set of records flushed to a NATS Server, Fluent Bit uses the following
 ]
 ```
 
-Each record is an individual entity represented in a JSON array that contains a UNIX\_TIMESTAMP and a JSON map with a set of key/values. A summarized output of the CPU input plugin will look as this:
+Each record is an individual entity represented in a JSON array that contains a Unix timestamp and a JSON map with a set of key/value pairs. A summarized output of the CPU input plugin will resemble the following:
 
 ```json
 [
