@@ -11,7 +11,7 @@ Before you begin, you need the following fields, which can be found under **Inge
 
 - [OpenObserve account](https://cloud.openobserve.ai/)
 - `HTTP_User`
-- `HTTP_Passwd`.
+- `HTTP_Passwd`
 
 ## Configuration parameters
 
