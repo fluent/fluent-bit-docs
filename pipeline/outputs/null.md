@@ -1,24 +1,24 @@
-# NULL
+# Null
 
-The **null** output plugin just throws away events.
+The _Null_ output plugin discards events.
 
-## Configuration Parameters
+## Configuration parameters
 
-The plugin doesn't support configuration parameters.
+This plugin doesn't have any configuration parameters.
 
-## Getting Started
+## Get started
 
 You can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
-From the command line you can let Fluent Bit throws away events with the following options:
+From the command line you can let Fluent Bit discard events with the following options:
 
 ```shell
 fluent-bit -i cpu -o null
 ```
 
-### Configuration File
+### Configuration file
 
 In your main configuration file append the following:
 
@@ -35,6 +35,7 @@ pipeline:
     - name: null
       match: '*'
 ```
+
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
