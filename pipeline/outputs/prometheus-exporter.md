@@ -4,9 +4,9 @@ description: An output plugin to expose Prometheus Metrics
 
 # Prometheus exporter
 
-The _Prometheus_ exporter lets you take metrics from Fluent Bit and expose them so a Prometheus instance can scrape them.
+The _Prometheus exporter_ lets you take metrics from Fluent Bit and expose them so a Prometheus instance can scrape them.
 
-The Prometheus exporter only works with metric plugins such as Node Exporter Metrics.
+The Prometheus exporter works only with metric plugins such as Node Exporter Metrics.
 
 
 ## Configuration parameters
@@ -22,7 +22,7 @@ This plugin supports the following parameters:
 
 ## Get started
 
-The Prometheus exporter only works with metrics captured from metric plugins. In the following example, host metrics are captured by the node exporter metrics plugin and then are routed to Prometheus exporter. In the output plugin, two labels are added `app="fluent-bit"`and `color="blue"`
+The Prometheus exporter works only with metrics captured from metric plugins. In the following example, host metrics are captured by the node exporter metrics plugin and then are routed to Prometheus exporter. In the output plugin, the labels `app="fluent-bit"`and `color="blue"` are added.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
