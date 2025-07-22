@@ -65,7 +65,7 @@ pipeline:
       region: us-east-1
       log_group_name: fluent-bit-cloudwatch
       log_stream_prefix: from-fluent-bit-
-      auto_create_group: on
+      auto_create_group: true
 ```
 
 {% endtab %}
@@ -78,7 +78,7 @@ pipeline:
   region us-east-1
   log_group_name fluent-bit-cloudwatch
   log_stream_prefix from-fluent-bit-
-  auto_create_group On
+  auto_create_group true
 ```
 
 {% endtab %}
@@ -100,7 +100,7 @@ pipeline:
       region: us-east-1
       log_group_name: fluent-bit-cloudwatch
       log_stream_prefix: from-fluent-bit-
-      auto_create_group: on
+      auto_create_group: true
       endpoint: localhost
       port: 4566
 ```
@@ -187,7 +187,7 @@ pipeline:
       region: us-east-1
       log_group_name: fallback-group
       log_stream_prefix: fallback-stream
-      auto_create_group: on
+      auto_create_group: true
       log_group_template: application-logs-$kubernetes['host'].$kubernetes['namespace_name']
       log_stream_template: $kubernetes['pod_name'].$kubernetes['container_name']
 ```
@@ -202,7 +202,7 @@ pipeline:
   region us-east-1
   log_group_name fallback-group
   log_stream_prefix fallback-stream
-  auto_create_group On
+  auto_create_group true
   log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
   log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
