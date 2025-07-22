@@ -6,7 +6,7 @@ description: An output plugin to submit Prometheus Metrics using the remote writ
 
 The _Prometheus remote write_ plugin lets you take metrics from Fluent Bit and submit them to a Prometheus server through the remote write mechanism.
 
-The Prometheus exporter only works with metric plugins, such as Node Exporter Metrics
+The Prometheus exporter works only with metric plugins, such as Node Exporter Metrics.
 
 ## Configuration parameters
 
@@ -27,13 +27,13 @@ This plugin supports the following parameters:
 | `proxy` | Specify an HTTP proxy. The expected format of this value is `http://HOST:PORT`. HTTPS isn't supported. Configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. | _none_ |
 | `uri` | Specify an optional HTTP URI for the target web server. For example: `/someuri` | `/` |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `log_response_payload` | Log the response payload within the Fluent Bit log | `false` |
+| `log_response_payload` | Log the response payload within the Fluent Bit log. | `false` |
 | `add_label` | This lets you add custom labels to all metrics exposed through the Prometheus exporter. You can have multiple of these fields. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## Get started
 
-The Prometheus remote write plugin only works with metrics collected by one of the metric input plugins. In the following example, host metrics are collected by the node exporter metrics plugin and then delivered by the Prometheus remote write output plugin.
+The Prometheus remote write plugin works only with metrics collected by one of the metric input plugins. In the following example, host metrics are collected by the node exporter metrics plugin and then delivered by the Prometheus remote write output plugin.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
