@@ -6,7 +6,7 @@ description: Send logs to Splunk HTTP Event Collector
 
 The _Splunk_ output plugin lets you ingest your records into a [Splunk Enterprise](https://www.splunk.com/en_us/products/splunk-enterprise.html) service through the HTTP Event Collector (HEC) interface.
 
-To learn how to set up the HEC in Splunk, refer to [Splunk / Use the HTTP Event Collector](http://docs.splunk.com/Documentation/Splunk/7.0.3/Data/UsetheHTTPEventCollector)
+To learn how to set up the HEC in Splunk, refer to [Splunk / Use the HTTP Event Collector](http://docs.splunk.com/Documentation/Splunk/7.0.3/Data/UsetheHTTPEventCollector).
 
 ## Configuration parameters
 
@@ -18,7 +18,7 @@ Connectivity, transport, and authentication configuration properties:
 | `port` | TCP port of the target Splunk service. | `8088` |
 | `splunk_token` | Specify the authentication token for the HTTP Event Collector interface.| _none_ |
 | `http_user` | Optional username for basic authentication on HEC. | _none_ |
-| `http_passwd` | Password for user defined in `http_user` | _none_ |
+| `http_passwd` | Password for user defined in `http_user`. | _none_ |
 | `http_buffer_size` | Buffer size used to receive Splunk HTTP responses. | `2M` |
 | `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
 | `channel` | Specify `X-Splunk-Request-Channel` header for the HTTP Event Collector interface. | _none_ |
