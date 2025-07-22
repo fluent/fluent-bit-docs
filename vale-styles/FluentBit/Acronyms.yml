@@ -52,6 +52,7 @@ exceptions:
   - IAM
   - IDE
   - IMDS
+  - ISO
   - JAR
   - JSON
   - JSX
@@ -61,6 +62,7 @@ exceptions:
   - LLVM
   - LTS
   - LTSV
+  - MAC
   - MQTT
   - MSK
   - NET
@@ -92,6 +94,7 @@ exceptions:
   - SQL
   - SSH
   - SSL
+  - SSM
   - SSO
   - STS
   - SVG

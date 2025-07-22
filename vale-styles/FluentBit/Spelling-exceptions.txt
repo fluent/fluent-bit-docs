@@ -127,6 +127,7 @@ Okta
 Onigmo
 Oniguruma
 OpenSearch
+OpenObserve
 OpenTelemetry
 Opsgenie
 OTel

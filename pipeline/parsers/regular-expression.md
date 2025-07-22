@@ -6,7 +6,7 @@ Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regul
 
 {% hint style="warning" %}
 
-This parser uses Onigmo, which is a backtracking regular expressions engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
+This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
 {% end hint %}
 
@@ -31,12 +31,12 @@ The following parser configuration example provides rules that can be applied to
 
 ```yaml
 parsers:
-    - name: apache
-      format: regex
-      regex: '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$'
-      time_key: time
-      time_format: '%d/%b/%Y:%H:%M:%S %z'
-      types: pid:integer size:integer
+  - name: apache
+    format: regex
+    regex: '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$'
+    time_key: time
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+    types: pid:integer size:integer
 ```
 
 {% endtab %}
@@ -44,12 +44,12 @@ parsers:
 
 ```text
 [PARSER]
-    Name   apache
-    Format regex
-    Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
-    Time_Key time
-    Time_Format %d/%b/%Y:%H:%M:%S %z
-    Types code:integer size:integer
+  Name   apache
+  Format regex
+  Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+  Time_Key time
+  Time_Format %d/%b/%Y:%H:%M:%S %z
+  Types code:integer size:integer
 ```
 
 {% endtab %}

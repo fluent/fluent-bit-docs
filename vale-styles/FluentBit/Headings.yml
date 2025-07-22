@@ -11,6 +11,7 @@ exceptions:
   - Amazon CloudWatch
   - Amazon ECR Public Gallery
   - Amazon Kinesis Data Firehose
+  - Amazon Kinesis Data Streams
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
@@ -32,6 +33,7 @@ exceptions:
   - CSV
   - cURL
   - Datadog
+  - DNS
   - Docker
   - Docker Hub
   - DogStatsD
@@ -61,6 +63,7 @@ exceptions:
   - Kubernetes
   - LaunchDarkly
   - Linux
+  - LogDNA
   - LTSV
   - macOS
   - Marketplace
@@ -70,6 +73,7 @@ exceptions:
   - Okta
   - OpenMetrics
   - OpenSearch
+  - OpenObserve
   - OpenTelemetry
   - Opsgenie
   - PagerDuty
@@ -84,6 +88,7 @@ exceptions:
   - Studio
   - Sumo Logic
   - Tanzu
+  - TCP
   - Telemetry Pipeline
   - Terraform
   - TLS

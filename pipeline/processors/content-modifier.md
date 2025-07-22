@@ -6,7 +6,7 @@ Similar to how filters work, this processor uses a unified mechanism to perform 
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -42,7 +42,7 @@ The following contexts are available:
 
 {% hint style="info" %}
 
-If your data doesn't follow the OpenTelemetry log schema, but your log destination expects to be in that format, you can use the [OpenTelemetry envelope](../pipeline/processors/opentelemetry-envelope) processor to transform your data. You can then pass that transformed data through the content modifier filter and use OpenTelemetry contexts accordingly.
+If your data doesn't follow the OpenTelemetry log schema, but your log destination expects to be in that format, you can use the [OpenTelemetry envelope](opentelemetry-envelope.md) processor to transform your data. You can then pass that transformed data through the content modifier filter and use OpenTelemetry contexts accordingly.
 
 {% endhint %}
 
@@ -81,21 +81,21 @@ The following example appends the key `color` with the value `blue` to the log s
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: insert
-                    key: "color"
-                    value: "blue"
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: "color"
+            value: "blue"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -110,26 +110,26 @@ Update the value of `key1` and insert `key2`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: upsert
-                    key: "key1"
-                    value: "5678"
+      processors:
+        logs:
+          - name: content_modifier
+            action: upsert
+            key: "key1"
+            value: "5678"
 
-                  - name: content_modifier
-                    action: upsert
-                    key: "key2"
-                    value: "example"
+          - name: content_modifier
+            action: upsert
+            key: "key2"
+            value: "example"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -144,20 +144,20 @@ Delete `key2` from the stream:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4", "key2": "example"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4", "key2": "example"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: delete
-                    key: "key2"
+      processors:
+        logs:
+          - name: content_modifier
+            action: delete
+            key: "key2"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -172,21 +172,21 @@ Change the name of `key2` to `test`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4", "key2": "example"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4", "key2": "example"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: rename
-                    key: "key2"
-                    value: "test"
+      processors:
+        logs:
+          - name: content_modifier
+            action: rename
+            key: "key2"
+            value: "test"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -201,20 +201,20 @@ Apply the SHA-256 algorithm for the value of the key `password`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"username": "bob", "password": "12345"}'
+  inputs:
+    - name: dummy
+      dummy: '{"username": "bob", "password": "12345"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: hash
-                    key: "password"
+      processors:
+        logs:
+          - name: content_modifier
+            action: hash
+            key: "password"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -222,28 +222,28 @@ pipeline:
 
 #### Extract example
 
-By using a domain address, perform a extraction of the components of it as a list of key value pairs:
+By using a domain address, perform an extraction of the components of it as a list of key value pairs:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"http.url": "https://fluentbit.io/docs?q=example"}'
+  inputs:
+    - name: dummy
+      dummy: '{"http.url": "https://fluentbit.io/docs?q=example"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: extract
-                    key: "http.url"
-                    pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
+      processors:
+        logs:
+          - name: content_modifier
+            action: extract
+            key: "http.url"
+            pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -258,26 +258,26 @@ Both keys in the example are strings. Convert the `key1` to a double/float type 
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4", "key2": "true"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4", "key2": "true"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: convert
-                    key: key1
-                    converted_type: int
+      processors:
+        logs:
+          - name: content_modifier
+            action: convert
+            key: key1
+            converted_type: int
 
-                  - name: content_modifier
-                    action: convert
-                    key: key2
-                    converted_type: boolean
+          - name: content_modifier
+            action: convert
+            key: key2
+            converted_type: boolean
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
