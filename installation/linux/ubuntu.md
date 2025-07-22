@@ -25,7 +25,7 @@ Follow the official
 [Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
 
 ```bash
-curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg
+sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg'
 ```
 
 ### Updated key from March 2022
@@ -56,12 +56,11 @@ which platforms are supported in each release.
 ## Update your sources lists
 
 On Ubuntu, you need to add the Fluent Bit APT server entry to your sources lists.
-Add the following content at bottom of your `/etc/apt/sources.list` file. Ensure
-`CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases).
+Ensure `CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases).
 For example, `focal` for Ubuntu 20.04.
 
 ```bash
-deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database

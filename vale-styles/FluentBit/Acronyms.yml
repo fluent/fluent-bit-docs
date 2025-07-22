@@ -61,6 +61,7 @@ exceptions:
   - LLVM
   - LTS
   - LTSV
+  - MAC
   - MQTT
   - MSK
   - NET

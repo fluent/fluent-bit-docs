@@ -6,12 +6,12 @@ The _Collectd_ input plugin lets you receive datagrams from the `collectd` servi
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `Listen` | Set the address to listen to. | `0.0.0.0` |
-| `Port` | Set the port to listen to. | `25826` |
-| `TypesDB` | Set the data specification file. | `/usr/share/collectd/types.db` |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key        | Description                                                                                             | Default                        |
+|:-----------|:--------------------------------------------------------------------------------------------------------|:-------------------------------|
+| `Listen`   | Set the address to listen to.                                                                           | `0.0.0.0`                      |
+| `Port`     | Set the port to listen to.                                                                              | `25826`                        |
+| `TypesDB`  | Set the data specification file.                                                                        | `/usr/share/collectd/types.db` |
+| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                        |
 
 ## Configuration examples
 
@@ -22,15 +22,15 @@ Here is a basic configuration example:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: collectd
-          listen: 0.0.0.0
-          port: 25826
-          typesdb: '/user/share/collectd/types.db,/etc/collectd/custom.db'
+  inputs:
+    - name: collectd
+      listen: 0.0.0.0
+      port: 25826
+      typesdb: '/user/share/collectd/types.db,/etc/collectd/custom.db'
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -38,14 +38,14 @@ pipeline:
 
 ```text
 [INPUT]
-    Name         collectd
-    Listen       0.0.0.0
-    Port         25826
-    TypesDB      /usr/share/collectd/types.db,/etc/collectd/custom.db
+  Name         collectd
+  Listen       0.0.0.0
+  Port         25826
+  TypesDB      /usr/share/collectd/types.db,/etc/collectd/custom.db
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}

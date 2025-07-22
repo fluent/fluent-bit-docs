@@ -33,6 +33,7 @@ exceptions:
   - CSV
   - cURL
   - Datadog
+  - DNS
   - Docker
   - Docker Hub
   - DogStatsD
@@ -62,6 +63,7 @@ exceptions:
   - Kubernetes
   - LaunchDarkly
   - Linux
+  - LogDNA
   - LTSV
   - macOS
   - Marketplace
@@ -84,6 +86,7 @@ exceptions:
   - Studio
   - Sumo Logic
   - Tanzu
+  - TCP
   - Telemetry Pipeline
   - Terraform
   - TLS

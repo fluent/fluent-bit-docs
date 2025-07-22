@@ -1,8 +1,6 @@
 # Metrics selector
 
-The _metrics selector_ processor lets you choose which metrics to include or exclude, similar to the [grep](../pipeline/filters/grep) filter for logs.
-
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=326269f3-cfea-472d-9169-1de32c142b90" />
+The _metrics selector_ processor lets you choose which metrics to include or exclude, similar to the [grep](../filters/grep.md) filter for logs.
 
 ## Configuration parameters
 
@@ -57,13 +55,13 @@ pipeline:
           - name: metrics_selector
             metric_name: /storage/
             action: include
+       
           - name: metrics_selector
             metric_name: /fs/
             action: exclude
 
           - name: labels
             delete: name
-
 
   outputs:
     - name: stdout
