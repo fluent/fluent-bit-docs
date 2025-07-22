@@ -93,6 +93,7 @@ exceptions:
   - SQL
   - SSH
   - SSL
+  - SSM
   - SSO
   - STS
   - SVG
