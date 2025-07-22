@@ -9,13 +9,17 @@ indicators:
 exceptions:
   - Amazon
   - Amazon CloudWatch
+  - Amazon ECR
   - Amazon ECR Public Gallery
   - Amazon Kinesis Data Firehose
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
+  - Amazon S3
+  - Apache Arrow
   - API
   - APIs
+  - AWS
   - AWS MSK IAM
   - AWS IAM
   - Azure
