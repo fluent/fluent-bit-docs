@@ -2,11 +2,11 @@
 
 The _labels_ processor lets you manipulate the labels of metrics.
 
-Similar to filters, this processor presents a enriching/modifying mechanism to perform operations for labels manipulation. The most significant difference is that processors perform better than filters, and when chaining them there are no encoding or decoding performance penalties.
+Similar to filters, this processor presents an enriching/modifying mechanism to perform operations for labels manipulation. The most significant difference is that processors perform better than filters, and when chaining them there are no encoding or decoding performance penalties.
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -29,16 +29,17 @@ The following example changes the value of the `name` key to `fluentbit`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
+  inputs:
+    - name: fluentbit_metrics
 
-          processors:
-              metrics:
-                  - name: labels
-                    update: name fluentbit
-    outputs:
-        - name : stdout
-          match: '*'
+      processors:
+        metrics:
+          - name: labels
+            update: name fluentbit
+  
+  outputs:
+    - name : stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -53,17 +54,17 @@ The following example appends the key `agent` with the value `fluentbit` as the 
 
 ```yaml
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
+  inputs:
+    - name: fluentbit_metrics
 
-          processors:
-              metrics:
-                  - name: labels
-                    insert: agent fluentbit
+      processors:
+        metrics:
+          - name: labels
+            insert: agent fluentbit
 
-    outputs:
-        - name : stdout
-          match: '*'
+  outputs:
+    - name : stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -78,16 +79,17 @@ The following example upserts the value of `name` and inserts `fluentbit`:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
+  inputs:
+    - name: fluentbit_metrics
 
-          processors:
-              metrics:
-                  - name: labels
-                    upsert: name fluentbit
-    outputs:
-        - name : stdout
-          match: '*'
+      processors:
+        metrics:
+          - name: labels
+            upsert: name fluentbit
+  
+  outputs:
+    - name : stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -102,16 +104,17 @@ The following example deletes the `name` key from metrics:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
+  inputs:
+    - name: fluentbit_metrics
 
-          processors:
-              metrics:
-                  - name: labels
-                    delete: name
-    outputs:
-        - name : stdout
-          match: '*'
+      processors:
+        metrics:
+          - name: labels
+            delete: name
+  
+  outputs:
+    - name : stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -126,16 +129,17 @@ The following example applies the SHA-1 algorithm for the value of the key `host
 
 ```yaml
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
+  inputs:
+    - name: fluentbit_metrics
 
-          processors:
-              metrics:
-                  - name: labels
-                    hash: hostname
-    outputs:
-        - name : stdout
-          match: '*'
+      processors:
+        metrics:
+          - name: labels
+            hash: hostname
+
+  outputs:
+    - name : stdout
+      match: '*'
 ```
 
 {% endtab %}
