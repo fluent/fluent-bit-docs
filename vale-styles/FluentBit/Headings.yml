@@ -72,6 +72,7 @@ exceptions:
   - Observability Platform
   - Okta
   - OpenMetrics
+  - OpenObserve
   - OpenTelemetry
   - Opsgenie
   - PagerDuty
