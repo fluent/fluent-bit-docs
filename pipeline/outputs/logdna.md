@@ -31,11 +31,11 @@ When the login processes a record or log, it searches for specific key names tha
 | `level` | If the record contains a key called `level` or `severity`, it will populate the context `level` key with that value. If not found, the context key is not set. |
 | `file` | If the record contains a key called `file`, it will populate the context `file` with the value found. Otherwise, if the plugin configuration provided a `file` property, that value will be used instead. |
 | `app` | If the record contains a key called `app`, it will populate the context `app` with the value found, otherwise it will use the value set for `app` in the configuration property. |
-| `meta` | if the record contains a key called `meta`, it will populate the context `meta` with the value found. |
+| `meta` | If the record contains a key called `meta`, it will populate the context `meta` with the value found. |
 
 ## Example configuration
 
-The following example configuration uses a `dummy` input and `logdna` output.
+The following example configuration uses a `dummy` input and `logdna` output:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
