@@ -16,6 +16,7 @@ exceptions:
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
+  - Apache SkyWalking
   - Amazon S3
   - Apache Arrow
   - API
