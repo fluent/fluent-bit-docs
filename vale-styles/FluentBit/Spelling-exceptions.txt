@@ -126,6 +126,7 @@ OAuth
 Okta
 Onigmo
 Oniguruma
+OpenSearch
 OpenObserve
 OpenTelemetry
 Opsgenie
