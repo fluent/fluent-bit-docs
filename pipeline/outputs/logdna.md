@@ -115,4 +115,4 @@ Your record will be available and visible in your LogDNA dashboard after a few s
 
 In your LogDNA dashboard, go to the top filters and mark the Tags `aa` and `bb`, then you will be able to see your records as shown:
 
-![](../../.gitbook/assets/logdna.png)
+![LogDNA dashboard](../../.gitbook/assets/logdna.png)
