@@ -12,6 +12,7 @@ exceptions:
   - Amazon ECR
   - Amazon ECR Public Gallery
   - Amazon Kinesis Data Firehose
+  - Amazon Kinesis Data Streams
   - Amazon Kinesis Firehose
   - Amazon Kinesis Streams
   - Amazon OpenSearch Service
@@ -36,6 +37,7 @@ exceptions:
   - CSV
   - cURL
   - Datadog
+  - DNS
   - Docker
   - Docker Hub
   - DogStatsD
@@ -53,6 +55,7 @@ exceptions:
   - Google Cloud BigQuery
   - Google Cloud Platform
   - Grafana
+  - Grafana Cloud
   - Graylog Extended Log Format
   - gRPC
   - HTTP
@@ -64,7 +67,9 @@ exceptions:
   - Kinesis
   - Kubernetes
   - LaunchDarkly
+  - Libpq
   - Linux
+  - LogDNA
   - LTSV
   - macOS
   - Marketplace
@@ -73,9 +78,12 @@ exceptions:
   - Observability Platform
   - Okta
   - OpenMetrics
+  - OpenSearch
+  - OpenObserve
   - OpenTelemetry
   - Opsgenie
   - PagerDuty
+  - PostgreSQL
   - Prometheus
   - PromQL
   - REPL
@@ -87,6 +95,7 @@ exceptions:
   - Studio
   - Sumo Logic
   - Tanzu
+  - TCP
   - Telemetry Pipeline
   - Terraform
   - TLS

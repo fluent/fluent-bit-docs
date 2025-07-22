@@ -4,7 +4,7 @@ The _sampling_ processor uses an extendable architecture that supports multiple 
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -20,7 +20,7 @@ This processor uses the following configuration parameters:
 
 ## Head sampling
 
-Head sampling makes the decision whether or not to keep a trace at the very beginning of its ingestion. This is when a root span is created but before the request is actually fulfilled.
+Head sampling makes the decision whether to keep a trace at the very beginning of its ingestion. This is when a root span is created but before the request is actually fulfilled.
 
 ![Head sampling diagram](../../.gitbook/assets/traces_head_sampling.png)
 
@@ -37,26 +37,26 @@ This example uses head sampling to process a smaller percentage of the overall i
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Head sampling of traces (percentage)
-                  - name: sampling
-                    type: probabilistic
-                    sampling_settings:
-                      sampling_percentage: 40
+      processors:
+        traces:
+          # Head sampling of traces (percentage)
+          - name: sampling
+            type: probabilistic
+            sampling_settings:
+            sampling_percentage: 40
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -110,30 +110,30 @@ The following example waits five seconds before making a decision. It then sampl
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (latency)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 5s
-                    conditions:
-                      - type: latency
-                        threshold_ms_low: 200
-                        threshold_ms_high: 3000
+      processors:
+        traces:
+          # Tail sampling of traces (latency)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 5s
+              conditions:
+                - type: latency
+                  threshold_ms_low: 200
+                  threshold_ms_high: 3000
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -158,30 +158,30 @@ The following example configuration waits five seconds before making a decision.
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (span_count)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 5s
-                    conditions:
-                        - type: span_count
-                          min_spans: 3
-                          max_spans: 5
+      processors:
+        traces:
+          # Tail sampling of traces (span_count)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 5s
+              conditions:
+                - type: span_count
+                  min_spans: 3
+                  max_spans: 5
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -205,29 +205,29 @@ The following example configuration samples only spans with the `ERROR` status c
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (status_code)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 5s
-                    conditions:
-                        - type: status_code
-                          status_codes: [ERROR]
+      processors:
+        traces:
+          # Tail sampling of traces (status_code)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 5s
+              conditions:
+                - type: status_code
+                  status_codes: [ERROR]
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -258,49 +258,49 @@ The following example configuration waits two seconds before making a decision. 
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (string_attribute)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 2s
-                    conditions:
-                        # Exact matching
-                        - type: string_attribute
-                          match_type: strict
-                          key: "http.method"
-                          values: ["GET"]
+      processors:
+        traces:
+          # Tail sampling of traces (string_attribute)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 2s
+              conditions:
+                # Exact matching
+                - type: string_attribute
+                  match_type: strict
+                  key: "http.method"
+                  values: ["GET"]
 
-                        # Check if attribute exists
-                        - type: string_attribute
-                          match_type: exists
-                          key: "service.name"
+                # Check if attribute exists
+                - type: string_attribute
+                  match_type: exists
+                  key: "service.name"
 
-                        # Regex pattern matching
-                        - type: string_attribute
-                          match_type: regex
-                          key: "http.url"
-                          values: ["^https://api\\..*", ".*\\/health$"]
+                # Regex pattern matching
+                - type: string_attribute
+                  match_type: regex
+                  key: "http.url"
+                  values: ["^https://api\\..*", ".*\\/health$"]
 
-                        # Multiple regex patterns for error conditions
-                        - type: string_attribute
-                          match_type: regex
-                          key: "error.message"
-                          values: ["timeout.*", "connection.*failed", ".*rate.?limit.*"]
+                # Multiple regex patterns for error conditions
+                - type: string_attribute
+                  match_type: regex
+                  key: "error.message"
+                  values: ["timeout.*", "connection.*failed", ".*rate.?limit.*"]
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -327,31 +327,31 @@ The following example configuration samples only spans with the key `http.status
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (status_code)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 5s
-                    conditions:
-                        - type: numeric_attribute
-                          key: "http.status_code"
-                          min_value: 400
-                          max_value: 504
+      processors:
+        traces:
+          # Tail sampling of traces (status_code)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 5s
+              conditions:
+                - type: numeric_attribute
+                  key: "http.status_code"
+                  min_value: 400
+                  max_value: 504
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -376,30 +376,30 @@ The following example configuration waits two seconds before making a decision. 
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (boolean_attribute)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 2s
-                    conditions:
-                        - type: boolean_attribute
-                          key: "user.logged"
-                          value: false
+      processors:
+        traces:
+          # Tail sampling of traces (boolean_attribute)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 2s
+              conditions:
+                - type: boolean_attribute
+                  key: "user.logged"
+                  value: false
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}
@@ -423,29 +423,29 @@ Example configuration:
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    hot_reload: on
+  flush: 1
+  log_level: info
+  hot_reload: on
 
 pipeline:
-    inputs:
-        - name: opentelemetry
-          port: 4318
+  inputs:
+    - name: opentelemetry
+      port: 4318
 
-          processors:
-              traces:
-                  # Tail sampling of traces (trace_state)
-                  - name: sampling
-                    type: tail
-                    sampling_settings:
-                        decision_wait: 2s
-                    conditions:
-                        - type: trace_state
-                          values: [debug=false, priority=high]
+      processors:
+        traces:
+          # Tail sampling of traces (trace_state)
+          - name: sampling
+            type: tail
+            sampling_settings:
+              decision_wait: 2s
+              conditions:
+                - type: trace_state
+                  values: [debug=false, priority=high]
 
-    outputs:
-        - name: stdout
-          match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
 ```
 
 {% endtab %}

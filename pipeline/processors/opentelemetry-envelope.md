@@ -6,7 +6,7 @@ The _OpenTelemetry envelope_ processor transforms your data to be compatible wit
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -23,26 +23,26 @@ The following example uses the `dummy` input plugin to generate one sample messa
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"message": "Hello World"}'
+  inputs:
+    - name: dummy
+      dummy: '{"message": "Hello World"}'
 
-          processors:
-              logs:
-                  - name: opentelemetry_envelope
+      processors:
+        logs:
+          - name: opentelemetry_envelope
 
-    outputs:
-        - name : stdout
-          match: '*'
+  outputs:
+    - name : stdout
+      match: '*'
 
-        - name: opentelemetry
-          match: '*'
-          host: 127.0.0.1
-          port: 4318
+    - name: opentelemetry
+      match: '*'
+      host: 127.0.0.1
+      port: 4318
 ```
 
 {% endtab %}
@@ -50,25 +50,25 @@ pipeline:
 
 ```yaml
 receivers:
-    otlp:
-        protocols:
-            http:
-                endpoint: 127.0.0.1:4318
+  otlp:
+    protocols:
+      http:
+        endpoint: 127.0.0.1:4318
 
 exporters:
-    file:
-        path: out.json
-    logging:
-        loglevel: info
+  file:
+    path: out.json
+  logging:
+    loglevel: info
 
 service:
-    telemetry:
-        logs:
-            level: debug
-    pipelines:
-        logs:
-            receivers: [otlp]
-            exporters: [file, logging]
+  telemetry:
+    logs:
+      level: debug
+  pipelines:
+    logs:
+      receivers: [otlp]
+      exporters: [file, logging]
 ```
 
 {% endtab %}
@@ -111,32 +111,32 @@ If you're interested in additional transformations, you can also use the [conten
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"message": "Hello World"}'
+  inputs:
+    - name: dummy
+      dummy: '{"message": "Hello World"}'
 
-          processors:
-              logs:
-                  - name: opentelemetry_envelope
+      processors:
+        logs:
+          - name: opentelemetry_envelope
 
-                  - name: content_modifier
-                    context: otel_resource_attributes
-                    action: upsert
-                    key: service.name
-                    value: my-service
+          - name: content_modifier
+            context: otel_resource_attributes
+            action: upsert
+            key: service.name
+            value: my-service
 
-    outputs:
-        - name : stdout
-          match: '*'
+  outputs:
+    - name : stdout
+      match: '*'
 
-        - name: opentelemetry
-          match: '*'
-          host: 127.0.0.1
-          port: 4318
+    - name: opentelemetry
+      match: '*'
+      host: 127.0.0.1
+      port: 4318
 ```
 
 {% endtab %}
