@@ -4,7 +4,7 @@ You can use any [filter](../filters/README.md) as a processor in Fluent Bit.
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -17,18 +17,19 @@ In this example, the [Grep](../filters/grep.md) filter is an output processor th
 
 ```yaml
 pipeline:
-      inputs:
-          - name: tail
-            path: lines.txt
-            parser: json
-      outputs:
-          - name: stdout
-            match: '*'
+  inputs:
+    - name: tail
+      path: lines.txt
+      parser: json
 
-            processors:
-                logs:
-                    - name: grep
-                      regex: log aa
+  outputs:
+    - name: stdout
+      match: '*'
+
+      processors:
+        logs:
+          - name: grep
+            regex: log aa
 ```
 
 {% endtab %}

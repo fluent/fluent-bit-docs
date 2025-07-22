@@ -6,7 +6,7 @@ This processor differs from the stream processor interface that runs after filte
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
 
 {% endhint %}
 
@@ -25,19 +25,19 @@ The following example generates a sample message with the keys `key` and `http.u
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4", "http.url": "https://fluentbit.io/search?q=docs"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4", "http.url": "https://fluentbit.io/search?q=docs"}'
 
-          processors:
-              logs:
-                  - name: sql
-                    query: "SELECT http.url FROM STREAM;"
+      processors:
+        logs:
+          - name: sql
+            query: "SELECT http.url FROM STREAM;"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -52,24 +52,24 @@ The following example is similar to the previous example, but additionally extra
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"key1": "123.4", "http.url": "https://fluentbit.io/search?q=docs"}'
+  inputs:
+    - name: dummy
+      dummy: '{"key1": "123.4", "http.url": "https://fluentbit.io/search?q=docs"}'
 
-          processors:
-              logs:
-                  - name: content_modifier
-                    action: extract
-                    key: "http.url"
-                    pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
+      processors:
+        logs:
+          - name: content_modifier
+            action: extract
+            key: "http.url"
+            pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
 
-        - name: sql
-          query: "SELECT http_domain FROM STREAM;"
+    - name: sql
+      query: "SELECT http_domain FROM STREAM;"
 
-    outputs:
-        - name : stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name : stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
