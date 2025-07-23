@@ -92,7 +92,7 @@ The previous configuration reads log records from `devices.log` that includes th
 {"hostname": " "}
 ```
 
-It uses the value of the `hostname` field (which was set as the `lookup_key`) to find matching values in the first column of `device-bu.csv`.
+Because `hostname` was set as the `lookup_key`, the Lookup filter uses the value of each `hostname` key within the record to search for matching values in the first column of the CSV file.
 
 ```text
 host,department
