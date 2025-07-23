@@ -338,5 +338,4 @@ the `logEntry` will be:
 }
 ```
 
-If the `timestamp` object or the `timestampSeconds` and `timestampNanos` fields end
-up being invalid, they will remain in the `jsonPayload` untouched.
+If the `timestamp` object or the `timestampSeconds` and `timestampNanos` fields end up being invalid, they will remain in the `jsonPayload` untouched.
