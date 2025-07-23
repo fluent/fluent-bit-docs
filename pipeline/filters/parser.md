@@ -26,9 +26,9 @@ This is an example of parsing a record `{"data":"100 0.5 true This is example"}`
 
 ```yaml
 parsers:
-    - name: dummy_test
-      format: regex
-      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+  - name: dummy_test
+    format: regex
+    regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
 ```
 
 {% endtab %}
@@ -36,9 +36,9 @@ parsers:
 
 ```text
 [PARSER]
-    Name dummy_test
-    Format regex
-    Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
+  Name dummy_test
+  Format regex
+  Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
 {% endtab %}
@@ -51,23 +51,23 @@ The path of the parser file should be written in configuration file under the `[
 
 ```yaml
 service:
-    parsers_file: /path/to/parsers.yaml
+  parsers_file: /path/to/parsers.yaml
 
 pipeline:
-    inputs:
-      - name: dummy
-        tag: dummy.data
-        dummy: '{"data":"100 0.5 true This is example"}'
+  inputs:
+    - name: dummy
+      tag: dummy.data
+      dummy: '{"data":"100 0.5 true This is example"}'
 
-    filters:
-      - name: parser
-        match: 'dummy.*'
-        key_name: data
-        parser: dummy_test
+  filters:
+    - name: parser
+      match: 'dummy.*'
+      key_name: data
+      parser: dummy_test
 
-    outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -75,22 +75,22 @@ pipeline:
 
 ```text
 [SERVICE]
-    Parsers_File /path/to/parsers.conf
+  Parsers_File /path/to/parsers.conf
 
 [INPUT]
-    Name dummy
-    Tag  dummy.data
-    Dummy {"data":"100 0.5 true This is example"}
+  Name dummy
+  Tag  dummy.data
+  Dummy {"data":"100 0.5 true This is example"}
 
 [FILTER]
-    Name parser
-    Match dummy.*
-    Key_Name data
-    Parser dummy_test
+  Name parser
+  Match dummy.*
+  Key_Name data
+  Parser dummy_test
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
@@ -100,33 +100,12 @@ The output when running the corresponding configuration is as follows:
 
 ```text
 # For YAML configuration.
-$ ./fluent-bit --config fluent-bit.yaml
+$ fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-$ ./fluent-bit --config fluent-bit.conf
+$ fluent-bit --config fluent-bit.conf
 
-Fluent Bit v4.0.3
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/07/03 16:15:34] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=23196
-[2025/07/03 16:15:34] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/07/03 16:15:34] [ info] [simd    ] disabled
-[2025/07/03 16:15:34] [ info] [cmetrics] version=1.0.3
-[2025/07/03 16:15:34] [ info] [ctraces ] version=0.6.6
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] initializing
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
-[2025/07/03 16:15:34] [ info] [output:stdout:stdout.0] worker #0 started
-[2025/07/03 16:15:34] [ info] [sp] stream processor started
+...
 [0] dummy.data: [[1750323528.603308000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 [0] dummy.data: [[1750323529.603788000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 [0] dummy.data: [[1750323530.604204000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
@@ -147,9 +126,9 @@ depending on the choice for YAML or classic configurations, would be as follows:
 
 ```yaml
 parsers:
-    - name: dummy_test
-      format: regex
-      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+  - name: dummy_test
+    format: regex
+    regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
 ```
 
 {% endtab %}
@@ -157,9 +136,9 @@ parsers:
 
 ```text
 [PARSER]
-    Name dummy_test
-    Format regex
-    Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
+  Name dummy_test
+  Format regex
+  Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
 {% endtab %}
@@ -172,24 +151,24 @@ Now add `Reserve_Data` to the filter section of the corresponding configuration 
 
 ```yaml
 service:
-    parsers_file: /path/to/parsers.yaml
+  parsers_file: /path/to/parsers.yaml
 
 pipeline:
-    inputs:
-      - name: dummy
-        tag: dummy.data
-        dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
+  inputs:
+    - name: dummy
+      tag: dummy.data
+      dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
 
-    filters:
-      - name: parser
-        match: 'dummy.*'
-        key_name: data
-        parser: dummy_test
-        reserve_data: on
+  filters:
+    - name: parser
+      match: 'dummy.*'
+      key_name: data
+      parser: dummy_test
+      reserve_data: on
 
-    outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -197,23 +176,23 @@ pipeline:
 
 ```text
 [SERVICE]
-    Parsers_File /path/to/parsers.conf
+  Parsers_File /path/to/parsers.conf
 
 [INPUT]
-    Name dummy
-    Tag  dummy.data
-    Dummy {"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}
+  Name dummy
+  Tag  dummy.data
+  Dummy {"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}
 
 [FILTER]
-    Name parser
-    Match dummy.*
-    Key_Name data
-    Parser dummy_test
-    Reserve_Data On
+  Name parser
+  Match dummy.*
+  Key_Name data
+  Parser dummy_test
+  Reserve_Data On
     
- [OUTPUT]
-    Name stdout
-    Match *
+[OUTPUT]
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
@@ -223,33 +202,12 @@ The output when running the corresponding configuration is as follows:
 
 ```text
 # For YAML configuration.
-$ ./fluent-bit --config fluent-bit.yaml
+$ fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-$ ./fluent-bit --config fluent-bit.conf
+$ fluent-bit --config fluent-bit.conf
 
-Fluent Bit v4.0.3
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/07/03 16:15:34] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=23196
-[2025/07/03 16:15:34] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/07/03 16:15:34] [ info] [simd    ] disabled
-[2025/07/03 16:15:34] [ info] [cmetrics] version=1.0.3
-[2025/07/03 16:15:34] [ info] [ctraces ] version=0.6.6
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] initializing
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
-[2025/07/03 16:15:34] [ info] [output:stdout:stdout.0] worker #0 started
-[2025/07/03 16:15:34] [ info] [sp] stream processor started
+...
 [0] dummy.data: [[1750325238.681398000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1750325239.682090000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1750325240.682903000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
@@ -263,9 +221,9 @@ the corresponding parsers file, depending on the choice for YAML or classic conf
 
 ```yaml
 parsers:
-    - name: dummy_test
-      format: regex
-      regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+  - name: dummy_test
+    format: regex
+    regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
 ```
 
 {% endtab %}
@@ -273,9 +231,9 @@ parsers:
 
 ```text
 [PARSER]
-    Name dummy_test
-    Format regex
-    Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
+  Name dummy_test
+  Format regex
+  Regex ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$
 ```
 
 {% endtab %}
@@ -288,25 +246,25 @@ Now add `Reserve_Data` and `Preserve_Key`to the filter section of the correspond
 
 ```yaml
 service:
-    parsers_file: /path/to/parsers.yaml
+  parsers_file: /path/to/parsers.yaml
 
 pipeline:
-    inputs:
-      - name: dummy
-        tag: dummy.data
-        dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
+  inputs:
+    - name: dummy
+      tag: dummy.data
+      dummy: '{"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}'
 
-    filters:
-      - name: parser
-        match: 'dummy.*'
-        key_name: data
-        parser: dummy_test
-        reserve_data: on
-        preserve_key: on
+  filters:
+    - name: parser
+      match: 'dummy.*'
+      key_name: data
+      parser: dummy_test
+      reserve_data: on
+      preserve_key: on
 
-    outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -314,24 +272,24 @@ pipeline:
 
 ```text
 [SERVICE]
-    Parsers_File /path/to/parsers.conf
+  Parsers_File /path/to/parsers.conf
 
 [INPUT]
-    Name dummy
-    Tag  dummy.data
-    Dummy {"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}
+  Name dummy
+  Tag  dummy.data
+  Dummy {"data":"100 0.5 true This is example", "key1":"value1", "key2":"value2"}
 
 [FILTER]
-    Name parser
-    Match dummy.*
-    Key_Name data
-    Parser dummy_test
-    Reserve_Data On
-    Preserve_Key On
+  Name parser
+  Match dummy.*
+  Key_Name data
+  Parser dummy_test
+  Reserve_Data On
+  Preserve_Key On
     
- [OUTPUT]
-    Name stdout
-    Match *
+[OUTPUT]
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
@@ -341,33 +299,12 @@ The output when running the corresponding configuration is as follows:
 
 ```text
 # For YAML configuration.
-$ ./fluent-bit --config fluent-bit.yaml
+$ fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-$ ./fluent-bit --config fluent-bit.conf
+$ fluent-bit --config fluent-bit.conf
 
-Fluent Bit v4.0.3
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/07/03 16:15:34] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=23196
-[2025/07/03 16:15:34] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/07/03 16:15:34] [ info] [simd    ] disabled
-[2025/07/03 16:15:34] [ info] [cmetrics] version=1.0.3
-[2025/07/03 16:15:34] [ info] [ctraces ] version=0.6.6
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] initializing
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
-[2025/07/03 16:15:34] [ info] [output:stdout:stdout.0] worker #0 started
-[2025/07/03 16:15:34] [ info] [sp] stream processor started
+...
 [0] dummy.data: [[1750325678.572817000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1750325679.574538000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
 [0] dummy.data: [[1750325680.569750000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "data"=>"100 0.5 true This is example", "key1"=>"value1", "key2"=>"value2"}]
