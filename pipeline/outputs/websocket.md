@@ -1,6 +1,6 @@
 # WebSocket
 
-The _WebSocket_ output plugin lets you flush your records into a WebSocket endpoint. It issues an HTTP GET request to do the handshake, and then uses TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) format.
+The _WebSocket_ output plugin lets you flush your records into a WebSocket endpoint. It issues an HTTP `GET` request to do the handshake, and then uses TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) format.
 
 ## Configuration parameters
 
@@ -77,7 +77,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The WebSocket plugin works with TCP keepalive mode, see [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) for details. Because WebSocket is a stateful plugin, it will decide when to send out handshake to server side. For example when the plugin begins to work or after connection with server has been dropped. In general, the interval to init a new WebSocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume WebSocket connections.
+For details about how the WebSocket plugin works with TCP keepalive mode, see [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options). Because WebSocket is a stateful plugin, it will decide when to send out handshake to server side. For example, when the plugin begins to work or after connection with server has been dropped. In general, the interval to init a new WebSocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume WebSocket connections.
 
 ## Tests
 
@@ -170,6 +170,6 @@ fluent-bit   -c ../conf/out_ws.conf
 
 ### Scenario description
 
-From the output of the Fluent Bit log, you can see that once data has been ingested into Fluent Bit, plugin performs  handshake. If no data or traffic is ongoing, the TCP connection would be aborted. When additional data arrives, a retry for WebSocket plugin triggers, with another handshake and data flush.
+From the output of the Fluent Bit log, you can see that when data has been ingested into Fluent Bit, the plugin performs a handshake. If no data or traffic is ongoing, the TCP connection would be aborted. When additional data arrives, a retry for WebSocket plugin triggers, with another handshake and data flush.
 
-There is another scenario, if the WebSocket server goes down and up in a short time, Fluent Bit would resume the TCP connection immediately. But in that case, the WebSocket output plugin is a malfunction state, and needs to restart Fluent Bit to resume working.
+In another scenario, if the WebSocket server goes down and up in a short time, Fluent Bit would resume the TCP connection immediately. But in that case, the WebSocket output plugin is a malfunction state, and needs to restart Fluent Bit to resume working.
