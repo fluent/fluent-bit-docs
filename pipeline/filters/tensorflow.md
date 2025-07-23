@@ -6,7 +6,7 @@ Tensorflow Lite is a lightweight open source deep learning framework used for mo
 
 The Tensorflow plugin for Fluent Bit has the following limitations:
 
-- Currently supports single-input models
+- Currently, supports single-input models
 - Uses Tensorflow 2.3 header files
 
 ## Configuration parameters
