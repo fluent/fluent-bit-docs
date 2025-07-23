@@ -29,7 +29,7 @@ To create a Tensorflow Lite shared library:
 1. Run the following command to create the shared library:
 
    ```shell
-   ./bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
+   bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
    ```
 
    The script creates the shared library
@@ -41,7 +41,7 @@ To create a Tensorflow Lite shared library:
 The Tensorflow filter plugin is disabled by default. You must build Fluent Bit with the Tensorflow plugin enabled. In addition, it requires access to Tensorflow Lite header files to compile. Therefore, you must pass the address of the Tensorflow source code on your machine to the [build script](https://github.com/fluent/fluent-bit#build-from-scratch):
 
 ```shell
-./cmake -DFLB_FILTER_TENSORFLOW=On -DTensorflow_DIR=<AddressOfTensorflowSourceCode> ...
+cmake -DFLB_FILTER_TENSORFLOW=On -DTensorflow_DIR=<AddressOfTensorflowSourceCode> ...
 ```
 
 ### Command line
@@ -51,7 +51,7 @@ If the Tensorflow plugin initializes correctly, it reports successful creation o
 The command:
 
 ```shell
-./fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
+fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
 ```
 
 produces an output like:
@@ -72,26 +72,26 @@ produces an output like:
 
 ```yaml
 service:
-    flush: 1
-    daemon: off
-    log_level: info
+  flush: 1
+  daemon: off
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: mqtt
-          tag: mqtt.data
+  inputs:
+    - name: mqtt
+      tag: mqtt.data
 
-    filters:
-        - name: tensorflow
-          match: mqtt.data
-          input_field: image
-          model_file: /home/m/model.tflite
-          include_input_fields: false
-          normalization_value: 255
+  filters:
+    - name: tensorflow
+      match: mqtt.data
+      input_field: image
+      model_file: /home/m/model.tflite
+      include_input_fields: false
+      normalization_value: 255
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -99,25 +99,25 @@ pipeline:
 
 ```text
 [SERVICE]
-    Flush        1
-    Daemon       Off
-    Log_Level    info
+  Flush        1
+  Daemon       Off
+  Log_Level    info
 
 [INPUT]
-    Name mqtt
-    Tag mqtt.data
+  Name mqtt
+  Tag  mqtt.data
 
 [FILTER]
-    Name tensorflow
-    Match mqtt.data
-    input_field image
-    model_file /home/m/model.tflite
-    include_input_fields false
-    normalization_value 255
+  Name                 tensorflow
+  Match                mqtt.data
+  input_field          image
+  model_file           /home/m/model.tflite
+  include_input_fields false
+  normalization_value  255
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
