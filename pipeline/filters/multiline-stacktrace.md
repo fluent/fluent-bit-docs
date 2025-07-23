@@ -66,25 +66,25 @@ This is the primary Fluent Bit YAML configuration file. It includes the `parsers
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers_multiline.yaml
+  flush: 1
+  log_level: info
+  parsers_file: parsers_multiline.yaml
     
 pipeline:
-    inputs:
-        - name: tail
-          path: test.log
-          read_from_head: true
-    
-    filters:
-        - name: multiline
-          match: '*'
-          multiline.key_content: log
-          multiline.parser: go,multiline-regex-test
-    
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: tail
+      path: test.log
+      read_from_head: true
+
+  filters:
+    - name: multiline
+      match: '*'
+      multiline.key_content: log
+      multiline.parser: go,multiline-regex-test
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -94,25 +94,24 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-    flush                 1
-    log_level             info
-    parsers_file          parsers_multiline.conf
+  flush                 1
+  log_level             info
+  parsers_file          parsers_multiline.conf
 
 [INPUT]
-    name                  tail
-    path                  test.log
-    read_from_head        true
+  name                  tail
+  path                  test.log
+  read_from_head        true
 
 [FILTER]
-    name                  multiline
-    match                 *
-    multiline.key_content log
-    multiline.parser      go, multiline-regex-test
+  name                  multiline
+  match                 *
+  multiline.key_content log
+  multiline.parser      go, multiline-regex-test
 
 [OUTPUT]
-    name                  stdout
-    match                 *
-
+  name                  stdout
+  match                 *
 ```
 
 {% endtab %}
@@ -122,39 +121,9 @@ This file defines a multiline parser for the example. A second multiline parser 
 
 ```yaml
 multiline_parsers:
-    - name: multiline-regex-test
-      type: regex
-      flush_timeout: 1000
-      #
-      # Regex rules for multiline parsing
-      # ---------------------------------
-      #
-      # configuration hints:
-      #
-      #  - first state always has the name: start_state
-      #  - every field in the rule must be inside double quotes
-      #
-      # rules |   state name  | regex pattern                  | next state
-      # ------|---------------|--------------------------------------------
-      rules:
-        - state: start_state
-          regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
-          next_state:  cont
-        - state: cont
-          regex: '/^\s+at.*/'
-          next_state: cont
-```
-
-{% endtab %}
-{% tab title="parsers_multiline.conf" %}
-
-This file defines a multiline parser for the example. A second multiline parser called `go` is used in `fluent-bit.conf`, but this one is a built-in parser.
-
-```text
-[MULTILINE_PARSER]
-    name          multiline-regex-test
-    type          regex
-    flush_timeout 1000
+  - name: multiline-regex-test
+    type: regex
+    flush_timeout: 1000
     #
     # Regex rules for multiline parsing
     # ---------------------------------
@@ -166,9 +135,38 @@ This file defines a multiline parser for the example. A second multiline parser 
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-    rule      "cont"          "/^\s+at.*/"                     "cont"
+    rules:
+      - state: start_state
+        regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+        next_state:  cont
+      - state: cont
+        regex: '/^\s+at.*/'
+        next_state: cont
+```
 
+{% endtab %}
+{% tab title="parsers_multiline.conf" %}
+
+This file defines a multiline parser for the example. A second multiline parser called `go` is used in `fluent-bit.conf`, but this one is a built-in parser.
+
+```text
+[MULTILINE_PARSER]
+  name          multiline-regex-test
+  type          regex
+  flush_timeout 1000
+  #
+  # Regex rules for multiline parsing
+  # ---------------------------------
+  #
+  # configuration hints:  
+  #
+  #  - first state always has the name: start_state
+  #  - every field in the rule must be inside double quotes 
+  #
+  # rules |   state name  | regex pattern                  | next state
+  # ------|---------------|--------------------------------------------
+  rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 
 {% endtab %}
@@ -237,7 +235,6 @@ runtime.goexit()
 created by runtime.gcenable
   /usr/local/go/src/runtime/mgc.go:216 +0x58
 one more line, no multiline
-
 ```
 
 {% endtab %}
@@ -246,7 +243,7 @@ one more line, no multiline
 Running Fluent Bit with the given configuration file:
 
 ```shell
-./fluent-bit -c fluent-bit.conf
+fluent-bit -c fluent-bit.conf
 ```
 
 Should return something like the following:
@@ -312,7 +309,6 @@ runtime.goexit()
 created by runtime.gcenable
   /usr/local/go/src/runtime/mgc.go:216 +0x58"}]
 [4] tail.0: [1626736433.143585473, {"log"=>"one more line, no multiline"}]
-
 ```
 
 Lines that don't match a pattern aren't considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
@@ -333,11 +329,11 @@ Fluent Bit can re-combine these logs that were split by the runtime and remove t
 ```yaml
 pipeline:
 
-    filters:
-        - name: multiline
-          match: '*'
-          multiline.key_content: log
-          mode: partial_message
+  filters:
+    - name: multiline
+      match: '*'
+      multiline.key_content: log
+      mode: partial_message
 ```
 
 {% endtab %}
@@ -345,10 +341,10 @@ pipeline:
 
 ```text
 [FILTER]
-     name                  multiline
-     match                 *
-     multiline.key_content log
-     mode                  partial_message
+  name                  multiline
+  match                 *
+  multiline.key_content log
+  mode                  partial_message
 ```
 
 {% endtab %}
