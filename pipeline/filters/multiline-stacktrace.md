@@ -7,7 +7,7 @@ description: Concatenate multiline or stack trace log messages. Available on Flu
 
 The Multiline filter helps concatenate messages that originally belonged to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines.
 
-Along with multiline filters, you can enable one of the following built-in Fluent Bit parsers with auto detection and multi-format support:
+Along with multiline filters, you can enable one of the following built-in Fluent Bit parsers with auto-detection and multi-format support:
 
 - Go
 - Python
@@ -23,7 +23,7 @@ When using this filter:
 
 This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter processes one chunk at a time and isn't suitable for most inputs which might send multiline messages in separate chunks.
 
-When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](pipeline/filters/rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
+When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
 
 {% endhint %}
 
@@ -31,7 +31,7 @@ When buffering is enabled, the filter doesn't immediately emit messages it recei
 
 Since concatenated records are re-emitted to the head of the Fluent Bit log pipeline, you can not configure multiple multiline filter definitions that match the same tags. This will cause an infinite loop in the Fluent Bit pipeline; to use multiple parsers on the same logs, configure a single filter definitions with a comma separated list of parsers for `multiline.parser`. For more, see issue [#5235](https://github.com/fluent/fluent-bit/issues/5235).
 
-Secondly, for the same reason, the multiline filter should be the first filter. Logs will be re-emitted by the multiline filter to the head of the pipeline- the filter will ignore its own re-emitted records, but other filters won't. If there are filters before the multiline filter, they will be applied twice.
+Secondly, for the same reason, the multiline filter should be the first filter. Logs will be re-emitted by the multiline filter to the head of the pipeline - the filter will ignore its own re-emitted records, but other filters won't. If there are filters before the multiline filter, they will be applied twice.
 
 {% endhint %}
 
