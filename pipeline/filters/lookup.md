@@ -95,7 +95,7 @@ The previous configuration reads log records from `devices.log` that includes th
 It uses the value of the `hostname` field (which was set as the `lookup_key`) to find matching values in the first column of `device-bu.csv`.
 
 ```text
-hostname,business_line
+host,department
 server-prod-001,Finance
 db-test-abc,Engineering
 db-test-abc,Marketing
