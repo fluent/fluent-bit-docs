@@ -84,7 +84,7 @@ If the regular expression doesn't match an incoming record, the rule will be ski
 
 If a regular expression has matched the value of the defined key in the rule, you can compose a new tag for that specific record. The tag is a concatenated string that can contain any of the following characters: `a-z`,`A-Z`, `0-9` and `.-,`.
 
-A tag can take any string value from the matching record, the original tag it self, environment variables, or general placeholders.
+A tag can take any string value from the matching record, the original tag itself, environment variables, or general placeholders.
 
 Consider the following incoming data on the rule:
 
