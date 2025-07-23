@@ -75,7 +75,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The previous configuration reads log records from `devices.log` that includes the following values for device hostnames:
+The previous configuration reads log records from `devices.log` that includes the following values in the `hostname` field:
 
 ```shell
 {"hostname": "server-prod-001"}
