@@ -156,7 +156,7 @@ To query ranges or starting from specific chunks IDs, remember that they're incr
 | `to` | The last chunk ID to be retrieved. If not found, the whole stream will be provided (starting from `from` if was set). |
 | `limit` | Limit the output to a specific number of chunks. The default value is `0`, which sends everything. |
 
-The following example specifies the range from chunk ID `1` to chunk ID `3` and only 1 chunk:
+The following example specifies the range from chunk ID `1` to chunk ID `3` and only one chunk:
 
 ```shell
 curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"`&#x20;
