@@ -107,7 +107,7 @@ The following example generates dummy log events for consumption by using `curl`
    {% endtab %}
    {% endtabs %}
 
-1. Retrieve the data
+1. Retrieve the data.
 
    ```shell
    curl -i http://127.0.0.1:2025/logs
