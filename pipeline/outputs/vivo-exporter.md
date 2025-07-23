@@ -69,11 +69,11 @@ By using an HTTP request, you can retrieve the data from the streams. The follow
 |------------|-------------------------------------------------------------------------------------------------------------------------------|
 | `/logs`    | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
 | `/metrics` | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
-| `/traces`  | Exposes traces events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
+| `/traces`  | Exposes trace events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
 
-The following example generates dummy log events which will be consuming by using `curl` HTTP command line client:
+The following example generates dummy log events for consumption by using `curl` HTTP command line client:
 
-1. Configure and start Fluent Bit
+1. Configure and start Fluent Bit.
 
    {% tabs %}
    {% tab title="fluent-bit.yaml" %}
@@ -138,7 +138,7 @@ Vivo-Stream-End-ID: 3
 
 ### Streams and IDs
 
-As mentioned previously, each stream buffers a `chunk` that contains `N` events, each chunk contains its own ID which is unique inside the stream.
+As mentioned previously, each stream buffers a `chunk` that contains `N` events, with each chunk containing its own ID that's unique inside the stream.
 
 After receiving the HTTP response, Vivo Exporter also reports the range of chunk IDs that were served in the response using the HTTP headers `Vivo-Stream-Start-ID` and `Vivo-Stream-End-ID`.
 
