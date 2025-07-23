@@ -323,4 +323,4 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The previous configuration first injects the necessary metadata keys and values in the record directly, with a prefix `olgm.` attached to the keys, which segregates the metadata keys from rest of the record keys. Then, using a `nest` filter only the metadata keys are selected by the filter and nested under `oci_la_global_metadata` key in the record, and the prefix `olgm.` is removed from the metadata keys.
+The previous configuration first injects the necessary metadata keys and values in the record directly, with a prefix `olgm.` attached to the keys, which segregates the metadata keys from rest of the record keys. Then, using a `nest` filter, only the metadata keys are selected by the filter and nested under the `oci_la_global_metadata` key in the record, and the prefix `olgm.` is removed from the metadata keys.
