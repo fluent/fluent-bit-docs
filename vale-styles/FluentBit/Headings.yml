@@ -62,6 +62,7 @@ exceptions:
   - HTTP
   - I
   - InfluxDB
+  - JSON
   - Kafka
   - Kafka Producer
   - Kafka REST
