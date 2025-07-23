@@ -32,22 +32,22 @@ The following is an example of a configuration file for the Nightfall filter:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          host: 0.0.0.0
-          port: 8000
+  inputs:
+    - name: http
+      host: 0.0.0.0
+      port: 8000
 
-    filters:
-        - name: nightfall
-          match: '*'
-          nightfall_api_key: <API key>
-          policy_id: 5991946b-1cc8-4c38-9240-72677029a3f7
-          sampling_rate: 1
-          tls.ca_path: /etc/ssl/certs
-    
-    outputs:
-        - name: stdout
-          match: '*'
+  filters:
+    - name: nightfall
+      match: '*'
+      nightfall_api_key: <API key>
+      policy_id: 5991946b-1cc8-4c38-9240-72677029a3f7
+      sampling_rate: 1
+      tls.ca_path: /etc/ssl/certs
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -55,21 +55,21 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    host 0.0.0.0
-    port 8000
+  name http
+  host 0.0.0.0
+  port 8000
 
 [FILTER]
-    Name nightfall
-    Match *
-    nightfall_api_key <API key>
-    policy_id 5991946b-1cc8-4c38-9240-72677029a3f7
-    sampling_rate 1
-    tls.ca_path /etc/ssl/certs
+  Name nightfall
+  Match *
+  nightfall_api_key <API key>
+  policy_id 5991946b-1cc8-4c38-9240-72677029a3f7
+  sampling_rate 1
+  tls.ca_path /etc/ssl/certs
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
@@ -81,10 +81,10 @@ After you configure the filter, you can use it from the command line by running 
 
 ```shell
 # For YAML configuration.
-./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.yaml
+fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.yaml
 
 # For classic configuration.
-./fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
+fluent-bit -c /PATH_TO_CONF_FILE/fluent-bit.conf
 ```
 
 Replace _`PATH_TO_CONF_FILE`_ with the path for where your filter configuration file
