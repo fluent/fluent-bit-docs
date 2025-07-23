@@ -1,6 +1,6 @@
 # Syslog
 
-The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats through different transports such as UDP, TCP or TLS.
+The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats through different transports such as UDP, TCP, or TLS.
 
 ## Configuration parameters
 
@@ -11,21 +11,21 @@ The _Syslog_ output plugin lets you deliver messages to Syslog servers. It suppo
 | `mode` | Desired transport type. Available options are `tcp` and `udp`. | `udp` |
 | `syslog_format` | The Syslog protocol format to use. Available options are `rfc3164` and `rfc5424`. | `rfc5424` |
 | `syslog_maxsize` | The maximum size allowed per message. The value must be an integer representing the number of bytes allowed. If no value is provided, the default size is set depending of the protocol version specified by `syslog_format`. The value `rfc3164` sets max size to 1024 bytes, and `rfc5424` sets the size to 2048 bytes. | _none_ |
-| `syslog_severity_key` | The key name from the original record that contains the Syslog severity number. This configuration is optional. | _none_ |
-| `syslog_severity_preset` | The preset severity number. It will be overwritten if `syslog_severity_key` is set and a key of a record is matched. This configuration is optional. | `6` |
-| `syslog_facility_key` | The key name from the original record that contains the Syslog facility number. This configuration is optional. | _none_ |
-| `syslog_facility_preset` | The preset facility number. It will be overwritten if `syslog_facility_key` is set and a key of a record is matched. This configuration is optional. | `1` |
-| `syslog_hostname_key` | The key name from the original record that contains the hostname that generated the message. This configuration is optional. | _none_ |
-| `syslog_hostname_preset` | The preset hostname. It will be overwritten if `syslog_hostname_key` is set and a key of a record is matched. This configuration is optional. | _none_ |
-| `syslog_appname_key` | The key name from the original record that contains the application name that generated the message. This configuration is optional. | _none_ |
-| `syslog_appname_preset` | The preset application name. It will be overwritten if `syslog_appname_key` is set and a key of a record is matched. This configuration is optional. | _none_ |
-| `syslog_procid_key` | The key name from the original record that contains the Process ID that generated the message. This configuration is optional. | _none_ |
-| `syslog_procid_preset` | The preset process ID. It will be overwritten if `syslog_procid_key` is set and a key of a record is matched. This configuration is optional. | _none_ |
-| `syslog_msgid_key` | The key name from the original record that contains the Message ID associated to the message. This configuration is optional. | _none_ |
-| `syslog_msgid_preset` | The preset message ID. It will be overwritten if `syslog_msgid_key` is set and a key of a record is matched. This configuration is optional. | _none_ |
-| `syslog_sd_key` | The key name from the original record that contains a map of key/value pairs to use as Structured Data \(SD\) content. The key name is included in the resulting SD field as shown in the examples in this doc. This configuration is optional. | _none_ |
-| `syslog_message_key` | The key name from the original record that contains the message to deliver. Be aware that this property is required, otherwise the message will be empty. | _none_ |
-| `allow_longer_sd_id` | If `true`, Fluent-bit allows SD-ID values that are longer than 32 characters. SD-ID values that exceed 32 characters violate RFC5424 standards. | `false` |
+| `syslog_severity_key` | Optional. The key name from the original record that contains the Syslog severity number. | _none_ |
+| `syslog_severity_preset` | Optional. The preset severity number. It will be overwritten if `syslog_severity_key` is set and a key of a record is matched. | `6` |
+| `syslog_facility_key` | Optional. The key name from the original record that contains the Syslog facility number. | _none_ |
+| `syslog_facility_preset` | Optional. The preset facility number. It will be overwritten if `syslog_facility_key` is set and a key of a record is matched. | `1` |
+| `syslog_hostname_key` | Optional. The key name from the original record that contains the hostname that generated the message. | _none_ |
+| `syslog_hostname_preset` | Optional. The preset hostname. It will be overwritten if `syslog_hostname_key` is set and a key of a record is matched. | _none_ |
+| `syslog_appname_key` | Optional. The key name from the original record that contains the application name that generated the message. | _none_ |
+| `syslog_appname_preset` | Optional. The preset application name. It will be overwritten if `syslog_appname_key` is set and a key of a record is matched. | _none_ |
+| `syslog_procid_key` | Optional. The key name from the original record that contains the Process ID that generated the message. | _none_ |
+| `syslog_procid_preset` | Optional. The preset process ID. It will be overwritten if `syslog_procid_key` is set and a key of a record is matched. | _none_ |
+| `syslog_msgid_key` | Optional. The key name from the original record that contains the Message ID associated to the message. | _none_ |
+| `syslog_msgid_preset` | Optional. The preset message ID. It will be overwritten if `syslog_msgid_key` is set and a key of a record is matched. | _none_ |
+| `syslog_sd_key` | Optional. The key name from the original record that contains a map of key/value pairs to use as Structured Data \(SD\) content. The key name is included in the resulting SD field as shown in the examples in this doc. | _none_ |
+| `syslog_message_key` | Required. The key name from the original record that contains the message to deliver. | _none_ |
+| `allow_longer_sd_id` | If `true`, Fluent Bit allows SD-ID values longer than 32 characters. SD-ID values that exceed 32 characters violate RFC5424 standards. | `false` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
