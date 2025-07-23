@@ -71,6 +71,7 @@ exceptions:
   - Libpq
   - Linux
   - LogDNA
+  - LogEntry
   - LTSV
   - macOS
   - Marketplace
