@@ -20,8 +20,7 @@ To start inserting records into Treasure Data, run the plugin from the command l
 
 ### Command line
 
-You can run the plugin from the command line, but it exposes your API key. Using a
-configuration file is recommended.
+You can run the plugin from the command line, but it exposes your API key. Using a configuration file is recommended.
 
 ```shell
 fluent-bit -i cpu -o td -p API="abc" -p Database="fluentbit" -p Table="cpu_samples"
