@@ -2,7 +2,7 @@
 
 The _Stackdriver_ output plugin lets you ingest your records into the [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
 
-Before getting started with the plugin configuration, make sure to obtain the [proper credentials](https://cloud.google.com/logging/docs/agent/logging/authorization#create-service-account) to get access to the service. For best results, use a common JSON credentials file that can be referenced by the Stackdriver plugin.
+Before getting started with the plugin configuration, be sure to obtain the [proper credentials](https://cloud.google.com/logging/docs/agent/logging/authorization#create-service-account) to get access to the service. For best results, use a common JSON credentials file that can be referenced by the Stackdriver plugin.
 
 ## Configuration parameters
 
@@ -10,7 +10,7 @@ This plugin uses the following configuration parameters. For more details about 
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file | Value of environment variable `$GOOGLE_APPLICATION_CREDENTIALS` |
+| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of environment variable `$GOOGLE_APPLICATION_CREDENTIALS` |
 | `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
 | `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
 | `metadata_server` | Prefix for a metadata server. | Value of environment variable `$METADATA_SERVER`, or `http://metadata.google.internal` if unset. |
@@ -148,7 +148,7 @@ The `project_id` resource label will always be set from the service credentials 
 
 ### Use the `resource_labels` parameter
 
-The `resource_labels` configuration parameter offers an alternative API for assigning the resource labels. To use, input a list of comma separated strings specifying resource labels plain text assignments (`new=value`), mappings from an original field in the log entry to a destination field (`destination=$original`) and environment variable assignments (`new=${var}`).
+The `resource_labels` configuration parameter offers an alternative API for assigning the resource labels. To use, input a list of comma-separated strings specifying resource labels plain text assignments (`new=value`), mappings from an original field in the log entry to a destination field (`destination=$original`) and environment variable assignments (`new=${var}`).
 
 For instance, consider the following log entry:
 
@@ -245,7 +245,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The `resource_labels` parameter also supports validation for required labels based on the input resource type. This allows Fluent Bit to check if all specified labels are present for a given configuration before runtime. If validation isn't currently supported for a resource type that you would like to use this API with, you can open a pull request for it. Adding validation for a new resource type involves specifying the resources associated with the type alongside the [required labels](https://github.com/fluent/fluent-bit/blob/master/plugins/out_stackdriver/stackdriver_resource_types.c#L27).
+The `resource_labels` parameter also supports validation for required labels based on the input resource type. This allows Fluent Bit to check if all specified labels are present for a given configuration before runtime. If validation isn't supported for a resource type that you want to use this API with, open a pull request for it. Adding validation for a new resource type involves specifying the resources associated with the type alongside the [required labels](https://github.com/fluent/fluent-bit/blob/master/plugins/out_stackdriver/stackdriver_resource_types.c#L27).
 
 ## Log names
 
@@ -255,13 +255,13 @@ By default, the plugin will write to the following log name:
 /projects/<project ID>/logs/<log tag>
 ```
 
-You might be in a scenario where being more specific about the log name is important (for example [integration with Log Router rules](https://cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics](https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series)). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md#log-entry-fields). You can configure a `log_name_key` if you'd like to use something different from `logging.googleapis.com/logName`. For example, if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
+You might be in a scenario where being more specific about the log name is important (for example, [integration with Log Router rules](https://cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics](https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series)). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md#log-entry-fields). You can configure a `log_name_key` if you'd like to use something different from `logging.googleapis.com/logName`. For example, if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
 
 ## Troubleshooting
 
 ### Upstream connection error
 
-An upstream connection error means Fluent Bit wasn't able to reach Google services, the error looks like this:
+An upstream connection error means Fluent Bit wasn't able to reach Google services. In that case, the error message looks like this:
 
 ```text
 [2019/01/07 23:24:09] [error] [oauth2] could not get an upstream connection
