@@ -107,4 +107,5 @@ exceptions:
   - VictorOps
   - Visual
   - VS
+  - WebSocket
   - Windows

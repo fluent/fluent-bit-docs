@@ -1,27 +1,29 @@
 # WebSocket
 
-The **websocket** output plugin allows to flush your records into a WebSocket endpoint. For now the functionality is pretty basic, and it issues an HTTP GET request to do the handshake, and then use TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) \(or JSON\) format.
+The _WebSocket_ output plugin lets you flush your records into a WebSocket endpoint. It issues an HTTP GET request to do the handshake, and then uses TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) format.
 
-## Configuration Parameters
+## Configuration parameters
 
-| Key                | Description                                                                                                                                                                        | default   |
-|:-------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------|
-| Host               | IP address or hostname of the target WebSocket Server                                                                                                                              | 127.0.0.1 |
-| Port               | TCP port of the target WebSocket Server                                                                                                                                            | 80        |
-| URI                | Specify an optional HTTP URI for the target websocket server, e.g: /something                                                                                                      | /         |
-| Header             | Add a HTTP header key/value pair. Multiple headers can be set.                                                                                                                     |           |
-| Format             | Specify the data format to be used in the HTTP request body, by default it uses _msgpack_. Other supported formats are _json_, _json\_stream_ and _json\_lines_ and _gelf_.        | msgpack   |
-| json\_date\_key    | Specify the name of the date field in output                                                                                                                                       | date      |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_, _epoch_, _iso8601_ (eg: _2018-05-30T09:39:52.000681Z_) and _java_sql_timestamp_ (eg: _2018-05-30 09:39:52.000681_) | double    |
-| workers            | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                               | `0`       |
+This plugin supports the following parameters:
 
-## Getting Started
+| Key | Description | Default |
+|:--- |:------------|:----------|
+| `Host` | IP address or hostname of the target WebSocket Server. | `127.0.0.1` |
+| `Port` | TCP port of the target WebSocket Server. | `80` |
+| `URI` | Specify an optional HTTP URI for the target WebSocket server. For example, `/someuri`. | `/` |
+| `Header` | Add a HTTP header key/value pair. Multiple headers can be set.  | _none_ |
+| `Format` | Specify the data format to be used in the HTTP request body. Supported formats: `json`, `json_stream`, `json_lines`, `gelf`. | `msgpack` |
+| `json_date_key` | Specify the name of the date field in output. | `date` |
+| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-In order to insert records into an HTTP server, you can run the plugin from the command line or through the configuration file:
+## Get started
 
-### Command Line
+To insert records into an HTTP server, you can run the plugin from the command line or through the configuration file.
 
-The **websocket** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\) or setting them directly through the service URI. The URI format is the following:
+### Command line
+
+The WebSocket plugin can read the parameters from the command line through the `-p` argument (property) or by setting them directly through the service URI. The URI format is the following:
 
 ```text
 http://host:port/something
@@ -33,7 +35,7 @@ Using the format specified, you could start Fluent Bit through:
 fluent-bit -i cpu -t cpu -o websocket://192.168.2.3:80/something -m '*'
 ```
 
-### Configuration File
+### Configuration file
 
 In your main configuration file, append the following:
 
@@ -45,7 +47,7 @@ pipeline:
   inputs:
     - name: cpu
       tag: cpu
-      
+
   outputs:
     - name: websocket
       match: '*'
@@ -75,11 +77,11 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Websocket plugin is working with tcp keepalive mode, please refer to [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) section for details. Since websocket is a stateful plugin, it will decide when to send out handshake to server side, for example when plugin just begins to work or after connection with server has been dropped. In general, the interval to init a new websocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume websocket connections.
+The WebSocket plugin works with TCP keepalive mode, see [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options) for details. Because WebSocket is a stateful plugin, it will decide when to send out handshake to server side. For example when the plugin begins to work or after connection with server has been dropped. In general, the interval to init a new WebSocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume WebSocket connections.
 
-## Testing
+## Tests
 
-### Configuration File
+### Configuration file example
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -91,7 +93,7 @@ pipeline:
       listen: 0.0.0.0
       port: 5170
       format: json
-      
+
   outputs:
     - name: websocket
       match: '*'
@@ -129,16 +131,16 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Once Fluent Bit is running, you can send some messages using the _netcat_:
+When Fluent Bit is running, you can send some messages using `netcat`:
 
 ```shell
 echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170; sleep 35; echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170
 ```
 
-In [Fluent Bit](http://fluentbit.io) we should see the following output:
+In [Fluent Bit](http://fluentbit.io) you should see the following output:
 
 ```shell
-$ fluent-bit   -c ../conf/out_ws.conf
+fluent-bit   -c ../conf/out_ws.conf
 
 ...
 [2021/02/05 22:17:09] [ info] [input:tcp:tcp.0] listening on 0.0.0.0:5170
@@ -166,8 +168,8 @@ $ fluent-bit   -c ../conf/out_ws.conf
 ...
 ```
 
-### Scenario Description
+### Scenario description
 
-From the output of fluent-bit log, we see that once data has been ingested into fluent bit, plugin would perform handshake. After a while, no data or traffic is undergoing, tcp connection would be aborted. And then another piece of data arrived, a retry for websocket plugin has been triggered, with another handshake and data flush.
+From the output of the Fluent Bit log, you can see that once data has been ingested into Fluent Bit, plugin performs  handshake. If no data or traffic is ongoing, the TCP connection would be aborted. When additional data arrives, a retry for WebSocket plugin triggers, with another handshake and data flush.
 
-There is another scenario, once websocket server flaps in a short time, which means it goes down and up in a short time, fluent-bit would resume tcp connection immediately. But in that case, websocket output plugin is a malfunction state, it needs to restart fluent-bit to get back to work.
+There is another scenario, if the WebSocket server goes down and up in a short time, Fluent Bit would resume the TCP connection immediately. But in that case, the WebSocket output plugin is a malfunction state, and needs to restart Fluent Bit to resume working.
