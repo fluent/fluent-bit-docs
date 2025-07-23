@@ -31,7 +31,7 @@ To test the Lua filter, you can run the plugin from the command line or through 
 From the command line you can use the following options:
 
 ```shell
-./fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
+fluent-bit -i dummy -F lua -p script=test.lua -p call=cb_print -m '*' -o null
 ```
 
 ### Configuration file
@@ -94,8 +94,8 @@ The Lua script can have one or multiple callbacks that can be used by this filte
 
 ```lua
 function cb_print(tag, timestamp, record)
-    ...
-    return code, timestamp, record
+  ...
+  return code, timestamp, record
 end
 ```
 
@@ -129,8 +129,8 @@ For more advanced use cases, especially when working with structured formats lik
 
 ```lua
 function cb_metadata(tag, timestamp, group, metadata, record)
-    ...
-    return code, timestamp, metadata, record
+  ...
+  return code, timestamp, metadata, record
 end
 ```
 
@@ -170,15 +170,15 @@ When using the extended prototype, you can return multiple records with their re
 
 ```lua
 function cb_metadata(tag, ts, group, metadata, record)
-    -- first record with its metadata
-    m1 = {foo = "meta1"}
-    r1 = {msg = "first log", old_record = record}
+  -- first record with its metadata
+  m1 = {foo = "meta1"}
+  r1 = {msg = "first log", old_record = record}
 
-    -- second record with its metadata
-    m2 = {foo = "meta2"}
-    r2 = {msg = "second log", old_record = record}
+  -- second record with its metadata
+  m2 = {foo = "meta2"}
+  r2 = {msg = "second log", old_record = record}
 
-    return 1, ts, {m1, m2}, {r1, r2}
+  return 1, ts, {m1, m2}, {r1, r2}
 end
 ```
 
@@ -298,11 +298,11 @@ pipeline:
       match: '*'
       call: append_tag
       code:  |
-          function append_tag(tag, timestamp, record)
-             new_record = record
-             new_record["my_env"] = FLB_ENV
-             return 1, timestamp, new_record
-          end
+        function append_tag(tag, timestamp, record)
+          new_record = record
+          new_record["my_env"] = FLB_ENV
+          return 1, timestamp, new_record
+        end
 
   outputs:
     - name: stdout
@@ -314,24 +314,24 @@ pipeline:
 
 ```text
 [SERVICE]
-	flush 1
-	daemon off
-	log_level debug
+  flush 1
+  daemon off
+  log_level debug
 
 [INPUT]
-	Name random
-	Tag test
-	Samples 10
+  Name random
+  Tag test
+  Samples 10
 
 [FILTER]
-	Name Lua
-	Match *
-	call append_tag
-	code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+  Name Lua
+  Match *
+  call append_tag
+  code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
 
 [OUTPUT]
-	Name stdout
-	Match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
@@ -379,11 +379,11 @@ pipeline:
 
 ```text
 [FILTER]
-Name                lua
-Alias               filter-iots-lua
-Match               iots_thread.*
-Script              filters.lua
-Call                set_landscape_deployment
+  Name                lua
+  Alias               filter-iots-lua
+  Match               iots_thread.*
+  Script              filters.lua
+  Call                set_landscape_deployment
 ```
 
 {% endtab %}
@@ -394,24 +394,24 @@ filters.lua:
 -- Use a Lua function to create some additional entries based
 -- on substrings from the kubernetes properties.
 function set_landscape_deployment(tag, timestamp, record)
-    local landscape = os.getenv("KUBERNETES_SERVICE_HOST")
-    if landscape then
-        -- Strip the landscape name from this field, KUBERNETES_SERVICE_HOST
-        -- Should be of this format
-        -- api.sandboxbsh-a.project.domain.com
-        -- Take off the leading "api."
-        -- sandboxbsh-a.project.domain.com
-        --print("landscape1:" .. landscape)
-        landscape = landscape:gsub("^[^.]+.", "")
-        --print("landscape2:" .. landscape)
-        -- Take off everything including and after the - in the cluster name
-        -- sandboxbsh
-        landscape = landscape:gsub("-.*$", "")
-        -- print("landscape3:" .. landscape)
-        record["iot_landscape"] = landscape
-    end
-    -- 2 - replace existing record with this update
-    return 2, timestamp, record
+  local landscape = os.getenv("KUBERNETES_SERVICE_HOST")
+  if landscape then
+    -- Strip the landscape name from this field, KUBERNETES_SERVICE_HOST
+    -- Should be of this format
+    -- api.sandboxbsh-a.project.domain.com
+    -- Take off the leading "api."
+    -- sandboxbsh-a.project.domain.com
+    --print("landscape1:" .. landscape)
+    landscape = landscape:gsub("^[^.]+.", "")
+    --print("landscape2:" .. landscape)
+    -- Take off everything including and after the - in the cluster name
+    -- sandboxbsh
+    landscape = landscape:gsub("-.*$", "")
+    -- print("landscape3:" .. landscape)
+    record["iot_landscape"] = landscape
+  end
+  -- 2 - replace existing record with this update
+  return 2, timestamp, record
 end
 ```
 
@@ -425,11 +425,11 @@ For example:
 
 ```lua
 function cb_split(tag, timestamp, record)
-    if record["x"] ~= nil then
-        return 2, timestamp, record["x"]
-    else
-        return 2, timestamp, record
-    end
+  if record["x"] ~= nil then
+    return 2, timestamp, record["x"]
+  else
+    return 2, timestamp, record
+  end
 end
 ```
 
@@ -458,17 +458,17 @@ pipeline:
 
 ```text
 [Input]
-    Name    stdin
+  Name    stdin
 
 [Filter]
-    Name    lua
-    Match   *
-    script  test.lua
-    call    cb_split
+  Name    lua
+  Match   *
+  script  test.lua
+  call    cb_split
 
 [Output]
-    Name    stdout
-    Match   *
+  Name    stdout
+  Match   *
 ```
 
 {% endtab %}
@@ -550,22 +550,22 @@ pipeline:
 
 ```text
 [INPUT]
-    Name                tail
-    Path                /var/log/containers/*_istio-proxy-*.log
-    multiline.parser    docker, cri
-    Tag                 istio.*
-    Mem_Buf_Limit       64MB
-    Skip_Long_Lines     Off
+  Name                tail
+  Path                /var/log/containers/*_istio-proxy-*.log
+  multiline.parser    docker, cri
+  Tag                 istio.*
+  Mem_Buf_Limit       64MB
+  Skip_Long_Lines     Off
 
 [FILTER]
-    Name                lua
-    Match               istio.*
-    Script              response_code_filter.lua
-    call                cb_response_code_filter
+  Name                lua
+  Match               istio.*
+  Script              response_code_filter.lua
+  call                cb_response_code_filter
 
 [Output]
-    Name                stdout
-    Match               *
+  Name                stdout
+  Match               *
 ```
 
 {% endtab %}
@@ -575,34 +575,34 @@ pipeline:
 
 ```json
 {
-    "log": {
-        "response_code": 200,
-        "bytes_sent": 111328341,
-        "authority": "randomservice.randomservice",
-        "duration": 14493,
-        "request_id": "2e9d38f8-36a9-40a6-bdb2-47c8eb7d399d",
-        "upstream_local_address": "10.11.82.178:42738",
-        "downstream_local_address": "10.10.21.17:80",
-        "upstream_cluster": "outbound|80||randomservice.svc.cluster.local",
-        "x_forwarded_for": null,
-        "route_name": "default",
-        "upstream_host": "10.11.6.90:80",
-        "user_agent": "RandomUserAgent",
-        "response_code_details": "via_upstream",
-        "downstream_remote_address": "10.11.82.178:51096",
-        "bytes_received": 1148,
-        "path": "/?parameter=random",
-        "response_flags": "-",
-        "start_time": "2022-07-28T11:16:51.663Z",
-        "upstream_transport_failure_reason": null,
-        "method": "POST",
-        "connection_termination_details": null,
-        "protocol": "HTTP/1.1",
-        "requested_server_name": null,
-        "upstream_service_time": "6161"
-    },
-    "stream": "stdout",
-    "time": "2022-07-28T11:17:06.704109897Z"
+  "log": {
+    "response_code": 200,
+    "bytes_sent": 111328341,
+    "authority": "randomservice.randomservice",
+    "duration": 14493,
+    "request_id": "2e9d38f8-36a9-40a6-bdb2-47c8eb7d399d",
+    "upstream_local_address": "10.11.82.178:42738",
+    "downstream_local_address": "10.10.21.17:80",
+    "upstream_cluster": "outbound|80||randomservice.svc.cluster.local",
+    "x_forwarded_for": null,
+    "route_name": "default",
+    "upstream_host": "10.11.6.90:80",
+    "user_agent": "RandomUserAgent",
+    "response_code_details": "via_upstream",
+    "downstream_remote_address": "10.11.82.178:51096",
+    "bytes_received": 1148,
+    "path": "/?parameter=random",
+    "response_flags": "-",
+    "start_time": "2022-07-28T11:16:51.663Z",
+    "upstream_transport_failure_reason": null,
+    "method": "POST",
+    "connection_termination_details": null,
+    "protocol": "HTTP/1.1",
+    "requested_server_name": null,
+    "upstream_service_time": "6161"
+  },
+  "stream": "stdout",
+  "time": "2022-07-28T11:17:06.704109897Z"
 }
 ```
 
@@ -620,23 +620,23 @@ Script `custom_datetime_format.lua`:
 
 ```lua
 function convert_to_utc(tag, timestamp, record)
-    local date_time = record["pub_date"]
-    local new_record = record
-    if date_time then
-        if string.find(date_time, ",") then
-            local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
-            local date_part, zone_part = date_time:match(pattern)
+  local date_time = record["pub_date"]
+  local new_record = record
+  if date_time then
+    if string.find(date_time, ",") then
+      local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+      local date_part, zone_part = date_time:match(pattern)
 
-            if date_part and zone_part then
-                local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
-                local handle = io.popen(command)
-                local result = handle:read("*a")
-                handle:close()
-                new_record["pub_date"] = result:match("%S+")
-            end
-        end
+      if date_part and zone_part then
+        local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+        local handle = io.popen(command)
+        local result = handle:read("*a")
+        handle:close()
+        new_record["pub_date"] = result:match("%S+")
+      end
     end
-    return 1, timestamp, new_record
+  end
+  return 1, timestamp, new_record
 end
 ```
 
@@ -662,24 +662,24 @@ pipeline:
     - name: lua
       match: '*'
       code: |
-          function convert_to_utc(tag, timestamp, record)
-              local date_time = record["pub_date"]
-              local new_record = record
-              if date_time then
-                  if string.find(date_time, ",") then
-                      local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
-                      local date_part, zone_part = date_time:match(pattern)
-                      if date_part and zone_part then
-                          local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
-                          local handle = io.popen(command)
-                          local result = handle:read("*a")
-                          handle:close()
-                          new_record["pub_date"] = result:match("%S+")
-                      end
-                  end
+        function convert_to_utc(tag, timestamp, record)
+          local date_time = record["pub_date"]
+          local new_record = record
+          if date_time then
+            if string.find(date_time, ",") then
+              local pattern = "(%a+, %d+ %a+ %d+ %d+:%d+:%d+) ([+-]%d%d%d%d)"
+              local date_part, zone_part = date_time:match(pattern)
+              if date_part and zone_part then
+                local command = string.format("date -u -d '%s %s' +%%Y-%%m-%%dT%%H:%%M:%%SZ", date_part, zone_part)
+                local handle = io.popen(command)
+                local result = handle:read("*a")
+                handle:close()
+                new_record["pub_date"] = result:match("%S+")
               end
-              return 1, timestamp, new_record
-           end
+            end
+          end
+          return 1, timestamp, new_record
+        end
       call: convert_to_utc
 
   outputs:
@@ -691,24 +691,24 @@ pipeline:
 
 ```text
 [INPUT]
-    Name    dummy
-    Dummy   {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
-    Tag     event_category_a
+  Name    dummy
+  Dummy   {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
+  Tag     event_category_a
 
 [INPUT]
-    Name    dummy
-    Dummy   {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
-    Tag     event_category_b
+  Name    dummy
+  Dummy   {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
+  Tag     event_category_b
 
 [FILTER]
-    Name                lua
-    Match               *
-    Script              custom_datetime_format.lua
-    call                convert_to_utc
+  Name                lua
+  Match               *
+  Script              custom_datetime_format.lua
+  call                convert_to_utc
 
 [Output]
-    Name                stdout
-    Match               *
+  Name                stdout
+  Match               *
 ```
 
 {% endtab %}
@@ -781,11 +781,11 @@ pipeline:
       match: '*'
       call: append_tag
       code:  |
-          function append_tag(tag, timestamp, record)
-             new_record = record
-             new_record["my_env"] = FLB_ENV
-             return 1, timestamp, new_record
-          end
+        function append_tag(tag, timestamp, record)
+          new_record = record
+          new_record["my_env"] = FLB_ENV
+          return 1, timestamp, new_record
+        end
 
   outputs:
     - name: stdout
