@@ -14,7 +14,7 @@ The plugin supports the following configuration parameters:
 | `Region` | Set the service region. Allowed values: `US`, `JP`. | `US` |
 | `Workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-## Getting started
+## Get started
 
 To start inserting records into Treasure Data, run the plugin from the command line or through the configuration file.
 
