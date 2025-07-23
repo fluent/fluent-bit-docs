@@ -17,6 +17,7 @@ exceptions:
   - AWS
   - CIDR
   - CLI
+  - CORS
   - CPU
   - CRI
   - CRD
