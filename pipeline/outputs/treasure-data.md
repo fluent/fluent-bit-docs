@@ -1,32 +1,33 @@
 # Treasure Data
 
-The **td** output plugin, allows to flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
+The _Treasure Data_ (TD) output plugin lets you flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key      | Description                                                                                                                                                                        | Default |
-|:---------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| API      | The [Treasure Data](http://treasuredata.com) API key. To obtain it please log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash. |         |
-| Database | Specify the name of your target database.                                                                                                                                          |         |
-| Table    | Specify the name of your target table where the records will be stored.                                                                                                            |         |
-| Region   | Set the service region, available values: US and JP                                                                                                                                | US      |
-| Workers  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                               | `0`     |
+| Key | Description | Default |
+|:--- |:----------- |:--------|
+| `API` | The Treasure Data API key. To obtain it, log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash. | _none_ |
+| `Database` | Specify the name of your target database. | _none_ |
+| `Table` | Specify the name of your target table where the records will be stored. | _none_ |
+| `Region` | Set the service region. Allowed values: `US`, `JP`. | `US` |
+| `Workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-## Getting Started
+## Getting started
 
-In order to start inserting records into [Treasure Data](https://www.treasuredata.com), you can run the plugin from the command line or through the configuration file:
+To start inserting records into Treasure Data, run the plugin from the command line or through the configuration file.
 
-### Command Line:
+### Command line
+
+You can run the plugin from the command line, but it exposes your API key. Using a
+configuration file is recommended.
 
 ```shell
 fluent-bit -i cpu -o td -p API="abc" -p Database="fluentbit" -p Table="cpu_samples"
 ```
 
-Ideally you don't want to expose your API key from the command line, using a configuration file is highly desired.
-
-### Configuration File
+### Configuration file
 
 In your main configuration file append the following:
 
@@ -38,7 +39,7 @@ pipeline:
   inputs:
     - name: cpu
       tag: my_cpu
-      
+
   outputs:
     - name: td
       match: '*'
