@@ -8,11 +8,11 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `Host` | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
+| `Host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
 | `Port` | TCP Port of the target service. | `5170` |
 | `Format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `msgpack` |
 | `json_date_key`| Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
-| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp` | `double` |
+| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## TLS configuration parameters
@@ -27,7 +27,7 @@ The following parameters are available to configure a secure channel connection 
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
 | `tls.crt_file`   | Absolute path to Certificate file. | _none_ |
 | `tls.key_file`   | Absolute path to private Key file. | _none_ |
-| `tls.key_passwd` | Optional password for tls.key_file file. | _none_ |
+| `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
 
 ### Command line
 
@@ -40,7 +40,7 @@ fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v
 ```
 
 
-Run the following in a separate terminal, `netcat` will start listening for messages on TCP port 5170. After it connects to Fluent Bit you should see the output in JSON format:
+Run the following in a separate terminal, `netcat` will start listening for messages on TCP port `5170`. After it connects to Fluent Bit you should see the output in JSON format:
 
 ```shell
 nc -l 5170
