@@ -42,20 +42,20 @@ The plugin outputs `uint` values and `filter_type_converter` converts them into 
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-    
-    filters:
-        - name: type_converter
-          match: '*'
-          uint_key:
-            - Mem.total Mem.total_str string
-            - Mem.used  Mem.used_str  string
-            - Mem.free  Mem.free_str  string
-    
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: mem
+
+  filters:
+    - name: type_converter
+      match: '*'
+      uint_key:
+        - Mem.total Mem.total_str string
+        - Mem.used  Mem.used_str  string
+        - Mem.free  Mem.free_str  string
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -63,18 +63,18 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
+  Name mem
 
 [FILTER]
-    Name type_converter
-    Match *
-    uint_key Mem.total Mem.total_str string
-    uint_key Mem.used  Mem.used_str  string
-    uint_key Mem.free  Mem.free_str  string
+  Name               type_converter
+  Match              *
+  uint_key Mem.total Mem.total_str string
+  uint_key Mem.used  Mem.used_str  string
+  uint_key Mem.free  Mem.free_str  string
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -83,7 +83,7 @@ pipeline:
 You can also run the filter from command line.
 
 ```shell
-./fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
+fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
 ```
 
 The output will be
