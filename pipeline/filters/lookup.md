@@ -1,6 +1,6 @@
 # Lookup
 
-The Lookup plugin looks up a key value from a record in a specified CSV file and, if a match is found, adds the corresponding value from the CSV as a new key-value pair to the record.
+The _Lookup_ plugin searches for a specified key in a CSV file and, if it finds a match, adds a new key to the output record whose value matches the corresponding CSV value.
 
 ## Configuration parameters
 
