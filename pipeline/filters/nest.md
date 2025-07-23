@@ -91,7 +91,7 @@ wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
 `NEST`.
 
 ```shell
-./fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
+fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
 ```
 
 ### Nest configuration file
@@ -101,21 +101,21 @@ wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: nest
-          match: '*'
-          operation: nest
-          wildcard: Mem.*
-          nest_under: Memstats
-          remove_prefix: Mem.
+  filters:
+    - name: nest
+      match: '*'
+      operation: nest
+      wildcard: Mem.*
+      nest_under: Memstats
+      remove_prefix: Mem.
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -123,20 +123,20 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under Memstats
-    Remove_prefix Mem.
+  Name nest
+  Match *
+  Operation nest  
+  Wildcard Mem.*
+  Nest_under Memstats
+  Remove_prefix Mem.
     
  [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -162,29 +162,29 @@ This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard:
-            - Mem.*
-            - Swap.*
-          Nest_under: Stats
-          Add_prefix: NESTED
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard:
+        - Mem.*
+        - Swap.*
+      Nest_under: Stats
+      Add_prefix: NESTED
 
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Stats
-          Remove_prefix: NESTED
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Stats
+      Remove_prefix: NESTED
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -192,28 +192,28 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Wildcard Swap.*
-    Nest_under Stats
-    Add_prefix NESTED
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Wildcard Swap.*
+  Nest_under Stats
+  Add_prefix NESTED
 
 [FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Stats
-    Remove_prefix NESTED
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Stats
+  Remove_prefix NESTED
     
 [OUTPUT]
-    Name  stdout
-    Match *    
+  Name  stdout
+  Match *    
 ```
 
 {% endtab %}
@@ -238,32 +238,32 @@ which is then nested under `LAYER2`, which is nested under `LAYER3`.
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: Mem.*
+      Nest_under: LAYER1
 
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER1*
+      Nest_under: LAYER2
 
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER2*
+      Nest_under: LAYER3
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -271,33 +271,33 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under LAYER1
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Nest_under LAYER1
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER1*
-    Nest_under LAYER2
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER1*
+  Nest_under LAYER2
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER2*
-    Nest_under LAYER3
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER2*
+  Nest_under LAYER3
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -336,50 +336,50 @@ This example uses the 3-level deep nesting of Example 2 and applies the `lift` f
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: Mem.*
+      Nest_under: LAYER1
 
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER1*
+      Nest_under: LAYER2
 
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER2*
+      Nest_under: LAYER3
 
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: LAYER3
-          Add_prefix: Lifted3_
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: LAYER3
+      Add_prefix: Lifted3_
 
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_LAYER2
-          Add_prefix: Lifted3_Lifted2_
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Lifted3_LAYER2
+      Add_prefix: Lifted3_Lifted2_
 
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_Lifted2_LAYER1
-          Add_prefix: Lifted3_Lifted2_Lifted1_
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Lifted3_Lifted2_LAYER1
+      Add_prefix: Lifted3_Lifted2_Lifted1_
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -387,54 +387,54 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under LAYER1
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Nest_under LAYER1
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER1*
-    Nest_under LAYER2
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER1*
+  Nest_under LAYER2
 
 [FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER2*
-    Nest_under LAYER3
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER2*
+  Nest_under LAYER3
 
 [FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under LAYER3
-    Add_prefix Lifted3_
+  Name nest
+  Match *
+  Operation lift
+  Nested_under LAYER3
+  Add_prefix Lifted3_
 
 [FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Lifted3_LAYER2
-    Add_prefix Lifted3_Lifted2_
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Lifted3_LAYER2
+  Add_prefix Lifted3_Lifted2_
 
 [FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Lifted3_Lifted2_LAYER1
-    Add_prefix Lifted3_Lifted2_Lifted1_
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Lifted3_Lifted2_LAYER1
+  Add_prefix Lifted3_Lifted2_Lifted1_
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
