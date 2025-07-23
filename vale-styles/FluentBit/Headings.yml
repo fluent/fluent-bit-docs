@@ -84,6 +84,7 @@ exceptions:
   - OpenObserve
   - OpenTelemetry
   - Opsgenie
+  - Oracle Cloud Infrastructure Logging Analytics
   - PagerDuty
   - PostgreSQL
   - Prometheus
