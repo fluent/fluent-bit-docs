@@ -1,4 +1,4 @@
-# Developer guide for beginners on contributing to Fluent Bit
+# Contribution guide for beginners
 
 If you have some knowledge of C, this guide should help you understand how to make code changes to Fluent Bit.
 
