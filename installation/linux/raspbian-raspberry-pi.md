@@ -1,10 +1,10 @@
-# Raspbian and Raspberry Pi
+# Raspberry Pi
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for the Raspberry, specifically for [Raspbian](http://raspbian.org) distribution. The following versions are supported:
+Fluent Bit is distributed as the `fluent-bit` package and is available for [Raspberry Pi](https://www.raspberrypi.com/software/operating-systems/). The following versions are supported:
 
-* Raspbian Bookworm (12)
-* Raspbian Bullseye (11)
-* Raspbian Buster (10)
+- Raspbian Bookworm (12)
+- Raspbian Bullseye (11)
+- Raspbian Buster (10)
 
 ## Server GPG key
 

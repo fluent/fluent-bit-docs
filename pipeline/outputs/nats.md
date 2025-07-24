@@ -8,7 +8,7 @@ The _NATS_ output plugin lets you flush your records into a [NATS Server](https:
 | --- | ----------- | ------- |
 | `host` | The IP address or hostname of the NATS server. | `127.0.0.1` |
 | `port` | The TCP port of the target NATS server. | `4222` |
-| `workers` | The number of [workers](../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 {% hint style="info" %}
 

@@ -8,6 +8,7 @@ first: '\b([A-Z]{3,5})\b'
 second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
+  - AAD
   - ACL
   - ANSI
   - API
@@ -30,6 +31,7 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - DST
   - ECR
   - ECS
   - EKS
@@ -109,6 +111,7 @@ exceptions:
   - TLS
   - TRE
   - TODO
+  - UAE
   - UDP
   - URI
   - URL

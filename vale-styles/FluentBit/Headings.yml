@@ -25,9 +25,11 @@ exceptions:
   - AWS MSK IAM
   - AWS IAM
   - Azure
+  - Azure Data Explorer
   - Azure Logs Ingestion API
   - Azure Log Analytics
   - BuildKite
+  - CheckList
   - CircleCI
   - CLI
   - CloudWatch
@@ -55,6 +57,7 @@ exceptions:
   - Google Cloud
   - Google Cloud BigQuery
   - Google Cloud Platform
+  - GPG
   - Grafana
   - Grafana Cloud
   - Graylog Extended Log Format
@@ -67,7 +70,9 @@ exceptions:
   - Kafka Producer
   - Kafka REST
   - Kinesis
+  - KQL
   - Kubernetes
+  - Kusto
   - LaunchDarkly
   - Libpq
   - Linux
@@ -76,6 +81,7 @@ exceptions:
   - LTSV
   - macOS
   - Marketplace
+  - Microsoft Fabric
   - MongoDB
   - NATS
   - New Relic
@@ -91,6 +97,7 @@ exceptions:
   - PostgreSQL
   - Prometheus
   - PromQL
+  - Raspberry Pi
   - REPL
   - ServiceMonitor
   - SignalFx

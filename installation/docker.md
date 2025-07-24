@@ -16,27 +16,31 @@ Use the following command to start Fluent Bit while using a configuration file:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
+
 ```shell
 docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
   cr.fluentbit.io/fluent/fluent-bit
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
+
 ```shell
 docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
   cr.fluentbit.io/fluent/fluent-bit \
   -c /fluent-bit/etc/fluent-bit.yaml
+
 ```
+
 {% endtab %}
 {% endtabs %}
-
 
 ## Tags and versions
 
 The following table describes the Linux container tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tag(s)       | Manifest Architectures    | Description                                                    |
+| Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
 | 4.0.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
 | 4.0.4 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.4](https://fluentbit.io/announcements/v4.0.4/) |
@@ -122,8 +126,6 @@ The following table describes the Linux container tags that are available on Doc
 | 2.1.6 | x86_64, arm64v8, arm32v7 | Release [v2.1.6](https://fluentbit.io/announcements/v2.1.6/) |
 | 2.1.5 | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
 | 2.1.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.4 | x86_64, arm64v8, arm32v7 | Release [v2.1.4](https://fluentbit.io/announcements/v2.1.4/) |
-| 2.1.4-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.3 | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
 | 2.1.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.2 | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
@@ -189,7 +191,7 @@ From a deployment perspective, there's no need to specify an architecture. The c
 
 ## Verify signed container images
 
-Version 1.9 and 2.0 container images are signed using Cosign/Sigstore. Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/cosign/installation/)):
+Version 1.9 and 2.0 container images are signed using Cosign/Sigstore. Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/quickstart/quickstart-cosign/)):
 
 ```shell
 $ cosign verify --key "https://packages.fluentbit.io/fluentbit-cosign.pub" fluent/fluent-bit:2.0.6

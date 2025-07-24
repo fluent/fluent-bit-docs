@@ -14,7 +14,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
 
 1. To stream data into BigQuery, you must create a [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) for Fluent Bit.
 1. Create a BigQuery dataset.
-   Fluent Bit doesn't create datasets for your data, so you must [create the dataset]((https://cloud.google.com/bigquery/docs/datasets)) ahead of time. You must also grant the service account `WRITER` permission on the dataset.
+   Fluent Bit doesn't create datasets for your data, so you must [create the dataset](https://cloud.google.com/bigquery/docs/datasets) ahead of time. You must also grant the service account `WRITER` permission on the dataset.
 
    Within the dataset you must create a table for the data to reside in. Use the following instructions for creating your table. Pay close attention to the schema, as it must match the schema of your output JSON. Unfortunately, because BigQuery doesn't allow dots in field names, you must use a filter to change the fields for many of the standard inputs (for example, `mem` or `cpu`).
 1. [Create a BigQuery table](https://cloud.google.com/bigquery/docs/tables).

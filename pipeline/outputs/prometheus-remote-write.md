@@ -196,7 +196,7 @@ pipeline:
 
 ### Coralogix
 
-With [Coralogix Metrics](https://coralogix.com/platform/metrics/) you might need to customize the URI. Additionally, you will make use of the header key with Coralogix private key.
+With [Coralogix Metrics](https://coralogix.com/platform/) you might need to customize the URI. Additionally, you will make use of the header key with Coralogix private key.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

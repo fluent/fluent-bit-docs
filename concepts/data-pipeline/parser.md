@@ -26,7 +26,7 @@ The parser converts unstructured data to structured data. As an example, conside
 192.168.2.20 - - [28/Jul/2006:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-This log line is a raw string without format. Structuring the log makes it easier to process the data later. If the [regular expression parser](pipeline/parsers/regular-expression) is used, the log entry could be converted to:
+This log line is a raw string without format. Structuring the log makes it easier to process the data later. If the [regular expression parser](../../pipeline/parsers/regular-expression) is used, the log entry could be converted to:
 
 ```javascript
 {

@@ -1,6 +1,5 @@
 ---
-description: Concatenate multiline or stack trace log messages. Available on Fluent Bit >=
-  v1.8.2.
+description: Concatenate multiline or stack trace log messages.
 ---
 
 # Multiline
@@ -23,7 +22,7 @@ When using this filter:
 
 This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter processes one chunk at a time and isn't suitable for most inputs which might send multiline messages in separate chunks.
 
-When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](pipeline/filters/rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
+When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](./rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
 
 {% endhint %}
 
@@ -48,7 +47,7 @@ The plugin supports the following configuration parameters:
 | `flush_ms` | Flush time for pending multiline records. Default: `2000`. |
 | `emitter_name` | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
 | `emitter_storage.type` | The storage type for the emitter input instance. This option supports the values `memory` (default) and `filesystem`. |
-| `emitter_mem_buf_limit` | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure. The default for this limit is `10M`. The pipeline will pause once the buffer exceeds the value of this setting.  or example, if the value is set to `10M` then the pipeline pauses if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| `emitter_mem_buf_limit` | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure. The default for this limit is `10M`. The pipeline will pause once the buffer exceeds the value of this setting.  or example, if the value is set to `10M` then the pipeline pauses if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
 
 ## Configuration example
 
@@ -69,19 +68,19 @@ service:
     flush: 1
     log_level: info
     parsers_file: parsers_multiline.yaml
-    
+
 pipeline:
     inputs:
         - name: tail
           path: test.log
           read_from_head: true
-    
+
     filters:
         - name: multiline
           match: '*'
           multiline.key_content: log
           multiline.parser: go,multiline-regex-test
-    
+
     outputs:
         - name: stdout
           match: '*'
@@ -319,7 +318,7 @@ Lines that don't match a pattern aren't considered as part of the multiline mess
 
 ## Docker partial message use case
 
-When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16KB. If your application emits a 100K log line, it will be split into seven partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
+When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16&nbspKB. If your application emits a 100K log line, it will be split into seven partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
 
 ```text
 {"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]
@@ -354,4 +353,5 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The two options for `mode` are mutually exclusive in the filter. If you set the `mode` to `partial_message` then the `multiline.parser` option isn't allowed.
+The two options for `mode` are mutually exclusive in the filter. If you set the
+`mode` to `partial_message` then the `multiline.parser` option isn't allowed.

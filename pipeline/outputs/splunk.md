@@ -29,7 +29,7 @@ Content and Splunk metadata (fields) handling configuration properties:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](sending-raw-events) to configure this option. | `off` |
+| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](#sending-raw-events) to configure this option. | `off` |
 | `event_key` | Specify the key name that will be used to send a single value as part of the record. | _none_ |
 | `event_host` | Specify the key name that contains the host value. This option allows a record accessors pattern. | _none_ |
 | `event_source` | Set the source value to assign to the event data. | _none_ |

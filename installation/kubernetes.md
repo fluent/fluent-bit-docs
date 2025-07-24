@@ -4,8 +4,6 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](<../.gitbook/assets/fluentbit\_kube\_logging (1).png>)
-
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible log processor with full support for Kubernetes:
 
 - Process Kubernetes containers logs from the file system or Systemd/Journald.
@@ -16,17 +14,17 @@ description: Kubernetes Production Grade Log Processor
 
 Before getting started it's important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of nodes. The Fluent Bit log agent tool needs to run on every node to collect logs from every pod. Fluent Bit is deployed as a DaemonSet, which is a pod that runs on every node of the cluster.
 
-When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](../pipeline/filters/kubernetes) filter plugin.
+When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) filter plugin.
 
 The Kubernetes filter plugin talks to the Kubernetes API Server to retrieve relevant information such as the `pod_id`, `labels`, and `annotations`. Other fields, such as `pod_name`, `container_id`, and `container_name`, are retrieved locally from the log file names. All of this is handled automatically, and no intervention is required from a configuration aspect.
 
 ## Installation
 
-[Fluent Bit](http://fluentbit.io) should be deployed as a DaemonSet, so it will be available on every node of your Kubernetes cluster.
+Fluent Bit should be deployed as a DaemonSet, so it will be available on every node of your Kubernetes cluster.
 
-The recommended way to deploy Fluent Bit for Kubernetes is with the official Helm Chart at <https://github.com/fluent/helm-charts>.
+The recommended way to deploy Fluent Bit for Kubernetes is with the official [Helm Chart](https://github.com/fluent/helm-charts).
 
-### Note for OpenShift
+### OpenShift
 
 If you are using Red Hat OpenShift you must set up Security Context Constraints (SCC) using the relevant option in the helm chart.
 
@@ -46,7 +44,7 @@ To validate that the repository was added, run `helm search repo fluent` to ensu
 helm upgrade --install fluent-bit fluent/fluent-bit
 ```
 
-### Default Values
+### Default values
 
 The default chart values include configuration to read container logs. With Docker parsing, Systemd logs apply Kubernetes metadata enrichment, and output to an Elasticsearch cluster. You can modify the [included values file](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
 

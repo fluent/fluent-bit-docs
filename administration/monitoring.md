@@ -62,7 +62,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Start Fluent bit with the corresponding configuration chosen above:
+Start Fluent bit with the corresponding configuration chosen previously:
 
 ```shell
 # For YAML configuration.
@@ -381,15 +381,15 @@ When querying the related metrics, the aliases are returned instead of the plugi
 
 You can create Grafana dashboards and alerts using Fluent Bit's exposed Prometheus style metrics.
 
-The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few key differences, such as the use of the `instance` label, stacked graphs, and a focus on Fluent Bit metrics. See [this blog post](https://www.robustperception.io/controlling-the-instance-label) for more information.
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://github.com/banzaicloud)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few key differences, such as the use of the `instance` label, stacked graphs, and a focus on Fluent Bit metrics. See [this blog post](https://www.robustperception.io/controlling-the-instance-label) for more information.
 
 ![dashboard](/.gitbook/assets/dashboard.png)
 
 ### Alerts
 
-Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
+Sample alerts [are available](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
 
-## Health Check for Fluent Bit
+## Health check for Fluent Bit
 
 Fluent bit supports the following configurations to set up the health check.
 

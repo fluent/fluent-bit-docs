@@ -1,10 +1,6 @@
 # Standard output
 
-<!-- vale FluentBit.Repetition = NO -->
-
-The _standard output_ output plugin prints ingested data to standard output.
-
-<!-- vale FluentBit.Repetition = YES -->
+The _standard output_ plugin prints ingested data to standard output.
 
 ## Configuration parameters
 
@@ -21,10 +17,10 @@ The _standard output_ output plugin prints ingested data to standard output.
 fluent-bit -i cpu -o stdout -v
 ```
 
-This example directs the plugin to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree/ddc1cf3d996966b9db39f8784596c8b7132b4d5b/pipeline/input/cpu.md) usage metrics and print them out to the standard output in a human-readable way:
+This example directs the plugin to gather [CPU](../inputs/cpu-metrics) usage metrics and print them out to the standard output in a human-readable way:
 
 ```shell
-$ fluent-bit -i cpu -o stdout -p format=msgpack -v
+fluent-bit -i cpu -o stdout -p format=msgpack -v
 
 ...
 [0] cpu.0: [1475898721, {"cpu_p"=>0.500000, "user_p"=>0.250000, "system_p"=>0.250000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>0.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>0.000000, "cpu2.p_cpu"=>0.000000, "cpu2.p_user"=>0.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>1.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>1.000000}]

@@ -2,19 +2,19 @@
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=759ddb3d-b363-4ee6-91fa-21025259767a" />
 
-- [Tap: generate events or records](troubleshooting.md#tap)
-- [Dump internals signal](troubleshooting#dump-internals-signal)
+- [Tap: generate events or records](#tap)
+- [Dump internals signal](#dump-internals-and-signal)
 
 ## Tap
 
 Tap can be used to generate events or records detailing what messages pass through Fluent Bit, at what time and what filters affect them.
 
-### Basic Tap example
+### Tap example
 
 Ensure that the container image supports Fluent Bit Tap (available in Fluent Bit 2.0+):
 
 ```shell
-$ docker run --rm -ti fluent/fluent-bit:latest --help | grep trace
+docker run --rm -ti fluent/fluent-bit:latest --help | grep trace
   -Z, --enable-chunk-traceenable chunk tracing, it can be activated either through the http api or the command line
   --trace-input           input to start tracing on startup.
   --trace-output          output to use for tracing on startup.
@@ -27,7 +27,7 @@ If the `--enable-chunk-trace` option is present, your Fluent Bit version support
 You can start Fluent Bit with tracing activated from the beginning by using the `trace-input` and `trace-output` properties:
 
 ```bash
-$ fluent-bit -Z -i dummy -o stdout -f 1 --trace-input=dummy.0 --trace-output=stdout
+fluent-bit -Z -i dummy -o stdout -f 1 --trace-input=dummy.0 --trace-output=stdout
 Fluent Bit v2.1.8
 * Copyright (C) 2015-2022 The Fluent Bit Authors
 * Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
@@ -338,7 +338,7 @@ This filter record is an example to explain the details of a Tap record:
 - `plugin_alias`: If an alias is set this field will contain the alias set for a plugin.
 - `records`: An array of all the records being sent. Fluent Bit handles records in chunks of multiple records and chunks are indivisible, the same is done in the Tap output. Each record consists of its timestamp followed by the actual data which is a composite type of keys and values.
 
-## Dump Internals / Signal
+## Dump Internals and signal
 
 When the service is running, you can export [metrics](monitoring.md) to see the overall status of the data flow of the service. There are other use cases where you might need to know the current status of the service internals, like the current status of the internal buffers. Dump Internals can help provide this information.
 
@@ -436,7 +436,7 @@ Depending of the buffering strategy and limits imposed by configuration, some Ch
 |  | `size` | Amount of bytes used by the Chunk. |
 |  | `size err` | Number of Chunks in an error state where its size couldn't be retrieved. |
 
-### Storage Layer
+### Storage layer
 
 Fluent Bit relies on a custom storage layer interface designed for hybrid buffering. The `Storage Layer` entry contains a total summary of Chunks registered by Fluent Bit:
 
