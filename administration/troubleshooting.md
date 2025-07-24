@@ -465,7 +465,7 @@ might be `up` (in memory) or `down` (filesystem).
 |  | `size` | Amount of bytes used by the Chunk. |
 |  | `size err` | Number of Chunks in an error state where its size couldn't be retrieved. |
 
-### Storage Layer
+### Storage layer
 
 Fluent Bit relies on a custom storage layer interface designed for hybrid buffering.
 The `Storage Layer` entry contains a total summary of Chunks registered by Fluent
