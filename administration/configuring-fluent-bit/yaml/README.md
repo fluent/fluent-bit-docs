@@ -1,4 +1,4 @@
-# Fluent Bit YAML Configuration
+# YAML configuration
 
 ## Before You Get Started
 

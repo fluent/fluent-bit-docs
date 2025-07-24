@@ -1,4 +1,4 @@
-# Configuring Fluent Bit
+# Configure Fluent Bit
 
 Fluent Bit supports two configuration formats:
 
