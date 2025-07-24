@@ -14,4 +14,4 @@ Fluent Bit buffering strategies are designed to solve problems associated with b
 
 These mechanisms aren't mutually exclusive. When data is ready to be processed or delivered it's always be in memory, while other data in the queue might be in the file system until is ready to be processed and moved up to memory.
 
-To learn more about the buffering configuration in Fluent Bit, see [Buffering & Storage](../administration/buffering-and-storage.md).
+To learn more about the buffering configuration in Fluent Bit, see [Buffering and Storage](../administration/buffering-and-storage.md).

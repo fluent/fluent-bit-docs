@@ -51,7 +51,7 @@ The following **output** plugins can take advantage of the TLS feature:
 - [Splunk](../pipeline/outputs/splunk.md)
 - [Stackdriver](../pipeline/outputs/stackdriver.md)
 - [Syslog](../pipeline/outputs/syslog.md)
-- [TCP & TLS](../pipeline/outputs/tcp-and-tls.md)
+- [TCO and TLS](../pipeline/outputs/tcp-and-tls.md)
 - [Treasure Data](../pipeline/outputs/treasure-data.md)
 - [WebSocket](../pipeline/outputs/websocket.md)
 
@@ -92,7 +92,7 @@ By default, the HTTP input plugin uses plain TCP. Run the following command to e
 ```
 
 {% hint style="info" %}
-See Tips & Trick section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these examples.
+See the Tips and Tricks section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these examples.
 {% endhint %}
 
 In the previous command, the two properties `tls` and `tls.verify` are set for demonstration purposes. Always enable verification in production environments.
