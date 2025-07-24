@@ -83,12 +83,12 @@
 * [Performance Tips](administration/performance.md)
 * [AWS credentials](administration/aws-credentials.md)
 
-## Local Testing
+## Local testing
 
-* [Validating your Data and Structure](local-testing/validating-your-data-and-structure.md)
-* [Running a Logging Pipeline Locally](local-testing/logging-pipeline.md)
+* [Validate your data and structure](local-testing/validating-your-data-and-structure.md)
+* [Run a logging pipeline locally](local-testing/logging-pipeline.md)
 
-## Data Pipeline <a href="#pipeline" id="pipeline"></a>
+## Data pipeline
 
 * [Pipeline Monitoring](pipeline/pipeline-monitoring.md)
 * [Inputs](pipeline/inputs/README.md)
@@ -223,21 +223,21 @@
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
 
-## Stream Processing
+## Stream processing
 
-* [Introduction to Stream Processing](stream-processing/introduction.md)
+* [Introduction to stream processing](stream-processing/introduction.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
-* [Getting Started](stream-processing/getting-started/README.md)
-  * [Fluent Bit + SQL](stream-processing/getting-started/fluent-bit-sql.md)
-  * [Check Keys and NULL values](stream-processing/getting-started/check-keys-null-values.md)
-  * [Hands On 101](stream-processing/getting-started/hands-on.md)
+* [Get started](stream-processing/getting-started/README.md)
+  * [Fluent Bit and SQL](stream-processing/getting-started/fluent-bit-sql.md)
+  * [Check keys and null values](stream-processing/getting-started/check-keys-null-values.md)
+  * [Tutorial](stream-processing/getting-started/hands-on.md)
 
-## Fluent Bit for Developers <a href="#development" id="development"></a>
+## Fluent Bit for developers
 
-* [C Library API](development/library_api.md)
-* [Ingest Records Manually](development/ingest-records-manually.md)
-* [Golang Output Plugins](development/golang-output-plugins.md)
-* [WASM Filter Plugins](development/wasm-filter-plugins.md)
-* [WASM Input Plugins](development/wasm-input-plugins.md)
-* [Developer guide for beginners on contributing to Fluent Bit](development/developer-guide.md)
+* [C library API](development/library_api.md)
+* [Ingest records manually](development/ingest-records-manually.md)
+* [Golang output plugins](development/golang-output-plugins.md)
+* [Wasm filter plugins](development/wasm-filter-plugins.md)
+* [Wasm input plugins](development/wasm-input-plugins.md)
+* [Contribution guide for beginners](development/developer-guide.md)

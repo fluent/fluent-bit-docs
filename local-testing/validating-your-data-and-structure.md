@@ -72,8 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the 
-keys `color` and `label` exist.
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the  keys `color` and `label` exist.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -97,7 +96,7 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
@@ -191,16 +190,16 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
-          
+
         # Match records that only contains map 'label' with key 'name' = 'abc'
         - name: grep
           match: '*'
           regex: "$label['name'] ^abc$"
-          
+
         # Check that every record contains 'label' with a non-null value
         - name: expect
           match: '*'
