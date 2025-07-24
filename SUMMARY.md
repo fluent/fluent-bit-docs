@@ -1,20 +1,20 @@
 # Table of contents
 
-* [Fluent Bit Documentation](README.md)
+* [Fluent Bit documentation](README.md)
 
 ## About
 
 * [What is Fluent Bit?](about/what-is-fluent-bit.md)
-* [A Brief History of Fluent Bit](about/history.md)
+* [A brief history of Fluent Bit](about/history.md)
 * [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [License](about/license.md)
-* [Sandbox and Lab Resources](about/sandbox-and-lab-resources.md)
+* [Sandbox and lab resources](about/sandbox-and-lab-resources.md)
 
 ## Concepts
 
-* [Key Concepts](concepts/key-concepts.md)
+* [Key concepts](concepts/key-concepts.md)
 * [Buffering](concepts/buffering.md)
-* [Data Pipeline](concepts/data-pipeline/README.md)
+* [Data pipeline](concepts/data-pipeline/README.md)
   * [Input](concepts/data-pipeline/input.md)
   * [Parser](concepts/data-pipeline/parser.md)
   * [Filter](concepts/data-pipeline/filter.md)
