@@ -36,12 +36,12 @@ service:
     http_server: on
     http_listen: 0.0.0.0
     http_port: 2020
-    
+
 pipeline:
     inputs:
         - name: cpu
-          
-    outputs:       
+
+    outputs:
         - name: stdout
           match: '*'
 ```
@@ -67,7 +67,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Start Fluent bit with the corresponding configuration chosen above:
+Start Fluent bit with the corresponding configuration chosen previously:
 
 ```shell
 # For YAML configuration.
@@ -345,13 +345,13 @@ service:
     http_server: on
     http_listen: 0.0.0.0
     http_port: 2020
-    
+
 pipeline:
     inputs:
         - name: cpu
           alias: server1_cpu
-          
-    outputs:       
+
+    outputs:
         - name: stdout
           alias: raw_output
           match: '*'
@@ -407,11 +407,11 @@ name:
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=0b83cb05-4f52-4853-83cc-f4539b64044d" />
 
-You can create Grafana dashboards and alerts using Fluent Bit's exposed Prometheus
+You can create Grafana dashboards and alerts using Fluent Bit exposed Prometheus
 style metrics.
 
 The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json)
-is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s
+is heavily inspired by [Banzai Cloud](https://github.com/banzaicloud)'s
 [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few
 key differences, such as the use of the `instance` label, stacked graphs, and a focus
 on Fluent Bit metrics. See
@@ -422,9 +422,9 @@ for more information.
 
 ### Alerts
 
-Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
+Sample alerts [are available](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
 
-## Health Check for Fluent Bit
+## Health check for Fluent Bit
 
 Fluent bit supports the following configurations to set up the health check.
 
@@ -468,12 +468,12 @@ service:
     hc_errors_count: 5
     hc_retry_failure_count: 5
     hc_period: 5
-    
+
 pipeline:
     inputs:
         - name: cpu
-          
-    outputs:       
+
+    outputs:
         - name: stdout
           match: '*'
 ```
