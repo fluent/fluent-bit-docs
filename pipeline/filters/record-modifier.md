@@ -1,6 +1,6 @@
-# Record Modifier
+# Record modifier
 
-The _Record Modifier_ [filter](pipeline/filters.md) lets you append fields to a record, or exclude specific fields.
+The _Record modifier_ filter lets you append fields to a record, or exclude specific fields.
 
 ## Configuration parameters
 
