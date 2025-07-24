@@ -1,6 +1,6 @@
 # TCP and TLS
 
-The _TCP_ output plugin lets you send records to a remote TCP server. The payload can be formatted in different ways as required.
+The _TCP and TLS_ output plugin lets you send records to a remote TCP server. The payload can be formatted in different ways as required.
 
 ## Configuration parameters
 

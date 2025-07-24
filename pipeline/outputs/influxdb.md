@@ -26,8 +26,7 @@ This plugin supports the following parameters:
 
 ### TLS / SSL
 
-The InfluxDB output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The InfluxDB output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 

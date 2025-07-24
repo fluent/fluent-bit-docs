@@ -2,7 +2,7 @@
 description: Send logs to Azure Data Explorer (Kusto)
 ---
 
-# Azure Data Explorer (Kusto)
+# Azure Data Explorer
 
 The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/services/data-explorer/) cluster, using the [Queued Ingestion](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/api/netfx/about-kusto-ingest#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
 
@@ -91,14 +91,14 @@ Get started quickly with this configuration file:
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"name": "Fluent Bit", "year": 2020}'
       samples: 1
-      tag: var.log.containers.app-default-96cbdef2340.log      
-      
+      tag: var.log.containers.app-default-96cbdef2340.log
+
   outputs:
     - name: azure_kusto
       match: '*'
@@ -123,7 +123,7 @@ pipeline:
       blob_uri_length: 128
       scheduler_max_retries: 3
       delete_on_max_upload_error: off
-      io_timeout: 60s 
+      io_timeout: 60s
 ```
 
 {% endtab %}

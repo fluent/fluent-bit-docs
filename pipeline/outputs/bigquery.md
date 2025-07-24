@@ -1,7 +1,6 @@
 # Google Cloud BigQuery
 
-The _BigQuery_ output plugin is an experimental plugin that lets you stream records
-into the [Google Cloud BigQuery](https://cloud.google.com/bigquery/) service.
+The _Google Cloud BigQuery_ output plugin is an experimental plugin that lets you stream records into the [Google Cloud BigQuery](https://cloud.google.com/bigquery/) service.
 
 The implementation doesn't support the following, which would be expected in a full production version:
 

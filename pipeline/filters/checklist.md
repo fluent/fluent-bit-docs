@@ -28,7 +28,7 @@ pipeline:
           path: test1.log
           read_from_head: true
           parser: json
-    
+
     filters:
         - name: checklist
           match: test1
@@ -38,7 +38,7 @@ pipeline:
               - ioc abc
               - badurl null
           log_level: debug
-    
+
     outputs:
         - name: stdout
           match: test1
