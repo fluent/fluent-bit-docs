@@ -3,7 +3,7 @@ description: A plugin based on Process Exporter to collect process level of metr
   metrics
 ---
 
-# Process Exporter metrics
+# Process exporter metrics
 
 [Prometheus Node exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems such as CPU, disk, network, and process statistics.
 
@@ -13,9 +13,7 @@ The Process Exporter Metrics plugin implements collecting of the various metrics
 
 {% hint style="info" %}
 
-All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't 
-operate on top of metrics. This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to 
-access the relevant metrics. MacOS doesn't have the `proc` filesystem so this plugin won't work for it.
+All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't operate on top of metrics. This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to access the relevant metrics. MacOS doesn't have the `proc` filesystem so this plugin won't work for it.
 
 {% endhint %}
 
@@ -69,13 +67,13 @@ In the following configuration file, the input plugin `process_exporter_metrics`
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: process_exporter_metrics
       tag:  process_metrics
       scrape_interval: 2
-      
+
   outputs:
     - name: prometheus_exporter
       match: process_metrics
@@ -125,9 +123,7 @@ curl http://127.0.0.1:2021/metrics
 
 When deploying Fluent Bit in a container you will need to specify additional settings to ensure that Fluent Bit has access to the process details.
 
-The following `docker` command deploys Fluent Bit with a specific mount path for
-`procfs` and settings enabled to ensure that Fluent Bit can collect from the host.
-These are then exposed over port 2021.
+The following `docker` command deploys Fluent Bit with a specific mount path for `procfs` and settings enabled to ensure that Fluent Bit can collect from the host. These are then exposed over port 2021.
 
 ```shell
 docker run -ti -v /proc:/host/proc:ro \

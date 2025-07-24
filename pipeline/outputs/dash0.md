@@ -19,8 +19,7 @@ Stream logs to [Dash0](https://www.dash0.com) by utilizing the [OpenTelemetry pl
 
 ### TLS / SSL
 
-The OpenTelemetry output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The OpenTelemetry output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 

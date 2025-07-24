@@ -1,4 +1,4 @@
-# Docker Metrics
+# Docker metrics
 
 The _Docker_ input plugin you collect Docker container metrics, including memory usage and CPU consumption.
 
@@ -41,7 +41,7 @@ pipeline:
 [INPUT]
   Name         docker
   Include      6bab19c3a0f9 14159be4ca2c
-  
+
 [OUTPUT]
   Name   stdout
   Match  *
