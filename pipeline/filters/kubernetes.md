@@ -51,7 +51,7 @@ The plugin supports the following configuration parameters:
 | `DNS_Retries` | Number of DNS lookup retries until the network starts working. | `6` |
 | `DNS_Wait_Time` | DNS lookup interval between network status checks. | `30` |
 | `Use_Kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `Kube_URL` settings.| `Off` |
-| `Use_Tag_For_Meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail--kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tag-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
+| `Use_Tag_For_Meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 | `Kubelet_Port` | Kubelet port to use for HTTP requests. This only works when `Use_Kubelet` is set to `On`. | `10250` |
 | `Kubelet_Host` | Kubelet host to use for HTTP requests. This only works when `Use_Kubelet` is set to `On`. | `127.0.0.1` |
 | `Kube_Meta_Cache_TTL` | Configurable time-to-live for Kubernetes cached pod metadata. By default, it's set to `0` which means `TTL` for cache entries is disabled and cache entries are evicted at random when capacity is reached. To enable this option, set the number to a time interval. For example, set the value to `60` or `60s` and cache entries which have been created more than 60 seconds ago will be evicted. | `0` |
@@ -273,9 +273,7 @@ apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1
 
 Rather than modify the original tag, the transformation creates a new representation for the filter to perform metadata lookup.
 
-Suggested change
-The new value is used by the filter to lookup the pod name and namespace, for that purpose it uses an internal regular expression:
-The new value is used by the filter to lookup the pod name and namespace. For that purpose, it uses an internal regular expression:
+With this suggested change, the new value is used by the filter to lookup the pod name and namespace. For that purpose, it uses an internal regular expression:
 
 ```text
 (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$
@@ -304,7 +302,7 @@ parsers:
     - name: custom-tag
       format: regex
       regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
-      
+
 pipeline:
     inputs:
         - name: tail
@@ -538,7 +536,7 @@ If you are in debug mode, you can see more:
 
 ## Troubleshooting
 
-Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is operating properly. The following section describes specific log messages you might receive.
+Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is operating properly. You might receive log messages like the following:
 
 - You can't see metadata appended to your pods or other Kubernetes objects
 
