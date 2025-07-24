@@ -41,8 +41,7 @@ Content and Splunk metadata (fields) handling configuration properties:
 
 ### TLS / SSL
 
-The Splunk output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The Splunk output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 
@@ -305,8 +304,7 @@ pipeline:
 
 In Fluent Bit 2.0 or later, you can send Fluent Bit metrics the `events` type into Splunk using Splunk HEC. This lets you perform visualizations, metric queries, and analysis with directly sent using Fluent Bit metrics. This is based off Splunk 8.0 support of multi metric support using a single concatenated JSON payload.
 
-Sending Fluent Bit metrics into Splunk requires the use of collecting Fluent Bit metrics plugins, whether events type of logs or metrics can be distinguished automatically.
-You don't need to pay attentions about the type of events.
+Sending Fluent Bit metrics into Splunk requires the use of collecting Fluent Bit metrics plugins, whether events type of logs or metrics can be distinguished automatically. You don't need to pay attentions about the type of events.
 
 This example includes two specific operations
 

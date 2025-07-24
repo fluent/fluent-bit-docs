@@ -1,6 +1,6 @@
-# Windows Event Log
+# Windows Event logs (winevtlog)
 
-The _Windows Event Log_ (`winevtlog`) input plugin lets you read Windows Event Log with the API from `winevt.h`.
+The _Windows Event logs_ (`winevtlog`) input plugin lets you read Windows Event logs with the API from `winevt.h`.
 
 ## Configuration parameters
 
@@ -43,7 +43,7 @@ pipeline:
       channels: Setup,Windows PowerShell
       interval_sec: 1
       db: winevtlog.sqlite
-  
+
   outputs:
     - name: stdout
       match: '*'

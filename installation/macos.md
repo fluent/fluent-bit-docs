@@ -1,7 +1,6 @@
 # macOS
 
-Fluent Bit is compatible with the latest Apple macOS software for x86_64 and
-Apple Silicon architectures.
+Fluent Bit is compatible with the latest Apple macOS software for x86_64 and Apple Silicon architectures.
 
 ## Installation packages
 
@@ -9,8 +8,7 @@ Installation packages can be found [here](https://packages.fluentbit.io/macos/).
 
 ## Requirements
 
-You must have [Homebrew](https://brew.sh/) installed in your system.
-If it isn't present, install it with the following command:
+You must have [Homebrew](https://brew.sh/) installed in your system. If it isn't present, install it with the following command:
 
 ```bash copy
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -18,8 +16,7 @@ If it isn't present, install it with the following command:
 
 ## Installing from Homebrew
 
-The Fluent Bit package on Homebrew isn't officially supported, but should work for
-basic use cases and testing. It can be installed using:
+The Fluent Bit package on Homebrew isn't officially supported, but should work for basic use cases and testing. It can be installed using:
 
 ```bash copy
 brew install fluent-bit
@@ -44,15 +41,13 @@ brew install git cmake openssl bison libyaml
    cd fluent-bit
    ```
 
-   If you want to use a specific version, checkout to the proper tag.
-   For example, to use `v1.8.13`, use the command:
+   If you want to use a specific version, checkout to the proper tag. For example, to use `v1.8.13`, use the command:
 
    ```bash copy
    git checkout v1.8.13
    ```
 
-1. To prepare the build system, you must expose certain environment variables so
-   Fluent Bit CMake build rules can pick the right libraries:
+1. To prepare the build system, you must expose certain environment variables so Fluent Bit CMake build rules can pick the right libraries:
 
    ```bash copy
    export OPENSSL_ROOT_DIR=`brew --prefix openssl`
@@ -65,16 +60,14 @@ brew install git cmake openssl bison libyaml
    cd build/
    ```
 
-1. Build Fluent Bit. This example indicates to the build system the location
-   the final binaries and `config` files should be installed:
+1. Build Fluent Bit. This example indicates to the build system the location the final binaries and `config` files should be installed:
 
    ```bash
    cmake -DFLB_DEV=on -DCMAKE_INSTALL_PREFIX=/opt/fluent-bit ../
    make -j 16
    ```
 
-1. Install Fluent Bit to the previously specified directory.
-   Writing to this directory requires root privileges.
+1. Install Fluent Bit to the previously specified directory. Writing to this directory requires root privileges.
 
    ```bash
    sudo make install
@@ -98,16 +91,14 @@ The binaries and configuration examples can be located at `/opt/fluent-bit/`.
    git checkout v1.9.2
    ```
 
-1. To prepare the build system, you must expose certain environment variables so
-   Fluent Bit CMake build rules can pick the right libraries:
+1. To prepare the build system, you must expose certain environment variables so Fluent Bit CMake build rules can pick the right libraries:
 
    ```bash copy
    export OPENSSL_ROOT_DIR=`brew --prefix openssl`
    export PATH=`brew --prefix bison`/bin:$PATH
    ```
 
-1. Create the specific macOS SDK target. For example, to specify macOS Big Sur
-   (11.3) SDK environment:
+1. Create the specific macOS SDK target. For example, to specify macOS Big Sur (11.3) SDK environment:
 
    ```bash copy
    export MACOSX_DEPLOYMENT_TARGET=11.3
@@ -158,9 +149,7 @@ To make the access path easier to Fluent Bit binary, extend the `PATH` variable:
 export PATH=/opt/fluent-bit/bin:$PATH
 ```
 
-To test, try Fluent Bit by generating a test message using the
-[Dummy input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/dummy)
-which prints to the standard output interface every one second:
+To test, try Fluent Bit by generating a test message using the [Dummy input plugin](https://docs.fluentbit.io/manual/pipeline/inputs/dummy) which prints to the standard output interface every one second:
 
 ```bash copy
 fluent-bit -i dummy -o stdout -f 1

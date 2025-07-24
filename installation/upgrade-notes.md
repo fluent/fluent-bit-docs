@@ -1,4 +1,4 @@
-# Upgrade Notes
+# Upgrade notes
 
 The following article covers the relevant compatibility changes for users upgrading from previous Fluent Bit versions.
 

@@ -1,12 +1,9 @@
 
-# Transport Security
+# TLS
 
-Fluent Bit provides integrated support for Transport Layer Security (TLS) and
-its predecessor Secure Sockets Layer (SSL). This section refers only
-to TLS for both implementations.
+Fluent Bit provides integrated support for Transport Layer Security (TLS) and its predecessor Secure Sockets Layer (SSL). This section refers only to TLS for both implementations.
 
-Both input and output plugins that perform Network I/O can optionally enable TLS and
-configure the behavior. The following table describes the properties available:
+Both input and output plugins that perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
 | Property | Description | Default |
 | :--- | :--- | :--- |
@@ -21,11 +18,9 @@ configure the behavior. The following table describes the properties available:
 | `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
 | `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
 
-To use TLS on input plugins, you must provide both a certificate and a
-private key.
+To use TLS on input plugins, you must provide both a certificate and a private key.
 
-The listed properties can be enabled in the configuration file, specifically in each
-output plugin section or directly through the command line.
+The listed properties can be enabled in the configuration file, specifically in each output plugin section or directly through the command line.
 
 The following **output** plugins can take advantage of the TLS feature:
 
@@ -77,15 +72,13 @@ The following **input** plugins can take advantage of the TLS feature:
 - [Syslog](../pipeline/inputs/syslog.md)
 - [TCP](../pipeline/inputs/tcp.md)
 
-In addition, other plugins implement a subset of TLS support, with
-restricted configuration:
+In addition, other plugins implement a subset of TLS support, with restricted configuration:
 
 - [Kubernetes Filter](../pipeline/filters/kubernetes.md)
 
 ## Example: enable TLS on HTTP input
 
-By default, the HTTP input plugin uses plain TCP. Run the following command to enable
-TLS:
+By default, the HTTP input plugin uses plain TCP. Run the following command to enable TLS:
 
 ```bash
 ./bin/fluent-bit -i http \
@@ -99,12 +92,10 @@ TLS:
 ```
 
 {% hint style="info" %}
-See Tips & Trick section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these 
-examples.
+See Tips & Trick section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these examples.
 {% endhint %}
 
-In the previous command, the two properties `tls` and `tls.verify` are set
-for demonstration purposes. Always enable verification in production environments.
+In the previous command, the two properties `tls` and `tls.verify` are set for demonstration purposes. Always enable verification in production environments.
 
 The same behavior can be accomplished using a configuration file:
 
@@ -150,8 +141,7 @@ pipeline:
 
 ## Example: enable TLS on HTTP output
 
-By default, the HTTP output plugin uses plain TCP. Run the following command to enable
-TLS:
+By default, the HTTP output plugin uses plain TCP. Run the following command to enable TLS:
 
 ```bash
 fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
@@ -160,8 +150,7 @@ fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
     -m '*'
 ```
 
-In the previous command, the properties `tls` and `tls.verify` are enabled
-for demonstration purposes. Always enable verification in production environments.
+In the previous command, the properties `tls` and `tls.verify` are enabled for demonstration purposes. Always enable verification in production environments.
 
 The same behavior can be accomplished using a configuration file:
 
@@ -211,10 +200,7 @@ pipeline:
 
 ### Generate a self signed certificates for testing purposes
 
-The following command generates a 4096 bit RSA key pair and a certificate that's signed
-using `SHA-256` with the expiration date set to 30 days in the future. In this example,
-`test.host.net` is set as the common name. This example opts out of `DES`, so the
-private key is stored in plain text.
+The following command generates a 4096 bit RSA key pair and a certificate that's signed using `SHA-256` with the expiration date set to 30 days in the future. In this example, `test.host.net` is set as the common name. This example opts out of `DES`, so the private key is stored in plain text.
 
 ```bash
 openssl req -x509 \
@@ -228,10 +214,7 @@ openssl req -x509 \
 
 ### Connect to virtual servers using TLS
 
-Fluent Bit supports
-[TLS server name indication](https://en.wikipedia.org/wiki/Server_Name_Indication).
-If you are serving multiple host names on a single IP address (for example, using
-virtual hosting), you can make use of `tls.vhost` to connect to a specific hostname.
+Fluent Bit supports [TLS server name indication](https://en.wikipedia.org/wiki/Server_Name_Indication). If you are serving multiple host names on a single IP address (for example, using virtual hosting), you can make use of `tls.vhost` to connect to a specific hostname.
 
 {% tabs %}
 
@@ -279,19 +262,16 @@ pipeline:
 
 ### Verify `subjectAltName`
 
-By default, TLS verification of host names isn't done automatically.
-As an example, you can extract the X509v3 Subject Alternative Name from a certificate:
+By default, TLS verification of host names isn't done automatically. As an example, you can extract the X509v3 Subject Alternative Name from a certificate:
 
 ```text
 X509v3 Subject Alternative Name:
     DNS:my.fluent-aggregator.net
 ```
 
-This certificate covers only `my.fluent-aggregator.net` so if you use a different
-hostname it should fail.
+This certificate covers only `my.fluent-aggregator.net` so if you use a different hostname it should fail.
 
-To fully verify the alternative name and demonstrate the failure, enable
-`tls.verify_hostname`:
+To fully verify the alternative name and demonstrate the failure, enable `tls.verify_hostname`:
 
 {% tabs %}
 

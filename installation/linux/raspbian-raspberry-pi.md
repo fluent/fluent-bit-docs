@@ -1,7 +1,6 @@
 # Raspberry Pi
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for [Raspberry Pi](https://www.raspberrypi.com/software/operating-systems/). The
-following versions are supported:
+Fluent Bit is distributed as the `fluent-bit` package and is available for [Raspberry Pi](https://www.raspberrypi.com/software/operating-systems/). The following versions are supported:
 
 - Raspbian Bookworm (12)
 - Raspbian Bullseye (11)
@@ -69,8 +68,7 @@ sudo apt-get update
 ```
 
 {% hint style="info" %}
-Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`) to avoid
-potential issues with expired certificates.
+Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`) to avoid potential issues with expired certificates.
 {% endhint %}
 
 ## Install Fluent Bit
@@ -103,6 +101,4 @@ sudo service fluent-bit status
 ...
 ```
 
-The default configuration of Fluent Bit collects metrics for CPU usage and
-sends the records to the standard output. You can see the outgoing data in your
-`/var/log/syslog` file.
+The default configuration of Fluent Bit collects metrics for CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/syslog` file.

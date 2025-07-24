@@ -2,7 +2,7 @@
 description: Generate metrics from logs
 ---
 
-# Log to metrics
+# Logs to metrics
 
 ![](https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5)
 
@@ -536,5 +536,4 @@ The `+Inf` bucket will always be included regardless of the buckets you specify.
 
 {% endhint %}
 
-This filter also attaches Kubernetes labels to each metric, identical to the behavior
-of `label_field`. This results in two sets for the histogram.
+This filter also attaches Kubernetes labels to each metric, identical to the behavior of `label_field`. This results in two sets for the histogram.

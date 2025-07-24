@@ -72,8 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the
-keys `color` and `label` exist.
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the  keys `color` and `label` exist.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -283,6 +282,4 @@ pipeline:
 
 ## Production deployment
 
-When deploying in production, consider removing any `Expect` filters from your
-configuration file. These filters are unnecessary unless you need 100% coverage of
-checks at runtime.
+When deploying in production, consider removing any `Expect` filters from your configuration file. These filters are unnecessary unless you need 100% coverage of checks at runtime.

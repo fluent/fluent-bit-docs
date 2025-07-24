@@ -46,31 +46,17 @@ helm upgrade --install fluent-bit fluent/fluent-bit
 
 ### Default values
 
-The default chart values include configuration to read container logs. With Docker
-parsing, Systemd logs apply Kubernetes metadata enrichment, and output to an
-Elasticsearch cluster. You can modify the
-[included values file](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml)
-to specify additional outputs, health checks, monitoring endpoints, or other
-configuration options.
+The default chart values include configuration to read container logs. With Docker parsing, Systemd logs apply Kubernetes metadata enrichment, and output to an Elasticsearch cluster. You can modify the [included values file](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
 
 ## Details
 
 The default configuration of Fluent Bit ensures the following:
 
-- Consume all containers logs from the running node and parse them with either
-  the `docker` or `cri` multi-line parser.
-- Persist how far it got into each file it's tailing so if a pod is restarted it
-  picks up from where it left off.
-- The Kubernetes filter adds Kubernetes metadata, specifically `labels` and
-  `annotations`. The filter only contacts the API Server when it can't find the
-  cached information, otherwise it uses the cache.
-- The default backend in the configuration is Elasticsearch set by the
-  [Elasticsearch Output Plugin](../pipeline/outputs/elasticsearch.md).
-  It uses the Logstash format to ingest the logs. If you need a different `Index`
-  and `Type`, refer to the plugin option and update as needed.
-- There is an option called `Retry_Limit`, which is set to `False`. If Fluent Bit
-  can't flush the records to Elasticsearch, it will retry indefinitely until it
-  succeeds.
+- Consume all containers logs from the running node and parse them with either the `docker` or `cri` multi-line parser.
+- Persist how far it got into each file it's tailing so if a pod is restarted it picks up from where it left off.
+- The Kubernetes filter adds Kubernetes metadata, specifically `labels` and `annotations`. The filter only contacts the API Server when it can't find the cached information, otherwise it uses the cache.
+- The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](../pipeline/outputs/elasticsearch.md). It uses the Logstash format to ingest the logs. If you need a different `Index` and `Type`, refer to the plugin option and update as needed.
+- There is an option called `Retry_Limit`, which is set to `False`. If Fluent Bit can't flush the records to Elasticsearch, it will retry indefinitely until it succeeds.
 
 ## Windows deployment
 
@@ -82,19 +68,15 @@ When deploying Fluent Bit to Kubernetes, there are three log files that you need
 
 - `C:\k\kubelet.err.log`
 
-  This is the error log file from kubelet daemon running on host. Retain this file
-  for future troubleshooting, including debugging deployment failures.
+  This is the error log file from kubelet daemon running on host. Retain this file for future troubleshooting, including debugging deployment failures.
 
 - `C:\var\log\containers\<pod>_<namespace>_<container>-<docker>.log`
 
-  This is the main log file you need to watch. Configure Fluent Bit to follow this
-  file. It's a symlink to the Docker log file in `C:\ProgramData\`, with some
-  additional metadata on the file's name.
+  This is the main log file you need to watch. Configure Fluent Bit to follow this file. It's a symlink to the Docker log file in `C:\ProgramData\`, with some additional metadata on the file's name.
 
 - `C:\ProgramData\Docker\containers\<docker>\<docker>.log`
 
-  This is the log file produced by Docker. Normally you don't directly read from this
-  file, but you need to make sure that this file is visible from Fluent Bit.
+  This is the log file produced by Docker. Normally you don't directly read from this file, but you need to make sure that this file is visible from Fluent Bit.
 
 Typically, your deployment YAML contains the following volume configuration.
 
@@ -209,16 +191,12 @@ parsers.conf: |
 
 ### Mitigate unstable network on Windows pods
 
-Windows pods often lack working DNS immediately after boot
-([#78479](https://github.com/kubernetes/kubernetes/issues/78479)). To mitigate this
-issue, `filter_kubernetes` provides a built-in mechanism to wait until the network
-starts up:
+Windows pods often lack working DNS immediately after boot ([#78479](https://github.com/kubernetes/kubernetes/issues/78479)). To mitigate this issue, `filter_kubernetes` provides a built-in mechanism to wait until the network starts up:
 
 - `DNS_Retries`: Retries N times until the network start working (6)
 - `DNS_Wait_Time`: Lookup interval between network status checks (30)
 
-By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's not enough
-for you, update the configuration as follows:
+By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's not enough for you, update the configuration as follows:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

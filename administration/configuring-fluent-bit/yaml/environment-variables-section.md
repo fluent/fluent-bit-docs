@@ -1,4 +1,4 @@
-# Environment variables section
+# Environment variables
 
 The `env` section lets you define environment variables directly within the configuration file. These variables can then be used to dynamically replace values throughout your configuration using the `${VARIABLE_NAME}` syntax.
 

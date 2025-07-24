@@ -1,6 +1,6 @@
 # Dummy
 
-The _Dummy_ input plugin, generates dummy events. Use this plugin for testing, debugging, benchmarking and getting started with Fluent Bit.
+The _Dummy_ input plugin generates dummy events. Use this plugin for testing, debugging, benchmarking and getting started with Fluent Bit.
 
 ## Configuration parameters
 
