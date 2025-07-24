@@ -12,11 +12,9 @@
 
 ## Prepare environment
 
-If you already know how CMake works, you can skip this section and review the
-available [build options](#general-options).
+If you already know how CMake works, you can skip this section and review the available [build options](#general-options).
 
-The following steps explain how to build and install the project with the default
-options.
+The following steps explain how to build and install the project with the default options.
 
 1. Change to the `build/` directory inside the Fluent Bit sources:
 
@@ -24,8 +22,7 @@ options.
    cd build/
    ```
 
-1. Let [CMake](http://cmake.org) configure the project specifying where the root
-   path is located:
+1. Let [CMake](http://cmake.org) configure the project specifying where the root path is located:
 
    ```bash
    cmake ../
@@ -136,9 +133,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Input plugins
 
-Input plugins gather information from a specific source type like network interfaces,
-some built-in metrics, or through a specific input device. The following input plugins
-are available:
+Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. The following input plugins are available:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
@@ -172,8 +167,7 @@ are available:
 
 ### Filter plugins
 
-Filter plugins let you modify, enrich or drop records. The following table describes
-the filters available on this version:
+Filter plugins let you modify, enrich or drop records. The following table describes the filters available on this version:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
@@ -196,8 +190,7 @@ the filters available on this version:
 
 ### Output plugins
 
-Output plugins let you flush the information to some external interface, service, or
-terminal. The following table describes the output plugins available:
+Output plugins let you flush the information to some external interface, service, or terminal. The following table describes the output plugins available:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
@@ -233,8 +226,7 @@ terminal. The following table describes the output plugins available:
 
 ### Processor plugins
 
-Processor plugins handle the events within the processor pipelines to allow
-modifying, enriching, or dropping events.
+Processor plugins handle the events within the processor pipelines to allow modifying, enriching, or dropping events.
 
 The following table describes the processors available:
 

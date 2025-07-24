@@ -4,15 +4,13 @@ description: Enable hot reload through SIGHUP signal or an HTTP endpoint
 
 # Hot reload
 
-Fluent Bit supports the reloading feature when enabled in the configuration file
-or on the command line with `-Y` or `--enable-hot-reload` option.
+Fluent Bit supports the reloading feature when enabled in the configuration file or on the command line with `-Y` or `--enable-hot-reload` option.
 
 Hot reloading is supported on Linux, macOS, and Windows operating systems.
 
 ## Update the configuration
 
-To get started with reloading over HTTP, enable the HTTP Server
-in the configuration file:
+To get started with reloading over HTTP, enable the HTTP Server in the configuration file:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -41,8 +39,7 @@ service:
 
 ## How to reload
 
-After updating the configuration, use one of the following methods to perform a
-hot reload:
+After updating the configuration, use one of the following methods to perform a hot reload:
 
 ### HTTP
 

@@ -1,9 +1,6 @@
 # Multiline parsing
 
-In an ideal world, applications might log their messages within a single line, but in
-reality applications generate multiple log messages that sometimes belong to the same
-context. Processing this information can be complex, like in application stack traces,
-which always have multiple log lines.
+In an ideal world, applications might log their messages within a single line, but in reality applications generate multiple log messages that sometimes belong to the same context. Processing this information can be complex, like in application stack traces, which always have multiple log lines.
 
 Fluent Bit v1.8 implemented a unified Multiline core capability to solve corner cases.
 
@@ -16,8 +13,7 @@ The Multiline parser engine exposes two ways to configure and use the feature:
 
 ### Built-in multiline parsers
 
-Fluent Bit exposes certain pre-configured parsers (built-in) to solve specific
-multiline parser cases. For example:
+Fluent Bit exposes certain pre-configured parsers (built-in) to solve specific multiline parser cases. For example:
 
 | Parser | Description |
 | ------ | ----------- |
@@ -29,17 +25,11 @@ multiline parser cases. For example:
 
 ### Configurable multiline parsers
 
-You can define your own Multiline parsers with their own rules, using a configuration
-file.
+You can define your own Multiline parsers with their own rules, using a configuration file.
 
-A multiline parser is defined in a `parsers configuration file` by using a
-`[MULTILINE_PARSER]` section definition. The multiline parser must have a unique name
-and a type, plus other configured properties associated with each type.
+A multiline parser is defined in a `parsers configuration file` by using a `[MULTILINE_PARSER]` section definition. The multiline parser must have a unique name and a type, plus other configured properties associated with each type.
 
-To understand which multiline parser type is required for your use case you have to
-know the conditions in the content that determine the beginning of a multiline
-message, and the continuation of subsequent lines. Fluent Bit provides a regular expression-based
-configuration that supports states to handle from the most cases.
+To understand which multiline parser type is required for your use case you have to know the conditions in the content that determine the beginning of a multiline message, and the continuation of subsequent lines. Fluent Bit provides a regular expression-based configuration that supports states to handle from the most cases.
 
 | Property | Description | Default |
 | -------- | ----------- | ------- |
@@ -59,8 +49,7 @@ Before configuring your parser you need to know the answer to the following ques
 
 When matching a regular expression, you must to define `states`. Some states define the start of a multiline message while others are states for the continuation of multiline messages. You can have multiple `continuation states` definitions to solve complex cases.
 
-The first regular expression that matches the start of a multiline message is called
-`start_state`. Other regular expression continuation lines can have different state names.
+The first regular expression that matches the start of a multiline message is called `start_state`. Other regular expression continuation lines can have different state names.
 
 #### Rules definition
 
@@ -70,8 +59,7 @@ A rule specifies how to match a multiline pattern and perform the concatenation.
 - regular expression pattern
 - next state
 
-A rule might be defined as follows (comments added to simplify the definition) in corresponding YAML and classic 
-configuration examples below:
+A rule might be defined as follows (comments added to simplify the definition) in corresponding YAML and classic  configuration examples below:
 
 {% tabs %}
 {% tab title="parsers_multiline.yaml" %}
@@ -112,15 +100,13 @@ To simplify the configuration of regular expressions, you can use the [Rubular](
 
 #### Configuration example
 
-The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition 
-explained previously. It is provided in corresponding YAML and classic configuration examples below:
+The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition  explained previously. It is provided in corresponding YAML and classic configuration examples below:
 
 {% tabs %}
 
 {% tab title="fluent-bit.yaml" %}
 
-This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.yaml` and tails the file `test.log` 
-by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
+This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.yaml` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
 
 ```yaml
 service:
@@ -144,8 +130,7 @@ pipeline:
 
 {% tab title="fluent-bit.conf" %}
 
-This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` 
-by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
+This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
 
 ```text
 [SERVICE]
@@ -287,9 +272,7 @@ Example files content:
 
 {% tab title="fluent-bit.yaml" %}
 
-This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` 
-by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`. 
-Then it sends the processing to the standard output.
+This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`.  Then it sends the processing to the standard output.
 
 ```yaml
 service:
@@ -319,9 +302,7 @@ pipeline:
 
 {% tab title="fluent-bit.conf" %}
 
-This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file 
-`test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser 
-`named-capture-test`. Then it sends the processing to the standard output.
+This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file  `test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser  `named-capture-test`. Then it sends the processing to the standard output.
 
 ```text
 [SERVICE]
