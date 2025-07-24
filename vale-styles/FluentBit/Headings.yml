@@ -55,6 +55,7 @@ exceptions:
   - Google Cloud
   - Google Cloud BigQuery
   - Google Cloud Platform
+  - GPG
   - Grafana
   - Grafana Cloud
   - Graylog Extended Log Format
@@ -91,6 +92,7 @@ exceptions:
   - PostgreSQL
   - Prometheus
   - PromQL
+  - Raspberry Pi
   - REPL
   - ServiceMonitor
   - SignalFx

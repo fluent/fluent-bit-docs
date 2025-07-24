@@ -1,17 +1,15 @@
-# Raspbian and Raspberry Pi
+# Raspberry Pi
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for the
-Raspberry, specifically for [Raspbian](http://raspbian.org) distribution. The
+Fluent Bit is distributed as the `fluent-bit` package and is available for [Raspberry Pi](https://www.raspberrypi.com/software/operating-systems/). The
 following versions are supported:
 
-* Raspbian Bookworm (12)
-* Raspbian Bullseye (11)
-* Raspbian Buster (10)
+- Raspbian Bookworm (12)
+- Raspbian Bullseye (11)
+- Raspbian Buster (10)
 
 ## Server GPG key
 
-The first step is to add the Fluent Bit server GPG key to your keyring so you
-can get FLuent Bit signed packages:
+The first step is to add the Fluent Bit server GPG key to your keyring so you can get FLuent Bit signed packages:
 
 ```shell
 sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add - '
@@ -19,9 +17,7 @@ sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add 
 
 ### Updated key from March 2022
 
-For the 1.9.0 and 1.8.15 and later releases, the
-[GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure
-this new one is added.
+For the 1.9.0 and 1.8.15 and later releases, the [GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure this new one is added.
 
 The GPG Key fingerprint of the new key is:
 
@@ -30,8 +26,7 @@ C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
 
-The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key)
-and might be required to install previous versions.
+The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key) and might be required to install previous versions.
 
 The GPG Key fingerprint of the old key is:
 
@@ -39,13 +34,11 @@ The GPG Key fingerprint of the old key is:
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
-Refer to the [supported platform documentation](./../supported-platforms.md) to see
-which platforms are supported in each release.
+Refer to the [supported platform documentation](./../supported-platforms.md) to see which platforms are supported in each release.
 
 ## Update your sources lists
 
-On Debian and derivative systems such as Raspbian, you need to add the Fluent Bit
-APT server entry to your sources lists.
+On Debian and derivative systems such as Raspbian, you need to add the Fluent Bit APT server entry to your sources lists.
 
 Add the following content at bottom of your `/etc/apt/sources.list` file.
 
