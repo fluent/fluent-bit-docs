@@ -160,6 +160,7 @@
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Log to Metrics](pipeline/filters/log_to_metrics.md)
+  * [Lookup](pipeline/filters/lookup.md)
   * [Lua](pipeline/filters/lua.md)
   * [Parser](pipeline/filters/parser.md)
   * [Record Modifier](pipeline/filters/record-modifier.md)
