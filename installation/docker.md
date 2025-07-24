@@ -202,7 +202,7 @@ architecture.
 ## Verify signed container images
 
 Version 1.9 and 2.0 container images are signed using Cosign/Sigstore.
-Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/cosign/installation/)):
+Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/quickstart/quickstart-cosign/)):
 
 ```shell
 $ cosign verify --key "https://packages.fluentbit.io/fluentbit-cosign.pub" fluent/fluent-bit:2.0.6
