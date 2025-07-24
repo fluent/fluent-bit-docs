@@ -30,6 +30,7 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - DST
   - ECR
   - ECS
   - EKS
@@ -109,6 +110,7 @@ exceptions:
   - TLS
   - TRE
   - TODO
+  - UAE
   - UDP
   - URI
   - URL
