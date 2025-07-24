@@ -4,8 +4,6 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-![](<../.gitbook/assets/fluentbit\_kube\_logging (1).png>)
-
 [Fluent Bit](http://fluentbit.io) is a lightweight and extensible log processor with full support for Kubernetes:
 
 - Process Kubernetes containers logs from the file system or Systemd/Journald.
