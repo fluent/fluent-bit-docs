@@ -28,6 +28,7 @@ exceptions:
   - Azure Logs Ingestion API
   - Azure Log Analytics
   - BuildKite
+  - CheckList
   - CircleCI
   - CLI
   - CloudWatch
