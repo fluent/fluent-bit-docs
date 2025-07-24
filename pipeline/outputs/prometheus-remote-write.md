@@ -30,7 +30,7 @@ This plugin supports the following parameters:
 | `log_response_payload` | Log the response payload within the Fluent Bit log. | `false` |
 | `add_label` | This lets you add custom labels to all metrics exposed through the Prometheus exporter. You can have multiple of these fields. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
-| `compression` | Payload compression algorithm. Supported options are `snappy`, `gzip` and `zstd`. | `snappy` |
+| `compression` | Payload compression algorithm. Supported options: `snappy`, `gzip`, `zstd`. | `snappy` |
 
 ## Get started
 
