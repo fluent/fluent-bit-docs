@@ -2,7 +2,7 @@
 description: Learn how to monitor your Fluent Bit data pipelines
 ---
 
-# Monitoring
+# Monitor data pipelines
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
 
