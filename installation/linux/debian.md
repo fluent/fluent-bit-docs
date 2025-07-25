@@ -1,7 +1,6 @@
 # Debian
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for the latest
-stable CentOS system.
+Fluent Bit is distributed as the `fluent-bit` package and is available for the latest stable CentOS system.
 
 The following architectures are supported
 
@@ -11,23 +10,19 @@ The following architectures are supported
 
 ## Single line install
 
-Fluent Bit provides an installation script to use for most Linux targets.
-This will always install the most recently released version.
+Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
 
 ```bash copy
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-This is a convenience helper and should always be validated prior to use.
-The recommended secure deployment approach is to use the following instructions:
+This is a convenience helper and should always be validated prior to use. The recommended secure deployment approach is to use the following instructions:
 
 ## Server GPG key
 
-The first step is to add the Fluent Bit server GPG key to your keyring to ensure
-you can get the correct signed packages.
+The first step is to add the Fluent Bit server GPG key to your keyring to ensure you can get the correct signed packages.
 
-Follow the official
-[Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
+Follow the official [Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
 
 ```bash copy
 sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg'
@@ -35,9 +30,7 @@ sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /
 
 ### Updated key from March 2022
 
-For the 1.9.0 and 1.8.15 and later releases, the
-[GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure
-this new one is added.
+For the 1.9.0 and 1.8.15 and later releases, the [GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure this new one is added.
 
 The GPG Key fingerprint of the new key is:
 
@@ -46,8 +39,7 @@ C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
 Fluentbit releases (Releases signing key) <releases@fluentbit.io>
 ```
 
-The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key)
-and might be required to install previous versions.
+The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key) and might be required to install previous versions.
 
 The GPG Key fingerprint of the old key is:
 
@@ -55,21 +47,17 @@ The GPG Key fingerprint of the old key is:
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
-Refer to the [supported platform documentation](../supported-platforms.md) to see
-which platforms are supported in each release.
+Refer to the [supported platform documentation](../supported-platforms.md) to see which platforms are supported in each release.
 
 ## Update your sources lists
 
 For Debian, you must add the Fluent Bit APT server entry to your sources lists.
 
-
 ```bash copy
 echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
-Replace _`CODENAME`_ with your specific
-[Debian release name](https://wiki.debian.org/DebianReleases#Production\_Releases)
-(for example: `bookworm` for Debian 12)
+Replace _`CODENAME`_ with your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production\_Releases) (for example: `bookworm` for Debian 12)
 
 ## Update your repositories database
 
@@ -80,8 +68,7 @@ sudo apt-get update
 ```
 
 {% hint style="info" %}
-Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`). This could
-avoid potential issues with expired certificates.
+Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`). This could avoid potential issues with expired certificates.
 {% endhint %}
 
 ## Install Fluent Bit
@@ -114,6 +101,4 @@ sudo service fluent-bit status
 ...
 ```
 
-The default Fluent Bit configuration collect metrics of CPU usage and sends the
-records to the standard output. You can see the outgoing data in your
-`/var/log/messages` file.
+The default Fluent Bit configuration collect metrics of CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/messages` file.

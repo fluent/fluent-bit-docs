@@ -1,33 +1,20 @@
 # Build with static configuration
 
-[Fluent Bit](https://fluentbit.io) in normal operation mode is configurable through
-[text files](/installation/configuration/file.md)
-or using specific arguments in the command line. Although this is the ideal deployment
-case, there are scenarios where a more restricted configuration is required. Static
-configuration mode restricts configuration ability.
+[Fluent Bit](https://fluentbit.io) in normal operation mode is configurable through text files or using specific arguments in the command line. Although this is the ideal deployment case, there are scenarios where a more restricted configuration is required. Static configuration mode restricts configuration ability.
 
-Static configuration mode includes a built-in configuration in the final binary of
-Fluent Bit, disabling the usage of external files or flags at runtime.
+Static configuration mode includes a built-in configuration in the final binary of Fluent Bit, disabling the usage of external files or flags at runtime.
 
 ## Get started
 
 ### Requirements
 
-The following steps assume you are familiar with configuring Fluent Bit using text
-files and you have experience building it from scratch as described in
-[Build and Install](build-and-install.md).
+The following steps assume you are familiar with configuring Fluent Bit using text files and you have experience building it from scratch as described in [Build and Install](build-and-install.md).
 
-#### Configuration Directory
+#### Configuration directory
 
-In your file system, prepare a specific directory that will be used as an entry
-point for the build system to lookup and parse the configuration files. This
-directory must contain a minimum of one configuration file called
-`fluent-bit.conf` containing the required
-[SERVICE](/administration/configuring-fluent-bit/yaml/service-section.md),
-[INPUT](/concepts/data-pipeline/input.md), and [OUTPUT](/concepts/data-pipeline/output.md)
-sections.
+In your file system, prepare a specific directory that will be used as an entry point for the build system to lookup and parse the configuration files. This directory must contain a minimum of one configuration file called `fluent-bit.conf` containing the required [SERVICE](/administration/configuring-fluent-bit/yaml/service-section.md), [INPUT](/concepts/data-pipeline/input.md), and [OUTPUT](/concepts/data-pipeline/output.md) sections.
 
-As an example, create a new `fluent-bit.yaml` file or `fluent-bit.conf` file with the corresponding content below:
+As an example, create a new `fluent-bit.yaml` file or `fluent-bit.conf` file:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -41,7 +28,7 @@ service:
 pipeline:
     inputs:
         - name: cpu
-          
+
     outputs:
         - name: stdout
           match: '*'
@@ -68,8 +55,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-This configuration calculates CPU metrics from the running system and prints them
-to the standard output interface.
+This configuration calculates CPU metrics from the running system and prints them to the standard output interface.
 
 #### Build with custom configuration
 

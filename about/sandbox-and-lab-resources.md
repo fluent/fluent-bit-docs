@@ -4,7 +4,7 @@ description: >-
   Labs for learning how to best operate, use, and have success with Fluent Bit.
 ---
 
-# Sandbox and Lab Resources
+# Sandbox and lab resources
 
 ## Fluent Bit Sandbox - sign-up required
 

@@ -2,8 +2,7 @@
 
 Configuration files must be flexible enough for any deployment need, but they must keep a clean and readable format.
 
-Fluent Bit `Commands` extends a configuration file with specific built-in features.
-The following commands are available:
+Fluent Bit `Commands` extends a configuration file with specific built-in features. The following commands are available:
 
 | Command | Prototype | Description |
 | :--- | :--- | :--- |
@@ -35,8 +34,7 @@ Fluent Bit will respects the following order when including:
 
 ### `inputs.conf`
 
-The following is an example of an `inputs.conf` file, like the one called in the
-previous example.
+The following is an example of an `inputs.conf` file, like the one called in the previous example.
 
 ```text
 [INPUT]
@@ -51,8 +49,7 @@ previous example.
 
 ### outputs.conf
 
-The following is an example of an `outputs.conf` file, like the one called in the
-previous example.
+The following is an example of an `outputs.conf` file, like the one called in the previous example.
 
 ```text
 [OUTPUT]

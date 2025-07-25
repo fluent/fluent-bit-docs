@@ -51,8 +51,7 @@ This plugin has the following configuration parameters:
 | `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), and is set to `On`. | `Off` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
-If you have used a common relational database, the parameters `index` and `type` can
-be compared to the `database` and `table` concepts.
+If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
 
 ### TLS / SSL
 
@@ -151,8 +150,7 @@ pipeline:
 
 ## Elasticsearch field names
 
-Some input plugins can generate messages where the field names contains dots (`.`). For Elasticsearch 2.0, this isn't allowed. The current `es` plugin replaces
-a dot with an underscore (`_`):
+Some input plugins can generate messages where the field names contains dots (`.`). For Elasticsearch 2.0, this isn't allowed. The current `es` plugin replaces a dot with an underscore (`_`):
 
 ```text
 {"cpu0.p_cpu"=>17.000000}
@@ -255,8 +253,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-In Elastic Cloud version 8 and great, the type option must be removed by setting
-`Suppress_Type_Name On`.
+In Elastic Cloud version 8 and great, the type option must be removed by setting `Suppress_Type_Name On`.
 
 Without this you will see errors like:
 
@@ -371,7 +368,7 @@ In Fluent Bit v1.8.2 and greater, Fluent Bit started using `create` method (inst
 Validation Failed: 1: an id must be provided if version type or value are set
 ```
 
-If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit versions greater than v1.8.2, correct them  by turning on `Generate_ID` as follows:
+If you see `action_request_validation_exception` errors on your pipeline with Fluent Bit versions greater than v1.8.2, correct them by turning on `Generate_ID` as follows:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

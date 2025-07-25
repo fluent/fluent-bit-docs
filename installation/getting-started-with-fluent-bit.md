@@ -56,6 +56,4 @@ Fluent Bit Sandbox Environment
 
 ## Enterprise Packages
 
-Fluent Bit packages are also provided by [enterprise
-providers](https://fluentbit.io/enterprise) for older end of life versions, Unix
-systems, and additional support and features including aspects like CVE backporting.
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, and additional support and features including aspects like CVE backporting.

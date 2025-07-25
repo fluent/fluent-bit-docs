@@ -1,4 +1,4 @@
-# Service section
+# Service
 
 The `service` section defines global properties of the service. The available configuration keys are:
 

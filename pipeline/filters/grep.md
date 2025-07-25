@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 | `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
 | `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
 
-### Record Accessor Enabled
+### Record Accessor enabled
 
 Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the `KEY`. Use the record accessor to match values against nested values.
 
@@ -94,6 +94,7 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
 
 The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions)).
 
@@ -197,7 +198,8 @@ or is missing or empty, then it will be excluded.
 If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
 If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
 After, if there is no `Regex`, the line is sent to the output.
-if there is a `Regex` and it matches, the line is sent to the output, else, it's blocked.
+
+If there is a `Regex` and it matches, the line is sent to the output, else, it's blocked.
 
 If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjunction or disjunction.
 
@@ -253,8 +255,6 @@ pipeline:
 The output looks similar to:
 
 ```text
-...
 [0] dummy: [1674348410.558341857, {"endpoint"=>"localhost", "value"=>"something"}]
 [0] dummy: [1674348411.546425499, {"endpoint"=>"localhost", "value"=>"something"}]
-...
 ```

@@ -118,8 +118,7 @@ You can see the records `{"data":"100 0.5 true This is example"}` are parsed.
 
 By default, the parser plugin only keeps the parsed fields in its output.
 
-If you enable `Reserve_Data`, all other fields are preserved. First the contents of the corresponding parsers file, 
-depending on the choice for YAML or classic configurations, would be as follows:
+If you enable `Reserve_Data`, all other fields are preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -213,8 +212,7 @@ $ fluent-bit --config fluent-bit.conf
 [0] dummy.data: [[1750325240.682903000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
 ```
 
-If you enable `Reserve_Data` and `Preserve_Key`, the original key field will also be preserved. First the contents of 
-the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
+If you enable `Reserve_Data` and `Preserve_Key`, the original key field will also be preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}

@@ -1,4 +1,4 @@
-# Splunk (HTTP HEC)
+# Splunk
 
 The _Splunk_ input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) requests.
 
@@ -25,9 +25,7 @@ To start performing the checks, you can run the plugin from the command line or 
 
 ### Set a tag
 
-The tag for the Splunk input plugin is set by adding the tag to the end of the request URL by default.
-This tag is then used to route the event through the system.
-The default behavior of the Splunk input sets the tags for the following endpoints:
+The tag for the Splunk input plugin is set by adding the tag to the end of the request URL by default. This tag is then used to route the event through the system. The default behavior of the Splunk input sets the tags for the following endpoints:
 
 - `/services/collector`
 - `/services/collector/event`

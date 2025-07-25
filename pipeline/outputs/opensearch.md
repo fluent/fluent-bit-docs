@@ -4,8 +4,7 @@ description: Send logs to Amazon OpenSearch Service
 
 # OpenSearch
 
-The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database.
-The following instructions assume you have an operational OpenSearch service running in your environment.
+The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database. The following instructions assume you have an operational OpenSearch service running in your environment.
 
 ## Configuration parameters
 
@@ -54,8 +53,7 @@ The parameters `index` and `type` can be confusing if you are new to OpenSearch.
 
 ### TLS / SSL
 
-The OpenSearch output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The OpenSearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### `write_operation`
 

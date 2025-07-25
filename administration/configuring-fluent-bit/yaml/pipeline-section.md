@@ -1,4 +1,4 @@
-# Pipeline section
+# Pipeline
 
 The `pipeline` section defines the flow of how data is collected, processed, and sent to its final destination. It encompasses the following core concepts:
 
@@ -13,8 +13,7 @@ The `pipeline` section defines the flow of how data is collected, processed, and
 
 {% hint style="info" %}
 
-**Note:** Processors can be enabled only by using the YAML configuration format. Classic mode configuration format 
-doesn't support processors.
+**Note:** Processors can be enabled only by using the YAML configuration format. Classic mode configuration format  doesn't support processors.
 
 {% endhint %}
 
@@ -33,7 +32,7 @@ pipeline:
           processors:
               logs:
                   - name: record_modifier
-                    
+
     filters:
         - name: grep
           match: '*'
@@ -75,7 +74,7 @@ pipeline:
                       action: upsert
                       key: my_new_key
                       value: 123
-  
+
       filters:
           - name: grep
             match: '*'
@@ -106,12 +105,12 @@ pipeline:
         - name: random
           tag: test-tag
           interval_sec: 1
-      
+
           processors:
               logs:
                   - name: modify
                     add: hostname monox
-          
+
                   - name: lua
                     call: append_tag
                     code: |
@@ -124,7 +123,7 @@ pipeline:
     outputs:
         - name: stdout
           match: '*'
-      
+
           processors:
               logs:
                   - name: lua

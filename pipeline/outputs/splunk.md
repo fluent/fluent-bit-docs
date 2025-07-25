@@ -29,7 +29,7 @@ Content and Splunk metadata (fields) handling configuration properties:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](sending-raw-events) to configure this option. | `off` |
+| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](#sending-raw-events) to configure this option. | `off` |
 | `event_key` | Specify the key name that will be used to send a single value as part of the record. | _none_ |
 | `event_host` | Specify the key name that contains the host value. This option allows a record accessors pattern. | _none_ |
 | `event_source` | Set the source value to assign to the event data. | _none_ |
@@ -41,8 +41,7 @@ Content and Splunk metadata (fields) handling configuration properties:
 
 ### TLS / SSL
 
-The Splunk output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The Splunk output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 
@@ -305,8 +304,7 @@ pipeline:
 
 In Fluent Bit 2.0 or later, you can send Fluent Bit metrics the `events` type into Splunk using Splunk HEC. This lets you perform visualizations, metric queries, and analysis with directly sent using Fluent Bit metrics. This is based off Splunk 8.0 support of multi metric support using a single concatenated JSON payload.
 
-Sending Fluent Bit metrics into Splunk requires the use of collecting Fluent Bit metrics plugins, whether events type of logs or metrics can be distinguished automatically.
-You don't need to pay attentions about the type of events.
+Sending Fluent Bit metrics into Splunk requires the use of collecting Fluent Bit metrics plugins, whether events type of logs or metrics can be distinguished automatically. You don't need to pay attentions about the type of events.
 
 This example includes two specific operations
 

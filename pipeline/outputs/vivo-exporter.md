@@ -2,19 +2,20 @@
 
 Vivo Exporter is an output plugin that exposes logs, metrics, and traces through an HTTP endpoint. This plugin aims to be used in conjunction with [Vivo project](https://github.com/calyptia/vivo) .
 
-### Configuration Parameters
+## Configuration parameters
 
-| Key                      | Description                                                                                                                            | Default |
-|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `empty_stream_on_read`   | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
-| `stream_queue_size`      | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
-| `http_cors_allow_origin` | Specify the value for the HTTP Access-Control-Allow-Origin header (CORS).                                                              |         |
-| `workers`                | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                   | `1`     |
+This plugin supports the following configuration parameters:
 
+| Key | Description | Default |
+| --- | ----------- | ---------|
+| `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `Off` |
+| `stream_queue_size`| Specify the maximum queue size per stream. Each specific stream for logs, metrics, and traces can hold up to `stream_queue_size` bytes. | `20M` |
+| `http_cors_allow_origin` | Specify the value for the HTTP `Access-Control-Allow-Origin` header (CORS). | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
-### Getting Started
+### Get started
 
-Here is a simple configuration of Vivo Exporter, note that this example is not based on defaults.
+The following is an example configuration of Vivo Exporter. This example isn't based on defaults.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -25,7 +26,7 @@ pipeline:
     - name: dummy
       tag: events
       rate: 2
-      
+
   outputs:
     - name: vivo_exporter
       match: '*'
@@ -56,64 +57,63 @@ pipeline:
 
 ### How it works
 
-Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
+Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (`20M` by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
 
-The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
+The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics, or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
 
 #### Requesting data from the streams
 
-By using a simple HTTP request, you can retrieve the data from the streams. The following are the endpoints available:
+By using an HTTP request, you can retrieve the data from the streams. The following are the endpoints available:
 
 | endpoint   | Description                                                                                                                   |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|
 | `/logs`    | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
 | `/metrics` | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
-| `/traces`  | Exposes traces events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, etc. |
+| `/traces`  | Exposes trace events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
 
-The example below will generate dummy log events which will be consuming by using `curl` HTTP command line client:
+The following example generates dummy log events for consumption by using `curl` HTTP command line client:
 
-**Configure and start Fluent Bit**
+1. Configure and start Fluent Bit.
 
+   {% tabs %}
+   {% tab title="fluent-bit.yaml" %}
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
+   ```yaml
+   pipeline:
+     inputs:
+       - name: dummy
+         tag: events
+         rate: 2
 
-```yaml
-pipeline:
-  inputs:
-    - name: dummy
-      tag: events
-      rate: 2
-      
-  outputs:
-    - name: vivo_exporter
-      match: '*'
-```
+     outputs:
+       - name: vivo_exporter
+         match: '*'
+   ```
 
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
+   {% endtab %}
+   {% tab title="fluent-bit.conf" %}
 
-```text
-[INPUT]
-  name  dummy
-  tag   events
-  rate  2
+   ```text
+   [INPUT]
+     name  dummy
+     tag   events
+     rate  2
 
-[OUTPUT]
-  name   vivo_exporter
-  match  *
-```
+   [OUTPUT]
+     name   vivo_exporter
+     match  *
+   ```
 
-{% endtab %}
-{% endtabs %}
+   {% endtab %}
+   {% endtabs %}
 
-**Retrieve the data**
+1. Retrieve the data.
 
-```shell
-curl -i http://127.0.0.1:2025/logs
-```
+   ```shell
+   curl -i http://127.0.0.1:2025/logs
+   ```
 
-> We are using the `-i` curl option to print also the HTTP response headers.
+   The `-i` curl option prints the HTTP response headers.
 
 Curl output would look like this:
 
@@ -138,25 +138,25 @@ Vivo-Stream-End-ID: 3
 
 ### Streams and IDs
 
-As mentioned above, on each stream we buffer a `chunk` that contains N events, each chunk contains it own ID which is unique inside the stream.
+As mentioned previously, each stream buffers a `chunk` that contains `N` events, with each chunk containing its own ID that's unique inside the stream.
 
-When we receive the HTTP response, Vivo Exporter also reports the range of chunk IDs that were served in the response via the HTTP headers `Vivo-Stream-Start-ID` and `Vivo-Stream-End-ID`.
+After receiving the HTTP response, Vivo Exporter also reports the range of chunk IDs that were served in the response using the HTTP headers `Vivo-Stream-Start-ID` and `Vivo-Stream-End-ID`.
 
 The values of these headers can be used by the client application to specify a range between IDs or set limits for the number of chunks to retrieve from the stream.
 
 ### Retrieve ranges and use limits
 
-A client might be interested into always retrieve the latest chunks available and skip previous one that already processed. In a first request without any given range, Vivo Exporter will provide all the content that exists in the buffer for the specific stream, on that response the client might want to keep the last ID (Vivo-Stream-End-ID) that was received.
+A client might be interested in always retrieving the latest chunks available and skip previous ones already processed. In a first request without any given range, Vivo Exporter will provide all the content that exists in the buffer for the specific stream. On that response, the client might want to keep the last ID (`Vivo-Stream-End-ID`) that was received.
 
-To query ranges or starting from specific chunks IDs, remember that they are incremental, you can use a mix of the following options:
+To query ranges or starting from specific chunks IDs, remember that they're incremental. You can use a mix of the following options:
 
-| Query string option | Description                                                                                                                                         |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `from`              | Specify the first chunk ID that is desired to be retrieved. Note that if the `chunk` ID does not exists the next one in the queue will be provided. |
-| `to`                | The last chunk ID is desired. If not found, the whole stream will be provided (starting from `from` if was set).                                    |
-| `limit`             | Limit the output to a specific number of chunks. The default value is `0`, which means: send everything.                                            |
+| Query string option | Description |
+|---------------------|-------------|
+| `from` | Specify the first chunk ID to be retrieved. If the `chunk` ID doesn't exist, the next one in the queue will be provided. |
+| `to` | The last chunk ID to be retrieved. If not found, the whole stream will be provided (starting from `from` if was set). |
+| `limit` | Limit the output to a specific number of chunks. The default value is `0`, which sends everything. |
 
-The following example specifies the range from chunk ID 1 to chunk ID 3 and only 1 chunk:
+The following example specifies the range from chunk ID `1` to chunk ID `3` and only one chunk:
 
 ```shell
 curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"`&#x20;

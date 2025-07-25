@@ -1,6 +1,6 @@
-# NGINX Exporter metrics
+# NGINX exporter metrics
 
-The _NGINX Exporter metrics_ input plugin scrapes metrics from the NGINX stub status handler.
+The _NGINX exporter metrics_ input plugin scrapes metrics from the NGINX stub status handler.
 
 ## Configuration parameters
 
@@ -36,8 +36,7 @@ server {
 
 ### Configuration with NGINX Plus REST API
 
-Another metrics API is available with NGINX Plus. You must first configure a path in
-NGINX Plus.
+Another metrics API is available with NGINX Plus. You must first configure a path in NGINX Plus.
 
 ```text
 server {
@@ -87,7 +86,7 @@ pipeline:
       host: 127.0.0.1
       port: 80
       status_URL: /status
-       
+
   outputs:
     - name: stdout
       match: '*'
@@ -125,7 +124,7 @@ pipeline:
       host: 127.0.0.1
       port: 80
       status_URL: /api
-          
+
   outputs:
     - name: stdout
       match: '*'

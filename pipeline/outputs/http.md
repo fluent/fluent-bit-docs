@@ -39,8 +39,7 @@ The plugin supports the following configuration parameters:
 
 ### TLS / SSL
 
-The HTTP output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The HTTP output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 
