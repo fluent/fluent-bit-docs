@@ -67,6 +67,7 @@ endcode
 endhint
 endtab
 endtabs
+Enum
 Eventhouse
 Exabeam
 Fargate
@@ -146,6 +147,8 @@ preprocessor
 Profiler
 Prometheus
 PromQL
+proto
+protobuf
 Protobuf
 proxying
 Pulumi

@@ -2,7 +2,7 @@
 description: A full feature set to access content of your records.
 ---
 
-# Record accessor
+# Record accessor syntax
 
 Fluent Bit works internally with structured records and it can be composed of an unlimited number of keys and values. Values can be anything like a number, string, array, or a map.
 

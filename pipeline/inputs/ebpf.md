@@ -1,4 +1,4 @@
-# `in_ebpf` input plugin for Fluent Bit (experimental)
+# Ebpf
 
 {% hint style="info" %}
 This plugin is experimental and might be unstable. Use it in development or testing environments only. Its features and behavior are subject to change.
@@ -59,7 +59,7 @@ To enable the `in_ebpf` plugin, follow these steps to build Fluent Bit from sour
    ```shell
    # For YAML configuration.
    sudo fluent-bit --config fluent-bit.yaml
-   
+
    # For classic configuration.
    sudo fluent-bit --config fluent-bit.conf
    ```
@@ -75,7 +75,7 @@ Here's a basic example of how to configure the plugin:
 pipeline:
   inputs:
     - name: ebpf
-      trace: 
+      trace:
         - trace_signal
         - trace_malloc
         - trace_bind

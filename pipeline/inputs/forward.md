@@ -1,7 +1,6 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers.
-This plugin implements the input service to listen for Forward messages.
+_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
 ## Configuration parameters
 
@@ -58,7 +57,7 @@ pipeline:
           port: 24224
           buffer_chunk_size: 1M
           buffer_max_size: 6M
-          
+
     outputs:
         - name: stdout
           match: '*'
@@ -87,9 +86,7 @@ pipeline:
 
 In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
 
-For using user-password authentication, specify `security.users` in at least a one-pair.
-For using shared key, specify `shared_key` in both of forward output and forward input.
-`self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
+For using user-password authentication, specify `security.users` in at least a one-pair. For using shared key, specify `shared_key` in both of forward output and forward input. `self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
 
 {% tabs %}
 {% tab title="fluent-bit-secure-forward.yaml" %}
@@ -105,7 +102,7 @@ pipeline:
       security.users: fluentbit changeme
       shared_key: secret
       self_hostname: flb.server.local
-      
+
   outputs:
     - name: stdout
       match: '*'

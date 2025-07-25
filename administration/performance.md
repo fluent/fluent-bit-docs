@@ -1,4 +1,4 @@
-# Performance Tips
+# Performance tips
 
 Fluent Bit is designed for high performance and minimal resource usage. Depending on your use case, you can optimize further using specific configuration options to achieve faster performance or reduce resource consumption.
 

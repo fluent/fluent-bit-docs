@@ -4,9 +4,7 @@ description: Learn about destinations for your data, such as databases and cloud
 
 # Output
 
-The output interface lets you define destinations for your data. Common destinations
-are remote services, local file systems, or other standard interfaces. Outputs are
-implemented as plugins.
+The output interface lets you define destinations for your data. Common destinations are remote services, local file systems, or other standard interfaces. Outputs are implemented as plugins.
 
 ```mermaid
 graph LR
@@ -24,9 +22,7 @@ graph LR
     style H stroke:darkred,stroke-width:2px;
 ```
 
-When an output plugin is loaded, an internal _instance_ is created. Every instance
-has its own independent configuration. Configuration keys are often called
-_properties_.
+When an output plugin is loaded, an internal _instance_ is created. Every instance has its own independent configuration. Configuration keys are often called _properties_.
 
 Every output plugin has its own documentation section specifying how it can be used and what properties are available.
 

@@ -21,8 +21,7 @@ This plugin supports the following parameters:
 
 ### TLS / SSL
 
-The Kafka REST Proxy output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The Kafka REST Proxy output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Get started
 

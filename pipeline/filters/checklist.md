@@ -1,6 +1,6 @@
 # CheckList
 
-The CheckList plugin (introduced in version 1.8.4) looks up a value in a specified list to see if it exists. The plugin then allows the addition of a record to indicate if the value was found.
+The _CheckList_ plugin (introduced in version 1.8.4) looks up a value in a specified list to see if it exists. The plugin then allows the addition of a record to indicate if the value was found.
 
 ## Configuration parameters
 
@@ -28,7 +28,7 @@ pipeline:
           path: test1.log
           read_from_head: true
           parser: json
-    
+
     filters:
         - name: checklist
           match: test1
@@ -38,7 +38,7 @@ pipeline:
               - ioc abc
               - badurl null
           log_level: debug
-    
+
     outputs:
         - name: stdout
           match: test1
