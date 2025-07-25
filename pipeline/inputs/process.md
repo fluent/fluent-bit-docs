@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 | `Alert`         | If enabled, the plugin will only generate messages if the target process is down.                             | `false` |
 | `Fd`            | If enabled, a number of `fd` is appended to each record.                                                      | `true`  |
 | `Mem`           | If enabled, memory usage of the process is appended to each record.                                           | `true`  |
-| `Threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).       | `false` |
+| `Threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading#inputs).       | `false` |
 
 ## Get started
 
@@ -30,7 +30,7 @@ fluent-bit -i proc -p proc_name=crond -o stdout
 
 ### Configuration file
 
-In your main configuration file, append the following `Input` & `Output` sections:
+In your main configuration file, append the following sections:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

@@ -2,8 +2,7 @@
 
 [Loki](https://grafana.com/oss/loki/) is multi-tenant log aggregation system inspired by Prometheus.
 
-The Fluent Bit _Loki_ built-in output plugin lets you send your log or events to a Loki service.
-It supports data enrichment with Kubernetes labels, custom label keys, and Tenant ID, along with other information.
+The Fluent Bit _Loki_ built-in output plugin lets you send your log or events to a Loki service. It supports data enrichment with Kubernetes labels, custom label keys, and Tenant ID, along with other information.
 
 There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
 
@@ -63,7 +62,7 @@ If you decide that your Loki Stream will be composed by two labels called `job` 
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -100,7 +99,7 @@ Another feature of Labels management is the ability to provide custom key names.
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -128,8 +127,7 @@ job="fluentbit", mystream="stdout"
 
 ### Use `label_keys`
 
-The `label_keys` configuration property lets you specify multiple record keys which need to be placed as part of the outgoing Stream Labels.
-This is another way to set a record key in the Stream, but with the limitation that you can't use a custom name for the key value.
+The `label_keys` configuration property lets you specify multiple record keys which need to be placed as part of the outgoing Stream Labels. This is another way to set a record key in the Stream, but with the limitation that you can't use a custom name for the key value.
 
 The following configuration examples generate the same Stream Labels:
 
@@ -138,7 +136,7 @@ The following configuration examples generate the same Stream Labels:
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -168,7 +166,7 @@ The previous configuration accomplishes the same as this one:
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -219,7 +217,7 @@ Add the JSON path to the plugin output configuration:
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -246,7 +244,7 @@ The previous configurations accomplish the same as this one:
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -281,7 +279,7 @@ If you're running in a Kubernetes environment, consider enabling the `auto_kuber
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -326,7 +324,7 @@ If the value is a string, `line_format` is `json`, and `drop_single_key` is `tru
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -360,8 +358,7 @@ If `drop_single_key` is `raw`, or `line_format` is `key_value`, it will show in 
 value
 ```
 
-If you want both structured JSON and plain text logs in Loki, set `drop_single_key` to `raw` and `line_format` to `json`.
-Loki doesn't interpret a quoted string as valid JSON. To remove the quotes without `drop_single_key` set to `raw`, use a query like this:
+If you want both structured JSON and plain text logs in Loki, set `drop_single_key` to `raw` and `line_format` to `json`. Loki doesn't interpret a quoted string as valid JSON. To remove the quotes without `drop_single_key` set to `raw`, use a query like this:
 
 ```text
 {"job"="fluent-bit"} | regexp `^"?(?P<log>.*?)"?$` | line_format "{{.log}}"
@@ -386,8 +383,7 @@ You can get the same behavior this flag provides in Loki with `drop_single_key` 
 The following configuration:
 
 - Defines fixed values for the cluster and region labels.
-- Uses the record accessor pattern to set the namespace label to the namespace name as
-  determined by the Kubernetes metadata filter (not shown).
+- Uses the record accessor pattern to set the namespace label to the namespace name as determined by the Kubernetes metadata filter (not shown).
 - Uses a structured metadata field to hold the Kubernetes pod name.
 
 {% tabs %}
@@ -395,7 +391,7 @@ The following configuration:
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -419,8 +415,7 @@ pipeline:
 
 Other common uses for structured metadata include trace and span IDs, process and thread IDs, and log levels.
 
-Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used
-with Loki deployments prior to Loki 3.0.
+Structured metadata is officially supported starting with Loki 3.0, and shouldn't be used with Loki deployments prior to Loki 3.0.
 
 ### Structured metadata maps
 
@@ -433,7 +428,7 @@ The following configuration is similar to the previous example, except now all e
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -462,7 +457,7 @@ Assuming the value `$kubernetes` is a map containing two entries `namespace_name
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -504,7 +499,7 @@ Below is an example configuration, be sure to set the credentials (shown here wi
 
 ```yaml
 pipeline:
-          
+
   outputs:
     - name: loki
       match: '*'
@@ -536,23 +531,22 @@ pipeline:
 
 ## Get Started
 
-The following configuration example emits a dummy example record and ingests it on Loki .
-Copy and paste the corresponding content below into a file `out_loki.yaml` or `out_loki.conf`:
+The following configuration example emits a dummy example record and ingests it on Loki. Copy and paste the corresponding content below into a file `out_loki.yaml` or `out_loki.conf`:
 
 {% tabs %}
 {% tab title="out-loki.yaml" %}
 
 ```yaml
-service: 
+service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}'
       samples: 1
-          
+
   outputs:
     - name: loki
       match: '*'

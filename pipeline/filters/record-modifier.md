@@ -1,6 +1,6 @@
-# Record Modifier
+# Record modifier
 
-The _Record Modifier_ [filter](pipeline/filters.md) lets you append fields to a record, or exclude specific fields.
+The _Record modifier_ filter lets you append fields to a record, or exclude specific fields.
 
 ## Configuration parameters
 
@@ -16,8 +16,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-To start filtering records, run the filter from the command line or through a
-configuration file.
+To start filtering records, run the filter from the command line or through a configuration file.
 
 This is a sample `in_mem` record to filter.
 
@@ -27,8 +26,7 @@ This is a sample `in_mem` record to filter.
 
 ### Append fields
 
-The following configuration file appends a product name and hostname to a record
-using an environment variable:
+The following configuration file appends a product name and hostname to a record using an environment variable:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

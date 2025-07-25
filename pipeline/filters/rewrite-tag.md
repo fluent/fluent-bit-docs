@@ -2,7 +2,7 @@
 description: Powerful and flexible routing
 ---
 
-# Rewrite Tag
+# Rewrite tag
 
 Tags make [routing](../../concepts/data-pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios where you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 

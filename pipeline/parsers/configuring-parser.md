@@ -33,7 +33,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | `Format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), or [`logfmt`](logfmt.md). |
 | `Regex` | Required for parsers with the `regex` format. Specifies the Ruby regular expression for parsing and composing the structured message. |
 | `Time_Key` | If the log entry provides a field with a timestamp, this option specifies the name of that field. |
-| `Time_Format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. |
+| `Time_Format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [`strptime` documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. |
 | `Time_Offset` | Specifies a fixed UTC time offset (such as `-0600` or `+0200`) for local dates. |
 | `Time_Keep` | If enabled, when a time key is recognized and parsed, the parser will keep the original time key. If disabled, the parser will drop the original time field. |
 | `Time_System_timezone` | If there is no time zone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
@@ -45,7 +45,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 
 ## Parsers configuration file
 
-All parsers must be defined in a parsers file (see below for examples), not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+All parsers must be defined in a parsers file, not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -95,7 +95,7 @@ For more information about the parsers available, refer to the [default parsers 
 
 ## Time resolution and fractional seconds
 
-Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function.
+Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) `libc` system function.
 
 In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
 
@@ -203,7 +203,7 @@ The following time zone abbreviations are supported.
 
 {% hint style="info" %}
 
-These are single-letter UTC offset designators. `J` (Juliet) represents local time and is not included. `Z` represents Zulu Time, as listed in the [Universal time zones](#universal-time-zones) list.
+These are single-letter UTC offset designators. `J` (Juliet) represents local time and isn't included. `Z` represents Zulu Time, as listed in the [Universal time zones](#universal-time-zones) list.
 
 {% endhint %}
 

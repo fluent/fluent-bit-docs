@@ -4,7 +4,7 @@ Fluent Bit supports multiple sources and formats. In addition, it provides filte
 
 Fluent Bit users are encouraged to integrate data validation in their continuous integration (CI) systems.
 
-In a normal production environment, inputs, filters, and outputs are defined in configuration files. Fluent Bit provides the [Expect](../pipeline/filters/expect.md) filter, which you can use to validate keys and values from your records and take action when an exception is found.
+In a normal production environment, inputs, filters, and outputs are defined in configuration files. Fluent Bit provides the [Expect](../pipeline/filters/expect) filter, which you can use to validate keys and values from your records and take action when an exception is found.
 
 A simplified view of the data processing pipeline is as follows:
 
@@ -20,8 +20,8 @@ IS --> Fil --> OD
 
 Consider the following pipeline, which uses a JSON file as its data source and has two filters:
 
-- [Grep](../pipeline/filters/grep.md) to exclude certain records.
-- [Record Modifier](../pipeline/filters/record-modifier.md) to alter records' content by adding and removing specific keys.
+- [Grep](../pipeline/filters/grep) to exclude certain records.
+- [Record Modifier](../pipeline/filters/record-modifier) to alter records' content by adding and removing specific keys.
 
 ```mermaid
 flowchart LR
@@ -72,8 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the 
-keys `color` and `label` exist.
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the  keys `color` and `label` exist.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -97,7 +96,7 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
@@ -191,16 +190,16 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
-          
+
         # Match records that only contains map 'label' with key 'name' = 'abc'
         - name: grep
           match: '*'
           regex: "$label['name'] ^abc$"
-          
+
         # Check that every record contains 'label' with a non-null value
         - name: expect
           match: '*'

@@ -1,14 +1,8 @@
 # Nightfall
 
-The _Nightfall_ filter scans logs for sensitive data and redacts any sensitive
-portions. This filter supports scanning for various sensitive information, ranging
-from API keys and Personally Identifiable Information (PII) to custom regular
-expressions you define. You can configure what to scan for in the
-[Nightfall Dashboard](https://app.nightfall.ai).
+The _Nightfall_ filter scans logs for sensitive data and redacts any sensitive portions. This filter supports scanning for various sensitive information, ranging from API keys and Personally Identifiable Information (PII) to custom regular expressions you define. You can configure what to scan for in the [Nightfall Dashboard](https://app.nightfall.ai).
 
-This filter isn't enabled by default in version 1.9.0 due to a typo. To enable it,
-set the flag ```-DFLB_FILTER_NIGHTFALL=ON``` when building. This is fixed for
-versions 1.9.1 and later.
+This filter isn't enabled by default in version 1.9.0 due to a typo. To enable it, set the flag ```-DFLB_FILTER_NIGHTFALL=ON``` when building. This is fixed for versions 1.9.1 and later.
 
 ## Configuration parameters
 
@@ -44,7 +38,7 @@ pipeline:
           policy_id: 5991946b-1cc8-4c38-9240-72677029a3f7
           sampling_rate: 1
           tls.ca_path: /etc/ssl/certs
-    
+
     outputs:
         - name: stdout
           match: '*'

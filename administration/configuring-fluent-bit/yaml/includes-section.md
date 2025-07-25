@@ -1,4 +1,4 @@
-# Includes section
+# Includes
 
 The `includes` section lets you specify additional YAML configuration files to be merged into the current configuration. These files are identified as a list of filenames and can include relative or absolute paths. If no absolute path is provided, the file is assumed to be located in a directory relative to the file that references it.
 

@@ -7,8 +7,7 @@ The _Nest_ filter plugin lets you operate on or with nested data. Its modes of o
 
 ## Example usage for `nest`
 
-As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*`
-under a new key `NestKey` the transformation becomes:
+As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
 
 Input:
 
@@ -34,8 +33,7 @@ Output:
 
 ## Example usage for `lift`
 
-As an example using JSON notation, to lift keys nested under the `Nested_under` value
-`NestKey*` the transformation becomes:
+As an example using JSON notation, to lift keys nested under the `Nested_under` value `NestKey*` the transformation becomes:
 
 Input:
 
@@ -86,9 +84,7 @@ To start filtering records, run the filter from the command line or through the 
 
 Using the command line mode requires quotes to parse the wildcard properly. The use of a configuration file is recommended.
 
-The following command loads the _mem_ plugin. Then the _nest_ filter matches the
-wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
-`NEST`.
+The following command loads the _mem_ plugin. Then the _nest_ filter matches the wildcard rule to the keys and nests the keys matching `Mem.*` under the new key `NEST`.
 
 ```shell
 ./fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
@@ -133,7 +129,7 @@ pipeline:
     Wildcard Mem.*
     Nest_under Memstats
     Remove_prefix Mem.
-    
+
  [OUTPUT]
     Name  stdout
     Match *
@@ -210,10 +206,10 @@ pipeline:
     Operation lift
     Nested_under Stats
     Remove_prefix NESTED
-    
+
 [OUTPUT]
     Name  stdout
-    Match *    
+    Match *
 ```
 
 {% endtab %}
@@ -228,8 +224,7 @@ pipeline:
 
 ## Example 3 - `nest` 3 levels deep
 
-This example takes the keys starting with `Mem.*` and nests them under `LAYER1`,
-which is then nested under `LAYER2`, which is nested under `LAYER3`.
+This example takes the keys starting with `Mem.*` and nests them under `LAYER1`, which is then nested under `LAYER2`, which is nested under `LAYER3`.
 
 ### Deep `nest` configuration file
 

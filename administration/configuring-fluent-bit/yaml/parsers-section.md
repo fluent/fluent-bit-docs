@@ -1,4 +1,4 @@
-# Parsers section
+# Parsers
 
 Parsers enable Fluent Bit components to transform unstructured data into a structured internal representation. You can define parsers either directly in the main configuration file or in separate external files for better organization.
 
