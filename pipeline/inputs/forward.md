@@ -51,16 +51,16 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: forward
-          listen: 0.0.0.0
-          port: 24224
-          buffer_chunk_size: 1M
-          buffer_max_size: 6M
-
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+      buffer_chunk_size: 1M
+      buffer_max_size: 6M
+      
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -68,15 +68,15 @@ pipeline:
 
 ```text
 [INPUT]
-    Name              forward
-    Listen            0.0.0.0
-    Port              24224
-    Buffer_Chunk_Size 1M
-    Buffer_Max_Size   6M
+  Name              forward
+  Listen            0.0.0.0
+  Port              24224
+  Buffer_Chunk_Size 1M
+  Buffer_Max_Size   6M
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
