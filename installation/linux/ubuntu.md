@@ -48,7 +48,7 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 On Ubuntu, you need to add the Fluent Bit APT server entry to your sources lists. Ensure `CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases). For example, `focal` for Ubuntu 20.04.
 
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release || lsb_release -cs) $(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database
