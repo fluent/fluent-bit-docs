@@ -1,6 +1,6 @@
 # Record modifier
 
-The _Record modifier_ filter lets you append fields to a record, or exclude specific fields.
+The _Record Modifier_ [filter](record-modifier.md) lets you append fields to a record, or exclude specific fields.
 
 ## Configuration parameters
 
@@ -33,20 +33,20 @@ The following configuration file appends a product name and hostname to a record
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: record_modifier
-          match: '*'
-          record:
-             - hostname ${HOSTNAME}
-             - product Awesome_Tool
+  filters:
+    - name: record_modifier
+      match: '*'
+      record:
+       - hostname ${HOSTNAME}
+       - product Awesome_Tool
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -54,18 +54,18 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 
 [FILTER]
-    Name record_modifier
-    Match *
-    Record hostname ${HOSTNAME}
-    Record product Awesome_Tool
+  Name record_modifier
+  Match *
+  Record hostname ${HOSTNAME}
+  Record product Awesome_Tool
 ```
 
 {% endtab %}
@@ -74,7 +74,7 @@ pipeline:
 You can run the filter from command line:
 
 ```shell
-./fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
+fluent-bit -i mem -o stdout -F record_modifier -p 'Record=hostname ${HOSTNAME}' -p 'Record=product Awesome_Tool' -m '*'
 ```
 
 The output looks something like:
@@ -92,21 +92,21 @@ The following configuration file removes `Swap.*` fields:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: record_modifier
-          match: '*'
-          remove_key:
-             - Swap.total
-             - Swap.used
-             - Swap.free
+  filters:
+    - name: record_modifier
+      match: '*'
+      remove_key:
+       - Swap.total
+       - Swap.used
+       - Swap.free
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -114,19 +114,19 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 
 [FILTER]
-    Name record_modifier
-    Match *
-    Remove_key Swap.total
-    Remove_key Swap.used
-    Remove_key Swap.free
+  Name record_modifier
+  Match *
+  Remove_key Swap.total
+  Remove_key Swap.used
+  Remove_key Swap.free
 ```
 
 {% endtab %}
@@ -135,7 +135,7 @@ pipeline:
 You can also run the filter from command line.
 
 ```shell
-./fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
+fluent-bit -i mem -o stdout -F  record_modifier -p 'Remove_key=Swap.total' -p 'Remove_key=Swap.free' -p 'Remove_key=Swap.used' -m '*'
 ```
 
 The output looks something like:
@@ -153,21 +153,21 @@ The following configuration file retains `Mem.*` fields.
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: record_modifier
-          match: '*'
-          Allowlist_key:
-             - Mem.total
-             - Mem.used
-             - Mem.free
+  filters:
+    - name: record_modifier
+      match: '*'
+      Allowlist_key:
+       - Mem.total
+       - Mem.used
+       - Mem.free
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -175,19 +175,19 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name record_modifier
-    Match *
-    Allowlist_key Mem.total
-    Allowlist_key Mem.used
-    Allowlist_key Mem.free
+  Name record_modifier
+  Match *
+  Allowlist_key Mem.total
+  Allowlist_key Mem.used
+  Allowlist_key Mem.free
 
- [OUTPUT]
-    Name  stdout
-    Match *
+[OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -196,7 +196,7 @@ pipeline:
 You can also run the filter from command line:
 
 ```shell
-./fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
+fluent-bit -i mem -o stdout -F record_modifier -p 'Allowlist_key=Mem.total' -p 'Allowlist_key=Mem.free' -p 'Allowlist_key=Mem.used' -m '*'
 ```
 
 The output looks something like:

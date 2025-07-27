@@ -72,11 +72,11 @@ Kubernetes filter provides several ways to process the data contained in the `lo
 
 ```yaml
 parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S.%L'
-      time_keep: on
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
 ```
 
 {% endtab %}
@@ -84,11 +84,11 @@ parsers:
 
 ```text
 [PARSER]
-    Name         docker
-    Format       json
-    Time_Key     time
-    Time_Format  %Y-%m-%dT%H:%M:%S.%L
-    Time_Keep    On
+  Name         docker
+  Format       json
+  Time_Key     time
+  Time_Format  %Y-%m-%dT%H:%M:%S.%L
+  Time_Keep    On
 ```
 
 {% endtab %}
@@ -196,21 +196,21 @@ Kubernetes Filter depends on either [Tail](../inputs/tail.md) or [Systemd](../in
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          tag: kube.*
-          path: /var/log/containers/*.log
-          multiline.parser: docker,cri
+  inputs:
+    - name: tail
+      tag: kube.*
+      path: /var/log/containers/*.log
+      multiline.parser: docker,cri
 
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_url: https://kubernetes.default.svc:443
-          kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-          kube_tag_prefix: kube.var.log.containers.
-          merge_log: on
-          merge_log_key: log_processed
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      kube_url: https://kubernetes.default.svc:443
+      kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kube_tag_prefix: kube.var.log.containers.
+      merge_log: on
+      merge_log_key: log_processed
 ```
 
 {% endtab %}
@@ -218,20 +218,20 @@ pipeline:
 
 ```text
 [INPUT]
-    Name    tail
-    Tag     kube.*
-    Path    /var/log/containers/*.log
-    multiline.parser              docker, cri
+  Name    tail
+  Tag     kube.*
+  Path    /var/log/containers/*.log
+  multiline.parser              docker, cri
 
 [FILTER]
-    Name             kubernetes
-    Match            kube.*
-    Kube_URL         https://kubernetes.default.svc:443
-    Kube_CA_File     /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    Kube_Token_File  /var/run/secrets/kubernetes.io/serviceaccount/token
-    Kube_Tag_Prefix  kube.var.log.containers.
-    Merge_Log        On
-    Merge_Log_Key    log_processed
+  Name             kubernetes
+  Match            kube.*
+  Kube_URL         https://kubernetes.default.svc:443
+  Kube_CA_File     /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  Kube_Token_File  /var/run/secrets/kubernetes.io/serviceaccount/token
+  Kube_Tag_Prefix  kube.var.log.containers.
+  Merge_Log        On
+  Merge_Log_Key    log_processed
 ```
 
 {% endtab %}
@@ -299,24 +299,24 @@ One such use case involves splitting logs by namespace, pods, containers or cont
 
 ```yaml
 parsers:
-    - name: custom-tag
-      format: regex
-      regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
-
+  - name: custom-tag
+    format: regex
+    regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
+      
 pipeline:
-    inputs:
-        - name: tail
-          tag: kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
-          path: /var/log/containers/*.log
-          tag_regex: '(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$'
-          parser: cri
+  inputs:
+    - name: tail
+      tag: kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
+      path: /var/log/containers/*.log
+      tag_regex: '(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$'
+      parser: cri
 
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_tag_prefix: kube.
-          regex_parser: custom-tag
-          merge_log: on
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      kube_tag_prefix: kube.
+      regex_parser: custom-tag
+      merge_log: on
 ```
 
 {% endtab %}
@@ -324,23 +324,23 @@ pipeline:
 
 ```text
 [PARSER]
-    Name    custom-tag
-    Format  regex
-    Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
+  Name    custom-tag
+  Format  regex
+  Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
 
 [INPUT]
-    Name              tail
-    Tag               kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
-    Path              /var/log/containers/*.log
-    Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$
-    Parser            cri
+  Name              tail
+  Tag               kube.<namespace_name>.<pod_name>.<container_name>.<container_id>
+  Path              /var/log/containers/*.log
+  Tag_Regex         (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$
+  Parser            cri
 
 [FILTER]
-    Name                kubernetes
-    Match               kube.*
-    Kube_Tag_Prefix     kube.
-    Regex_Parser        custom-tag
-    Merge_Log           On
+  Name                kubernetes
+  Match               kube.*
+  Kube_Tag_Prefix     kube.
+  Regex_Parser        custom-tag
+  Merge_Log           On
 ```
 
 {% endtab %}
@@ -407,27 +407,27 @@ Fluent Bit configuration example:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          tag: kube.*
-          path: /var/log/containers/*.log
-          db: /var/log/flb_kube.db
-          parser: docker
-          docker_mode: on
-          mem_buf_limit: 50MB
-          skip_login_lines: on
-          refresh_interval: 10
+  inputs:
+    - name: tail
+      tag: kube.*
+      path: /var/log/containers/*.log
+      db: /var/log/flb_kube.db
+      parser: docker
+      docker_mode: on
+      mem_buf_limit: 50MB
+      skip_login_lines: on
+      refresh_interval: 10
 
-    filters:
-        - name: kubernetes
-          match: 'kube.*'
-          kube_url: https://kubernetes.default.svc.cluster.local:443
-          kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-          merge_log: on
-          buffer_size: 0
-          use_kubelet: ture
-          kubelet_port: 10250
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      kube_url: https://kubernetes.default.svc.cluster.local:443
+      kube_ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      merge_log: on
+      buffer_size: 0
+      use_kubelet: ture
+      kubelet_port: 10250
 ```
 
 {% endtab %}
@@ -435,26 +435,26 @@ pipeline:
 
 ```yaml
 [INPUT]
-    Name              tail
-    Tag               kube.*
-    Path              /var/log/containers/*.log
-    DB                /var/log/flb_kube.db
-    Parser            docker
-    Docker_Mode       On
-    Mem_Buf_Limit     50MB
-    Skip_Long_Lines   On
-    Refresh_Interval  10
+  Name              tail
+  Tag               kube.*
+  Path              /var/log/containers/*.log
+  DB                /var/log/flb_kube.db
+  Parser            docker
+  Docker_Mode       On
+  Mem_Buf_Limit     50MB
+  Skip_Long_Lines   On
+  Refresh_Interval  10
 
 [FILTER]
-    Name                kubernetes
-    Match               kube.*
-    Kube_URL            https://kubernetes.default.svc.cluster.local:443
-    Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
-    Merge_Log           On
-    Buffer_Size         0
-    Use_Kubelet         true
-    Kubelet_Port        10250
+  Name                kubernetes
+  Match               kube.*
+  Kube_URL            https://kubernetes.default.svc.cluster.local:443
+  Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+  Merge_Log           On
+  Buffer_Size         0
+  Use_Kubelet         true
+  Kubelet_Port        10250
 ```
 
 {% endtab %}

@@ -50,7 +50,7 @@ The plugin supports the following rules:
 | `Move_to_start` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the start of the message. |
 | `Move_to_end` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the end of the message. |
 
-- Rules are case insensitive, but parameters aren't.
+- Rules are case-insensitive, but parameters aren't.
 - Any number of rules can be set in a filter instance.
 - Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
 
@@ -71,7 +71,7 @@ The plugin supports the following conditions:
 | `Matching_keys_have_matching_values` | `REGEXP:KEY` | `REGEXP:VALUE` | Is `true` if all keys matching `KEY` have values that match `VALUE`. |
 | `Matching_keys_do_not_have_matching_values` | `REGEXP:KEY` | `REGEXP:VALUE` | Is `true` if all keys matching `KEY` have values that don't match `VALUE`. |
 
-- Conditions are case insensitive, but parameters aren't.
+- Conditions are case-insensitive, but parameters aren't.
 - Any number of conditions can be set.
 - Conditions apply to the whole filter instance and all its rules. _Not_ to individual rules.
 - All conditions must be `true` for the rules to be applied.
@@ -95,18 +95,18 @@ which outputs data similar to the following:
 Using the command line mode requires quotes parse the wildcard properly. The use of a configuration file is recommended.
 
 ```shell
-./fluent-bit -i mem \
-              -p 'tag=mem.local' \
-              -F modify \
-              -p 'Add=Service1 SOMEVALUE' \
-              -p 'Add=Service2 SOMEVALUE3' \
-              -p 'Add=Mem.total2 TOTALMEM2' \
-              -p 'Rename=Mem.free MEMFREE' \
-              -p 'Rename=Mem.used MEMUSED' \
-              -p 'Rename=Swap.total SWAPTOTAL' \
-              -p 'Add=Mem.total TOTALMEM' \
-              -m '*' \
-              -o stdout
+fluent-bit -i mem \
+           -p 'tag=mem.local' \
+           -F modify \
+           -p 'Add=Service1 SOMEVALUE' \
+           -p 'Add=Service2 SOMEVALUE3' \
+           -p 'Add=Mem.total2 TOTALMEM2' \
+           -p 'Rename=Mem.free MEMFREE' \
+           -p 'Rename=Mem.used MEMUSED' \
+           -p 'Rename=Swap.total SWAPTOTAL' \
+           -p 'Add=Mem.total TOTALMEM' \
+           -m '*' \
+           -o stdout
 ```
 
 ### Configuration file
@@ -116,26 +116,26 @@ Using the command line mode requires quotes parse the wildcard properly. The use
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
+  inputs:
+    - name: mem
+      tag: mem.local
 
-    filters:
-        - name: modify
-          match: '*'
-          Add:
-            - Service1 SOMEVALUE
-            - Service3 SOMEVALUE3
-            - Mem.total2 TOTALMEM2
-            - Mem.total TOTALMEM
-          Rename:
-            - Mem.free MEMFREE
-            - Mem.used MEMUSED
-            - Swap.total SWAPTOTAL
+  filters:
+    - name: modify
+      match: '*'
+      Add:
+        - Service1 SOMEVALUE
+        - Service3 SOMEVALUE3
+        - Mem.total2 TOTALMEM2
+        - Mem.total TOTALMEM
+      Rename:
+        - Mem.free MEMFREE
+        - Mem.used MEMUSED
+        - Swap.total SWAPTOTAL
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -143,23 +143,23 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name modify
-    Match *
-    Add Service1 SOMEVALUE
-    Add Service3 SOMEVALUE3
-    Add Mem.total2 TOTALMEM2
-    Rename Mem.free MEMFREE
-    Rename Mem.used MEMUSED
-    Rename Swap.total SWAPTOTAL
-    Add Mem.total TOTALMEM
+  Name modify
+  Match *
+  Add Service1 SOMEVALUE
+  Add Service3 SOMEVALUE3
+  Add Mem.total2 TOTALMEM2
+  Rename Mem.free MEMFREE
+  Rename Mem.used MEMUSED
+  Rename Swap.total SWAPTOTAL
+  Add Mem.total TOTALMEM
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -186,35 +186,35 @@ The output of both the command line and configuration invocations should be iden
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-          interval_sec: 1
+  inputs:
+    - name: mem
+      tag: mem.local
+      interval_sec: 1
 
-    filters:
-        - name: modify
-          match: mem.*
-          Condition:
-              - Key_Does_Not_Exist cpustats
-              - Key_Exists Mem.used
-          Set: cpustats UNKNOWN
+  filters:
+    - name: modify
+      match: mem.*
+      Condition:
+        - Key_Does_Not_Exist cpustats
+        - Key_Exists Mem.used
+      Set: cpustats UNKNOWN
 
-        - name: modify
-          match: mem.*
-          Condition: Key_Value_Does_Not_Equal cpustats KNOWN
-          Add: sourcetype memstats
+    - name: modify
+      match: mem.*
+      Condition: Key_Value_Does_Not_Equal cpustats KNOWN
+      Add: sourcetype memstats
 
-        - name: modify
-          match: mem.*
-          Condition: Key_Value_Equals cpustats UNKNOWN
-          Remove_wildcard:
-              - Mem
-              - Swap
-          Add: cpustats_more STILL_UNKNOWN
-    
-    outputs:
-        - name: stdout
-          match: '*'
+    - name: modify
+      match: mem.*
+      Condition: Key_Value_Equals cpustats UNKNOWN
+      Remove_wildcard:
+        - Mem
+        - Swap
+      Add: cpustats_more STILL_UNKNOWN
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -222,34 +222,34 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
-    Interval_Sec 1
+  Name mem
+  Tag  mem.local
+  Interval_Sec 1
 
 [FILTER]
-    Name    modify
-    Match   mem.*
-    Condition Key_Does_Not_Exist cpustats
-    Condition Key_Exists Mem.used
-    Set cpustats UNKNOWN
+  Name    modify
+  Match   mem.*
+  Condition Key_Does_Not_Exist cpustats
+  Condition Key_Exists Mem.used
+  Set cpustats UNKNOWN
 
 [FILTER]
-    Name    modify
-    Match   mem.*
-    Condition Key_Value_Does_Not_Equal cpustats KNOWN
-    Add sourcetype memstats
+  Name    modify
+  Match   mem.*
+  Condition Key_Value_Does_Not_Equal cpustats KNOWN
+  Add sourcetype memstats
 
 [FILTER]
-    Name    modify
-    Match   mem.*
-    Condition Key_Value_Equals cpustats UNKNOWN
-    Remove_wildcard Mem
-    Remove_wildcard Swap
-    Add cpustats_more STILL_UNKNOWN
+  Name    modify
+  Match   mem.*
+  Condition Key_Value_Equals cpustats UNKNOWN
+  Remove_wildcard Mem
+  Remove_wildcard Swap
+  Add cpustats_more STILL_UNKNOWN
 
 [OUTPUT]
-    Name           stdout
-    Match          *
+  Name           stdout
+  Match          *
 ```
 
 {% endtab %}
@@ -274,28 +274,28 @@ pipeline:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-          interval_sec: 1
+  inputs:
+    - name: mem
+      tag: mem.local
+      interval_sec: 1
 
-    filters:
-        - name: modify
-          match: mem.*
-          Remove_wildcard:
-            - Mem
-            - Swap
-          set:
-            - This_plugin_is_on 🔥
-            - 🔥 is_hot
-            - ❄️ is_cold
-            - 💦 is_wet
-          copy: 🔥 💦
-          rename:  💦 ❄️
-          
-    outputs:
-        - name: stdout
-          match: '*'
+  filters:
+    - name: modify
+      match: mem.*
+      Remove_wildcard:
+        - Mem
+        - Swap
+      set:
+        - This_plugin_is_on 🔥
+        - 🔥 is_hot
+        - ❄️ is_cold
+        - 💦 is_wet
+      copy: 🔥 💦
+      rename:  💦 ❄️
+      
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -303,24 +303,24 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
-    Tag  mem.local
+  Name mem
+  Tag  mem.local
 
 [FILTER]
-    Name modify
-    Match *
-    Remove_Wildcard Mem
-    Remove_Wildcard Swap
-    Set This_plugin_is_on 🔥
-    Set 🔥 is_hot
-    Copy 🔥 💦
-    Rename  💦 ❄️
-    Set ❄️ is_cold
-    Set 💦 is_wet
+  Name modify
+  Match *
+  Remove_Wildcard Mem
+  Remove_Wildcard Swap
+  Set This_plugin_is_on 🔥
+  Set 🔥 is_hot
+  Copy 🔥 💦
+  Rename  💦 ❄️
+  Set ❄️ is_cold
+  Set 💦 is_wet
     
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}

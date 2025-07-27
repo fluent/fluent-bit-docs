@@ -45,34 +45,34 @@ section of the Fluent Bit configuration (not shown).
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          tag: ecs.*
-          path: /var/lib/docker/containers/*/*.log
-          docker_mode: on
-          docker_mode_flush: 5
-          docker_mode_parser: container_firstline
-          parser: docker
-          db: /var/fluent-bit/state/flb_container.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-          read_from_head: off
+  inputs:
+    - name: tail
+      tag: ecs.*
+      path: /var/lib/docker/containers/*/*.log
+      docker_mode: on
+      docker_mode_flush: 5
+      docker_mode_parser: container_firstline
+      parser: docker
+      db: /var/fluent-bit/state/flb_container.db
+      mem_buf_limit: 50MB
+      skip_long_lines: on
+      refresh_interval: 10
+      rotate_wait: 30
+      storage.type: filesystem
+      read_from_head: off
 
-    filters:
-        - name: ecs
-          match: '*'
-          ecs_tag_prefix: ecs.var.lib.docker.containers.
-          add:
-            - ecs_task_id $TaskID
-            - cluster $ClusterName
+  filters:
+    - name: ecs
+      match: '*'
+      ecs_tag_prefix: ecs.var.lib.docker.containers.
+      add:
+        - ecs_task_id $TaskID
+        - cluster $ClusterName
 
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name: stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -80,32 +80,32 @@ pipeline:
 
 ```text
 [INPUT]
-    Name                tail
-    Tag                 ecs.*
-    Path                /var/lib/docker/containers/*/*.log
-    Docker_Mode         On
-    Docker_Mode_Flush   5
-    Docker_Mode_Parser  container_firstline
-    Parser              docker
-    DB                  /var/fluent-bit/state/flb_container.db
-    Mem_Buf_Limit       50MB
-    Skip_Long_Lines     On
-    Refresh_Interval    10
-    Rotate_Wait         30
-    storage.type        filesystem
-    Read_From_Head      Off
+  Name                tail
+  Tag                 ecs.*
+  Path                /var/lib/docker/containers/*/*.log
+  Docker_Mode         On
+  Docker_Mode_Flush   5
+  Docker_Mode_Parser  container_firstline
+  Parser              docker
+  DB                  /var/fluent-bit/state/flb_container.db
+  Mem_Buf_Limit       50MB
+  Skip_Long_Lines     On
+  Refresh_Interval    10
+  Rotate_Wait         30
+  storage.type        filesystem
+  Read_From_Head      Off
 
 [FILTER]
-    Name ecs
-    Match *
-    ECS_Tag_Prefix ecs.var.lib.docker.containers.
-    ADD ecs_task_id $TaskID
-    ADD cluster $ClusterName
+  Name ecs
+  Match *
+  ECS_Tag_Prefix ecs.var.lib.docker.containers.
+  ADD ecs_task_id $TaskID
+  ADD cluster $ClusterName
 
 [OUTPUT]
-    Name stdout
-    Match *
-    Format json_lines
+  Name stdout
+  Match *
+  Format json_lines
 ```
 
 {% endtab %}
@@ -115,10 +115,10 @@ The output log should be similar to:
 
 ```text
 {
-    "date":1665003546.0,
-    "log":"some message from your container",
-    "ecs_task_id" "1234567890abcdefghijklmnop",
-    "cluster": "your_cluster_name",
+  "date":1665003546.0,
+  "log":"some message from your container",
+  "ecs_task_id" "1234567890abcdefghijklmnop",
+  "cluster": "your_cluster_name",
 }
 ```
 
@@ -129,32 +129,32 @@ The output log should be similar to:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          tag: ecs.*
-          path: /var/lib/docker/containers/*/*.log
-          docker_mode: on
-          docker_mode_flush: 5
-          docker_mode_parser: container_firstline
-          parser: docker
-          db: /var/fluent-bit/state/flb_container.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-          read_from_head: off
+  inputs:
+    - name: tail
+      tag: ecs.*
+      path: /var/lib/docker/containers/*/*.log
+      docker_mode: on
+      docker_mode_flush: 5
+      docker_mode_parser: container_firstline
+      parser: docker
+      db: /var/fluent-bit/state/flb_container.db
+      mem_buf_limit: 50MB
+      skip_long_lines: on
+      refresh_interval: 10
+      rotate_wait: 30
+      storage.type: filesystem
+      read_from_head: off
 
-    filters:
-        - name: ecs
-          match: '*'
-          ecs_tag_prefix: ecs.var.lib.docker.containers.
-          add: resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
+  filters:
+    - name: ecs
+      match: '*'
+      ecs_tag_prefix: ecs.var.lib.docker.containers.
+      add: resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
 
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name: stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -162,31 +162,31 @@ pipeline:
 
 ```text
 [INPUT]
-    Name                tail
-    Tag                 ecs.*
-    Path                /var/lib/docker/containers/*/*.log
-    Docker_Mode         On
-    Docker_Mode_Flush   5
-    Docker_Mode_Parser  container_firstline
-    Parser              docker
-    DB                  /var/fluent-bit/state/flb_container.db
-    Mem_Buf_Limit       50MB
-    Skip_Long_Lines     On
-    Refresh_Interval    10
-    Rotate_Wait         30
-    storage.type        filesystem
-    Read_From_Head      Off
+  Name                tail
+  Tag                 ecs.*
+  Path                /var/lib/docker/containers/*/*.log
+  Docker_Mode         On
+  Docker_Mode_Flush   5
+  Docker_Mode_Parser  container_firstline
+  Parser              docker
+  DB                  /var/fluent-bit/state/flb_container.db
+  Mem_Buf_Limit       50MB
+  Skip_Long_Lines     On
+  Refresh_Interval    10
+  Rotate_Wait         30
+  storage.type        filesystem
+  Read_From_Head      Off
 
 [FILTER]
-    Name ecs
-    Match *
-    ECS_Tag_Prefix ecs.var.lib.docker.containers.
-    ADD resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
+  Name ecs
+  Match *
+  ECS_Tag_Prefix ecs.var.lib.docker.containers.
+  ADD resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
 
 [OUTPUT]
-    Name stdout
-    Match *
-    Format json_lines
+  Name stdout
+  Match *
+  Format json_lines
 ```
 
 {% endtab %}
@@ -196,9 +196,9 @@ The output log would be similar to:
 
 ```text
 {
-    "date":1665003546.0,
-    "log":"some message from your container",
-    "resource" "cluster.family.1234567890abcdefghijklmnop.app",
+  "date":1665003546.0,
+  "log":"some message from your container",
+  "resource" "cluster.family.1234567890abcdefghijklmnop.app",
 }
 ```
 
@@ -214,29 +214,29 @@ This example shows a use case for the `Cluster_Metadata_Only` option attaching c
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          tag: ecsagent.*
-          path: /var/log/ecs/*
-          db: /var/fluent-bit/state/flb_ecs.db
-          mem_buf_limit: 50MB
-          skip_long_lines: on
-          refresh_interval: 10
-          rotate_wait: 30
-          storage.type: filesystem
-         # Collect all logs on instance
-          read_from_head: on
+  inputs:
+    - name: tail
+      tag: ecsagent.*
+      path: /var/log/ecs/*
+      db: /var/fluent-bit/state/flb_ecs.db
+      mem_buf_limit: 50MB
+      skip_long_lines: on
+      refresh_interval: 10
+      rotate_wait: 30
+      storage.type: filesystem
+      # Collect all logs on instance
+      read_from_head: on
 
-    filters:
-        - name: ecs
-          match: '*'
-          cluster_metadata_only: on
-          add: cluster $ClusterName
+  filters:
+    - name: ecs
+      match: '*'
+      cluster_metadata_only: on
+      add: cluster $ClusterName
 
-    outputs:
-        - name: stdout
-          match: '*'
-          format: json_lines
+  outputs:
+    - name: stdout
+      match: '*'
+      format: json_lines
 ```
 
 {% endtab %}
@@ -244,28 +244,28 @@ pipeline:
 
 ```text
 [INPUT]
-    Name                tail
-    Tag                 ecsagent.*
-    Path                /var/log/ecs/*
-    DB                  /var/fluent-bit/state/flb_ecs.db
-    Mem_Buf_Limit       50MB
-    Skip_Long_Lines     On
-    Refresh_Interval    10
-    Rotate_Wait         30
-    storage.type        filesystem
-    # Collect all logs on instance
-    Read_From_Head      On
+  Name                tail
+  Tag                 ecsagent.*
+  Path                /var/log/ecs/*
+  DB                  /var/fluent-bit/state/flb_ecs.db
+  Mem_Buf_Limit       50MB
+  Skip_Long_Lines     On
+  Refresh_Interval    10
+  Rotate_Wait         30
+  storage.type        filesystem
+  # Collect all logs on instance
+  Read_From_Head      On
 
 [FILTER]
-    Name ecs
-    Match *
-    Cluster_Metadata_Only On
-    ADD cluster $ClusterName
+  Name ecs
+  Match *
+  Cluster_Metadata_Only On
+  ADD cluster $ClusterName
 
 [OUTPUT]
-    Name stdout
-    Match *
-    Format json_lines
+  Name stdout
+  Match *
+  Format json_lines
 ```
 
 {% endtab %}
