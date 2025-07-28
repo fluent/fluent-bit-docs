@@ -57,6 +57,7 @@ exceptions:
   - GCP
   - GitLab
   - GitHub
+  - Go
   - Google
   - Google Cloud
   - Google Cloud BigQuery
@@ -85,6 +86,7 @@ exceptions:
   - LTSV
   - macOS
   - Marketplace
+  - MessagePack
   - Microsoft Fabric
   - MongoDB
   - NATS
@@ -127,6 +129,7 @@ exceptions:
   - Visual
   - Vivo Exporter
   - VS
+  - Wasm
   - WebSocket
   - Windows
   - YAML
