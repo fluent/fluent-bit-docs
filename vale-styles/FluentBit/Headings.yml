@@ -107,6 +107,7 @@ exceptions:
   - REST
   - ServiceMonitor
   - SignalFx
+  - SIMD
   - Slack
   - SSL
   - StatsD
