@@ -40,4 +40,4 @@ Fluent Bit Workshop for Getting Started with Cloud Native Telemetry Pipelines
 
 This workshop by Amazon goes through common Kubernetes logging patterns and routing data to OpenSearch and visualizing with OpenSearch dashboards
 
-{% embed url="https://archive.eksworkshop.com/intermediate/230_logging/" %}
+{% embed url="https://eksworkshop.com/" %}
