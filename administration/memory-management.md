@@ -1,7 +1,5 @@
 # Memory management
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5cc3ce54-e910-4ebf-85f5-f02530b3e11b" />
-
 You might need to estimate how much memory Fluent Bit could be using in scenarios like containerized environments where memory limits are essential.
 
 To make an estimate, in-use input plugins must set the `Mem_Buf_Limit`option. Learn more about it in [Backpressure](backpressure.md).
@@ -22,8 +20,8 @@ It's strongly suggested that in any production environment, Fluent Bit should be
 
 Use the following command to determine if Fluent Bit has been built with jemalloc:
 
-```bash
-bin/fluent-bit -h | grep JEMALLOC
+```shell
+fluent-bit -h | grep JEMALLOC
 ```
 
 The output should look like:

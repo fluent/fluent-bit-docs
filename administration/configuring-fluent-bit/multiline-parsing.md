@@ -77,7 +77,6 @@ rules:
 ```
 
 {% endtab %}
-
 {% tab title="parsers_multiline.conf" %}
 
 ```text
@@ -110,88 +109,54 @@ This is the primary Fluent Bit YAML configuration file. It includes the `parsers
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers_multiline.yaml
+  flush: 1
+  log_level: info
+  parsers_file: parsers_multiline.yaml
 
 pipeline:
-    inputs:
-      - name: tail
-        path: test.log
-        read_from_head: true
-        multiline.parser: multiline-regex-test
+  inputs:
+    - name: tail
+      path: test.log
+      read_from_head: true
+      multiline.parser: multiline-regex-test
 
-    outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
 
 ```text
 [SERVICE]
-    flush        1
-    log_level    info
-    parsers_file parsers_multiline.conf
+  flush        1
+  log_level    info
+  parsers_file parsers_multiline.conf
 
 [INPUT]
-    name             tail
-    path             test.log
-    read_from_head   true
-    multiline.parser multiline-regex-test
+  name             tail
+  path             test.log
+  read_from_head   true
+  multiline.parser multiline-regex-test
 
 [OUTPUT]
-    name             stdout
-    match            *
+  name             stdout
+  match            *
 ```
 
 {% endtab %}
-
 {% tab title="parsers_multiline.yaml" %}
 
 This file defines a multiline parser for the YAML configuration example.
 
 ```yaml
 multiline_parsers:
-    - name: multiline-regex-test
-      type: regex
-      flush_timeout: 1000
-      #
-      # Regex rules for multiline parsing
-      # ---------------------------------
-      #
-      # configuration hints:
-      #
-      #  - first state always has the name: start_state
-      #  - every field in the rule must be inside double quotes
-      #
-      # rules |   state name  | regex pattern                  | next state
-      # ------|---------------|--------------------------------------------
-      rules:
-        - state: start_state
-          regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
-          next_state: cont
-        - state: cont
-          regex: '/^\s+at.*/'
-          next_state: cont
-```
-
-
-{% endtab %}
-
-{% tab title="parsers_multiline.conf" %}
-
-This second file defines a multiline parser for the classic configuration example.
-
-```text
-[MULTILINE_PARSER]
-    name          multiline-regex-test
-    type          regex
-    flush_timeout 1000
+  - name: multiline-regex-test
+    type: regex
+    flush_timeout: 1000
     #
     # Regex rules for multiline parsing
     # ---------------------------------
@@ -203,12 +168,41 @@ This second file defines a multiline parser for the classic configuration exampl
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-    rule      "cont"          "/^\s+at.*/"                     "cont"
+    rules:
+      - state: start_state
+        regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+        next_state: cont
+      - state: cont
+        regex: '/^\s+at.*/'
+        next_state: cont
 ```
 
 {% endtab %}
+{% tab title="parsers_multiline.conf" %}
 
+This second file defines a multiline parser for the classic configuration example.
+
+```text
+[MULTILINE_PARSER]
+  name          multiline-regex-test
+  type          regex
+  flush_timeout 1000
+  #
+  # Regex rules for multiline parsing
+  # ---------------------------------
+  #
+  # configuration hints:
+  #
+  #  - first state always has the name: start_state
+  #  - every field in the rule must be inside double quotes
+  #
+  # rules |   state name  | regex pattern                  | next state
+  # ------|---------------|--------------------------------------------
+  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  rule      "cont"          "/^\s+at.*/"                     "cont"
+```
+
+{% endtab %}
 {% tab title="test.log" %}
 
 The example log file with multiline content:
@@ -269,111 +263,72 @@ The following example retrieves `date` and `message` from concatenated logs.
 Example files content:
 
 {% tabs %}
-
 {% tab title="fluent-bit.yaml" %}
 
 This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser `named-capture-test`.  Then it sends the processing to the standard output.
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers_multiline.yaml
+  flush: 1
+  log_level: info
+  parsers_file: parsers_multiline.yaml
 
 pipeline:
-    inputs:
-      - name: tail
-        path: test.log
-        read_from_head: true
-        multiline.parser: multiline-regex-test
+  inputs:
+    - name: tail
+      path: test.log
+      read_from_head: true
+      multiline.parser: multiline-regex-test
 
-    filters:
-      - name: parser
-        match: '*'
-        key_name: log
-        parser: named-capture-test
+  filters:
+    - name: parser
+      match: '*'
+      key_name: log
+      parser: named-capture-test
 
-    outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file  `test.log` by applying the multiline parser `multiline-regex-test`. It also parses concatenated log by applying parser  `named-capture-test`. Then it sends the processing to the standard output.
 
 ```text
 [SERVICE]
-    flush        1
-    log_level    info
-    parsers_file parsers_multiline.conf
+  flush        1
+  log_level    info
+  parsers_file parsers_multiline.conf
 
 [INPUT]
-    name             tail
-    path             test.log
-    read_from_head   true
-    multiline.parser multiline-regex-test
+  name             tail
+  path             test.log
+  read_from_head   true
+  multiline.parser multiline-regex-test
 
 [FILTER]
-    name             parser
-    match            *
-    key_name         log
-    parser           named-capture-test
+  name             parser
+  match            *
+  key_name         log
+  parser           named-capture-test
 
 [OUTPUT]
-    name             stdout
-    match            *
+  name             stdout
+  match            *
 ```
 
 {% endtab %}
-
 {% tab title="parsers_multiline.yaml" %}
 
 This file defines a multiline parser for the YAML example.
 
 ```yaml
 multiline_parsers:
-    - name: multiline-regex-test
-      type: regex
-      flush_timeout: 1000
-      #
-      # Regex rules for multiline parsing
-      # ---------------------------------
-      #
-      # configuration hints:
-      #
-      #  - first state always has the name: start_state
-      #  - every field in the rule must be inside double quotes
-      #
-      # rules |   state name  | regex pattern                  | next state
-      # ------|---------------|--------------------------------------------
-      rules:
-        - state: start_state
-          regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
-          next_state:  cont
-        - state: cont
-          regex: '/^\s+at.*/'
-          next_state: cont
-
-parsers:
-    - name: named-capture-test
-      format: regex
-      regex: '/^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m'
- ```
-
-{% endtab %}
-
-{% tab title="parsers_multiline.conf" %}
-
-This file defines a multiline parser for the classic example.
-
-```text
-[MULTILINE_PARSER]
-    name          multiline-regex-test
-    type          regex
-    flush_timeout 1000
+  - name: multiline-regex-test
+    type: regex
+    flush_timeout: 1000
     #
     # Regex rules for multiline parsing
     # ---------------------------------
@@ -385,17 +340,52 @@ This file defines a multiline parser for the classic example.
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-    rule      "cont"          "/^\s+at.*/"                     "cont"
+    rules:
+      - state: start_state
+        regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+        next_state:  cont
+    
+      - state: cont
+        regex: '/^\s+at.*/'
+        next_state: cont
+
+parsers:
+  - name: named-capture-test
+    format: regex
+    regex: '/^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m'
+ ```
+
+{% endtab %}
+{% tab title="parsers_multiline.conf" %}
+
+This file defines a multiline parser for the classic example.
+
+```text
+[MULTILINE_PARSER]
+  name          multiline-regex-test
+  type          regex
+  flush_timeout 1000
+  #
+  # Regex rules for multiline parsing
+  # --------------------------------- 
+  #
+  # configuration hints:  
+  #
+  #  - first state always has the name: start_state
+  #  - every field in the rule must be inside double quotes
+  #
+  # rules |   state name  | regex pattern                  | next state
+  # ------|---------------|--------------------------------------------
+  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  rule      "cont"          "/^\s+at.*/"                     "cont"
 
 [PARSER]
-    Name named-capture-test
-    Format regex
-    Regex /^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m
+  Name named-capture-test
+  Format regex
+  Regex /^(?<date>[a-zA-Z]+ \d+ \d+\:\d+\:\d+) (?<message>.*)/m
 ```
 
 {% endtab %}
-
 {% tab title="test.log" %}
 
 The example log file with multiline content:
