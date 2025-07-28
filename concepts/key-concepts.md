@@ -13,7 +13,7 @@ Before diving into [Fluent Bit](https://fluentbit.io) you might want to get acqu
 - Match
 - Structured Message
 
-## Event or Record
+## Events or records
 
 Every incoming piece of data that belongs to a log or a metric that's retrieved by Fluent Bit is considered an _Event_ or a _Record_.
 
