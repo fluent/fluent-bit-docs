@@ -10,21 +10,26 @@ Fluent Bit supports the following architectures:
 
 ## Single line install
 
-Fluent Bit provides an installation script to use for most Linux targets.This will always install the most recently released version.
+Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
 
 ```bash
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
-This is a convenience helper and should always be validated prior to use. Older versions of this install script will not support auto-detecting Rocky or Alma Linux. The recommended secure deployment approach is to use the following instructions:
+This is a convenience helper and should always be validated prior to use. Older versions of this install script won't support auto-detecting Rocky or Alma Linux. The recommended secure deployment approach is to use the following instructions:
 
 ## RHEL 9
 
-From CentOS 9 Stream onwards, the CentOS dependencies will update more often than downstream usage. This may mean that incompatible (more recent) versions are provided of certain dependencies (e.g. OpenSSL). For OSS, we also provide RockyLinux and AlmaLinux repositories. This may be required for RHEL 9 as well which will no longer track equivalent CentOS 9 stream dependencies. No RHEL 9 build is provided, it is expected to use one of the OSS variants listed.
+From CentOS 9 Stream and later, the CentOS dependencies will update more often than
+downstream usage. This might mean that incompatible (more recent) versions are
+provided of certain dependencies (for example, OpenSSL). For OSS, there are RockyLinux
+and AlmaLinux repositories. This might be required for RHEL 9 as well which will no
+longer track equivalent CentOS 9 stream dependencies. No RHEL 9 build is provided, it
+is expected to use one of the OSS variants listed.
 
-## Configure Yum
+## Configure YUM
 
-The `fluent-bit` is provided through a Yum repository. To add the repository reference to your system:
+The `fluent-bit` package is provided through a Yum repository. To add the repository reference to your system:
 
 1. In `/etc/yum.repos.d/`, add a new file called `fluent-bit.repo`.
 1. Add the following content to the file - replace `almalinux` with `rockylinux` if required:

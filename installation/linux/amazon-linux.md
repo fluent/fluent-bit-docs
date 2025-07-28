@@ -19,7 +19,7 @@ curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 
 This is a convenience helper and should always be validated prior to use. The recommended secure deployment approach is to use the following instructions:
 
-## Configure Yum
+## Configure YUM
 
 The `fluent-bit` is provided through a Yum repository. To add the repository reference to your system, add a new file called `fluent-bit.repo` in `/etc/yum.repos.d/` with the following content:
 

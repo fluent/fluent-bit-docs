@@ -106,6 +106,7 @@ exceptions:
   - Raspberry Pi
   - REPL
   - REST
+  - RHEL
   - ServiceMonitor
   - SignalFx
   - SIMD
@@ -130,3 +131,4 @@ exceptions:
   - WebSocket
   - Windows
   - YAML
+  - YUM
