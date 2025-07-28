@@ -16,6 +16,7 @@ exceptions:
   - ASC
   - ASP
   - AWS
+  - BSD
   - CIDR
   - CLI
   - CORS
@@ -41,6 +42,7 @@ exceptions:
   - GCP
   - GCS
   - GDB
+  - GELF
   - GET
   - GNU
   - GPG
@@ -78,6 +80,7 @@ exceptions:
   - NOTE
   - NVDA
   - OAP
+  - OOM
   - OSS
   - PATH
   - PEM
@@ -99,6 +102,7 @@ exceptions:
   - SHA
   - SIEM
   - SLA
+  - SNI
   - SQL
   - SSH
   - SSL

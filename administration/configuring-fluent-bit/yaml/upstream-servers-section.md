@@ -1,6 +1,6 @@
 # Upstream servers
 
-The `upstream_servers` section defines a group of endpoints, referred to as nodes. Nodes are used by output plugins to distribute data in a round-robin fashion. This is useful for plugins that require load balancing when sending data. Examples of plugins that support this capability include [Forward](https://docs.fluentbit.io/manual/pipeline/outputs/forward) and [Elasticsearch](https://docs.fluentbit.io/manual/pipeline/outputs/elasticsearch).
+The `upstream_servers` section defines a group of endpoints, referred to as nodes. Nodes are used by output plugins to distribute data in a round-robin fashion. Use this section for plugins that require load balancing when sending data. Examples of plugins that support this capability include [Forward](https://docs.fluentbit.io/manual/pipeline/outputs/forward) and [Elasticsearch](https://docs.fluentbit.io/manual/pipeline/outputs/elasticsearch).
 
 The `upstream_servers` section require specifying a `name` for the group and a list
 of `nodes`. The following example defines two upstream server groups, `forward-balancing` and `forward-balancing-2`:

@@ -45,6 +45,9 @@ exceptions:
   - Docker
   - Docker Hub
   - DogStatsD
+  - EC2
+  - ECS
+  - EKS
   - Elastic Cloud
   - Emmet
   - EventBridge
@@ -69,7 +72,7 @@ exceptions:
   - JSON
   - Kafka
   - Kafka Producer
-  - Kafka REST
+  - Kafka
   - Kinesis
   - KQL
   - Kubernetes
@@ -87,6 +90,7 @@ exceptions:
   - NATS
   - New Relic
   - Observability Platform
+  - OIDC
   - Okta
   - OpenMetrics
   - OpenSearch
@@ -95,13 +99,16 @@ exceptions:
   - Opsgenie
   - Oracle Cloud Infrastructure Logging Analytics
   - PagerDuty
+  - Pod Identity
   - PostgreSQL
   - Prometheus
   - PromQL
   - Raspberry Pi
   - REPL
+  - REST
   - ServiceMonitor
   - SignalFx
+  - SIMD
   - Slack
   - SSL
   - StatsD
@@ -112,6 +119,7 @@ exceptions:
   - Telemetry Pipeline
   - Terraform
   - TLS
+  - Transport Layer Security
   - Treasure Data
   - TypeScript
   - URLs
@@ -121,3 +129,4 @@ exceptions:
   - VS
   - WebSocket
   - Windows
+  - YAML

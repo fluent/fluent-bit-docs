@@ -1,7 +1,3 @@
----
-description: This page describes the main configuration file used by Fluent Bit.
----
-
 # Configuration file
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
@@ -119,7 +115,7 @@ The following is an example of an `OUTPUT` section:
     Match my*cpu
 ```
 
-### Example: collecting CPU metrics
+### Collecting `cpu` metrics example
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
@@ -138,7 +134,7 @@ The following configuration file example demonstrates how to collect CPU metrics
     Match my*cpu
 ```
 
-## Config Include File
+## Config include file
 
 To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file. The `@INCLUDE` can be used in the following way:
 

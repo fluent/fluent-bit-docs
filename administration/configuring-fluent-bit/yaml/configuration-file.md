@@ -26,7 +26,7 @@ The YAML configuration file doesn't support the following sections:
 YAML configuration is used in the smoke tests for containers. An always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
 {% endhint %}
 
-## Env
+## `env`
 
 The `env` section allows the definition of configuration variables that will be used later in the configuration file.
 
@@ -79,7 +79,7 @@ The `service` section defines the global properties of the service. The Service 
 | `coro_stack_size` | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Don't set too small a value (for example, `4096`), or coroutine threads can overrun the stack buffer. Don't change the default value of this parameter unless you know what you are doing. | `24576` |
 | `scheduler.cap`   | Set a maximum retry time in seconds. Supported from v1.8.7. | `2000` |
 | `scheduler.base`  | Sets the base of exponential backoff. Supported from v1.8.7. | `5` |
-| `json.convert_nan_to_null` | If enabled, NaN is converted to null when fluent-bit converts msgpack to JSON. | `false` |
+| `json.convert_nan_to_null` | If enabled, NaN is converted to null when Fluent Bit converts `msgpack` to JSON. | `false` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true |
 
 The following is an example of a `service` section:
@@ -122,7 +122,7 @@ pipeline:
           port: 8080
 ```
 
-This pipeline consists of two `inputs`: a tail plugin and an HTTP server plugin. Each plugin has its own map in the array of `inputs` consisting of simple properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, such as the `record` and `allowlist_key` properties for the `record_modifier` `filter`:
+This pipeline consists of two `inputs`: a tail plugin and an HTTP server plugin. Each plugin has its own map in the array of `inputs` consisting of basic properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, such as the `record` and `allowlist_key` properties for the `record_modifier` `filter`:
 
 ```yaml
 pipeline:
@@ -214,7 +214,7 @@ pipeline:
           match: 'my*cpu'
 ```
 
-#### Example: collecting CPU metrics
+#### Collecting `cpu` metrics example
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
@@ -235,7 +235,7 @@ pipeline:
 
 ## Processors
 
-Fluent-Bit 2.1.2 and greater implements an interface called "processor" to extend the processing capabilities in input and output plugins directly without routing the data. The input and output plugins can run in separate threads. This interface allows users to apply data transformations and filtering to incoming data records before they're processed further in the pipeline.
+Fluent Bit 2.1.2 and greater implements an interface called `processor` to extend the processing capabilities in input and output plugins directly without routing the data. The input and output plugins can run in separate threads. This interface allows users to apply data transformations and filtering to incoming data records before they're processed further in the pipeline.
 
 This capability is only exposed in YAML configuration and not in classic configuration mode due to the restriction of nested levels of configuration.
 

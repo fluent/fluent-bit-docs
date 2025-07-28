@@ -22,7 +22,7 @@ To use TLS on input plugins, you must provide both a certificate and a private k
 
 The listed properties can be enabled in the configuration file, specifically in each output plugin section or directly through the command line.
 
-The following **output** plugins can take advantage of the TLS feature:
+The following output plugins can take advantage of the TLS feature:
 
 - [Amazon S3](../pipeline/outputs/s3.md)
 - [Apache SkyWalking](../pipeline/outputs/skywalking.md)
@@ -51,11 +51,11 @@ The following **output** plugins can take advantage of the TLS feature:
 - [Splunk](../pipeline/outputs/splunk.md)
 - [Stackdriver](../pipeline/outputs/stackdriver.md)
 - [Syslog](../pipeline/outputs/syslog.md)
-- [TCO and TLS](../pipeline/outputs/tcp-and-tls.md)
+- [TCP and TLS](../pipeline/outputs/tcp-and-tls.md)
 - [Treasure Data](../pipeline/outputs/treasure-data.md)
 - [WebSocket](../pipeline/outputs/websocket.md)
 
-The following **input** plugins can take advantage of the TLS feature:
+The following input plugins can take advantage of the TLS feature:
 
 - [Docker Events](../pipeline/inputs/docker-events.md)
 - [Elasticsearch (Bulk API)](../pipeline/inputs/elasticsearch.md)
@@ -93,7 +93,7 @@ fluent-bit -i http \
 
 {% hint style="info" %}
 
-See the Tips and Tricks section below for details on generating `self_signed.crt` and `self_signed.key` files shown in these examples.
+See the Tips and Tricks section for details on generating `self_signed.crt` and `self_signed.key` files shown in these examples.
 
 {% endhint %}
 
@@ -194,7 +194,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Tips and Tricks
+## Tips and tricks
 
 ### Generate a self-signed certificates for testing purposes
 

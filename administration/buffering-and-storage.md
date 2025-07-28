@@ -105,7 +105,7 @@ Fluent Bit controls the number of chunks that are `up` in memory by using the fi
 
 By default, the engine allows a total of 128 chunks `up` in memory in total, considering all chunks. This value is controlled by the service property `storage.max_chunks_up`. The active chunks that are `up` are ready for delivery and are still receiving records. Any other remaining chunk is in a `down` state, which means that it's only in the filesystem and won't be `up` in memory unless it's ready to be delivered. Chunks are never much larger than 2&nbsp;MB, so with the default `storage.max_chunks_up` value of 128, each input is limited to roughly 256&nbsp;MB of memory.
 
-If the input plugin has enabled `storage.type` as `filesystem`, when reaching the `storage.max_chunks_up` threshold, instead of the plugin being paused, all new data will go to chunks that are `down` in the filesystem. This lets you control memory usage by the service and also provides a guarantee that the service won't lose any data. By default, the enforcement of the `storage.max_chunks_up` limit is best-effort. Fluent Bit can only append new data to chunks that are `up`. When the limit is reached chunks will be temporarily brought `up` in memory to ingest new data, and then put to a `down` state afterwards. In general, Fluent Bit works to keep the total number of `up` chunks at or below `storage.max_chunks_up`.
+If the input plugin has enabled `storage.type` as `filesystem`, when reaching the `storage.max_chunks_up` threshold, instead of the plugin being paused, all new data will go to chunks that are `down` in the filesystem. This lets you control memory usage by the service and also provides a guarantee that the service won't lose any data. By default, the enforcement of the `storage.max_chunks_up` limit is best-effort. Fluent Bit can only append new data to chunks that are `up`. When the limit is reached chunks will be temporarily brought `up` in memory to ingest new data, and then put to a `down` state afterwards. In general, Fluent Bit works to keep the total number of `up` chunks at or under `storage.max_chunks_up`.
 
 If `storage.pause_on_chunks_overlimit` is enabled (default is off), the input plugin pauses upon exceeding `storage.max_chunks_up`. With this option, `storage.max_chunks_up` becomes a hard limit for the input. When the input is paused, records won't be ingested until the plugin resumes. For some inputs, such as TCP and tail, pausing the input will almost certainly lead to log loss. For the tail input, Fluent Bit can save its current offset in the current file it's reading, and pick back up when the input is resumed.
 
@@ -122,7 +122,7 @@ Fluent Bit implements the concept of logical queues. Based on its tag, a chunk c
 
 It's common to find cases where multiple destinations with different response times exist for a chunk, or one of the destinations is generating backpressure.
 
-To limit the amount of filesystem chunks logically queueing, Fluent Bit v1.6 and later includes the `storage.total_limit_size` configuration property for output This property limits the total size in bytes of chunks that can exist in the filesystem for a certain logical output destination. If one of the destinations reaches the configured `storage.total_limit_size`, the oldest chunk from its queue for that logical output destination will be discarded to make room for new data.
+To limit the amount of filesystem chunks logically queueing, Fluent Bit v1.6 and later includes the `storage.total_limit_size` configuration property for output. This property limits the total size in bytes of chunks that can exist in the filesystem for a certain logical output destination. If one of the destinations reaches the configured `storage.total_limit_size`, the oldest chunk from its queue for that logical output destination will be discarded to make room for new data.
 
 ## Configuration
 
@@ -145,9 +145,9 @@ The Service section refers to the section defined in the main [configuration fil
 | `storage.checksum` | Enable the data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. Accepted values: `Off`, `On`. | `Off` |
 | `storage.max_chunks_up` | If the input plugin has enabled `filesystem` storage type, this property sets the maximum number of chunks that can be `up` in memory. Use this setting to control memory usage when you enable `storage.type filesystem`. | `128` |
 | `storage.backlog.mem_limit` | If `storage.path` is set, Fluent Bit looks for data chunks that weren't delivered and are still in the storage layer. These are called _backlog_ data. _Backlog chunks_ are filesystem chunks that were left over from a previous Fluent Bit run; chunks that couldn't be sent before exit that Fluent Bit will pick up when restarted. Fluent Bit will check the `storage.backlog.mem_limit` value against the current memory usage from all `up` chunks for the input. If the `up` chunks currently consume less memory than the limit, it will bring the _backlog_ chunks up into memory so they can be sent by outputs. | `5M` |
-| `storage.backlog.flush_on_shutdown` | When enabled, Fluent Bit will attempt to flush all backlog filesystem chunks to their destination(s) during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but may increase shutdown time. Accepted values: `Off`, `On`. | `Off` |
+| `storage.backlog.flush_on_shutdown` | When enabled, Fluent Bit will attempt to flush all backlog filesystem chunks to their destination during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but can increase shutdown time. Accepted values: `Off`, `On`. | `Off` |
 | `storage.metrics` | If `http_server` option is enabled in the main `[SERVICE]` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details refer to the [Monitoring](monitoring.md) section. | `off` |
-| `storage.delete_irrecoverable_chunks` | When enabled, [irrecoverable chunks](./buffering-and-storage.md#irrecoverable-chunks) will be deleted during runtime, and any other irrecoverable chunk located in the configured storage path directory will be deleted when Fluent-Bit starts. Accepted values: 'Off`, 'On`. | `Off` |
+| `storage.delete_irrecoverable_chunks` | When enabled, [irrecoverable chunks](./buffering-and-storage.md#irrecoverable-chunks) will be deleted during runtime, and any other irrecoverable chunk located in the configured storage path directory will be deleted when Fluent Bit starts. Accepted values: `Off`, 'On`. | `Off` |
 
 A Service section will look like this:
 
@@ -184,7 +184,7 @@ service:
 
 This configuration sets an optional buffering mechanism where the route to the data is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without running a checksum and up to a maximum of 5&nbsp;MB of memory when processing backlog data.
 
-### Input Section Configuration
+### Input section configuration
 
 Optionally, any Input plugin can configure their storage preference. The following table describes the options available:
 
@@ -242,7 +242,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Output Section Configuration
+### Output section configuration
 
 If certain chunks are filesystem `storage.type` based, it's possible to control the size of the logical queue for an output plugin. The following table describes the options available:
 
@@ -302,4 +302,5 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-If Fluent Bit is offline because of a network issue, it will continue buffering CPU samples, keeping a maximum of 5&nbsp;MB of the newest data.
+If Fluent Bit is offline because of a network issue, it will continue buffering CPU
+samples, keeping a maximum of 5&nbsp;MB of the newest data.

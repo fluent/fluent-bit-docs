@@ -59,7 +59,7 @@ A rule specifies how to match a multiline pattern and perform the concatenation.
 - regular expression pattern
 - next state
 
-A rule might be defined as follows (comments added to simplify the definition) in corresponding YAML and classic configuration examples below:
+A rule might be defined as follows (comments added to simplify the definition) in the corresponding YAML and classic configuration examples:
 
 {% tabs %}
 {% tab title="parsers_multiline.yaml" %}
@@ -99,7 +99,7 @@ To simplify the configuration of regular expressions, you can use the [Rubular](
 
 #### Configuration example
 
-The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition  explained previously. It is provided in corresponding YAML and classic configuration examples below:
+The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition explained previously. It's provided in following YAML and classic configuration examples:
 
 {% tabs %}
 
@@ -344,7 +344,7 @@ multiline_parsers:
       - state: start_state
         regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
         next_state:  cont
-    
+
       - state: cont
         regex: '/^\s+at.*/'
         next_state: cont
@@ -367,9 +367,9 @@ This file defines a multiline parser for the classic example.
   flush_timeout 1000
   #
   # Regex rules for multiline parsing
-  # --------------------------------- 
+  # ---------------------------------
   #
-  # configuration hints:  
+  # configuration hints:
   #
   #  - first state always has the name: start_state
   #  - every field in the rule must be inside double quotes

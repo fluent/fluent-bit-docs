@@ -125,7 +125,7 @@ This response means Tap is active. The terminal with Fluent Bit running should n
 
 All the records that display are those emitted by the activities of the dummy plugin.
 
-### Complex Tap example
+### Tap example (complex)
 
 This example takes the same steps but demonstrates how the mechanism works with more complicated configurations.
 

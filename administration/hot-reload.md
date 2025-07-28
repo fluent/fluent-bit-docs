@@ -54,18 +54,6 @@ For using curl to reload Fluent Bit, users must specify an empty request body as
 curl -X POST -d '{}' localhost:2020/api/v2/reload
 ```
 
-### Signal
-
-Hot reloading can be used with `SIGHUP`.
-
-`SIGHUP` signal isn't supported on Windows.
-
-## Confirm a reload
-
-Use one of the following methods to confirm the reload occurred.
-
-### HTTP
-
 Obtain a count of hot reload using the HTTP endpoint:
 
 - `GET /api/v2/reload`
@@ -77,3 +65,13 @@ The endpoint returns `hot_reload_count` as follows:
 ```
 
 The default value of the counter is `0`.
+
+### Signal
+
+Hot reloading can be used with `SIGHUP`.
+
+`SIGHUP` signal isn't supported on Windows.
+
+## Confirm a reload
+
+Use one of the following methods to confirm the reload occurred.
