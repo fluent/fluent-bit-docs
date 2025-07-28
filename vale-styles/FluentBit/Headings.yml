@@ -44,6 +44,9 @@ exceptions:
   - Docker
   - Docker Hub
   - DogStatsD
+  - EC2
+  - ECS
+  - EKS
   - Elastic Cloud
   - Emmet
   - EventBridge
@@ -86,6 +89,7 @@ exceptions:
   - NATS
   - New Relic
   - Observability Platform
+  - OIDC
   - Okta
   - OpenMetrics
   - OpenSearch
@@ -94,6 +98,7 @@ exceptions:
   - Opsgenie
   - Oracle Cloud Infrastructure Logging Analytics
   - PagerDuty
+  - Pod Identity
   - PostgreSQL
   - Prometheus
   - PromQL

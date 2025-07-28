@@ -23,11 +23,11 @@ The shared settings evaluate in the following order:
 | Setting | File | Description |
 |---|---|---|
 | `credential_process` | `config` | Linux only. See [Sourcing credentials with an external process in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html). |
-| `aws_access_key_id`<br />`aws_secret_access_key`<br />`aws_session_token` | `credentials` | Access key ID and secret key to use to authenticate. The session token must be set for temporary credentials. |
+| `aws_access_key_id`, `aws_secret_access_key`, `aws_session_token` | `credentials` | Access key ID and secret key to use to authenticate. The session token must be set for temporary credentials. |
 
 No other settings are supported.
 
-## EKS Web Identity Token (OIDC)
+## EKS web identity token (OIDC)
 
 Credentials are fetched using a signed web identity token for a Kubernetes service account. See [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
 
