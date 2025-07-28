@@ -71,7 +71,7 @@ exceptions:
   - JSON
   - Kafka
   - Kafka Producer
-  - Kafka REST
+  - Kafka
   - Kinesis
   - KQL
   - Kubernetes
@@ -104,6 +104,7 @@ exceptions:
   - PromQL
   - Raspberry Pi
   - REPL
+  - REST
   - ServiceMonitor
   - SignalFx
   - Slack

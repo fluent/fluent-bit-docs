@@ -61,7 +61,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Start Fluent bit with the corresponding configuration chosen previously:
+Start Fluent Bit with the corresponding configuration chosen previously:
 
 ```shell
 # For YAML configuration.
@@ -122,7 +122,7 @@ Fluent Bit exposes the following endpoints for monitoring.
 | `/api/v1/health`             | Display the Fluent Bit health check result. | String |
 | `/api/v2/metrics`            | Display internal metrics per loaded plugin. | [cmetrics text format](https://github.com/fluent/cmetrics) |
 | `/api/v2/metrics/prometheus` | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
-| `/api/v2/reload             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
+| `/api/v2/reload`             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
 
 ### v1 metrics
 
@@ -137,7 +137,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 - **Record**: a single message collected from a source, such as a single long line in a file.
 - **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
 
-  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can either successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
+  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
 
 | Metric name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
@@ -372,7 +372,7 @@ When querying the related metrics, the aliases are returned instead of the plugi
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=0b83cb05-4f52-4853-83cc-f4539b64044d" />
 
-You can create Grafana dashboards and alerts using Fluent Bit's exposed Prometheus style metrics.
+You can create Grafana dashboards and alerts using Fluent Bit exposed Prometheus style metrics.
 
 The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://github.com/banzaicloud)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few key differences, such as the use of the `instance` label, stacked graphs, and a focus on Fluent Bit metrics. See [this blog post](https://www.robustperception.io/controlling-the-instance-label) for more information.
 
@@ -384,7 +384,7 @@ Sample alerts [are available](https://github.com/fluent/fluent-bit-docs/blob/mas
 
 ## Health check for Fluent Bit
 
-Fluent bit supports the following configurations to set up the health check.
+Fluent Bit supports the following configurations to set up the health check.
 
 | Configuration name     | Description | Default       |
 | ---------------------- | ------------| ------------- |
@@ -472,4 +472,6 @@ Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 secon
 
 ## Telemetry Pipeline
 
-[Telemetry Pipeline](https://chronosphere.io/platform/telemetry-pipeline/) is a hosted service that lets you monitor your Fluent Bit agents including data flow, metrics, and configurations.
+[Telemetry Pipeline](https://chronosphere.io/platform/telemetry-pipeline/) is a
+hosted service that lets you monitor your Fluent Bit agents including data flow,
+metrics, and configurations.
