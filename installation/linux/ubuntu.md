@@ -45,10 +45,16 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 ## Update your sources lists
 
-On Ubuntu, you need to add the Fluent Bit APT server entry to your sources lists. Ensure `CODENAME` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases). For example, `focal` for Ubuntu 20.04.
+On Ubuntu, you need to add the Fluent Bit APT server entry to your sources lists.
+Ensure `codename` is set to your specific [Ubuntu release name](https://wiki.ubuntu.com/Releases). For example, `focal` for Ubuntu 20.04.
 
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/${CODENAME} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
+codename=$(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release 2>/dev/null || lsb_release -cs 2>/dev/null)
+```
+Now Update your sources listes 
+
+```bash
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$codename $codename main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database
