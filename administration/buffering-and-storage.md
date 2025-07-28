@@ -56,27 +56,26 @@ Choose your preferred format for an example input definition:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tcp
-          listen: 0.0.0.0
-          port: 5170
-          format: none
-          tag: tcp-logs
-          mem_buf_limit: 50MB
+  inputs:
+    - name: tcp
+      listen: 0.0.0.0
+      port: 5170
+      format: none
+      tag: tcp-logs
+      mem_buf_limit: 50MB
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name          tcp
-    Listen        0.0.0.0
-    Port          5170
-    Format        none
-    Tag           tcp-logs
-    Mem_Buf_Limit 50MB
+  Name          tcp
+  Listen        0.0.0.0
+  Port          5170
+  Format        none
+  Tag           tcp-logs
+  Mem_Buf_Limit 50MB
 ```
 
 {% endtab %}
@@ -89,8 +88,9 @@ If this input uses more than 50&nbsp;MB memory to buffer logs, you will get a wa
 ```
 
 {% hint style="info" %}
-`mem_buf_Limit` applies only when `storage.type` is set to the default value of
-`memory`.
+
+`m em_buf_Limit` applies only when `storage.type` is set to the default value of `memory`.
+
 {% endhint %}
 
 #### Filesystem buffering
@@ -156,28 +156,27 @@ A Service section will look like this:
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    storage.path: /var/log/flb-storage/
-    storage.sync: normal
-    storage.checksum: off
-    storage.backlog.mem_limit: 5M
-    storage.backlog.flush_on_shutdown: off
+  flush: 1
+  log_level: info
+  storage.path: /var/log/flb-storage/
+  storage.sync: normal
+  storage.checksum: off
+  storage.backlog.mem_limit: 5M
+  storage.backlog.flush_on_shutdown: off
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    flush                     1
-    log_Level                 info
-    storage.path              /var/log/flb-storage/
-    storage.sync              normal
-    storage.checksum          off
-    storage.backlog.mem_limit 5M
-    storage.backlog.flush_on_shutdown off
+  flush                     1
+  log_Level                 info
+  storage.path              /var/log/flb-storage/
+  storage.sync              normal
+  storage.checksum          off
+  storage.backlog.mem_limit 5M
+  storage.backlog.flush_on_shutdown off
 ```
 
 {% endtab %}
@@ -201,44 +200,43 @@ The following example configures a service offering filesystem buffering capabil
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    storage.path: /var/log/flb-storage/
-    storage.sync: normal
-    storage.checksum: off
-    storage.max_chunks_up: 128
-    storage.backlog.mem_limit: 5M
+  flush: 1
+  log_level: info
+  storage.path: /var/log/flb-storage/
+  storage.sync: normal
+  storage.checksum: off
+  storage.max_chunks_up: 128
+  storage.backlog.mem_limit: 5M
 
 pipeline:
-    inputs:
-        - name: cpu
-          storage.type: filesystem
+  inputs:
+    - name: cpu
+      storage.type: filesystem
 
-        - name: mem
-          storage.type: memory
+    - name: mem
+      storage.type: memory
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    flush                     1
-    log_Level                 info
-    storage.path              /var/log/flb-storage/
-    storage.sync              normal
-    storage.checksum          off
-    storage.max_chunks_up     128
-    storage.backlog.mem_limit 5M
+  flush                     1
+  log_Level                 info
+  storage.path              /var/log/flb-storage/
+  storage.sync              normal
+  storage.checksum          off
+  storage.max_chunks_up     128
+  storage.backlog.mem_limit 5M
 
 [INPUT]
-    name          cpu
-    storage.type  filesystem
+  name          cpu
+  storage.type  filesystem
 
 [INPUT]
-    name          mem
-    storage.type  memory
+  name          mem
+  storage.type  memory
 ```
 
 {% endtab %}
@@ -259,47 +257,46 @@ The following example creates records with CPU usage samples in the filesystem w
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    storage.path: /var/log/flb-storage/
-    storage.sync: normal
-    storage.checksum: off
-    storage.max_chunks_up: 128
-    storage.backlog.mem_limit: 5M
+  flush: 1
+  log_level: info
+  storage.path: /var/log/flb-storage/
+  storage.sync: normal
+  storage.checksum: off
+  storage.max_chunks_up: 128
+  storage.backlog.mem_limit: 5M
 
 pipeline:
-    inputs:
-        - name: cpu
-          storage.type: filesystem
+  inputs:
+    - name: cpu
+      storage.type: filesystem
 
-    outputs:
-        - name: stackdriver
-          match: '*'
-          storage.total_limit_size: 5M
+  outputs:
+    - name: stackdriver
+      match: '*'
+      storage.total_limit_size: 5M
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    flush                     1
-    log_Level                 info
-    storage.path              /var/log/flb-storage/
-    storage.sync              normal
-    storage.checksum          off
-    storage.max_chunks_up     128
-    storage.backlog.mem_limit 5M
+  flush                     1
+  log_Level                 info
+  storage.path              /var/log/flb-storage/
+  storage.sync              normal
+  storage.checksum          off
+  storage.max_chunks_up     128
+  storage.backlog.mem_limit 5M
 
 [INPUT]
-    name                      cpu
-    storage.type              filesystem
+  name                      cpu
+  storage.type              filesystem
 
 [OUTPUT]
-    name                      stackdriver
-    match                     *
-    storage.total_limit_size  5M
+  name                      stackdriver
+  match                     *
+  storage.total_limit_size  5M
 ```
 
 {% endtab %}
