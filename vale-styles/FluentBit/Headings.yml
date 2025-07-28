@@ -121,3 +121,4 @@ exceptions:
   - VS
   - WebSocket
   - Windows
+  - YAML
