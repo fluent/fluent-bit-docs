@@ -84,8 +84,8 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
 # $ curl http://127.0.0.1:2021/metrics
 #
 service:
-   flush: 1
-   log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
   inputs:
