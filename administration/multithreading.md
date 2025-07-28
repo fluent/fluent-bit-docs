@@ -37,6 +37,6 @@ Inputs aren't internally aware of multithreading. If an input runs in threaded m
 
 ## Outputs
 
-When outputs flush data, they can either perform this operation inside Fluent Bit's main thread or inside a separate dedicated thread called a _worker_. Each output can have one or more workers running in parallel, and each worker can handle multiple concurrent flushes. You can configure this behavior by changing the value of the `workers` setting.
+When outputs flush data, they can either perform this operation inside the main Fluent Bit thread or inside a separate dedicated thread called a _worker_. Each output can have one or more workers running in parallel, and each worker can handle multiple concurrent flushes. You can configure this behavior by changing the value of the `workers` setting.
 
-All outputs are capable of running in multiple workers, and each output has a default value of `0`, `1`, or `2` workers. However, even if an output uses workers by default, you can safely reduce the number of workers below the default or disable workers entirely.
+All outputs are capable of running in multiple workers, and each output has a default value of `0`, `1`, or `2` workers. However, even if an output uses workers by default, you can safely reduce the number of workers under the default or disable workers entirely.
