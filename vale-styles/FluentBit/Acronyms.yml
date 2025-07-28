@@ -41,6 +41,7 @@ exceptions:
   - GCP
   - GCS
   - GDB
+  - GELF
   - GET
   - GNU
   - GPG
@@ -100,6 +101,7 @@ exceptions:
   - SHA
   - SIEM
   - SLA
+  - SNI
   - SQL
   - SSH
   - SSL
