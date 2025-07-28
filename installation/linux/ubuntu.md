@@ -51,7 +51,8 @@ Ensure `codename` is set to your specific [Ubuntu release name](https://wiki.ubu
 ```bash
 codename=$(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release 2>/dev/null || lsb_release -cs 2>/dev/null)
 ```
-Now Update your sources listes 
+
+Update your source's list:
 
 ```bash
 echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$codename $codename main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
