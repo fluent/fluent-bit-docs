@@ -30,6 +30,7 @@ exceptions:
   - Azure Log Analytics
   - BuildKite
   - CheckList
+  - Chronosphere
   - CircleCI
   - CLI
   - CloudWatch

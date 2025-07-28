@@ -20,6 +20,7 @@ boolean
 Buildkite
 cAdvisor
 Calyptia
+Chronosphere
 chronotf
 clickstreams
 CloudWatch
