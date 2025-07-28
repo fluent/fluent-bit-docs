@@ -28,35 +28,34 @@ To get started, enable the HTTP server from the configuration file. The followin
 
 ```yaml
 service:
-    http_server: on
-    http_listen: 0.0.0.0
-    http_port: 2020
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
 
 pipeline:
-    inputs:
-        - name: cpu
+  inputs:
+    - name: cpu
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
 
 [INPUT]
-    Name cpu
+  Name cpu
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -66,21 +65,16 @@ Start Fluent bit with the corresponding configuration chosen previously:
 
 ```shell
 # For YAML configuration.
-./bin/fluent-bit --config fluent-bit.yaml
+$ fluent-bit --config fluent-bit.yaml
 
 # For classic configuration.
-./bin/fluent-bit --config fluent-bit.conf
+$ fluent-bit --config fluent-bit.conf
 ```
 
 Fluent Bit starts and generates output in your terminal:
 
 ```shell
-Fluent Bit v1.4.0
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
+...
 [2020/03/10 19:08:24] [ info] [engine] started
 [2020/03/10 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
@@ -242,12 +236,12 @@ The following are detailed descriptions for the metrics collected by the storage
 Query the service uptime with the following command:
 
 ```shell
-$ curl -s http://127.0.0.1:2020/api/v1/uptime | jq
+curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 The command prints a similar output like this:
 
-```javascript
+```json
 {
   "uptime_sec": 8950000,
   "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
@@ -264,7 +258,7 @@ curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 
 The command prints a similar output like this:
 
-```javascript
+```json
 {
   "input": {
     "cpu.0": {
@@ -315,39 +309,38 @@ The following example sets an alias to the `INPUT` section of the configuration 
 
 ```yaml
 service:
-    http_server: on
-    http_listen: 0.0.0.0
-    http_port: 2020
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
 
 pipeline:
-    inputs:
-        - name: cpu
-          alias: server1_cpu
+  inputs:
+    - name: cpu
+      alias: server1_cpu
 
-    outputs:
-        - name: stdout
-          alias: raw_output
-          match: '*'
+  outputs:
+    - name: stdout
+      alias: raw_output
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
 
 [INPUT]
-    Name  cpu
-    Alias server1_cpu
+  Name  cpu
+  Alias server1_cpu
 
 [OUTPUT]
-    Name  stdout
-    Alias raw_output
-    Match *
+  Name  stdout
+  Alias raw_output
+  Match *
 ```
 
 {% endtab %}
@@ -355,7 +348,7 @@ pipeline:
 
 When querying the related metrics, the aliases are returned instead of the plugin name:
 
-```javascript
+```json
 {
   "input": {
     "server1_cpu": {
@@ -421,43 +414,42 @@ The following configuration examples show how to define these settings:
 
 ```yaml
 service:
-    http_server: on
-    http_listen: 0.0.0.0
-    http_port: 2020
-    health_check: on
-    hc_errors_count: 5
-    hc_retry_failure_count: 5
-    hc_period: 5
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
+  health_check: on
+  hc_errors_count: 5
+  hc_retry_failure_count: 5
+  hc_period: 5
 
 pipeline:
-    inputs:
-        - name: cpu
+  inputs:
+    - name: cpu
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
-    Health_Check On
-    HC_Errors_Count 5
-    HC_Retry_Failure_Count 5
-    HC_Period 5
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
+  Health_Check On
+  HC_Errors_Count 5
+  HC_Retry_Failure_Count 5
+  HC_Period 5
 
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
