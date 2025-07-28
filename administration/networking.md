@@ -81,53 +81,52 @@ Use the following configuration snippet of your choice in a corresponding file n
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
-    inputs:
-        - name:  random
-          samples: 5
+  inputs:
+    - name:  random
+      samples: 5
 
-    outputs:
-        - name: tcp
-          match: '*'
-          host: 127.0.0.1
-          port: 9090
-          format: json_lines
-          # Networking Setup
-          net.dns.mode: TCP
-          net.connect_timeout: 5
-          net.source_address: 127.0.0.1
-          net.keepalive: on
-          net.keepalive_idle_timeout: 10
+  outputs:
+    - name: tcp
+      match: '*'
+      host: 127.0.0.1
+      port: 9090
+      format: json_lines
+      # Networking Setup
+      net.dns.mode: TCP
+      net.connect_timeout: 5
+      net.source_address: 127.0.0.1
+      net.keepalive: on
+      net.keepalive_idle_timeout: 10
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    flush     1
-    log_level info
+  flush     1
+  log_level info
 
 [INPUT]
-    name      random
-    samples   5
+  name      random
+  samples   5
 
 [OUTPUT]
-    name      tcp
-    match     *
-    host      127.0.0.1
-    port      9090
-    format    json_lines
-    # Networking Setup
-    net.dns.mode                TCP
-    net.connect_timeout         5
-    net.source_address          127.0.0.1
-    net.keepalive               on
-    net.keepalive_idle_timeout  10
+  name      tcp
+  match     *
+  host      127.0.0.1
+  port      9090
+  format    json_lines
+  # Networking Setup
+  net.dns.mode                TCP
+  net.connect_timeout         5
+  net.source_address          127.0.0.1
+  net.keepalive               on
+  net.keepalive_idle_timeout  10
 ```
 
 {% endtab %}
