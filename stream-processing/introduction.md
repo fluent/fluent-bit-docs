@@ -1,6 +1,6 @@
 # Introduction to stream processing
 
-![](../.gitbook/assets/stream_processor.png)
+![Fluent Bit stream processing](../.gitbook/assets/stream_processor.png)
 
 Fluent Bit is a fast and flexible log processor that collects, parsers, filters, and delivers logs to remote databases, where data analysis can then be performed.
 

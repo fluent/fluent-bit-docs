@@ -193,6 +193,8 @@ stdout
 strftime
 subcommand
 subcommands
+subkey
+subkeys
 subquery
 subrecord
 substring
