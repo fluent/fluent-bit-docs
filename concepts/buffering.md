@@ -12,6 +12,6 @@ Network failures or latency in third party service is common. When data can't be
 
 Fluent Bit buffering strategies are designed to solve problems associated with backpressure and general delivery failures. Fluent Bit offers a primary buffering mechanism in memory and an optional secondary one using the file system. With this hybrid solution you can accommodate any use case safely and keep a high performance while processing your data.
 
-These mechanisms aren't mutually exclusive. When data is ready to be processed or delivered it's always be in memory, while other data in the queue might be in the file system until is ready to be processed and moved up to memory.
+These mechanisms aren't mutually exclusive. When data is ready to be processed or delivered it's always be in memory. Other data in the queue might be in the file system until is ready to be processed and moved up to memory.
 
 To learn more about the buffering configuration in Fluent Bit, see [Buffering and Storage](../administration/buffering-and-storage.md).

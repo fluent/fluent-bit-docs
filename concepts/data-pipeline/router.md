@@ -78,7 +78,7 @@ pipeline:
 
 Routing reads the `Input` `Tag` and the `Output` `Match` rules. If data has a `Tag` that doesn't match at routing time, the data is deleted.
 
-## Routing with Wildcard
+## Routing with wildcards
 
 Routing is flexible enough to support wildcards in the `Match` pattern. The following example defines a common destination for both sources of data:
 
@@ -122,7 +122,7 @@ pipeline:
 
 The match rule is set to `my_*`, which matches any Tag starting with `my_`.
 
-## Routing with Regex
+## Routing with regular expressions
 
 Routing also provides support for regular expressions with the `Match_Regex` pattern, allowing for more complex and precise matching criteria. The following example demonstrates how to route data from sources based on a regular expression:
 
