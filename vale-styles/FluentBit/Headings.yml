@@ -121,5 +121,6 @@ exceptions:
   - Visual
   - Vivo Exporter
   - VS
+  - Wasm
   - WebSocket
   - Windows
