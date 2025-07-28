@@ -22,4 +22,4 @@ Fluent Bit is started by the `S99fluent-bit` script.
 
 ## Support
 
-All configurations with a toolchain that supports threads and dynamic library linking are supported.
+All configurations with a tool chain that supports threads and dynamic library linking are supported.

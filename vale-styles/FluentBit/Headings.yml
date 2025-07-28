@@ -116,6 +116,7 @@ exceptions:
   - SIMD
   - Slack
   - SSL
+  - SSM
   - StatsD
   - Studio
   - Sumo Logic
