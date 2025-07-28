@@ -7,6 +7,7 @@ match: $sentence
 indicators:
   - ':'
 exceptions:
+  - AlmaLinux
   - Amazon
   - Amazon CloudWatch
   - Amazon ECR
@@ -29,6 +30,7 @@ exceptions:
   - Azure Logs Ingestion API
   - Azure Log Analytics
   - BuildKite
+  - CentOS
   - CheckList
   - Chronosphere
   - CircleCI
@@ -104,9 +106,11 @@ exceptions:
   - Prometheus
   - PromQL
   - Raspberry Pi
+  - Red Hat
   - REPL
   - REST
   - RHEL
+  - RockyLinux
   - ServiceMonitor
   - SignalFx
   - SIMD
