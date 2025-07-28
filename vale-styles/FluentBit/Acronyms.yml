@@ -16,6 +16,7 @@ exceptions:
   - ASC
   - ASP
   - AWS
+  - BSD
   - CIDR
   - CLI
   - CORS
