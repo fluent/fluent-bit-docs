@@ -54,6 +54,7 @@ exceptions:
   - GCP
   - GitLab
   - GitHub
+  - Go
   - Google
   - Google Cloud
   - Google Cloud BigQuery
