@@ -4,13 +4,15 @@ description: The production grade telemetry ecosystem
 
 # Fluentd and Fluent Bit
 
-Telemetry data processing can be complex, especially at scale. That's why [Fluentd](https://www.fluentd.org) was created. Fluentd is more than a simple tool, it's grown into a fullscale ecosystem that contains SDKs for different languages and subprojects like [Fluent Bit](https://fluentbit.io).
+Telemetry data processing can be complex, especially at scale. That's why [Fluentd](https://www.fluentd.org) was created. Fluentd is more than a basic tool, it's grown into a full-scale ecosystem that contains SDKs for different languages and sub-projects like [Fluent Bit](https://fluentbit.io).
 
-Here, we describe the relationship between the [Fluentd](http://fluentd.org) and [Fluent Bit](http://fluentbit.io) open source projects.
+The Fluentd and Fluent Bit projects are both:
 
-Both projects are:
-
-- Licensed under the terms of Apache License v2.0. - Graduated hosted projects by the [Cloud Native Computing Foundation (CNCF)](https://cncf.io). - Production grade solutions: Deployed millions of times every single day. - Vendor neutral and community driven. - Widely adopted by the industry: Trusted by major companies like AWS, Microsoft, Google Cloud, and hundreds of others.
+- Licensed under the terms of Apache License v2.0.
+- Graduated hosted projects by the [Cloud Native Computing Foundation (CNCF)](https://cncf.io).
+- Production grade solutions: Deployed millions of times every single day.
+- Vendor neutral and community driven.
+- Widely adopted by the industry: Trusted by major companies like AWS, Microsoft, Google Cloud, and hundreds of others.
 
 The projects have many similarities: [Fluent Bit](https://fluentbit.io) is designed and built on top of the best ideas of [Fluentd](https://www.fluentd.org) architecture and general design. Which one you choose depends on your end-users' needs.
 
