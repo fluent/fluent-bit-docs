@@ -343,7 +343,7 @@ Overall ingestion status of the plugin.
 
 ### Tasks
 
-When an input plugin ingests data into the engine, a Chunk is created. A Chunk can contains multiple records. At flush time, the engine creates a Task that contains the routes for the Chunk associated in question.
+When an input plugin ingests data into the engine, a Chunk is created. A Chunk can contain multiple records. At flush time, the engine creates a Task that contains the routes for the Chunk associated in question.
 
 The Task dump describes the tasks associated to the input plugin:
 
@@ -358,7 +358,7 @@ The Task dump describes the tasks associated to the input plugin:
 
 The Chunks dump tells more details about all the chunks that the input plugin has generated and are still being processed.
 
-Depending of the buffering strategy and limits imposed by configuration, some Chunks might be `up` (in memory) or `down` (filesystem).
+Depending on the buffering strategy and limits imposed by configuration, some Chunks might be `up` (in memory) or `down` (filesystem).
 
 | Entry | Sub-entry | Description |
 | :--- | :--- | :--- |
