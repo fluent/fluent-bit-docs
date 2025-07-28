@@ -111,6 +111,7 @@ exceptions:
   - Telemetry Pipeline
   - Terraform
   - TLS
+  - Transport Layer Security
   - Treasure Data
   - TypeScript
   - URLs
