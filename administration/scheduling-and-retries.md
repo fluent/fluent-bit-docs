@@ -54,24 +54,23 @@ The following example configures the `scheduler.base` as `3` seconds and `schedu
 
 ```yaml
 service:
-    flush: 5
-    daemon: off
-    log_level: debug
-    scheduler.base: 3
-    scheduler.cap: 30
+  flush: 5
+  daemon: off
+  log_level: debug
+  scheduler.base: 3
+  scheduler.cap: 30
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    Flush            5
-    Daemon           off
-    Log_Level        debug
-    scheduler.base   3
-    scheduler.cap    30
+  Flush            5
+  Daemon           off
+  Log_Level        debug
+  scheduler.base   3
+  scheduler.cap    30
 ```
 
 {% endtab %}
@@ -105,39 +104,36 @@ The following example configures two outputs, where the HTTP plugin has an unlim
 
 ```yaml
 pipeline:
-    inputs:
-        ...
 
-    outputs:
-        - name: http
-          host: 192.168.5.6
-          port: 8080
-          retry_limit: false
+  outputs:
+    - name: http
+      host: 192.168.5.6
+      port: 8080
+      retry_limit: false
 
-        - name: es
-          host: 192.168.5.20
-          port: 9200
-          logstash_format: on
-          retry_limit: 5
+    - name: es
+      host: 192.168.5.20
+      port: 9200
+      logstash_format: on
+      retry_limit: 5
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
-    Name        http
-    Host        192.168.5.6
-    Port        8080
-    Retry_Limit False
+  Name        http
+  Host        192.168.5.6
+  Port        8080
+  Retry_Limit False
 
 [OUTPUT]
-    Name            es
-    Host            192.168.5.20
-    Port            9200
-    Logstash_Format On
-    Retry_Limit     5
+  Name            es
+  Host            192.168.5.20
+  Port            9200
+  Logstash_Format On
+  Retry_Limit     5
 ```
 
 {% endtab %}
