@@ -6,10 +6,10 @@ Fluent Bit `Commands` extends a configuration file with specific built-in featur
 
 | Command | Prototype | Description |
 | :--- | :--- | :--- |
-| [`@INCLUDE`](commands.md#cmd_include) | `@INCLUDE FILE` | Include a configuration file. |
-| [`@SET`](commands.md#cmd_set) | `@SET KEY=VAL` | Set a configuration variable. |
+| [`@INCLUDE`](#include) | `@INCLUDE FILE` | Include a configuration file. |
+| [`@SET`](#set) | `@SET KEY=VAL` | Set a configuration variable. |
 
-## `@INCLUDE` <a id="cmd_include"></a>
+## `@INCLUDE`
 
 Configuring a logging pipeline might lead to an extensive configuration file. In order to maintain a human-readable configuration, split the configuration in multiple files.
 
@@ -47,7 +47,7 @@ The following is an example of an `inputs.conf` file, like the one called in the
     Tag  varlog.*
 ```
 
-### outputs.conf
+### `outputs.conf`
 
 The following is an example of an `outputs.conf` file, like the one called in the previous example.
 
@@ -64,7 +64,7 @@ The following is an example of an `outputs.conf` file, like the one called in th
     Logstash_Format On
 ```
 
-## `@SET` <a id="cmd_set"></a>
+## `@SET`
 
 Fluent Bit supports [configuration variables](variables.md). One way to expose this variables to Fluent Bit is through setting a shell environment variable, the other is through the `@SET` command.
 
