@@ -112,6 +112,7 @@ exceptions:
   - SignalFx
   - SIMD
   - Slack
+  - SQL
   - SSL
   - StatsD
   - Studio
