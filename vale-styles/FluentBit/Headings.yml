@@ -82,6 +82,7 @@ exceptions:
   - LTSV
   - macOS
   - Marketplace
+  - MessagePack
   - Microsoft Fabric
   - MongoDB
   - NATS
