@@ -196,9 +196,9 @@ pipeline:
 
 ## Tips and Tricks
 
-### Generate a self signed certificates for testing purposes
+### Generate a self-signed certificates for testing purposes
 
-The following command generates a 4096 bit RSA key pair and a certificate that's signed using `SHA-256` with the expiration date set to 30 days in the future. In this example, `test.host.net` is set as the common name. This example opts out of `DES`, so the private key is stored in plain text.
+The following command generates a 4096-bit RSA key pair and a certificate that's signed using `SHA-256` with the expiration date set to 30 days in the future. In this example, `test.host.net` is set as the common name. This example opts out of `DES`, so the private key is stored in plain text.
 
 ```shell
 openssl req -x509 \
