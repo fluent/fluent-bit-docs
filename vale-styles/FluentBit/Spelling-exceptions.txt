@@ -92,6 +92,7 @@ grpc_service
 gzip
 HashiCorp
 HEC
+Homebrew
 hostname
 Hostname
 Ingester

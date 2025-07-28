@@ -68,6 +68,8 @@ exceptions:
   - Grafana Cloud
   - Graylog Extended Log Format
   - gRPC
+  - Helm
+  - Homebrew
   - HTTP
   - I
   - InfluxDB
@@ -95,8 +97,9 @@ exceptions:
   - OIDC
   - Okta
   - OpenMetrics
-  - OpenSearch
   - OpenObserve
+  - OpenSearch
+  - OpenShift
   - OpenTelemetry
   - Opsgenie
   - Oracle Cloud Infrastructure Logging Analytics

@@ -85,20 +85,20 @@ The latest stable version is 4.0.5. Each version is available from the following
 
 | INSTALLERS | SHA256 CHECKSUMS |
 |----------- | ---------------- |
-| [fluent-bit-4.0.5-win32.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.exe) | [31d1d98f3c9a8cb829abc448de93ef859b63d02852c8529482fe284ed1176356](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.exe.sha256) |
-| [fluent-bit-4.0.5-win32.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.zip) | [98463c4a2d49392a2a01a8942f9ec6096328845c71476b5fd8a6055487101772](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.zip.sha256) |
-| [fluent-bit-4.0.5-win64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.exe) | [935bc64cd81140e37c3e59aeed65e96a5e2c1e255252d2084754f2e829f04301](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.exe.sha256) |
-| [fluent-bit-4.0.5-win64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.zip) | [f0c101bfd889c6f327dc74914e6084b77dbad9c9d64fe58a63fddd836aa29fec](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.zip.sha256) |
-| [fluent-bit-4.0.5-winarm64.exe](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.exe) | [be71a4c9ce51d69ea7ae18b32670c377e21039d4543a362ee06cee519e6c5308](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.exe.sha256) |
-| [fluent-bit-4.0.5-winarm64.zip](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.zip) | [b39bfc3901b6da135acdc5fd16ce36ba7c6195efa7c68635815991816c35882e](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.zip.sha256) |
+| [`fluent-bit-4.0.5-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.exe) | [`31d1d98f3c9a8cb829abc448de93ef859b63d02852c8529482fe284ed1176356`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.exe.sha256) |
+| [`fluent-bit-4.0.5-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.zip) | [`98463c4a2d49392a2a01a8942f9ec6096328845c71476b5fd8a6055487101772`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.zip.sha256) |
+| [`fluent-bit-4.0.5-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.exe) | [`935bc64cd81140e37c3e59aeed65e96a5e2c1e255252d2084754f2e829f04301`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.exe.sha256) |
+| [`fluent-bit-4.0.5-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.zip) | [`f0c101bfd889c6f327dc74914e6084b77dbad9c9d64fe58a63fddd836aa29fec`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.zip.sha256) |
+| [`fluent-bit-4.0.5-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.exe) | [`be71a4c9ce51d69ea7ae18b32670c377e21039d4543a362ee06cee519e6c5308`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.exe.sha256) |
+| [`fluent-bit-4.0.5-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.zip) | [`b39bfc3901b6da135acdc5fd16ce36ba7c6195efa7c68635815991816c35882e`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.zip.sha256) |
 
 These are now using the Github Actions built versions. Legacy AppVeyor builds are still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.
 
 MSI installers are also available:
 
-- [fluent-bit-4.0.5-win32.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.msi)
-- [fluent-bit-4.0.5-win64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.msi)
-- [fluent-bit-4.0.5-winarm64.msi](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.msi)
+- [`fluent-bit-4.0.5-win32.msi`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win32.msi)
+- [`fluent-bit-4.0.5-win64.msi`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-win64.msi)
+- [`fluent-bit-4.0.5-winarm64.msi`](https://packages.fluentbit.io/windows/fluent-bit-4.0.5-winarm64.msi)
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
@@ -164,10 +164,10 @@ Fluent Bit v2.0.x
 
 To halt the process, press `Control+C` in the terminal.
 
-## Installing from the EXE installer
+## Installing from the executable installer
 
-1. Download an EXE installer for the appropriate 32-bit or 64-bit build.
-1. Double-click the EXE installer you've downloaded. The installation wizard starts.
+1. Download an `EXE` installer for the appropriate 32-bit or 64-bit build.
+1. Double-click the `EXE` installer you've downloaded. The installation wizard starts.
 
 1. Click **Next** and finish the installation. By default, Fluent Bit is installed in `C:\Program Files\fluent-bit\`.
 
@@ -189,7 +189,7 @@ The uninstaller also supports a silent uninstall using the same `/S` flag. This 
 
 ## Windows service support
 
-Windows services are equivalent to daemons in UNIX (long-running background processes). For v1.5.0 and later, Fluent Bit has native support for Windows services.
+Windows services are equivalent to daemons in Unix (long-running background processes). For v1.5.0 and later, Fluent Bit has native support for Windows services.
 
 For example, you have the following installation layout:
 
@@ -279,7 +279,7 @@ Remove the service (requires PowerShell 6.0 or later)
 Remove-Service fluent-bit
 ```
 
-## Compile from Source
+## Compile from source
 
 If you need to create a custom executable, use the following procedure to compile Fluent Bit by yourself.
 
@@ -294,7 +294,7 @@ start vs.exe
 
 1. Choose `C++ Build Tools` and `C++ CMake tools for Windows` and wait until the process finishes.
 
-1. Install flex and bison. One way to install them on Windows is to use [winflexbison](https://github.com/lexxmark/winflexbison).
+1. Install flex and bison. One way to install them on Windows is to use [`winflexbison`](https://github.com/lexxmark/winflexbison).
 
    ```shell
    wget -o winflexbison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.22/win_flex_bison-2.5.22.zip

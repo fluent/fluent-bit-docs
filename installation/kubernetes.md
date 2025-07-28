@@ -28,7 +28,7 @@ The recommended way to deploy Fluent Bit for Kubernetes is with the official [He
 
 If you are using Red Hat OpenShift you must set up Security Context Constraints (SCC) using the relevant option in the helm chart.
 
-### Installing with Helm Chart
+### Installing with Helm chart
 
 [Helm](https://helm.sh) is a package manager for Kubernetes and lets you deploy application packages into your running cluster. Fluent Bit is distributed using a Helm chart found in the [Fluent Helm Charts repository](https://github.com/fluent/helm-charts).
 

@@ -10,6 +10,7 @@ second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 exceptions:
   - AAD
   - ACL
+  - AMD
   - ANSI
   - API
   - ARN
@@ -57,6 +58,7 @@ exceptions:
   - HTTP
   - HTTPS
   - IAM
+  - IBM
   - IDE
   - IMDS
   - ISO
@@ -72,12 +74,14 @@ exceptions:
   - MIME
   - MAC
   - MQTT
+  - MSI
   - MSK
   - NATS
   - NET
   - NGINX
   - NIC
   - NOTE
+  - NSIS
   - NVDA
   - OAP
   - OOM
