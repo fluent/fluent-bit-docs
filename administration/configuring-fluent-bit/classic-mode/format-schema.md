@@ -27,13 +27,13 @@ A section is defined by a name or title inside brackets. Using the previous exam
 - Any commented line under a section must be indented too.
 - End-of-line comments aren't supported, only full-line comments.
 
-## Entries: key/value
+## Entries: `key`/`value`
 
 A section can contain entries. An entry is defined by a line of text that contains a `Key` and a `Value`. Using the previous example, the `[SERVICE]` section contains two entries: one is the key `Daemon` with value `off` and the other is the key `Log_Level` with the value `debug`. The following rules apply:
 
 - An entry is defined by a key and a value.
 - A key must be indented.
-- A key must contain a value which ends in the breakline.
+- A key must contain a value which ends in a line break.
 - Multiple keys with the same name can exist.
 
 Commented lines are set prefixing the `#` character. Commented lines aren't processed but they must be indented.
