@@ -1,28 +1,26 @@
 ---
-description: >-
-  The following page gives an overview of free public resources for Sandbox and
-  Labs for learning how to best operate, use, and have success with Fluent Bit.
+description: An overview of free public resources for sandbox and labs for learning how to best operate, use, and have success with Fluent Bit.
 ---
 
 # Sandbox and lab resources
 
-## Fluent Bit Sandbox - sign-up required
+## Fluent Bit sandbox - sign-up required
 
 The following are labs that can run in your browser however require email sign-up
 
 <div data-full-width="true"><figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure></div>
 
-* [Fluent Bit 101 Sandbox - Getting Started with configuration and routing](https://play.instruqt.com/Fluent/invite/nuys5ifhsprt)
+- [Fluent Bit 101 Sandbox - Getting Started with configuration and routing](https://play.instruqt.com/Fluent/invite/nuys5ifhsprt)
 
-## Open Source Labs - environment required
+## Open Source labs - environment required
 
 The following are open source labs where you will need to spin up resources to run through the lab in details
 
-### O11y Workshops by Chronosphere
+### O11y workshops by Chronosphere
 
-These workshops, open source, provided by Chronosphere can be found here: [https://o11y-workshops.gitlab.io/](https://o11y-workshops.gitlab.io/). The OSS repository can be found here: [https://gitlab.com/o11y-workshops/workshop-fluentbit](https://gitlab.com/o11y-workshops/workshop-fluentbit)
+Chronosphere provides several [open source observability workshops](https://o11y-workshops.gitlab.io/). The OSS repository can be found here: [https://gitlab.com/o11y-workshops/workshop-fluentbit](https://gitlab.com/o11y-workshops/workshop-fluentbit)
 
-The cards below include links to each of the labs in the workshop&#x20;
+The following cards include links to each of the labs in the workshop:
 
 {% embed url="https://o11y-workshops.gitlab.io/workshop-fluentbit/" %}
 Fluent Bit Workshop for Getting Started with Cloud Native Telemetry Pipelines
