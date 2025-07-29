@@ -134,14 +134,15 @@ pipeline:
 
 In another terminal, start `nc` and make it listen for messages on TCP port 9090:
 
-```text
+```shell
 nc -l 9090
 ```
 
 Start Fluent Bit with the configuration file you defined previously to see data flowing to netcat:
 
-```text
+```shell
 $ nc -l 9090
+
 {"date":1587769732.572266,"rand_value":9704012962543047466}
 {"date":1587769733.572354,"rand_value":7609018546050096989}
 {"date":1587769734.572388,"rand_value":17035865539257638950}
