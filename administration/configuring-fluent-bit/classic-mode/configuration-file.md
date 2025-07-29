@@ -1,7 +1,5 @@
 # Configuration file
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
-
 One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows the use one configuration file that works at a global scope and uses the defined [Format and Schema](format-schema.md).
 
 The main configuration file supports four sections:
@@ -39,11 +37,11 @@ The `Service` section defines global properties of the service. The following ke
 
 The following is an example of a `SERVICE` section:
 
-```python
+```text
 [SERVICE]
-    Flush           5
-    Daemon          off
-    Log_Level       debug
+  Flush           5
+  Daemon          off
+  Log_Level       debug
 ```
 
 For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
@@ -64,10 +62,10 @@ The `INPUT` section defines a source (related to an input plugin). Each [input p
 
 The following is an example of an `INPUT` section:
 
-```python
+```text
 [INPUT]
-    Name cpu
-    Tag  my_cpu
+  Name cpu
+  Tag  my_cpu
 ```
 
 ## Config filter
@@ -87,11 +85,11 @@ The `FILTER` section defines a filter (related to an filter plugin). Each filter
 
 The following is an example of a `FILTER` section:
 
-```python
+```text
 [FILTER]
-    Name  grep
-    Match *
-    Regex log aa
+  Name  grep
+  Match *
+  Regex log aa
 ```
 
 ## Config output
@@ -109,29 +107,29 @@ The `OUTPUT` section specifies a destination that certain records should go to a
 
 The following is an example of an `OUTPUT` section:
 
-```python
+```text
 [OUTPUT]
-    Name  stdout
-    Match my*cpu
+  Name  stdout
+  Match my*cpu
 ```
 
 ### Collecting `cpu` metrics example
 
 The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
-```python
+```text
 [SERVICE]
-    Flush     5
-    Daemon    off
-    Log_Level debug
+  Flush     5
+  Daemon    off
+  Log_Level debug
 
 [INPUT]
-    Name  cpu
-    Tag   my_cpu
+  Name  cpu
+  Tag   my_cpu
 
 [OUTPUT]
-    Name  stdout
-    Match my*cpu
+  Name  stdout
+  Match my*cpu
 ```
 
 ## Config include file
