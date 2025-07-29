@@ -34,13 +34,13 @@ AWS vends SSM public parameters with the regional repository link for each image
 
 To see a list of available version tags in a given region, run the following command:
 
-```bash
+```shell
 aws ssm get-parameters-by-path --region eu-central-1 --path /aws/service/aws-for-fluent-bit/ --query 'Parameters[*].Name'
 ```
 
 To see the ECR repository URI for a given image tag in a given region, run the following:
 
-```bash
+```shell
 aws ssm get-parameter --region ap-northeast-1 --name /aws/service/aws-for-fluent-bit/2.0.0
 ```
 
