@@ -52,9 +52,9 @@ This helps with down-sampling when collecting metrics.
 | `filesystem.ignore_mount_point_regex` | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)` |
 | `filesystem.ignore_filesystem_type_regex` | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$` |
 | `diskstats.ignore_device_regex` | Specify the regular expression for the` diskstats` to prevent collection of/ignore. | `^(ram\|loop\|fd\|(h\|s\|v\|xv)d[a-z]\|nvme\\d+n\\d+p)\\d+$` |
-| `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | false |
-| `systemd_unit_start_time_metrics` | Determines if the collector will include unit start time metrics. | false |
-| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | false |
+| `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | `false` |
+| `systemd_unit_start_time_metrics` | Determines if the collector will include unit start time metrics. | `false` |
+| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
 | `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
 | `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)"` |
 
