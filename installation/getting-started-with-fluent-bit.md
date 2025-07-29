@@ -5,8 +5,6 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9732f9c-44a4-46d3-ab87-86138455c698" />
 
-Fluent bit &
-
 ## Container deployment
 
 | Deployment Type   | instructions                                       |
