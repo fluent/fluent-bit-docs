@@ -12,7 +12,7 @@ Fluent Bit supports the following architectures:
 
 Fluent Bit provides an installation script to use for most Linux targets.This will always install the most recently released version.
 
-```bash
+```shell
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
@@ -31,12 +31,12 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
 
    ```text
    [fluent-bit]
-   name = Fluent Bit
-   baseurl = https://packages.fluentbit.io/almalinux/$releasever/
-   gpgcheck=1
-   gpgkey=https://packages.fluentbit.io/fluentbit.key
-   repo_gpgcheck=1
-   enabled=1
+     name = Fluent Bit
+     baseurl = https://packages.fluentbit.io/almalinux/$releasever/
+     gpgcheck=1
+     gpgkey=https://packages.fluentbit.io/fluentbit.key
+     repo_gpgcheck=1
+     enabled=1
    ```
 
 1. As a best practice, enable `gpgcheck` and `repo_gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.
@@ -45,20 +45,21 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
 
 1. After your repository is configured, run the following command to install it:
 
-   ```bash
+   ```shell
    sudo yum install fluent-bit
    ```
 
 1. Instruct `Systemd` to enable the service:
 
-   ```bash
+   ```shell
    sudo systemctl start fluent-bit
    ```
 
 If you do a status check, you should see a similar output like this:
 
-```bash
+```shell
 $ systemctl status fluent-bit
+
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/usr/lib/systemd/system/fluent-bit.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago

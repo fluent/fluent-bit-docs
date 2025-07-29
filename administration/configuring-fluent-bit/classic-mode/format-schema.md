@@ -10,11 +10,11 @@ The schema is defined by three concepts:
 
 An example of a configuration file is as follows:
 
-```python
+```text
 [SERVICE]
-    # This is a commented line
-    Daemon    off
-    log_level debug
+  # This is a commented line
+  Daemon    off
+  log_level debug
 ```
 
 ## Sections
@@ -42,15 +42,15 @@ Commented lines are set prefixing the `#` character. Commented lines aren't proc
 
 Fluent Bit configuration files are based in a strict indented mode. Each configuration file must follow the same pattern of alignment from left to right when writing text. By default, an indentation level of four spaces from left to right is suggested. Example:
 
-```python
+```text
 [FIRST_SECTION]
-    # This is a commented line
-    Key1  some value
-    Key2  another value
-    # more comments
+  # This is a commented line
+  Key1  some value
+  Key2  another value
+  # more comments
 
 [SECOND_SECTION]
-    KeyN  3.14
+  KeyN  3.14
 ```
 
 This example shows two sections with multiple entries and comments. Empty lines are allowed.

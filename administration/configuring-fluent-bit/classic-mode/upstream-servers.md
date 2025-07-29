@@ -37,27 +37,27 @@ The following example defines an `Upstream` called forward-balancing which aims 
 - node-2: connects to 127.0.0.1:44000
 - node-3: connects to 127.0.0.1:45000 using TLS without verification. It also defines a specific configuration option required by Forward output called `shared_key`.
 
-```python
+```text
 [UPSTREAM]
-    name       forward-balancing
+  name       forward-balancing
 
 [NODE]
-    name       node-1
-    host       127.0.0.1
-    port       43000
+  name       node-1
+  host       127.0.0.1
+  port       43000
 
 [NODE]
-    name       node-2
-    host       127.0.0.1
-    port       44000
+  name       node-2
+  host       127.0.0.1
+  port       44000
 
 [NODE]
-    name       node-3
-    host       127.0.0.1
-    port       45000
-    tls        on
-    tls.verify off
-    shared_key secret
+  name       node-3
+  host       127.0.0.1
+  port       45000
+  tls        on
+  tls.verify off
+  shared_key secret
 ```
 
 Every `Upstream` definition must exists in its own configuration file in the file system. Adding multiple `Upstream` configurations in the same file or different files isn't allowed.

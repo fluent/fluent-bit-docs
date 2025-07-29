@@ -12,14 +12,14 @@ Start by creating one of the corresponding Fluent Bit configuration files to sta
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: '{"top": {".dotted": "value"}}'
-          
-    outputs:       
-        - name: es
-          host: elasticsearch
-          replace_dots: on
+  inputs:
+    - name: dummy
+      dummy: '{"top": {".dotted": "value"}}'
+      
+  outputs:       
+    - name: es
+      host: elasticsearch
+      replace_dots: on
 ```
 
 {% endtab %}
@@ -44,6 +44,7 @@ pipeline:
 Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit (with the configuration file mounted) and Elasticsearch.
 
 {% code title="docker-compose.yaml" %}
+
 ```yaml
 version: "3.7"
 
@@ -61,13 +62,14 @@ services:
     environment:
       - discovery.type=single-node
 ```
+
 {% endcode %}
 
 ## View indexed logs
 
 To view indexed logs, run the following command:
 
-```bash
+```shell
 curl "localhost:9200/_search?pretty" \
   -H 'Content-Type: application/json' \
   -d'{ "query": { "match_all": {} }}'
@@ -77,6 +79,6 @@ curl "localhost:9200/_search?pretty" \
 
 To reset your index, run the following command:
 
-```bash
+```shell
 curl -X DELETE "localhost:9200/fluent-bit?pretty"
 ```
