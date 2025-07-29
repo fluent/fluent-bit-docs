@@ -10,70 +10,102 @@ Provide a valid Windows configuration with the installation.
 
 The following configuration is an example:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 5
+  daemon: off
+  log_level: info
+  parsers_file: parsers.yaml
+  plugins_file: plugins.yaml
+  http_server: off
+  http_listen: 0.0.0.0
+  http_port: 2020
+  storage.metrics: on
+
+pipeline:
+  inputs:
+    - name: winlog
+      channels: Setup,Windows Powershell
+      interval_sec: 1
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
-    # Flush
-    # =====
-    # set an interval of seconds before to flush records to a destination
-    flush        5
+  # Flush
+  # =====
+  # set an interval of seconds before to flush records to a destination
+  flush        5
 
-    # Daemon
-    # ======
-    # instruct Fluent Bit to run in foreground or background mode.
-    daemon       Off
+  # Daemon
+  # ======
+  # instruct Fluent Bit to run in foreground or background mode.
+  daemon       Off
 
-    # Log_Level
-    # =========
-    # Set the verbosity level of the service, values can be:
-    #
-    # - error
-    # - warning
-    # - info
-    # - debug
-    # - trace
-    #
-    # by default 'info' is set, that means it includes 'error' and 'warning'.
-    log_level    info
+  # Log_Level
+  # =========
+  # Set the verbosity level of the service, values can be:
+  #
+  # - error
+  # - warning
+  # - info
+  # - debug
+  # - trace
+  #
+  # by default 'info' is set, that means it includes 'error' and 'warning'.
+  log_level    info
 
-    # Parsers File
-    # ============
-    # specify an optional 'Parsers' configuration file
-    parsers_file parsers.conf
+  # Parsers File
+  # ============
+  # specify an optional 'Parsers' configuration file
+  parsers_file parsers.conf
 
-    # Plugins File
-    # ============
-    # specify an optional 'Plugins' configuration file to load external plugins.
-    plugins_file plugins.conf
+  # Plugins File
+  # ============
+  # specify an optional 'Plugins' configuration file to load external plugins.
+  plugins_file plugins.conf
 
-    # HTTP Server
-    # ===========
-    # Enable/Disable the built-in HTTP Server for metrics
-    http_server  Off
-    http_listen  0.0.0.0
-    http_port    2020
+  # HTTP Server
+  # ===========
+  # Enable/Disable the built-in HTTP Server for metrics
+  http_server  Off
+  http_listen  0.0.0.0
+  http_port    2020
 
-    # Storage
-    # =======
-    # Fluent Bit can use memory and filesystem buffering based mechanisms
-    #
-    # - https://docs.fluentbit.io/manual/administration/buffering-and-storage
-    #
-    # storage metrics
-    # ---------------
-    # publish storage pipeline metrics in '/api/v1/storage'. The metrics are
-    # exported only if the 'http_server' option is enabled.
-    #
-    storage.metrics on
+  # Storage
+  # =======
+  # Fluent Bit can use memory and filesystem buffering based mechanisms
+  #
+  # - https://docs.fluentbit.io/manual/administration/buffering-and-storage
+  #
+  # storage metrics
+  # ---------------
+  # publish storage pipeline metrics in '/api/v1/storage'. The metrics are
+  # exported only if the 'http_server' option is enabled.
+  #
+  storage.metrics on
 
 [INPUT]
-    Name         winlog
-    Channels     Setup,Windows PowerShell
-    Interval_Sec 1
+  Name         winlog
+  Channels     Setup,Windows PowerShell
+  Interval_Sec 1
 
 [OUTPUT]
-    name  stdout
-    match *
+  name  stdout
+  match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Migration to Fluent Bit
 
@@ -102,7 +134,7 @@ MSI installers are also available:
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
-```shell copy
+```shell
 Get-FileHash fluent-bit-4.0.5-win32.exe
 ```
 
@@ -138,24 +170,15 @@ Get-FileHash fluent-bit-4.0.5-win32.exe
 1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:
 
    ```shell
-   .\bin\fluent-bit.exe -i dummy -o stdout
+   fluent-bit.exe -i dummy -o stdout
    ```
 
 The following output indicates Fluent Bit is running:
 
 ```shell
-.\bin\fluent-bit.exe  -i dummy -o stdout
-Fluent Bit v2.0.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+fluent-bit.exe  -i dummy -o stdout
 
-[2019/06/28 10:13:04] [ info] [storage] initializing...
-[2019/06/28 10:13:04] [ info] [storage] in-memory
-[2019/06/28 10:13:04] [ info] [storage] normal synchronization mode, checksum disabled, max_chunks_up=128
-[2019/06/28 10:13:04] [ info] [engine] started (pid=10324)
-[2019/06/28 10:13:04] [ info] [sp] stream processor started
+...
 [0] dummy.0: [1561684385.443823800, {"message"=>"dummy"}]
 [1] dummy.0: [1561684386.428399000, {"message"=>"dummy"}]
 [2] dummy.0: [1561684387.443641900, {"message"=>"dummy"}]
@@ -337,13 +360,13 @@ start vs.exe
 Now you should be able to run Fluent Bit:
 
 ```shell
-.\bin\debug\fluent-bit.exe -i dummy -o stdout
+fluent-bit.exe -i dummy -o stdout
 ```
 
 ### Packaging
 
 To create a ZIP package, call `cpack` as follows:
 
-```text
+```shell
 cpack -G ZIP
 ```
