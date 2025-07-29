@@ -140,7 +140,7 @@ requests. Vale suggestions, errors, and warnings will display in GitHub on the
 
 Most Vale tests are at the `suggestion` level and won't block merging.
 
-The following tests are at a `error` level and will cause a test failure:
+The following tests are at `error` level and will cause a test failure:
 
 - [AmSpelling](https://developers.google.com/style/word-list)
 - [Ampersand](https://developers.google.com/style/word-list#ampersand)
