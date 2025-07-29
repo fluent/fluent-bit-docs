@@ -14,7 +14,7 @@ For CentOS 9 and later, Fluent Bit uses [CentOS Stream](https://www.centos.org/c
 
 Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
 
-```bash
+```shell
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
@@ -27,8 +27,9 @@ CentOS 8 is now end-of-life, so the default Yum repositories are unavailable.
 Ensure you've configured an appropriate mirror. For example:
 
 ```shell
-sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
-sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+$ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+
+$ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 ```
 
 An alternative is to use Rocky or Alma Linux, which should be equivalent.
@@ -48,12 +49,12 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
 
    ```text
    [fluent-bit]
-   name = Fluent Bit
-   baseurl = https://packages.fluentbit.io/centos/$releasever/
-   gpgcheck=1
-   gpgkey=https://packages.fluentbit.io/fluentbit.key
-   repo_gpgcheck=1
-   enabled=1
+     name = Fluent Bit
+     baseurl = https://packages.fluentbit.io/centos/$releasever/
+     gpgcheck=1
+     gpgkey=https://packages.fluentbit.io/fluentbit.key
+     repo_gpgcheck=1
+     enabled=1
    ```
 
 1. As a best practice, enable `gpgcheck` and `repo_gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.
@@ -83,20 +84,21 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 1. After your repository is configured, run the following command to install it:
 
-   ```bash
+   ```shell
    sudo yum install fluent-bit
    ```
 
 1. Instruct `Systemd` to enable the service:
 
-   ```bash
+   ```shell
    sudo systemctl start fluent-bit
    ```
 
 If you do a status check, you should see a similar output like this:
 
-```bash
+```shell
 $ systemctl status fluent-bit
+
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/usr/lib/systemd/system/fluent-bit.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago
@@ -116,9 +118,8 @@ The `fluent-bit.repo` file for the latest installations of Fluent Bit uses a `$r
 
 ```text
 [fluent-bit]
-name = Fluent Bit
-baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
-...
+  name = Fluent Bit
+  baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
 ```
 
 Depending on your Red Hat distribution version, this variable can return a value other than the OS major release version (for example, RHEL7 Server distributions return `7Server` instead of `7`). The Fluent Bit package URL uses the major OS release version, so any other value here will cause a 404.
@@ -127,12 +128,12 @@ To resolve this issue, replace the `$releasever` variable with your system's OS 
 
 ```text
 [fluent-bit]
-name = Fluent Bit
-baseurl = https://packages.fluentbit.io/centos/7/$basearch/
-gpgcheck=1
-gpgkey=https://packages.fluentbit.io/fluentbit.key
-repo_gpgcheck=1
-enabled=1
+  name = Fluent Bit
+  baseurl = https://packages.fluentbit.io/centos/7/$basearch/
+  gpgcheck=1
+  gpgkey=https://packages.fluentbit.io/fluentbit.key
+  repo_gpgcheck=1
+  enabled=1
 ```
 
 ### Yum install fails with incompatible dependencies using CentOS 9+
