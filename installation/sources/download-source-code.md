@@ -17,7 +17,7 @@ For example, for version 1.8.12 the link is: [https://github.com/fluent/fluent-b
 
 If you want to contribute to Fluent Bit, you should use the most recent code. You can get the development version from the Git repository:
 
-```bash
+```shell
 git clone https://github.com/fluent/fluent-bit
 ```
 
