@@ -41,7 +41,7 @@ Variables set in the `env` section can't be overridden by system environment var
 
 For example, to set the `FLUSH_INTERVAL` system environment variable to `2` and use it in your configuration:
 
-```bash
+```shell
 export FLUSH_INTERVAL=2
 ```
 
