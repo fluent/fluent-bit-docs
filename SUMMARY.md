@@ -98,7 +98,7 @@
   * [Docker events](pipeline/inputs/docker-events.md)
   * [Docker metrics](pipeline/inputs/docker-metrics.md)
   * [Dummy](pipeline/inputs/dummy.md)
-  * [Ebpf](pipeline/inputs/ebpf.md)
+  * [eBPF](pipeline/inputs/ebpf.md)
   * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec WASI](pipeline/inputs/exec-wasi.md)
   * [Exec](pipeline/inputs/exec.md)

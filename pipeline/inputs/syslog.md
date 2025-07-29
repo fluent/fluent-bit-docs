@@ -55,7 +55,7 @@ service:
   flush: 1
   log_level: info
   parsers_file: parsers.yaml
-    
+
 pipeline:
   inputs:
     - name: syslog
@@ -63,7 +63,7 @@ pipeline:
       buffer_chunk_size: 32000
       buffer_max_size: 64000
       receive_buffer_size: 512000
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -101,7 +101,7 @@ When Fluent Bit is running, you can send some messages using the logger tool:
 logger -u /tmp/in_syslog my_ident my_message
 ```
 
-Then run Fluent bit using the following command:
+Then run Fluent Bit using the following command:
 
 ```shell
 # For YAML configuration.
@@ -125,7 +125,7 @@ The following configuration examples cover different use cases to integrate Flue
 
 ### `rsyslog` to Fluent Bit: Network mode over TCP
 
-#### Fluent Bit configuration
+#### Fluent Bit configuration [#config-tcp]
 
 Put the following content in your configuration file:
 
@@ -136,7 +136,7 @@ Put the following content in your configuration file:
 service:
   flush: 1
   parsers_file: parsers.yaml
-    
+
 pipeline:
   inputs:
     - name: syslog
@@ -144,7 +144,7 @@ pipeline:
       listen: 0.0.0.0
       port: 5140
       mode: tcp
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -175,7 +175,7 @@ pipeline:
 
 Then, start Fluent Bit.
 
-#### `rsyslog` configuration
+#### `rsyslog` configuration [#rsyslog-tcp]
 
 Add a new file to your `rsyslog` configuration rules called `60-fluent-bit.conf` inside the directory `/etc/rsyslog.d/` and add the following content:
 
@@ -191,7 +191,7 @@ sudo service rsyslog restart
 
 ### `rsyslog` to Fluent Bit: Unix socket mode over UDP
 
-#### Fluent Bit configuration
+#### Fluent Bit configuration [#config-udp]
 
 Put the following content in your Fluent Bit configuration:
 
@@ -202,7 +202,7 @@ Put the following content in your Fluent Bit configuration:
 service:
   flush: 1
   parsers_file: parsers.yaml
-    
+
 pipeline:
   inputs:
     - name: syslog
@@ -210,7 +210,7 @@ pipeline:
       path: /tmp/fluent-bit.sock
       mode: unix_udp
       unix_perm: 0644
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -241,7 +241,7 @@ pipeline:
 
 Then, start Fluent Bit.
 
-#### `rsyslog` configuration
+#### `rsyslog` configuration [#rsyslog-udp]
 
 Add a new file to your `rsyslog` configuration rules called `60-fluent-bit.conf` inside the directory `/etc/rsyslog.d/` containing the following content:
 

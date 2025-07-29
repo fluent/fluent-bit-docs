@@ -2,7 +2,7 @@
 
 The _TCP_ input plugin lets you retrieve structured JSON or raw messages over a TCP network interface (TCP port).
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
@@ -11,7 +11,7 @@ The plugin supports the following configuration parameters:
 | `Listen`             | Listener network interface.                                                                                                                                                                                                                           | `0.0.0.0`                   |
 | `Port`               | TCP port to listen for connections.                                                                                                                                                                                                                   | `5170`                      |
 | `Buffer_Size`        | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default is the value of `Chunk_Size`.                                                                                                                                | `Chunk_Size`                |
-| `Chunk_Size`         | The default buffer to store the incoming JSON messages. It doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `Chunk_Size`. If not set, `Chunk_Size` is equal to 32 (32KB). | `32`                        |
+| `Chunk_Size`         | The default buffer to store the incoming JSON messages. It doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `Chunk_Size`. If not set, `Chunk_Size` is equal to 32 (32&nbsp;KB). | `32`                        |
 | `Format`             | Specify the expected payload format. Supported values: `json` and `none`. When set to `json` it expects JSON maps. When set to `none`, every record splits using the defined `Separator`.                                                             | `json`                      |
 | `Separator`          | When `Format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                                                                             | `LF` or `0x10` (break line) |
 | `Source_Address_Key` | Specify the key to inject the source address.                                                                                                                                                                                                         | _none_                      |
