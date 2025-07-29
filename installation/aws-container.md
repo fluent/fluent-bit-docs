@@ -22,13 +22,13 @@ Also, Fluent Bit includes an S3 output plugin named `s3`.
 
 - [Amazon S3](https://docs.fluentbit.io/manual/pipeline/outputs/s3)
 
-## Versions and Regional Repositories
+## Versions and regional repositories
 
 AWS vends their container image using [Docker Hub](https://hub.docker.com/r/amazon/aws-for-fluent-bit), and a set of highly available regional Amazon ECR repositories. For more information, see the [AWS for Fluent Bit GitHub repository](https://github.com/aws/aws-for-fluent-bit#public-images).
 
 The AWS for Fluent Bit image uses a custom versioning scheme because it contains multiple projects. To see what each release contains, see the [release notes on GitHub](https://github.com/aws/aws-for-fluent-bit/releases).
 
-## SSM Public Parameters
+## SSM public parameters
 
 AWS vends SSM public parameters with the regional repository link for each image. These parameters can be queried by any AWS account.
 

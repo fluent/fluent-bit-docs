@@ -10,6 +10,7 @@ autoscaler
 autoscaling
 Avro
 backoff
+backporting
 backpressure
 backtrace
 Bazel
@@ -18,6 +19,7 @@ Blackhole
 blocklist
 boolean
 Buildkite
+Buildroot
 cAdvisor
 Calyptia
 Chronosphere
@@ -52,7 +54,7 @@ deprovisioned
 deprovisioning
 deprovisions
 Devo
-Distroless
+distroless
 DogStatsD
 downsample
 downsampled
@@ -90,6 +92,7 @@ grpc_service
 gzip
 HashiCorp
 HEC
+Homebrew
 hostname
 Hostname
 Ingester

@@ -38,7 +38,7 @@ docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
 
 ## Tags and versions
 
-The following table describes the Linux container tags that are available on Docker Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
+The following table describes the Linux container tags that are available on Docker Hub [`fluent/fluent-bit`](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 | Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
@@ -250,9 +250,9 @@ Alpine Linux uses Musl C library instead of Glibc. Musl isn't fully compatible w
 - Alpine Linux Musl Time format parser doesn't support Glibc extensions.
 - The Fluent Bit maintainers' preference for base images are Distroless and Debian for security and maintenance reasons.
 
-### Why use Distroless containers?
+### Why use distroless containers?
 
-The reasons for using Distroless are well covered in
+The reasons for using distroless are well covered in
 [Why should I use Distroless images?](https://github.com/GoogleContainerTools/distroless#why-should-i-use-distroless-images).
 
 - Include only what you need, reduce the attack surface available.

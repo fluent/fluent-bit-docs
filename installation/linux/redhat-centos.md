@@ -34,15 +34,16 @@ $ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g'
 
 An alternative is to use Rocky or Alma Linux, which should be equivalent.
 
-## RHEL/AlmaLinux/RockyLinux and CentOS 9 Stream
+## RHEL, AlmaLinux, RockyLinux, and CentOS 9 Stream
 
-From CentOS 9 Stream onwards, the CentOS dependencies will update more often than downstream usage. This may mean that incompatible (more recent) versions are provided of certain dependencies (e.g. OpenSSL). For OSS, we also provide RockyLinux and AlmaLinux repositories.
+From CentOS 9 Stream and later, the CentOS dependencies will update more often than downstream usage. This might mean that incompatible (more recent) versions are
+provided of certain dependencies (for example, OpenSSL). For OSS, Fluent Bit also provide RockyLinux and AlmaLinux repositories.
 
-Replace the `centos` string in Yum configuration below with `almalinux` or `rockylinux` to use those repositories instead. This may be required for RHEL 9 as well which will no longer track equivalent CentOS 9 stream dependencies. No RHEL 9 build is provided, it is expected to use one of the OSS variants listed.
+Replace the `centos` string in Yum configuration with `almalinux` or `rockylinux` to use those repositories instead. This might be required for RHEL 9 as well which will no longer track equivalent CentOS 9 stream dependencies. No RHEL 9 build is provided, as it's expected you're using one of the OSS variants listed.
 
-## Configure Yum
+## Configure YUM
 
-The `fluent-bit` is provided through a Yum repository. To add the repository reference to your system:
+The`fluent-bit` package is provided through a Yum repository. To add the repository reference to your system:
 
 1. In `/etc/yum.repos.d/`, add a new file called `fluent-bit.repo`.
 1. Add the following content to the file:
@@ -112,7 +113,7 @@ The default Fluent Bit configuration collect metrics of CPU usage and sends the 
 
 ## FAQ
 
-### Yum install fails with a "404 - Page not found" error for the package mirror
+### Yum install fails with a `404 - Page not found` error for the package mirror
 
 The `fluent-bit.repo` file for the latest installations of Fluent Bit uses a `$releasever` variable to determine the correct version of the package to install to your system:
 
@@ -138,6 +139,6 @@ To resolve this issue, replace the `$releasever` variable with your system's OS 
 
 ### Yum install fails with incompatible dependencies using CentOS 9+
 
-CentOS 9 onwards will no longer be compatible with RHEL 9 as it may track more recent dependencies. Alternative AlmaLinux and RockyLinux repositories are available.
+CentOS 9 and later will no longer be compatible with RHEL 9 as it might track more recent dependencies. Alternative AlmaLinux and RockyLinux repositories are available.
 
-See the guidance above.
+See the previous guidance.

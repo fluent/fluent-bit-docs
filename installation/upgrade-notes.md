@@ -16,13 +16,13 @@ The `td-agent-bit` package is no longer provided after this release. Users shoul
 
 If you are migrating from previous version of Fluent Bit, review the following important changes:
 
-### Tail Input Plugin
+### Tail input plugin
 
 By default, the tail input plugin follows a file from the end after the service starts, instead of reading it from the beginning. Every file found when the plugin starts is followed from it last position. New files discovered at runtime or when files rotate are read from the beginning.
 
 To keep the old behavior, set the option `read_from_head` to `true`.
 
-### Stackdriver Output Plugin
+### Stackdriver output plugin
 
 The `project_id` of [resource](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) in [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) sent to Google Cloud Logging would be set to the `project_id` rather than the project number. To learn the difference between Project ID and project number, see [Creating and managing projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin).
 
@@ -44,7 +44,7 @@ If you are migrating from Fluent Bit v1.2 to v1.3, there are no breaking changes
 
 ## Fluent Bit v1.2
 
-### Docker, JSON, Parsers and Decoders
+### Docker, JSON, parsers, and decoders
 
 Fluent Bit v1.2 fixed many issues associated with JSON encoding and decoding.
 
@@ -59,7 +59,7 @@ For example, when parsing Docker logs, it's no longer necessary to use decoders.
   Time_Keep   On 
 ```
 
-### Kubernetes Filter
+### Kubernetes filter
 
 Fluent Bit made improvements to Kubernetes Filter handling of stringified `log` messages. If the `Merge_Log` option is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
 

@@ -4,7 +4,7 @@ Fluent Bit is compatible with the latest Apple macOS software for x86_64 and App
 
 ## Installation packages
 
-Installation packages can be found [here](https://packages.fluentbit.io/macos/).
+Installation packages can be found [in the Fluent Bit repository](https://packages.fluentbit.io/macos/).
 
 ## Requirements
 

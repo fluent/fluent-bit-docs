@@ -52,15 +52,15 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 ## Update your sources lists
 
 For Debian, you must add the Fluent Bit APT server entry to your sources lists.
-Ensure codename is set to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production\_Releases). (for example: `bookworm` for Debian 12)
+Ensure codename is set to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production_Releases). (for example: `bookworm` for Debian 12).
 
 ```shell
 codename=$(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release 2>/dev/null || lsb_release -cs 2>/dev/null)
 ```
 
-Now Update your sources lists
+Update your source's lists:
 
-```shell
+```bash
 echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$codename $codename main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
