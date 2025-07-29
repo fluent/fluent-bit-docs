@@ -68,7 +68,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 3. The command should return output like the following:
 
-    ```shell
+    ```text
     [0] stdin.0: [[1684196745.942883835, {}], {"key"=>"some value"}]
     [0] stdin.0: [[1684196746.938949056, {}], {"key"=>"some value"}]
     [0] stdin.0: [[1684196747.940162493, {}], {"key"=>"some value"}]
@@ -105,7 +105,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 3. Which returns the following:
 
-    ```shell
+    ```text
     [0] stdin.0: [[1684110480.028171300, {}], {"realtimestamp"=>1684196880.030070}]
     [0] stdin.0: [[1684110481.033753395, {}], {"realtimestamp"=>1684196881.034741}]
     [0] stdin.0: [[1684110482.036730051, {}], {"realtimestamp"=>1684196882.037704}]
@@ -144,7 +144,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 3. Which returns results like the following:
 
-    ```shell
+    ```text
     [0] stdin.0: [[1684110513.060139417, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196913.061017}]
     [0] stdin.0: [[1684110514.063085317, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196914.064145}]
     [0] stdin.0: [[1684110515.066210508, {"metakey"=>"metavalue"}], {"realtimestamp"=>1684196915.067155}]
@@ -155,7 +155,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 4. On older Fluent Bit versions records in this format will be discarded. If the log level permits, Fluent Bit will log:
 
-    ```shell
+    ```text
     [ warn] unknown time format 6
     ```
 
