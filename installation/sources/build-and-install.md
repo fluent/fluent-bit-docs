@@ -18,13 +18,13 @@ The following steps explain how to build and install the project with the defaul
 
 1. Change to the `build/` directory inside the Fluent Bit sources:
 
-   ```bash
+   ```shell
    cd build/
    ```
 
 1. Let [CMake](http://cmake.org) configure the project specifying where the root path is located:
 
-   ```bash
+   ```shell
    cmake ../
    ```
 
@@ -50,7 +50,7 @@ The following steps explain how to build and install the project with the defaul
 
 1. Start the compilation process using the `make` command:
 
-   ```bash
+   ```shell
    make
    ```
 
@@ -77,7 +77,7 @@ The following steps explain how to build and install the project with the defaul
 
 1. To continue installing the binary on the system, use `make install`:
 
-   ```bash
+   ```shell
    make install
    ```
 
