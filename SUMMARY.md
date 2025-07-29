@@ -172,7 +172,7 @@
   * [Sysinfo](pipeline/filters/sysinfo.md)
   * [Tensorflow](pipeline/filters/tensorflow.md)
   * [Throttle](pipeline/filters/throttle.md)
-  * [Type Converter](pipeline/filters/type-converter.md)
+  * [Type converter](pipeline/filters/type-converter.md)
   * [Wasm](pipeline/filters/wasm.md)
 * [Outputs](pipeline/outputs/README.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)

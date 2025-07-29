@@ -65,7 +65,7 @@ will become:
 
 The last pane of the window was overwritten and 1 message was dropped.
 
-### Interval versus Window size
+### `Interval` versus `Window` size
 
 You might notice it's possible to configure the `Interval` of the `Window` shift. It's counterintuitive, but there is a difference between the two previous examples:
 
@@ -115,7 +115,7 @@ The following command will load the Tail plugin and read the content of the `lin
 fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

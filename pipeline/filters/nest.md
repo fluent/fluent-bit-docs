@@ -63,12 +63,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Value format | Operation | Description |
 | :--- | :--- | :--- | :--- |
-| `Operation` | ENUM [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
-| `Wildcard` | FIELD WILDCARD | `nest` | Nest records which field matches the wildcard |
-| `Nest_under` | FIELD STRING | `nest` | Nest records matching the `Wildcard` under this key |
-| `Nested_under` | FIELD STRING | `lift` | Lift records nested under the `Nested_under` key |
-| `Add_prefix` | FIELD STRING | Any | Prefix affected keys with this string |
-| `Remove_prefix` | FIELD STRING | Any | Remove prefix from affected keys if it matches this string |
+| `Operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
+| `Wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
+| `Nest_under` | Field string | `nest` | Nest records matching the `Wildcard` under this key |
+| `Nested_under` | Field string | `lift` | Lift records nested under the `Nested_under` key |
+| `Add_prefix` | Field string | Any | Prefix affected keys with this string |
+| `Remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
 
 ## Get started
 
@@ -125,11 +125,11 @@ pipeline:
 [FILTER]
   Name nest
   Match *
-  Operation nest  
+  Operation nest
   Wildcard Mem.*
   Nest_under Memstats
   Remove_prefix Mem.
-    
+
  [OUTPUT]
   Name  stdout
   Match *
@@ -206,10 +206,10 @@ pipeline:
   Operation lift
   Nested_under Stats
   Remove_prefix NESTED
-    
+
 [OUTPUT]
   Name  stdout
-  Match *    
+  Match *
 ```
 
 {% endtab %}
@@ -298,7 +298,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Deep `nest` Result
+### Deep `nest` result
 
 ```text
 [0] mem.local: [1524795923.009867831, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "LAYER3"=>{"LAYER2"=>{"LAYER1"=>{"Mem.total"=>4050908, "Mem.used"=>1112036, "Mem.free"=>2938872}}}}]
