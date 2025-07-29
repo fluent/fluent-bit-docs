@@ -30,3 +30,4 @@ jobs:
       - uses: errata-ai/vale-action@v2.1.1
         with:
           files: all
+          fail_on_error: true
