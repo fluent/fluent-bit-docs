@@ -102,7 +102,6 @@ To simplify the configuration of regular expressions, you can use the [Rubular](
 The following example provides a full Fluent Bit configuration file for multiline parsing by using the definition explained previously. It's provided in following YAML and classic configuration examples:
 
 {% tabs %}
-
 {% tab title="fluent-bit.yaml" %}
 
 This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.yaml` and tails the file `test.log`  by applying the multiline parser `multiline-regex-test`. Then it sends the processing to the standard output.
@@ -224,7 +223,7 @@ another line...
 
 By running Fluent Bit with the corresponding configuration file you will obtain the following output:
 
-```text
+```shell
 # For YAML configuration.
 $ ./fluent-bit --config fluent-bit.yaml
 
@@ -399,7 +398,6 @@ Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something
     at com.myproject.module.MyProject.someMethod(MyProject.java:10)
     at com.myproject.module.MyProject.main(MyProject.java:6)
 another line...
-
 ```
 
 {% endtab %}
@@ -407,7 +405,7 @@ another line...
 
 By running Fluent Bit with the corresponding configuration file you will obtain:
 
-```text
+```shell
 # For YAML configuration.
 $ ./fluent-bit --config fluent-bit.yaml
 
