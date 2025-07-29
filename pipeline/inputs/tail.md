@@ -60,7 +60,7 @@ Although Fluent Bit has a soft limit of 2&nbsp;MB for chunks, input plugins like
 
 ### Memory protection with `mem_buf_limit`
 
-If Fluent Bit is not configured to use filesystem buffering, it needs mechanisms to protect against high memory consumption during backpressure scenarios (for example, when destination endpoints are down or network issues occur). The `mem_buf_limit` option restricts how much memory in chunks an input plugin can use.
+If Fluent Bit isn't configured to use filesystem buffering, it needs mechanisms to protect against high memory consumption during backpressure scenarios (for example, when destination endpoints are down or network issues occur). The `mem_buf_limit` option restricts how much memory in chunks an input plugin can use.
 
 When filesystem buffering is enabled, memory management works differently. For more details, see [Buffering and Storage](../../administration/buffering-and-storage.md).
 
@@ -400,11 +400,11 @@ By default, SQLite client tools don't format the columns in a human-readable way
 .width 5 32 12 12 10
 ```
 
-## SQLite and Write Ahead Logging
+## SQLite and write-ahead logging
 
 Fluent Bit keeps the state or checkpoint of each file through using a SQLite database file. If the service is restarted, it can continue consuming files from it last checkpoint position (offset). The default options set are enabled for high performance and corruption-safe.
 
-The SQLite journal mode enabled is `Write Ahead Log` or `WAL`. This allows improved performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
+The SQLite journal mode enabled is write-ahead logging or `WAL`. This allows improved performance of read and write operations to disk. When enabled, you will see in your file system additional files being created, consider the following configuration statement:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -437,9 +437,9 @@ The previous configuration enables a database file called `test.db` and in the s
 
 These two files support the `WAL` mechanism that helps improve performance and reduce the number system calls required. The `-wal` file refers to the file that stores the new changes to be committed. At some point the `WAL` file transactions are moved back to the real database file. The `-shm` file is a shared-memory type to allow concurrent-users to the `WAL` file.
 
-### Write Ahead Logging (WAL) and memory usage
+### Write-ahead logging (`WAL`) and memory usage
 
-The `WAL` mechanism gives higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually isn't relevant unless you want your memory metrics back to normal. Fluent Bit 1.7.3 introduced the new option `db.journal_mode` that sets the journal mode for databases. By default, this mode is set to `WAL (Write-Ahead Logging)`. Allowed configurations for `db.journal_mode` are `DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF` .
+The `WAL` mechanism gives higher performance but also might increase the memory usage by Fluent Bit. Most of this usage comes from the memory mapped and cached pages. In some cases you might see that memory usage keeps a bit high giving the impression of a memory leak, but actually isn't relevant unless you want your memory metrics back to normal. Fluent Bit 1.7.3 introduced the new option `db.journal_mode` that sets the journal mode for databases. By default, this mode is set to `WAL`. Allowed configurations for `db.journal_mode` are `DELETE | TRUNCATE | PERSIST | MEMORY | WAL | OFF` .
 
 ## File rotation
 

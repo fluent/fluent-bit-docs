@@ -51,7 +51,7 @@ pipeline:
     - name: http
       listen: 0.0.0.0
       port: 8888
-      
+
   outputs:
     - name: stdout
       match: app.log
@@ -171,7 +171,7 @@ The `success_header` parameter lets you set multiple HTTP headers on success. Th
 pipeline:
   inputs:
     - name: http
-      success_header: 
+      success_header:
         - X-Custom custom-answer
         - X-Another another-answer
 ```
