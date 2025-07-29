@@ -129,6 +129,7 @@ exceptions:
   - Tanzu
   - TCP
   - Telemetry Pipeline
+  - Tensorflow Lite
   - Terraform
   - TLS
   - Transport Layer Security

@@ -4,7 +4,7 @@ description: Generate metrics from logs
 
 # Logs to metrics
 
-The _log to metrics_ filter lets you generate log-derived metrics. It supports modes to count records, provide a guage for field values, or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values.
+The _log to metrics_ filter lets you generate log-derived metrics. It supports modes to count records, provide a gauge for field values, or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values.
 
 This filter doesn't actually act as a record filter and therefore doesn't change or drop records. All records will pass through this filter untouched, and any generated metrics will be emitted into a separate metric pipeline.
 
@@ -53,13 +53,13 @@ The following example takes records from two `dummy` inputs and counts all messa
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 20, "color": "red", "shape": "circle"}'
       tag: dummy.log
-      
+
     - name: dummy
       dummy: '{"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}'
       tag: dummy.log2
@@ -154,13 +154,13 @@ The `gauge` mode needs a `value_field` to specify where to generate the metric v
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 20, "color": "red", "shape": "circle"}'
       tag: dummy.log
-      
+
     - name: dummy
       dummy: '{"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}'
       tag: dummy.log2
@@ -176,7 +176,7 @@ pipeline:
       kubernetes_mode: on
       regex: 'message .*el.*'
       add_label: app $kubernetes['labels']['app']
-      label_field: 
+      label_field:
         - color
         - shape
 
@@ -218,7 +218,7 @@ pipeline:
   add_label          app $kubernetes['labels']['app']
   label_field        color
   label_field        shape
-    
+
 [OUTPUT]
   name               prometheus_exporter
   match              *
@@ -278,13 +278,13 @@ Similar to the `gauge` mode, the `histogram` mode needs a `value_field` to speci
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 20, "color": "red", "shape": "circle"}'
       tag: dummy.log
-      
+
     - name: dummy
       dummy: '{"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}'
       tag: dummy.log2
@@ -342,7 +342,7 @@ pipeline:
   add_label          app $kubernetes['labels']['app']
   label_field        color
   label_field        shape
-    
+
 [OUTPUT]
   name               prometheus_exporter
   match              *
@@ -417,13 +417,13 @@ In the resulting output, there are several buckets by default: `0.005, 0.01, 0.0
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: dummy
       dummy: '{"message":"dummy", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 20, "color": "red", "shape": "circle"}'
       tag: dummy.log
-      
+
     - name: dummy
       dummy: '{"message":"hello", "kubernetes":{"namespace_name": "default", "docker_id": "abc123", "pod_name": "pod1", "container_name": "mycontainer", "pod_id": "def456", "labels":{"app": "app1"}}, "duration": 60, "color": "blue", "shape": "square"}'
       tag: dummy.log2
@@ -496,7 +496,7 @@ pipeline:
   regex              message .*el.*
   label_field        color
   label_field        shape
-    
+
 [OUTPUT]
   name               prometheus_exporter
   match              *

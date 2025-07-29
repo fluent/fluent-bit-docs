@@ -302,7 +302,7 @@ parsers:
   - name: custom-tag
     format: regex
     regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
-      
+
 pipeline:
   inputs:
     - name: tail
@@ -560,7 +560,7 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
     If set roles are configured correctly, it should respond with `yes`.
 
-    For instance, using Azure AKS, running the previous command might respond with:
+    For instance, using Azure Kubernetes Service (AKS), running the previous command might respond with:
 
     ```text
     no - Azure does not have opinion for this user.

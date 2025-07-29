@@ -62,8 +62,8 @@ The plugin supports the following conditions:
 | :--- | :--- | :--- | :--- |
 | `Key_exists` | `STRING:KEY` | _none_ | Is `true` if `KEY` exists. |
 | `Key_does_not_exist` | `STRING:KEY` | _none_ | Is `true` if `KEY` doesn't exist. |
-| `A_key_matches` | `REGEXP:KEY` | _none_ | Is `true` if a key matches regex `KEY`. |
-| `No_key_matches` | `REGEXP:KEY` | _none_ | Is `true` if no key matches regex `KEY`. |
+| `A_key_matches` | `REGEXP:KEY` | _none_ | Is `true` if a key matches regular expression `KEY`. |
+| `No_key_matches` | `REGEXP:KEY` | _none_ | Is `true` if no key matches regular expression `KEY`. |
 | `Key_value_equals` | `STRING:KEY` | `STRING:VALUE` | Is `true` if `KEY` exists and its value is `VALUE`. |
 | `Key_value_does_not_equal` | `STRING:KEY` | `STRING:VALUE` | Is `true` if `KEY` exists and its value isn't `VALUE`. |
 | `Key_value_matches` | `STRING:KEY` | `REGEXP:VALUE` | Is `true` if key `KEY` exists and its value matches `VALUE`. |
@@ -267,7 +267,7 @@ pipeline:
 
 ## Example 3 - emoji
 
-### Emoji configuration File
+### Emoji configuration file
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -292,7 +292,7 @@ pipeline:
         - 💦 is_wet
       copy: 🔥 💦
       rename:  💦 ❄️
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -317,7 +317,7 @@ pipeline:
   Rename  💦 ❄️
   Set ❄️ is_cold
   Set 💦 is_wet
-    
+
 [OUTPUT]
   Name  stdout
   Match *

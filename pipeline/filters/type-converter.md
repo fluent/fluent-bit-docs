@@ -1,6 +1,6 @@
-# Type Converter
+# Type converter
 
-The _Type Converter_ filter plugin converts data types and appends new key-value pairs.
+The _Type converter_ filter plugin converts data types and appends new key-value pairs.
 
 You can use this filter in combination with plugins which expect incoming string value. For example, [Grep](grep.md) and [Modify](modify.md).
 

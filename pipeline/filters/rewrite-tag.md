@@ -55,10 +55,10 @@ The key represents the name of the _record key_ that holds the `value` to use to
 
 To match against the value of the key `name`, you must use `$name`. The key selector is flexible enough to allow to match nested levels of sub-maps from the structure. To capture the value of the nested key `s2`, specify `$ss['s1']['s2']`, for short:
 
--`$name` = "abc-123"
--`$ss['s1']['s2']` = "flb"
+-`$name` = `abc-123`
+-`$ss['s1']['s2']` = `flb`
 
-A key must point to a value that contains a string. It's not valid for numbers, Booleans, maps, or arrays.
+A key must point to a value that contains a string. It's not valid for numbers, Boolean values, maps, or arrays.
 
 ### Regular expressions
 
@@ -72,11 +72,11 @@ To match any record that it `$name` contains a value of the format `string-numbe
 
 This example uses parentheses to specify groups of data. If the pattern matches the value a placeholder will be created that can be consumed by the `NEW_TAG` section.
 
-If `$name` equals `abc-123` , then the following placeholders will be created:
+If `$name` equals `abc-123`, then the following placeholders will be created:
 
--`$0` = "abc-123"
--`$1` = "abc"
--`$2` = "123"
+-`$0` = `abc-123`
+-`$1` = `abc`
+-`$2` = `123`
 
 If the regular expression doesn't match an incoming record, the rule will be skipped and the next rule (if present) will be processed.
 
@@ -228,7 +228,7 @@ The _dummy_ input generated two records, while the filter dropped two from the c
 
 The records generated are handled by the internal emitter, so the new records are summarized in the Emitter metrics. Take a look at the entry called `emitter_for_rewrite_tag.0`.
 
-### The Emitter
+### Emitter
 
 The _Emitter_ is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an emitter instance to use it exclusively to emit records, allowing for granular control of who is emitting what.
 

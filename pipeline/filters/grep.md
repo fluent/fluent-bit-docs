@@ -16,9 +16,9 @@ The plugin supports the following configuration parameters:
 | `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
 | `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
 
-### Record Accessor enabled
+### Record accessor enabled
 
-Enable the [Record Accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the `KEY`. Use the record accessor to match values against nested values.
+Enable the [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) feature to specify the `KEY`. Use the record accessor to match values against nested values.
 
 ## Filter records
 
@@ -53,18 +53,18 @@ fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdou
 ```yaml
 service:
   parsers_file: /path/to/parsers.conf
-    
+
 pipeline:
   inputs:
     - name: tail
       path: lines.txt
       parser: json
-      
+
   filters:
     - name: grep
       match: '*'
       regex: log aa
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -95,8 +95,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-
-The filter allows to use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions)).
+The filter lets you use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions)).
 
 ### Nested fields example
 
@@ -127,8 +126,8 @@ For example, to exclude records that match the nested field `kubernetes.labels.a
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-pipeline: 
-  
+pipeline:
+
   filters:
     - name: grep
       match: '*'
@@ -162,7 +161,7 @@ The following example checks for a specific valid value for the key:
 
 ```yaml
 pipeline:
- 
+
   filters:
     # Use Grep to verify the contents of the iot_timestamp value.
     # If the iot_timestamp key does not exist, this will fail
@@ -214,7 +213,7 @@ pipeline:
     - name: dummy
       dummy: '{"endpoint":"localhost", "value":"something"}'
       tag: dummy
-      
+
   filters:
     - name: grep
       match: '*'

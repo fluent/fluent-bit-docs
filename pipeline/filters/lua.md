@@ -18,7 +18,7 @@ The plugin supports the following configuration parameters:
 | `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |
 | `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
 | `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
-| `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it is converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
+| `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it's converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | `code` | Inline Lua code instead of loading from a path defined in `script`. |
 | `enable_flb_null` | If enabled, `null` will be converted to `flb_null` in Lua. This helps prevent removing key/value since `nil` is a special value to remove key/value from map in Lua. Default value: `false`. |
 
@@ -140,7 +140,7 @@ end
 | ---- | ----------- |
 | `tag` | Name of the tag associated with the incoming record. |
 | `timestamp` | Unix timestamp with nanoseconds associated with the incoming record. |
-| `group` | A read-only table containing group-level metadata (for example, OpenTelemetry resource or scope info). This will be an empty table if the log is not part of a group. |
+| `group` | A read-only table containing group-level metadata (for example, OpenTelemetry resource or scope info). This will be an empty table if the log isn't part of a group. |
 | `metadata` | A table representing the record-specific metadata. You can modify this if needed. |
 | `record` | Lua table with the record content. |
 
@@ -192,7 +192,7 @@ The metadata and record arrays must have the same length.
 
 This example demonstrates processing OpenTelemetry logs with group metadata access:
 
-#### Configuration
+#### Configuration [#configuration-otel]
 
 ```yaml
 pipeline:
@@ -390,6 +390,7 @@ pipeline:
 {% endtabs %}
 
 filters.lua:
+
 ```lua
 -- Use a Lua function to create some additional entries based
 -- on substrings from the kubernetes properties.
@@ -421,7 +422,7 @@ The Lua callback function can return an array of tables (for example, an array o
 
 For example:
 
-#### Lua script
+#### Lua script [#lua-record-split]
 
 ```lua
 function cb_split(tag, timestamp, record)
@@ -433,7 +434,7 @@ function cb_split(tag, timestamp, record)
 end
 ```
 
-#### Configuration
+#### Configuration [#configuration-record-split]
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -453,6 +454,7 @@ pipeline:
     - name: stdout
       match: '*'
 ```
+
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
@@ -474,7 +476,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### Input
+#### Input [#input-record-split]
 
 ```text
 {"x": [ {"a1":"aa", "z1":"zz"}, {"b1":"bb", "x1":"xx"}, {"c1":"cc"} ]}
@@ -482,7 +484,7 @@ pipeline:
 {"a3":"aa", "z3":"zz", "b3":"bb", "x3":"xx", "c3":"cc"}
 ```
 
-#### Output
+#### Output [#output-record-split]
 
 ```text
 [0] stdin.0: [1538435928.310583591, {"a1"=>"aa", "z1"=>"zz"}]
@@ -498,9 +500,9 @@ See also [Fluent Bit: PR 811](https://github.com/fluent/fluent-bit/pull/811).
 
 ### Response code filtering
 
-This example filters Istio logs to exclude lines with a response code between `1` and `399`. Istio is confiured to write logs in JSON format.
+This example filters Istio logs to exclude lines with a response code between `1` and `399`. Istio is configured to write logs in JSON format.
 
-#### Lua script
+#### Lua script [#lua-response-code]
 
 Script `response_code_filter.lua`
 
@@ -517,7 +519,7 @@ function cb_response_code_filter(tag, timestamp, record)
 end
 ```
 
-#### Configuration
+#### Configuration [#configuration-response-code]
 
 Configuration to get Istio logs and apply response code filter to them.
 
@@ -571,7 +573,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### Input
+#### Input [#input-response-code]
 
 ```json
 {
@@ -606,7 +608,7 @@ pipeline:
 }
 ```
 
-#### Output
+#### Output [#output-response-code]
 
 In the output, only the messages with response code `0` or greater than `399` are shown.
 
@@ -614,7 +616,7 @@ In the output, only the messages with response code `0` or greater than `399` ar
 
 The following example converts a field's specific type of `datetime` format to the UTC ISO 8601 format.
 
-#### Lua script
+#### Lua script [#lua-time-format]
 
 Script `custom_datetime_format.lua`:
 
@@ -640,7 +642,7 @@ function convert_to_utc(tag, timestamp, record)
 end
 ```
 
-#### Configuration
+#### Configuration [#configuration-time-format]
 
 Use this configuration to obtain a JSON key with `datetime`, and then convert it to another format.
 
@@ -686,6 +688,7 @@ pipeline:
     - name: stdout
       match: '*'
 ```
+
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
@@ -714,19 +717,21 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### Input
+#### Input [#input-time-format]
 
 ```json
 {"event": "Restock", "pub_date": "Tue, 30 Jul 2024 18:01:06 +0000"}
 ```
+
 and
 
 ```json
 {"event": "Soldout", "pub_date": "Mon, 29 Jul 2024 10:15:00 +0600"}
 ```
+
 Which are handled by dummy in this example.
 
-#### Output
+#### Output [#output-time-format]
 
 The output of this process shows the conversion of the `datetime` of two timezones to ISO 8601 format in UTC.
 
@@ -755,7 +760,7 @@ env:
 
 These variables can be accessed from the Lua code by referring to the `FLB_ENV` Lua table. Since this is a Lua table, you can access its sub-records through the same syntax (for example, `FLB_ENV['A']`).
 
-#### Configuration
+#### Configuration [#configuration-env-var]
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
