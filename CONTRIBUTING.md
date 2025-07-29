@@ -169,5 +169,9 @@ The following tests are at a `warning` level and won't prevent merging:
 file and makes suggestions for improvements. Most markdownlint tests are enabled.
 [See the configuration file](https://github.com/fluent/fluent-bit-docs/blob/master/.markdownlint.json).
 
+The Fluent Bit documentation repository is using a GitHub action to check for invalid
+markdown based on the configuration file. This action might provide review
+suggestions, but doesn't block merging.
+
 Line wrap tests are off due to a GitBook decision that hard wraps the rendered page
 on line wraps in the markdown. This leads to rendered pages with awkward line wraps.
