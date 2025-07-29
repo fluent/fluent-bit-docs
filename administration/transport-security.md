@@ -143,7 +143,7 @@ pipeline:
 
 By default, the HTTP output plugin uses plain TCP. Run the following command to enable TLS:
 
-```bash
+```shell
 fluent-bit -i cpu -t cpu -o http://192.168.2.3:80/something \
            -p tls=on         \
            -p tls.verify=off \

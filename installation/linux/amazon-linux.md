@@ -13,7 +13,7 @@ Amazon Linux 2022 is no longer supported.
 
 Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
 
-```bash copy
+```shell
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
@@ -25,24 +25,24 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
 
 ### Amazon Linux 2
 
-```text copy
+```text
 [fluent-bit]
-name = Fluent Bit
-baseurl = https://packages.fluentbit.io/amazonlinux/2/
-gpgcheck=1
-gpgkey=https://packages.fluentbit.io/fluentbit.key
-enabled=1
+  name = Fluent Bit
+  baseurl = https://packages.fluentbit.io/amazonlinux/2/
+  gpgcheck=1
+  gpgkey=https://packages.fluentbit.io/fluentbit.key
+  enabled=1
 ```
 
 ### Amazon Linux 2023
 
-```text copy
+```text
 [fluent-bit]
-name = Fluent Bit
-baseurl = https://packages.fluentbit.io/amazonlinux/2023/
-gpgcheck=1
-gpgkey=https://packages.fluentbit.io/fluentbit.key
-enabled=1
+  name = Fluent Bit
+  baseurl = https://packages.fluentbit.io/amazonlinux/2023/
+  gpgcheck=1
+  gpgkey=https://packages.fluentbit.io/fluentbit.key
+  enabled=1
 ```
 
 You should always enable `gpgcheck` for security reasons. All Fluent Bit packages are signed.
@@ -72,20 +72,21 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 
 1. After your repository is configured, run the following command to install it:
 
-   ```bash copy
+   ```shell
    sudo yum install fluent-bit
    ```
 
 1. Instruct `systemd` to enable the service:
 
-```bash copy
+```shell
 sudo systemctl start fluent-bit
 ```
 
 If you do a status check, you should see a similar output like this:
 
-```bash
+```shell
 $ systemctl status fluent-bit
+
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/usr/lib/systemd/system/fluent-bit.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2016-07-07 02:08:01 BST; 9s ago

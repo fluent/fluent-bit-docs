@@ -43,19 +43,19 @@ Add the following content at bottom of your `/etc/apt/sources.list` file.
 
 ### Raspbian 12 (Bookworm)
 
-```text
+```shell
 echo "deb https://packages.fluentbit.io/raspbian/bookworm bookworm main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Raspbian 11 (Bullseye)
 
-```text
+```shell
 echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Raspbian 10 (Buster)
 
-```text
+```shell
 echo "deb https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
@@ -63,12 +63,14 @@ echo "deb https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee 
 
 Now let your system update the `apt` database:
 
-```bash
+```shell
 sudo apt-get update
 ```
 
 {% hint style="info" %}
+
 Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`) to avoid potential issues with expired certificates.
+
 {% endhint %}
 
 ## Install Fluent Bit
@@ -81,14 +83,15 @@ Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`) to avoid po
 
 1. Instruct `systemd` to enable the service:
 
-   ```bash
+   ```shell
    sudo service fluent-bit start
    ```
 
 If you do a status check, you should see a similar output like this:
 
-```bash
-sudo service fluent-bit status
+```shell
+$ sudo service fluent-bit status
+
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/lib/systemd/system/fluent-bit.service; disabled; vendor preset: enabled)
    Active: active (running) since mié 2016-07-06 16:58:25 CST; 2h 45min ago

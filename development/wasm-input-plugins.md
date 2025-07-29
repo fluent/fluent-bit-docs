@@ -12,13 +12,13 @@ There are no additional requirements to execute Wasm plugins.
 
 ### For Wasm programs
 
-Fluent Bit supports the following Wasm toolchains:
+Fluent Bit supports the following Wasm tool chains:
 
-* Rust on `wasm32-unknown-unknown`
-  * rustc 1.62.1 (e092d0b6b 2022-07-16) or later
-* [TinyGo](https://github.com/tinygo-org/tinygo) on `wasm32-wasi`
-  * v0.24.0 or later
-* [WASI SDK](https://github.com/WebAssembly/wasi-sdk) 13 or later
+- Rust on `wasm32-unknown-unknown`
+  - rustc 1.62.1 (`e092d0b6b` 2022-07-16) or later
+- [TinyGo](https://github.com/tinygo-org/tinygo) on `wasm32-wasi`
+  - v0.24.0 or later
+- [WASI SDK](https://github.com/WebAssembly/wasi-sdk) 13 or later
 
 ## Get started
 
@@ -50,7 +50,7 @@ Wasm input in Fluent Bit assumes WASI ABI, also known as `wasm32-wasi` on Rust t
 
 ### Install additional components
 
-TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-wasi` target, you must install `wasm32-wasi` by using [rustup](https://rustup.rs/). Then, install the target components as:
+TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-wasi` target, you must install `wasm32-wasi` by using [`rustup`](https://rustup.rs/). Then, install the target components as:
 
 ```text
 rustup target add wasm32-wasi
@@ -74,10 +74,10 @@ pipeline:
           tag: exec.wasi.local
           wasi_path: /path/to/wasi_built_json.wasm
           # For security reasons, WASM/WASI program cannot access its outer world
-          # without accessible permissions. Uncomment below 'accessible_paths' and 
+          # without accessible permissions. Uncomment below 'accessible_paths' and
           # run Fluent Bit from the 'wasi_path' location:
           # accessible_paths /path/to/fluent-bit
-        
+
     outputs:
         - name: stdout
           match: '*'
@@ -92,7 +92,7 @@ pipeline:
     Tag  exec.wasi.local
     WASI_Path /path/to/wasi_built_json.wasm
     # For security reasons, WASM/WASI program cannot access its outer world
-    # without accessible permissions. Uncomment below 'accessible_paths' and 
+    # without accessible permissions. Uncomment below 'accessible_paths' and
     # run Fluent Bit from the 'wasi_path' location:
     # accessible_paths /path/to/fluent-bit
 
@@ -104,4 +104,5 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-For an example that handles structured logs, see the [Rust `serde-json` example](https://github.com/fluent/fluent-bit/tree/master/examples/wasi_serde_json).
+For an example that handles structured logs, see the [Rust `serde-json`
+example](https://github.com/fluent/fluent-bit/tree/master/examples/wasi_serde_json).

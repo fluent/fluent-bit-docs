@@ -12,7 +12,7 @@ The following architectures are supported
 
 Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
 
-```bash copy
+```shell
 curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ```
 
@@ -24,7 +24,7 @@ The first step is to add the Fluent Bit server GPG key to your keyring to ensure
 
 Follow the official [Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
 
-```bash copy
+```shell
 sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg'
 ```
 
@@ -54,7 +54,7 @@ Refer to the [supported platform documentation](../supported-platforms.md) to se
 For Debian, you must add the Fluent Bit APT server entry to your sources lists.
 Ensure codename is set to your specific [Debian release name](https://wiki.debian.org/DebianReleases#Production_Releases). (for example: `bookworm` for Debian 12).
 
-```bash
+```shell
 codename=$(grep -oP '(?<=VERSION_CODENAME=).*' /etc/os-release 2>/dev/null || lsb_release -cs 2>/dev/null)
 ```
 
@@ -68,32 +68,35 @@ echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages
 
 Update your system's `apt` database:
 
-```bash copy
+```shell
 sudo apt-get update
 ```
 
 {% hint style="info" %}
+
 Fluent Bit recommends upgrading your system (`sudo apt-get upgrade`). This could avoid potential issues with expired certificates.
+
 {% endhint %}
 
 ## Install Fluent Bit
 
 1. Use the following `apt-get` command to install the latest Fluent Bit:
 
-   ```bash copy
+   ```shell
    sudo apt-get install fluent-bit
    ```
 
 1. Instruct `systemd` to enable the service:
 
-   ```bash copy
+   ```shell
    sudo systemctl start fluent-bit
    ```
 
 If you do a status check, you should see a similar output similar to:
 
-```bash
-sudo service fluent-bit status
+```shell
+$ sudo service fluent-bit status
+
 ● fluent-bit.service - Fluent Bit
    Loaded: loaded (/lib/systemd/system/fluent-bit.service; disabled; vendor preset: enabled)
    Active: active (running) since mié 2016-07-06 16:58:25 CST; 2h 45min ago

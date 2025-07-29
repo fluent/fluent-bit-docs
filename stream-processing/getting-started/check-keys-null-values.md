@@ -23,7 +23,8 @@ SELECT * FROM STREAM:test WHERE phone IS NOT NULL;
 ## Check if a key exists
 
 You can also confirm whether a certain key exists in a record at all, regardless of its value. Fluent Bit provides specific record functions that you can use in the condition part of the SQL statement. The following function determines whether `key` exists in a record:
-```text
+
+```sql
 @record.contains(key)
 ```
 

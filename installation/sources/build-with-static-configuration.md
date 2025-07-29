@@ -21,35 +21,34 @@ As an example, create a new `fluent-bit.yaml` file or `fluent-bit.conf` file:
 
 ```yaml
 service:
-    flush: 1
-    daemon: off
-    log_level: info
+  flush: 1
+  daemon: off
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: cpu
+  inputs:
+    - name: cpu
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [SERVICE]
-    Flush     1
-    Daemon    off
-    Log_Level info
+  Flush     1
+  Daemon    off
+  Log_Level info
 
 [INPUT]
-    Name      cpu
+  Name      cpu
 
 [OUTPUT]
-    Name      stdout
-    Match     *
+  Name      stdout
+  Match     *
 ```
 
 {% endtab %}
@@ -61,30 +60,28 @@ This configuration calculates CPU metrics from the running system and prints the
 
 1. Go to the Fluent Bit source code build directory:
 
-   ```bash copy
+   ```shell
    cd fluent-bit/build/
    ```
 
 1. Run CMake, appending the `FLB_STATIC_CONF` option pointing to
    the configuration directory recently created:
 
-   ```bash copy
+   ```shell
    cmake -DFLB_STATIC_CONF=/path/to/my/confdir/
    ```
 
 1. Build Fluent Bit:
 
-   ```bash copy
+   ```shell
    make
    ```
 
 The generated `fluent-bit` binary is ready to run without additional configuration:
 
-```bash
+```shell
 $ bin/fluent-bit
-Fluent-Bit v0.15.0
-Copyright (C) Treasure Data
 
-[2018/10/19 15:32:31] [ info] [engine] started (pid=15186)
+...
 [0] cpu.local: [1539984752.000347547, {"cpu_p"=>0.750000, "user_p"=>0.500000, "system_p"=>0.250000, "cpu0.p_cpu"=>1.000000, "cpu0.p_user"=>1.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>0.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>0.000000, "cpu2.p_cpu"=>0.000000, "cpu2.p_user"=>0.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>1.000000, "cpu3.p_user"=>1.000000, "cpu3.p_system"=>0.000000}]
 ```

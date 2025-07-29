@@ -6,13 +6,13 @@ Fluent Bit is written in C and can be used from any C or C++ application.
 
 Fluent Bit runs as a service, which means that the exposed API provides interfaces to create and manage contexts, specify inputs and outputs, set configuration parameters, and set routing paths for events or records. A typical usage of this library involves:
 
-* Creating library instance and contexts and setting their properties.
-* Enabling input plugins and setting their properties.
-* Enabling output plugins and setting their properties.
-* Starting the library runtime.
-* Optionally ingesting records manually.
-* Stopping the library runtime.
-* Destroying library instances and contexts.
+- Creating library instance and contexts and setting their properties.
+- Enabling input plugins and setting their properties.
+- Enabling output plugins and setting their properties.
+- Starting the library runtime.
+- Optionally ingesting records manually.
+- Stopping the library runtime.
+- Destroying library instances and contexts.
 
 ## Data types
 

@@ -36,41 +36,40 @@ Consider the following configuration example that delivers `CPU` metrics to an E
 
 ```yaml
 pipeline:
-    inputs:
-        - name: cpu
-          tag: my_cpu
+  inputs:
+    - name: cpu
+      tag: my_cpu
 
-        - name: mem
-          tag: my_mem
+    - name: mem
+      tag: my_mem
 
-    outputs:
-        - name: es
-          match: my_cpu
+  outputs:
+    - name: es
+      match: my_cpu
 
-        - name: stdout
-          match: my_mem
+    - name: stdout
+      match: my_mem
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name cpu
-    Tag  my_cpu
+  Name cpu
+  Tag  my_cpu
 
 [INPUT]
-    Name mem
-    Tag  my_mem
+  Name mem
+  Tag  my_mem
 
 [OUTPUT]
-    Name   es
-    Match  my_cpu
+  Name   es
+  Match  my_cpu
 
 [OUTPUT]
-    Name   stdout
-    Match  my_mem
+  Name   stdout
+  Match  my_mem
 ```
 
 {% endtab %}
@@ -87,34 +86,33 @@ Routing is flexible enough to support wildcards in the `Match` pattern. The foll
 
 ```yaml
 pipeline:
-    inputs:
-        - name: cpu
-          tag: my_cpu
+  inputs:
+    - name: cpu
+      tag: my_cpu
 
-        - name: mem
-          tag: my_mem
+    - name: mem
+      tag: my_mem
 
-    outputs:
-        - name: stdout
-          match: 'my_*'
+  outputs:
+    - name: stdout
+      match: 'my_*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name cpu
-    Tag  my_cpu
+  Name cpu
+  Tag  my_cpu
 
 [INPUT]
-    Name mem
-    Tag  my_mem
+  Name mem
+  Tag  my_mem
 
 [OUTPUT]
-    Name   stdout
-    Match  my_*
+  Name   stdout
+  Match  my_*
 ```
 
 {% endtab %}
@@ -131,34 +129,33 @@ Routing also provides support for regular expressions with the `Match_Regex` pat
 
 ```yaml
 pipeline:
-    inputs:
-        - name: temperature_sensor
-          tag: temp_sensor_A
+  inputs:
+    - name: temperature_sensor
+      tag: temp_sensor_A
 
-        - name: humidity_sensor
-          tag: humid_sensor_B
+    - name: humidity_sensor
+      tag: humid_sensor_B
 
-    outputs:
-        - name: stdout
-          match: '.*_sensor_[AB]'
+  outputs:
+    - name: stdout
+      match: '.*_sensor_[AB]'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name temperature_sensor
-    Tag  temp_sensor_A
+  Name temperature_sensor
+  Tag  temp_sensor_A
 
 [INPUT]
-    Name humidity_sensor
-    Tag  humid_sensor_B
+  Name humidity_sensor
+  Tag  humid_sensor_B
 
 [OUTPUT]
-    Name         stdout
-    Match_regex  .*_sensor_[AB]
+  Name         stdout
+  Match_regex  .*_sensor_[AB]
 ```
 
 {% endtab %}
