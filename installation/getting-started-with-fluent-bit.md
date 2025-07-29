@@ -9,7 +9,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
    sadsada
 ## Container deployment
 
-| Deployment Type   | instructions                                       |
+| Deployment Type   | Instructions
 | ----------------- | -------------------------------------------------- |
 | Kubernetes        | [Deploy on Kubernetes](kubernetes.md#installation) |
 | Docker            | [Deploy with Docker](docker.md)                    |
