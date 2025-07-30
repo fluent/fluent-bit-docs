@@ -1,6 +1,6 @@
 # Observe
 
-Use the [HTTP output plugin](./http) to flush your records [into Observe](https://docs.observeinc.com/en/latest/content/data-ingestion/forwarders/fluentbit.html). It issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
+Use the [HTTP output plugin](`http`) to flush your records [into Observe](https://docs.observeinc.com/en/latest/content/data-ingestion/forwarders/fluentbit.html). It issues a POST request with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
 
 ## Configuration parameters
 

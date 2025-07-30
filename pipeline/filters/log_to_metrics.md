@@ -26,9 +26,9 @@ The plugin supports the following configuration parameters:
 | `metric_description` | Required. Sets a description for the metric. |  |
 | `bucket` | Required for mode `histogram`. Defines a bucket for histograms. | For example, `0.75` |
 | `add_label` | Adds a custom label `NAME` and set the value to the value of `KEY`. |  |
-| `label_field` | Includes a record field as label dimension in the metric. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor) notation for nested fields. |
-| `value_field` | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor) notation for nested fields. |
-| `kubernetes_mode` | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes) filter plugin, which fills those fields. |  |
+| `label_field` | Includes a record field as label dimension in the metric. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `value_field` | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `kubernetes_mode` | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes.md) filter plugin, which fills those fields. |  |
 | `Regex` | Includes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
 | `Exclude` | Excludes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
 | `Flush_Interval_Sec` | The interval for metrics emission, in seconds. If `Flush_Interval_Sec` and `Flush_Interval_Nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |  |
