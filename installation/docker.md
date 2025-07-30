@@ -253,7 +253,7 @@ Alpine Linux uses Musl C library instead of Glibc. Musl isn't fully compatible w
 ### Why use distroless containers?
 
 The reasons for using distroless are well covered in
-[Why should I use Distroless images?](https://gthub.com/GoogleContainerTools/distroless#why-should-i-use-distroless-images).
+[Why should I use Distroless images?](tps://github.com/GoogleContainerTools/distroless#why-should-i-use-distroless-images).
 
 - Include only what you need, reduce the attack surface available.
 - Reduces size and improves performance.
