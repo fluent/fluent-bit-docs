@@ -150,7 +150,7 @@ becomes
 {"cpu0_p_cpu"=>17.000000}
 ```
 
-## FAQ
+## Frequently asked questions
 
 ### `Logstash_Prefix_Key`
 

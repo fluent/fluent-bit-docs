@@ -4,7 +4,7 @@ description: Send logs and metrics to Amazon CloudWatch
 
 # Amazon CloudWatch
 
-![](<../../.gitbook/assets/image (3) (2) (2) (4) (4) (3) (1).png>)
+![Amazon CloudWatch](<../../.gitbook/assets/image (3) (2) (2) (4) (4) (3) (1).png>)
 
 The _Amazon CloudWatch_ output plugin lets you ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided using [Embedded Metric Format (EMF)](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
 

@@ -62,11 +62,11 @@ For the special fields that map to `LogEntry` prototypes, add them as objects wi
 }
 ```
 
-Adding special fields to logs is best done through the [`modify` filter](https://docs.fluentbit.io/manual/pipeline/filters/modify) for simple fields, or [a Lua script using the `lua` filter](https://docs.fluentbit.io/manual/pipeline/filters/lua) for more complex fields.
+Adding special fields to logs is best done through the [`modify` filter](https://docs.fluentbit.io/manual/pipeline/filters/modify) for basic fields, or [a Lua script using the `lua` filter](https://docs.fluentbit.io/manual/pipeline/filters/lua) for more complex fields.
 
-## Simple type special fields
+## Basic type special fields
 
-Special fields with simple types (except for the [`logging.googleapis.com/insertId` field](#insert-id)) will follow this pattern (demonstrated with the `logging.googleapis.com/logName` field):
+Special fields with basic types (except for the [`logging.googleapis.com/insertId` field](#insert-id)) will follow this pattern (demonstrated with the `logging.googleapis.com/logName` field):
 
 1. If the special field matches the type, it will be moved to the corresponding LogEntry field. For example:
 
@@ -111,7 +111,7 @@ Special fields with simple types (except for the [`logging.googleapis.com/insert
    }
    ```
 
-### Exceptions
+### Exceptions [#exceptions-basic]
 
 #### Insert ID
 
@@ -244,9 +244,9 @@ the `logEntry will be:
 }
 ```
 
-### Exceptions
+### Exceptions [#exceptions-proto]
 
-#### Monitored Resource ID
+#### `MonitoredResource` ID
 
 The `logging.googleapis.com/monitored_resource` field is parsed in a special way, meaning it has some important exceptions:
 
