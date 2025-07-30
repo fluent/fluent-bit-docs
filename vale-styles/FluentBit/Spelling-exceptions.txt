@@ -119,6 +119,7 @@ Lua
 Lucene
 macOS
 Mandiant
+markdownlint
 matchers
 metacharacter
 Metricbeat
