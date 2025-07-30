@@ -42,7 +42,7 @@ within a few minutes.
 If you open a pull request that requires ongoing discussion or review, the Fluent Bit
 maintainers will add a `waiting-for-user` to your pull request. This tag means that
 we're blocked from moving forward until you reply. To keep contributions from going
-stale, we'll wait 45 days for your response, but we may close the pull request if we
+stale, we'll wait 45 days for your response, but we might close the pull request if we
 don't hear back from you by then.
 
 ## Submit a contribution

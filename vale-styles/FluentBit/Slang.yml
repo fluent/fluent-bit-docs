@@ -2,7 +2,7 @@ extends: existence
 message: "Don't use internet slang abbreviations such as '%s'."
 link: 'https://developers.google.com/style/abbreviations'
 ignorecase: true
-level: suggestion
+level: warning
 tokens:
   - 'tl;dr'
   - ymmv
