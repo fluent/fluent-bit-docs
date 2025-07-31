@@ -43,7 +43,6 @@ Datagen
 datagram
 datagrams
 datapoint
-datapoints
 Datastream
 declaratively
 deduplicate
@@ -74,6 +73,7 @@ Enum
 Eventhouse
 Exabeam
 Fargate
+Filebeats
 Firehose
 FluentBit
 Fluentd
@@ -90,6 +90,7 @@ grpc_code
 grpc_method
 grpc_service
 gzip
+gzipped
 HashiCorp
 HEC
 Homebrew
@@ -118,7 +119,10 @@ Lua
 Lucene
 macOS
 Mandiant
+markdownlint
 matchers
+metacharacter
+Metricbeat
 Minishift
 minikube
 MTTx
@@ -143,6 +147,7 @@ PagerDuty
 performant
 persistable
 Podman
+popen
 Postgres
 PostgreSQL
 PowerShell
@@ -226,6 +231,7 @@ unnests
 unsort
 upsert
 upserts
+untrusted
 UUIDs
 Vectra
 Vercel
@@ -235,6 +241,9 @@ Vivo
 VMs
 Wasm
 Wavefront
+winevtlog
+winlog
+Winlogbeat
 Worldmap
 Yocto
 Zipkin

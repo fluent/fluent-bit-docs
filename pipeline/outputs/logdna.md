@@ -28,7 +28,7 @@ When the login processes a record or log, it searches for specific key names tha
 
 | Key | Description |
 | :--- | :--- |
-| `level` | If the record contains a key called `level` or `severity`, it will populate the context `level` key with that value. If not found, the context key is not set. |
+| `level` | If the record contains a key called `level` or `severity`, Fluent Bit will populate the context `level` key with that value. If not found, Fluent Bit won't set the context key. |
 | `file` | If the record contains a key called `file`, it will populate the context `file` with the value found. Otherwise, if the plugin configuration provided a `file` property, that value will be used instead. |
 | `app` | If the record contains a key called `app`, it will populate the context `app` with the value found, otherwise it will use the value set for `app` in the configuration property. |
 | `meta` | If the record contains a key called `meta`, it will populate the context `meta` with the value found. |

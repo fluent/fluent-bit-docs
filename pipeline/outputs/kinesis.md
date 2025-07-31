@@ -10,7 +10,7 @@ This is the documentation for the core Fluent Bit Kinesis plugin written in C. I
 
 This `kinesis_streams` plugin always uses a random partition key when uploading records to Kinesis through the [PutRecords API](https://docs.aws.amazon.com/kinesis/latest/APIReference/API_PutRecords.html).
 
-For information about how AWS credentials are fetched, see [AWS credentials](../../administration/aws-credentials).
+For information about how AWS credentials are fetched, see [AWS credentials](../../administration/aws-credentials.md).
 
 ## Configuration parameters
 

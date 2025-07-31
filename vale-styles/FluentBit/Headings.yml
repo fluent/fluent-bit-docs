@@ -26,9 +26,12 @@ exceptions:
   - AWS MSK IAM
   - AWS IAM
   - Azure
+  - Azure Blob
   - Azure Data Explorer
   - Azure Logs Ingestion API
   - Azure Log Analytics
+  - Azure Storage
+  - Azurite
   - BuildKite
   - CentOS
   - CheckList
@@ -36,9 +39,11 @@ exceptions:
   - CircleCI
   - CLI
   - CloudWatch
+  - CNCF
   - Code
   - Collector
   - Cosmos
+  - CPU
   - Crowdstrike
   - CSV
   - cURL
@@ -47,6 +52,7 @@ exceptions:
   - Docker
   - Docker Hub
   - DogStatsD
+  - eBPF
   - EC2
   - ECS
   - EKS
@@ -55,12 +61,14 @@ exceptions:
   - EventBridge
   - FlowCounter
   - Fluent Bit
+  - Fluentd
   - Forward
   - GCP
   - GitLab
   - GitHub
   - Go
   - Google
+  - Google Chronicle
   - Google Cloud
   - Google Cloud BigQuery
   - Google Cloud Platform
@@ -68,12 +76,15 @@ exceptions:
   - Grafana
   - Grafana Cloud
   - Graylog Extended Log Format
+  - GELF
   - gRPC
+  - gzip
   - Helm
   - Homebrew
   - HTTP
   - I
   - InfluxDB
+  - I/O
   - JSON
   - Kafka
   - Kafka Producer
@@ -93,6 +104,7 @@ exceptions:
   - MessagePack
   - Microsoft Fabric
   - MongoDB
+  - MQTT
   - NATS
   - New Relic
   - Observability Platform
@@ -135,6 +147,9 @@ exceptions:
   - Transport Layer Security
   - Treasure Data
   - TypeScript
+  - Ubuntu
+  - UDP
+  - Unix
   - URLs
   - VictorOps
   - Visual
@@ -143,5 +158,6 @@ exceptions:
   - Wasm
   - WebSocket
   - Windows
+  - Windows Event
   - YAML
   - YUM

@@ -10,18 +10,18 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 
 ## Configuration
 
-| Key                        | Description                                                                                                                                                 | Default   |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| `listen`                   | The network address to listen on.                                                                                                                           | `0.0.0.0` |
-| `port`                     | The port for Fluent Bit to listen for incoming connections. In Fluent Bit 3.0.2 or later, this port is used for both transport `OTLP/HTTP` and `OTLP/GRPC`. | `4318`    |
-| `tag`                      | Tag for all data ingested by this plugin. This will only be used if `tag_from_uri` is set to `false`. Otherwise, the tag will be created from the URI.      | _none_    |
-| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                         | _none_    |
-| `raw_traces`               | Route trace data as a log.                                                                                                                                  | `false`   |
-| `buffer_max_size`          | Specify the maximum buffer size in `KB`, `MB`, or `GB` to the HTTP payload.                                                                                 | `4M`      |
-| `buffer_chunk_size`        | Initial size and allocation strategy to store the payload (advanced users only)`                                                                            | `512K`    |
-| `successful_response_code` | Allows for setting a successful response code. Supported values: `200`, `201`, or `204`.                                                                    | `201`     |
-| `tag_from_uri`             | By default, the tag will be created from the URI. For example, `v1_metrics` from `/v1/metrics`. This must be set to false if using `tag`.                   | `true`    |
-| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                     | `false`   |
+| Key | Description | Default |
+|---|---|---|
+| `listen` | The network address to listen on. | `0.0.0.0` |
+| `port` | The port for Fluent Bit to listen for incoming connections. In Fluent Bit 3.0.2 or later, this port is used for both transport `OTLP/HTTP` and `OTLP/GRPC`. | `4318` |
+| `tag` | Tag for all data ingested by this plugin. This will only be used if `tag_from_uri` is set to `false`. Otherwise, the tag will be created from the URI. | _none_ |
+| `tag_key` | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key. | _none_ |
+| `raw_traces` | Route trace data as a log. | `false` |
+| `buffer_max_size` | Specify the maximum buffer size in `KB`, `MB`, or `GB` to the HTTP payload. | `4M` |
+| `buffer_chunk_size` | Initial size and allocation strategy to store the payload (advanced users only)` | `512K` |
+| `successful_response_code` | Allows for setting a successful response code. Supported values: `200`, `201`, or `204`. | `201` |
+| `tag_from_uri` | By default, the tag will be created from the URI. For example, `v1_metrics` from `/v1/metrics`. This must be set to false if using `tag`. | `true` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 Raw traces means that any data forwarded to the traces endpoint (`/v1/traces`) will be packed and forwarded as a log message, and won't be processed by Fluent Bit. The traces endpoint by default expects a valid `protobuf` encoded payload, but you can set the `raw_traces` option in case you want to get trace telemetry data to any of the Fluent Bit supported outputs.
 
@@ -54,7 +54,7 @@ For `OTLP/GRPC`:
 
 The OpenTelemetry input plugin supports the following telemetry data types:
 
-| Type    | HTTP1/JSON    | HTTP1/Protobuf | HTTP2/GRPC |
+| Type    | HTTP1/JSON    | HTTP1/Protobuf | HTTP2/gRPC |
 |---------|---------------|----------------|------------|
 | Logs    | Stable        | Stable         | Stable     |
 | Metrics | Unimplemented | Stable         | Stable     |
@@ -71,7 +71,7 @@ pipeline:
     - name: opentelemetry
       listen: 127.0.0.1
       port: 4318
-      
+
   outputs:
     - name: stdout
       match: '*'

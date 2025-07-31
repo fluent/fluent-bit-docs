@@ -71,7 +71,7 @@ Some Windows Event Log channels, like `Security`, require administrative privile
 
 The default value of `Read_Limit_Per_Cycle` is `512KiB`.
 
-512KiB(= 0x7ffff = 512 * 1024 * 1024) isn't equal to 512KB (= 512 * 1000 * 1000). To increase events per second on this plugin, specify larger value than 512KiB.
+512&nbsp;KiB(= 0x7ffff = 512 * 1024 * 1024) isn't equal to 512&nbsp;KB (= 512 * 1000 * 1000). To increase events per second on this plugin, specify larger value than 512&nbsp;KiB.
 
 #### Query languages for `Event_Query` parameter
 

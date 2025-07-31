@@ -71,7 +71,7 @@ To gather metrics from the command line with the NGINX Plus REST API you need to
 fluent-bit -i nginx_metrics -p host=127.0.0.1 -p port=80 -p nginx_plus=on -p status_url=/api -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
 In your main configuration file append the following:
 

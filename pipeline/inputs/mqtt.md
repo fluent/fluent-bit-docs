@@ -55,7 +55,7 @@ pipeline:
       tag: data
       listen: 0.0.0.0
       port: 1883
-      
+
   outputs:
     - name: stdout
       match: '*'

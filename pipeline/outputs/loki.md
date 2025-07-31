@@ -22,8 +22,8 @@ There is a separate Golang output plugin provided by [Grafana](https://grafana.c
 | `labels` | Stream labels for API request. It can be multiple comma separated of strings specifying `key=value` pairs. Allows fixed parameters, or adding custom record keys (similar to the `label_keys` property). See the Labels section. | `job=fluent-bit` |
 | `label_keys` | (Optional.) List of record keys that will be placed as stream labels. This configuration property is for records key only. See the Labels section. | _none_ |
 | `label_map_path` | Specify the label map path. The file defines how to extract labels from each record. See the Labels section. | _none_ |
-| `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Structured metadata](#structured_metadata). | _none_ |
-| `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Structured metadata](#structured_metadata). | _none_ |
+| `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Use `structured_metadata`.](#use-structured_metadata). | _none_ |
+| `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Use `structured_metadata`.](#use-structured_metadata). | _none_ |
 | `remove_keys` | (Optional.) List of keys to remove. | _none_ |
 | `drop_single_key` | When set to `true` and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in `line_format`. If set to `raw` and the log line is a string, the log line will be sent unquoted. | `off` |
 | `line_format` | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`, the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together (separated by a single space) in the format. | `json` |
@@ -272,7 +272,7 @@ job="fluentbit", stream="stdout"
 
 #### Kubernetes and labels
 
-If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which autopopulates the streams with the Pod labels for you. Consider the following configuration:
+If you're running in a Kubernetes environment, consider enabling the `auto_kubernetes_labels` option, which populates the streams with the Pod labels for you. Consider the following configuration:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -479,7 +479,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Networking and TLS Configuration
+## Networking and TLS configuration
 
 This plugin inherits core Fluent Bit features to customize the network behavior and optionally enable TLS in the communication channel. For more details about the specific options available, refer to the following articles:
 
@@ -492,7 +492,7 @@ All options mentioned in these articles must be enabled in the plugin configurat
 
 Fluent Bit supports sending logs and metrics to [Grafana Cloud](https://grafana.com/products/cloud/) by providing the appropriate URL and ensuring TLS is enabled.
 
-Below is an example configuration, be sure to set the credentials (shown here with XXX) and ensure the host URL matches the correct one for your deployment:
+The following samples show example configurations. Be sure to set the credentials (shown here with `XXX`) and ensure the host URL matches the correct one for your deployment:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -529,9 +529,9 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Get Started
+## Get started
 
-The following configuration example emits a dummy example record and ingests it on Loki. Copy and paste the corresponding content below into a file `out_loki.yaml` or `out_loki.conf`:
+The following configuration example emits a dummy example record and ingests it on Loki. Copy and paste the following content into a file `out_loki.yaml` or `out_loki.conf`:
 
 {% tabs %}
 {% tab title="out-loki.yaml" %}

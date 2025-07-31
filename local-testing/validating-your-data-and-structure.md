@@ -4,7 +4,7 @@ Fluent Bit supports multiple sources and formats. In addition, it provides filte
 
 Fluent Bit users are encouraged to integrate data validation in their continuous integration (CI) systems.
 
-In a normal production environment, inputs, filters, and outputs are defined in configuration files. Fluent Bit provides the [Expect](../pipeline/filters/expect) filter, which you can use to validate keys and values from your records and take action when an exception is found.
+In a normal production environment, inputs, filters, and outputs are defined in configuration files. Fluent Bit provides the [Expect](../pipeline/filters/expect.md) filter, which you can use to validate keys and values from your records and take action when an exception is found.
 
 A simplified view of the data processing pipeline is as follows:
 
@@ -20,8 +20,8 @@ IS --> Fil --> OD
 
 Consider the following pipeline, which uses a JSON file as its data source and has two filters:
 
-- [Grep](../pipeline/filters/grep) to exclude certain records.
-- [Record Modifier](../pipeline/filters/record-modifier) to alter records' content by adding and removing specific keys.
+- [Grep](../pipeline/filters/grep.md) to exclude certain records.
+- [Record Modifier](../pipeline/filters/record-modifier.md) to alter records' content by adding and removing specific keys.
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ record --> stdout
 
 Add data validation between each step to ensure your data structure is correct.
 
-This example uses the [Expect](../pipeline/filters/expect) filter.
+This example uses the [Expect](../pipeline/filters/expect.md) filter.
 
 ```mermaid
 flowchart LR
@@ -164,7 +164,7 @@ The following is the Fluent Bit classic parsers file:
 {% endtab %}
 {% endtabs %}
 
-If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
+If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail.md) input (`parser json`), the Expect filter triggers the `exit` action.
 
 To extend the pipeline, add a Grep filter to match records that map `label` containing a key called `name` with value the `abc`, and add an Expect filter to re-validate that condition:
 

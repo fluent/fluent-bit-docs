@@ -57,7 +57,7 @@ pipeline:
       port: 24224
       buffer_chunk_size: 1M
       buffer_max_size: 6M
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -82,7 +82,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Fluent Bit and Secure Forward Setup
+## Fluent Bit and secure forward setup
 
 In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
 

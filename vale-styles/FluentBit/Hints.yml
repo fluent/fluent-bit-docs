@@ -1,6 +1,6 @@
 extends: existence
 message: "Instead of using `>` to call out information, use GitBook hint syntax. https://gitbook.com/docs/creating-content/blocks/hint#representation-in-markdown"
-level: suggestion
+level: error
 nonword: true
 scope: raw
 tokens:

@@ -16,7 +16,7 @@ This plugin uses the following configuration parameters:
 | `profile_name` | The OCI configuration profile name to be used from the configuration file. | `DEFAULT` |
 | `namespace` | The OCI tenancy namespace to upload log data to. | _none_ |
 | `proxy` | The proxy name, in `http://host:port` format. Only supports HTTP protocol. | _none_ |
-| `workers` | The number of [workers](../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 | `oci_config_in_record` | If set to `true`, the following `oci_la_*` will be read from the record itself instead of the output plugin configuration. | `false` |
 | `oci_la_log_group_id` | Required. The Oracle Cloud Identifier (OCID) of the Logging Analytics where you want to store logs. | _none_ |
 | `oci_la_log_source_name` | Required. The Logging Analytics Source to use for processing log records. | _none_ |

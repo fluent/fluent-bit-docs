@@ -10,7 +10,7 @@ The _New Relic_ output plugin lets you send logs to New Relic.
 | `api_key` | Your [New Relic API key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required.| _none_ |
 | `license_key` | Your [New Relic license key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required. | _none_ |
 | `compress` | Sets the compression mechanism for the payload. Possible values: `gzip` or `false`. | `gzip` |
-| `workers` | Sets the number of [workers](../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `workers` | Sets the number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Example configuration
 
