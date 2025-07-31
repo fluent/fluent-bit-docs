@@ -118,6 +118,8 @@ The following time zone abbreviations are supported.
 | `Z`          | `+00:00`             | `0`              | no     | Zulu Time (UTC)            |
 | `UT`         | `+00:00`             | `0`              | no     | Universal Time             |
 
+<!-- vale FluentBit.Headings = NO -->
+
 ### North American time zones
 
 | Abbreviation | UTC Offset (`HH:MM`) | Offset (seconds) | Is DST | Description                                              |
@@ -152,6 +154,8 @@ The following time zone abbreviations are supported.
 | `MSK`        | `+03:00`             | `10800`          | no     | Moscow Standard Time             |
 
 ### South American time zones
+
+<!-- vale FluentBit.Headings = YES -->
 
 | Abbreviation | UTC Offset (`HH:MM`) | Offset (seconds) | Is DST | Description                                                              |
 | ------------ | -------------------- | ---------------- | ------ | ------------------------------------------------------------------------ |
