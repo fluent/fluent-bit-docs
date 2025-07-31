@@ -140,7 +140,7 @@ The following tests are at a `error` level and will prevent merging:
 
 - [AmSpelling](https://developers.google.com/style/word-list)
 - [Ampersand](https://developers.google.com/style/word-list#ampersand)
-- Don't use
+- [Don'tUse](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/DontUse.yml)
 - [Emdash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
 - [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
 - [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
