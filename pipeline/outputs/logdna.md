@@ -18,7 +18,6 @@ This plugin uses the following configuration parameters:
 | `tags` | A list of comma-separated strings to group records in LogDNA and simplify the query with filters. | _none_ |
 | `file` | Optional name of a file being monitored. This value is only set if the record doesn't contain a reference to it. | _none_ |
 | `app` | Name of the application. This value is automatically discovered on each record. If no value is found, the default value is used. | `Fluent Bit` |
-| `workers` | The number of [workers](../../administration/multithreading#outputs) to perform flush operations for this output. | `0` |
 
 ## Data discovery and enrichment
 

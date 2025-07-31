@@ -26,7 +26,7 @@ Fluent Bit uses the application's credentials to ingest data into your cluster.
 
 - [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+- [Authorize the app in your database](https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization)
 
 ## Create a table
 
@@ -70,7 +70,7 @@ By default, Kusto will insert incoming ingestion data into a table by inferring 
 | `buffering_enabled` | Optional. Enable buffering into disk before ingesting into Azure Kusto. | `Off` |
 | `buffer_dir` | Optional. When buffering is `On`, specifies the location of directory where the buffered data will be stored. | `/tmp/fluent-bit/azure-kusto/` |
 | `upload_timeout` | Optional. When buffering is `On`, specifies a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than x minutes and haven't reached `upload_file_size` limit. | `30m` |
-| `upload_file_size`| Optional. When buffering is `On`, specifies the size of files to be uploaded in MBs. | `200MB` |
+| `upload_file_size`| Optional. When buffering is `On`, specifies the size of files to be uploaded in megabytes. | `200MB` |
 | `azure_kusto_buffer_key` | Optional. When buffering is `On`, set the Azure Kusto buffer key which must be specified when using multiple instances of Azure Kusto output plugin and buffering is enabled. | `key` |
 | `store_dir_limit_size` | Optional. When buffering is `On`, set the max size of the buffer directory. | `8GB` |
 | `buffer_file_delete_early`    | Optional. When buffering is `On`, whether to delete the buffered file early after successful blob creation. | `Off` |
