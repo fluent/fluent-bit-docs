@@ -22,6 +22,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ludeeus/action-shellcheck@master
 
+  markdownlint:
+    name: runner / markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: markdownlint
+        uses: prologic/action-markdownlint@v0.26.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review # Change reporter. (Only `github-pr-check` is supported at the moment).
   vale:
     name: runner / vale
     runs-on: ubuntu-latest
