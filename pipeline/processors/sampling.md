@@ -103,7 +103,7 @@ The latency condition uses the following `conditions` configuration parameters:
 | `threshold_ms_low` | Specifies the lower latency threshold. Traces with a duration less than or equal to this value will be sampled. | `0` |
 | `threshold_ms_high` | Specifies the upper latency threshold. Traces with a duration greater than or equal to this value will be sampled. | `0` |
 
-The following example waits five seconds before making a decision. It then samples traces based on latency, capturing short traces of 200&nbsp;ms or less and long traces of 3000&nbsp;ms or more. Traces between 200&nbsp;ms and 3000&nbsp;ms are not sampled unless another condition applies.
+The following example waits five seconds before making a decision. It then samples traces based on latency, capturing short traces of 200&nbsp;ms or less and long traces of 3000&nbsp;ms or more. Traces between 200&nbsp;ms and 3000&nbsp;ms won't be sampled unless another condition applies.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -151,7 +151,7 @@ The span count condition uses the following `conditions` configuration parameter
 | `max_spans` | Specifies the minimum number of spans a trace must have to be sampled. | _none_ |
 | `min_spans` | Specifies the maximum number of spans a trace can have to be sampled.  | _none_ |
 
-The following example configuration waits five seconds before making a decision. It then samples traces with at least three spans but no more than five spans. Traces with less than three spans or greater than five spans are not sampled unless another condition applies.
+The following example configuration waits five seconds before making a decision. It then samples traces with at least three spans but no more than five spans. Traces with less than three spans or greater than five spans won't be sampled unless another condition applies.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
