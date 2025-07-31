@@ -17,7 +17,7 @@ The _standard output_ plugin prints ingested data to standard output.
 fluent-bit -i cpu -o stdout -v
 ```
 
-This example directs the plugin to gather [CPU](../inputs/cpu-metrics) usage metrics and print them out to the standard output in a human-readable way:
+This example directs the plugin to gather [CPU](../inputs/cpu-metrics.md) usage metrics and print them out to the standard output in a human-readable way:
 
 ```shell
 fluent-bit -i cpu -o stdout -p format=msgpack -v

@@ -26,7 +26,7 @@ Fluent Bit uses the application's credentials to ingest data into your cluster.
 
 - [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+- [Authorize the app in your database](https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization)
 
 ## Create a table
 

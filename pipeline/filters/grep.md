@@ -39,7 +39,7 @@ To start filtering records, run the filter from the command line or through the 
 
 When using the command line, pay close attention to quote the regular expressions. Using a configuration file might be easier.
 
-The following command loads the [tail](../../pipeline/inputs/tail) plugin and reads the content of `lines.txt`. Then the `grep` filter applies a regular expression rule over the `log` field created by the `tail` plugin and only passes records with a field value starting with `aa`:
+The following command loads the [tail](../../pipeline/inputs/tail.md) plugin and reads the content of `lines.txt`. Then the `grep` filter applies a regular expression rule over the `log` field created by the `tail` plugin and only passes records with a field value starting with `aa`:
 
 ```shell
 fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdout
