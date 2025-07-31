@@ -1,3 +1,5 @@
+<!-- vale off -->
+
 # Contributing to Fluent Bit docs
 
 First of all, thanks for taking the time to read this guide. The fact that you're
@@ -191,3 +193,5 @@ suggestions, but doesn't block merging.
 
 Line wrap tests are off due to a GitBook decision that hard wraps the rendered page
 on line wraps in the markdown. This leads to rendered pages with awkward line wraps.
+
+<!-- vale on -->
