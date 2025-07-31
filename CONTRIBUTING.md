@@ -132,11 +132,15 @@ the prose of your pull requests and adds suggestions to improve style and clarit
 There is a [VSCode plugin for Vale](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
 which outputs suggestions to the problems pane in the IDE.
 
+The Fluent Bit repository runs Vale as a GitHub Action on updated text in new pull
+requests. Vale suggestions, errors, and warnings will display in GitHub on the
+**Files changed** page.
+
 [See the Vale tests for Fluent Bit](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles).
 
 Most Vale tests are at the `suggestion` level and won't block merging.
 
-The following tests are at a `error` level and will prevent merging:
+The following tests are at `error` level and will cause a test failure:
 
 - [AmSpelling](https://developers.google.com/style/word-list)
 - [Ampersand](https://developers.google.com/style/word-list#ampersand)
