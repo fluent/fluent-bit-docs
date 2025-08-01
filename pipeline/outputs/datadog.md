@@ -28,7 +28,7 @@ This plugin uses the following configuration parameters:
 | `dd_tags` | Optional. The [tags](https://docs.datadoghq.com/tagging/) you want to assign to your logs in Datadog. If unset, Datadog will look for the tags in the [`ddtags` attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs).  | _none_ |
 | `dd_message_key` | By default, the plugin searches for the key `log` and remaps the value to the key `message`. If the property is set, the plugin will search the property name key. | _none_ |
 | `dd_hostname` | The host the emitted logs should be associated with. If unset, Datadog expects the host to be set with `host`, `hostname`, or `syslog.hostname` attributes. See [Datadog Logs preprocessor documentation](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=host#preprocessing) for recognized attributes. | _none_ |
-| `site` | Optional. The Datadog site to send logs to. Use `datadoghq.com` for US or `datadoghq.eu` for EU. If not specified, defaults to `datadoghq.com`. | `datadoghq.com` |
+| `site` | Optional. The Datadog site to send logs to. Use `datadoghq.com` for US or `datadoghq.eu` for EU. If no value is specified, defaults to `datadoghq.com`. | `datadoghq.com` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | `header` | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
 
