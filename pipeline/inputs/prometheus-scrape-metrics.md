@@ -1,16 +1,16 @@
-# Prometheus Scrape metrics
+# Prometheus scrape metrics
 
 Fluent Bit 1.9 and later includes additional metrics features to let you collect logs and metrics from a Prometheus-based endpoint at a set interval. These metrics can be routed to metric supported endpoints such as [Prometheus Exporter](../outputs/prometheus-exporter.md), [InfluxDB](../outputs/influxdb.md) or [Prometheus Remote Write](../outputs/prometheus-remote-write.md).
 
 ## Configuration
 
-| Key | Description | Default  |
-| --- | ----------- | -------- |
-| `host`  | The host of the Prometheus metric endpoint to scrape. | _none_ |
-| `port`  | The port of the Prometheus metric endpoint to scrape. | _none_ |
-| `scrape_interval` | The interval to scrape metrics. | `10s` |
-| `metrics_path` | The metrics URI endpoint, which must start with a forward slash (`/`). Parameters can be added to the path by using `?` | `/metrics` |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key               | Description                                                                                                             | Default    |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------|------------|
+| `host`            | The host of the Prometheus metric endpoint to scrape.                                                                   | _none_     |
+| `port`            | The port of the Prometheus metric endpoint to scrape.                                                                   | _none_     |
+| `scrape_interval` | The interval to scrape metrics.                                                                                         | `10s`      |
+| `metrics_path`    | The metrics URI endpoint, which must start with a forward slash (`/`). Parameters can be added to the path by using `?` | `/metrics` |
+| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                 | `false`    |
 
 ## Example
 
@@ -21,35 +21,34 @@ If an endpoint exposes Prometheus Metrics you can specify the configuration to s
 
 ```yaml
 pipeline:
-    inputs:
-        - name: prometheus_scrape
-          host: 0.0.0.0
-          port: 8201
-          tag: vault
-          metrics_path: /v1/sys/metrics?format=prometheus
-          scrape_interval: 10s
+  inputs:
+    - name: prometheus_scrape
+      host: 0.0.0.0
+      port: 8201
+      tag: vault
+      metrics_path: /v1/sys/metrics?format=prometheus
+      scrape_interval: 10s
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-
 {% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    name prometheus_scrape
-    host 0.0.0.0
-    port 8201
-    tag vault
-    metrics_path /v1/sys/metrics?format=prometheus
-    scrape_interval 10s
+  name prometheus_scrape
+  host 0.0.0.0
+  port 8201
+  tag vault
+  metrics_path /v1/sys/metrics?format=prometheus
+  scrape_interval 10s
 
 [OUTPUT]
-    name stdout
-    match *
+  name stdout
+  match *
 ```
 
 {% endtab %}
@@ -58,6 +57,7 @@ pipeline:
 This returns output similar to:
 
 ```text
+...
 2022-03-26T23:01:29.836663788Z go_memstats_alloc_bytes_total = 31891336
 2022-03-26T23:01:29.836663788Z go_memstats_frees_total = 313264
 2022-03-26T23:01:29.836663788Z go_memstats_lookups_total = 0
@@ -100,4 +100,5 @@ This returns output similar to:
 2022-03-26T23:01:29.836663788Z vault_runtime_sys_bytes = 24724488
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_pause_ns = 1917611
 2022-03-26T23:01:29.836663788Z vault_runtime_total_gc_runs = 19
+...
 ```

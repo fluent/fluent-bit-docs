@@ -1,64 +1,105 @@
 ---
-description: 'Send logs, metrics to Azure Log Analytics'
+description: Send logs, metrics to Azure Log Analytics
 ---
 
 # Azure Log Analytics
 
-![](../../.gitbook/assets/image%20%287%29.png)
+The Azure output plugin lets you ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
 
-Azure output plugin allows to ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
+For details about how to setup Azure Log Analytics, see the [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/) documentation.
 
-To get more details about how to setup Azure Log Analytics, please refer to the following documentation: [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/)
+## Configuration parameters
 
-## Configuration Parameters
-
-| Key | Description | default |
+| Key | Description | Default |
 | :--- | :--- | :--- |
-| Customer\_ID | Customer ID or WorkspaceID string. |  |
-| Shared\_Key | The primary or the secondary Connected Sources client authentication key. |  |
-| Log\_Type | The name of the event type. | fluentbit |
-| Log_Type_Key | If included, the value for this key will be looked upon in the record and if present, will over-write the `log_type`. If not found then the `log_type` value will be used. | |
-| Time\_Key | Optional parameter to specify the key name where the timestamp will be stored. | @timestamp |
-| Time\_Generated | If enabled, the HTTP request header 'time-generated-field' will be included so Azure can override the timestamp with the key specified by 'time_key' option. | off |
-| Workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `Customer_ID` | Customer ID or WorkspaceID string. | _none_ |
+| `Shared_Key` | The primary or the secondary Connected Sources client authentication key. | _none_ |
+| `Log_Type` | The name of the event type. | `fluentbit` |
+| `Log_Type_Key` | If included, the value for this key checked in the record and if present, will overwrite the `log_type`. If not found then the `log_type` value will be used. | _none_ |
+| `Time_Key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
+| `Time_Generated` | If enabled, the HTTP request header `time-generated-field` will be included so Azure can override the timestamp with the key specified by `time_key` option. | `off` |
+| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-## Getting Started
+## Get started
 
-In order to insert records into an Azure Log Analytics instance, you can run the plugin from the command line or through the configuration file:
+To insert records into an Azure Log Analytics instance, run the plugin from the command line or through the configuration file.
 
-### Command Line
+### Command line
 
-The **azure** plugin, can read the parameters from the command line in two ways, through the **-p** argument \(property\), e.g:
+The _Azure_ plugin can read the parameters from the command line in the following ways, using the `-p` argument (property):
 
-```text
+```shell
 fluent-bit -i cpu -o azure -p customer_id=abc -p shared_key=def -m '*' -f 1
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following sections:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: azure
+      match: '*'
+      customer_id: abc
+      shared_key: def
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Customer_ID abc
+  Shared_Key  def
 ```
 
-Another example using the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor), which will read the table name (or event type) dynamically from kubernetes label `app`, instead of `Log_Type`:
+{% endtab %}
+{% endtabs %}
+
+The following example uses the `Log_Type_Key` with [record-accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor), which will read the table name (or event type) dynamically from the Kubernetes label `app`, instead of `Log_Type`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: azure
+      match: '*'
+      log_type_key: $kubernetes['labels']['app']
+      customer_id: abc
+      shared_key: def
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name        azure
-    Match       *
-    Log_Type_Key $kubernetes['labels']['app']
-    Customer_ID abc
-    Shared_Key  def
+  Name        azure
+  Match       *
+  Log_Type_Key $kubernetes['labels']['app']
+  Customer_ID abc
+  Shared_Key  def
 ```
+
+{% endtab %}
+{% endtabs %}

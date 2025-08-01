@@ -5,16 +5,16 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 ## Configuration parameters
 
-| Key | Description | Default |
-| --- | ----------- | ------- |
-| `listen` | The address to listen on. | `0.0.0.0` |
-| `port` | The port for Fluent Bit to listen on. | `9880` |
-| `tag_key` | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key. | _none_ |
-| `buffer_max_size` | Specify the maximum buffer size in KB to receive a JSON message. | `4M` |
-| `buffer_chunk_size` | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K` |
-| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204` | `201` |
-| `success_header` | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer` | _none_ |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key                        | Description                                                                                                                                | Default   |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `listen`                   | The address to listen on.                                                                                                                  | `0.0.0.0` |
+| `port`                     | The port for Fluent Bit to listen on.                                                                                                      | `9880`    |
+| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                        | _none_    |
+| `buffer_max_size`          | Specify the maximum buffer size in KB to receive a JSON message.                                                                           | `4M`      |
+| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K`    |
+| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`                                                         | `201`     |
+| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`                           | _none_    |
+| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                    | `false`   |
 
 ### TLS / SSL
 
@@ -47,14 +47,14 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
-          
-    outputs:
-        - name: stdout
-          match: app.log
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+
+  outputs:
+    - name: stdout
+      match: app.log
 ```
 
 {% endtab %}
@@ -62,13 +62,13 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    listen 0.0.0.0
-    port 8888
+  name http
+  listen 0.0.0.0
+  port 8888
 
 [OUTPUT]
-    name stdout
-    match app.log
+  name stdout
+  match app.log
 ```
 
 {% endtab %}
@@ -87,14 +87,14 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
 
-    outputs:
-        - name: stdout
-          match: http.0
+  outputs:
+    - name: stdout
+      match: http.0
 ```
 
 {% endtab %}
@@ -102,13 +102,13 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    listen 0.0.0.0
-    port 8888
+  name http
+  listen 0.0.0.0
+  port 8888
 
 [OUTPUT]
-    name  stdout
-    match  http.0
+  name  stdout
+  match  http.0
 ```
 
 {% endtab %}
@@ -131,15 +131,15 @@ curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
-          tag_key: key1
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+      tag_key: key1
 
-    outputs:
-        - name: stdout
-          match: value1
+  outputs:
+    - name: stdout
+      match: value1
 ```
 
 {% endtab %}
@@ -147,14 +147,14 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    listen 0.0.0.0
-    port 8888
-    tag_key key1
+  name http
+  listen 0.0.0.0
+  port 8888
+  tag_key key1
 
 [OUTPUT]
-    name stdout
-    match value1
+  name stdout
+  match value1
 ```
 
 {% endtab %}
@@ -169,11 +169,11 @@ The `success_header` parameter lets you set multiple HTTP headers on success. Th
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          success_header: 
-            - X-Custom custom-answer
-            - X-Another another-answer
+  inputs:
+    - name: http
+      success_header:
+        - X-Custom custom-answer
+        - X-Another another-answer
 ```
 
 {% endtab %}
@@ -181,9 +181,9 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    success_header X-Custom custom-answer
-    success_header X-Another another-answer
+  name http
+  success_header X-Custom custom-answer
+  success_header X-Another another-answer
 ```
 
 {% endtab %}
@@ -202,14 +202,14 @@ curl -d @app.log -XPOST -H "content-type: application/json" http://localhost:888
 
 ```yaml
 pipeline:
-    inputs:
-        - name: http
-          listen: 0.0.0.0
-          port: 8888
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -217,13 +217,13 @@ pipeline:
 
 ```text
 [INPUT]
-    name http
-    listen 0.0.0.0
-    port 8888
+  name http
+  listen 0.0.0.0
+  port 8888
 
 [OUTPUT]
-    name stdout
-    match *
+  name stdout
+  match *
 ```
 
 {% endtab %}

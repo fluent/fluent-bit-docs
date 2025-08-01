@@ -1,7 +1,6 @@
 # Docker
 
-Fluent Bit container images are available on Docker Hub ready for production usage.
-Current available images can be deployed in multiple architectures.
+Fluent Bit container images are available on Docker Hub ready for production usage. Current available images can be deployed in multiple architectures.
 
 ## Start Docker
 
@@ -17,29 +16,34 @@ Use the following command to start Fluent Bit while using a configuration file:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
+
 ```shell
 docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
   cr.fluentbit.io/fluent/fluent-bit
 ```
+
 {% endtab %}
 
 {% tab title="fluent-bit.yaml" %}
+
 ```shell
 docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
   cr.fluentbit.io/fluent/fluent-bit \
   -c /fluent-bit/etc/fluent-bit.yaml
+
 ```
+
 {% endtab %}
 {% endtabs %}
 
-
 ## Tags and versions
 
-The following table describes the Linux container tags that are available on Docker
-Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
+The following table describes the Linux container tags that are available on Docker Hub [`fluent/fluent-bit`](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tag(s)       | Manifest Architectures    | Description                                                    |
+| Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 4.0.5-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 4.0.5 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.5](https://fluentbit.io/announcements/v4.0.5/) |
 | 4.0.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
 | 4.0.4 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.4](https://fluentbit.io/announcements/v4.0.4/) |
 | 4.0.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
@@ -124,8 +128,6 @@ Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 | 2.1.6 | x86_64, arm64v8, arm32v7 | Release [v2.1.6](https://fluentbit.io/announcements/v2.1.6/) |
 | 2.1.5 | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
 | 2.1.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.4 | x86_64, arm64v8, arm32v7 | Release [v2.1.4](https://fluentbit.io/announcements/v2.1.4/) |
-| 2.1.4-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.3 | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
 | 2.1.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
 | 2.1.2 | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
@@ -179,28 +181,19 @@ Hub [fluent/fluent-bit](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
-Container images for Windows Server 2019 and Windows Server 2022 are provided for
-v2.0.6 and later. These can be found as tags on the same Docker Hub registry.
+Container images for Windows Server 2019 and Windows Server 2022 are provided for v2.0.6 and later. These can be found as tags on the same Docker Hub registry.
 
 ## Multi-architecture images
 
-Fluent Bit production stable images are based on
-[Distroless](https://github.com/GoogleContainerTools/distroless). Focusing on
-security, these images contain only the Fluent Bit binary and minimal system
-libraries and basic configuration.
+Fluent Bit production stable images are based on [Distroless](https://github.com/GoogleContainerTools/distroless). Focusing on security, these images contain only the Fluent Bit binary and minimal system libraries and basic configuration.
 
-Debug images are available for all architectures (for 1.9.0 and later), and contain
-a full Debian shell and package manager that can be used to troubleshoot or for
-testing purposes.
+Debug images are available for all architectures (for 1.9.0 and later), and contain a full Debian shell and package manager that can be used to troubleshoot or for testing purposes.
 
-From a deployment perspective, there's no need to specify an architecture. The
-container client tool that pulls the image gets the proper layer for the running
-architecture.
+From a deployment perspective, there's no need to specify an architecture. The container client tool that pulls the image gets the proper layer for the running architecture.
 
 ## Verify signed container images
 
-Version 1.9 and 2.0 container images are signed using Cosign/Sigstore.
-Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/cosign/installation/)):
+Version 1.9 and 2.0 container images are signed using Cosign/Sigstore. Verify these signatures using `cosign` ([install guide](https://docs.sigstore.dev/quickstart/quickstart-cosign/)):
 
 ```shell
 $ cosign verify --key "https://packages.fluentbit.io/fluentbit-cosign.pub" fluent/fluent-bit:2.0.6
@@ -213,8 +206,7 @@ The following checks were performed on each of these signatures:
 [{"critical":{"identity":{"docker-reference":"index.docker.io/fluent/fluent-bit"},"image":{"docker-manifest-digest":"sha256:c740f90b07f42823d4ecf4d5e168f32ffb4b8bcd87bc41df8f5e3d14e8272903"},"type":"cosign container image signature"},"optional":{"release":"2.0.6","repo":"fluent/fluent-bit","workflow":"Release from staging"}}]
 ```
 
-Replace `cosign` with the binary installed if it has a different name
-(for example, `cosign-linux-amd64`).
+Replace `cosign` with the binary installed if it has a different name (for example, `cosign-linux-amd64`).
 
 Keyless signing is also provided but is still experimental:
 
@@ -222,10 +214,7 @@ Keyless signing is also provided but is still experimental:
 COSIGN_EXPERIMENTAL=1 cosign verify fluent/fluent-bit:2.0.6
 ```
 
-`COSIGN_EXPERIMENTAL=1` is used to allow verification of images signed in keyless
-mode. To learn more about keyless signing, see the
-[Sigstore keyless signature](https://docs.sigstore.dev/cosign/signing/overview/)
-documentation.
+`COSIGN_EXPERIMENTAL=1` is used to allow verification of images signed in keyless mode. To learn more about keyless signing, see the [Sigstore keyless signature](https://docs.sigstore.dev/cosign/signing/overview/) documentation.
 
 ## Get started
 
@@ -235,8 +224,7 @@ documentation.
    docker pull cr.fluentbit.io/fluent/fluent-bit:2.0
    ```
 
-1. After the image is in place, run the following test which makes Fluent Bit
-   measure CPU usage by the container:
+1. After the image is in place, run the following test which makes Fluent Bit measure CPU usage by the container:
 
    ```shell
    docker run -ti cr.fluentbit.io/fluent/fluent-bit:2.0 \
@@ -255,22 +243,16 @@ to the standard output. For example:
 
 ### Why there is no Fluent Bit Docker image based on Alpine Linux?
 
-Alpine Linux uses Musl C library instead of Glibc. Musl isn't fully compatible with
-Glibc, which generated many issues in the following areas when used with Fluent Bit:
+Alpine Linux uses Musl C library instead of Glibc. Musl isn't fully compatible with Glibc, which generated many issues in the following areas when used with Fluent Bit:
 
-- Memory Allocator: To run properly in high-load environments, Fluent Bit uses
-  Jemalloc as a default memory allocator which reduces fragmentation and provides
-  better performance. Jemalloc can't run smoothly with Musl and requires extra work.
-- Alpine Linux Musl functions bootstrap have a compatibility issue when loading
-  Golang shared libraries. This causes problems when trying to load Golang output
-  plugins in Fluent Bit.
+- Memory Allocator: To run properly in high-load environments, Fluent Bit uses Jemalloc as a default memory allocator which reduces fragmentation and provides better performance. Jemalloc can't run smoothly with Musl and requires extra work.
+- Alpine Linux Musl functions bootstrap have a compatibility issue when loading Golang shared libraries. This causes problems when trying to load Golang output plugins in Fluent Bit.
 - Alpine Linux Musl Time format parser doesn't support Glibc extensions.
-- The Fluent Bit maintainers' preference for base images are Distroless and
-  Debian for security and maintenance reasons.
+- The Fluent Bit maintainers' preference for base images are Distroless and Debian for security and maintenance reasons.
 
-### Why use Distroless containers?
+### Why use distroless containers?
 
-The reasons for using Distroless are well covered in
+The reasons for using distroless are well covered in
 [Why should I use Distroless images?](https://github.com/GoogleContainerTools/distroless#why-should-i-use-distroless-images).
 
 - Include only what you need, reduce the attack surface available.
@@ -284,29 +266,19 @@ The reasons for using Distroless are well covered in
 With any choice, there are downsides:
 
 - No shell or package manager to update or add things.
-  - Generally, dynamic updating is a bad idea in containers as the time it's done
-    affects the outcome: two containers started at different times using the same
-    base image can perform differently or get different dependencies.
-  - A better approach is to rebuild a new image version. You can do this with
-    Distroless, but it's harder and requires multistage builds or similar to provide
-    the new dependencies.
+  - Generally, dynamic updating is a bad idea in containers as the time it's done affects the outcome: two containers started at different times using the same base image can perform differently or get different dependencies.
+  - A better approach is to rebuild a new image version. You can do this with Distroless, but it's harder and requires multistage builds or similar to provide the new dependencies.
 - Debugging can be harder.
-  - More specifically you need applications set up to properly expose information for
-    debugging rather than rely on traditional debug approaches of connecting to
-    processes or dumping memory. This can be an upfront cost versus a runtime cost but
-    does shift left in the development process so hopefully is a reduction overall.
-- Assumption that Distroless is secure: nothing is secure and there are still
-  exploits so it doesn't remove the need for securing your system.
-- Sometimes you need to use a common base image, such as with audits, security,
-  health, and so on.
+  - More specifically you need applications set up to properly expose information for debugging rather than rely on traditional debug approaches of connecting to processes or dumping memory. This can be an upfront cost versus a runtime cost but does shift left in the development process so hopefully is a reduction overall.
+- Assumption that Distroless is secure: nothing is secure and there are still exploits so it doesn't remove the need for securing your system.
+- Sometimes you need to use a common base image, such as with audits, security, health, and so on.
 
 Using `exec` to access a container will potentially impact resource limits.
 
 For debugging, debug containers are available now in K8S:
 <https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container>
 
-- This can be a significantly different container from the one you want to
-  investigate, with lots of extra tools or even a different base.
+- This can be a significantly different container from the one you want to investigate, with lots of extra tools or even a different base.
 - No resource limits applied to this container, which can be good or bad.
 - Runs in pod namespaces. It's another container that can access everything the others can.
 - Might need architecture of the pod to share volumes or other information.

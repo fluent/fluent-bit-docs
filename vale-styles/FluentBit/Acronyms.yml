@@ -8,15 +8,20 @@ first: '\b([A-Z]{3,5})\b'
 second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
+  - AAD
   - ACL
+  - AMD
   - ANSI
   - API
   - ARN
   - ASC
   - ASP
   - AWS
+  - BSD
   - CIDR
   - CLI
+  - CNCF
+  - CORS
   - CPU
   - CRI
   - CRD
@@ -29,12 +34,17 @@ exceptions:
   - DNS
   - DPI
   - DPPS
+  - DST
+  - ECR
   - ECS
+  - EKS
   - FAQ
   - FIPS
   - GCC
   - GCP
+  - GCS
   - GDB
+  - GELF
   - GET
   - GNU
   - GPG
@@ -43,12 +53,16 @@ exceptions:
   - GUI
   - GZIP
   - HEC
+  - HMAC
   - HPA
   - HTML
   - HTTP
   - HTTPS
   - IAM
+  - IBM
   - IDE
+  - IMDS
+  - ISO
   - JAR
   - JSON
   - JSX
@@ -58,12 +72,20 @@ exceptions:
   - LLVM
   - LTS
   - LTSV
+  - MIME
+  - MAC
   - MQTT
+  - MSI
+  - MSK
+  - NATS
   - NET
   - NGINX
   - NIC
   - NOTE
+  - NSIS
   - NVDA
+  - OAP
+  - OOM
   - OSS
   - PATH
   - PEM
@@ -85,16 +107,20 @@ exceptions:
   - SHA
   - SIEM
   - SLA
+  - SNI
   - SQL
   - SSH
   - SSL
+  - SSM
   - SSO
+  - STS
   - SVG
   - TBD
   - TCP
   - TLS
   - TRE
   - TODO
+  - UAE
   - UDP
   - URI
   - URL
@@ -102,9 +128,11 @@ exceptions:
   - UTC
   - UTF
   - UUID
+  - VPC
   - WASI
   - WMI
   - XML
   - XSS
   - YAML
+  - YUM
   - ZIP

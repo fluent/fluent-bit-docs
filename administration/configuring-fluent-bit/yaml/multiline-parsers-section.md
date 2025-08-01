@@ -1,6 +1,6 @@
 # Multiline parsers
 
-Multiline parsers are used to combine logs that span multiple events into a single, cohesive message. This is particularly useful for handling stack traces, error logs, or any log entry that contains multiple lines of information.
+Multiline parsers are used to combine logs that span multiple events into a single, cohesive message. Use this parser for handling stack traces, error logs, or any log entry that contains multiple lines of information.
 
 In YAML configuration, the syntax for defining multiline parsers differs slightly from the classic configuration format introducing minor breaking changes, specifically on how the rules are defined.
 

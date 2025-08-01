@@ -32,14 +32,14 @@ For example, the predefined Docker parser has the following definition:
 
 ```yaml
 parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S.%L'
-      time_keep: on
-      # Command   |  Decoder | Field | Optional Action   |
-      # ==========|==========|=======|===================|
-      decode_field_as: escaped log
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+    # Command   |  Decoder | Field | Optional Action   |
+    # ==========|==========|=======|===================|
+    decode_field_as: escaped log
 ```
 
 {% endtab %}
@@ -47,14 +47,14 @@ parsers:
 
 ```text
 [PARSER]
-    Name         docker
-    Format       json
-    Time_Key     time
-    Time_Format  %Y-%m-%dT%H:%M:%S.%L
-    Time_Keep    On
-    # Command       |  Decoder  | Field | Optional Action   |
-    # ==============|===========|=======|===================|
-    Decode_Field_As    escaped     log
+  Name         docker
+  Format       json
+  Time_Key     time
+  Time_Format  %Y-%m-%dT%H:%M:%S.%L
+  Time_Keep    On
+  # Command       |  Decoder  | Field | Optional Action   |
+  # ==============|===========|=======|===================|
+  Decode_Field_As    escaped     log
 ```
 
 {% endtab %}
@@ -99,12 +99,14 @@ Example input from `/path/to/log.log`:
 Example output:
 
 ```text
+...
 [24] tail.0: [1519082729.184544400, {"log"=>"   Checking indexes...
 ", "stream"=>"stdout", "time"=>"2018-02-19T23:25:29.1845444Z"}]
 [25] tail.0: [1519082729.184553600, {"log"=>"           Validated: _audit _internal _introspection _telemetry _thefishbucket history main snmp_data summary
 ", "stream"=>"stdout", "time"=>"2018-02-19T23:25:29.1845536Z"}]
 [26] tail.0: [1519082729.184562200, {"log"=>"   Done
 ", "stream"=>"stdout", "time"=>"2018-02-19T23:25:29.1845622Z"}]
+...
 ```
 
 Decoder example Fluent Bit configuration files:
@@ -114,17 +116,17 @@ Decoder example Fluent Bit configuration files:
 
 ```yaml
 service:
-    parsers_file: parsers.yaml
+  parsers_file: parsers.yaml
 
 pipeline:
-    inputs:
-        - name: tail
-          parser: docker
-          path: /path/to/log.log
+  inputs:
+    - name: tail
+      parser: docker
+      path: /path/to/log.log
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -132,16 +134,16 @@ pipeline:
 
 ```text
 [SERVICE]
-    Parsers_File parsers.conf
+  Parsers_File parsers.conf
 
 [INPUT]
-    Name        tail
-    Parser      docker
-    Path        /path/to/log.log
+  Name        tail
+  Parser      docker
+  Path        /path/to/log.log
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
@@ -154,11 +156,11 @@ The example parsers file:
 
 ```yaml
 parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S %z'
-      decode_field_as: escaped_utf8 log
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S %z'
+    decode_field_as: escaped_utf8 log
 ```
 
 {% endtab %}
@@ -166,11 +168,11 @@ parsers:
 
 ```text
 [PARSER]
-    Name        docker
-    Format      json
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S %z
-    Decode_Field_as escaped_utf8 log
+  Name        docker
+  Format      json
+  Time_Key    time
+  Time_Format %Y-%m-%dT%H:%M:%S %z
+  Decode_Field_as escaped_utf8 log
 ```
 
 {% endtab %}

@@ -42,7 +42,7 @@ within a few minutes.
 If you open a pull request that requires ongoing discussion or review, the Fluent Bit
 maintainers will add a `waiting-for-user` to your pull request. This tag means that
 we're blocked from moving forward until you reply. To keep contributions from going
-stale, we'll wait 45 days for your response, but we may close the pull request if we
+stale, we'll wait 45 days for your response, but we might close the pull request if we
 don't hear back from you by then.
 
 ## Submit a contribution
@@ -132,20 +132,29 @@ the prose of your pull requests and adds suggestions to improve style and clarit
 There is a [VSCode plugin for Vale](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
 which outputs suggestions to the problems pane in the IDE.
 
+The Fluent Bit repository runs Vale as a GitHub Action on updated text in new pull
+requests. Vale suggestions, errors, and warnings will display in GitHub on the
+**Files changed** page.
+
 [See the Vale tests for Fluent Bit](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles).
 
 Most Vale tests are at the `suggestion` level and won't block merging.
 
-The following tests are at a `error` level and will prevent merging:
+The following tests are at `error` level and will cause a test failure:
 
 - [AmSpelling](https://developers.google.com/style/word-list)
+- [Ampersand](https://developers.google.com/style/word-list#ampersand)
+- [Don'tUse](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/DontUse.yml)
 - [Emdash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
 - [Endash](https://github.com/errata-ai/Google/blob/master/Google/EmDash.yml)
 - [Exclamation](https://github.com/errata-ai/Google/blob/master/Google/Exclamation.yml)
 - [Gender](https://developers.google.com/style/pronouns#gender-neutral-pronouns)
 - [GenderBias](https://developers.google.com/style/inclusive-documentation)
+- [Hints](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/Hints.yml) using `>`.
 - [HeadingPunctuation](https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings)
+- [Latin](https://developers.google.com/style/abbreviations)
 - [LyHyphens](https://developers.google.com/style/hyphens)
+- [MayMightCan](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/MayMightCan.yml)
 - [NonStandardQuotes](https://github.com/fluent/fluent-bit-docs/blob/master/vale-styles/FluentBit/NonStandardQuotes.yml):
   [Use standard quotes](https://developers.google.com/style/quotation-marks#straight-and-curly-quotation-marks).
   By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
@@ -154,19 +163,31 @@ The following tests are at a `error` level and will prevent merging:
   in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en)
   or [Microsoft Word](https://support.microsoft.com/en-us/office/smart-quotes-in-word-and-powerpoint-702fc92e-b723-4e3d-b2cc-71dedaf2f343)
   to prevent this problem.
+- [Optional plurals](https://developers.google.com/style/plurals-parentheses)
 - [Ordinal](https://developers.google.com/style/numbers)
+- [Periods](https://developers.google.com/style/abbreviations)
+- [Ranges](https://developers.google.com/style/hyphens)
 - [Repetition](https://github.com/errata-ai/vale/blob/v3/testdata/styles/Markup/Repetition.yml):
   Checks for the same word used twice in succession.
+- [Slang](https://developers.google.com/style/abbreviations)
+- [Spacing](https://developers.google.com/style/sentence-spacing)
 
 The following tests are at a `warning` level and won't prevent merging:
 
 - [Ampersand](https://developers.google.com/style/word-list#ampersand)
+- [First person](https://developers.google.com/style/pronouns#personal-pronouns)
+- [Possessives](https://developers.google.com/style/possessives)
+- [Simplicity](https://developers.google.com/style/word-list#easy)
 
 ### Markdownlint
 
 [Markdownlint](https://github.com/markdownlint/markdownlint) checks markdown in a
 file and makes suggestions for improvements. Most markdownlint tests are enabled.
 [See the configuration file](https://github.com/fluent/fluent-bit-docs/blob/master/.markdownlint.json).
+
+The Fluent Bit documentation repository is using a GitHub action to check for invalid
+markdown based on the configuration file. This action might provide review
+suggestions, but doesn't block merging.
 
 Line wrap tests are off due to a GitBook decision that hard wraps the rendered page
 on line wraps in the markdown. This leads to rendered pages with awkward line wraps.

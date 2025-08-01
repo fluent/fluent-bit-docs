@@ -1,4 +1,4 @@
-# Kafka Consumer
+# Kafka
 
 The _Kafka_ input plugin enables Fluent Bit to consume messages directly from one or more [Apache Kafka](https://kafka.apache.org/) topics. By subscribing to specified topics, this plugin efficiently collects and forwards Kafka messages for further processing within your Fluent Bit pipeline.
 
@@ -8,21 +8,21 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 
 ## Configuration parameters
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| `brokers` | Single or multiple list of Kafka Brokers. For example: `192.168.1.3:9092`, `192.168.1.4:9092`. | _none_ |
-| `topics` | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to. | _none_ |
-| `format` | Serialization format of the messages. If set to `json`, the payload will be parsed as JSON. | _none_ |
-| `client_id` | Client id passed to librdkafka. | _none_ |
-| `group_id` | Group id passed to librdkafka. | `fluent-bit` |
-| `poll_ms` | Kafka brokers polling interval in milliseconds. | `500` |
-| `Buffer_Max_Size` | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M` |
-| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) | _none_ |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key                  | Description                                                                                                                              | default      |
+|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:-------------|
+| `brokers`            | Single or multiple list of Kafka Brokers. For example: `192.168.1.3:9092`, `192.168.1.4:9092`.                                           | _none_       |
+| `topics`             | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to.                                                  | _none_       |
+| `format`             | Serialization format of the messages. If set to `json`, the payload will be parsed as JSON.                                              | _none_       |
+| `client_id`          | Client id passed to librdkafka.                                                                                                          | _none_       |
+| `group_id`           | Group id passed to librdkafka.                                                                                                           | `fluent-bit` |
+| `poll_ms`            | Kafka brokers polling interval in milliseconds.                                                                                          | `500`        |
+| `Buffer_Max_Size`    | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M`         |
+| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md)                     | _none_       |
+| `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`      |
 
 ## Get started
 
-To subscribe to or collect messages from Apache Kafka, run the plugin from the command line or through the configuration file as shown below.
+To subscribe to or collect messages from Apache Kafka, run the plugin from the command line or through the configuration file as shown in the following examples.
 
 ### Command line
 
@@ -41,15 +41,15 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: kafka
-          brokers: 192.168.1.3:9092
-          topics: some-topic
-          poll_ms: 100
+  inputs:
+    - name: kafka
+      brokers: 192.168.1.3:9092
+      topics: some-topic
+      poll_ms: 100
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -57,14 +57,14 @@ pipeline:
 
 ```text
 [INPUT]
-    Name        kafka
-    Brokers     192.168.1.3:9092
-    Topics      some-topic
-    poll_ms     100
+  Name        kafka
+  Brokers     192.168.1.3:9092
+  Topics      some-topic
+  poll_ms     100
 
 [OUTPUT]
-    Name        stdout
-    Match       *
+  Name        stdout
+  Match       *
 ```
 
 {% endtab %}
@@ -79,23 +79,23 @@ The Fluent Bit source repository contains a full example of using Fluent Bit to 
 
 ```yaml
 pipeline:
-    inputs:
-        - name: kafka
-          brokers: kafka-broker:9092
-          topics: fb-source
-          poll_ms: 100
-          format: json
+  inputs:
+    - name: kafka
+      brokers: kafka-broker:9092
+      topics: fb-source
+      poll_ms: 100
+      format: json
 
-    filters:
-        - name: lua
-          match: '*'
-          script: kafka.lua
-          call: modify_kafka_message
+  filters:
+    - name: lua
+      match: '*'
+      script: kafka.lua
+      call: modify_kafka_message
 
-    outputs:
-        - name: kafka
-          brokers: kafka-broker:9092
-          topics: fb-sink
+  outputs:
+    - name: kafka
+      brokers: kafka-broker:9092
+      topics: fb-sink
 ```
 
 {% endtab %}
@@ -103,22 +103,22 @@ pipeline:
 
 ```text
 [INPUT]
-    Name kafka
-    brokers kafka-broker:9092
-    topics fb-source
-    poll_ms 100
-    format json
+  Name kafka
+  brokers kafka-broker:9092
+  topics fb-source
+  poll_ms 100
+  format json
 
 [FILTER]
-    Name    lua
-    Match   *
-    script  kafka.lua
-    call    modify_kafka_message
+  Name    lua
+  Match   *
+  script  kafka.lua
+  call    modify_kafka_message
 
 [OUTPUT]
-    Name kafka
-    brokers kafka-broker:9092
-    topics fb-sink
+  Name kafka
+  brokers kafka-broker:9092
+  topics fb-sink
 ```
 
 {% endtab %}
@@ -132,41 +132,34 @@ Every message received is then processed with `kafka.lua` and sent back to the `
 
 The example can be executed locally with `make start` in the `examples/kafka_filter` directory (`docker/compose` is used).
 
-## AWS MSK IAM Authentication
+## AWS MSK IAM authentication
 
-*Available since Fluent Bit v4.0.4*
+Fluent Bit v4.0.4 and later supports authentication to Amazon MSK (Managed Streaming for Apache Kafka) clusters using AWS IAM. This lets you securely connect to MSK brokers with AWS credentials, leveraging IAM roles and policies for access control.
 
-Fluent Bit supports authentication to Amazon MSK (Managed Streaming for Apache Kafka) clusters using AWS IAM. This allows you to securely connect to MSK brokers with AWS credentials, leveraging IAM roles and policies for access control.
-
-### Prerequisites
-
-**Build Requirements**
+### Build requirements
 
 If you are compiling Fluent Bit from source, ensure the following requirements are met to enable AWS MSK IAM support:
 
 - The packages `libsasl2` and `libsasl2-dev` must be installed on your build environment.
 
-**Runtime Requirements**
+### Runtime requirements
+
 - **Network Access:** Fluent Bit must be able to reach your MSK broker endpoints (AWS VPC setup).
-- **AWS Credentials:** Provide credentials using any supported AWS method:
+- **AWS Credentials:** Provide these AWS credentials using any supported AWS method. These credentials are discovered by default when `aws_msk_iam` flag is enabled.
   - IAM roles (recommended for EC2, ECS, or EKS)
   - Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
   - AWS credentials file (`~/.aws/credentials`)
   - Instance metadata service (IMDS)
+- **IAM Permissions:** The credentials must allow access to the target MSK cluster, as shown in the following example policy.
 
-  Note these credentials are discovery by default when `aws_msk_iam` flag is enabled.
+### Configuration parameters [#config-aws]
 
-- **IAM Permissions:** The credentials must allow access to the target MSK cluster (see example policy below).
+| Property | Description | Required |
+| -------- | ----------- | -------- |
+| `aws_msk_iam` | If `true`, enables AWS MSK IAM authentication. Possible values: `true`, `false`. | `false` |
+| `aws_msk_iam_cluster_arn` | Full ARN of the MSK cluster for region extraction. This value is required if `aws_msk_iam` is `true`. | _none_ |
 
-### Configuration Parameters
-
-| Property                  | Description                                         | Type    | Required                      |
-|---------------------------|-----------------------------------------------------|---------|-------------------------------|
-| `aws_msk_iam`             | Enable AWS MSK IAM authentication                   | Boolean | No (default: false)           |
-| `aws_msk_iam_cluster_arn` | Full ARN of the MSK cluster for region extraction   | String  | Yes (if `aws_msk_iam` is true)|
-
-
-### Configuration Example
+### Configuration example
 
 ```yaml
 pipeline:
@@ -182,28 +175,32 @@ pipeline:
       match: '*'
 ```
 
-### Example AWS IAM Policy
+### Example AWS IAM policy
 
-> **Note:** IAM policies and permissions can be complex and may vary depending on your organization's security requirements. If you are unsure about the correct permissions or best practices, please consult with your AWS administrator or an AWS expert who is familiar with MSK and IAM security.
+{% hint style="info" %}
+
+IAM policies and permissions can be complex and might vary depending on your organization's security requirements. If you are unsure about the correct permissions or best practices, consult your AWS administrator or an AWS expert who is familiar with MSK and IAM security.
+
+{% endhint %}
 
 The AWS credentials used by Fluent Bit must have permission to connect to your MSK cluster. Here is a minimal example policy:
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "kafka-cluster:*",
-                "kafka-cluster:DescribeCluster",
-                "kafka-cluster:ReadData",
-                "kafka-cluster:DescribeTopic",
-                "kafka-cluster:Connect"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "kafka-cluster:*",
+        "kafka-cluster:DescribeCluster",
+        "kafka-cluster:ReadData",
+        "kafka-cluster:DescribeTopic",
+        "kafka-cluster:Connect"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```

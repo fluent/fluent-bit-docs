@@ -9,8 +9,8 @@ Here is an example parsers configuration:
 
 ```yaml
 parsers:
-    - name: logfmt
-      format: logfmt
+  - name: logfmt
+    format: logfmt
 ```
 
 {% endtab %}
@@ -18,8 +18,8 @@ parsers:
 
 ```text
 [PARSER]
-    Name        logfmt
-    Format      logfmt
+  Name        logfmt
+  Format      logfmt
 ```
 
 {% endtab %}
@@ -46,9 +46,9 @@ If you want to be more strict than the logfmt standard and not parse lines where
 
 ```yaml
 parsers:
-    - name: logfmt
-      format: logfmt
-      logfmt_no_bare_keys: true
+  - name: logfmt
+    format: logfmt
+    logfmt_no_bare_keys: true
 ```
 
 {% endtab %}
@@ -56,9 +56,9 @@ parsers:
 
 ```text
 [PARSER]
-    Name        logfmt
-    Format      logfmt
-    Logfmt_No_Bare_Keys true
+  Name        logfmt
+  Format      logfmt
+  Logfmt_No_Bare_Keys true
 ```
 
 {% endtab %}

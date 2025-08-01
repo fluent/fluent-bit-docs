@@ -14,11 +14,11 @@ Metrics collected with Node Exporter Metrics flow through a separate pipeline fr
 
 ## Configuration
 
-| Key             | Description                                                               | Default   |
-| --------------- | --------------------------------------------------------------------------| --------- |
-| `scrape_interval` | The rate at which metrics are collected from the host operating system. | `2` seconds |
-| `scrape_on_start` | Scrape metrics upon start, use to avoid waiting for `scrape_interval` for the first round of metrics.  | `false` |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key               | Description                                                                                             | Default     |
+|-------------------|---------------------------------------------------------------------------------------------------------|-------------|
+| `scrape_interval` | The rate at which metrics are collected from the host operating system.                                 | `2` seconds |
+| `scrape_on_start` | Scrape metrics upon start, use to avoid waiting for `scrape_interval` for the first round of metrics.   | `false`     |
+| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`     |
 
 ## Get started
 
@@ -31,20 +31,20 @@ In the following configuration file, the input plugin `node_exporter_metrics` co
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
     
 pipeline:
-    inputs:
-        - name: fluentbit_metrics
-          tag: internal_metrics
-          scrape_interval: 2
+  inputs:
+    - name: fluentbit_metrics
+      tag: internal_metrics
+      scrape_interval: 2
 
-    outputs:
-        - name: prometheus_exporter
-          match: internal_metrics
-          host: 0.0.0.0
-          port: 2021
+  outputs:
+    - name: prometheus_exporter
+      match: internal_metrics
+      host: 0.0.0.0
+      port: 2021
 ```
 
 {% endtab %}
@@ -61,20 +61,19 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-    flush           1
-    log_level       info
+  flush           1
+  log_level       info
 
 [INPUT]
-    name            fluentbit_metrics
-    tag             internal_metrics
-    scrape_interval 2
+  name            fluentbit_metrics
+  tag             internal_metrics
+  scrape_interval 2
 
 [OUTPUT]
-    name            prometheus_exporter
-    match           internal_metrics
-    host            0.0.0.0
-    port            2021
-
+  name            prometheus_exporter
+  match           internal_metrics
+  host            0.0.0.0
+  port            2021
 ```
 
 {% endtab %}

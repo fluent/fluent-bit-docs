@@ -33,38 +33,38 @@ Multiple parsers can be defined and each section has it own properties. The foll
 | `Format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), or [`logfmt`](logfmt.md). |
 | `Regex` | Required for parsers with the `regex` format. Specifies the Ruby regular expression for parsing and composing the structured message. |
 | `Time_Key` | If the log entry provides a field with a timestamp, this option specifies the name of that field. |
-| `Time_Format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [strptime documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. |
+| `Time_Format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [`strptime` documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. |
 | `Time_Offset` | Specifies a fixed UTC time offset (such as `-0600` or `+0200`) for local dates. |
 | `Time_Keep` | If enabled, when a time key is recognized and parsed, the parser will keep the original time key. If disabled, the parser will drop the original time field. |
 | `Time_System_timezone` | If there is no time zone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
 | `Types` | Specifies the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string` (default), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
-| `Decode_Field` | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field <decoder_type> <field_name>`. See [Decoders](pipeline/parsers/decoders.md) for additional information. |
-| `Decode_Field_As` | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field_As <decoder_type> <field_name>`. See [Decoders](pipeline/parsers/decoders.md) for additional information. |
+| `Decode_Field` | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. |
+| `Decode_Field_As` | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field_As <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. |
 | `Skip_Empty_Values` | Specifies a boolean which determines if the parser should skip empty values. The default is `true`. |
 | `Time_Strict` | The default value (`true`) tells the parser to be strict with the expected time format. With this option set to false, the parser will be permissive with the format of the time. You can use this when the format expects time fraction but the time to be parsed doesn't include it.  |
 
 ## Parsers configuration file
 
-All parsers must be defined in a parsers file (see below for examples), not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+All parsers must be defined in a parsers file, not in the Fluent Bit global configuration file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
 
 ```yaml
 parsers:
-    - name: docker
-      format: json
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S.%L'
-      time_keep: on
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
 
-    - name: syslog-rfc5424
-      format: regex
-      regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
-      time_key: time
-      time_format: '%Y-%m-%dT%H:%M:%S.%L'
-      time_keep: on
-      types: pid:integer
+  - name: syslog-rfc5424
+    format: regex
+    regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+    types: pid:integer
 ```
 
 {% endtab %}
@@ -72,20 +72,20 @@ parsers:
 
 ```text
 [PARSER]
-    Name        docker
-    Format      json
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S.%L
-    Time_Keep   On
+  Name        docker
+  Format      json
+  Time_Key    time
+  Time_Format %Y-%m-%dT%H:%M:%S.%L
+  Time_Keep   On
 
 [PARSER]
-    Name        syslog-rfc5424
-    Format      regex
-    Regex       ^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S.%L
-    Time_Keep   On
-    Types pid:integer
+  Name        syslog-rfc5424
+  Format      regex
+  Regex       ^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$
+  Time_Key    time
+  Time_Format %Y-%m-%dT%H:%M:%S.%L
+  Time_Keep   On
+  Types pid:integer
 ```
 
 {% endtab %}
@@ -95,7 +95,7 @@ For more information about the parsers available, refer to the [default parsers 
 
 ## Time resolution and fractional seconds
 
-Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) libc system function.
+Time resolution and its format supported are handled by using the [strftime\(3\)](http://man7.org/linux/man-pages/man3/strftime.3.html) `libc` system function.
 
 In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
 
@@ -117,6 +117,8 @@ The following time zone abbreviations are supported.
 | `UTC`        | `+00:00`             | `0`              | no     | Coordinated Universal Time |
 | `Z`          | `+00:00`             | `0`              | no     | Zulu Time (UTC)            |
 | `UT`         | `+00:00`             | `0`              | no     | Universal Time             |
+
+<!-- vale FluentBit.Headings = NO -->
 
 ### North American time zones
 
@@ -153,6 +155,8 @@ The following time zone abbreviations are supported.
 
 ### South American time zones
 
+<!-- vale FluentBit.Headings = YES -->
+
 | Abbreviation | UTC Offset (`HH:MM`) | Offset (seconds) | Is DST | Description                                                              |
 | ------------ | -------------------- | ---------------- | ------ | ------------------------------------------------------------------------ |
 | `ART`        | `-03:00`             | `-10800`         | no     | Argentina Time                                                           |
@@ -161,7 +165,7 @@ The following time zone abbreviations are supported.
 | `CLT`        | `-04:00`             | `-14400`         | no     | Chile Standard Time                                                      |
 | `CLST`       | `-03:00`             | `-10800`         | yes    | Chile Summer Time                                                        |
 
-### Australasian and Oceanian time zones
+### Australasian and Oceania time zones
 
 | Abbreviation | UTC Offset (`HH:MM`) | Offset (seconds) | Is DST | Description                        |
 | ------------ | -------------------- | ---------------- | ------ | ---------------------------------- |
@@ -203,7 +207,7 @@ The following time zone abbreviations are supported.
 
 {% hint style="info" %}
 
-These are single-letter UTC offset designators. `J` (Juliet) represents local time and is not included. `Z` represents Zulu Time, as listed in the [Universal time zones](#universal-time-zones) list.
+These are single-letter UTC offset designators. `J` (Juliet) represents local time and isn't included. `Z` represents Zulu Time, as listed in the [Universal time zones](#universal-time-zones) list.
 
 {% endhint %}
 

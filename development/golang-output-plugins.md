@@ -7,9 +7,11 @@ Fluent Bit supports integration of Golang plugins built as shared objects for ou
 Compile Fluent Bit with Golang support:
 
 ```shell
-cd build/
-cmake -DFLB_DEBUG=On -DFLB_PROXY_GO=On ../
-make
+$ cd build/
+
+$ cmake -DFLB_DEBUG=On -DFLB_PROXY_GO=On ../
+
+$ make
 ```
 
 Once compiled, you can see the new `-e` option in the binary which stands for _external plugin_.
@@ -74,7 +76,7 @@ The previous code is a template to write an output plugin. It's important to kee
 
 To build the code, use the following line:
 
-```bash
+```shell
 go build -buildmode=c-shared -o out_gstdout.so out_gstdout.go
 ```
 
@@ -82,16 +84,17 @@ Once built, a shared library called `out_gstdout.so` will be available. Confirm 
 
 ```shell
 $ ldd out_gstdout.so
-    linux-vdso.so.1 =>  (0x00007fff561dd000)
-    libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fc4aeef0000)
-    libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fc4aeb27000)
-    /lib64/ld-linux-x86-64.so.2 (0x000055751a4fd000)
+  
+  linux-vdso.so.1 =>  (0x00007fff561dd000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fc4aeef0000)
+  libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fc4aeb27000)
+  /lib64/ld-linux-x86-64.so.2 (0x000055751a4fd000)
 ```
 
 ## Run Fluent Bit with the new plugin
 
-```bash
-bin/fluent-bit -e /path/to/out_gstdout.so -i cpu -o gstdout
+```shell
+fluent-bit -e /path/to/out_gstdout.so -i cpu -o gstdout
 ```
 
 ## Configuration file
@@ -109,10 +112,23 @@ Fluent Bit can load and run Golang plugins using two configuration files.
 
 #### Plugin file example
 
-```python
-[PLUGINS]
-    Path /path/to/out_gstdout.so
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+plugins:
+  - /path/to/out_gstdout.so
 ```
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[PLUGINS]
+  Path /path/to/out_gstdout.so
+```
+
+{% endtab %}
+{% endtabs %}
 
 ### Main configuration file
 
@@ -126,16 +142,36 @@ The keys for Golang plugin available as of this version are described in the fol
 
 The following is an example of a main configuration file.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  - /path/to/plugins.yaml
+  
+pipeline:
+  inputs:
+    - name dummy
+
+  outputs:
+    - name: gstdout
+```
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
-    plugins_file /path/to/plugins.conf
+  plugins_file /path/to/plugins.conf
 
 [INPUT]
-    Name dummy
+  Name dummy
 
 [OUTPUT]
-    Name gstdout
+  Name gstdout
 ```
+
+{% endtab %}
+{% endtabs %}
 
 #### Config key constraint
 
@@ -173,6 +209,6 @@ The following configuration keys are reserved by Fluent Bit and must not be used
 
 You can load a main configuration file using `-c` option. You don't need to specify a plugins configuration file from command line.
 
-```text
+```shell
 fluent-bit -c fluent-bit.conf
 ```
