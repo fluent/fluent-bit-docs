@@ -191,6 +191,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | Metric Name                                | Labels                                                                  | Description | Type    | Unit    |
 |--------------------------------------------|-------------------------------------------------------------------------|-------------|---------|---------|
 | `fluentbit_input_bytes_total`            | name: the name or alias for the input instance  | The number of bytes of log records that this input instance has ingested successfully. | counter | bytes   |
+| `fluentbit_input_ingestion_paused`       | name: the name or alias for the input instance  | Indicates whether the input instance ingestion is currently paused (1) or not (0). | gauge   | boolean |
 | `fluentbit_input_records_total`          | name: the name or alias for the input instance  | The number of log records this input ingested successfully. | counter | records |
 | `fluentbit_filter_bytes_total`           | name: the name or alias for the filter instance | The number of bytes of log records that this filter instance has ingested successfully. | counter | bytes   |
 | `fluentbit_filter_records_total`         | name: the name or alias for the filter instance | The number of log records this filter has ingested successfully. | counter | records |
