@@ -2,7 +2,7 @@
 
 Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields within those logs. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
 
-Conditional processing is available in Fluentbit version 4.0 and greater.
+Conditional processing is available in fluent-bit version 4.0 and greater.
 
 ## Configuration
 
@@ -94,6 +94,7 @@ The `conditions.rules.op` parameter has the following possible values:
 - `regex`: matches a regular expression
 - `not_regex`: does not match a regular expression
 - `in`: is included in the specified array
+
 - `not_in`: is not included in the specified array
 
 ## Examples
