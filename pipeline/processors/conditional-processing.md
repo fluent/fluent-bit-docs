@@ -12,7 +12,7 @@ You can turn a standard processor into a conditional processor by adding a `cond
 
 - Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors, including conditional processors.
 
-* *Conditional processing isn't supported if you're using a [filter as a processor](../filters).
+- Conditional processing is not supported if you're using a [filter as a processor](../filters).
 
 {% endhint %}
 
@@ -85,7 +85,8 @@ You can use `$field` syntax to access a top-level field, and `$field['child']['s
 
 The `conditions.rules.op` parameter has the following possible values:
 
-- `eq`: equal to
+* `eq`: equal to
+
 - `neq`: not equal to
 - `gt`: greater than
 - `lt`: less than
@@ -94,7 +95,6 @@ The `conditions.rules.op` parameter has the following possible values:
 - `regex`: matches a regular expression
 - `not_regex`: does not match a regular expression
 - `in`: is included in the specified array
-
 - `not_in`: is not included in the specified array
 
 ## Examples
