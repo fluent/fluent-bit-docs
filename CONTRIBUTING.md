@@ -122,7 +122,7 @@ When you create a new `.md` file for a new page, you must add an entry to this r
 This repository runs linters as GitHub Actions for each pull request. If a linter finds errors or makes suggested changes, you can view these results in the **Files changed** tab.
 
 <details>
-<summary>:white_check_mark: Examples: linter results</summary>
+<summary>:mag: Examples: linter results</summary>
 
 ![An example of a warning-level Vale result.](/.gitbook/assets/vale-example-warning.png)
 
