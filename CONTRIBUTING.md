@@ -22,7 +22,7 @@ After you open a pull request in this repository, a Fluent Bit maintainer will r
 
 ### Request review without merging
 
-If you're contributing documentation for a Fluent Bit feature that's still in development, add the `waiting-on-code-merge` label to a pull request. This lets the maintainers know that your changes are ready for review but not ready to be merged.
+If you're contributing documentation for a Fluent Bit feature that's still in development, ask a maintainer to add the `waiting-on-code-merge` label to your pull request. This lets other maintainers know that your changes aren't ready to merge yet, even if they were approved.
 
 ### Stale pull requests
 
