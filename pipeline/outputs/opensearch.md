@@ -246,7 +246,7 @@ Without this you will see errors like:
 {"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
 ```
 
-### Fluent-Bit and Amazon OpenSearch serverless
+### Fluent Bit and Amazon OpenSearch serverless
 
 Amazon OpenSearch Serverless is an offering that eliminates your need to manage OpenSearch clusters. All existing Fluent Bit OpenSearch output plugin options work with OpenSearch Serverless. For Fluent Bit, you must specify the service name as `aoss` (Amazon OpenSearch Serverless) when you enable `AWS_Auth`:
 
