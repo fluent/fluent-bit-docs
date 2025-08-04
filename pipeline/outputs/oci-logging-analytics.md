@@ -1,10 +1,10 @@
 ---
-description: Send logs to Oracle Cloud Infrastructure Logging Analytics Service
+description: Send logs to Oracle Cloud Infrastructure Log Analytics Service
 ---
 
 # Oracle Cloud Infrastructure Logging Analytics
 
-The _Oracle Cloud Infrastructure Logging Analytics_ output plugin lets you ingest your log records into the [Oracle Cloud Infrastructure (OCI) Logging Analytics](https://docs.oracle.com/en-us/iaas/logging-analytics/home.htm) service.
+The _Oracle Cloud Infrastructure Logging Analytics_ output plugin lets you ingest your log records into the [Oracle Cloud Infrastructure (OCI) Log Analytics](https://docs.oracle.com/en-us/iaas/log-analytics/home.htm) service.
 
 ## Configuration parameters
 
@@ -18,13 +18,13 @@ This plugin uses the following configuration parameters:
 | `proxy` | The proxy name, in `http://host:port` format. Only supports HTTP protocol. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 | `oci_config_in_record` | If set to `true`, the following `oci_la_*` will be read from the record itself instead of the output plugin configuration. | `false` |
-| `oci_la_log_group_id` | Required. The Oracle Cloud Identifier (OCID) of the Logging Analytics where you want to store logs. | _none_ |
-| `oci_la_log_source_name` | Required. The Logging Analytics Source to use for processing log records. | _none_ |
-| `oci_la_entity_id` | The OCID of the Logging Analytics entity. | _none_ |
-| `oci_la_entity_type` | The entity type of the Logging Analytics entity. | _none_ |
+| `oci_la_log_group_id` | Required. The Oracle Cloud Identifier (OCID) of the Log Analytics where you want to store logs. | _none_ |
+| `oci_la_log_source_name` | Required. The Log Analytics Source to use for processing log records. | _none_ |
+| `oci_la_entity_id` | The OCID of the Log Analytics entity. | _none_ |
+| `oci_la_entity_type` | The entity type of the Log Analytics entity. | _none_ |
 | `oci_la_log_path` | Specifies the original location of the log files. | _none_ |
-| `oci_la_global_metadata` | Specifies additional global metadata along with original log content to Logging Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
-| `oci_la_metadata` | Specifies additional metadata for a log event along with original log content to Logging Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
+| `oci_la_global_metadata` | Specifies additional global metadata along with original log content to Log Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
+| `oci_la_metadata` | Specifies additional metadata for a log event along with original log content to Log Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
 
 ### TLS/SSL
 
@@ -34,13 +34,13 @@ The OCI Logging Analytics output plugin supports TLS/SSL. For more details about
 
 ### Prerequisites
 
-- You must onboard with the OCI Logging Analytics service for the minimum required policies in the OCI region where you want to monitor. Refer to [Logging Analytics Quick Start](https://docs.oracle.com/en-us/iaas/logging-analytics/doc/quick-start.html) for details.
+- You must onboard with the OCI Log Analytics service for the minimum required policies in the OCI region where you want to monitor. Refer to [Log Analytics Quick Start](https://docs.oracle.com/en-us/iaas/log-analytics/doc/quick-start.html) for details.
 
-- You must create one or more OCI Logging Analytics log groups. Refer to [Create Log Group](https://docs.oracle.com/en-us/iaas/logging-analytics/doc/create-logging-analytics-resources.html#GUID-D1758CFB-861F-420D-B12F-34D1CC5E3E0E) for details.
+- You must create one or more OCI Log Analytics log groups. Refer to [Create Log Group](https://docs.oracle.com/en-us/iaas/log-analytics/doc/create-log-analytics-resources.html#GUID-D1758CFB-861F-420D-B12F-34D1CC5E3E0E) for details.
 
 ### Run the output plugin
 
-To insert records into the OCI Logging Analytics service, you can run the plugin from the command line or through a configuration file.
+To insert records into the OCI Log Analytics service, you can run the plugin from the command line or through a configuration file.
 
 #### Command line
 
