@@ -115,6 +115,8 @@ For version 1.9 and later, `td-agent-bit` is a deprecated package and was remove
 
 The latest stable version is 4.0.6.
 
+<!-- vale off -->
+
 | INSTALLERS | SHA256 CHECKSUMS |
 |----------- | ---------------- |
 | [`fluent-bit-4.0.6-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-win32.exe) | [844f9a19ec70648f83f0d849e92fe78df5cf4e7fd0c047f45d8b51c5b3acdb46](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-win32.exe.sha256) |
@@ -123,6 +125,8 @@ The latest stable version is 4.0.6.
 | [`fluent-bit-4.0.6-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-win64.zip) | [63894d7cebd2db9a3697bbf3d66fae6c33ec68496d7132e0cccd06b3e4b28b78](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-win64.zip.sha256) |
 | [`fluent-bit-4.0.6-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-winarm64.exe) | [7e0ccbaf18634ccd0b9cedc137a3905202c715a67d744a21221aa71696371ae3](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-winarm64.exe.sha256) |
 | [`fluent-bit-4.0.6-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-winarm64.zip) | [ebc9d2942ebdf5e406fcf13d8b76df14ca92f5f8c35c35d19a29b8f3fea141e2](https://packages.fluentbit.io/windows/fluent-bit-4.0.6-winarm64.zip.sha256) |
+
+<!-- vale on -->
 
 These are now using the Github Actions built versions. Legacy AppVeyor builds are still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.
 
