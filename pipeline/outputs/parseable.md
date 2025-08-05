@@ -14,12 +14,12 @@ Stream logs, metrics, and traces to [Parseable](https://www.parseable.com) by ut
 | `port`                     | TCP port of your Parseable Ingestor. | `8000` |
 | `http_user`                | Username for HTTP basic authentication. | `admin` |
 | `http_passwd`              | Password for HTTP basic authentication. | `admin` |
-| `header`                   | **Required headers for Parseable integration.** Must include `X-P-Stream` (stream name) and `X-P-Log-Source` (telemetry type: `otel-logs`, `otel-metrics`, or `otel-traces`). | **Required** |
-| `add_label`                | Add custom labels to the telemetry data. | None |
+| `header`                   | Required headers for Parseable integration. Must include `X-P-Stream` (stream name) and `X-P-Log-Source` (telemetry type: `otel-logs`, `otel-metrics`, or `otel-traces`). | _none_ |
+| `add_label`                | Add custom labels to the telemetry data. | _none_ |
 | `log_response_payload`     | Log the response payload from the server for debugging. | `False` |
-| `metrics_uri`              | Specify the HTTP URI for the target web server listening for metrics | `/v1/metrics` |
-| `logs_uri`                 | Specify the HTTP URI for the target web server listening for logs | `/v1/logs` |
-| `traces_uri`               | Specify the HTTP URI for the target web server listening for traces | `/v1/traces` |
+| `metrics_uri`              | Specify the HTTP URI for the target web server listening for metrics. | `/v1/metrics` |
+| `logs_uri`                 | Specify the HTTP URI for the target web server listening for logs. | `/v1/logs` |
+| `traces_uri`               | Specify the HTTP URI for the target web server listening for traces. | `/v1/traces` |
 | `tls`                      | Enable or disable TLS/SSL encryption. | `Off` |
 
 ### TLS / SSL
