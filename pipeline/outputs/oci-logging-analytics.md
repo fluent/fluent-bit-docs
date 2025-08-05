@@ -36,7 +36,7 @@ The OCI Logging Analytics output plugin supports TLS/SSL. For more details about
 
 - You must onboard with the OCI Log Analytics service for the minimum required policies in the OCI region where you want to monitor. Refer to [Log Analytics Quick Start](https://docs.oracle.com/en-us/iaas/log-analytics/doc/quick-start.html) for details.
 
-- You must create one or more OCI Log Analytics log groups. Refer to [Create Log Group](https://docs.oracle.com/en-us/iaas/log-analytics/doc/create-log-analytics-resources.html#GUID-D1758CFB-861F-420D-B12F-34D1CC5E3E0E) for details.
+- You must create one or more OCI Log Analytics log groups. Refer to [Create Log Group](https://docs.oracle.com/en-us/iaas/log-analytics/doc/create-logging-analytics-resources.html#GUID-D1758CFB-861F-420D-B12F-34D1CC5E3E0E) for details.
 
 ### Run the output plugin
 
