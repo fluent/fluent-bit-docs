@@ -1,0 +1,8 @@
+extends: substitution
+message: "'%s' is not the preferred term; use 'endpoint' instead."
+level: error
+ignorecase: true
+swap:
+  "end point": "endpoint"
+  end-point: "endpoint"
+  end-points: "endpoints"
