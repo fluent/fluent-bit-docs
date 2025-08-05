@@ -203,6 +203,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
+| `fluentbit_output_latency_seconds`      | input: the name of the input plugin instance, output: the name of the output plugin instance | End-to-end latency from chunk creation to successful delivery. Provides observability into chunk-level pipeline performance. | histogram | seconds |
 | `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 | `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
 | `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
@@ -230,6 +231,89 @@ The following are detailed descriptions for the metrics collected by the storage
 | `fluentbit_input_storage_chunks_busy_bytes` | name: the name or alias for the input instance  | The sum of the byte size of each chunk which is currently marked as busy. | gauge | bytes |
 | `fluentbit_output_upstream_total_connections` | name: the name or alias for the output instance | The sum of the connection count of each output plugins. | gauge | bytes |
 | `fluentbit_output_upstream_busy_connections` | name: the name or alias for the output instance | The sum of the connection count in a busy state of each output plugins.                                                                                                  | gauge   | bytes   |
+
+### Output latency metric
+
+> note: feature introduced in v4.0.6.
+
+The `fluentbit_output_latency_seconds` histogram metric captures end-to-end latency from the time a chunk is created by an input plugin until it is successfully delivered by an output plugin. This provides observability into chunk-level pipeline performance and helps identify slowdowns or bottlenecks in the output path.
+
+#### Bucket configuration
+
+The histogram uses the following default bucket boundaries, designed around Fluent Bit's typical flush interval of 1 second:
+
+```
+0.5, 1.0, 1.5, 2.5, 5.0, 10.0, 20.0, 30.0, +Inf
+```
+
+These boundaries provide:
+- **High resolution around 1s latency**: Captures normal operation near the default flush interval
+- **Small backpressure detection**: Identifies minor delays in the 1-2.5s range
+- **Bottleneck identification**: Detects retry cycles, network stalls, or plugin bottlenecks in higher ranges
+- **Complete coverage**: The `+Inf` bucket ensures all latencies are captured
+
+#### Example output
+
+When exposed via Fluent Bit's built-in HTTP server, the metric appears in Prometheus format:
+
+```prometheus
+# HELP fluentbit_output_latency_seconds End-to-end latency in seconds
+# TYPE fluentbit_output_latency_seconds histogram
+fluentbit_output_latency_seconds_bucket{le="0.5",input="random.0",output="stdout.0"} 0
+fluentbit_output_latency_seconds_bucket{le="1.0",input="random.0",output="stdout.0"} 1
+fluentbit_output_latency_seconds_bucket{le="1.5",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="2.5",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="5.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="10.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="20.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="30.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="+Inf",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_sum{input="random.0",output="stdout.0"} 6.0015411376953125
+fluentbit_output_latency_seconds_count{input="random.0",output="stdout.0"} 6
+```
+
+#### Use cases
+
+**Performance monitoring**: Monitor overall pipeline health by tracking latency percentiles:
+
+```promql
+# 95th percentile latency
+histogram_quantile(0.95, rate(fluentbit_output_latency_seconds_bucket[5m]))
+
+# Average latency
+rate(fluentbit_output_latency_seconds_sum[5m]) / rate(fluentbit_output_latency_seconds_count[5m])
+```
+
+**Bottleneck detection**: Identify specific input/output pairs experiencing high latency:
+
+```promql
+# Outputs with highest average latency
+topk(5, rate(fluentbit_output_latency_seconds_sum[5m]) / rate(fluentbit_output_latency_seconds_count[5m]))
+```
+
+**SLA monitoring**: Track how many chunks are delivered within acceptable time bounds:
+
+```promql
+# Percentage of chunks delivered within 2 seconds
+(
+  rate(fluentbit_output_latency_seconds_bucket{le="2.0"}[5m]) /
+  rate(fluentbit_output_latency_seconds_count[5m])
+) * 100
+```
+
+**Alerting**: Create alerts for degraded pipeline performance:
+
+```yaml
+# Example Prometheus alerting rule
+- alert: FluentBitHighLatency
+  expr: histogram_quantile(0.95, rate(fluentbit_output_latency_seconds_bucket[5m])) > 5
+  for: 2m
+  labels:
+    severity: warning
+  annotations:
+    summary: "Fluent Bit pipeline experiencing high latency"
+    description: "95th percentile latency is {{ $value }}s for {{ $labels.input }} -> {{ $labels.output }}"
+```
 
 ### Uptime example
 
