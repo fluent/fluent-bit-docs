@@ -31,8 +31,8 @@ The OpenTelemetry output plugin supports TLS/SSL. For more details about the pro
 To get started with sending telemetry data to Parseable:
 
 1. Ensure your Parseable Ingestor is running and accessible.
-2. Configure authentication credentials (username/password).
-3. In your main Fluent Bit configuration file append the following:
+1. Configure authentication credentials (username/password).
+1. In your main Fluent Bit configuration file append the following:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
