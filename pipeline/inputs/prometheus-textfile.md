@@ -1,13 +1,13 @@
-# Prometheus textfile
+# Prometheus text file
 
-The _Prometheus textfile_ input plugin allows Fluent Bit to read metrics from Prometheus text format files (`.prom` files) on the local filesystem. Use this plugin to collect custom metrics that are written to files by external applications or scripts, similar to the Prometheus Node Exporter `textfile` collector.
+The _Prometheus text file_ input plugin allows Fluent Bit to read metrics from Prometheus text format files (`.prom` files) on the local filesystem. Use this plugin to collect custom metrics that are written to files by external applications or scripts, similar to the Prometheus Node Exporter text file collector.
 
 ## Configuration parameters
 
 | Key | Description | Default |
 |-----|-------------|---------|
-| `path` | File or directory path pattern. Supports glob patterns with `*` wildcard (For example, `/var/lib/prometheus/*.prom`) | _none_ |
-| `scrape_interval` | Interval in seconds between file scans | `10s` |
+| `path` | File or directory path pattern. Supports glob patterns with `*` wildcard (for example, `/var/lib/prometheus/*.prom`). | _none_ |
+| `scrape_interval` | Interval in seconds between file scans. | `10s` |
 
 ## Get started
 
