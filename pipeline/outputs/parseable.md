@@ -140,9 +140,9 @@ pipeline:
 
 Parseable uses streams to organize your telemetry data. The `X-P-Stream` header specifies which stream the data should be sent to:
 
-- **otellogs**: Stream for log data
-- **otelmetrics**: Stream for metrics data  
-- **oteltraces**: Stream for trace data
+- `otellogs`: Stream for log data
+- `otelmetrics`: Stream for metrics data  
+- `oteltraces`: Stream for trace data
 
 The `X-P-Log-Source` header helps identify the source of the telemetry data for better organization and filtering. And this has to be set to `otel-logs`, `otel-metrics`, or `otel-traces` based on the telemetry type.
 
