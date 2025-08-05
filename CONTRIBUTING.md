@@ -117,6 +117,8 @@ curly quotes. If you copy-paste from one of these tools, you must correct the qu
 
 When you create a new `.md` file for a new page, you must add an entry to this repository's [`SUMMARY.md` file](https://github.com/fluent/fluent-bit-docs/blob/master/SUMMARY.md) (or ask a maintainer to add it on your behalf). If you don't update `SUMMARY.md`, the new page won't appear in the table of contents on the Fluent Bit docs site.
 
+Similarly, if you update the `#h1` header to change the title of an existing page, make sure to update that page's `SUMMARY.md` entry to match.
+
 ## Linters
 
 This repository runs linters as GitHub Actions for each pull request. If a linter finds errors or makes suggested changes, you can view these results in the **Files changed** tab.
