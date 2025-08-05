@@ -234,29 +234,28 @@ The following are detailed descriptions for the metrics collected by the storage
 
 ### Output latency metric
 
-> note: feature introduced in v4.0.6.
-
-The `fluentbit_output_latency_seconds` histogram metric captures end-to-end latency from the time a chunk is created by an input plugin until it is successfully delivered by an output plugin. This provides observability into chunk-level pipeline performance and helps identify slowdowns or bottlenecks in the output path.
+Introduced in Fluent Bit 4.0.6, the `fluentbit_output_latency_seconds` histogram metric captures end-to-end latency from the time a chunk is created by an input plugin until it's successfully delivered by an output plugin. This provides observability into chunk-level pipeline performance and helps identify slowdowns or bottlenecks in the output path.
 
 #### Bucket configuration
 
-The histogram uses the following default bucket boundaries, designed around Fluent Bit's typical flush interval of 1 second:
+The histogram uses the following default bucket boundaries, designed around the Fluent Bit typical flush interval of 1 second:
 
-```
+```text
 0.5, 1.0, 1.5, 2.5, 5.0, 10.0, 20.0, 30.0, +Inf
 ```
 
 These boundaries provide:
-- **High resolution around 1s latency**: Captures normal operation near the default flush interval
-- **Small backpressure detection**: Identifies minor delays in the 1-2.5s range
-- **Bottleneck identification**: Detects retry cycles, network stalls, or plugin bottlenecks in higher ranges
-- **Complete coverage**: The `+Inf` bucket ensures all latencies are captured
+
+- High resolution around 1&nbsp;s latency: Captures normal operation near the default flush interval.
+- Small backpressure detection: Identifies minor delays in the 1-2.5&nbsp;s range.
+- Bottleneck identification: Detects retry cycles, network stalls, or plugin bottlenecks in higher ranges.
+- Complete coverage**: The `+Inf` bucket ensures all latencies are captured.
 
 #### Example output
 
-When exposed via Fluent Bit's built-in HTTP server, the metric appears in Prometheus format:
+When exposed through the Fluent Bit built-in HTTP server, the metric appears in Prometheus format:
 
-```prometheus
+```text
 # HELP fluentbit_output_latency_seconds End-to-end latency in seconds
 # TYPE fluentbit_output_latency_seconds histogram
 fluentbit_output_latency_seconds_bucket{le="0.5",input="random.0",output="stdout.0"} 0
