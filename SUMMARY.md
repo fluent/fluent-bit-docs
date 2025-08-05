@@ -121,6 +121,7 @@
   * [Process metrics](pipeline/inputs/process.md)
   * [Prometheus remote write](pipeline/inputs/prometheus-remote-write.md)
   * [Prometheus scrape Metrics](pipeline/inputs/prometheus-scrape-metrics.md)
+  * [Prometheus text file](pipeline/inputs/prometheus-textfile.md)
   * [Random](pipeline/inputs/random.md)
   * [Serial interface](pipeline/inputs/serial-interface.md)
   * [Splunk](pipeline/inputs/splunk.md)
