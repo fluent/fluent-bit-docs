@@ -3,13 +3,15 @@
 
 # Contributing to Fluent Bit docs
 
-First of all, thanks for taking the time to read this guide. The fact that you're here means you're interested in contributing to Fluent Bit, and we highly appreciate your time.
+First of all, thanks for taking the time to read this guide. The fact that you're here means you're interested in contributing to Fluent Bit, and we greatly appreciate your time.
 
 This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
 
-Fluent Bit has a group of dedicated maintainers who oversee this repository, including several technical writers. These writers will review any pull requests you open, so don't be afraid to contribute—even if you're not a writer by trade. Your suggestions are valuable, and we'll help you wrangle any stray commas.
+Fluent Bit has a group of dedicated maintainers who oversee this repository, including several technical writers. These writers will review any pull requests you open, so don't be afraid to contribute, even if you're not a writer by trade. Your suggestions are valuable, and we'll help you wrangle any stray commas.
 
 ## :star: Quick tips
+
+Before you contribute to the Fluent Bit docs, review these critical tips:
 
 - [Sign off](#sign-off-your-git-commits) your Git commits.
 - Use [soft line wraps](#line-wraps) in Markdown files.
@@ -18,7 +20,7 @@ Fluent Bit has a group of dedicated maintainers who oversee this repository, inc
 
 ## Review process
 
-After you open a pull request in this repository, a Fluent Bit maintainer will review it, add comments or suggestions as needed, and then merge it. After your changes are successfully merges into `master`, the docs site will update within a few minutes.
+After you open a pull request in this repository, a Fluent Bit maintainer will review it, add comments or suggestions as needed, and then merge it. After your changes are successfully merged into `master`, the docs site will update within a few minutes.
 
 ### Request review without merging
 
@@ -26,7 +28,7 @@ If you're contributing documentation for a Fluent Bit feature that's still in de
 
 ### Stale pull requests
 
-If you open a pull request that requires extended discussion or review, the Fluent Bit maintainers will add a `waiting-for-user` label to your pull request. This label means that we're blocked from moving forward until you reply. To keep contributions from going stale, we'll wait 45 days for your response, but we might close the pull request if we don't hear back from you by then.
+If you open a pull request that requires extended discussion or review, the Fluent Bit maintainers will add a `waiting-for-user` label to your pull request. This label means that we're blocked from moving forward until you reply. To keep contributions from going stale, we'll wait 45 days for your response, after which we might close the pull request if we don't hear back from you.
 
 ## Pass DCO checks
 
@@ -40,7 +42,7 @@ For more information, refer to GitHub's guide to [setting your commit email addr
 
 ### Sign off your Git commits
 
-You must sign off your commits to certify your identity as the commit author. A commit is "signed off" when its commit message looks like this:
+You must sign off your commits to certify your identity as the commit author. A commit is signed off when its commit message looks like this:
 
 ```text
 pipeline: outputs: syslog: fix grammar in examples
@@ -51,7 +53,7 @@ For faster signing, you can use the `-s` flag:
 
 `git commit -a -s -m "pipeline: outputs: syslog: fix grammar in examples"`
 
-> :bulb: If you're using VSCode, the [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047) option automatically appends a `Signed-off-by:` message to all of your commits.
+> :bulb: If you're using VSCode, the [**Git: Always Sign Off**](https://github.com/microsoft/vscode/issues/83096#issuecomment-545350047) option appends a `Signed-off-by:` message to all of your commits.
 
 ### Fix "DCO is missing" errors
 
@@ -59,8 +61,7 @@ If a DCO error blocks your pull request from merging, refer to this guide about 
 
 ## Style guidelines
 
-The Fluent Bit documentation follows the [Google developer documentation style guide](https://developers.google.com/style) for most topics related to grammar and style. We don't expect you
-to memorize these style rules, but the maintainers who review your pull request might suggest changes accordingly.
+The Fluent Bit documentation follows the [Google developer documentation style guide](https://developers.google.com/style) for most topics related to grammar and style. We don't expect you to memorize these style rules, but the maintainers who review your pull request might suggest changes accordingly.
 
 The active [linters](#linters) in this repository flag certain style errors and, in some cases, explain how to fix them.
 
@@ -70,8 +71,7 @@ The Fluent Bit docs library is built and hosted through [GitBook](https://docs.g
 
 ### Links
 
-When cross-linking between in this repository, use a full absolute path whenever
-possible. For example:
+When cross-linking between in this repository, use a full absolute path whenever possible. For example:
 
 ```text
 [LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
@@ -117,7 +117,7 @@ curly quotes. If you copy-paste from one of these tools, you must correct the qu
 
 When you create a new `.md` file for a new page, you must add an entry to this repository's [`SUMMARY.md` file](https://github.com/fluent/fluent-bit-docs/blob/master/SUMMARY.md) (or ask a maintainer to add it on your behalf). If you don't update `SUMMARY.md`, the new page won't appear in the table of contents on the Fluent Bit docs site.
 
-Similarly, if you update the `# h1` title header of an existing page, make sure to update that page's `SUMMARY.md` entry to match. `SUMMARY.md` entries takes precedence over in-page headers, which means that if you update a page's `# h1` title without updating `SUMMARY.md`, the unchanged `SUMMARY.md` title will persist in both the rendered page and the table of contents.
+Similarly, if you update the `# h1` title header of an existing page, be sure to update that page's `SUMMARY.md` entry to match. `SUMMARY.md` entries takes precedence over in-page headers, which means that if you update a page's `# h1` title without updating `SUMMARY.md`, the unchanged `SUMMARY.md` title will persist in both the rendered page and the table of contents.
 
 ## Linters
 
