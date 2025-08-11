@@ -25,4 +25,8 @@ Outputs are implemented as plugins.
 
 ## Parsers
 
-Parser convert unstructured data to structured data. Use a parser to set a structure to the incoming data by using input plugins as data is collected.
+[Parsers](../pipeline.parsers.md) convert unstructured data to structured data. Use a parser to set a structure to the incoming data by using input plugins as data is collected.
+
+## Route
+
+[Routing](../pipeline/router.md) is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../concepts/key-concepts#tag.md) and [Matching](../concepts/key-concepts#match.md) rules.

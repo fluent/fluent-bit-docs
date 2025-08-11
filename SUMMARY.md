@@ -14,13 +14,7 @@
 
 * [Key concepts](concepts/key-concepts.md)
 * [Buffering](concepts/buffering.md)
-* [Data pipeline](concepts/data-pipeline/README.md)
-  * [Input](concepts/data-pipeline/input.md)
-  * [Parser](concepts/data-pipeline/parser.md)
-  * [Filter](concepts/data-pipeline/filter.md)
-  * [Buffer](concepts/data-pipeline/buffer.md)
-  * [Router](concepts/data-pipeline/router.md)
-  * [Output](concepts/data-pipeline/output.md)
+* [Data pipeline](concepts/data-pipeline.md)
 
 ## Installation
 
