@@ -13,4 +13,16 @@ For more details about the Filters available and their usage, see [Filters](../p
 
 ## Inputs
 
-Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log files, while others can gather metrics information from the operating system. There are many plugins to suit different needs.
+Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log
+files, while others can gather metrics information from the operating system. There
+are many plugins to suit different needs.
+
+## Outputs
+
+[Outputs](../pipeline/outputs.md) let you define destinations for your data. Common
+destinations are remote services, local file systems, or other standard interfaces.
+Outputs are implemented as plugins.
+
+## Parsers
+
+Parser convert unstructured data to structured data. Use a parser to set a structure to the incoming data by using input plugins as data is collected.
