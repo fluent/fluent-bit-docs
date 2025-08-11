@@ -9,6 +9,8 @@ The [`buffer`](./buffering.md) phase in the pipeline aims to provide a unified a
 ## Filter
 
 In production environments you need full control of the data you're collecting. Filtering lets you alter the collected data before delivering it to a destination.
-For more details about the Filters available and their usage, see [Filters](https://docs.fluentbit.io/manual/pipeline/filters).
+For more details about the Filters available and their usage, see [Filters](../pipeline/filters.md).
 
 ## Inputs
+
+Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log files, while others can gather metrics information from the operating system. There are many plugins to suit different needs.
