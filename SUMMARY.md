@@ -130,7 +130,7 @@
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
-* [Parsers](pipeline/parsers/README.md)
+* [Parsers](pipeline/parsers.md)
   * [Configuring parsers](pipeline/parsers/configuring-parser.md)
   * [JSON](pipeline/parsers.md)
   * [Regular expression](pipeline/parsers/regular-expression.md)
