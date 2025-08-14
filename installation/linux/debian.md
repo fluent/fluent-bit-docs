@@ -1,6 +1,6 @@
 # Debian
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for the latest stable CentOS system.
+Fluent Bit is distributed as the `fluent-bit` package and is available for the latest stable Debian system.
 
 The following architectures are supported
 
