@@ -4,7 +4,7 @@ description: Create flexible routing rules
 
 # Router
 
-Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../key-concepts.md) and [Matching](../key-concepts.md) rules.
+Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../concepts/key-concepts.md) and [Matching](../key-concepts.md) rules.
 
 ```mermaid
 graph LR
@@ -161,4 +161,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-In this configuration, the `Match_regex` rule is set to `.*_sensor_[AB]`. This regular expression matches any `Tag` that ends with `_sensor_A` or `_sensor_B`, regardless of what precedes it. This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.
+In this configuration, the `Match_regex` rule is set to `.*_sensor_[AB]`. This
+regular expression matches any `Tag` that ends with `_sensor_A` or `_sensor_B`,
+regardless of what precedes it. This approach provides a more flexible and powerful
+way to handle different source tags with a single routing rule.

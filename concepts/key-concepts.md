@@ -58,7 +58,7 @@ to represent events. This format is still supported for reading input event stre
 
 ## Filtering
 
-You might need to perform modifications on an Event's content. The process to alter, append to, or drop Events is called [_filtering_](data-pipeline/filter.md).
+You might need to perform modifications on an Event's content. The process to alter, append to, or drop Events is called [_filtering_](../pipeline/filters.md).
 
 Use filtering to:
 
@@ -68,15 +68,15 @@ Use filtering to:
 
 ## Tag
 
-Every Event ingested by Fluent Bit is assigned a Tag. This tag is an internal string used in a later stage by the Router to decide which Filter or [Output](data-pipeline/output.md) phase it must go through.
+Every Event ingested by Fluent Bit is assigned a Tag. This tag is an internal string used in a later stage by the Router to decide which Filter or [Output](../pipeline/outputs.md) phase it must go through.
 
-Most tags are assigned manually in the configuration. If a tag isn't specified, Fluent Bit assigns the name of the [Input](data-pipeline/input.md) plugin instance where that Event was generated from.
+Most tags are assigned manually in the configuration. If a tag isn't specified, Fluent Bit assigns the name of the [Input](../pipeline/inputs.md) plugin instance where that Event was generated from.
 
 {% hint style="info" %}
 The [Forward](../pipeline/inputs/forward.md) input plugin doesn't assign tags. This plugin speaks the Fluentd wire protocol called Forward where every Event already comes with a Tag associated. Fluent Bit will always use the incoming Tag set by the client.
 {% endhint %}
 
-A tagged record must always have a Matching rule. To learn more about Tags and Matches, see [Routing](data-pipeline/router.md).
+A tagged record must always have a Matching rule. To learn more about Tags and Matches, see [Routing](../pipeline/router.md).
 
 ## Timestamp
 
@@ -97,7 +97,7 @@ where:
 
 Fluent Bit lets you route your collected and processed Events to one or multiple destinations. A _Match_ represents a rule to select Events where a Tag matches a defined rule.
 
-To learn more about Tags and Matches, see [Routing](data-pipeline/router.md).
+To learn more about Tags and Matches, see [Routing](../pipeline/router.md).
 
 ## Structured messages
 
