@@ -6,22 +6,19 @@ The Fluent Bit data pipeline incorporates several specific concepts.
 
 The [`buffer`](./buffering.md) phase in the pipeline aims to provide a unified and persistent mechanism to store your data, using the primary in-memory model or the file system-based mode.
 
-## Filter
+## Filters
 
 In production environments you need full control of the data you're collecting. Filtering lets you alter the collected data before delivering it to a destination.
+
 For more details about the Filters available and their usage, see [Filters](../pipeline/filters.md).
 
 ## Inputs
 
-Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log
-files, while others can gather metrics information from the operating system. There
-are many plugins to suit different needs.
+Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log files, while others can gather metrics information from the operating system. There are many plugins to suit different needs.
 
 ## Outputs
 
-[Outputs](../pipeline/outputs.md) let you define destinations for your data. Common
-destinations are remote services, local file systems, or other standard interfaces.
-Outputs are implemented as plugins.
+[Output plugins](../pipeline/outputs.md) let you define destinations for your data. Common destinations are remote services, local file systems, or other standard interfaces.
 
 ## Parsers
 
