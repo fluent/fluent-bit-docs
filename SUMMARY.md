@@ -44,7 +44,7 @@
 
 ## Administration
 
-* [Configure Fluent Bit](administration/configuring-fluent-bit/README.md)
+* [Configure Fluent Bit](administration/configuring-fluent-bit.md)
   * [YAML configuration](administration/configuring-fluent-bit/yaml/README.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
     * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
@@ -137,7 +137,7 @@
   * [LTSV](pipeline/parsers/ltsv.md)
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
-* [Processors](pipeline/processors/README.md)
+* [Processors](pipeline/processors.md)
   * [Content modifier](pipeline/processors/content-modifier.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
