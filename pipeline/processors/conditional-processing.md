@@ -1,57 +1,57 @@
 # Conditional processing
 
-Conditional processing lets you selectively apply [processors](README.md) to
-logs based on the value of fields that those logs contain. This feature lets you
-create processing pipelines that only process records that meet certain
-criteria, and ignore the rest.
+Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields within those logs. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
 
 Conditional processing is available in Fluent Bit version 4.0 and greater.
 
 ## Configuration
 
-You can turn a standard processor into a conditional processor by adding a
-`condition` block to the processor's YAML configuration settings.
+You can turn a standard processor into a conditional processor by adding a `condition` block to the processor's YAML configuration settings.
 
 {% hint style="info" %}
-Conditional processing is only available for [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md), not [classic configuration files](../../administration/configuring-fluent-bit/classic-mode/README.md).
+
+- Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors, including conditional processors.
+- Conditional processing isn't supported if you're using a [filter as a processor](../filters).
+
 {% endhint %}
 
-
 These `condition` blocks use the following syntax:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
   inputs:
-  <...>
-      processors:
-        logs:
-          - name: {processor_name}
-            <...>
-            condition:
-	      op: {and|or}
-              rules:
-                - field: {field_name1}
-                  op: {comparison_operator}
-                  value: {comparison_value1}
-                - field: {field_name2}
-                  op: {comparison_operator}
-                  value: {comparison_value2}
-            <...>
+    <...>
+
+  processors:
+    logs:
+      - name: processor_name
+        <...>
+        condition:
+          op: {and|or}
+          rules:
+          - field: {field_name1}
+            op: {comparison_operator}
+            value: {comparison_value1}
+          - field: {field_name2}
+            op: {comparison_operator}
+            value: {comparison_value2}
+        <...>
 ```
 
-Each processor can only have a single `condition` block, but that condition can
-include multiple rules. These rules are stored as items in the `condition.rules`
-array.
+{% endtab %}
+{% endtabs %}
+
+Each processor can only have a single `condition` block, but that condition can include multiple rules. These rules are stored as items in the `condition.rules` array.
 
 ### Condition evaluation
 
-The `condition.op` parameter specifies the condition's evaluation logic. It has
-two possible values:
+The `condition.op` parameter specifies the condition's evaluation logic. It can have one of the following values:
 
-- `and`: A log entry meets this condition when all of the rules in the `condition.rules`
-  are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
-- `or`: A log entry meets this condition when one or more rules in the `condition.rules`
-  array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
+- `and`: A log entry meets this condition when all the rules in the `condition.rules` array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
+- `or`: A log entry meets this condition when one or more rules in the `condition.rules` array are [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
 
 ### Rules
 
@@ -65,10 +65,11 @@ Each item in the `condition.rules` array must include values for the following p
 
 Rules are evaluated against each log that passes through your data pipeline. For example, given a rule with these parameters:
 
-```
-- field: "$status"
-   op: eq
-   value: 200
+```yaml
+rules:
+  - field: "$status"
+    op: eq
+    value: 200
 ```
 
 This rule evaluates to `true` for a log that contains the string `'status':200`, but evaluates to `false` for a log that contains the string `'status':403`.
@@ -98,8 +99,10 @@ The `conditions.rules.op` parameter has the following possible values:
 
 ### Basic condition
 
-This example applies a condition that only processes logs that contain the
-string `{"request": {"method": "POST"`:
+This example applies a condition that only processes logs that contain the string `{"request": {"method": "POST"`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -107,6 +110,7 @@ pipeline:
     - name: dummy
       dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
       tag: request.log
+
       processors:
         logs:
           - name: content_modifier
@@ -121,10 +125,15 @@ pipeline:
                   value: "POST"
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Multiple conditions with `and`
 
-This example applies a condition that only processes logs when all of the
-specified rules are met:
+This example applies a condition that only processes logs when all the specified rules are met:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -132,27 +141,33 @@ pipeline:
     - name: dummy
       dummy: '{"request": {"method": "POST", "path": "/api/v1/sensitive-data"}}'
       tag: request.log
+
       processors:
-        logs:
-          - name: content_modifier
-            action: insert
-            key: requires_audit
-            value: true
-            condition:
-              op: and
-              rules:
-                - field: "$request['method']"
-                  op: eq
-                  value: "POST"
-                - field: "$request['path']"
-                  op: regex
-                  value: "\/sensitive-.*"
+          logs:
+            - name: content_modifier
+              action: insert
+              key: requires_audit
+              value: true
+              condition:
+                op: and
+                rules:
+                  - field: "$request['method']"
+                    op: eq
+                    value: "POST"
+                  - field: "$request['path']"
+                    op: regex
+                    value: "\/sensitive-.*"
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### Multiple conditions with `or`
 
-This example applies a condition that only processes logs when one or more of
-the specified rules are met:
+This example applies a condition that only processes logs when one or more of the specified rules are met:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -160,6 +175,7 @@ pipeline:
     - name: dummy
       dummy: '{"request": {"method": "GET", "path": "/api/v1/resource", "status_code": 200, "response_time": 150}}'
       tag: request.log
+
       processors:
         logs:
           - name: content_modifier
@@ -177,9 +193,15 @@ pipeline:
                   value: 400
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Array of values
 
 This example uses an array for the value of `condition.rules.value`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -187,6 +209,7 @@ pipeline:
     - name: dummy
       dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
       tag: request.log
+
       processors:
         logs:
           - name: content_modifier
@@ -201,9 +224,15 @@ pipeline:
                   value: ["POST", "PUT", "DELETE"]
 ```
 
+{% endtab %}
+{% endtabs %}
+
 ### Multiple processors with conditions
 
 This example uses multiple processors with conditional processing enabled for each:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -211,6 +240,7 @@ pipeline:
     - name: dummy
       dummy: '{"log": "Error: Connection refused", "level": "error", "service": "api-gateway"}'
       tag: app.log
+
       processors:
         logs:
           - name: content_modifier
@@ -242,5 +272,7 @@ pipeline:
                   value: ["error", "fatal"]
 ```
 
-This configuration adds an `alert` field to error logs from critical services,
-and adds a `paging_required` field to errors that contain specific critical patterns.
+{% endtab %}
+{% endtabs %}
+
+This configuration adds an `alert` field to error logs from critical services, and adds a `paging_required` field to errors that contain specific critical patterns.

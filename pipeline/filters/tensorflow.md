@@ -6,7 +6,7 @@ Tensorflow Lite is a lightweight open source deep learning framework used for mo
 
 The Tensorflow plugin for Fluent Bit has the following limitations:
 
-- Currently supports single-input models
+- Currently, supports single-input models
 - Uses Tensorflow 2.3 header files
 
 ## Configuration parameters
@@ -28,7 +28,7 @@ To create a Tensorflow Lite shared library:
 1. Install the [Bazel](https://bazel.build/) package manager.
 1. Run the following command to create the shared library:
 
-   ```bash
+   ```shell
    bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
    ```
 
@@ -40,18 +40,18 @@ To create a Tensorflow Lite shared library:
 
 The Tensorflow filter plugin is disabled by default. You must build Fluent Bit with the Tensorflow plugin enabled. In addition, it requires access to Tensorflow Lite header files to compile. Therefore, you must pass the address of the Tensorflow source code on your machine to the [build script](https://github.com/fluent/fluent-bit#build-from-scratch):
 
-```bash
+```shell
 cmake -DFLB_FILTER_TENSORFLOW=On -DTensorflow_DIR=<AddressOfTensorflowSourceCode> ...
 ```
 
 ### Command line
 
-If Tensorflow plugin initializes correctly, it reports successful creation of the interpreter, and prints a summary of model's input and output types and dimensions.
+If the Tensorflow plugin initializes correctly, it reports successful creation of the interpreter, and prints a summary of model's input and output types and dimensions.
 
 The command:
 
-```bash
-bin/fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
+```shell
+fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
 ```
 
 produces an output like:
@@ -67,25 +67,58 @@ produces an output like:
 
 ### Configuration file
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  daemon: off
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: mqtt
+      tag: mqtt.data
+
+  filters:
+    - name: tensorflow
+      match: mqtt.data
+      input_field: image
+      model_file: /home/m/model.tflite
+      include_input_fields: false
+      normalization_value: 255
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
-    Flush        1
-    Daemon       Off
-    Log_Level    info
+  Flush        1
+  Daemon       Off
+  Log_Level    info
 
 [INPUT]
-    Name mqtt
-    Tag mqtt.data
+  Name mqtt
+  Tag  mqtt.data
 
 [FILTER]
-    Name tensorflow
-    Match mqtt.data
-    input_field image
-    model_file /home/m/model.tflite
-    include_input_fields false
-    normalization_value 255
+  Name                 tensorflow
+  Match                mqtt.data
+  input_field          image
+  model_file           /home/m/model.tflite
+  include_input_fields false
+  normalization_value  255
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name  stdout
+  Match *
 ```
+
+{% endtab %}
+{% endtabs %}

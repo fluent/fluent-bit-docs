@@ -1,8 +1,6 @@
-# Type Converter
+# Type converter
 
-The _Type Converter_ filter plugin converts data types and appends new key-value pairs.
-
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
+The _Type converter_ filter plugin converts data types and appends new key-value pairs.
 
 You can use this filter in combination with plugins which expect incoming string value. For example, [Grep](grep.md) and [Modify](modify.md).
 
@@ -38,42 +36,43 @@ The plugin outputs `uint` values and `filter_type_converter` converts them into 
 ### Convert `uint` to string
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name mem
-
-[FILTER]
-    Name type_converter
-    Match *
-    uint_key Mem.total Mem.total_str string
-    uint_key Mem.used  Mem.used_str  string
-    uint_key Mem.free  Mem.free_str  string
-
-[OUTPUT]
-    Name stdout
-    Match *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-    filters:
-        - name: type_converter
-          match: '*'
-          uint_key:
-            - Mem.total Mem.total_str string
-            - Mem.used  Mem.used_str  string
-            - Mem.free  Mem.free_str  string
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: mem
+
+  filters:
+    - name: type_converter
+      match: '*'
+      uint_key:
+        - Mem.total Mem.total_str string
+        - Mem.used  Mem.used_str  string
+        - Mem.free  Mem.free_str  string
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name mem
+
+[FILTER]
+  Name               type_converter
+  Match              *
+  uint_key Mem.total Mem.total_str string
+  uint_key Mem.used  Mem.used_str  string
+  uint_key Mem.free  Mem.free_str  string
+
+[OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -87,6 +86,6 @@ fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_s
 
 The output will be
 
-```python
+```text
 [0] mem.0: [1639915154.160159749, {"Mem.total"=>8146052, "Mem.used"=>4513564, "Mem.free"=>3632488, "Swap.total"=>1918356, "Swap.used"=>0, "Swap.free"=>1918356, "Mem.total_str"=>"8146052", "Mem.used_str"=>"4513564", "Mem.free_str"=>"3632488"}]
 ```

@@ -2,7 +2,7 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit Documentation
+# Fluent Bit documentation
 
 <figure><img src=".gitbook/assets/fluent_bit_logo.png" alt=""><figcaption></figcaption></figure>
 
@@ -24,14 +24,18 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
   - Connect nearly any source to nearly any destination using preexisting plugins
   - Extensibility:
     - Write input, filter, or output plugins in the C language
-    - WASM: [WASM Filter Plugins](development/wasm-filter-plugins.md) or [WASM Input Plugins](development/wasm-input-plugins.md)
+    - Wasm: [Wasm Filter Plugins](development/wasm-filter-plugins.md) or [Wasm Input Plugins](development/wasm-input-plugins.md)
     - Write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
 - [Monitoring](administration/monitoring.md): Expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
-- [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using simple SQL queries
+- [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using basic SQL queries
   - Create new streams of data using query results
   - Aggregation windows
   - Data analysis and prediction: Time series forecasting
 - Portable: Runs on Linux, macOS, Windows and BSD systems
+
+### Release notes
+
+For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
 ## Fluent Bit, Fluentd, and CNCF
 

@@ -23,41 +23,42 @@ To start filtering records, you can run the filter from the command line or thro
 The following configuration file is to append the Fluent Bit version and operating system name.
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-
-```python
-[INPUT]
-    Name dummy
-    Tag test
-
-[FILTER]
-    Name sysinfo
-    Match *
-    Fluentbit_version_key flb_ver
-    Os_name_key os_name
-
-[OUTPUT]
-    name stdout
-    match *
-```
-
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          tag: test
-    filters:
-        - name: sysinfo
-          match: '*'
-          Fluentbit_version_key: flb_ver
-          Os_name_key: os_name
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: dummy
+      tag: test
+
+  filters:
+    - name: sysinfo
+      match: '*'
+      Fluentbit_version_key: flb_ver
+      Os_name_key: os_name
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name dummy
+  Tag test
+
+[FILTER]
+  Name sysinfo
+  Match *
+  Fluentbit_version_key flb_ver
+  Os_name_key os_name
+
+[OUTPUT]
+  name stdout
+  match *
 ```
 
 {% endtab %}

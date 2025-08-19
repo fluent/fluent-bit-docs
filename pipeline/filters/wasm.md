@@ -29,20 +29,49 @@ The plugin supports the following configuration parameters:
 
 Here is a configuration example.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy.local
+
+  filters:
+    - name: wasm
+      match: 'dummy.*'
+      event_format: json    # or msgpack
+      wasm_path: /path/to/wasm_program.wasm
+      function_name: filter_function_name
+      # Note: run Fluent Bit from the 'wasm_path' location.
+      accessible_paths: /path/to/accessible
+    
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name   dummy
-    Tag    dummy.local
+  Name   dummy
+  Tag    dummy.local
 
 [FILTER]
-    Name wasm
-    Match dummy.*
-    Event_Format json # or msgpack
-    WASM_Path /path/to/wasm_program.wasm
-    Function_Name filter_function_name
-    Accessible_Paths .,/path/to/accessible
+  Name             wasm
+  Match            dummy.*
+  Event_Format     json # or msgpack
+  WASM_Path        /path/to/wasm_program.wasm
+  Function_Name    filter_function_name
+  Accessible_Paths .,/path/to/accessible
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
+
+{% endtab %}
+{% endtabs %}

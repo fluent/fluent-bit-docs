@@ -7,8 +7,7 @@ The _Nest_ filter plugin lets you operate on or with nested data. Its modes of o
 
 ## Example usage for `nest`
 
-As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*`
-under a new key `NestKey` the transformation becomes:
+As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
 
 Input:
 
@@ -34,8 +33,7 @@ Output:
 
 ## Example usage for `lift`
 
-As an example using JSON notation, to lift keys nested under the `Nested_under` value
-`NestKey*` the transformation becomes:
+As an example using JSON notation, to lift keys nested under the `Nested_under` value `NestKey*` the transformation becomes:
 
 Input:
 
@@ -65,12 +63,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Value format | Operation | Description |
 | :--- | :--- | :--- | :--- |
-| `Operation` | ENUM [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
-| `Wildcard` | FIELD WILDCARD | `nest` | Nest records which field matches the wildcard |
-| `Nest_under` | FIELD STRING | `nest` | Nest records matching the `Wildcard` under this key |
-| `Nested_under` | FIELD STRING | `lift` | Lift records nested under the `Nested_under` key |
-| `Add_prefix` | FIELD STRING | Any | Prefix affected keys with this string |
-| `Remove_prefix` | FIELD STRING | Any | Remove prefix from affected keys if it matches this string |
+| `Operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
+| `Wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
+| `Nest_under` | Field string | `nest` | Nest records matching the `Wildcard` under this key |
+| `Nested_under` | Field string | `lift` | Lift records nested under the `Nested_under` key |
+| `Add_prefix` | Field string | Any | Prefix affected keys with this string |
+| `Remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
 
 ## Get started
 
@@ -86,56 +84,55 @@ To start filtering records, run the filter from the command line or through the 
 
 Using the command line mode requires quotes to parse the wildcard properly. The use of a configuration file is recommended.
 
-The following command loads the _mem_ plugin. Then the _nest_ filter matches the
-wildcard rule to the keys and nests the keys matching `Mem.*` under the new key
-`NEST`.
+The following command loads the _mem_ plugin. Then the _nest_ filter matches the wildcard rule to the keys and nests the keys matching `Mem.*` under the new key `NEST`.
 
-```shell copy
-bin/fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
+```shell
+fluent-bit -i mem -p 'tag=mem.local' -F nest -p 'Operation=nest' -p 'Wildcard=Mem.*' -p 'Nest_under=Memstats' -p 'Remove_prefix=Mem.' -m '*' -o stdout
 ```
 
 ### Nest configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="fluent-bit.yaml" %}
 
-```python copy
-[INPUT]
-    Name mem
-    Tag  mem.local
+```yaml
+pipeline:
+  inputs:
+    - name: mem
+      tag: mem.local
 
-[OUTPUT]
-    Name  stdout
-    Match *
+  filters:
+    - name: nest
+      match: '*'
+      operation: nest
+      wildcard: Mem.*
+      nest_under: Memstats
+      remove_prefix: Mem.
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under Memstats
-    Remove_prefix Mem.
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
+{% tab title="fluent-bit.conf" %}
 
-{% tab title="fluent-bit.yaml" %}
+```text
+[INPUT]
+  Name mem
+  Tag  mem.local
 
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          operation: nest
-          wildcard: Mem.*
-          nest_under: Memstats
-          remove_prefix: Mem.
-    outputs:
-        - name: stdout
-          match: '*'
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Nest_under Memstats
+  Remove_prefix Mem.
+
+ [OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -157,59 +154,62 @@ This example nests all `Mem.*` and `Swap.*` items under the `Stats` key and then
 ### `nest` and `lift` undo configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="fluent-bit.yaml" %}
 
-```python copy
-[INPUT]
-    Name mem
-    Tag  mem.local
+```yaml
+pipeline:
+  inputs:
+    - name: mem
+      tag: mem.local
 
-[OUTPUT]
-    Name  stdout
-    Match *
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard:
+        - Mem.*
+        - Swap.*
+      Nest_under: Stats
+      Add_prefix: NESTED
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Wildcard Swap.*
-    Nest_under Stats
-    Add_prefix NESTED
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Stats
+      Remove_prefix: NESTED
 
-[FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Stats
-    Remove_prefix NESTED
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="fluent-bit.conf" %}
 
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard:
-            - Mem.*
-            - Swap.*
-          Nest_under: Stats
-          Add_prefix: NESTED
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Stats
-          Remove_prefix: NESTED
-    outputs:
-        - name: stdout
-          match: '*'
+```text
+[INPUT]
+  Name mem
+  Tag  mem.local
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Wildcard Swap.*
+  Nest_under Stats
+  Add_prefix NESTED
+
+[FILTER]
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Stats
+  Remove_prefix NESTED
+
+[OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -224,78 +224,81 @@ pipeline:
 
 ## Example 3 - `nest` 3 levels deep
 
-This example takes the keys starting with `Mem.*` and nests them under `LAYER1`,
-which is then nested under `LAYER2`, which is nested under `LAYER3`.
+This example takes the keys starting with `Mem.*` and nests them under `LAYER1`, which is then nested under `LAYER2`, which is nested under `LAYER3`.
 
 ### Deep `nest` configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="fluent-bit.yaml" %}
 
-```python copy
-[INPUT]
-    Name mem
-    Tag  mem.local
+```yaml
+pipeline:
+  inputs:
+    - name: mem
+      tag: mem.local
 
-[OUTPUT]
-    Name  stdout
-    Match *
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: Mem.*
+      Nest_under: LAYER1
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under LAYER1
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER1*
+      Nest_under: LAYER2
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER1*
-    Nest_under LAYER2
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER2*
+      Nest_under: LAYER3
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER2*
-    Nest_under LAYER3
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="fluent-bit.conf" %}
 
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
-    outputs:
-        - name: stdout
-          match: '*'
+```text
+[INPUT]
+  Name mem
+  Tag  mem.local
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Nest_under LAYER1
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER1*
+  Nest_under LAYER2
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER2*
+  Nest_under LAYER3
+
+[OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
 {% endtabs %}
 
-### Deep `nest` Result
+### Deep `nest` result
 
 ```text
 [0] mem.local: [1524795923.009867831, {"Swap.total"=>1046524, "Swap.used"=>0, "Swap.free"=>1046524, "LAYER3"=>{"LAYER2"=>{"LAYER1"=>{"Mem.total"=>4050908, "Mem.used"=>1112036, "Mem.free"=>2938872}}}}]
@@ -324,103 +327,109 @@ This example uses the 3-level deep nesting of Example 2 and applies the `lift` f
 ### `nest` and `lift` prefix configuration file
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="fluent-bit.yaml" %}
 
-```python copy
-[INPUT]
-    Name mem
-    Tag  mem.local
+```yaml
+pipeline:
+  inputs:
+    - name: mem
+      tag: mem.local
 
-[OUTPUT]
-    Name  stdout
-    Match *
+  filters:
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: Mem.*
+      Nest_under: LAYER1
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard Mem.*
-    Nest_under LAYER1
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER1*
+      Nest_under: LAYER2
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER1*
-    Nest_under LAYER2
+    - name: nest
+      match: '*'
+      Operation: nest
+      Wildcard: LAYER2*
+      Nest_under: LAYER3
 
-[FILTER]
-    Name nest
-    Match *
-    Operation nest
-    Wildcard LAYER2*
-    Nest_under LAYER3
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: LAYER3
+      Add_prefix: Lifted3_
 
-[FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under LAYER3
-    Add_prefix Lifted3_
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Lifted3_LAYER2
+      Add_prefix: Lifted3_Lifted2_
 
-[FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Lifted3_LAYER2
-    Add_prefix Lifted3_Lifted2_
+    - name: nest
+      match: '*'
+      Operation: lift
+      Nested_under: Lifted3_Lifted2_LAYER1
+      Add_prefix: Lifted3_Lifted2_Lifted1_
 
-[FILTER]
-    Name nest
-    Match *
-    Operation lift
-    Nested_under Lifted3_Lifted2_LAYER1
-    Add_prefix Lifted3_Lifted2_Lifted1_
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
+{% tab title="fluent-bit.conf" %}
 
-{% tab title="fluent-bit.yaml" %}
+```text
+[INPUT]
+  Name mem
+  Tag  mem.local
 
-```yaml copy
-pipeline:
-    inputs:
-        - name: mem
-          tag: mem.local
-    filters:
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: Mem.*
-          Nest_under: LAYER1
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER1*
-          Nest_under: LAYER2
-        - name: nest
-          match: '*'
-          Operation: nest
-          Wildcard: LAYER2*
-          Nest_under: LAYER3
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: LAYER3
-          Add_prefix: Lifted3_
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_LAYER2
-          Add_prefix: Lifted3_Lifted2_
-        - name: nest
-          match: '*'
-          Operation: lift
-          Nested_under: Lifted3_Lifted2_LAYER1
-          Add_prefix: Lifted3_Lifted2_Lifted1_
-    outputs:
-        - name: stdout
-          match: '*'
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard Mem.*
+  Nest_under LAYER1
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER1*
+  Nest_under LAYER2
+
+[FILTER]
+  Name nest
+  Match *
+  Operation nest
+  Wildcard LAYER2*
+  Nest_under LAYER3
+
+[FILTER]
+  Name nest
+  Match *
+  Operation lift
+  Nested_under LAYER3
+  Add_prefix Lifted3_
+
+[FILTER]
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Lifted3_LAYER2
+  Add_prefix Lifted3_Lifted2_
+
+[FILTER]
+  Name nest
+  Match *
+  Operation lift
+  Nested_under Lifted3_Lifted2_LAYER1
+  Add_prefix Lifted3_Lifted2_Lifted1_
+
+[OUTPUT]
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}

@@ -1,69 +1,91 @@
-# Windows Event Log (winevtlog)
+# Windows Event logs (winevtlog)
 
-The **winevtlog** input plugin allows you to read Windows Event Log with new API from `winevt.h`.
+The _Windows Event logs_ (`winevtlog`) input plugin lets you read Windows Event logs with the API from `winevt.h`.
 
-## Configuration Parameters <a id="config"></a>
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Channels | A comma-separated list of channels to read from. |  |
-| Interval\_Sec | Set the polling interval for each channel. \(optional\) | 1 |
-| Interval\_NSec | Set the polling interval for each channel (sub seconds. \(optional\) | 0 |
-| Read\_Existing\_Events | Whether to read existing events from head or tailing events at last on subscribing. \(optional\) | False |
-| DB | Set the path to save the read offsets. \(optional\) |  |
-| String\_Inserts | Whether to include StringInserts in output records. \(optional\) | True  |
-| Render\_Event\_As\_XML | Whether to render system part of event as XML string or not. \(optional\) | False  |
-| Ignore\_Missing\_Channels | Whether to ignore event channels not present in the event log, and continue running with subscribed channels. \(optional\) | False  |
-| Use\_ANSI | Use ANSI encoding on eventlog messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to True may solve the problem. \(optional\) | False  |
-| Event\_Query | Specify XML query for filtering events. | `*` |
-| Read\_Limit\_Per\_Cycle | Specify read limit per cycle.  | 512KiB |
-| Threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
-| Remote.Server | Specify server name of remote access for Windows EventLog. | |
-| Remote.Domain | Specify domain name of remote access for Windows EventLog. | |
-| Remote.Username | Specify user name of remote access for Windows EventLog. | |
-| Remote.Password | Specify password of remote access for Windows EventLog.  | |
+| Key                       | Description                                                                                                                                                                                | Default  |
+|:--------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|
+| `Channels`                | A comma-separated list of channels to read from.                                                                                                                                           | _none_   |
+| `Interval_Sec`            | Optional. Set the polling interval for each channel.                                                                                                                                       | `1`      |
+| `Interval_NSec`           | Optional. Set the polling interval for each channel. (nanoseconds)                                                                                                                         | `0 `     |
+| `Read_Existing_Events`    | Optional. Whether to read existing events from head or tailing events at last on subscribing.                                                                                              | `False`  |
+| `DB`                      | Optional. Set the path to save the read offsets.                                                                                                                                           | _none_   |
+| `String_Inserts`          | Optional. Whether to include string inserts in output records.                                                                                                                             | `True`   |
+| `Render_Event_As_XML`     | Optional. Whether to render the system part of an event as an XML string or not.                                                                                                           | `False`  |
+| `Ignore_Missing_Channels` | Optional. Whether to ignore event channels not present in the event log, and continue running with subscribed channels.                                                                    | `False`  |
+| `Use_ANSI`                | Optional. Use ANSI encoding on `eventlog` messages. If you have issues receiving blank strings with old Windows versions (Server 2012 R2), setting this to `True` might solve the problem. | `False`  |
+| `Event_Query`             | Specify XML query for filtering events.                                                                                                                                                    | `*`      |
+| `Read_Limit_Per_Cycle`    | Specify read limit per cycle.                                                                                                                                                              | `512KiB` |
+| Threaded                  | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                    | `false`  |
+| `Remote.Server`           | Specify server name of remote access for Windows EventLog.                                                                                                                                 | _none_   |
+| `Remote.Domain`           | Specify domain name of remote access for Windows EventLog.                                                                                                                                 | _none_   |
+| `Remote.Username`         | Specify user name of remote access for Windows EventLog.                                                                                                                                   | _none_   |
+| `Remote.Password`         | Specify password of remote access for Windows EventLog.                                                                                                                                    | _none_   |
 
-Note that if you do not set _db_, the plugin will tail channels on each startup.
+If `db` isn't set, the plugin will tail channels on each startup.
 
-## Configuration Examples <a id="config_example"></a>
+## Configuration examples
 
-### Configuration File
+### Configuration file
 
 Here is a minimum configuration example.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: winevtlog
+      channels: Setup,Windows PowerShell
+      interval_sec: 1
+      db: winevtlog.sqlite
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name         winevtlog
-    Channels     Setup,Windows PowerShell
-    Interval_Sec 1
-    DB           winevtlog.sqlite
+  Name         winevtlog
+  Channels     Setup,Windows PowerShell
+  Interval_Sec 1
+  DB           winevtlog.sqlite
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
-Note that some Windows Event Log channels \(like `Security`\) requires an admin privilege for reading. In this case, you need to run fluent-bit as an administrator.
+{% endtab %}
+{% endtabs %}
 
-The default value of Read\_Limit\_Per\_Cycle is set up as 512KiB.
-Note that 512KiB(= 0x7ffff = 512 * 1024 * 1024) does not equals to 512KB (= 512 * 1000 * 1000).
-To increase events per second on this plugin, specify larger value than 512KiB.
+Some Windows Event Log channels, like `Security`, require administrative privilege for reading. In this case, you must run Fluent Bit as an administrator.
 
-#### Query Languages for Event_Query Parameter
+The default value of `Read_Limit_Per_Cycle` is `512KiB`.
+
+512&nbsp;KiB(= 0x7ffff = 512 * 1024 * 1024) isn't equal to 512&nbsp;KB (= 512 * 1000 * 1000). To increase events per second on this plugin, specify larger value than 512&nbsp;KiB.
+
+#### Query languages for `Event_Query` parameter
 
 The `Event_Query` parameter can be used to specify the XML query for filtering Windows EventLog during collection.
-The supported query types are [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query.
-For further details, please refer to [the MSDN doc](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
+The supported query types are [`XPath`](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query.
+For further details, refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
 
-### Command Line
+### Command line
 
-If you want to do a quick test, you can run this plugin from the command line.
+If you want to do a test, you can run this plugin from the command line:
 
-```bash
-$ fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
+```shell
+fluent-bit -i winevtlog -p 'channels=Setup' -p 'Read_Existing_Events=true' -o stdout
 ```
 
-Note that `winevtlog` plugin will tail channels on each startup.
-If you want to confirm whether this plugin is working or not, you should specify `-p 'Read_Existing_Events=true'` parameter.
+The `winevtlog` plugin will tail channels on each startup.
+If you want to confirm whether this plugin is working or not, specify the `-p 'Read_Existing_Events=true'` parameter.

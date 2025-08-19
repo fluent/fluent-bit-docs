@@ -7,7 +7,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 
 ## Container deployment
 
-| Deployment Type   | instructions                                       |
+| Deployment Type   | Instructions |
 | ----------------- | -------------------------------------------------- |
 | Kubernetes        | [Deploy on Kubernetes](kubernetes.md#installation) |
 | Docker            | [Deploy with Docker](docker.md)                    |
@@ -29,8 +29,8 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 
 | Operating System    | Installation instructions |
 | ------------------- | ------------------------- |
-| Windows Server 2019 | [Windows Server EXE](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
-| Windows 10 2019.03  | [Windows EXE](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
+| Windows Server 2019 | [Windows Server `EXE`](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
+| Windows 10 2019.03  | [Windows `EXE`](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
 
 ## Install on macOS (packages)
 
@@ -38,7 +38,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 | ------------------- | --------------------------------------------- |
 | macOS               | [Homebrew](macos.md#installing-from-homebrew) |
 
-## Compile from Source (Linux, Windows, FreeBSD, macOS)
+## Compile from source (Linux, Windows, FreeBSD, macOS)
 
 | Operating system | Installation instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
@@ -46,16 +46,14 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 | macOS            | [Compile from source](macos.md#compile-from-source) |
 | Windows          | [Compile from Source](windows.md#compile-from-source)       |
 
-## Sandbox Environment
+## Sandbox environment
 
 If you are interested in learning about Fluent Bit you can try out the sandbox environment:
 
 {% embed url="https://play.instruqt.com/embed/Fluent/tracks/fluent-bit-getting-started-101?token=em_S2zOzhhDQepM0vDS" %}
-Fluent Bit Sandbox Environment
+Fluent Bit sandbox environment
 {% endembed %}
 
-## Enterprise Packages
+## Enterprise packages
 
-Fluent Bit packages are also provided by [enterprise
-providers](https://fluentbit.io/enterprise) for older end of life versions, Unix
-systems, and additional support and features including aspects like CVE backporting.
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, and additional support and features including aspects like CVE backporting.

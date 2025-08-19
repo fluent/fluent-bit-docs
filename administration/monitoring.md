@@ -6,9 +6,7 @@ description: Learn how to monitor your Fluent Bit data pipelines
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9ca51eb-7faf-491d-a62e-618a21c94506" />
 
-Fluent Bit includes features for monitoring the internals of your pipeline, in
-addition to connecting to Prometheus and Grafana, Health checks, and connectors to
-use external services:
+Fluent Bit includes features for monitoring the internals of your pipeline, in addition to connecting to Prometheus and Grafana, Health checks, and connectors to use external services:
 
 - [HTTP Server: JSON and Prometheus Exporter-style metrics](monitoring.md#http-server)
 - [Grafana Dashboards and Alerts](monitoring.md#grafana-dashboard-and-alerts)
@@ -17,56 +15,74 @@ use external services:
 
 ## HTTP server
 
-Fluent Bit includes an HTTP server for querying internal information and monitoring
-metrics of each running plugin.
+Fluent Bit includes an HTTP server for querying internal information and monitoring metrics of each running plugin.
 
 You can integrate the monitoring interface with Prometheus.
 
 ### Get started
 
-To get started, enable the HTTP server from the configuration file. The following
-configuration instructs Fluent Bit to start an HTTP server on TCP port `2020` and
-listen on all network interfaces:
+To get started, enable the HTTP server from the configuration file. The following configuration instructs Fluent Bit to start an HTTP server on TCP port `2020` and listen on all network interfaces:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
-[SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
+service:
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
 
-[INPUT]
-    Name cpu
+pipeline:
+  inputs:
+    - name: cpu
 
-[OUTPUT]
-    Name  stdout
-    Match *
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
-Apply the configuration file:
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
+
+[INPUT]
+  Name cpu
+
+[OUTPUT]
+  Name  stdout
+  Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+Start Fluent Bit with the corresponding configuration chosen previously:
 
 ```shell
-bin/fluent-bit -c fluent-bit.conf
+# For YAML configuration.
+$ fluent-bit --config fluent-bit.yaml
+
+# For classic configuration.
+$ fluent-bit --config fluent-bit.conf
 ```
 
 Fluent Bit starts and generates output in your terminal:
 
 ```shell
-Fluent Bit v1.4.0
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
+...
 [2020/03/10 19:08:24] [ info] [engine] started
 [2020/03/10 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
-Use `curl` to gather information about the HTTP server. The following command sends
-the command output to the `jq` program, which outputs human-readable JSON data to the
-terminal.
+Use `curl` to gather information about the HTTP server. The following command sends the command output to the `jq` program, which outputs human-readable JSON data to the terminal.
 
-```bash
-curl -s http://127.0.0.1:2020 | jq
+```shell
+$ curl -s http://127.0.0.1:2020 | jq
 {
   "fluent-bit": {
     "version": "0.13.0",
@@ -106,7 +122,7 @@ Fluent Bit exposes the following endpoints for monitoring.
 | `/api/v1/health`             | Display the Fluent Bit health check result. | String |
 | `/api/v2/metrics`            | Display internal metrics per loaded plugin. | [cmetrics text format](https://github.com/fluent/cmetrics) |
 | `/api/v2/metrics/prometheus` | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
-| `/api/v2/reload             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
+| `/api/v2/reload`             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
 
 ### v1 metrics
 
@@ -114,21 +130,14 @@ The following descriptions apply to v1 metric endpoints.
 
 #### `/api/v1/metrics/prometheus` endpoint
 
-The following descriptions apply to metrics outputted in Prometheus format by the
-`/api/v1/metrics/prometheus` endpoint.
+The following descriptions apply to metrics outputted in Prometheus format by the `/api/v1/metrics/prometheus` endpoint.
 
 The following terms are key to understanding how Fluent Bit processes metrics:
 
-- **Record**: a single message collected from a source, such as a single long line in
-  a file.
-- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A
-  batch of records in a chunk are tracked together as a single unit.
+- **Record**: a single message collected from a source, such as a single long line in a file.
+- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
 
-  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but
-  the size can vary at runtime. Chunks are then sent to an output. An output plugin
-  instance can either successfully send the full chunk to the destination and mark it
-  as successful, or it can fail the chunk entirely if an unrecoverable error is
-  encountered, or it can ask for the chunk to be retried.
+  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
 
 | Metric name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
@@ -146,8 +155,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 
 #### `/api/v1/storage` endpoint
 
-The following descriptions apply to metrics outputted in JSON format by the
-`/api/v1/storage` endpoint.
+The following descriptions apply to metrics outputted in JSON format by the `/api/v1/storage` endpoint.
 
 | Metric Key                                    | Description   | Unit    |
 |-----------------------------------------------|---------------|---------|
@@ -171,21 +179,14 @@ The following descriptions apply to v2 metric endpoints.
 
 #### `/api/v2/metrics/prometheus` or `/api/v2/metrics` endpoint
 
-The following descriptions apply to metrics outputted in Prometheus format by the
-`/api/v2/metrics/prometheus` or `/api/v2/metrics` endpoints.
+The following descriptions apply to metrics outputted in Prometheus format by the `/api/v2/metrics/prometheus` or `/api/v2/metrics` endpoints.
 
 The following terms are key to understanding how Fluent Bit processes metrics:
 
-- **Record**: a single message collected from a source, such as a single long line in
-  a file.
-- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A
-  batch of records in a chunk are tracked together as a single unit.
+- **Record**: a single message collected from a source, such as a single long line in a file.
+- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
 
-  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but
-  the size can vary at runtime. Chunks are then sent to an output. An output plugin
-  instance can either successfully send the full chunk to the destination and mark it
-  as successful, or it can fail the chunk entirely if an unrecoverable error is
-  encountered, or it can ask for the chunk to be retried.
+  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can either successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
 
 | Metric Name                                | Labels                                                                  | Description | Type    | Unit    |
 |--------------------------------------------|-------------------------------------------------------------------------|-------------|---------|---------|
@@ -202,6 +203,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
+| `fluentbit_output_latency_seconds`      | input: the name of the input plugin instance, output: the name of the output plugin instance | End-to-end latency from chunk creation to successful delivery. Provides observability into chunk-level pipeline performance. | histogram | seconds |
 | `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 | `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
 | `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
@@ -209,8 +211,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 
 #### Storage layer
 
-The following are detailed descriptions for the metrics collected by the storage
-layer.
+The following are detailed descriptions for the metrics collected by the storage layer.
 
 | Metric Name                                 | Labels                       | Description   | Type    | Unit    |
 |---------------------------------------------|------------------------------|---------------|---------|---------|
@@ -231,17 +232,99 @@ layer.
 | `fluentbit_output_upstream_total_connections` | name: the name or alias for the output instance | The sum of the connection count of each output plugins. | gauge | bytes |
 | `fluentbit_output_upstream_busy_connections` | name: the name or alias for the output instance | The sum of the connection count in a busy state of each output plugins.                                                                                                  | gauge   | bytes   |
 
+### Output latency metric
+
+Introduced in Fluent Bit 4.0.6, the `fluentbit_output_latency_seconds` histogram metric captures end-to-end latency from the time a chunk is created by an input plugin until it's successfully delivered by an output plugin. This provides observability into chunk-level pipeline performance and helps identify slowdowns or bottlenecks in the output path.
+
+#### Bucket configuration
+
+The histogram uses the following default bucket boundaries, designed around the Fluent Bit typical flush interval of 1 second:
+
+```text
+0.5, 1.0, 1.5, 2.5, 5.0, 10.0, 20.0, 30.0, +Inf
+```
+
+These boundaries provide:
+
+- High resolution around 1&nbsp;s latency: Captures normal operation near the default flush interval.
+- Small backpressure detection: Identifies minor delays in the 1-2.5&nbsp;s range.
+- Bottleneck identification: Detects retry cycles, network stalls, or plugin bottlenecks in higher ranges.
+- Complete coverage**: The `+Inf` bucket ensures all latencies are captured.
+
+#### Example output
+
+When exposed through the Fluent Bit built-in HTTP server, the metric appears in Prometheus format:
+
+```text
+# HELP fluentbit_output_latency_seconds End-to-end latency in seconds
+# TYPE fluentbit_output_latency_seconds histogram
+fluentbit_output_latency_seconds_bucket{le="0.5",input="random.0",output="stdout.0"} 0
+fluentbit_output_latency_seconds_bucket{le="1.0",input="random.0",output="stdout.0"} 1
+fluentbit_output_latency_seconds_bucket{le="1.5",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="2.5",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="5.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="10.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="20.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="30.0",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_bucket{le="+Inf",input="random.0",output="stdout.0"} 6
+fluentbit_output_latency_seconds_sum{input="random.0",output="stdout.0"} 6.0015411376953125
+fluentbit_output_latency_seconds_count{input="random.0",output="stdout.0"} 6
+```
+
+#### Use cases
+
+**Performance monitoring**: Monitor overall pipeline health by tracking latency percentiles:
+
+```promql
+# 95th percentile latency
+histogram_quantile(0.95, rate(fluentbit_output_latency_seconds_bucket[5m]))
+
+# Average latency
+rate(fluentbit_output_latency_seconds_sum[5m]) / rate(fluentbit_output_latency_seconds_count[5m])
+```
+
+**Bottleneck detection**: Identify specific input/output pairs experiencing high latency:
+
+```promql
+# Outputs with highest average latency
+topk(5, rate(fluentbit_output_latency_seconds_sum[5m]) / rate(fluentbit_output_latency_seconds_count[5m]))
+```
+
+**SLA monitoring**: Track how many chunks are delivered within acceptable time bounds:
+
+```promql
+# Percentage of chunks delivered within 2 seconds
+(
+  rate(fluentbit_output_latency_seconds_bucket{le="2.0"}[5m]) /
+  rate(fluentbit_output_latency_seconds_count[5m])
+) * 100
+```
+
+**Alerting**: Create alerts for degraded pipeline performance:
+
+```yaml
+# Example Prometheus alerting rule
+- alert: FluentBitHighLatency
+  expr: histogram_quantile(0.95, rate(fluentbit_output_latency_seconds_bucket[5m])) > 5
+  for: 2m
+  labels:
+    severity: warning
+  annotations:
+    summary: "Fluent Bit pipeline experiencing high latency"
+    description: "95th percentile latency is {{ $value }}s for {{ $labels.input }} -> {{ $labels.output }}"
+```
+
 ### Uptime example
 
 Query the service uptime with the following command:
 
-```bash
+```shell
 curl -s http://127.0.0.1:2020/api/v1/uptime | jq
 ```
 
 The command prints a similar output like this:
 
-```javascript
+```json
 {
   "uptime_sec": 8950000,
   "uptime_hr": "Fluent Bit has been running:  103 days, 14 hours, 6 minutes and 40 seconds"
@@ -252,13 +335,13 @@ The command prints a similar output like this:
 
 Query internal metrics in JSON format with the following command:
 
-```bash
+```shell
 curl -s http://127.0.0.1:2020/api/v1/metrics | jq
 ```
 
 The command prints a similar output like this:
 
-```javascript
+```json
 {
   "input": {
     "cpu.0": {
@@ -282,7 +365,7 @@ The command prints a similar output like this:
 
 Query internal metrics in Prometheus Text 0.0.4 format:
 
-```bash
+```shell
 curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
 ```
 
@@ -300,34 +383,55 @@ fluentbit_output_retries_failed_total{name="stdout.0"} 0 1509150350542
 
 ### Configure aliases
 
-By default, configured plugins on runtime get an internal name in the format
-`_plugin_name.ID_`. For monitoring purposes, this can be confusing if many plugins of
-the same type were configured. To make a distinction each configured input or output
-section can get an _alias_ that will be used as the parent name for the metric.
+By default, configured plugins on runtime get an internal name in the format `_plugin_name.ID_`. For monitoring purposes, this can be confusing if many plugins of the same type were configured. To make a distinction each configured input or output section can get an _alias_ that will be used as the parent name for the metric.
 
-The following example sets an alias to the `INPUT` section of the configuration file,
-which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
+The following example sets an alias to the `INPUT` section of the configuration file, which is using the [CPU](../pipeline/inputs/cpu-metrics.md) input plugin:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
-[SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
+service:
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
 
-[INPUT]
-    Name  cpu
-    Alias server1_cpu
+pipeline:
+  inputs:
+    - name: cpu
+      alias: server1_cpu
 
-[OUTPUT]
-    Name  stdout
-    Alias raw_output
-    Match *
+  outputs:
+    - name: stdout
+      alias: raw_output
+      match: '*'
 ```
 
-When querying the related metrics, the aliases are returned instead of the plugin
-name:
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
-```javascript
+```text
+[SERVICE]
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
+
+[INPUT]
+  Name  cpu
+  Alias server1_cpu
+
+[OUTPUT]
+  Name  stdout
+  Alias raw_output
+  Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+When querying the related metrics, the aliases are returned instead of the plugin name:
+
+```json
 {
   "input": {
     "server1_cpu": {
@@ -351,26 +455,19 @@ name:
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=0b83cb05-4f52-4853-83cc-f4539b64044d" />
 
-You can create Grafana dashboards and alerts using Fluent Bit's exposed Prometheus
-style metrics.
+You can create Grafana dashboards and alerts using Fluent Bit exposed Prometheus style metrics.
 
-The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json)
-is heavily inspired by [Banzai Cloud](https://banzaicloud.com)'s
-[logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few
-key differences, such as the use of the `instance` label, stacked graphs, and a focus
-on Fluent Bit metrics. See
-[this blog post](https://www.robustperception.io/controlling-the-instance-label)
-for more information.
+The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://github.com/banzaicloud)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752) with a few key differences, such as the use of the `instance` label, stacked graphs, and a focus on Fluent Bit metrics. See [this blog post](https://www.robustperception.io/controlling-the-instance-label) for more information.
 
 ![dashboard](/.gitbook/assets/dashboard.png)
 
 ### Alerts
 
-Sample alerts are available [here](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
+Sample alerts [are available](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/alerts.yaml).
 
-## Health Check for Fluent Bit
+## Health check for Fluent Bit
 
-Fluent bit supports the following configurations to set up the health check.
+Fluent Bit supports the following configurations to set up the health check.
 
 | Configuration name     | Description | Default       |
 | ---------------------- | ------------| ------------- |
@@ -379,13 +476,9 @@ Fluent bit supports the following configurations to set up the health check.
 | `HC_Retry_Failure_Count` | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined `HC_Period`, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1` | `5` |
 | `HC_Period` | The time period by second to count the error and retry failure data point | `60` |
 
-Not every error log means an error to be counted. The error retry failures count only
-on specific errors, which is the example in configuration table description.
+Not every error log means an error to be counted. The error retry failures count only on specific errors, which is the example in configuration table description.
 
-Based on the `HC_Period` setting, if the real error number is over `HC_Errors_Count`,
-or retry failure is over `HC_Retry_Failure_Count`, Fluent Bit is considered
-unhealthy. The health endpoint returns an HTTP status `500` and an `error` message.
-Otherwise, the endpoint returns HTTP status `200` and an `ok` message.
+Based on the `HC_Period` setting, if the real error number is over `HC_Errors_Count`, or retry failure is over `HC_Retry_Failure_Count`, Fluent Bit is considered unhealthy. The health endpoint returns an HTTP status `500` and an `error` message. Otherwise, the endpoint returns HTTP status `200` and an `ok` message.
 
 The equation to calculate this behavior is:
 
@@ -395,32 +488,59 @@ health status = (HC_Errors_Count > HC_Errors_Count config value) OR
 the HC_Period interval
 ```
 
-The `HC_Errors_Count` and `HC_Retry_Failure_Count` only count for output plugins and
-count a sum for errors and retry failures from all running output plugins.
+The `HC_Errors_Count` and `HC_Retry_Failure_Count` only count for output plugins and count a sum for errors and retry failures from all running output plugins.
 
-The following configuration file example shows how to define these settings:
+The following configuration examples show how to define these settings:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
+service:
+  http_server: on
+  http_listen: 0.0.0.0
+  http_port: 2020
+  health_check: on
+  hc_errors_count: 5
+  hc_retry_failure_count: 5
+  hc_period: 5
+
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [SERVICE]
-    HTTP_Server  On
-    HTTP_Listen  0.0.0.0
-    HTTP_PORT    2020
-    Health_Check On
-    HC_Errors_Count 5
-    HC_Retry_Failure_Count 5
-    HC_Period 5
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_PORT    2020
+  Health_Check On
+  HC_Errors_Count 5
+  HC_Retry_Failure_Count 5
+  HC_Period 5
 
 [INPUT]
-    Name  cpu
+  Name  cpu
 
 [OUTPUT]
-    Name  stdout
-    Match *
+  Name  stdout
+  Match *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Use the following command to call the health endpoint:
 
-```bash
+```shell
 curl -s http://127.0.0.1:2020/api/v1/health
 ```
 
