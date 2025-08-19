@@ -24,4 +24,4 @@ Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information
 
 ## Route
 
-[Routing](../pipeline/router.md) is a core feature that lets you route your data through filters, and then to one or multiple destinations. The router relies on the concept of [tags](./key-concepts.md#tag) and [matching](/key-concepts.md#match) rules.
+[Routing](../pipeline/router.md) is a core feature that lets you route your data through filters, and then to one or multiple destinations. The router relies on the concept of [tags](./key-concepts.md#tag) and [matching](./key-concepts.md#match) rules.
