@@ -4,7 +4,7 @@ description: Create flexible routing rules
 
 # Router
 
-Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../key-concepts.md) and [Matching](../key-concepts.md) rules.
+Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../concepts/key-concepts.md) and [Matching](../key-concepts.md) rules.
 
 ```mermaid
 graph LR

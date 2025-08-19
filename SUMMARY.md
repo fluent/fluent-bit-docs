@@ -14,13 +14,7 @@
 
 * [Key concepts](concepts/key-concepts.md)
 * [Buffering](concepts/buffering.md)
-* [Data pipeline](concepts/data-pipeline/README.md)
-  * [Input](concepts/data-pipeline/input.md)
-  * [Parser](concepts/data-pipeline/parser.md)
-  * [Filter](concepts/data-pipeline/filter.md)
-  * [Buffer](concepts/data-pipeline/buffer.md)
-  * [Router](concepts/data-pipeline/router.md)
-  * [Output](concepts/data-pipeline/output.md)
+* [Data pipeline](concepts/data-pipeline.md)
 
 ## Installation
 
@@ -91,7 +85,7 @@
 ## Data pipeline
 
 * [Pipeline monitoring](pipeline/pipeline-monitoring.md)
-* [Inputs](pipeline/inputs/README.md)
+* [Inputs](pipeline/inputs.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O metrics](pipeline/inputs/disk-io-metrics.md)
@@ -136,7 +130,7 @@
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
-* [Parsers](pipeline/parsers/README.md)
+* [Parsers](pipeline/parsers.md)
   * [Configuring parsers](pipeline/parsers/configuring-parser.md)
   * [JSON](pipeline/parsers/json.md)
   * [Regular expression](pipeline/parsers/regular-expression.md)
@@ -152,7 +146,7 @@
   * [SQL](pipeline/processors/sql.md)
   * [Filters as processors](pipeline/processors/filters.md)
   * [Conditional processing](pipeline/processors/conditional-processing.md)
-* [Filters](pipeline/filters/README.md)
+* [Filters](pipeline/filters.md)
   * [AWS metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
   * [ECS metadata](pipeline/filters/ecs-metadata.md)
@@ -175,7 +169,8 @@
   * [Throttle](pipeline/filters/throttle.md)
   * [Type converter](pipeline/filters/type-converter.md)
   * [Wasm](pipeline/filters/wasm.md)
-* [Outputs](pipeline/outputs/README.md)
+* [Router](pipeline/router.md)
+* [Outputs](pipeline/outputs.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
