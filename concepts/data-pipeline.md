@@ -20,7 +20,7 @@ Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information
 
 ## Parsers
 
-[Parsers](../pipeline.parsers.md) convert unstructured data to structured data. Use a parser to set a structure to the incoming data by using input plugins as data is collected.
+[Parsers](../pipeline/parsers.md) convert unstructured data to structured data. Use a parser to set a structure to the incoming data by using input plugins as data is collected.
 
 ## Route
 
