@@ -6,7 +6,7 @@ This processor differs from the stream processor interface that runs after filte
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
 {% endhint %}
 

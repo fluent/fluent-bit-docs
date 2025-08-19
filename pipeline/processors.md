@@ -1,6 +1,6 @@
 # Processors
 
-Processors are components that modify, transform, or enhance data as it flows through Fluent Bit. Unlike [filters](../filters/README.md), processors are tightly coupled to inputs, which means they execute immediately and avoid creating a performance bottleneck.
+Processors are components that modify, transform, or enhance data as it flows through Fluent Bit. Unlike [filters](filters.md), processors are tightly coupled to inputs, which means they execute immediately and avoid creating a performance bottleneck.
 
 Additionally, filters can be implemented in a way that mimics the behavior of processors, but processors can't be implemented in a way that mimics filters.
 

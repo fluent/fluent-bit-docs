@@ -6,7 +6,7 @@ The _OpenTelemetry envelope_ processor transforms your data to be compatible wit
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
 {% endhint %}
 
@@ -178,4 +178,5 @@ The collector JSON output will resemble the following:
 }
 ```
 
-For more details about further processing, read the [content modifier](../processors/content-modifier.md) processor documentation.
+For more details about further processing, read the [content
+modifier](../processors/content-modifier.md) processor documentation.

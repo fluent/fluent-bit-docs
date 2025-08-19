@@ -6,7 +6,7 @@ Similar to filters, this processor presents an enriching/modifying mechanism to 
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
 {% endhint %}
 
@@ -36,7 +36,7 @@ pipeline:
         metrics:
           - name: labels
             update: name fluentbit
-  
+
   outputs:
     - name : stdout
       match: '*'
@@ -86,7 +86,7 @@ pipeline:
         metrics:
           - name: labels
             upsert: name fluentbit
-  
+
   outputs:
     - name : stdout
       match: '*'
@@ -111,7 +111,7 @@ pipeline:
         metrics:
           - name: labels
             delete: name
-  
+
   outputs:
     - name : stdout
       match: '*'
