@@ -14,7 +14,6 @@ The Process Exporter Metrics plugin implements collecting of the various metrics
 {% hint style="info" %}
 
 All metrics including those collected with this plugin flow through a separate pipeline from logs and current filters don't operate on top of metrics. This plugin is only supported on Linux based operating systems as it uses the `proc` filesystem to access the relevant metrics. MacOS doesn't have the `proc` filesystem so this plugin won't work for it.
-
 {% endhint %}
 
 ## Configuration
@@ -58,7 +57,7 @@ In the following configuration file, the input plugin `process_exporter_metrics`
 # Process Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
-# them through a Prometheus HTTP end-point.
+# them through a Prometheus HTTP endpoint.
 #
 # After starting the service try it with:
 #
@@ -88,7 +87,7 @@ pipeline:
 # Process Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
-# them through a Prometheus HTTP end-point.
+# them through a Prometheus HTTP endpoint.
 #
 # After starting the service try it with:
 #
