@@ -26,19 +26,19 @@ Configuring Fluent Bit with YAML introduces the following root-level sections:
 
 To access detailed configuration guides for each section, use the following links:
 
-- [Service Section documentation](service-section.md)
+- [Service Section documentation](./yaml/service-section.md)
   - Overview of global settings, configuration options, and examples.
-- [Parsers Section documentation](parsers-section.md)
+- [Parsers Section documentation](./yaml/parsers-section.md)
   - Detailed guide on defining parsers and supported formats.
-- [Multiline Parsers Section documentation](multiline-parsers-section.md)
+- [Multiline Parsers Section documentation](./yaml/multiline-parsers-section.md)
   - Explanation of multiline parsing configuration.
-- [Pipeline Section documentation](pipeline-section.md)
+- [Pipeline Section documentation](./yaml/pipeline-section.md)
   - Details on setting up pipelines and using processors.
-- [Plugins Section documentation](plugins-section.md)
+- [Plugins Section documentation](./yaml/plugins-section.md)
   - How to load external plugins.
-- [Upstream Servers Section documentation](upstream-servers-section.md)
+- [Upstream Servers Section documentation](./yaml/upstream-servers-section.md)
   - Guide on setting up and using upstream nodes with supported plugins.
-- [Environment Variables Section documentation](environment-variables-section.md)
+- [Environment Variables Section documentation](./yaml/environment-variables-section.md)
   - Information on setting environment variables and their scope within Fluent Bit.
-- [Includes Section documentation](includes-section.md)
+- [Includes Section documentation](./yaml/includes-section.md)
   - Description on how to include external YAML files.

@@ -14,16 +14,16 @@ Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml
 
 Fluent Bit offers the following processors:
 
-- [Content modifier](content-modifier.md): Manipulate the content, metadata, and attributes of logs and traces.
-- [Labels](labels.md): Add, update, or delete metric labels.
-- [Metrics selector](metrics-selector.md): Choose which metrics to keep or discard.
-- [OpenTelemetry envelope](opentelemetry-envelope.md): Transform logs into an OpenTelemetry-compatible format.
-- [Sampling](sampling.md): Apply head or tail sampling to incoming traces.
-- [SQL](sql.md): Use SQL queries to extract log content.
+- [Content modifier](./processors/content-modifier.md): Manipulate the content, metadata, and attributes of logs and traces.
+- [Labels](./processors/labels.md): Add, update, or delete metric labels.
+- [Metrics selector](./processors/metrics-selector.md): Choose which metrics to keep or discard.
+- [OpenTelemetry envelope](./processors/opentelemetry-envelope.md): Transform logs into an OpenTelemetry-compatible format.
+- [Sampling](./processors/sampling.md): Apply head or tail sampling to incoming traces.
+- [SQL](./processors/sql.md): Use SQL queries to extract log content.
 - [Filters as processors](filters.md): Use filters as processors.
 
 ## Features
 
 Compatible processors include the following features:
 
-- [Conditional processing](conditional-processing.md): Selectively apply processors to logs based on the value of fields that those logs contain.
+- [Conditional processing](./processors/conditional-processing.md): Selectively apply processors to logs based on the value of fields that those logs contain.
