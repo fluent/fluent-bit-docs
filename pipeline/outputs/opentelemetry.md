@@ -47,9 +47,9 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-# Dummy Logs & traces with Node Exporter Metrics export using OpenTelemetry output plugin
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
 # -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs & traces and delivers
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
 # them through the OpenTelemetry plugin to a local collector :
 #
 service:
@@ -95,9 +95,9 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-# Dummy Logs & traces with Node Exporter Metrics export using OpenTelemetry output plugin
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
 # -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs & traces and delivers
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
 # them through the OpenTelemetry plugin to a local collector :
 #
 [SERVICE]

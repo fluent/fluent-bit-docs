@@ -4,8 +4,7 @@ description: Send logs to Amazon OpenSearch Service
 
 # OpenSearch
 
-The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database.
-The following instructions assume you have an operational OpenSearch service running in your environment.
+The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database. The following instructions assume you have an operational OpenSearch service running in your environment.
 
 ## Configuration parameters
 
@@ -54,8 +53,7 @@ The parameters `index` and `type` can be confusing if you are new to OpenSearch.
 
 ### TLS / SSL
 
-The OpenSearch output plugin supports TLS/SSL.
-For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The OpenSearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ### `write_operation`
 
@@ -152,7 +150,7 @@ becomes
 {"cpu0_p_cpu"=>17.000000}
 ```
 
-## FAQ
+## Frequently asked questions
 
 ### `Logstash_Prefix_Key`
 
@@ -248,7 +246,7 @@ Without this you will see errors like:
 {"error":{"root_cause":[{"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"}],"type":"illegal_argument_exception","reason":"Action/metadata line [1] contains an unknown parameter [_type]"},"status":400}
 ```
 
-### Fluent-Bit and Amazon OpenSearch serverless
+### Fluent Bit and Amazon OpenSearch serverless
 
 Amazon OpenSearch Serverless is an offering that eliminates your need to manage OpenSearch clusters. All existing Fluent Bit OpenSearch output plugin options work with OpenSearch Serverless. For Fluent Bit, you must specify the service name as `aoss` (Amazon OpenSearch Serverless) when you enable `AWS_Auth`:
 

@@ -12,7 +12,7 @@ There are no additional requirements to execute Wasm plugins.
 
 #### Build `flb-wamrc` (optional)
 
-`flb-wamrc` is a `flb`-prefixed AOT (ahead of time) compiler that's provided from [`wasm-micro-runtime`](https://github.com/bytecodealliance/wasm-micro-runtime).
+`flb-wamrc` is a `flb`-prefixed Ahead of Time (AOT) compiler that's provided from [`wasm-micro-runtime`](https://github.com/bytecodealliance/wasm-micro-runtime).
 
 For `flb-wamrc` support, you must install the LLVM infrastructure and some additional libraries (`libmlir`, `libPolly`, `libedit`, and `libpfm`). For example:
 
@@ -22,13 +22,13 @@ For `flb-wamrc` support, you must install the LLVM infrastructure and some addit
 
 ### For Wasm programs
 
-Currently, Fluent Bit supports the following Wasm tool chains:
+Fluent Bit supports the following Wasm tool chains:
 
-* Rust on `wasm32-unknown-unknown`
-  * rustc 1.62.1 (e092d0b6b 2022-07-16) or later
-* [TinyGo](https://github.com/tinygo-org/tinygo) on `wasm32-wasi`
-  * v0.24.0 or later
-* [WASI SDK](https://github.com/WebAssembly/wasi-sdk) 13 or later.
+- Rust on `wasm32-unknown-unknown`
+  - rustc 1.62.1 (`e092d0b6b` 2022-07-16) or later
+- [TinyGo](https://github.com/tinygo-org/tinygo) on `wasm32-wasi`
+  - v0.24.0 or later
+- [WASI SDK](https://github.com/WebAssembly/wasi-sdk) 13 or later.
 
 ## Get started
 
@@ -44,8 +44,13 @@ To support AOT-compiled Wasm execution as filter plugins, build Fluent Bit with 
 
 Once compiled, you can see new plugins that handle `wasm`, for example:
 
+```shell
+bin/fluent-bit -h
+```
+
+Which returns results similar to:
+
 ```text
-$ bin/fluent-bit -h
 Usage: fluent-bit [OPTION]
 Inputs
   # ... other input plugin stuffs
@@ -60,9 +65,9 @@ Filters
 
 The Fluent Bit Wasm filter assumes C ABI, also known as `wasm32-unknown-unknown` on Rust target and `wasm32-wasi` on TinyGo target.
 
-### To Install Additional Components
+### Install additional components
 
-TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-unknown-unknown` target, you must install `wasm32-unknown-unknown` by using [rustup](https://rustup.rs/). Then, install the target components as follows:
+TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-unknown-unknown` target, you must install `wasm32-unknown-unknown` by using [`rustup`](https://rustup.rs/). Then, install the target components as follows:
 
 ```text
 rustup target add wasm32-unknown-unknown
@@ -116,7 +121,7 @@ pipeline:
         function_name: super_awesome_filter
         # Note: run Fluent Bit from the 'wasm_path' location.
         accessible_paths: /path/to/fluent-bit
-        
+
     outputs:
         - name: stdout
           match: '*'
@@ -152,7 +157,8 @@ For example, one of the sample [Rust Wasm filters](https://github.com/fluent/flu
 [0] dummy.local: [1666270589.270348000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:29.270348000 +0000"}]
 [0] dummy.local: [1666270590.271107000, {"lang"=>"Rust", "message"=>"dummy", "original"=>"{"message":"dummy"}", "tag"=>"dummy.local", "time"=>"2022-10-20T12:56:30.271107000 +0000"}]
 ```
-Another example of a Rust Wasm filter is the [flb_filter_iis](https://github.com/kenriortega/flb_filter_iis) filter.
+
+Another example of a Rust Wasm filter is the [`flb_filter_iis`](https://github.com/kenriortega/flb_filter_iis) filter.
 
 This filter takes the [Internet Information Services (IIS)](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis) [w3c logs](https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis#select-w3c-fields-to-log) (with some custom modifications) and transforms the raw string into a standard Fluent Bit JSON structured record.
 
@@ -172,7 +178,7 @@ pipeline:
         wasm_path: /plugins/flb_filter_iis_wasm.wasm
         function_name: flb_filter_log_iis_w3c_custom
         accessible_paths: .
-        
+
     outputs:
         - name: stdout
           match: 'iis.*'
@@ -213,6 +219,7 @@ The output after the filter logic will be:
 ```
 
 This filter approach offers several advantages inherent to programming languages. For example:
+
 - It can be extended by adding type conversion to fields, such as `sc_bytes`, `cs_bytes`, and `time_taken`. You can use this to validate data results.
 - It allows for the use of conditions to apply more descriptive filters. For example, you can get only all logs that contain status codes higher than `4xx` or `5xx`.
 - It can be used to define allow lists and deny lists using a data structure array or a file to store predefined IP addresses.
@@ -254,6 +261,7 @@ AOT compiling should generate CPU architecture-dependent objects. If you want to
 
 ### Further examples
 
-* [C filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_c)
-* [Rust Filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_rust)
-* [TinyGo filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_go)
+- [C filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_c)
+- [Rust Filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_rust)
+- [TinyGo
+  filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_go)

@@ -65,7 +65,7 @@ will become:
 
 The last pane of the window was overwritten and 1 message was dropped.
 
-### Interval versus Window size
+### `Interval` versus `Window` size
 
 You might notice it's possible to configure the `Interval` of the `Window` shift. It's counterintuitive, but there is a difference between the two previous examples:
 
@@ -112,30 +112,30 @@ It's suggested to use a configuration file.
 The following command will load the Tail plugin and read the content of the `lines.txt` file. Then, the Throttle filter will apply a rate limit and only pass the records which are read below the `rate`:
 
 ```shell
-./fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
+fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
-    inputs:
-        - name: tail
-          path: lines.txt
-    
-    filters:
-        - name: throttle
-          match: '*'
-          rate: 1000
-          window: 300
-          interval: 1s
-    
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: tail
+      path: lines.txt
+
+  filters:
+    - name: throttle
+      match: '*'
+      rate: 1000
+      window: 300
+      interval: 1s
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -143,19 +143,19 @@ pipeline:
 
 ```text
 [INPUT]
-    Name   tail
-    Path   lines.txt
+  Name   tail
+  Path   lines.txt
 
 [FILTER]
-    Name     throttle
-    Match    *
-    Rate     1000
-    Window   300
-    Interval 1s
+  Name     throttle
+  Match    *
+  Rate     1000
+  Window   300
+  Interval 1s
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}

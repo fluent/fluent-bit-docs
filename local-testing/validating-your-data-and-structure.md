@@ -37,7 +37,7 @@ record --> stdout
 
 Add data validation between each step to ensure your data structure is correct.
 
-This example uses the [Expect](../pipeline/filters/expect) filter.
+This example uses the [Expect](../pipeline/filters/expect.md) filter.
 
 ```mermaid
 flowchart LR
@@ -72,8 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the 
-keys `color` and `label` exist.
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the  keys `color` and `label` exist.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -97,7 +96,7 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
@@ -165,7 +164,7 @@ The following is the Fluent Bit classic parsers file:
 {% endtab %}
 {% endtabs %}
 
-If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail) input (`parser json`), the Expect filter triggers the `exit` action.
+If the JSON parser fails or is missing in the [Tail](../pipeline/inputs/tail.md) input (`parser json`), the Expect filter triggers the `exit` action.
 
 To extend the pipeline, add a Grep filter to match records that map `label` containing a key called `name` with value the `abc`, and add an Expect filter to re-validate that condition:
 
@@ -191,16 +190,16 @@ pipeline:
     filters:
         - name: expect
           match: '*'
-          key_exists: 
+          key_exists:
             - color
             - $label['name']
           action: exit
-          
+
         # Match records that only contains map 'label' with key 'name' = 'abc'
         - name: grep
           match: '*'
           regex: "$label['name'] ^abc$"
-          
+
         # Check that every record contains 'label' with a non-null value
         - name: expect
           match: '*'

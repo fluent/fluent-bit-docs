@@ -10,6 +10,7 @@ autoscaler
 autoscaling
 Avro
 backoff
+backporting
 backpressure
 backtrace
 Bazel
@@ -18,8 +19,10 @@ Blackhole
 blocklist
 boolean
 Buildkite
+Buildroot
 cAdvisor
 Calyptia
+Chronosphere
 chronotf
 clickstreams
 CloudWatch
@@ -31,6 +34,7 @@ Config
 Coralogix
 coroutine
 coroutines
+cron
 Crowdstrike
 CRDs
 DaemonSet
@@ -40,7 +44,6 @@ Datagen
 datagram
 datagrams
 datapoint
-datapoints
 Datastream
 declaratively
 deduplicate
@@ -51,7 +54,7 @@ deprovisioned
 deprovisioning
 deprovisions
 Devo
-Distroless
+distroless
 DogStatsD
 downsample
 downsampled
@@ -71,6 +74,7 @@ Enum
 Eventhouse
 Exabeam
 Fargate
+Filebeats
 Firehose
 FluentBit
 Fluentd
@@ -87,8 +91,10 @@ grpc_code
 grpc_method
 grpc_service
 gzip
+gzipped
 HashiCorp
 HEC
+Homebrew
 hostname
 Hostname
 Ingester
@@ -114,7 +120,10 @@ Lua
 Lucene
 macOS
 Mandiant
+markdownlint
 matchers
+metacharacter
+Metricbeat
 Minishift
 minikube
 MTTx
@@ -139,6 +148,7 @@ PagerDuty
 performant
 persistable
 Podman
+popen
 Postgres
 PostgreSQL
 PowerShell
@@ -192,6 +202,8 @@ stdout
 strftime
 subcommand
 subcommands
+subkey
+subkeys
 subquery
 subrecord
 substring
@@ -205,6 +217,7 @@ templated
 temporality
 Tensorflow
 Terraform
+textfile
 Thanos
 Timeshift
 tolerations
@@ -220,6 +233,7 @@ unnests
 unsort
 upsert
 upserts
+untrusted
 UUIDs
 Vectra
 Vercel
@@ -229,6 +243,9 @@ Vivo
 VMs
 Wasm
 Wavefront
+winevtlog
+winlog
+Winlogbeat
 Worldmap
 Yocto
 Zipkin

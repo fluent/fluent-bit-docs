@@ -2,9 +2,9 @@
 description: A plugin based on Prometheus Windows Exporter to collect system and host level metrics
 ---
 
-# Windows Exporter metrics
+# Windows exporter metrics
 
-[Prometheus Windows Exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from Microsoft Windows, such as CPU, Disk, Network, and Process statistics. Fluent Bit 1.9.0 and later includes the Windows Exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
+[Prometheus Windows exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from Microsoft Windows, such as CPU, Disk, Network, and Process statistics. Fluent Bit 1.9.0 and later includes the Windows Exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
 The initial release of Windows Exporter metrics contains a single collector available from Prometheus Windows Exporter.
 
@@ -84,8 +84,8 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
 # $ curl http://127.0.0.1:2021/metrics
 #
 service:
-   flush: 1
-   log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
   inputs:

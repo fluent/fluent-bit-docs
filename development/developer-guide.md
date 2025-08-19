@@ -1,4 +1,4 @@
-# Developer guide for beginners on contributing to Fluent Bit
+# Contribution guide for beginners
 
 If you have some knowledge of C, this guide should help you understand how to make code changes to Fluent Bit.
 
@@ -14,10 +14,10 @@ For cryptographic support, Fluent Bit uses the system installed version of OpenS
 
 When you write Fluent Bit code, you'll use the Fluent Bit versions of the standard C functions for working with memory:
 
-* [`flb_malloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `malloc`, allocates memory.
-* [`flb_calloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `calloc`, allocates memory and initializes it to zero.
-* [`flb_realloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `realloc`.
-* [`flb_free()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `free`, releases allocated memory.
+- [`flb_malloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `malloc`, allocates memory.
+- [`flb_calloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `calloc`, allocates memory and initializes it to zero.
+- [`flb_realloc()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `realloc`.
+- [`flb_free()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_mem.h): Equivalent to `free`, releases allocated memory.
 
 {% hint style="info" %}
 Many types have specialized create and destroy functions, like [`flb_sds_create()` and `flb_sds_destroy()`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_sds.h).
@@ -33,9 +33,9 @@ In general, you should use SDS strings in any string processing code. SDS string
 
 Fluent Bit has its own network connection library. The key types and functions are defined in the following header files:
 
-* [`flb_upstream.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_upstream.h)
-* [`flb_http_client.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_http_client.h)
-* [`flb_io.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_io.h)
+- [`flb_upstream.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_upstream.h)
+- [`flb_http_client.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_http_client.h)
+- [`flb_io.h`](https://github.com/fluent/fluent-bit/blob/master/include/fluent-bit/flb_io.h)
 
 The following code demonstrates an HTTP request in Fluent Bit:
 
@@ -318,7 +318,8 @@ The [stdout plugin](https://github.com/fluent/fluent-bit/tree/master/plugins/out
 Fluent Bit provides a standalone environment for development. Developers who use different operating systems or distributions can develop on a basic, common stack. The development environment provides the required libraries and tools for you.
 
 Development environments are provided for:
-- [Devcontainer](https://github.com/fluent/fluent-bit/blob/master/DEVELOPER_GUIDE.md#devcontainer)
+
+- [Development container](https://github.com/fluent/fluent-bit/blob/master/DEVELOPER_GUIDE.md#devcontainer)
 - [Vagrant](https://github.com/fluent/fluent-bit/blob/master/DEVELOPER_GUIDE.md#vagrant).
 
 ## Testing

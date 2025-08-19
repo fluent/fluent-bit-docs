@@ -6,7 +6,7 @@ Additionally, filters can be implemented in a way that mimics the behavior of pr
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/configuration-file.md) support processors.
 
 {% endhint %}
 

@@ -1,6 +1,6 @@
-# Windows Event Log
+# Windows Event logs (winlog)
 
-The _Windows Event Log_ (`winlog`) input plugin lets you read the Windows Event Log.
+The _Windows Event logs_ (`winlog`) input plugin lets you read Windows Event logs.
 
 ## Configuration parameters
 

@@ -1,8 +1,6 @@
-# Type Converter
+# Type converter
 
-The _Type Converter_ filter plugin converts data types and appends new key-value pairs.
-
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
+The _Type converter_ filter plugin converts data types and appends new key-value pairs.
 
 You can use this filter in combination with plugins which expect incoming string value. For example, [Grep](grep.md) and [Modify](modify.md).
 
@@ -42,20 +40,20 @@ The plugin outputs `uint` values and `filter_type_converter` converts them into 
 
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-    
-    filters:
-        - name: type_converter
-          match: '*'
-          uint_key:
-            - Mem.total Mem.total_str string
-            - Mem.used  Mem.used_str  string
-            - Mem.free  Mem.free_str  string
-    
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: mem
+
+  filters:
+    - name: type_converter
+      match: '*'
+      uint_key:
+        - Mem.total Mem.total_str string
+        - Mem.used  Mem.used_str  string
+        - Mem.free  Mem.free_str  string
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -63,18 +61,18 @@ pipeline:
 
 ```text
 [INPUT]
-    Name mem
+  Name mem
 
 [FILTER]
-    Name type_converter
-    Match *
-    uint_key Mem.total Mem.total_str string
-    uint_key Mem.used  Mem.used_str  string
-    uint_key Mem.free  Mem.free_str  string
+  Name               type_converter
+  Match              *
+  uint_key Mem.total Mem.total_str string
+  uint_key Mem.used  Mem.used_str  string
+  uint_key Mem.free  Mem.free_str  string
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -83,7 +81,7 @@ pipeline:
 You can also run the filter from command line.
 
 ```shell
-./fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
+fluent-bit -i mem -o stdout -F type_converter -p 'uint_key=Mem.total Mem.total_str string' -p 'uint_key=Mem.used Mem.used_str string' -p 'uint_key=Mem.free Mem.free_str string' -m '*'
 ```
 
 The output will be

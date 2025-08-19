@@ -1,7 +1,6 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers.
-This plugin implements the input service to listen for Forward messages.
+_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
 ## Configuration parameters
 
@@ -52,16 +51,16 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: forward
-          listen: 0.0.0.0
-          port: 24224
-          buffer_chunk_size: 1M
-          buffer_max_size: 6M
-          
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+      buffer_chunk_size: 1M
+      buffer_max_size: 6M
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -69,27 +68,25 @@ pipeline:
 
 ```text
 [INPUT]
-    Name              forward
-    Listen            0.0.0.0
-    Port              24224
-    Buffer_Chunk_Size 1M
-    Buffer_Max_Size   6M
+  Name              forward
+  Listen            0.0.0.0
+  Port              24224
+  Buffer_Chunk_Size 1M
+  Buffer_Max_Size   6M
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
 {% endtabs %}
 
-## Fluent Bit and Secure Forward Setup
+## Fluent Bit and secure forward setup
 
 In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
 
-For using user-password authentication, specify `security.users` in at least a one-pair.
-For using shared key, specify `shared_key` in both of forward output and forward input.
-`self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
+For using user-password authentication, specify `security.users` in at least a one-pair. For using shared key, specify `shared_key` in both of forward output and forward input. `self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
 
 {% tabs %}
 {% tab title="fluent-bit-secure-forward.yaml" %}
@@ -105,7 +102,7 @@ pipeline:
       security.users: fluentbit changeme
       shared_key: secret
       self_hostname: flb.server.local
-      
+
   outputs:
     - name: stdout
       match: '*'

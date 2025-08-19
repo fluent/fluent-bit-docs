@@ -4,7 +4,7 @@ description: Send logs and metrics to Amazon CloudWatch
 
 # Amazon CloudWatch
 
-![](<../../.gitbook/assets/image (3) (2) (2) (4) (4) (3) (1).png>)
+![Amazon CloudWatch](<../../.gitbook/assets/image (3) (2) (2) (4) (4) (3) (1).png>)
 
 The _Amazon CloudWatch_ output plugin lets you ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided using [Embedded Metric Format (EMF)](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
 
@@ -29,7 +29,7 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `log_group_class`     | Optional. Specifies the log storage class for new log groups when `auto_create_group` is set to `true`. You can't modify the storage class of existing log groups. Allowed values: `STANDARD`, `INFREQUENT_ACCESS`. Default: `STANDARD`.       |
 | `log_retention_days`  | If set to a number greater than zero, and newly create log group's retention policy is set to this many days. Allowed values: [`1`, `3`, `5`, `7`, `14`, `30`, `60`, `90`, `120`, `150`, `180`, `365`, `400`, `545`, `731`, `1827`, `3653`] |
 | `endpoint`              | Specify a custom endpoint for the CloudWatch Logs API.               |
-| `metric_namespace`     | An optional string representing the CloudWatch namespace for the metrics. See the [Metrics tutorial](metrics-tutorial) section for a full configuration. |
+| `metric_namespace`     | An optional string representing the CloudWatch namespace for the metrics. See the [Metrics tutorial](#metrics-tutorial) section for a full configuration. |
 | `metric_dimensions`    | A list of lists containing the dimension keys that will be applied to all metrics. The values within a dimension set must be members on the root-node. For more information about dimensions, see [Dimension](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Dimension.html) and [Dimensions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension). In the Fluent Bit configurations, `metric_dimensions` is a comma and semicolon separated string. If you have only one list of dimensions, put the values as a comma separated string. If you want to put list of lists, use the list as semicolon separated strings. For example, if you set the value as `dimension_1,dimension_2;dimension_3`, Fluent Bit converts it as `[[dimension_1, dimension_2],[dimension_3]]`. |
 | `sts_endpoint`         | Specify a custom STS endpoint for the AWS STS API.  |
 | `profile`               | Option to specify an AWS Profile for credentials. Defaults to `default`.              |

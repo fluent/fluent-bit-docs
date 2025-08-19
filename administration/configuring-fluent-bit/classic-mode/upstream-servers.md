@@ -1,6 +1,6 @@
 # Upstream servers
 
-Fluent Bit [output plugins](../../pipeline/outputs/) aim to connect to external services to deliver logs over the network. Being able to connect to one node (host) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The `Upstream` feature provides this capability.
+Fluent Bit [output plugins](../../../pipeline/outputs/) aim to connect to external services to deliver logs over the network. Being able to connect to one node (host) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The `Upstream` feature provides this capability.
 
 An `Upstream` defines a set of nodes that will be targeted by an output plugin, by the nature of the implementation an output plugin must support the `Upstream` feature. The following plugin has `Upstream` support:
 
@@ -37,27 +37,27 @@ The following example defines an `Upstream` called forward-balancing which aims 
 - node-2: connects to 127.0.0.1:44000
 - node-3: connects to 127.0.0.1:45000 using TLS without verification. It also defines a specific configuration option required by Forward output called `shared_key`.
 
-```python
+```text
 [UPSTREAM]
-    name       forward-balancing
+  name       forward-balancing
 
 [NODE]
-    name       node-1
-    host       127.0.0.1
-    port       43000
+  name       node-1
+  host       127.0.0.1
+  port       43000
 
 [NODE]
-    name       node-2
-    host       127.0.0.1
-    port       44000
+  name       node-2
+  host       127.0.0.1
+  port       44000
 
 [NODE]
-    name       node-3
-    host       127.0.0.1
-    port       45000
-    tls        on
-    tls.verify off
-    shared_key secret
+  name       node-3
+  host       127.0.0.1
+  port       45000
+  tls        on
+  tls.verify off
+  shared_key secret
 ```
 
 Every `Upstream` definition must exists in its own configuration file in the file system. Adding multiple `Upstream` configurations in the same file or different files isn't allowed.

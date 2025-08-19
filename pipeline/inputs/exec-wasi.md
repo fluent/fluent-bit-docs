@@ -1,6 +1,6 @@
-# Exec Wasi
+# Exec WASI
 
-The _Exec Wasi_ input plugin lets you execute Wasm programs that are WASI targets like external programs and collect event logs from there.
+The _Exec WASI_ input plugin lets you execute Wasm programs that are WASI targets like external programs and collect event logs from there.
 
 ## Configuration parameters
 
@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 |:-------------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
 | `WASI_Path`        | The location of a Wasm program file.                                                                                                         |
 | `Parser`           | Specify the name of a parser to interpret the entry as a structured message.                                                                 |
-| `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from WASM programs.                                                             |
+| `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from Wasm programs.                                                             |
 | `Interval_Sec`     | Polling interval (seconds).                                                                                                                  |
 | `Interval_NSec`    | Polling interval (nanosecond).                                                                                                               |
 | `Wasm_Heap_Size`   | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.  |
@@ -23,11 +23,11 @@ The plugin supports the following configuration parameters:
 
 Here is a configuration example.
 
-`in_exec_wasi` can handle parsers. To retrieve from structured data from a WASM program, you must create a `parser.conf`:
+`in_exec_wasi` can handle parsers. To retrieve from structured data from a Wasm program, you must create a `parser.conf`:
 
 The `Time_Format` should be aligned for the format of your using timestamp.
 
-This example assumes the WASM program writes JSON style strings to `stdout`.
+This example assumes the Wasm program writes JSON style strings to `stdout`.
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -68,7 +68,7 @@ service:
     http_server: off
     http_listen: 0.0.0.0
     http_port: 2020
-    
+
 pipeline:
     inputs:
       - name: exec_wasi
@@ -76,7 +76,7 @@ pipeline:
         wasi_path: /path/to/wasi/program.wasm
         # Note: run from the 'wasi_path' location.
         accessible_paths: /path/to/accessible
-        
+
     outputs:
         - name: stdout
           match: '*'

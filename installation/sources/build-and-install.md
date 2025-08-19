@@ -12,22 +12,19 @@
 
 ## Prepare environment
 
-If you already know how CMake works, you can skip this section and review the
-available [build options](#general-options).
+If you already know how CMake works, you can skip this section and review the available [build options](#general-options).
 
-The following steps explain how to build and install the project with the default
-options.
+The following steps explain how to build and install the project with the default options.
 
 1. Change to the `build/` directory inside the Fluent Bit sources:
 
-   ```bash
+   ```shell
    cd build/
    ```
 
-1. Let [CMake](http://cmake.org) configure the project specifying where the root
-   path is located:
+1. Let [CMake](http://cmake.org) configure the project specifying where the root path is located:
 
-   ```bash
+   ```shell
    cmake ../
    ```
 
@@ -53,7 +50,7 @@ options.
 
 1. Start the compilation process using the `make` command:
 
-   ```bash
+   ```shell
    make
    ```
 
@@ -80,7 +77,7 @@ options.
 
 1. To continue installing the binary on the system, use `make install`:
 
-   ```bash
+   ```shell
    make install
    ```
 
@@ -94,38 +91,38 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| `FLB_ALL` | Enable all features available | _No_ |
-| `FLB_JEMALLOC` | Use Jemalloc as default memory allocator | _No_ |
-| `FLB_TLS` | Build with SSL/TLS support | _Yes_ |
-| `FLB_BINARY` | Build executable | _Yes_ |
-| `FLB_EXAMPLES` | Build examples | _Yes_ |
-| `FLB_SHARED_LIB` | Build shared library | _Yes_ |
-| `FLB_MTRACE` | Enable mtrace support | _No_ |
-| `FLB_INOTIFY` | Enable Inotify support | _Yes_ |
-| `FLB_POSIX_TLS` | Force POSIX thread storage | _No_ |
-| `FLB_SQLDB` | Enable SQL embedded database support | _No_ |
-| `FLB_HTTP_SERVER` | Enable HTTP Server | _No_ |
-| `FLB_LUAJIT` | Enable Lua scripting support | _Yes_ |
-| `FLB_RECORD_ACCESSOR` | Enable record accessor | _Yes_ |
-| `FLB_SIGNV4` | Enable AWS Signv4 support | _Yes_ |
+| `FLB_ALL` | Enable all features available | `No` |
+| `FLB_JEMALLOC` | Use Jemalloc as default memory allocator | `No` |
+| `FLB_TLS` | Build with SSL/TLS support | `Yes` |
+| `FLB_BINARY` | Build executable | `Yes` |
+| `FLB_EXAMPLES` | Build examples | `Yes` |
+| `FLB_SHARED_LIB` | Build shared library | `Yes` |
+| `FLB_MTRACE` | Enable `mtrace` support | `No` |
+| `FLB_INOTIFY` | Enable Inotify support | `Yes` |
+| `FLB_POSIX_TLS` | Force POSIX thread storage | `No` |
+| `FLB_SQLDB` | Enable SQL embedded database support | `No` |
+| `FLB_HTTP_SERVER` | Enable HTTP Server | `No` |
+| `FLB_LUAJIT` | Enable Lua scripting support | `Yes` |
+| `FLB_RECORD_ACCESSOR` | Enable record accessor | `Yes` |
+| `FLB_SIGNV4` | Enable AWS Signv4 support | `Yes` |
 | `FLB_STATIC_CONF` | Build binary using static configuration files. The value of this option must be a directory containing configuration files. |  |
-| `FLB_STREAM_PROCESSOR` | Enable Stream Processor | _Yes_ |
-| `FLB_CONFIG_YAML` | Enable YAML configuration support | _Yes_ |
-| `FLB_WASM` | Build with WASM runtime support | _Yes_ |
-| `FLB_WAMRC` | Build with WASM AOT compiler executable | _No_ |
+| `FLB_STREAM_PROCESSOR` | Enable Stream Processor | `Yes` |
+| `FLB_CONFIG_YAML` | Enable YAML configuration support | `Yes` |
+| `FLB_WASM` | Build with Wasm runtime support | `Yes` |
+| `FLB_WAMRC` | Build with Wasm AOT compiler executable | `No` |
 
 ### Development options
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| `FLB_DEBUG` | Build binaries with debug symbols | _No_ |
-| `FLB_VALGRIND` | Enable Valgrind support | _No_ |
-| `FLB_TRACE` | Enable trace mode | _No_ |
-| `FLB_SMALL` | Minimise binary size | _No_ |
-| `FLB_TESTS_RUNTIME` | Enable runtime tests | _No_ |
-| `FLB_TESTS_INTERNAL` | Enable internal tests | _No_ |
-| `FLB_TESTS` | Enable tests | _No_ |
-| `FLB_BACKTRACE` | Enable backtrace/stacktrace support | _Yes_ |
+| `FLB_DEBUG` | Build binaries with debug symbols | `No` |
+| `FLB_VALGRIND` | Enable `Valgrind` support | `No` |
+| `FLB_TRACE` | Enable trace mode | `No` |
+| `FLB_SMALL` | Minimise binary size | `No` |
+| `FLB_TESTS_RUNTIME` | Enable runtime tests | `No` |
+| `FLB_TESTS_INTERNAL` | Enable internal tests | `No` |
+| `FLB_TESTS` | Enable tests | `No` |
+| `FLB_BACKTRACE` | Enable backtrace/stacktrace support | `Yes` |
 
 ### Optimization options
 
@@ -136,108 +133,103 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Input plugins
 
-Input plugins gather information from a specific source type like network interfaces,
-some built-in metrics, or through a specific input device. The following input plugins
-are available:
+Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. The following input plugins are available:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_IN_COLLECTD`](../../pipeline/inputs/collectd.md) | Enable Collectd input plugin | _On_ |
-| [`FLB_IN_CPU`](../../pipeline/inputs/cpu-metrics.md) | Enable CPU input plugin | _On_ |
-| [`FLB_IN_DISK`](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | _On_ |
-| [`FLB_IN_DOCKER`](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | _On_ |
-| [`FLB_IN_EXEC`](../../pipeline/inputs/exec.md) | Enable Exec input plugin | _On_ |
-| [`FLB_IN_EXEC_WASI`](../../pipeline/inputs/exec-wasi.md) | Enable Exec WASI input plugin | _On_ |
-| [`FLB_IN_FLUENTBIT_METRICS`](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | _On_ |
-| [`FLB_IN_ELASTICSEARCH`](../../pipeline/inputs/elasticsearch.md) | Enable Elasticsearch/OpenSearch Bulk input plugin | _On_ |
-| [`FLB_IN_FORWARD`](../../pipeline/inputs/forward.md) | Enable Forward input plugin | _On_ |
-| [`FLB_IN_HEAD`](../../pipeline/inputs/head.md) | Enable Head input plugin | _On_ |
-| [`FLB_IN_HEALTH`](../../pipeline/inputs/health.md) | Enable Health input plugin | _On_ |
-| [`FLB_IN_KMSG`](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | _On_ |
-| [`FLB_IN_MEM`](../../pipeline/inputs/memory-metrics.md) | Enable Memory input plugin | _On_ |
-| [`FLB_IN_MQTT`](../../pipeline/inputs/mqtt.md) | Enable MQTT Server input plugin | _On_ |
-| [`FLB_IN_NETIF`](../../pipeline/inputs/network-io-metrics.md) | Enable Network I/O metrics input plugin | _On_ |
-| [`FLB_IN_PROC`](../../pipeline/inputs/process.md) | Enable Process monitoring input plugin | _On_ |
-| [`FLB_IN_RANDOM`](../../pipeline/inputs/random.md) | Enable Random input plugin | _On_ |
-| [`FLB_IN_SERIAL`](../../pipeline/inputs/serial-interface.md) | Enable Serial input plugin | _On_ |
-| [`FLB_IN_STDIN`](../../pipeline/inputs/standard-input.md) | Enable Standard input plugin | _On_ |
-| [`FLB_IN_SYSLOG`](../../pipeline/inputs/syslog.md) | Enable Syslog input plugin | _On_ |
-| [`FLB_IN_SYSTEMD`](../../pipeline/inputs/systemd.md) | Enable Systemd / Journald input plugin | _On_ |
-| [`FLB_IN_TAIL`](../../pipeline/inputs/tail.md) | Enable Tail (follow files) input plugin | _On_ |
-| [`FLB_IN_TCP`](../../pipeline/inputs/tcp.md) | Enable TCP input plugin | _On_ |
-| [`FLB_IN_THERMAL`](../../pipeline/inputs/thermal.md) | Enable system temperature input plugin | _On_ |
-| [`FLB_IN_UDP`](../../pipeline/inputs/udp.md) | Enable UDP input plugin | _On_ |
-| [`FLB_IN_WINLOG`](../../pipeline/inputs/windows-event-log.md) | Enable Windows Event Log input plugin (Windows Only) | _On_ |
-| [`FLB_IN_WINEVTLOG`](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | _On_ |
+| [`FLB_IN_COLLECTD`](../../pipeline/inputs/collectd.md) | Enable Collectd input plugin | `On` |
+| [`FLB_IN_CPU`](../../pipeline/inputs/cpu-metrics.md) | Enable CPU input plugin | `On` |
+| [`FLB_IN_DISK`](../../pipeline/inputs/disk-io-metrics.md) | Enable Disk I/O Metrics input plugin | `On` |
+| [`FLB_IN_DOCKER`](../../pipeline/inputs/docker-events.md) | Enable Docker metrics input plugin | `On` |
+| [`FLB_IN_EXEC`](../../pipeline/inputs/exec.md) | Enable Exec input plugin | `On` |
+| [`FLB_IN_EXEC_WASI`](../../pipeline/inputs/exec-wasi.md) | Enable Exec WASI input plugin | `On` |
+| [`FLB_IN_FLUENTBIT_METRICS`](../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin | `On` |
+| [`FLB_IN_ELASTICSEARCH`](../../pipeline/inputs/elasticsearch.md) | Enable Elasticsearch/OpenSearch Bulk input plugin | `On` |
+| [`FLB_IN_FORWARD`](../../pipeline/inputs/forward.md) | Enable Forward input plugin | `On` |
+| [`FLB_IN_HEAD`](../../pipeline/inputs/head.md) | Enable Head input plugin | `On` |
+| [`FLB_IN_HEALTH`](../../pipeline/inputs/health.md) | Enable Health input plugin | `On` |
+| [`FLB_IN_KMSG`](../../pipeline/inputs/kernel-logs.md) | Enable Kernel log input plugin | `On` |
+| [`FLB_IN_MEM`](../../pipeline/inputs/memory-metrics.md) | Enable Memory input plugin | `On` |
+| [`FLB_IN_MQTT`](../../pipeline/inputs/mqtt.md) | Enable MQTT Server input plugin | `On` |
+| [`FLB_IN_NETIF`](../../pipeline/inputs/network-io-metrics.md) | Enable Network I/O metrics input plugin | `On` |
+| [`FLB_IN_PROC`](../../pipeline/inputs/process.md) | Enable Process monitoring input plugin | `On` |
+| [`FLB_IN_RANDOM`](../../pipeline/inputs/random.md) | Enable Random input plugin | `On` |
+| [`FLB_IN_SERIAL`](../../pipeline/inputs/serial-interface.md) | Enable Serial input plugin | `On` |
+| [`FLB_IN_STDIN`](../../pipeline/inputs/standard-input.md) | Enable Standard input plugin | `On` |
+| [`FLB_IN_SYSLOG`](../../pipeline/inputs/syslog.md) | Enable Syslog input plugin | `On` |
+| [`FLB_IN_SYSTEMD`](../../pipeline/inputs/systemd.md) | Enable Systemd / Journald input plugin | `On` |
+| [`FLB_IN_TAIL`](../../pipeline/inputs/tail.md) | Enable Tail (follow files) input plugin | `On` |
+| [`FLB_IN_TCP`](../../pipeline/inputs/tcp.md) | Enable TCP input plugin | `On` |
+| [`FLB_IN_THERMAL`](../../pipeline/inputs/thermal.md) | Enable system temperature input plugin | `On` |
+| [`FLB_IN_UDP`](../../pipeline/inputs/udp.md) | Enable UDP input plugin | `On` |
+| [`FLB_IN_WINLOG`](../../pipeline/inputs/windows-event-log.md) | Enable Windows Event Log input plugin (Windows Only) | `On` |
+| [`FLB_IN_WINEVTLOG`](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `On` |
 
 ### Filter plugins
 
-Filter plugins let you modify, enrich or drop records. The following table describes
-the filters available on this version:
+Filter plugins let you modify, enrich or drop records. The following table describes the filters available on this version:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_FILTER_AWS`](../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | _On_ |
-| [`FLB_FILTER_ECS`](../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | _On_ |
-| `FLB_FILTER_EXPECT` | Enable Expect data test filter | _On_ |
-| [`FLB_FILTER_GREP`](../../pipeline/filters/grep.md) | Enable Grep filter | _On_ |
-| [`FLB_FILTER_KUBERNETES`](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | _On_ |
-| [`FLB_FILTER_LUA`](../../pipeline/filters/lua.md) | Enable Lua scripting filter | _On_ |
-| [`FLB_FILTER_MODIFY`](../../pipeline/filters/modify.md) | Enable Modify filter | _On_ |
-| [`FLB_FILTER_NEST`](../../pipeline/filters/nest.md) | Enable Nest filter | _On_ |
-| [`FLB_FILTER_PARSER`](../../pipeline/filters/parser.md) | Enable Parser filter | _On_ |
-| [`FLB_FILTER_RECORD_MODIFIER`](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | _On_ |
-| [`FLB_FILTER_REWRITE_TAG`](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | _On_ |
-| [`FLB_FILTER_STDOUT`](../../pipeline/filters/standard-output.md) | Enable Stdout filter | _On_ |
-| [`FLB_FILTER_SYSINFO`](../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | _On_ |
-| [`FLB_FILTER_THROTTLE`](../../pipeline/filters/throttle.md) | Enable Throttle filter | _On_ |
-| [`FLB_FILTER_TYPE_CONVERTER`](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | _On_ |
-| [`FLB_FILTER_WASM`](../../pipeline/filters/wasm.md) | Enable WASM filter | _On_ |
+| [`FLB_FILTER_AWS`](../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | `On` |
+| [`FLB_FILTER_ECS`](../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | `On` |
+| `FLB_FILTER_EXPECT` | Enable Expect data test filter | `On` |
+| [`FLB_FILTER_GREP`](../../pipeline/filters/grep.md) | Enable Grep filter | `On` |
+| [`FLB_FILTER_KUBERNETES`](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | `On` |
+| [`FLB_FILTER_LUA`](../../pipeline/filters/lua.md) | Enable Lua scripting filter | `On` |
+| [`FLB_FILTER_MODIFY`](../../pipeline/filters/modify.md) | Enable Modify filter | `On` |
+| [`FLB_FILTER_NEST`](../../pipeline/filters/nest.md) | Enable Nest filter | `On` |
+| [`FLB_FILTER_PARSER`](../../pipeline/filters/parser.md) | Enable Parser filter | `On` |
+| [`FLB_FILTER_RECORD_MODIFIER`](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | `On` |
+| [`FLB_FILTER_REWRITE_TAG`](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | `On` |
+| [`FLB_FILTER_STDOUT`](../../pipeline/filters/standard-output.md) | Enable Stdout filter | `On` |
+| [`FLB_FILTER_SYSINFO`](../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | `On` |
+| [`FLB_FILTER_THROTTLE`](../../pipeline/filters/throttle.md) | Enable Throttle filter | `On` |
+| [`FLB_FILTER_TYPE_CONVERTER`](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | `On` |
+| [`FLB_FILTER_WASM`](../../pipeline/filters/wasm.md) | Enable Wasm filter | `On` |
 
 ### Output plugins
 
-Output plugins let you flush the information to some external interface, service, or
-terminal. The following table describes the output plugins available:
+Output plugins let you flush the information to some external interface, service, or terminal. The following table describes the output plugins available:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_OUT_AZURE`](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | _On_ |
-| [`FLB_OUT_AZURE_KUSTO`](../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | _On_ |
-| [`FLB_OUT_BIGQUERY`](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | _On_ |
-| [`FLB_OUT_COUNTER`](../../pipeline/outputs/counter.md) | Enable Counter output plugin | _On_ |
-| [`FLB_OUT_CLOUDWATCH_LOGS`](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | _On_ |
-| [`FLB_OUT_DATADOG`](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | _On_ |
-| [`FLB_OUT_ES`](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | _On_ |
-| [`FLB_OUT_FILE`](../../pipeline/outputs/file.md) | Enable File output plugin | _On_ |
-| [`FLB_OUT_KINESIS_FIREHOSE`](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | _On_ |
-| [`FLB_OUT_KINESIS_STREAMS`](../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | _On_ |
-| [`FLB_OUT_FLOWCOUNTER`](../../pipeline/outputs/flowcounter.md) | Enable Flowcounter output plugin | _On_ |
-| [`FLB_OUT_FORWARD`](../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | _On_ |
-| [`FLB_OUT_GELF`](../../pipeline/outputs/gelf.md) | Enable Gelf output plugin | _On_ |
-| [`FLB_OUT_HTTP`](../../pipeline/outputs/http.md) | Enable HTTP output plugin | _On_ |
-| [`FLB_OUT_INFLUXDB`](../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | _On_ |
+| [`FLB_OUT_AZURE`](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | `On` |
+| [`FLB_OUT_AZURE_KUSTO`](../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | `On` |
+| [`FLB_OUT_BIGQUERY`](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | `On` |
+| [`FLB_OUT_COUNTER`](../../pipeline/outputs/counter.md) | Enable Counter output plugin | `On` |
+| [`FLB_OUT_CLOUDWATCH_LOGS`](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | `On` |
+| [`FLB_OUT_DATADOG`](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | `On` |
+| [`FLB_OUT_ES`](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | `On` |
+| [`FLB_OUT_FILE`](../../pipeline/outputs/file.md) | Enable File output plugin | `On` |
+| [`FLB_OUT_KINESIS_FIREHOSE`](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | `On` |
+| [`FLB_OUT_KINESIS_STREAMS`](../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | `On` |
+| [`FLB_OUT_FLOWCOUNTER`](../../pipeline/outputs/flowcounter.md) | Enable Flow counter output plugin | `On` |
+| [`FLB_OUT_FORWARD`](../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | `On` |
+| [`FLB_OUT_GELF`](../../pipeline/outputs/gelf.md) | Enable GELF output plugin | `On` |
+| [`FLB_OUT_HTTP`](../../pipeline/outputs/http.md) | Enable HTTP output plugin | `On` |
+| [`FLB_OUT_INFLUXDB`](../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | `On` |
 | [`FLB_OUT_KAFKA`](../../pipeline/outputs/kafka.md) | Enable Kafka output | Off |
-| [`FLB_OUT_KAFKA_REST`](../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | _On_ |
-| `FLB_OUT_LIB` | Enable Lib output plugin | _On_ |
-| [`FLB_OUT_NATS`](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | _On_ |
-| `FLB_OUT_NULL` | Enable NULL output plugin | _On_ |
-| `FLB_OUT_PGSQL` | Enable PostgreSQL output plugin | _On_ |
-| `FLB_OUT_PLOT` | Enable Plot output plugin | _On_ |
-| `FLB_OUT_SLACK` | Enable Slack output plugin | _On_ |
-| [`FLB_OUT_S3`](../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | _On_ |
-| [`FLB_OUT_SPLUNK`](../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | _On_ |
-| [`FLB_OUT_STACKDRIVER`](../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | _On_ |
-| [`FLB_OUT_STDOUT`](build-and-install.md) | Enable STDOUT output plugin | _On_ |
-| `FLB_OUT_TCP` | Enable TCP/TLS output plugin | _On_ |
-| [`FLB_OUT_TD`](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | _On_ |
+| [`FLB_OUT_KAFKA_REST`](../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | `On` |
+| `FLB_OUT_LIB` | Enable Lib output plugin | `On` |
+| [`FLB_OUT_NATS`](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | `On` |
+| `FLB_OUT_NULL` | Enable `NULL` output plugin | `On` |
+| `FLB_OUT_PGSQL` | Enable PostgreSQL output plugin | `On` |
+| `FLB_OUT_PLOT` | Enable Plot output plugin | `On` |
+| `FLB_OUT_SLACK` | Enable Slack output plugin | `On` |
+| [`FLB_OUT_S3`](../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | `On` |
+| [`FLB_OUT_SPLUNK`](../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | `On` |
+| [`FLB_OUT_STACKDRIVER`](../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | `On` |
+| [`FLB_OUT_STDOUT`](build-and-install.md) | Enable STDOUT output plugin | `On` |
+| `FLB_OUT_TCP` | Enable TCP/TLS output plugin | `On` |
+| [`FLB_OUT_TD`](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | `On` |
 
 ### Processor plugins
 
-Processor plugins handle the events within the processor pipelines to allow
-modifying, enriching, or dropping events.
+Processor plugins handle the events within the processor pipelines to allow modifying, enriching, or dropping events.
 
 The following table describes the processors available:
 
 | Option | Description | Default || :--- | :--- | :--- |
-| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | _On_ |
-| [`FLB_PROCESSOR_LABELS`](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | _On_ |
+| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | `On` |
+| [`FLB_PROCESSOR_LABELS`](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | `On` |

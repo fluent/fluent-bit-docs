@@ -1,6 +1,6 @@
-# Chronicle
+# Google Chronicle
 
-The _Chronicle_ output plugin lets you ingest security logs into the [Google Chronicle](https://chronicle.security/) service. This connector is designed to send unstructured security logs.
+The _Google Chronicle_ output plugin lets you ingest security logs into the [Google Chronicle](https://chronicle.security/) service. This connector is designed to send unstructured security logs.
 
 ## Google Cloud configuration
 

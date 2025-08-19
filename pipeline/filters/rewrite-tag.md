@@ -2,11 +2,11 @@
 description: Powerful and flexible routing
 ---
 
-# Rewrite Tag
+# Rewrite tag
 
-Tags make [routing](../../concepts/data-pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios where you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
+Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios when you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 
-The _Rewrite Tag_ filter lets you re-emit a record under a new tag. Once a record has been re-emitted, the original record can be preserved or discarded.
+The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.
 
 The Rewrite Tag filter defines rules that match specific record key content against a regular expression. If a match exists, a new record with the defined tag will be emitted, entering from the beginning of the pipeline. Multiple rules can be specified and are processed in order until one of them matches.
 
@@ -55,10 +55,10 @@ The key represents the name of the _record key_ that holds the `value` to use to
 
 To match against the value of the key `name`, you must use `$name`. The key selector is flexible enough to allow to match nested levels of sub-maps from the structure. To capture the value of the nested key `s2`, specify `$ss['s1']['s2']`, for short:
 
--`$name` = "abc-123"
--`$ss['s1']['s2']` = "flb"
+-`$name` = `abc-123`
+-`$ss['s1']['s2']` = `flb`
 
-A key must point to a value that contains a string. It's not valid for numbers, Booleans, maps, or arrays.
+A key must point to a value that contains a string. It's not valid for numbers, Boolean values, maps, or arrays.
 
 ### Regular expressions
 
@@ -72,11 +72,11 @@ To match any record that it `$name` contains a value of the format `string-numbe
 
 This example uses parentheses to specify groups of data. If the pattern matches the value a placeholder will be created that can be consumed by the `NEW_TAG` section.
 
-If `$name` equals `abc-123` , then the following placeholders will be created:
+If `$name` equals `abc-123`, then the following placeholders will be created:
 
--`$0` = "abc-123"
--`$1` = "abc"
--`$2` = "123"
+-`$0` = `abc-123`
+-`$1` = `abc`
+-`$2` = `123`
 
 If the regular expression doesn't match an incoming record, the rule will be skipped and the next rule (if present) will be processed.
 
@@ -84,7 +84,7 @@ If the regular expression doesn't match an incoming record, the rule will be ski
 
 If a regular expression has matched the value of the defined key in the rule, you can compose a new tag for that specific record. The tag is a concatenated string that can contain any of the following characters: `a-z`,`A-Z`, `0-9` and `.-,`.
 
-A tag can take any string value from the matching record, the original tag it self, environment variables, or general placeholders.
+A tag can take any string value from the matching record, the original tag itself, environment variables, or general placeholders.
 
 Consider the following incoming data on the rule:
 
@@ -121,24 +121,24 @@ The following configuration example will emit a dummy record. The filter will re
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
+  flush: 1
+  log_level: info
 
 pipeline:
-    inputs:
-        - name: dummy
-          tag:  test_tag
-          dummy: '{"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}'
+  inputs:
+    - name: dummy
+      tag:  test_tag
+      dummy: '{"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}'
 
-    filters:
-        - name: rewrite_tag
-          match: test_tag
-          rule: $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
-          emitter_name: re_emitted
+  filters:
+    - name: rewrite_tag
+      match: test_tag
+      rule: $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
+      emitter_name: re_emitted
 
-    outputs:
-        - name: stdout
-          match: from.*
+  outputs:
+    - name: stdout
+      match: from.*
 ```
 
 {% endtab %}
@@ -146,23 +146,23 @@ pipeline:
 
 ```text
 [SERVICE]
-    Flush     1
-    Log_Level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-    NAME   dummy
-    Dummy  {"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}
-    Tag    test_tag
+  NAME   dummy
+  Dummy  {"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}
+  Tag    test_tag
 
 [FILTER]
-    Name          rewrite_tag
-    Match         test_tag
-    Rule          $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
-    Emitter_Name  re_emitted
+  Name          rewrite_tag
+  Match         test_tag
+  Rule          $tool ^(fluent)$  from.$TAG.new.$tool.$sub['s1']['s2'].out false
+  Emitter_Name  re_emitted
 
 [OUTPUT]
-    Name   stdout
-    Match  from.*
+  Name   stdout
+  Match  from.*
 ```
 
 {% endtab %}
@@ -171,30 +171,9 @@ pipeline:
 The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`:
 
 ```shell
-$ ./fluent-bit -c example.conf
+$ fluent-bit -c example.conf
 
-Fluent Bit v4.0.3
-* Copyright (C) 2015-2025 The Fluent Bit Authors
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-______ _                  _    ______ _ _             ___  _____
-|  ___| |                | |   | ___ (_) |           /   ||  _  |
-| |_  | |_   _  ___ _ __ | |_  | |_/ /_| |_  __   __/ /| || |/' |
-|  _| | | | | |/ _ \ '_ \| __| | ___ \ | __| \ \ / / /_| ||  /| |
-| |   | | |_| |  __/ | | | |_  | |_/ / | |_   \ V /\___  |\ |_/ /
-\_|   |_|\__,_|\___|_| |_|\__| \____/|_|\__|   \_/     |_(_)___/
-
-
-[2025/07/03 16:15:34] [ info] [fluent bit] version=4.0.3, commit=3a91b155d6, pid=23196
-[2025/07/03 16:15:34] [ info] [storage] ver=1.5.3, type=memory, sync=normal, checksum=off, max_chunks_up=128
-[2025/07/03 16:15:34] [ info] [simd    ] disabled
-[2025/07/03 16:15:34] [ info] [cmetrics] version=1.0.3
-[2025/07/03 16:15:34] [ info] [ctraces ] version=0.6.6
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] initializing
-[2025/07/03 16:15:34] [ info] [input:dummy:dummy.0] storage_strategy='memory' (memory only)
-[2025/07/03 16:15:34] [ info] [output:stdout:stdout.0] worker #0 started
-[2025/07/03 16:15:34] [ info] [sp] stream processor started
+...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
 
@@ -209,7 +188,7 @@ The `rewrite_tag` filter emits new records that go through the beginning of the 
 Using the previously provided configuration, when you query the metrics exposed in the HTTP interface:
 
 ```shell
-./curl  http://127.0.0.1:2020/api/v1/metrics/ | jq
+curl  http://127.0.0.1:2020/api/v1/metrics/ | jq
 ```
 
 You will see metrics output similar to the following:
@@ -249,7 +228,7 @@ The _dummy_ input generated two records, while the filter dropped two from the c
 
 The records generated are handled by the internal emitter, so the new records are summarized in the Emitter metrics. Take a look at the entry called `emitter_for_rewrite_tag.0`.
 
-### The Emitter
+### Emitter
 
 The _Emitter_ is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an emitter instance to use it exclusively to emit records, allowing for granular control of who is emitting what.
 

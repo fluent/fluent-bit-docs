@@ -177,7 +177,7 @@ Take great care with shell quoting and escaping when wrapping commands.
 
 A script like the following can ruin your day if someone passes it the argument `$(rm -rf /my/important/files; echo "deleted your stuff!")'`
 
-```bash
+```shell
 #!/bin/bash
 # This is a DANGEROUS example of what NOT to do, NEVER DO THIS
 exec fluent-bit \
@@ -190,7 +190,7 @@ exec fluent-bit \
 
 The previous script would be safer if written with:
 
-```bash
+```shell
   -p command='echo '"$(printf '%q' "$@")" \
 ```
 

@@ -1,4 +1,4 @@
-# Graylog Extended Log Format
+# Graylog Extended Log Format (GELF)
 
 The _[Graylog](https://www.graylog.org) Extended Log Format (GELF)_ output plugin lets you send logs in GELF format directly to a Graylog input using TLS, TCP, or UDP protocols.
 
@@ -26,8 +26,7 @@ According to the [GELF Payload Specification](https://go2docs.graylog.org/5-0/ge
 
 ### TLS / SSL
 
-The GELF output plugin supports TLS/SSL.
-For information about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+The GELF output plugin supports TLS/SSL. For information about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
 ## Notes
 

@@ -1,6 +1,7 @@
 # Forward
 
 _Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org).
+
 There are no configuration steps required besides specifying where [Fluentd](http://fluentd.org) is located, which can be a local or a remote destination.
 
 This plugin offers the following transports and modes:
@@ -116,8 +117,7 @@ When Fluentd is ready to receive messages, specify where the `forward` output pl
 fluent-bit -i INPUT -o forward://HOST:PORT
 ```
 
-If the `tag` parameter isn't set, the plugin will retain the tag.
-The `tag` is important for routing rules inside Fluentd.
+If the `tag` parameter isn't set, the plugin will retain the tag. The `tag` is important for routing rules inside Fluentd.
 
 Using the [CPU](../inputs/cpu-metrics.md) input plugin as an example, you can flush `cpu` metrics with the `tag` `fluent_bit` to Fluentd:
 
@@ -235,8 +235,7 @@ Paste this content in a file called `fld.conf`:
    fluent-bit --config flb.conf
    ```
 
-After five seconds, Fluent Bit will write records to Fluentd.
-In Fluentd output you will see a message like this:
+After five seconds, Fluent Bit will write records to Fluentd. In Fluentd output you will see a message like this:
 
 ```text
 ...

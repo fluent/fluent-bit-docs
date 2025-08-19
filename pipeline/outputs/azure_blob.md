@@ -10,7 +10,7 @@ The Fluent Bit plugin works with the official Azure Service and can be configure
 
 ## Azure Storage account
 
-Ensure you have an Azure Storage account. [Azure Blob Storage Tutorial \(Video\)](https://www.youtube.com/watch?v=-sCKnOm8G_g) explains how to set up your account.
+Ensure you have an Azure Storage account. [Azure Blob Storage Tutorial (video)](https://www.youtube.com/watch?v=-sCKnOm8G_g) explains how to set up your account.
 
 ## Configuration parameters
 
@@ -49,7 +49,7 @@ Fluent Bit exposes the following configuration properties.
 
 Fluent Bit can deliver records to the official service or an emulator.
 
-### Configuration for Azure Storage Service
+### Configuration for Azure Storage
 
 The following configuration example generates a random message with a custom tag:
 

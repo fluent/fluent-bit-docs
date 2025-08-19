@@ -18,7 +18,7 @@ This plugin uses the following configuration parameters:
 | `tags` | A list of comma-separated strings to group records in LogDNA and simplify the query with filters. | _none_ |
 | `file` | Optional name of a file being monitored. This value is only set if the record doesn't contain a reference to it. | _none_ |
 | `app` | Name of the application. This value is automatically discovered on each record. If no value is found, the default value is used. | `Fluent Bit` |
-| `workers` | The number of [workers](../administration/multithreading#outputs) to perform flush operations for this output. | `0` |
+| `workers` | The number of [workers](../../administration/multithreading#outputs) to perform flush operations for this output. | `0` |
 
 ## Data discovery and enrichment
 
@@ -28,7 +28,7 @@ When the login processes a record or log, it searches for specific key names tha
 
 | Key | Description |
 | :--- | :--- |
-| `level` | If the record contains a key called `level` or `severity`, it will populate the context `level` key with that value. If not found, the context key is not set. |
+| `level` | If the record contains a key called `level` or `severity`, Fluent Bit will populate the context `level` key with that value. If not found, Fluent Bit won't set the context key. |
 | `file` | If the record contains a key called `file`, it will populate the context `file` with the value found. Otherwise, if the plugin configuration provided a `file` property, that value will be used instead. |
 | `app` | If the record contains a key called `app`, it will populate the context `app` with the value found, otherwise it will use the value set for `app` in the configuration property. |
 | `meta` | If the record contains a key called `meta`, it will populate the context `meta` with the value found. |
