@@ -12,7 +12,7 @@ The [`buffer`](./buffering.md) phase in the pipeline aims to provide a unified a
 
 ## Inputs
 
-Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log files, while others can gather metrics information from the operating system. There are many plugins to suit different needs.
+Fluent Bit provides [input plugins](../pipeline/inputs.md) to gather information from different sources. Some plugins collect data from log files, and others gather metrics information from the operating system. There are many plugins to suit different needs.
 
 ## Outputs
 
