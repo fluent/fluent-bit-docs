@@ -32,6 +32,6 @@ The `buffer` phase contains the data in an immutable state, meaning that no othe
 
 Buffered data uses the Fluent Bit internal binary representation, which isn't raw text.
 
-Fluent Bit offers a buffering mechanism in the file system that acts as a backup system to avoid data loss in case of system failures.
+To avoid data loss in case of system failures, Fluent Bit offers a buffering mechanism in the file system that acts as a backup system.
 
 To learn more about the buffering configuration in Fluent Bit, see [Buffering and Storage](../administration/buffering-and-storage.md).

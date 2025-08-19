@@ -1,6 +1,6 @@
 # Inputs
 
-Input plugins gather information from different sources. Some plugins collect data from log files, while others can gather metrics information from the operating system. There are many plugins to suit different needs.
+Input plugins gather information from different sources. Some plugins collect data from log files, and others gather metrics information from the operating system. There are many different plugins, and they let you handle many different needs.
 
 ```mermaid
 graph LR

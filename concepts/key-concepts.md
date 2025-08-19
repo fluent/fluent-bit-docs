@@ -58,7 +58,7 @@ to represent events. This format is still supported for reading input event stre
 
 ## Filtering
 
-You might need to perform modifications on an Event's content. The process to alter, append to, or drop Events is called [_filtering_](../pipeline/filters.md).
+You might need to perform modifications on an event's content. The process to alter, append to, or drop Events is called [_filtering_](../pipeline/filters.md).
 
 Use filtering to:
 

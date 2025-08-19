@@ -4,9 +4,9 @@ description: Powerful and flexible routing
 
 # Rewrite tag
 
-Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios where you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
+Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios when you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 
-The _Rewrite Tag_ filter lets you re-emit a record under a new tag. Once a record has been re-emitted, the original record can be preserved or discarded.
+The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.
 
 The Rewrite Tag filter defines rules that match specific record key content against a regular expression. If a match exists, a new record with the defined tag will be emitted, entering from the beginning of the pipeline. Multiple rules can be specified and are processed in order until one of them matches.
 

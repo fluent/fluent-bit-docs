@@ -1,6 +1,6 @@
 # Parsers
 
-Dealing with raw strings or unstructured messages is difficult. Having a structure makes data more usable. Set a structure to the incoming data by using input plugins as data is collected.
+Dealing with raw strings or unstructured messages is difficult. Having a structure makes data more usable. Set a structure for the incoming data by using input plugins as data is collected.
 
 Parsers are fully configurable and are independently and optionally handled by each input plugin.
 
