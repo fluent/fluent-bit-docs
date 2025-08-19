@@ -26,7 +26,7 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `Buffer_Size` | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must conform to the [unit size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. A value of `0` results in no limit, and the buffer will expand as-needed. If pod specifications exceed the buffer limit, the API response is discarded when retrieving metadata, and some Kubernetes metadata will fail to be injected to the logs. | `32k` |
-| `Kube_URL` | API Server end-point | [https://kubernetes.default.svc:443](https://kubernetes.default.svc:443) |
+| `Kube_URL` | API Server endpoint | [https://kubernetes.default.svc:443](https://kubernetes.default.svc:443) |
 | `Kube_CA_File` | CA certificate file | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt` |
 | `Kube_CA_Path` | Absolute path to scan for certificate files | _none_ |
 | `Kube_Token_File` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
@@ -304,7 +304,7 @@ parsers:
     - name: custom-tag
       format: regex
       regex: '^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})'
-      
+
 pipeline:
     inputs:
         - name: tail
@@ -590,4 +590,6 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
 ## Credit
 
-The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
+The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata
+Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter)
+written by [Jimmi Dyson](https://github.com/jimmidyson).

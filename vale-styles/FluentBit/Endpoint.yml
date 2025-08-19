@@ -1,8 +1,9 @@
 extends: substitution
-message: "'%s' is not the preferred term; use 'endpoint' instead."
+message: 'Use "%s" instead of "%s".'
 level: error
 ignorecase: true
 swap:
-  "end point": "endpoint"
-  end-point: "endpoint"
-  end-points: "endpoints"
+  end point: endpoint
+  end-point: endpoint
+  end points: endpoints
+  end-points: endpoints
