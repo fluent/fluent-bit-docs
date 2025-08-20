@@ -20,7 +20,7 @@ using several methods.
 
 You can [direct download and compile the source code](../installation/sources/README.md).
 
-You can also select a package follow the specific instructions for it:
+You can also select a package follow the specific instructions for it using the following links:
 
 ### Container deployment
 
