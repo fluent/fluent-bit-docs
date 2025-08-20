@@ -4,7 +4,7 @@ The _sampling_ processor uses an extendable architecture that supports multiple 
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
 {% endhint %}
 

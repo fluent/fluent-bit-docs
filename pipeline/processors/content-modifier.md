@@ -6,7 +6,7 @@ Similar to how filters work, this processor uses a unified mechanism to perform 
 
 {% hint style="info" %}
 
-Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors.
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
 {% endhint %}
 

@@ -26,7 +26,7 @@
   * [Download source code](installation/sources/download-source-code.md)
   * [Build and install](installation/sources/build-and-install.md)
   * [Build with static configuration](installation/sources/build-with-static-configuration.md)
-* [Linux packages](installation/linux/README.md)
+* [Linux packages](installation/linux.md)
   * [Amazon Linux](installation/linux/amazon-linux.md)
   * [Rocky Linux and Alma Linux ](installation/linux/alma-rocky.md)
   * [Red Hat and CentOS](installation/linux/redhat-centos.md)
@@ -44,8 +44,8 @@
 
 ## Administration
 
-* [Configure Fluent Bit](administration/configuring-fluent-bit/README.md)
-  * [YAML configuration](administration/configuring-fluent-bit/yaml/README.md)
+* [Configure Fluent Bit](administration/configuring-fluent-bit.md)
+  * [YAML configuration](administration/configuring-fluent-bit/yaml.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
     * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
     * [Multiline parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
@@ -137,7 +137,7 @@
   * [LTSV](pipeline/parsers/ltsv.md)
   * [Logfmt](pipeline/parsers/logfmt.md)
   * [Decoders](pipeline/parsers/decoders.md)
-* [Processors](pipeline/processors/README.md)
+* [Processors](pipeline/processors.md)
   * [Content modifier](pipeline/processors/content-modifier.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
@@ -223,7 +223,7 @@
 * [Introduction to stream processing](stream-processing/introduction.md)
 * [Overview](stream-processing/overview.md)
 * [Changelog](stream-processing/changelog.md)
-* [Get started](stream-processing/getting-started/README.md)
+* [Get started](stream-processing/get-started.md)
   * [Fluent Bit and SQL](stream-processing/getting-started/fluent-bit-sql.md)
   * [Check keys and null values](stream-processing/getting-started/check-keys-null-values.md)
   * [Tutorial](stream-processing/getting-started/hands-on.md)

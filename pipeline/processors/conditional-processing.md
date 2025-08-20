@@ -1,6 +1,6 @@
 # Conditional processing
 
-Conditional processing lets you selectively apply [processors](README.md) to logs based on the value of fields within those logs. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
+Conditional processing lets you selectively apply [processors](../processors.md) to logs based on the value of fields within those logs. This feature lets you create processing pipelines that only process records that meet certain criteria, and ignore the rest.
 
 Conditional processing is available in Fluent Bit version 4.0 and greater.
 
@@ -10,8 +10,8 @@ You can turn a standard processor into a conditional processor by adding a `cond
 
 {% hint style="info" %}
 
-- Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml/README.md) support processors, including conditional processors.
-- Conditional processing isn't supported if you're using a [filter as a processor](../filters).
+- Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors, including conditional processors.
+- Conditional processing isn't supported if you're using a [filter as a processor](../filters.md).
 
 {% endhint %}
 

@@ -9,14 +9,14 @@ timers, receiving internal messages, scheduling flushes, and handling retries.
 This event loop runs in the main Fluent Bit thread.
 
 To free up resources in the main thread, you can configure
-[inputs](../pipeline/inputs/README.md) and [outputs](../pipeline/outputs/README.md)
+[inputs](../pipeline/inputs.md) and [outputs](../pipeline/outputs.md)
 to run in their own self-contained threads. However, inputs and outputs implement
 multithreading in distinct ways: inputs can run in `threaded` mode, and outputs
 can use one or more `workers`.
 
 Threading also affects certain processes related to inputs and outputs. For example,
-[filters](../pipeline/filters/README.md) always run in the main thread, but
-[processors](../pipeline/processors/README.md) run in the self-contained threads of
+[filters](../pipeline/filters.md) always run in the main thread, but
+[processors](../pipeline/processors.md) run in the self-contained threads of
 their respective inputs or outputs, if applicable.
 
 ## Inputs
