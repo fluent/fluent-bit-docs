@@ -33,7 +33,7 @@ In the following configuration file, the input plugin `node_exporter_metrics` co
 service:
   flush: 1
   log_level: info
-    
+
 pipeline:
   inputs:
     - name: fluentbit_metrics
@@ -54,7 +54,7 @@ pipeline:
 # Fluent Bit Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collects Fluent Bit metrics and exposes
-# them through a Prometheus HTTP end-point.
+# them through a Prometheus HTTP endpoint.
 #
 # After starting the service try it with:
 #

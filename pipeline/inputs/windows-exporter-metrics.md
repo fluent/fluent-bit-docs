@@ -77,7 +77,7 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
 # Node Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
-# them through a Prometheus HTTP end-point.
+# them through a Prometheus HTTP endpoint.
 #
 # After starting the service try it with:
 #
@@ -106,7 +106,7 @@ pipeline:
 # Node Exporter Metrics + Prometheus Exporter
 # -------------------------------------------
 # The following example collect host metrics on Linux and expose
-# them through a Prometheus HTTP end-point.
+# them through a Prometheus HTTP endpoint.
 #
 # After starting the service try it with:
 #

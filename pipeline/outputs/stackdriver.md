@@ -267,7 +267,10 @@ An upstream connection error means Fluent Bit wasn't able to reach Google servic
 [2019/01/07 23:24:09] [error] [oauth2] could not get an upstream connection
 ```
 
-This is due to a network issue in the environment where Fluent Bit is running. Ensure that the Host, Container, or Pod can reach the Google API endpoints.
+This is due to a network issue in the environment where Fluent Bit is running. Make sure that the Host, Container or Pod can reach the following Google endpoints:
+
+- [https://www.googleapis.com](https://www.googleapis.com)
+- [https://logging.googleapis.com](https://logging.googleapis.com)
 
 {% hint style="warning" %}
 
