@@ -7,7 +7,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 
 The Fluent Bit telemetry agent is available for Linux, macOS, Windows, and BSD family operating systems.
 
-If you are interested in learning about Fluent Bit you can try out the [sandbox environment](../about/sandbox-and-lab-resources.md).
+If you're interested in learning about Fluent Bit, you can try out the [sandbox environment](../about/sandbox-and-lab-resources.md).
 
 ## Requirements
 
@@ -15,12 +15,11 @@ All Fluent Bit installations must meet certain [requirements](./requirements.md)
 
 ## Supported platforms and packages
 
-Fluent Bit software is available for a variety of platforms and can be installed
-using several methods.
+Fluent Bit software is available for a variety of platforms and can be installed using several methods.
 
 You can [direct download and compile the source code](../installation/sources/README.md).
 
-You can also select a package follow the specific instructions for it using the following links:
+To select a package for a container or operating system, use the instructions for that option from the following links:
 
 ### Container deployment
 
@@ -66,4 +65,4 @@ You can also select a package follow the specific instructions for it using the 
 
 ### Enterprise packages
 
-Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, or for additional support and features including aspects like CVE backporting.
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end-of-life versions, Unix systems, or for additional support and features including aspects (such as CVE backporting).
