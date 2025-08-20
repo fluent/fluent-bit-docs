@@ -5,7 +5,24 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9732f9c-44a4-46d3-ab87-86138455c698" />
 
-## Container deployment
+The Fluent Bit telemetry agent is available for Linux, macOS, Windows, and BSD family operating systems.
+
+If you are interested in learning about Fluent Bit you can try out the [sandbox environment](../about/sandbox-and-lab-resources.md).
+
+## Requirements
+
+All Fluent Bit installations must meet certain [requirements](./requirements.md).
+
+## Supported platforms and packages
+
+Fluent Bit software is available for a variety of platforms and can be installed
+using several methods.
+
+You can [direct download and compile the source code](../installation/sources/README.md).
+
+You can also select a package follow the specific instructions for it:
+
+### Container deployment
 
 | Deployment Type   | Instructions |
 | ----------------- | -------------------------------------------------- |
@@ -13,7 +30,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 | Docker            | [Deploy with Docker](docker.md)                    |
 | Containers on AWS | [Deploy on Containers on AWS](aws-container.md)    |
 
-## Install on Linux (packages)
+### Install on Linux (packages)
 
 | Operating System       | Installation instructions |
 | ---------------------- | ------------------------- |
@@ -25,20 +42,20 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 | Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
 | Buildroot / Embedded Linux | [Buildroot / Embedded Linux](buildroot-embedded-linux.md) |
 
-## Install on Windows (packages)
+### Install on Windows (packages)
 
 | Operating System    | Installation instructions |
 | ------------------- | ------------------------- |
 | Windows Server 2019 | [Windows Server `EXE`](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
 | Windows 10 2019.03  | [Windows `EXE`](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
 
-## Install on macOS (packages)
+### Install on macOS (packages)
 
 | Operating System    | Installation instructions                     |
 | ------------------- | --------------------------------------------- |
 | macOS               | [Homebrew](macos.md#installing-from-homebrew) |
 
-## Compile from source (Linux, Windows, FreeBSD, macOS)
+### Compile from source (Linux, Windows, FreeBSD, macOS)
 
 | Operating system | Installation instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
@@ -46,14 +63,7 @@ description: A guide on how to install, deploy, and upgrade Fluent Bit
 | macOS            | [Compile from source](macos.md#compile-from-source) |
 | Windows          | [Compile from Source](windows.md#compile-from-source)       |
 
-## Sandbox environment
 
-If you are interested in learning about Fluent Bit you can try out the sandbox environment:
+### Enterprise packages
 
-{% embed url="https://play.instruqt.com/embed/Fluent/tracks/fluent-bit-getting-started-101?token=em_S2zOzhhDQepM0vDS" %}
-Fluent Bit sandbox environment
-{% endembed %}
-
-## Enterprise packages
-
-Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, and additional support and features including aspects like CVE backporting.
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, or for additional support and features including aspects like CVE backporting.
