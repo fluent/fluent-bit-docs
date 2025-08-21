@@ -14,7 +14,7 @@ This plugin uses the following configuration parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `Host` | The Datadog server where you are sending your logs. | `http-intake.logs.datadoghq.com` |
+| `site` | The Datadog site to send logs to. Use `datadoghq.com` for US or `datadoghq.eu` for EU. This parameter is used to automatically construct the endpoint when the `Host` parameter is not specified. If not specified, defaults to `datadoghq.com`. | `datadoghq.com` |
 | `TLS` | End-to-end security communications security protocol. Datadog recommends setting this to `on`. | `off` |
 | `compress` | Optional. Compresses the payload in GZIP format. Datadog supports and recommends setting this to `gzip`.  | _none_ |
 | `apikey` | Your [Datadog API key](https://app.datadoghq.com/account/settings#api). | _none_ |
@@ -28,9 +28,9 @@ This plugin uses the following configuration parameters:
 | `dd_tags` | Optional. The [tags](https://docs.datadoghq.com/tagging/) you want to assign to your logs in Datadog. If unset, Datadog will look for the tags in the [`ddtags` attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs).  | _none_ |
 | `dd_message_key` | By default, the plugin searches for the key `log` and remaps the value to the key `message`. If the property is set, the plugin will search the property name key. | _none_ |
 | `dd_hostname` | The host the emitted logs should be associated with. If unset, Datadog expects the host to be set with `host`, `hostname`, or `syslog.hostname` attributes. See [Datadog Logs preprocessor documentation](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=host#preprocessing) for recognized attributes. | _none_ |
-| `site` | Optional. The Datadog site to send logs to. Use `datadoghq.com` for US or `datadoghq.eu` for EU. If not specified, defaults to `datadoghq.com`. | `datadoghq.com` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 | `header` | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `Host` | The Datadog server endpoint where you are sending your logs. This parameter takes precedence over the `site` parameter if both are specified. If not set, the plugin will use the `site` parameter to construct the endpoint automatically. | `http-intake.logs.datadoghq.com` |
 
 ### Configuration file
 
