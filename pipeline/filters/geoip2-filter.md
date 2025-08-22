@@ -27,22 +27,22 @@ The following configuration processes the incoming `remote_addr` and appends cou
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          dummy: {"remote_addr": "8.8.8.8"}
+  inputs:
+    - name: dummy
+      dummy: {"remote_addr": "8.8.8.8"}
 
-    filters:
-        - name: gioip2
-          match: '*'
-          database: GioLite2-City.mmdb
-          lookup_key: remote_addr
-          record:
-              - country remote_addr %{country.names.en}
-              - isocode remote_addr %{country.iso_code}
+  filters:
+    - name: gioip2
+      match: '*'
+      database: GioLite2-City.mmdb
+      lookup_key: remote_addr
+      record:
+        - country remote_addr %{country.names.en}
+        - isocode remote_addr %{country.iso_code}
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -50,20 +50,20 @@ pipeline:
 
 ```text
 [INPUT]
-    Name   dummy
-    Dummy  {"remote_addr": "8.8.8.8"}
+  Name   dummy
+  Dummy  {"remote_addr": "8.8.8.8"}
 
 [FILTER]
-    Name geoip2
-    Match *
-    Database GeoLite2-City.mmdb
-    Lookup_key remote_addr
-    Record country remote_addr %{country.names.en}
-    Record isocode remote_addr %{country.iso_code}
+  Name geoip2
+  Match *
+  Database GeoLite2-City.mmdb
+  Lookup_key remote_addr
+  Record country remote_addr %{country.names.en}
+  Record isocode remote_addr %{country.iso_code}
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}

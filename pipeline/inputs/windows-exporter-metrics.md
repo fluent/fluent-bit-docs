@@ -2,9 +2,9 @@
 description: A plugin based on Prometheus Windows Exporter to collect system and host level metrics
 ---
 
-# Windows Exporter metrics
+# Windows exporter metrics
 
-[Prometheus Windows Exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from Microsoft Windows, such as CPU, Disk, Network, and Process statistics. Fluent Bit 1.9.0 and later includes the Windows Exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
+[Prometheus Windows exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from Microsoft Windows, such as CPU, Disk, Network, and Process statistics. Fluent Bit 1.9.0 and later includes the Windows Exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
 The initial release of Windows Exporter metrics contains a single collector available from Prometheus Windows Exporter.
 
@@ -12,31 +12,31 @@ Metrics collected with Windows Exporter metrics flow through a separate pipeline
 
 ## Configuration
 
-| Key             | Description                                                            | Default   |
-| --------------- | ---------------------------------------------------------------------- | --------- |
-| `scrape_interval` | The rate at which metrics are collected. | `5 seconds` |
-| `we.logical_disk.allow_disk_regex` | Specify the regular expression for logical disk metrics to allow collection of.  | `"/.+/"` (all) |
-| `we.logical_disk.deny_disk_regex` | Specify the regular expression for logical disk metrics to prevent collection of or ignore.  | `NULL` (all) |
-| `we.net.allow_nic_regex` | Specify the regular expression for network metrics captured by the name of the NIC. | `"/.+/"` (all) |
-| `we.service.where` | Specify the `WHERE` clause for retrieving service metrics.  | `NULL` |
-| `we.service.include` | Specify the key value pairs for the include condition for the `WHERE` clause of service metrics. | `NULL`   |
-| `we.service.exclude` | Specify the key value pairs for the exclude condition for the `WHERE` clause of service metrics. | `NULL`   |
-| `we.process.allow_process_regex` | Specify the regular expression covering the process metrics to collect. | `"/.+/"` (all) |
-| `we.process.deny_process_regex`  | Specify the regular expression for process metrics to prevent collection of or ignore. | `NULL` (all) |
-| `collector.cpu.scrape_interval` | The rate in seconds at which `cpu` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.net.scrape_interval` | The rate in seconds at which `net` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.logical_disk.scrape_interval` | The rate in seconds at which `logical_disk` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.cs.scrape_interval` | The rate in seconds at which `cs` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.os.scrape_interval`| The rate in seconds at which `os` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.thermalzone.scrape_interval`| The rate in seconds at which `thermalzone` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.cpu_info.scrape_interval`| The rate in seconds at which `cpu_info` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.logon.scrape_interval`   | The rate in seconds at which `logon` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.system.scrape_interval`  | The rate in seconds at which `system` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.service.scrape_interval`  | The rate in seconds at which `service` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.memory.scrape_interval`  | The rate in seconds at which `memory` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.paging_file.scrape_interval`  | The rate in seconds at which `paging_file` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `collector.process.scrape_interval`  | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds` |
-| `metrics` | Specify which metrics are collected. | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system,service"` |
+| Key                                      | Description                                                                                                                                                    | Default                                                                  |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| `scrape_interval`                        | The rate at which metrics are collected.                                                                                                                       | `5 seconds`                                                              |
+| `we.logical_disk.allow_disk_regex`       | Specify the regular expression for logical disk metrics to allow collection of.                                                                                | `"/.+/"` (all)                                                           |
+| `we.logical_disk.deny_disk_regex`        | Specify the regular expression for logical disk metrics to prevent collection of or ignore.                                                                    | `NULL` (all)                                                             |
+| `we.net.allow_nic_regex`                 | Specify the regular expression for network metrics captured by the name of the NIC.                                                                            | `"/.+/"` (all)                                                           |
+| `we.service.where`                       | Specify the `WHERE` clause for retrieving service metrics.                                                                                                     | `NULL`                                                                   |
+| `we.service.include`                     | Specify the key value pairs for the include condition for the `WHERE` clause of service metrics.                                                               | `NULL`                                                                   |
+| `we.service.exclude`                     | Specify the key value pairs for the exclude condition for the `WHERE` clause of service metrics.                                                               | `NULL`                                                                   |
+| `we.process.allow_process_regex`         | Specify the regular expression covering the process metrics to collect.                                                                                        | `"/.+/"` (all)                                                           |
+| `we.process.deny_process_regex`          | Specify the regular expression for process metrics to prevent collection of or ignore.                                                                         | `NULL` (all)                                                             |
+| `collector.cpu.scrape_interval`          | The rate in seconds at which `cpu` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0 seconds`                                                              |
+| `collector.net.scrape_interval`          | The rate in seconds at which `net` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0 seconds`                                                              |
+| `collector.logical_disk.scrape_interval` | The rate in seconds at which `logical_disk` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0 seconds`                                                              |
+| `collector.cs.scrape_interval`           | The rate in seconds at which `cs` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.           | `0 seconds`                                                              |
+| `collector.os.scrape_interval`           | The rate in seconds at which `os` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.           | `0 seconds`                                                              |
+| `collector.thermalzone.scrape_interval`  | The rate in seconds at which `thermalzone` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.  | `0 seconds`                                                              |
+| `collector.cpu_info.scrape_interval`     | The rate in seconds at which `cpu_info` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.     | `0 seconds`                                                              |
+| `collector.logon.scrape_interval`        | The rate in seconds at which `logon` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.        | `0 seconds`                                                              |
+| `collector.system.scrape_interval`       | The rate in seconds at which `system` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.       | `0 seconds`                                                              |
+| `collector.service.scrape_interval`      | The rate in seconds at which `service` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0 seconds`                                                              |
+| `collector.memory.scrape_interval`       | The rate in seconds at which `memory` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.       | `0 seconds`                                                              |
+| `collector.paging_file.scrape_interval`  | The rate in seconds at which `paging_file` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.  | `0 seconds`                                                              |
+| `collector.process.scrape_interval`      | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0 seconds`                                                              |
+| `metrics`                                | Specify which metrics are collected.                                                                                                                           | `"cpu,cpu_info,os,net,logical_disk,cs,thermalzone,logon,system,service"` |
 
 ## Collectors available
 
@@ -44,21 +44,21 @@ The following table describes the available collectors as part of this plugin. A
 
 The Version column specifies the Fluent Bit version where the collector is available.
 
-| Name          | Description                                                                                      | OS      | Version |
-| ------------- | ------------------------------------------------------------------------------------------------ | ------- | ------- |
-| `cpu`           | Exposes CPU statistics.                                                                          | Windows | v1.9    |
-| `net`           | Exposes Network statistics.                                                                      | Windows | v2.0.8  |
-| `logical_disk` | Exposes `logical_disk` statistics.                                                                | Windows | v2.0.8  |
-| `cs`            | Exposes `cs` statistics.                                                                         | Windows | v2.0.8  |
-| `os`            | Exposes OS statistics.                                                                           | Windows | v2.0.8  |
-| `thermalzone`   | Exposes `thermalzone` statistics.                                                                | Windows | v2.0.8  |
-| `cpu_info`     | Exposes `cpu_info` statistics.                                                                    | Windows | v2.0.8  |
-| `logon`         | Exposes `logon` statistics.                                                                      | Windows | v2.0.8  |
-| `system`        | Exposes `system` statistics.                                                                     | Windows | v2.0.8  |
-| `service`       | Exposes `service` statistics.                                                                    | Windows | v2.1.6  |
-| `memory`        | Exposes `memory` statistics.                                                                       | Windows | v2.1.9 |
-| `paging_file`   | Exposes `paging_file` statistics.                                                                 | Windows | v2.1.9  |
-| `process`       | Exposes `process` statistics.                                                                      | Windows | v2.1.9 |
+| Name           | Description                        | OS      | Version |
+|----------------|------------------------------------|---------|---------|
+| `cpu`          | Exposes CPU statistics.            | Windows | v1.9    |
+| `net`          | Exposes Network statistics.        | Windows | v2.0.8  |
+| `logical_disk` | Exposes `logical_disk` statistics. | Windows | v2.0.8  |
+| `cs`           | Exposes `cs` statistics.           | Windows | v2.0.8  |
+| `os`           | Exposes OS statistics.             | Windows | v2.0.8  |
+| `thermalzone`  | Exposes `thermalzone` statistics.  | Windows | v2.0.8  |
+| `cpu_info`     | Exposes `cpu_info` statistics.     | Windows | v2.0.8  |
+| `logon`        | Exposes `logon` statistics.        | Windows | v2.0.8  |
+| `system`       | Exposes `system` statistics.       | Windows | v2.0.8  |
+| `service`      | Exposes `service` statistics.      | Windows | v2.1.6  |
+| `memory`       | Exposes `memory` statistics.       | Windows | v2.1.9  |
+| `paging_file`  | Exposes `paging_file` statistics.  | Windows | v2.1.9  |
+| `process`      | Exposes `process` statistics.      | Windows | v2.1.9  |
 
 ## Threading
 
@@ -69,6 +69,38 @@ This input always runs in its own [thread](../../administration/multithreading.m
 ### Configuration file
 
 In the following configuration file, the input plugin `windows_exporter_metrics` collects `metrics` every two seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+# Node Exporter Metrics + Prometheus Exporter
+# -------------------------------------------
+# The following example collect host metrics on Linux and expose
+# them through a Prometheus HTTP end-point.
+#
+# After starting the service try it with:
+#
+# $ curl http://127.0.0.1:2021/metrics
+#
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: windows_exporter_metrics
+      tag: node_metrics
+      scrape_interval: 2
+
+  outputs:
+    - name: prometheus_exporter
+      match: node_metrics
+      port: 2021
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 # Node Exporter Metrics + Prometheus Exporter
@@ -81,20 +113,23 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-    flush           1
-    log_level       info
+  flush           1
+  log_level       info
 
 [INPUT]
-    name            windows_exporter_metrics
-    tag             node_metrics
-    scrape_interval 2
+  name            windows_exporter_metrics
+  tag             node_metrics
+  scrape_interval 2
 
 [OUTPUT]
-    name            prometheus_exporter
-    match           node_metrics
-    host            0.0.0.0
-    port            2021
+  name            prometheus_exporter
+  match           node_metrics
+  host            0.0.0.0
+  port            2021
 ```
+
+{% endtab %}
+{% endtabs %}
 
 You can test the expose of the metrics by using `curl`:
 
@@ -104,7 +139,7 @@ curl http://127.0.0.1:2021/metrics
 
 ### Service where clause
 
-Windows service collector will retrieve all of the service information for the local node or container.
+Windows service collector will retrieve all the service information for the local node or container.
 `we.service.where`, `we.service.include`, and `we.service.exclude` can be used to filter the service metrics.
 
 To filter these metrics, users should specify a `WHERE` clause.
@@ -202,6 +237,6 @@ The WMI query will be called with the translated parameter as:
 
 ## Enhancement requests
 
-The plugin implements a subset of the available collectors in the original Prometheus Windows Exporter. If you would like a specific collector prioritized, open a Github issue by using the following template:
+The plugin implements a subset of the available collectors in the original Prometheus Windows Exporter. If you would like a specific collector prioritized, open a GitHub issue by using the following template:
 
 - [`in_windows_exporter_metrics`](https://github.com/fluent/fluent-bit/issues/new?assignees=\&labels=\&template=feature_request.md\&title=in_windows_exporter_metrics:%20add%20ABC%20collector)

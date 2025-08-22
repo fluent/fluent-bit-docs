@@ -37,7 +37,7 @@ For conditionals, added the new _@record_ functions:
 | `@record.time()` | Returns the record timestamp. |
 | `@record.contains(key)` | Returns `true` or false if `key` exists in the record, or `false` if not. |
 
-### IS NULL, IS NOT NULL
+### `IS NULL` and `IS NOT NULL`
 
 Added `IS NULL` and `IS NOT NULL` statements to determine whether an existing key in a record has a null value. For example:
 
@@ -45,10 +45,10 @@ Added `IS NULL` and `IS NOT NULL` statements to determine whether an existing ke
 SELECT * FROM STREAM:test WHERE key3['sub1'] IS NOT NULL;
 ```
 
-For more details, see [Check Keys and NULL values](../stream-processing/getting-started/check-keys-null-values.md).
+For more details, see [Check keys and null values](../stream-processing/getting-started/check-keys-null-values.md).
 
 ## Fluent Bit v1.1
 
-> Release date: May 09, 2019
+> Release date: 2019-05-09
 
 Added the stream processor to Fluent Bit.

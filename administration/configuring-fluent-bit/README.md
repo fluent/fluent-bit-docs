@@ -1,9 +1,9 @@
-# Configuring Fluent Bit
+# Configure Fluent Bit
 
 Fluent Bit supports two configuration formats:
 
 - [YAML](yaml/README.md): Standard configuration format as of v3.2.
-- [Classic mode](classic-mode/README.md): To be deprecated at the end of 2025.
+- [Classic mode](classic-mode/README.md): To be deprecated at the end of 2026.
 
 ## Command line interface
 

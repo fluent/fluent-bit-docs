@@ -1,4 +1,4 @@
-# AWS Metadata
+# AWS metadata
 
 The _AWS Filter_ enriches logs with AWS Metadata. The plugin adds the EC2 instance ID and availability zone to log records. To use this plugin, you must be running in EC2 and have the [instance metadata service enabled](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html).
 
@@ -153,7 +153,7 @@ If you run Fluent Bit logs might look like the following:
 
 #### `tags_exclude`
 
-Suppose the EC2 instance has three tags: `Name:fluent-bit-docs-example`, `project:fluentbit`, and `department:it`. In this example, the `department` tag is redundant and will be excluded. All of the projects belong to the `it` department, and you don't want to waste storage space on redundant labels.
+Suppose the EC2 instance has three tags: `Name:fluent-bit-docs-example`, `project:fluentbit`, and `department:it`. In this example, the `department` tag is redundant and will be excluded. All the projects belong to the `it` department, and you don't want to waste storage space on redundant labels.
 
 Here is an example configuration that achieves this:
 
@@ -163,11 +163,11 @@ Here is an example configuration that achieves this:
 ```yaml
 pipeline:
 
-    filters:
-        - name: aws
-          match: '*'
-          tags_enabled: true
-          tags_exclude: department
+  filters:
+    - name: aws
+      match: '*'
+      tags_enabled: true
+      tags_exclude: department
 ```
 
 {% endtab %}
@@ -175,10 +175,10 @@ pipeline:
 
 ```text
 [FILTER]
-    Name aws
-    Match *
-    tags_enabled true
-    tags_exclude department
+  Name aws
+  Match *
+  tags_enabled true
+  tags_exclude department
 ```
 
 {% endtab %}

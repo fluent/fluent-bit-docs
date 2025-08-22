@@ -17,7 +17,7 @@ This plugin is generally supported on Linux-based operating systems, with macOS 
 
 ## Configuration
 
-`scrape_interval` sets the default for all scrapes. To set granular scrape intervals, set the specific interval. For example, `collector.cpu.scrape_interval`. When using a granular scrape interval, if a value greater than `0` is used, it overrides the global default. Otherwise the global default is used.
+`scrape_interval` sets the default for all scrapes. To set granular scrape intervals, set the specific interval. For example, `collector.cpu.scrape_interval`. When using a granular scrape interval, if a value greater than `0` is used, it overrides the global default. Otherwise, the global default is used.
 
 The plugin top-level `scrape_interval` setting is the global default. Any custom settings for individual `scrape_intervals` override that specific metric scraping interval.
 
@@ -27,34 +27,34 @@ Overridden intervals only change the collection interval, not the interval for p
 
 For example, if the global interval is set to `5` and an override interval of `60` is used, the published metrics will be reported every five seconds. However, the specific collector will stay the same for 60 seconds until it's collected again.
 
-This helps with downsampling when collecting metrics.
+This helps with down-sampling when collecting metrics.
 
-| Key             | Description                                                            | Default   |
-| --------------- | ---------------------------------------------------------------------- | --------- |
+| Key | Description | Default |
+|---|---|---|
 | `scrape_interval` | The rate in seconds at which metrics are collected from the host operating system. | `5` |
-| `path.procfs`     | The mount point used to collect process information and metrics.        | `/proc/`    |
-| `path.sysfs`      | The path in the filesystem used to collect system metrics.              | `/sys/`     |
+| `path.procfs` | The mount point used to collect process information and metrics. | `/proc/` |
+| `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys/` |
 | `collector.cpu.scrape_interval` | The rate in seconds at which `cpu` metrics are collected from the host operating system. | `0` |
-| `collector.cpufreq.scrape_interval`   | The rate in seconds at which `cpufreq` metrics are collected from the host operating system.  | `0` |
-| `collector.meminfo.scrape_interval`   | The rate in seconds at which `meminfo` metrics are collected from the host operating system.  | `0` |
-| `collector.diskstats.scrape_interval` | The rate in seconds at which `diskstats` metrics are collected from the host operating system.  | `0` |
-| `collector.filesystem.scrape_interval` | The rate in seconds at which `filesystem` metrics are collected from the host operating system.  | `0` |
-| `collector.uname.scrape_interval`     | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
-| `collector.stat.scrape_interval`      | The rate in seconds at which `stat` metrics are collected from the host operating system.  | `0` |
-| `collector.time.scrape_interval`      | The rate in seconds at which `time` metrics are collected from the host operating system.  | `0` |
-| `collector.loadavg.scrape_interval`   | The rate in seconds at which `loadavg` metrics are collected from the host operating system.  | `0` |
-| `collector.vmstat.scrape_interval`   | The rate in seconds at which `vmstat` metrics are collected from the host operating system.  | `0` |
-| `collector.thermal_zone.scrape_interval`   | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system.  | `0` |
-| `collector.filefd.scrape_interval`   | The rate in seconds at which `filefd` metrics are collected from the host operating system.  | `0` |
-| `collector.nvme.scrape_interval` | The rate in seconds at which `nvme` metrics are collected from the host operating system.  | `0` |
-| `collector.processes.scrape_interval` | The rate in seconds at which system level `process` metrics are collected from the host operating system.  | `0` |
+| `collector.cpufreq.scrape_interval` | The rate in seconds at which `cpufreq` metrics are collected from the host operating system. | `0` |
+| `collector.meminfo.scrape_interval` | The rate in seconds at which `meminfo` metrics are collected from the host operating system. | `0` |
+| `collector.diskstats.scrape_interval` | The rate in seconds at which `diskstats` metrics are collected from the host operating system. | `0` |
+| `collector.filesystem.scrape_interval` | The rate in seconds at which `filesystem` metrics are collected from the host operating system. | `0` |
+| `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
+| `collector.stat.scrape_interval` | The rate in seconds at which `stat` metrics are collected from the host operating system. | `0` |
+| `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
+| `collector.loadavg.scrape_interval` | The rate in seconds at which `loadavg` metrics are collected from the host operating system. | `0` |
+| `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
+| `collector.thermal_zone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
+| `collector.filefd.scrape_interval` | The rate in seconds at which `filefd` metrics are collected from the host operating system. | `0` |
+| `collector.nvme.scrape_interval` | The rate in seconds at which `nvme` metrics are collected from the host operating system. | `0` |
+| `collector.processes.scrape_interval` | The rate in seconds at which system level `process` metrics are collected from the host operating system. | `0` |
 | `metrics` | Specify which metrics are collected from the host operating system. These metrics depend on `/procfs` or `/sysfs`. The actual values of metrics will be read from `/proc` or `/sys` when needed. `cpu`, `cpufreq`, `meminfo`, `diskstats`, `filesystem`, `stat`, `loadavg`, `vmstat`, `netdev`, and `filefd` depend on `procfs`. `cpufreq` metrics depend on `sysfs`. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
-| `filesystem.ignore_mount_point_regex`  | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)`    |
-| `filesystem.ignore_filesystem_type_regex`  | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$`    |
+| `filesystem.ignore_mount_point_regex` | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)` |
+| `filesystem.ignore_filesystem_type_regex` | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$` |
 | `diskstats.ignore_device_regex` | Specify the regular expression for the` diskstats` to prevent collection of/ignore. | `^(ram\|loop\|fd\|(h\|s\|v\|xv)d[a-z]\|nvme\\d+n\\d+p)\\d+$` |
-| `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | false |
-| `systemd_unit_start_time_metrics` | Determines if the collector will include unit start time metrics. | false |
-| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | false |
+| `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | `false` |
+| `systemd_unit_start_time_metrics` | Determines if the collector will include unit start time metrics. | `false` |
+| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
 | `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
 | `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)"` |
 
@@ -64,24 +64,24 @@ The following table describes the available collectors as part of this plugin. T
 
 The Version column specifies the Fluent Bit version where the collector is available.
 
-| Name | Description | Operating system | Version |
-| ---- | ----------- | ---------------- | ------- |
-| `cpu`       | Exposes CPU statistics. | Linux, macOS | 1.8 |
-| `cpufreq`   | Exposes CPU frequency statistics. | Linux | 1.8 |
-| `diskstats` | Exposes disk I/O statistics.   | Linux, macOS | 1.8 |
-| `filefd`    | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`. | Linux | 1.8.2 |
-| `filesystem` | Exposes filesystem statistics from `/proc/*/mounts`. | Linux | 2.0.9 |
-| `loadavg`    | Exposes load average.  | Linux, macOS | 1.8 |
-| `meminfo`    | Exposes memory statistics. | Linux, macOS | 1.8 |
-| `netdev`     | Exposes network interface statistics such as bytes transferred. | Linux, macOS | 1.8.2  |
-| `stat`       | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux | 1.8 |
-| `time`       | Exposes the current system time. | Linux | v1.8 |
-| `uname`      | Exposes system information as provided by the `uname` system call. | Linux, macOS | 1.8 |
-| `vmstat`     | Exposes statistics from `/proc/vmstat`. | Linux | 1.8.2 |
-| `systemd collector` | Exposes statistics from `systemd`.| Linux  | 2.1.3 |
-| `thermal_zone`      | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*` | Linux | 2.2.1 |
-| `nvme` | Exposes `nvme` statistics from `/proc`. | Linux | 2.2.0 |
-| `processes` | Exposes processes statistics from `/proc`. | Linux | 2.2.0  |
+| Name                | Description                                                                                      | Operating system | Version |
+|---------------------|--------------------------------------------------------------------------------------------------|------------------|---------|
+| `cpu`               | Exposes CPU statistics.                                                                          | Linux, macOS     | 1.8     |
+| `cpufreq`           | Exposes CPU frequency statistics.                                                                | Linux            | 1.8     |
+| `diskstats`         | Exposes disk I/O statistics.                                                                     | Linux, macOS     | 1.8     |
+| `filefd`            | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux            | 1.8.2   |
+| `filesystem`        | Exposes filesystem statistics from `/proc/*/mounts`.                                             | Linux            | 2.0.9   |
+| `loadavg`           | Exposes load average.                                                                            | Linux, macOS     | 1.8     |
+| `meminfo`           | Exposes memory statistics.                                                                       | Linux, macOS     | 1.8     |
+| `netdev`            | Exposes network interface statistics such as bytes transferred.                                  | Linux, macOS     | 1.8.2   |
+| `stat`              | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux            | 1.8     |
+| `time`              | Exposes the current system time.                                                                 | Linux            | v1.8    |
+| `uname`             | Exposes system information as provided by the `uname` system call.                               | Linux, macOS     | 1.8     |
+| `vmstat`            | Exposes statistics from `/proc/vmstat`.                                                          | Linux            | 1.8.2   |
+| `systemd collector` | Exposes statistics from `systemd`.                                                               | Linux            | 2.1.3   |
+| `thermal_zone`      | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                               | Linux            | 2.2.1   |
+| `nvme`              | Exposes `nvme` statistics from `/proc`.                                                          | Linux            | 2.2.0   |
+| `processes`         | Exposes processes statistics from `/proc`.                                                       | Linux            | 2.2.0   |
 
 ## Threading
 
@@ -107,20 +107,20 @@ In the following configuration file, the input plugin `node_exporter_metrics` co
 # $ curl http://127.0.0.1:2021/metrics
 #
 service:
-    flush: 1
-    log_level: info
-    
+  flush: 1
+  log_level: info
+
 pipeline:
-    inputs:
-        - name: node_exporter_metrics
-          tag:  node_metrics
-          scrape_interval: 2
-          
-    outputs:
-        - name: prometheus_exporter
-          match: node_metrics
-          host: 0.0.0.0
-          port: 2021
+  inputs:
+    - name: node_exporter_metrics
+      tag:  node_metrics
+      scrape_interval: 2
+
+  outputs:
+    - name: prometheus_exporter
+      match: node_metrics
+      host: 0.0.0.0
+      port: 2021
 ```
 
 {% endtab %}
@@ -138,19 +138,19 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-    flush           1
-    log_level       info
+  flush           1
+  log_level       info
 
 [INPUT]
-    name            node_exporter_metrics
-    tag             node_metrics
-    scrape_interval 2
+  name            node_exporter_metrics
+  tag             node_metrics
+  scrape_interval 2
 
 [OUTPUT]
-    name            prometheus_exporter
-    match           node_metrics
-    host            0.0.0.0
-    port            2021
+  name            prometheus_exporter
+  match           node_metrics
+  host            0.0.0.0
+  port            2021
 
 
 ```
@@ -170,16 +170,16 @@ When deploying Fluent Bit in a container you will need to specify additional set
 
 ```shell
 docker run -ti -v /proc:/host/proc \
-                 -v /sys:/host/sys   \
-                 -p 2021:2021        \
-                 fluent/fluent-bit:1.8.0 \
-                 /fluent-bit/bin/fluent-bit \
-                 -i node_exporter_metrics \
-                 -p path.procfs=/host/proc \
-                 -p path.sysfs=/host/sys \
-                 -o prometheus_exporter \
-                 -p "add_label=host $HOSTNAME" \
-                 -f 1
+           -v /sys:/host/sys   \
+           -p 2021:2021        \
+           fluent/fluent-bit:1.8.0 \
+           /fluent-bit/bin/fluent-bit \
+           -i node_exporter_metrics \
+           -p path.procfs=/host/proc \
+           -p path.sysfs=/host/sys \
+           -o prometheus_exporter \
+           -p "add_label=host $HOSTNAME" \
+           -f 1
 ```
 
 ### Fluent Bit with Prometheus and Grafana
@@ -190,7 +190,7 @@ If you use dashboards for monitoring, Grafana is one option. The Fluent Bit sour
 
    ```shell
    git clone https://github.com/fluent/fluent-bit
-   
+
    cd fluent-bit/docker_compose/node-exporter-dashboard/
    ```
 

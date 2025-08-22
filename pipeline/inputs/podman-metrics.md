@@ -6,14 +6,14 @@ The metrics can be exposed later as, for example, Prometheus counters and gauges
 
 ## Configuration parameters
 
-| Key | Description | Default |
-| --- | ------------| ------- |
-| `scrape_interval`   | Interval between each scrape of Podman data (in seconds). | `30` |
-| `scrape_on_start`   | Sets whether this plugin scrapes Podman data on startup. | `false` |
-| `path.config`       | Custom path to the Podman containers configuration file. | `/var/lib/containers/storage/overlay-containers/containers.json` |
-| `path.sysfs`        | Custom path to the `sysfs` subsystem directory. | `/sys/fs/cgroup` |
-| `path.procfs`       | Custom path to the `proc` subsystem directory. | `/proc` |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| Key               | Description                                                                                             | Default                                                          |
+|-------------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `scrape_interval` | Interval between each scrape of Podman data (in seconds).                                               | `30`                                                             |
+| `scrape_on_start` | Sets whether this plugin scrapes Podman data on startup.                                                | `false`                                                          |
+| `path.config`     | Custom path to the Podman containers configuration file.                                                | `/var/lib/containers/storage/overlay-containers/containers.json` |
+| `path.sysfs`      | Custom path to the `sysfs` subsystem directory.                                                         | `/sys/fs/cgroup`                                                 |
+| `path.procfs`     | Custom path to the `proc` subsystem directory.                                                          | `/proc`                                                          |
+| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                                                          |
 
 ## Get started
 
@@ -53,10 +53,10 @@ container_network_receive_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc
 # HELP container_network_receive_errors_total Network received errors
 # TYPE container_network_receive_errors_total counter
 container_network_receive_errors_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 0
-# HELP container_network_transmit_bytes_total Network transmited bytes
+# HELP container_network_transmit_bytes_total Network transmitted bytes
 # TYPE container_network_transmit_bytes_total counter
 container_network_transmit_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 962
-# HELP container_network_transmit_errors_total Network transmitedd errors
+# HELP container_network_transmit_errors_total Network transmitted errors
 # TYPE container_network_transmit_errors_total counter
 container_network_transmit_errors_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 0
 # HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
@@ -89,27 +89,26 @@ fluentbit_input_storage_chunks_busy_bytes{name="podman_metrics.0"} 0
 
 ```yaml
 pipeline:
-    inputs:
-        - name: podman_metrics
-          scrape_interval: 10
-          scrape_on_start: true
-          
-    outputs:
-        - name: prometheus_exporter
+  inputs:
+    - name: podman_metrics
+      scrape_interval: 10
+      scrape_on_start: true
+      
+  outputs:
+    - name: prometheus_exporter
 ```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-
 ```text
 [INPUT]
-    name podman_metrics
-    scrape_interval 10
-    scrape_on_start true
+  name podman_metrics
+  scrape_interval 10
+  scrape_on_start true
     
 [OUTPUT]
-    name prometheus_exporter
+  name prometheus_exporter
 ```
 
 {% endtab %}
