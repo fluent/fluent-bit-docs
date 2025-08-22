@@ -2,8 +2,10 @@ name: Links
 
 on:
   schedule:
-    - cron: "00 18 * * 0"
-
+    - cron: "00 18 1 * *"
+# Uncomment the following line while testing links in a single PR. Recomment when
+# done.
+# pull_request
 
 jobs:
   linkChecker:
@@ -19,6 +21,8 @@ jobs:
         with:
           fail: false
           jobSummary: true
+
+# If testing links on pull_request, comment these lines out!
 
       - name: Create Issue From File
         if: steps.lychee.outputs.exit_code != 0
