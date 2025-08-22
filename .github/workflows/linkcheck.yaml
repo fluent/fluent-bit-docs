@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "00 18 1 * *"
 # Uncomment the following line while testing links in a single PR. Recomment when
-# done.
+# done. Be sure to comment out the 'Create Issue from File' section while testing.
 # pull_request
 
 jobs:
