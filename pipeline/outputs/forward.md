@@ -44,6 +44,8 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file`. | _none_ |
+| `tls.windows.certstore_name`  | (Windows only) Specify the name of the Windows Certificate Store to load certificates from.  | `Root` |
+| `tls.windows.use_enterprise_store` | (Windows only) Enable loading certificates from the Local Machine Enterprise Certificate Store. | `Off` |
 
 ## Forward setup
 
