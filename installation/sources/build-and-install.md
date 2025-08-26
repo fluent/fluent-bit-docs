@@ -230,6 +230,7 @@ Processor plugins handle the events within the processor pipelines to allow modi
 
 The following table describes the processors available:
 
-| Option | Description | Default || :--- | :--- | :--- |
+| Option | Description | Default |
+| :--- | :--- | :--- |
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | `On` |
 | [`FLB_PROCESSOR_LABELS`](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | `On` |
