@@ -1,16 +1,10 @@
 ---
-description: An overview of free public resources for sandbox and labs for learning how to best operate, use, and have success with Fluent Bit.
+description: >-
+  An overview of free public resources for sandbox and labs for learning how to
+  best operate, use, and have success with Fluent Bit.
 ---
 
 # Sandbox and lab resources
-
-## Fluent Bit sandbox - sign-up required
-
-The following are labs that can run in your browser however require email sign-up
-
-<div data-full-width="true"><figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure></div>
-
-- [Fluent Bit 101 Sandbox - Getting Started with configuration and routing](https://play.instruqt.com/Fluent/invite/nuys5ifhsprt)
 
 ## Open Source labs - environment required
 
