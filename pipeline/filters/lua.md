@@ -1,5 +1,7 @@
 # Lua
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
+
 The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
 A Lua-based filter requires two steps:
