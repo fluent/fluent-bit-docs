@@ -1,5 +1,7 @@
 # Metrics selector
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=326269f3-cfea-472d-9169-1de32c142b90" />
+
 The _metrics selector_ processor lets you choose which metrics to include or exclude, similar to the [grep](../filters/grep.md) filter for logs.
 
 ## Configuration parameters
