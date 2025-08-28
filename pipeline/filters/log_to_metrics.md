@@ -4,6 +4,8 @@ description: Generate metrics from logs
 
 # Logs to metrics
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5" />
+
 The _log to metrics_ filter lets you generate log-derived metrics. It supports modes to count records, provide a gauge for field values, or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values.
 
 This filter doesn't actually act as a record filter and therefore doesn't change or drop records. All records will pass through this filter untouched, and any generated metrics will be emitted into a separate metric pipeline.
