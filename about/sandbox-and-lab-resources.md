@@ -6,6 +6,8 @@ description: >-
 
 # Sandbox and lab resources
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=83d7b072-bdfc-4f7d-810d-3ab42267ff54" />
+
 ## Open Source labs - environment required
 
 The following are open source labs where you will need to spin up resources to run through the lab in details
