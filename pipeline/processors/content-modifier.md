@@ -1,5 +1,7 @@
 # Content modifier
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
+
 The _content modifier_ processor lets you manipulate the content, metadata, and attributes of logs and traces.
 
 Similar to how filters work, this processor uses a unified mechanism to perform operations for data manipulation. The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
