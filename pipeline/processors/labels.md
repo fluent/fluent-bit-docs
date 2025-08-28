@@ -1,5 +1,7 @@
 # Labels
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1e9a2474-00c3-4d8d-b170-79996be7af79" />
+
 The _labels_ processor lets you manipulate the labels of metrics.
 
 Similar to filters, this processor presents an enriching/modifying mechanism to perform operations for labels manipulation. The most significant difference is that processors perform better than filters, and when chaining them there are no encoding or decoding performance penalties.
