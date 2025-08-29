@@ -1,5 +1,7 @@
 # Type converter
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
+
 The _Type converter_ filter plugin converts data types and appends new key-value pairs.
 
 You can use this filter in combination with plugins which expect incoming string value. For example, [Grep](grep.md) and [Modify](modify.md).

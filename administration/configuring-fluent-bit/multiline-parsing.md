@@ -1,5 +1,7 @@
 # Multiline parsing
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e19a4c14-a9e4-4163-8f3a-52196eb9a585" />
+
 In an ideal world, applications might log their messages within a single line, but in reality applications generate multiple log messages that sometimes belong to the same context. Processing this information can be complex, like in application stack traces, which always have multiple log lines.
 
 Fluent Bit v1.8 implemented a unified Multiline core capability to solve corner cases.

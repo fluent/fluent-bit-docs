@@ -1,5 +1,7 @@
 # SQL
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=6bd80893-c66f-4950-9e6d-c21358e9e8c9" />
+
 The _SQL_ processor lets you use conditional expressions to select content from logs. This processor doesn't depend on a database or table. Instead, your queries run on the stream.
 
 This processor differs from the stream processor interface that runs after filters.

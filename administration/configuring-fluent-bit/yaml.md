@@ -1,5 +1,7 @@
 # YAML configuration
 
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" />
+
 ## Before you get started
 
 Fluent Bit traditionally offered a `classic` configuration mode, a custom configuration format that's phasing out. While `classic` mode has served well for many years, it has several limitations. Its basic design only supports grouping sections with key-value pairs and lacks the ability to handle sub-sections or complex data structures like lists.
