@@ -37,6 +37,7 @@ Only HTTP endpoints are supported.
 | `logs_span_id_metadata_key`            | Specify a `SpanId` key` to look up in the metadata.           | `$SpanId`         |
 | `logs_trace_id_metadata_key`           | Specify a `TraceId` key to look up in the metadata.          | `$TraceId`        |
 | `logs_attributes_metadata_key`         | Specify an `Attributes` key to look up in the metadata.      | `$Attributes`     |
+| `logs_body_key_attributes`             | When enabled (`true`), Fluent Bit will place all parsed JSON fields (except the one mapped by `logs_body_key`) inside the `attributes` section of the OpenTelemetry `LogRecord`. This is useful if you want structured key/value pairs as attributes, while still mapping a specific field (defined by `logs_body_key`) to the `body`. | `false` |
 | `workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
