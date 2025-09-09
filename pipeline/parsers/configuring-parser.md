@@ -45,7 +45,7 @@ Multiple parsers can be defined and each section has it own properties. The foll
 
 ## Parsers configuration file
 
-All parsers may be defined in a parsers file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
+All parsers can be defined in a parsers file. The parsers file exposes all parsers available that can be used by the input plugins that are aware of this feature. A parsers file can have multiple entries, like so:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
