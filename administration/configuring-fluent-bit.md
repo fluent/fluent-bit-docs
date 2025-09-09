@@ -10,7 +10,12 @@ Fluent Bit supports two configuration formats:
 Fluent Bit exposes most of it features through the command line interface. Running the `-h` option you can get a list of the options available:
 
 ```shell
-$ docker run --rm -it fluent/fluent-bit --help
+docker run --rm -it fluent/fluent-bit --help
+```
+
+Which returns the following help text:
+
+```text
 Usage: /fluent-bit/bin/fluent-bit [OPTION]
 
 Available Options
