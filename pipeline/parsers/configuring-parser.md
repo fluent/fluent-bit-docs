@@ -15,7 +15,7 @@ By default, Fluent Bit provides a set of pre-configured parsers that can be used
 - Syslog rfc5424
 - Syslog rfc3164
 
-Parsers are defined in configuration files that are loaded at start time, through the main Fluent Bit configuration file (YAML or classic), or using one or more external configuration files. Parsers can also be loaded from the command line.
+Parsers are defined in configuration files that are loaded at start time, either through the main Fluent Bit configuration file (YAML or classic) or by using one or more external configuration files. You can also load parsers from the command line.
 
 {% hint style="info" %}
 
