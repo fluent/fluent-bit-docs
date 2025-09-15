@@ -33,13 +33,13 @@ To select a package for a container or operating system, use the instructions fo
 
 | Operating System       | Installation instructions |
 | ---------------------- | ------------------------- |
-| CentOS / Red Hat       | [CentOS 7](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](linux/redhat-centos.md#install-on-redhat-centos) |
-| Ubuntu                 | [Ubuntu 16.04 LTS](linux/ubuntu.md), [Ubuntu 18.04 LTS](linux/ubuntu.md), [Ubuntu 20.04 LTS](linux/ubuntu.md), [Ubuntu 22.04 LTS](linux/ubuntu.md), [Ubuntu 24.04 LTS](linux/ubuntu.md) |
-| Debian                 | [Debian 10](linux/debian.md), [Debian 11](linux/debian.md), [Debian 12](linux/debian.md) |
-| Amazon Linux           | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](linux/amazon-linux.md#amazon-linux-2022) |
-| Raspbian / Raspberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
-| Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
-| Buildroot / Embedded Linux | [Buildroot / Embedded Linux](buildroot-embedded-linux.md) |
+| CentOS / Red Hat       | [CentOS 7](/downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](/downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](/downloads/linux/redhat-centos.md#install-on-redhat-centos) |
+| Ubuntu                 | [Ubuntu 16.04 LTS](/downloads/linux/ubuntu.md), [Ubuntu 18.04 LTS](/downloads/linux/ubuntu.md), [Ubuntu 20.04 LTS](/downloads/linux/ubuntu.md), [Ubuntu 22.04 LTS](/downloads/linux/ubuntu.md), [Ubuntu 24.04 LTS](/downloads/linux/ubuntu.md) |
+| Debian                 | [Debian 10](/downloads/linux/debian.md), [Debian 11](/downloads/linux/debian.md), [Debian 12](/downloads/linux/debian.md) |
+| Amazon Linux           | [Amazon Linux 2](/downloads/linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](/downloads/linux/amazon-linux.md#amazon-linux-2022) |
+| Raspbian / Raspberry Pi | [Raspbian 10](/downloads/linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](/downloads/linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
+| Yocto / Embedded Linux | [Yocto / Embedded Linux](/downloads/linux/yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
+| Buildroot / Embedded Linux | [Buildroot / Embedded Linux](/downloads/linux/buildroot-embedded-linux.md) |
 
 ### Install on Windows (packages)
 
@@ -54,7 +54,7 @@ To select a package for a container or operating system, use the instructions fo
 | ------------------- | --------------------------------------------- |
 | macOS               | [Homebrew](macos.md#installing-from-homebrew) |
 
-### Compile from source (Linux, Windows, FreeBSD, macOS)
+### Compile from source (/downloads/linux, Windows, FreeBSD, macOS)
 
 | Operating system | Installation instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
