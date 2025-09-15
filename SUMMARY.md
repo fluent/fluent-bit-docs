@@ -21,7 +21,7 @@
 * [Get started with Fluent Bit](installation/getting-started-with-fluent-bit.md)
 * [Download and install Fluent Bit](installation/downloads.md)
 * [Requirements](installation/requirements.md)
-* Downloads
+* [Downloads](installation/downloads.md)
   * [Build from source code](installation/source.md)
     * [Build and install](installation/source/build-and-install.md)
     * [Build with static configuration](installation/source/build-with-static-configuration.md)
