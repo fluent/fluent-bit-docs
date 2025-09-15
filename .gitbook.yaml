@@ -2,6 +2,8 @@ redirects:
     # Installation
     installation/upgrade_notes:       ./installation/upgrade-notes.md
     installation/supported_platforms: ./installation/supported-platforms.md
+    installation/docker.md: ./installation/downloads/docker.md
+    installation/windows.md: ./installation/downloads/windows.md
 
     # Inputs
     input/collectd:        ./pipeline/inputs/
