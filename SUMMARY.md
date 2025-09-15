@@ -39,7 +39,7 @@
   * [Kubernetes](installation/downloads/kubernetes.md)
   * [macOS](installation/downloads/macos.md)
   * [Windows](installation/downloads/windows.md)
-  * [Upgrade notes](installation/downloads/upgrade-notes.md)
+  * [Upgrade notes](installation/upgrade-notes.md)
 
 ## Administration
 
