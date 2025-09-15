@@ -17,7 +17,7 @@ All Fluent Bit installations must meet certain [requirements](./requirements.md)
 
 Fluent Bit software is available for a variety of platforms and can be installed using several methods.
 
-You can [direct download and compile the source code](../installation/sources/README.md).
+You can [direct download and compile the source code](../installation/source.md).
 
 To select a package for a container or operating system, use the instructions for that option from the following links:
 
@@ -25,9 +25,9 @@ To select a package for a container or operating system, use the instructions fo
 
 | Deployment Type   | Instructions |
 | ----------------- | -------------------------------------------------- |
-| Kubernetes        | [Deploy on Kubernetes](kubernetes.md#installation) |
-| Docker            | [Deploy with Docker](docker.md)                    |
-| Containers on AWS | [Deploy on Containers on AWS](aws-container.md)    |
+| Kubernetes        | [Deploy on Kubernetes](downloads/kubernetes.md#installation) |
+| Docker            | [Deploy with Docker](downloads/docker.md)                    |
+| Containers on AWS | [Deploy on Containers on AWS](downloads/aws-container.md)    |
 
 ### Install on Linux (packages)
 
@@ -45,22 +45,22 @@ To select a package for a container or operating system, use the instructions fo
 
 | Operating System    | Installation instructions |
 | ------------------- | ------------------------- |
-| Windows Server 2019 | [Windows Server `EXE`](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
-| Windows 10 2019.03  | [Windows `EXE`](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive)               |
+| Windows Server 2019 | [Windows Server `EXE`](downloads/windows.md#installing-from-exe-installer), [Windows Server ZIP](downloads/windows.md#installing-from-zip-archive) |
+| Windows 10 2019.03  | [Windows `EXE`](downloads/windows.md#installing-from-exe-installer), [Windows ZIP](downloads/windows.md#installing-from-zip-archive)               |
 
 ### Install on macOS (packages)
 
 | Operating System    | Installation instructions                     |
 | ------------------- | --------------------------------------------- |
-| macOS               | [Homebrew](macos.md#installing-from-homebrew) |
+| macOS               | [Homebrew](downloads/macos.md#installing-from-homebrew) |
 
-### Compile from source (/downloads/linux, Windows, FreeBSD, macOS)
+### Compile from source (Linux, Windows, FreeBSD, macOS)
 
 | Operating system | Installation instructions                                   |
 | ---------------- | ----------------------------------------------------------- |
-| Linux, FreeBSD   | [Compile from source](sources/build-and-install.md)         |
-| macOS            | [Compile from source](macos.md#compile-from-source) |
-| Windows          | [Compile from Source](windows.md#compile-from-source)       |
+| Linux, FreeBSD   | [Compile from source](downloads/source/build-and-install.md)         |
+| macOS            | [Compile from source](downloads/macos.md#compile-from-source) |
+| Windows          | [Compile from Source](downloads/windows.md#compile-from-source)       |
 
 
 ### Enterprise packages
