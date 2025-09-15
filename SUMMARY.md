@@ -34,15 +34,13 @@
     * [Raspbian and Raspberry Pi](installation/downloads/linux/raspbian-raspberry-pi.md)
     * [Yocto embedded Linux](installation/downloads/linux/yocto-embedded-linux.md)
     * [Buildroot embedded Linux](installation/downloads/linux/buildroot-embedded-linux.md)
-  * [Yocto embedded Linux](installation/downloads/linux/yocto-embedded-linux.md)
-* [Buildroot embedded Linux](installation/downloads/linux/buildroot-embedded-linux.md)
-* [Docker](installation/docker.md)
-* [Containers on AWS](installation/aws-container.md)
-* [Amazon EC2](installation/amazon-ec2.md)
-* [Kubernetes](installation/kubernetes.md)
-* [macOS](installation/macos.md)
-* [Windows](installation/windows.md)
-* [Upgrade notes](installation/upgrade-notes.md)
+  * [Docker](installation/downloads/docker.md)
+  * [Containers on AWS](installation/downloads/aws-container.md)
+  * [Amazon EC2](installation/downloads/amazon-ec2.md)
+  * [Kubernetes](installation/downloads/kubernetes.md)
+  * [macOS](installation/downloads/macos.md)
+  * [Windows](installation/downloads/windows.md)
+  * [Upgrade notes](installation/downloads/upgrade-notes.md)
 
 ## Administration
 

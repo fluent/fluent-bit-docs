@@ -4,24 +4,24 @@ Fluent Bit supports the following operating systems and architectures:
 
 | Operating System | Distribution | Architectures |
 | :--- | :--- | :--- |
-| Linux | [Amazon Linux 2023](/downloads/linux/amazon-linux.md) | x86_64, Arm64v8 |
-|  | [Amazon Linux 2](/downloads/linux/amazon-linux.md) | x86_64, Arm64v8 |
-|  | [CentOS 9 Stream](/downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [CentOS 8](/downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [CentOS 7](/downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
-|  | [Rocky Linux 8](/downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
-|  | [Rocky Linux 9](/downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
-|  | [Alma Linux 8](/downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
-|  | [Alma Linux 9](/downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
-|  | [Debian 12 (Bookworm)](/downloads/linux/debian.md) | x86_64, Arm64v8 |
-|  | [Debian 11 (Bullseye)](/downloads/linux/debian.md) | x86_64, Arm64v8 |
-|  | [Debian 10 (Buster)](/downloads/linux/debian.md) | x86_64, Arm64v8 |
-|  | [Ubuntu 24.04 (Noble Numbat)](/downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
-|  | [Ubuntu 22.04 (Jammy Jellyfish)](/downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
-|  | [Raspbian 12 (Bookworm)](/downloads/linux/raspbian-raspberry-pi.md) | Arm32v7 |
+| Linux | [Amazon Linux 2023](downloads/linux/amazon-linux.md) | x86_64, Arm64v8 |
+|  | [Amazon Linux 2](downloads/linux/amazon-linux.md) | x86_64, Arm64v8 |
+|  | [CentOS 9 Stream](downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
+|  | [CentOS 8](downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
+|  | [CentOS 7](downloads/linux/redhat-centos.md) | x86_64, Arm64v8 |
+|  | [Rocky Linux 8](downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Rocky Linux 9](downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Alma Linux 8](downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Alma Linux 9](downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
+|  | [Debian 12 (Bookworm)](downloads/linux/debian.md) | x86_64, Arm64v8 |
+|  | [Debian 11 (Bullseye)](downloads/linux/debian.md) | x86_64, Arm64v8 |
+|  | [Debian 10 (Buster)](downloads/linux/debian.md) | x86_64, Arm64v8 |
+|  | [Ubuntu 24.04 (Noble Numbat)](downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
+|  | [Ubuntu 22.04 (Jammy Jellyfish)](downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
+|  | [Raspbian 12 (Bookworm)](downloads/linux/raspbian-raspberry-pi.md) | Arm32v7 |
 | macOS | * | x86_64, Apple M1 |
-| Windows | [Windows Server 2019](windows.md) | x86_64, x86 |
-|  | [Windows 10 1903](windows.md) | x86_64, x86 |
+| Windows | [Windows Server 2019](downloads/windows.md) | x86_64, x86 |
+|  | [Windows 10 1903](downloads/windows.md) | x86_64, x86 |
 
 From an architecture support perspective, Fluent Bit is fully functional on x86_64, Arm64v8, and Arm32v7 based processors.
 
