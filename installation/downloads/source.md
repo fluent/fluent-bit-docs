@@ -23,4 +23,12 @@ git clone https://github.com/fluent/fluent-bit
 
 The `master` branch is where the development of Fluent Bit happens. Development version users should expect issues when compiling or at run time.
 
-Fluent Bit users are encouraged to help test every development version to ensure a stable release.
+Fluent Bit users are encouraged to help test every development version to ensure a
+stable release.
+
+## Next step
+
+After downloading Fluent Bit, install it using one of the following methods:
+
+- [Build and install](./source/build-and-install.md)
+- [Build with a static configuration](./source/build-with-static-configuration.md)
