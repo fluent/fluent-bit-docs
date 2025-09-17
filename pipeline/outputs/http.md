@@ -25,6 +25,7 @@ The plugin supports the following configuration parameters:
 | `allow_duplicated_headers` | Specify if duplicated headers are allowed. If a duplicated header is found, the latest key/value set is preserved. | `true` |
 | `log_response_payload` | Specify if the response payload should be logged or not. | `true` |
 | `header_tag` | Specify an optional HTTP header field for the original message tag. | _none_ |
+| `http_method` | Specify POST vs PUT HTTP Method. | `POST` |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
 | `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
