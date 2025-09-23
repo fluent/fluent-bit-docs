@@ -75,7 +75,7 @@ If no database file is present, positioning behavior depends on the value of `re
 - When `read_from_head` is `true`, the plugin reads from the beginning of the file.
 - When `read_from_head` is `false`, the plugin starts monitoring from the end of the file (classic "tail" behavior). This means that only new content written after Fluent Bit starts will be monitored.
 
-The database file essentially stores `inode=offset` so it is recommended to be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
+The database file essentially stores `inode=offset` so it should be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
 
 ## Monitor a large number of files
 
