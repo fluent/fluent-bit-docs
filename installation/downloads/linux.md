@@ -4,6 +4,8 @@ Fluent Bit is available for a variety of Linux distributions and embedded Linux 
 
 The most secure option is to create the repositories according to the instructions for your specific OS.
 
+## Single line install
+
 An installation script is provided for use with most Linux targets. This will by default install the most recent version released.
 
 ```bash
