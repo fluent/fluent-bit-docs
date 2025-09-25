@@ -33,10 +33,12 @@ To select a package for a container or operating system, use the instructions fo
 
 | Operating System       | Installation instructions |
 | ---------------------- | ------------------------- |
-| CentOS / Red Hat       | [CentOS 7](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](downloads/linux/redhat-centos.md#install-on-redhat-centos) |
+| Alma Linux / Red Hat   | [Alma Linux 8](downloads/linux/alma-rocky.md), [Alma Linux 9](downloads/linux/alma-rocky.md), [Alma Linux 10](downloads/linux/alma-rocky.md) |
+| CentOS / Red Hat       | [CentOS 7](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 10 Stream](downloads/linux/redhat-centos.md#install-on-redhat-centos) |
+| Rocky Linux / Red Hat  | [Rocky Linux 8](downloads/linux/alma-rocky.md), [Rocky Linux 9](downloads/linux/alma-rocky.md), [Rocky Linux 10](downloads/linux/alma-rocky.md) |
 | Ubuntu                 | [Ubuntu 16.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 18.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 20.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 22.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 24.04 LTS](downloads/linux/ubuntu.md) |
-| Debian                 | [Debian 10](downloads/linux/debian.md), [Debian 11](downloads/linux/debian.md), [Debian 12](downloads/linux/debian.md) |
-| Amazon Linux           | [Amazon Linux 2](downloads/linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2022](downloads/linux/amazon-linux.md#amazon-linux-2022) |
+| Debian                 | [Debian 10](downloads/linux/debian.md), [Debian 11](downloads/linux/debian.md), [Debian 12](downloads/linux/debian.md), [Debian 13](downloads/linux/debian.md) |
+| Amazon Linux           | [Amazon Linux 2](downloads/linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2023](downloads/linux/amazon-linux.md#amazon-linux-2023) |
 | Raspbian / Raspberry Pi | [Raspbian 10](downloads/linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](downloads/linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
 | Yocto / Embedded Linux | [Yocto / Embedded Linux](downloads/linux/yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
 | Buildroot / Embedded Linux | [Buildroot / Embedded Linux](downloads/linux/buildroot-embedded-linux.md) |
