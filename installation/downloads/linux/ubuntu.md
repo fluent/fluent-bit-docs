@@ -2,46 +2,17 @@
 
 Fluent Bit is distributed as the `fluent-bit` package and is available for long-term support releases of Ubuntu. The latest officially supported version is Noble Numbat (24.04).
 
-## Single line install
-
-An installation script is provided for most Linux targets. This will always install the most recent version released.
-
-```shell
-curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
-```
-
-This is purely a convenience helper and should always be validated prior to use. The recommended secure deployment approach is to use the following instructions.
+The recommended secure deployment approach is to use the following instructions.
 
 ## Server GPG key
 
-The first step is to add the Fluent Bit server GPG key to your keyring to ensure you can get the correct signed packages.
+Add the Fluent Bit server GPG key to your keyring to ensure you can get the correct signed packages.
 
 Follow the official [Debian wiki guidance](https://wiki.debian.org/DebianRepository/UseThirdParty#OpenPGP_Key_distribution).
 
 ```shell
 sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor > /usr/share/keyrings/fluentbit-keyring.gpg'
 ```
-
-### Updated key from March 2022
-
-For releases 1.9.0 and 1.8.15 and later, the [GPG key has been updated](https://packages.fluentbit.io/fluentbit.key). Ensure the new key is added.
-
-The GPG Key fingerprint of the new key is:
-
-```text
-C3C0 A285 34B9 293E AF51  FABD 9F9D DC08 3888 C1CD
-Fluentbit releases (Releases signing key) <releases@fluentbit.io>
-```
-
-The previous key is [still available](https://packages.fluentbit.io/fluentbit-legacy.key) and might be required to install previous versions.
-
-The GPG Key fingerprint of the old key is:
-
-```text
-F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
-```
-
-Refer to the [supported platform documentation](../supported-platforms.md) to see which platforms are supported in each release.
 
 ## Update your sources lists
 
@@ -80,6 +51,8 @@ If you receive the error `Certificate verification failed`, check if the package
 
 ## Install Fluent Bit
 
+1. Ensure your [GPG key](../linux.md#gpg-key-updates) is up to date.
+
 1. Use the following `apt-get` command to install the latest Fluent Bit:
 
    ```shell
@@ -109,4 +82,6 @@ $ systemctl status fluent-bit
 ...
 ```
 
-The default configuration of `fluent-bit` is collecting metrics of CPU usage and sending the records to the standard output. You can see the outgoing data in your `/var/log/syslog` file.
+The default configuration of `fluent-bit` is collecting metrics of CPU usage and
+sending the records to the standard output. You can see the outgoing data in your
+`/var/log/syslog` file.

@@ -8,16 +8,6 @@ Fluent Bit supports the following architectures:
 - `aarch64`
 - `arm64v8`
 
-## Single line install
-
-Fluent Bit provides an installation script to use for most Linux targets. This will always install the most recently released version.
-
-```shell
-curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
-```
-
-This is a convenience helper and should always be validated prior to use. Older versions of this install script won't support auto-detecting Rocky or Alma Linux. The recommended secure deployment approach is to use the following instructions:
-
 ## RHEL 9
 
 From CentOS 9 Stream and later, the CentOS dependencies will update more often than
@@ -74,4 +64,6 @@ $ systemctl status fluent-bit
 ...
 ```
 
-The default Fluent Bit configuration collect metrics of CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/messages` file.
+The default Fluent Bit configuration collect metrics of CPU usage and sends the
+records to the standard output. You can see the outgoing data in your
+`/var/log/messages` file.
