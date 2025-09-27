@@ -29,6 +29,7 @@ This plugin has the following configuration parameters:
 | `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ |
 | `HTTP_User` | Optional username credential for Elastic X-Pack access | _none_ |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User` | _none_ |
+| `HTTP_API_Key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `HTTP_User` or `Cloud_Auth` are defined, this parameter is ignored.  | _none_ |
 | `Index` | Index name | `fluent-bit` |
 | `Type` | Type name | `_doc` |
 | `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off` | `Off` |
