@@ -28,7 +28,7 @@ Only HTTP endpoints are supported.
 | `logs_severity_text_message_key` | The severity text id key to look up in the log events body/message. Sets the `SeverityText` field of the OpenTelemetry logs data model. | `severityText` |
 | `logs_severity_number_message_key` | The severity number id key to look up in the log events body/message. Sets the `SeverityNumber` field of the OpenTelemetry logs data model. | `severityNumber` |
 | `add_label` | Lets you add custom labels to all metrics exposed through the OpenTelemetry exporter. You can have multiple of these fields. | _none_ |
-| `compress` | Set payload compression mechanism. Allowed value: 'gzip'. | _none_ |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
 | `logs_observed_timestamp_metadata_key` | Specify an `ObservedTimestamp` key to look up in the metadata. | `$ObservedKey` |
 | `logs_timestamp_metadata_key` | Specify a `Timestamp` key to look up in the metadata.        | `$Timestamp`      |
 | `logs_severity_key_metadata_key`       | Specify a `SeverityText` key to look up in the metadata.     | `$SeverityText`   |
@@ -47,34 +47,98 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
+
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
+# -------------------------------------------
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
+# them through the OpenTelemetry plugin to a local collector :
+#
 service:
+  flush: 1
   log_level: info
 
 pipeline:
   inputs:
-    - name: mem
-      tag: mem
+    - name: node_exporter_metrics
+      tag: node_metrics
+      scrape_interval: 2
 
-  filters:
-    - name: aws
-      match: '*'
+    - name: dummy
+      tag: dummy.log
+      rate: 3
+
+    - name: event_type
+      type: traces
 
   outputs:
-    - name: cloudwatch_logs
+    - name: opentelemetry
       match: '*'
-      region: us-west-2
-      log_stream_name: fluent-bit-cloudwatch
-      log_group_name: fluent-bit-cloudwatch
-      log_format: json/emf
-      metric_namespace: fluent-bit-metrics
-      metric_dimensions: ec2_instance_id
-      auto_create_group: true
+      host: localhost
+      port: 443
+      metrics_uri: /v1/metrics
+      logs_uri: /v1/logs
+      traces_uri: /v1/traces
+      log_response_payload: true
+      tls: on
+      tls.verify: off
+      logs_body_key: $message
+      logs_span_id_message_key: span_id
+      logs_trace_id_message_key: trace_id
+      logs_severity_text_message_key: loglevel
+      logs_severity_number_message_key: lognum
+      # add user-defined labels
+      add_label:
+        - app fluent-bit
+        - color blue
 ```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-insert fluent-bit.conf
+```text
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
+# -------------------------------------------
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
+# them through the OpenTelemetry plugin to a local collector :
+#
+[SERVICE]
+  Flush                1
+  Log_level            info
+
+[INPUT]
+  Name                 node_exporter_metrics
+  Tag                  node_metrics
+  Scrape_interval      2
+
+[INPUT]
+  Name                 dummy
+  Tag                  dummy.log
+  Rate                 3
+
+[INPUT]
+  Name                 event_type
+  Type                 traces
+
+[OUTPUT]
+  Name                 opentelemetry
+  Match                *
+  Host                 localhost
+  Port                 443
+  Metrics_uri          /v1/metrics
+  Logs_uri             /v1/logs
+  Traces_uri           /v1/traces
+  Log_response_payload True
+  Tls                  On
+  Tls.verify           Off
+  logs_body_key $message
+  logs_span_id_message_key span_id
+  logs_trace_id_message_key trace_id
+  logs_severity_text_message_key loglevel
+  logs_severity_number_message_key lognum
+  # add user-defined labels
+  add_label            app fluent-bit
+  add_label            color blue
+```
 
 {% endtab %}
 {% endtabs %}
