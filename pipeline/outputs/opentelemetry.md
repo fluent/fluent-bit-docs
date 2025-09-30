@@ -47,7 +47,28 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-test.yaml
+service:
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: mem
+      tag: mem
+
+  filters:
+    - name: aws
+      match: '*'
+
+  outputs:
+    - name: cloudwatch_logs
+      match: '*'
+      region: us-west-2
+      log_stream_name: fluent-bit-cloudwatch
+      log_group_name: fluent-bit-cloudwatch
+      log_format: json/emf
+      metric_namespace: fluent-bit-metrics
+      metric_dimensions: ec2_instance_id
+      auto_create_group: true
 ```
 
 {% endtab %}
