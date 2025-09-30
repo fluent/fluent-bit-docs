@@ -10,7 +10,7 @@ Only HTTP endpoints are supported.
 
 | Key | Description | Default |
 |-----|-------------|---------|
-| `host`| IP address or hostname of the target HTTP server. | `127.0.0.1` |
+| `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
 | `http_user` | Basic Auth username. | _none_ |
 | `http_passwd` | Basic Auth password. Requires `HTTP_user` to be set. | _none_ |
 | `port` | TCP port of the target HTTP server. | `80` |
@@ -28,13 +28,13 @@ Only HTTP endpoints are supported.
 | `logs_severity_text_message_key` | The severity text id key to look up in the log events body/message. Sets the `SeverityText` field of the OpenTelemetry logs data model. | `severityText` |
 | `logs_severity_number_message_key` | The severity number id key to look up in the log events body/message. Sets the `SeverityNumber` field of the OpenTelemetry logs data model. | `severityNumber` |
 | `add_label` | Lets you add custom labels to all metrics exposed through the OpenTelemetry exporter. You can have multiple of these fields. | _none_ |
-| `compress` | Set payload compression mechanism. Allowed value: 'gzip'. | _none_ |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
 | `logs_observed_timestamp_metadata_key` | Specify an `ObservedTimestamp` key to look up in the metadata. | `$ObservedKey` |
 | `logs_timestamp_metadata_key` | Specify a `Timestamp` key to look up in the metadata.        | `$Timestamp`      |
 | `logs_severity_key_metadata_key`       | Specify a `SeverityText` key to look up in the metadata.     | `$SeverityText`   |
-| `logs_severity_number_metadata_key`    | Specify a `SeverityNumber` key to look up in the metadata.   | `$SeverityNumber` |
-| `logs_trace_flags_metadata_key`        | Specify a `Flags` key to look up in the metadata.            | `$Flags`          |
-| `logs_span_id_metadata_key`            | Specify a `SpanId` key` to look up in the metadata.           | `$SpanId`         |
+| `logs_severity_number_metadata_key` | Specify a `SeverityNumber` key to look up in the metadata. | `$SeverityNumber` |
+| `logs_trace_flags_metadata_key` | Specify a `Flags` key to look up in the metadata. | `$Flags` |
+| `logs_span_id_metadata_key`            | Specify a `SpanId` key to look up in the metadata.           | `$SpanId`         |
 | `logs_trace_id_metadata_key`           | Specify a `TraceId` key to look up in the metadata.          | `$TraceId`        |
 | `logs_attributes_metadata_key`         | Specify an `Attributes` key to look up in the metadata.      | `$Attributes`     |
 | `workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
@@ -47,6 +47,7 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
+
 # Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
 # -------------------------------------------
 # The following example collects host metrics on Linux and dummy logs and traces and delivers
