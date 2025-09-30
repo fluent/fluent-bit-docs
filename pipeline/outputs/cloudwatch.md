@@ -364,7 +364,6 @@ pipeline:
   metric_dimensions ec2_instance_id,az
   auto_create_group true
 ```
-
 {% endtab %}
 {% endtabs %}
 
