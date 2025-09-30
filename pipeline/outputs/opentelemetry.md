@@ -28,6 +28,10 @@ Only HTTP endpoints are supported.
 | `logs_severity_text_message_key` | The severity text id key to look up in the log events body/message. Sets the `SeverityText` field of the OpenTelemetry logs data model. | `severityText` |
 | `logs_severity_number_message_key` | The severity number id key to look up in the log events body/message. Sets the `SeverityNumber` field of the OpenTelemetry logs data model. | `severityNumber` |
 | `add_label` | Lets you add custom labels to all metrics exposed through the OpenTelemetry exporter. You can have multiple of these fields. | _none_ |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
+| `logs_observed_timestamp_metadata_key` | Specify an `ObservedTimestamp` key to look up in the metadata. | `$ObservedKey` |
+| `logs_timestamp_metadata_key` | Specify a `Timestamp` key to look up in the metadata.        | `$Timestamp`      |
+| `logs_severity_key_metadata_key`       | Specify a `SeverityText` key to look up in the metadata.     | `$SeverityText`   |
 
 
 ## Get started
