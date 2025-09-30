@@ -101,42 +101,42 @@ pipeline:
 # them through the OpenTelemetry plugin to a local collector :
 #
 [SERVICE]
-    Flush                1
-    Log_level            info
+  Flush                1
+  Log_level            info
 
 [INPUT]
-    Name                 node_exporter_metrics
-    Tag                  node_metrics
-    Scrape_interval      2
+  Name                 node_exporter_metrics
+  Tag                  node_metrics
+  Scrape_interval      2
 
 [INPUT]
-    Name                 dummy
-    Tag                  dummy.log
-    Rate                 3
+  Name                 dummy
+  Tag                  dummy.log
+  Rate                 3
 
 [INPUT]
-    Name                 event_type
-    Type                 traces
+  Name                 event_type
+  Type                 traces
 
 [OUTPUT]
-    Name                 opentelemetry
-    Match                *
-    Host                 localhost
-    Port                 443
-    Metrics_uri          /v1/metrics
-    Logs_uri             /v1/logs
-    Traces_uri           /v1/traces
-    Log_response_payload True
-    Tls                  On
-    Tls.verify           Off
-    logs_body_key $message
-    logs_span_id_message_key span_id
-    logs_trace_id_message_key trace_id
-    logs_severity_text_message_key loglevel
-    logs_severity_number_message_key lognum
-    # add user-defined labels
-    add_label            app fluent-bit
-    add_label            color blue
+  Name                 opentelemetry
+  Match                *
+  Host                 localhost
+  Port                 443
+  Metrics_uri          /v1/metrics
+  Logs_uri             /v1/logs
+  Traces_uri           /v1/traces
+  Log_response_payload True
+  Tls                  On
+  Tls.verify           Off
+  logs_body_key $message
+  logs_span_id_message_key span_id
+  logs_trace_id_message_key trace_id
+  logs_severity_text_message_key loglevel
+  logs_severity_number_message_key lognum
+  # add user-defined labels
+  add_label            app fluent-bit
+  add_label            color blue
 ```
 
 {% endtab %}
