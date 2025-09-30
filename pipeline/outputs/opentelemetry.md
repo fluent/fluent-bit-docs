@@ -33,7 +33,7 @@ Only HTTP endpoints are supported.
 | `logs_timestamp_metadata_key` | Specify a `Timestamp` key to look up in the metadata.        | `$Timestamp`      |
 | `logs_severity_key_metadata_key`       | Specify a `SeverityText` key to look up in the metadata.     | `$SeverityText`   |
 | `logs_severity_number_metadata_key` | Specify a `SeverityNumber` key to look up in the metadata. | `SeverityNumber` |
-
+| `logs_trace_data_metakey` | Specify a `Flags` key to look up in the metadata. | `$Flags` |
 
 ## Get started
 
