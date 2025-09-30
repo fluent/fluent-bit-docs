@@ -46,51 +46,7 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
-```yaml
-
-# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
-# -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs and traces and delivers
-# them through the OpenTelemetry plugin to a local collector :
-#
-service:
-  flush: 1
-  log_level: info
-
-pipeline:
-  inputs:
-    - name: node_exporter_metrics
-      tag: node_metrics
-      scrape_interval: 2
-
-    - name: dummy
-      tag: dummy.log
-      rate: 3
-
-    - name: event_type
-      type: traces
-
-  outputs:
-    - name: opentelemetry
-      match: '*'
-      host: localhost
-      port: 443
-      metrics_uri: /v1/metrics
-      logs_uri: /v1/logs
-      traces_uri: /v1/traces
-      log_response_payload: true
-      tls: on
-      tls.verify: off
-      logs_body_key: $message
-      logs_span_id_message_key: span_id
-      logs_trace_id_message_key: trace_id
-      logs_severity_text_message_key: loglevel
-      logs_severity_number_message_key: lognum
-      # add user-defined labels
-      add_label:
-        - app fluent-bit
-        - color blue
-```
+# Dummy logs and traces with Node exporter metrics
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
