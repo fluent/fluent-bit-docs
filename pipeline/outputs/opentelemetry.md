@@ -14,6 +14,8 @@ Only HTTP endpoints are supported.
 | `http_user` | Basic Auth username. | _none_ |
 | `http_passwd` | Basic Auth password. Requires `HTTP_user` to be set. | _none_ |
 | `port` | TCP port of the target HTTP server. | `80` |
+| `proxy` | Specify an HTTP Proxy. The expected format value is `http://HOST:PORT`. HTTPS isn't supported. It's recommended to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. | _none_ |
+| `http2` | Defines whether HTTP/2 protocol is enabled. This setting also supports the `force` option, which forces HTTP/2 over a plain text connection. | `On` |
 
 ## Get started
 
