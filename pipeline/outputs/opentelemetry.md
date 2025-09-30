@@ -20,6 +20,10 @@ Only HTTP endpoints are supported.
 | `metrics_uri` | Specify an optional HTTP URI for the target web server listening for metrics. For example, `/v1/metrics`. | `/` |
 | `logs_uri` | Specify an optional HTTP URI for the target web server listening for logs, For example, `/v1/logs`. | `/` |
 | `traces_uri` | Specify an optional HTTP URI for the target web server listening for traces, For example, `/v1/traces`. | `/` |
+| `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `log_response_payload` | Log the response payload within the Fluent Bit log. | `false` |
+| `logs_body_key` | The log body key to look up in the log events body/message. Sets the `Body` field of the OpenTelemetry logs data model. | `message` |
+| `logs_trace_id_message_key` | The trace id key to look up in the log events body/message. Sets the `TraceId` field of the OpenTelemetry logs data model. | `traceId` |
 
 ## Get started
 
