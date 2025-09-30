@@ -24,6 +24,11 @@ Only HTTP endpoints are supported.
 | `log_response_payload` | Log the response payload within the Fluent Bit log. | `false` |
 | `logs_body_key` | The log body key to look up in the log events body/message. Sets the `Body` field of the OpenTelemetry logs data model. | `message` |
 | `logs_trace_id_message_key` | The trace id key to look up in the log events body/message. Sets the `TraceId` field of the OpenTelemetry logs data model. | `traceId` |
+| `logs_span_id_message_key` | The span id key to look up in the log events body/message. Sets the `SpanId` field of the OpenTelemetry logs data model. | `spanId` |
+| `logs_severity_text_message_key` | The severity text id key to look up in the log events body/message. Sets the `SeverityText` field of the OpenTelemetry logs data model. | `severityText` |
+| `logs_severity_number_message_key` | The severity number id key to look up in the log events body/message. Sets the `SeverityNumber` field of the OpenTelemetry logs data model. | `severityNumber` |
+| `add_label` | Lets you add custom labels to all metrics exposed through the OpenTelemetry exporter. You can have multiple of these fields. | _none_ |
+
 
 ## Get started
 
