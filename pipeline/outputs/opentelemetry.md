@@ -11,6 +11,9 @@ Only HTTP endpoints are supported.
 | Key | Description | Default |
 |-----|-------------|---------|
 | `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
+| `http_user` | Basic Auth username. | _none_ |
+| `http_passwd` | Basic Auth password. Requires `HTTP_user` to be set. | _none_ |
+| `port` | TCP port of the target HTTP server. | `80` |
 
 ## Get started
 
