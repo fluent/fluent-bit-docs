@@ -6,6 +6,11 @@ description: An output plugin to submit Logs, Metrics, or Traces to an OpenTelem
 
 The OpenTelemetry plugin lets you take logs, metrics, and traces from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
 
+Only HTTP endpoints are supported.
+
+| Key | Description | Default |
+|-----|-------------|---------|
+| `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
 
 ## Get started
 
