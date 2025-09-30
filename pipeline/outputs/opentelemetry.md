@@ -46,7 +46,9 @@ The OpenTelemetry plugin works with logs and only the metrics collected from one
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
+```yaml
 # Dummy logs and traces with Node exporter metrics
+```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
