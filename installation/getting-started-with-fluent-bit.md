@@ -17,7 +17,7 @@ All Fluent Bit installations must meet certain [requirements](./requirements.md)
 
 Fluent Bit software is available for a variety of platforms and can be installed using several methods.
 
-You can [direct download and compile the source code](../installation/source.md).
+You can [direct download and compile the source code](../installation/downloads/source.md).
 
 To select a package for a container or operating system, use the instructions for that option from the following links:
 

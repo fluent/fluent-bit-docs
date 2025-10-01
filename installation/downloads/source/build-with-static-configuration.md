@@ -12,7 +12,7 @@ The following steps assume you are familiar with configuring Fluent Bit using te
 
 #### Configuration directory
 
-In your file system, prepare a specific directory that will be used as an entry point for the build system to lookup and parse the configuration files. This directory must contain a minimum of one configuration file, called `fluent-bit.conf`, that contains the required [`SERVICE`](/administration/configuring-fluent-bit/yaml/service-section.md), [`INPUT`](../../pipeline/inputs.md), and [`OUTPUT`](../../pipeline/outputs.md) sections.
+In your file system, prepare a specific directory that will be used as an entry point for the build system to lookup and parse the configuration files. This directory must contain a minimum of one configuration file, called `fluent-bit.conf`, that contains the required [`SERVICE`](../../../administration/configuring-fluent-bit/yaml/service-section.md), [`INPUT`](../../../pipeline/inputs.md), and [`OUTPUT`](../../../pipeline/outputs.md) sections.
 
 As an example, create a new `fluent-bit.yaml` file or `fluent-bit.conf` file:
 

@@ -55,7 +55,7 @@ The default configuration of Fluent Bit ensures the following:
 - Consume all containers logs from the running node and parse them with either the `docker` or `cri` multi-line parser.
 - Persist how far it got into each file it's tailing so if a pod is restarted it picks up from where it left off.
 - The Kubernetes filter adds Kubernetes metadata, specifically `labels` and `annotations`. The filter only contacts the API Server when it can't find the cached information, otherwise it uses the cache.
-- The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](../pipeline/outputs/elasticsearch.md). It uses the Logstash format to ingest the logs. If you need a different `Index` and `Type`, refer to the plugin option and update as needed.
+- The default backend in the configuration is Elasticsearch set by the [Elasticsearch Output Plugin](../../pipeline/outputs/elasticsearch.md). It uses the Logstash format to ingest the logs. If you need a different `Index` and `Type`, refer to the plugin option and update as needed.
 - There is an option called `Retry_Limit`, which is set to `False`. If Fluent Bit can't flush the records to Elasticsearch, it will retry indefinitely until it succeeds.
 
 ## Windows deployment

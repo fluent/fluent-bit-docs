@@ -33,7 +33,7 @@ The GPG Key fingerprint of the old key is:
 F209 D876 2A60 CD49 E680 633B 4FF8 368B 6EA0 722A
 ```
 
-Refer to the [supported platform documentation](supported-platforms.md) to see which platforms are supported in each release.
+Refer to the [supported platform documentation](../getting-started-with-fluent-bit.md#supported-platforms-and-packages) to see which platforms are supported in each release.
 
 ## Migration to Fluent Bit
 
