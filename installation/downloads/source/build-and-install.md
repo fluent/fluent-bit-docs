@@ -171,22 +171,22 @@ Filter plugins let you modify, enrich or drop records. The following table descr
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_FILTER_AWS`](../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | `On` |
-| [`FLB_FILTER_ECS`](../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | `On` |
+| [`FLB_FILTER_AWS`](../../../pipeline/filters/aws-metadata.md) | Enable AWS metadata filter | `On` |
+| [`FLB_FILTER_ECS`](../../../pipeline/filters/ecs-metadata.md) | Enable AWS metadata filter | `On` |
 | `FLB_FILTER_EXPECT` | Enable Expect data test filter | `On` |
-| [`FLB_FILTER_GREP`](../../pipeline/filters/grep.md) | Enable Grep filter | `On` |
-| [`FLB_FILTER_KUBERNETES`](../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | `On` |
-| [`FLB_FILTER_LUA`](../../pipeline/filters/lua.md) | Enable Lua scripting filter | `On` |
-| [`FLB_FILTER_MODIFY`](../../pipeline/filters/modify.md) | Enable Modify filter | `On` |
-| [`FLB_FILTER_NEST`](../../pipeline/filters/nest.md) | Enable Nest filter | `On` |
-| [`FLB_FILTER_PARSER`](../../pipeline/filters/parser.md) | Enable Parser filter | `On` |
-| [`FLB_FILTER_RECORD_MODIFIER`](../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | `On` |
-| [`FLB_FILTER_REWRITE_TAG`](../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | `On` |
-| [`FLB_FILTER_STDOUT`](../../pipeline/filters/standard-output.md) | Enable Stdout filter | `On` |
-| [`FLB_FILTER_SYSINFO`](../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | `On` |
-| [`FLB_FILTER_THROTTLE`](../../pipeline/filters/throttle.md) | Enable Throttle filter | `On` |
-| [`FLB_FILTER_TYPE_CONVERTER`](../../pipeline/filters/type-converter.md) | Enable Type Converter filter | `On` |
-| [`FLB_FILTER_WASM`](../../pipeline/filters/wasm.md) | Enable Wasm filter | `On` |
+| [`FLB_FILTER_GREP`](../../../pipeline/filters/grep.md) | Enable Grep filter | `On` |
+| [`FLB_FILTER_KUBERNETES`](../../../pipeline/filters/kubernetes.md) | Enable Kubernetes metadata filter | `On` |
+| [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md) | Enable Lua scripting filter | `On` |
+| [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md) | Enable Modify filter | `On` |
+| [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md) | Enable Nest filter | `On` |
+| [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md) | Enable Parser filter | `On` |
+| [`FLB_FILTER_RECORD_MODIFIER`](../../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter | `On` |
+| [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md) | Enable Rewrite Tag filter | `On` |
+| [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md) | Enable Stdout filter | `On` |
+| [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md) | Enable Sysinfo filter | `On` |
+| [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md) | Enable Throttle filter | `On` |
+| [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md) | Enable Type Converter filter | `On` |
+| [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md) | Enable Wasm filter | `On` |
 
 ### Output plugins
 
@@ -194,35 +194,35 @@ Output plugins let you flush the information to some external interface, service
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_OUT_AZURE`](../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | `On` |
-| [`FLB_OUT_AZURE_KUSTO`](../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | `On` |
-| [`FLB_OUT_BIGQUERY`](../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | `On` |
-| [`FLB_OUT_COUNTER`](../../pipeline/outputs/counter.md) | Enable Counter output plugin | `On` |
-| [`FLB_OUT_CLOUDWATCH_LOGS`](../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | `On` |
-| [`FLB_OUT_DATADOG`](../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | `On` |
-| [`FLB_OUT_ES`](../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | `On` |
-| [`FLB_OUT_FILE`](../../pipeline/outputs/file.md) | Enable File output plugin | `On` |
-| [`FLB_OUT_KINESIS_FIREHOSE`](../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | `On` |
-| [`FLB_OUT_KINESIS_STREAMS`](../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | `On` |
-| [`FLB_OUT_FLOWCOUNTER`](../../pipeline/outputs/flowcounter.md) | Enable Flow counter output plugin | `On` |
-| [`FLB_OUT_FORWARD`](../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | `On` |
-| [`FLB_OUT_GELF`](../../pipeline/outputs/gelf.md) | Enable GELF output plugin | `On` |
-| [`FLB_OUT_HTTP`](../../pipeline/outputs/http.md) | Enable HTTP output plugin | `On` |
-| [`FLB_OUT_INFLUXDB`](../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | `On` |
-| [`FLB_OUT_KAFKA`](../../pipeline/outputs/kafka.md) | Enable Kafka output | Off |
-| [`FLB_OUT_KAFKA_REST`](../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | `On` |
+| [`FLB_OUT_AZURE`](../../../pipeline/outputs/azure.md) | Enable Microsoft Azure output plugin | `On` |
+| [`FLB_OUT_AZURE_KUSTO`](../../../pipeline/outputs/azure_kusto.md) | Enable Azure Kusto output plugin | `On` |
+| [`FLB_OUT_BIGQUERY`](../../../pipeline/outputs/bigquery.md) | Enable Google BigQuery output plugin | `On` |
+| [`FLB_OUT_COUNTER`](../../../pipeline/outputs/counter.md) | Enable Counter output plugin | `On` |
+| [`FLB_OUT_CLOUDWATCH_LOGS`](../../../pipeline/outputs/cloudwatch.md) | Enable Amazon CloudWatch output plugin | `On` |
+| [`FLB_OUT_DATADOG`](../../../pipeline/outputs/datadog.md) | Enable Datadog output plugin | `On` |
+| [`FLB_OUT_ES`](../../../pipeline/outputs/elasticsearch.md) | Enable [Elastic Search](http://www.elastic.co) output plugin | `On` |
+| [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md) | Enable File output plugin | `On` |
+| [`FLB_OUT_KINESIS_FIREHOSE`](../../../pipeline/outputs/firehose.md) | Enable Amazon Kinesis Data Firehose output plugin | `On` |
+| [`FLB_OUT_KINESIS_STREAMS`](../../../pipeline/outputs/kinesis.md) | Enable Amazon Kinesis Data Streams output plugin | `On` |
+| [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md) | Enable Flow counter output plugin | `On` |
+| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md) | Enable [Fluentd](http://www.fluentd.org) output plugin | `On` |
+| [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md) | Enable GELF output plugin | `On` |
+| [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md) | Enable HTTP output plugin | `On` |
+| [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md) | Enable InfluxDB output plugin | `On` |
+| [`FLB_OUT_KAFKA`](../../../pipeline/outputs/kafka.md) | Enable Kafka output | Off |
+| [`FLB_OUT_KAFKA_REST`](../../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin | `On` |
 | `FLB_OUT_LIB` | Enable Lib output plugin | `On` |
-| [`FLB_OUT_NATS`](../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | `On` |
+| [`FLB_OUT_NATS`](../../../pipeline/outputs/nats.md) | Enable [NATS](http://www.nats.io) output plugin | `On` |
 | `FLB_OUT_NULL` | Enable `NULL` output plugin | `On` |
 | `FLB_OUT_PGSQL` | Enable PostgreSQL output plugin | `On` |
 | `FLB_OUT_PLOT` | Enable Plot output plugin | `On` |
 | `FLB_OUT_SLACK` | Enable Slack output plugin | `On` |
-| [`FLB_OUT_S3`](../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | `On` |
-| [`FLB_OUT_SPLUNK`](../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | `On` |
-| [`FLB_OUT_STACKDRIVER`](../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | `On` |
+| [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md) | Enable Amazon S3 output plugin | `On` |
+| [`FLB_OUT_SPLUNK`](../../../pipeline/outputs/splunk.md) | Enable Splunk output plugin | `On` |
+| [`FLB_OUT_STACKDRIVER`](../../../pipeline/outputs/stackdriver.md) | Enable Google Stackdriver output plugin | `On` |
 | [`FLB_OUT_STDOUT`](build-and-install.md) | Enable STDOUT output plugin | `On` |
 | `FLB_OUT_TCP` | Enable TCP/TLS output plugin | `On` |
-| [`FLB_OUT_TD`](../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | `On` |
+| [`FLB_OUT_TD`](../../../pipeline/outputs/treasure-data.md) | Enable [Treasure Data](http://www.treasuredata.com) output plugin | `On` |
 
 ### Processor plugins
 
@@ -232,5 +232,5 @@ The following table describes the processors available:
 
 | Option | Description | Default |
 | :--- | :--- | :--- |
-| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | `On` |
-| [`FLB_PROCESSOR_LABELS`](../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | `On` |
+| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor | `On` |
+| [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md) | Enable metrics label manipulation processor | `On` |

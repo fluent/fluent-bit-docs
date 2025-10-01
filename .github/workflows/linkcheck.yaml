@@ -3,6 +3,7 @@ name: Links
 on:
   schedule:
     - cron: "00 18 1 * *"
+
 # Uncomment the following line while testing links in a single PR. Recomment when
 # done. Be sure to comment out the 'Create Issue from File' section while testing.
 # pull_request
@@ -24,10 +25,10 @@ jobs:
 
 # If testing links on pull_request, comment these lines out!
 
-      - name: Create Issue From File
-        if: steps.lychee.outputs.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: Link Checker Report
-          content-filepath: ./lychee/out.md
-          labels: report, automated issue
+#      - name: Create Issue From File
+#        if: steps.lychee.outputs.exit_code != 0
+#        uses: peter-evans/create-issue-from-file@v5
+#        with:
+#          title: Link Checker Report
+#          content-filepath: ./lychee/out.md
+#          labels: report, automated issue
