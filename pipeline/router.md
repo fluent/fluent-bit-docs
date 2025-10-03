@@ -138,7 +138,7 @@ pipeline:
 
   outputs:
     - name: stdout
-      match: '.*_sensor_[AB]'
+      match_regex: '.*_sensor_[AB]'
 ```
 
 {% endtab %}
