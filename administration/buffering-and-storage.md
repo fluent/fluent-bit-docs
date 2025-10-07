@@ -89,7 +89,7 @@ If this input uses more than 50&nbsp;MB memory to buffer logs, you will get a wa
 
 {% hint style="info" %}
 
-`m em_buf_Limit` applies only when `storage.type` is set to the default value of `memory`.
+`mem_buf_Limit` applies only when `storage.type` is set to the default value of `memory`.
 
 {% endhint %}
 
