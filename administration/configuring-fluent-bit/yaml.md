@@ -4,9 +4,11 @@
 
 ## Before you get started
 
+YAML has become essential in a cloud ecosystem. To minimize friction and provide a more intuitive experience for creating data pipelines, users are encouraged to transition to YAML.
+
 Fluent Bit traditionally offered a `classic` configuration mode, a custom configuration format that's phasing out. While `classic` mode has served well for many years, it has several limitations. Its basic design only supports grouping sections with key-value pairs and lacks the ability to handle sub-sections or complex data structures like lists.
 
-YAML has become essential in a cloud ecosystem. To minimize friction and provide a more intuitive experience for creating data pipelines, users are encouraged to transition to YAML. The YAML format enables features, such as processors, that aren't possible to configure in `classic` mode.
+The YAML format enables features, such as processors, that aren't possible to configure in `classic` mode.
 
 As of Fluent Bit v3.2, you can configure everything in YAML.
 
