@@ -112,8 +112,8 @@ If `storage.pause_on_chunks_overlimit` is enabled (default is off), the input pl
 Look for messages in the Fluent Bit log output like:
 
 ```text
-[input] tail.1 paused (storage buf overlimit
-[input] tail.1 resume (storage buf overlimit
+[input] tail.1 paused (storage buf overlimit)
+[input] tail.1 resume (storage buf overlimit)
 ```
 
 ##### Limiting filesystem space for chunks
