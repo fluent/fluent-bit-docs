@@ -53,7 +53,7 @@
     * [Upstream servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md)
     * [Environment variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
     * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
-  * [Classic mode](administration/configuring-fluent-bit/classic-mode/README.md)
+  * [Classic mode](administration/configuring-fluent-bit/classic-mode.md)
     * [Format and schema](administration/configuring-fluent-bit/classic-mode/format-schema.md)
     * [Configuration file](administration/configuring-fluent-bit/classic-mode/configuration-file.md)
     * [Variables](administration/configuring-fluent-bit/classic-mode/variables.md)
