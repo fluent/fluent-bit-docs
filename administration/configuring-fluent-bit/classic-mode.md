@@ -2,9 +2,7 @@
 
 Fluent Bit classic mode configuration will be deprecated at the end of 2026.
 
-Classic mode is a custom configuration model for Fluent Bit. It's more limited than
-the [YAML configuration mode](../configuring-fluent-bit/yaml.md), and doesn't have
-the more extensive feature support the YAML configuration has. Classic mode basic design only supports grouping sections with key-value pairs and lacks the ability to handle sub-sections or complex data structures like lists.
+Classic mode is a custom configuration model for Fluent Bit. It's more limited than the [YAML configuration mode](../configuring-fluent-bit/yaml.md), and doesn't have the more extensive feature support the YAML configuration has. Classic mode basic design only supports grouping sections with key-value pairs and lacks the ability to handle sub-sections or complex data structures like lists.
 
 Learn more about classic mode:
 
