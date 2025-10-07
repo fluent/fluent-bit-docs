@@ -255,6 +255,23 @@ The multiline parser is a very powerful feature, but it has some limitations tha
 - The multiline parser isn't affected by the `buffer_max_size` configuration option, allowing the composed log record to grow beyond this size. The `skip_long_lines` option won't be applied to multiline messages.
 - It's not possible to get the time key from the body of the multiline message. However, it can be extracted and set as a new key by using a filter.
 
+### Additional configuration for buffer limit of multiline
+
+Fluent Bit now supports a configuration key to **limit the memory used during multiline concatenation**.
+
+| Property                 | Description                                                                                                                                                                                                                                                                                                                      | Default |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `multiline_buffer_limit` | Sets the maximum size of the in-memory buffer used while assembling a multiline message. When the accumulated size exceeds this limit, the message is truncated and a `multiline_truncated: true` metadata field is attached to the emitted record. A value of `0` disables the limit. Accepts unit suffixes like `KiB`, `MiB`, or `GiB`. | `2MiB`  |
+
+```text
+service:
+  multiline_buffer_limit  2MiB   # default; limit concatenated multiline message size
+```
+
+If the limit is reached, Fluent Bit flushes the partial record with `multiline_truncated: true` metadata immediately to prevent Out-Of-Memory (OOM) conditions.
+This option ensures predictable memory usage in Kubernetes or other constrained environments,
+particularly when using built-in parsers such as `cri` or `docker`.
+
 ## Get structured data from multiline message
 
 Fluent-bit supports the `/pat/m` option. It allows `.` matches a new line, which can be used to parse multiline logs.
