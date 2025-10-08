@@ -42,6 +42,8 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 4.0.12-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
+| 4.0.12 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.12](https://fluentbit.io/announcements/v4.0.12/) |
 | 4.0.11-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
 | 4.0.11 | x86_64, arm64v8, arm32v7, s390x | Release [v4.0.11](https://fluentbit.io/announcements/v4.0.11/) |
 | 4.0.10-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
