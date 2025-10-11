@@ -32,7 +32,7 @@ pipeline:
       dummy: {"remote_addr": "8.8.8.8"}
 
   filters:
-    - name: gioip2
+    - name: geoip2
       match: '*'
       database: GioLite2-City.mmdb
       lookup_key: remote_addr
