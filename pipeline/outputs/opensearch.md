@@ -37,7 +37,7 @@ This plugin supports the following parameters:
 | `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
 | `Include_Tag_Key` | When enabled, append the `Tag` name to the record. | `Off` |
-| `Tag_Key | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` |
+| `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` |
 | `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. | `Off` |
 | `Id_Key` | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. | _none_ |
 | `Write_Operation` | Operation to use to write in bulk requests. | `create` |
