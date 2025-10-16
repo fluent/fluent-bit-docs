@@ -28,6 +28,7 @@
     * [Amazon Linux](installation/downloads/linux/amazon-linux.md)
     * [Rocky Linux and Alma Linux ](installation/downloads/linux/alma-rocky.md)
     * [Red Hat and CentOS](installation/downloads/linux/redhat-centos.md)
+    * [openSUSE / SLES](installation/downloads/linux/suse.md)
     * [Debian](installation/downloads/linux/debian.md)
     * [Ubuntu](installation/downloads/linux/ubuntu.md)
     * [Raspbian and Raspberry Pi](installation/downloads/linux/raspbian-raspberry-pi.md)
