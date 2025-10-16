@@ -1,6 +1,6 @@
-# openSUSE and SLES
+# openSUSE and SUSE Linux Enterprise Server (SLES)
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for the latest stable opensuse-leap and sles 15.7 system.
+Fluent Bit is distributed as the `fluent-bit` package and is available for OpenSUSE-Leap 15.6 and SLES 15.7 systems.
 
 Fluent Bit supports the following architectures:
 
@@ -8,81 +8,86 @@ Fluent Bit supports the following architectures:
 - `aarch64`
 - `arm64v8`
 
-For openSUSE 15, Fluent Bit uses [openSUSE Leap](https://get.opensuse.org/leap) as the canonical base system.
+Fluent Bit supports the following distro versions:
+
+- opensuse/leap:15.6
+- sles/15.7
+
+For openSUSE, Fluent Bit uses [openSUSE Leap Base Container Images (BCI)](https://build.opensuse.org/project/show/openSUSE:Containers:Leap) as the canonical base system.
+
+For SLES, Fluent Bit uses [SUSE Base Container Images (BCI)](https://www.suse.com/products/base-container-images/) as the canonical base system.
 
 The recommended secure deployment approach is to use the following instructions:
 
-## For openSUSE and SUSE Linux Enterprise Server (SLES)
+## Ensure you select the correct openSUSE verse SLES Package
 
-Fluent Bit provides packages for openSUSE (Leap) and SUSE Linux Enterprise Server (SLES). The repository uses the $releasever variable to dynamically fetch packages for your specific system version.
+The openSUSE package is built and tested specifically for openSUSE Leap environments, ensuring compatibility with openSUSE libraries, update cycles, and system dependencies. Using the openSUSE package on openSUSE Leap systems helps avoid potential issues with mismatched dependencies or unsupported features that may arise from using SLES packages.
 
-## Configure `zypper`
+The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which may include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it may lead to library incompatibilities.
 
-The `fluent-bit` openSUSE package is provided through a `zypper` repository. To add the repository reference to your system:
 
-1. Import the GPG key used to sign the packages.
-1. In `/etc/zypp/repos.d/`, add a new file named `fluent-bit.repo`.
-1. Add the following content to the file.
+**In summary:**  
+- Use the openSUSE package for openSUSE Leap systems.  
+- Use the SLES package for SUSE Linux Enterprise Server systems.
+
+This ensures you receive the correct updates and compatibility for your chosen platform.
+
+
+## openSUSE Leap
+
+Ensure your system repositories are up to date. For openSUSE Leap, use the following repository path:
+
+- `https://packages.fluentbit.io/opensuse/leap/$releaserver`
+
+### Configure Zypper for openSUSE Leap
+
+1. In `/etc/zypp/repos.d/`, add a new file called `fluent-bit.repo`.
+1. Add the following content to the file (replace `$releaserver` with your Leap version, e.g., `15.6`):
+
    ```text
    [fluent-bit]
-     name = Fluent Bit
-     baseurl = https://packages.fluentbit.io/suse/$releasever/
+     name=Fluent Bit
+     baseurl=https://packages.fluentbit.io/opensuse/leap/$releaserver/
      gpgcheck=1
-     gpgkey=https://packages.fluentbit.io/fluentbit.key
      repo_gpgcheck=1
+     gpgkey=https://packages.fluentbit.io/fluentbit.key
      enabled=1
    ```
-1. Refresh the repository to make the new packages available.
-   ```text
-   sudo zypper refresh
-   ```
-1. As a best practice, gpgcheck and repo_gpgcheck are enabled by default for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages
 
-## Install
+1. As a best practice, enable `gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.
 
-Ensure you've configured an appropriate mirror. For example:
+## SUSE Linux Enterprise Server (SLES)
 
-```shell
-$ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+Ensure your system repositories are up to date. For SLES, use the following repository path:
 
-$ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-```
+- `https://packages.fluentbit.io/sles/$releasever`
 
-An alternative is to use Rocky or Alma Linux, which should be equivalent.
+### Configure Zypper for SLES
 
-## SLES
-
-For openSUSE and SUSE Linux Enterprise Server (SLES)
-
-Fluent Bit provides packages for openSUSE (Leap) and SUSE Linux Enterprise Server (SLES). The repository uses the $releasever variable to dynamically fetch packages for your specific system version.
-
-## Configure `zypper`
-
-The`fluent-bit` package is provided through a Yum repository. To add the repository reference to your system:
-
-1. In `/etc/yum.repos.d/`, add a new file called `fluent-bit.repo`.
+1. In `/etc/zypp/repos.d/`, add a new file called `fluent-bit.repo`.
 1. Add the following content to the file:
 
    ```text
    [fluent-bit]
-     name = Fluent Bit
-     baseurl = https://packages.fluentbit.io/centos/$releasever/
+     name=Fluent Bit
+     baseurl=https://packages.fluentbit.io/sles/$releasever/
      gpgcheck=1
-     gpgkey=https://packages.fluentbit.io/fluentbit.key
      repo_gpgcheck=1
+     gpgkey=https://packages.fluentbit.io/fluentbit.key
      enabled=1
    ```
 
-1. As a best practice, enable `gpgcheck` and `repo_gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.
+1. As a best practice, enable `gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.   
 
-### Install
+### Install Fluent Bit
 
 1. Ensure your [GPG key](../linux.md#gpg-key-updates) is up to date.
 
 1. After your repository is configured, run the following command to install it:
 
    ```shell
-   sudo dnf install fluent-bit
+   sudo zypper refresh
+   sudo zypper install fluent-bit
    ```
 
 1. Instruct `Systemd` to enable the service:
@@ -105,36 +110,28 @@ $ systemctl status fluent-bit
 ...
 ```
 
-The default Fluent Bit configuration collect metrics of CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/messages` file.
+The default Fluent Bit configuration collects metrics of CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/messages` file.
 
 ## FAQ
 
-### Yum install fails with a `404 - Page not found` error for the package mirror
+### Zypper install fails with a `404 - Page not found` error for the package mirror
 
-The `fluent-bit.repo` file for the latest installations of Fluent Bit uses a `$releasever` variable to determine the correct version of the package to install to your system:
+Ensure you use the correct `$releaserver` (e.g., `15.6`) in your repo path:
 
-```text
-[fluent-bit]
-  name = Fluent Bit
-  baseurl = https://packages.fluentbit.io/centos/$releasever/$basearch/
-```
-
-Depending on your Red Hat distribution version, this variable can return a value other than the OS major release version (for example, RHEL7 Server distributions return `7Server` instead of `7`). The Fluent Bit package URL uses the major OS release version, so any other value here will cause a 404.
-
-To resolve this issue, replace the `$releasever` variable with your system's OS major release version. For example:
+For openSUSE Leap:
 
 ```text
-[fluent-bit]
-  name = Fluent Bit
-  baseurl = https://packages.fluentbit.io/centos/7/$basearch/
-  gpgcheck=1
-  gpgkey=https://packages.fluentbit.io/fluentbit.key
-  repo_gpgcheck=1
-  enabled=1
+baseurl=https://packages.fluentbit.io/opensuse/leap/15.6/
 ```
 
-### Yum install fails with incompatible dependencies using CentOS 9+
+For SLES
 
-CentOS 9 and later will no longer be compatible with RHEL 9 as it might track more recent dependencies. Alternative AlmaLinux and RockyLinux repositories are available.
+```text
+baseurl=https://packages.fluentbit.io/sles/15.7/
+```
 
-See the previous guidance.
+zypper knows about special variables like $releasever. It has its own internal logic to replace these with the correct values from your system's baseproduct file.
+
+### Zypper install fails with incompatible dependencies
+
+OpenSUSE may track more recent dependencies than SLES. If you encounter dependency issues, ensure you are using the correct repository path for your OS distro.
