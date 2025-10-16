@@ -107,6 +107,7 @@ exceptions:
   - SHA
   - SIEM
   - SLA
+  - SLES
   - SNI
   - SQL
   - SSH
@@ -114,6 +115,7 @@ exceptions:
   - SSM
   - SSO
   - STS
+  - SUSE
   - SVG
   - TBD
   - TCP
