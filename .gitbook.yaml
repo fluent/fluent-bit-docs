@@ -82,3 +82,6 @@ redirects:
 
     # Processors
     processor/metrics_selector:   ./pipeline/processors/metrics_selector.md
+
+    # Other
+    concepts/buffering: ./pipeline/buffering.md

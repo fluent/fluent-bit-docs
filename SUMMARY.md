@@ -13,7 +13,6 @@
 ## Concepts
 
 * [Key concepts](concepts/key-concepts.md)
-* [Buffering](concepts/buffering.md)
 * [Data pipeline](concepts/data-pipeline.md)
 
 ## Installation
@@ -83,7 +82,6 @@
 
 ## Data pipeline
 
-* [Pipeline monitoring](pipeline/pipeline-monitoring.md)
 * [Inputs](pipeline/inputs.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU metrics](pipeline/inputs/cpu-metrics.md)
@@ -168,7 +166,8 @@
   * [Throttle](pipeline/filters/throttle.md)
   * [Type converter](pipeline/filters/type-converter.md)
   * [Wasm](pipeline/filters/wasm.md)
-* [Router](pipeline/router.md)
+* [Buffering](pipeline/buffering.md)
+* [Routing](pipeline/router.md)
 * [Outputs](pipeline/outputs.md)
   * [Amazon CloudWatch](pipeline/outputs/cloudwatch.md)
   * [Amazon Kinesis Data Firehose](pipeline/outputs/firehose.md)
@@ -217,6 +216,7 @@
   * [Treasure Data](pipeline/outputs/treasure-data.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
+* [Pipeline monitoring](pipeline/pipeline-monitoring.md)
 
 ## Stream processing
 

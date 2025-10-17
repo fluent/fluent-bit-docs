@@ -2,7 +2,7 @@
 description: Create flexible routing rules
 ---
 
-# Router
+# Routing
 
 Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. The router relies on the concept of [Tags](../concepts/key-concepts.md) and [Matching](../concepts/key-concepts.md) rules.
 
