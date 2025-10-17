@@ -22,6 +22,8 @@ Fluent Bit supports the following operating systems and architectures:
 | macOS | * | x86_64, Apple M1 |
 | Windows | [Windows Server 2019](downloads/windows.md) | x86_64, x86 |
 |  | [Windows 10 1903](downloads/windows.md) | x86_64, x86 |
+|  | [openSUSE Leap 15.6](downloads/linux/suse.md) | x86_64, Arm64v8 |
+|  | [SUSE Linux Enterprise Server (SLES) 15.7](downloads/linux/suse.md) | x86_64, Arm64v8 |
 
 From an architecture support perspective, Fluent Bit is fully functional on x86_64, Arm64v8, and Arm32v7 based processors.
 
