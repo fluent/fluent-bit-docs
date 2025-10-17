@@ -6,7 +6,6 @@ Fluent Bit supports the following architectures:
 
 - `x86_64`
 - `aarch64`
-- `arm64v8`
 
 Fluent Bit supports the following distro versions:
 
