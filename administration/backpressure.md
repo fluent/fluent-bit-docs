@@ -6,13 +6,13 @@ It's possible for logs or data to be ingested or created faster than the ability
 
 To avoid backpressure, Fluent Bit implements a mechanism in the engine that restricts the amount of data an input plugin can ingest. Restriction is done through the configuration parameters `Mem_Buf_Limit` and `storage.Max_Chunks_Up`.
 
-As described in the [Buffering](../concepts/buffering.md) concepts section, Fluent Bit offers two modes for data handling: in-memory only (default) and in-memory and filesystem (optional).
+As described in [Buffering and storage](../administration/buffering-and-storage.md) , Fluent Bit offers two modes for data handling: in-memory only (default) and in-memory and filesystem (optional).
 
 The default `storage.type memory` buffer can be restricted with `Mem_Buf_Limit`. If memory reaches this limit and you reach a backpressure scenario, you won't be able to ingest more data until the data chunks that are in memory can be flushed. The input pauses and Fluent Bit [emits](https://github.com/fluent/fluent-bit/blob/v2.0.0/src/flb_input_chunk.c#L1334) a `[warn] [input] {input name or alias} paused (mem buf overlimit)` log message.
 
 Depending on the input plugin in use, this might cause incoming data to be discarded (for example, TCP input plugin). The tail plugin can handle pauses without data loss, storing its current file offset and resuming reading later. When buffer memory is available, the input resumes accepting logs. Fluent Bit [emits](https://github.com/fluent/fluent-bit/blob/v2.0.0/src/flb_input_chunk.c#L1277) a `[info] [input] {input name or alias} resume (mem buf overlimit)` message.
 
-Mitigate the risk of data loss by configuring secondary storage on the filesystem using the `storage.type` of `filesystem` (as described in [Buffering and Storage](buffering-and-storage.md)). Initially, logs will be buffered to both memory and the filesystem. When the `storage.max_chunks_up` limit is reached, all new data will be stored in the filesystem. Fluent Bit stops queueing new data in memory and buffers only to the filesystem. When `storage.type filesystem` is set, the `Mem_Buf_Limit` setting no longer has any effect. Instead, the `[SERVICE]` level `storage.max_chunks_up` setting controls the size of the memory buffer.
+Mitigate the risk of data loss by configuring secondary storage on the filesystem using the `storage.type` of `filesystem` (as described in [Buffering and storage](../administration/buffering-and-storage.md)). Initially, logs will be buffered to both memory and the filesystem. When the `storage.max_chunks_up` limit is reached, all new data will be stored in the filesystem. Fluent Bit stops queueing new data in memory and buffers only to the filesystem. When `storage.type filesystem` is set, the `Mem_Buf_Limit` setting no longer has any effect. Instead, the `[SERVICE]` level `storage.max_chunks_up` setting controls the size of the memory buffer.
 
 ## `Mem_Buf_Limit`
 
