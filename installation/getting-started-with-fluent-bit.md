@@ -1,45 +1,70 @@
 ---
-description: The following serves as a guide on how to install/deploy/upgrade Fluent Bit
+description: A guide on how to install, deploy, and upgrade Fluent Bit
 ---
+# Get started with Fluent Bit
 
-# Getting Started with Fluent Bit
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9732f9c-44a4-46d3-ab87-86138455c698" />
 
-## Container Deployment
+The Fluent Bit telemetry agent is available for Linux, macOS, Windows, and BSD family operating systems.
 
-| Deployment Type | Instructions |
-| :--- | :--- |
-| Kubernetes | [Deploy on Kubernetes](kubernetes.md#installation) |
-| Docker | [Deploy with Docker](docker.md) |
-| Containers on AWS | [Deploy on Containers on AWS](aws-container.md) |
+If you're interested in learning about Fluent Bit, you can try out the [sandbox environment](../about/sandbox-and-lab-resources.md).
 
-## Install on Linux \(Packages\)
+## Requirements
 
-| Operating System | Installation Instructions |
-| :--- | :--- |
-| CentOS / Red Hat  | [CentOS 7](linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](linux/redhat-centos.md#install-on-redhat-centos) |
-| Ubuntu | [Ubuntu 16.04 LTS](linux/ubuntu.md#ubuntu-16-04-lts-xenial-xerus), [Ubuntu 18.04 LTS](linux/ubuntu.md#ubuntu-18-04-lts-bionic-beaver), [Ubuntu 20.04 LTS](linux/ubuntu.md#ubuntu-20-04-lts-focal-fossa) |
-| Debian | [Debian 9](linux/debian.md#debian-9-stretch), [Debian 10](linux/debian.md#debian-10-buster) |
-| Amazon Linux | [Amazon Linux 2](linux/amazon-linux.md#install-on-amazon-linux-2) |
-| Raspbian / Rasberry Pi | [Raspbian 10](linux/raspbian-raspberry-pi.md#raspbian-10-buster) |
-| Yocto / Embedded Linux | [Yocto / Embedded Linux](yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
+All Fluent Bit installations must meet certain [requirements](./requirements.md).
 
-## Install on Windows \(Packages\)
+## Supported platforms and packages
 
-| Operating System | Installation Instructions |
-| :--- | :--- |
-| Windows Server 2019 | [Windows Server EXE](windows.md#installing-from-exe-installer), [Windows Server ZIP](windows.md#installing-from-zip-archive) |
-| Windows 10 2019.03 | [Windows EXE](windows.md#installing-from-exe-installer), [Windows ZIP](windows.md#installing-from-zip-archive) |
+Fluent Bit software is available for a variety of platforms and can be installed using several methods.
 
-## Compile from Source \(Linux, Windows, FreeBSD, MacOS\)
+You can [direct download and compile the source code](../installation/downloads/source.md).
 
-| Operating System | Installation Instructions |
-| :--- | :--- |
-| Linux, FreeBSD, MacOS | [Compile from source](sources/download-source-code.md) |
-| Windows | [Compile from Source](windows.md#compile-from-source) |
+To select a package for a container or operating system, use the instructions for that option from the following links:
 
-## Enterprise Packages
+### Container deployment
 
-Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end of life versions, Unix systems, and additional support and features. A list provided by fluentbit.io/enterprise is provided below
+| Deployment Type   | Instructions |
+| ----------------- | -------------------------------------------------- |
+| Kubernetes        | [Deploy on Kubernetes](downloads/kubernetes.md#installation) |
+| Docker            | [Deploy with Docker](downloads/docker.md)                    |
+| Containers on AWS | [Deploy on Containers on AWS](downloads/aws-container.md)    |
 
-* [Calyptia Fluent Bit LTS](https://www.calyptia.com/calyptia-agent)
+### Install on Linux (packages)
 
+| Operating System       | Installation instructions |
+| ---------------------- | ------------------------- |
+| Alma Linux / Red Hat   | [Alma Linux 8](downloads/linux/alma-rocky.md), [Alma Linux 9](downloads/linux/alma-rocky.md), [Alma Linux 10](downloads/linux/alma-rocky.md) |
+| CentOS / Red Hat       | [CentOS 7](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 8](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 9 Stream](downloads/linux/redhat-centos.md#install-on-redhat-centos), [CentOS 10 Stream](downloads/linux/redhat-centos.md#install-on-redhat-centos) |
+| Rocky Linux / Red Hat  | [Rocky Linux 8](downloads/linux/alma-rocky.md), [Rocky Linux 9](downloads/linux/alma-rocky.md), [Rocky Linux 10](downloads/linux/alma-rocky.md) |
+| Ubuntu                 | [Ubuntu 16.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 18.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 20.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 22.04 LTS](downloads/linux/ubuntu.md), [Ubuntu 24.04 LTS](downloads/linux/ubuntu.md) |
+| Debian                 | [Debian 10](downloads/linux/debian.md), [Debian 11](downloads/linux/debian.md), [Debian 12](downloads/linux/debian.md), [Debian 13](downloads/linux/debian.md) |
+| Amazon Linux           | [Amazon Linux 2](downloads/linux/amazon-linux.md#install-on-amazon-linux-2), [Amazon Linux 2023](downloads/linux/amazon-linux.md#amazon-linux-2023) |
+| Raspbian / Raspberry Pi | [Raspbian 10](downloads/linux/raspbian-raspberry-pi.md#raspbian-10-buster), [Raspbian 11](downloads/linux/raspbian-raspberry-pi.md#raspbian-11-bullseye) |
+| Yocto / Embedded Linux | [Yocto / Embedded Linux](downloads/linux/yocto-embedded-linux.md#fluent-bit-and-other-architectures) |
+| Buildroot / Embedded Linux | [Buildroot / Embedded Linux](downloads/linux/buildroot-embedded-linux.md) |
+
+### Install on Windows (packages)
+
+| Operating System    | Installation instructions |
+| ------------------- | ------------------------- |
+| Windows Server 2019 | [Windows Server `EXE`](downloads/windows.md#installing-from-exe-installer), [Windows Server ZIP](downloads/windows.md#installing-from-zip-archive) |
+| Windows 10 2019.03  | [Windows `EXE`](downloads/windows.md#installing-from-exe-installer), [Windows ZIP](downloads/windows.md#installing-from-zip-archive)               |
+
+### Install on macOS (packages)
+
+| Operating System    | Installation instructions                     |
+| ------------------- | --------------------------------------------- |
+| macOS               | [Homebrew](downloads/macos.md#installing-from-homebrew) |
+
+### Compile from source (Linux, Windows, FreeBSD, macOS)
+
+| Operating system | Installation instructions                                   |
+| ---------------- | ----------------------------------------------------------- |
+| Linux, FreeBSD   | [Compile from source](downloads/source/build-and-install.md)         |
+| macOS            | [Compile from source](downloads/macos.md#compile-from-source) |
+| Windows          | [Compile from Source](downloads/windows.md#compile-from-source)       |
+
+
+### Enterprise packages
+
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end-of-life versions, Unix systems, or for additional support and features including aspects (such as CVE backporting).
