@@ -1,23 +1,20 @@
-# Output Formats
+# Output formats
 
-Some of the output plugin's has a config field called `formats`, with a limited
-amount of options are available (`json`, `json_stream`, `json_lines`, `msgpack`, `gelf`).
+Some of the output plugin's has a configuration field called `formats`, with a limited amount of options are available (`json`, `json_stream`, `json_lines`, `msgpack`, `gelf`).
 
-The specifications, or reference to external documentation of the formats, is
-available in this page.
+The specifications, or reference to external documentation of the formats, is available in this page.
 
-## JSON Formats
+## JSON formats
 
-The most custom format options are the JSON types, these are three quite
-common variants of sending JSON encoded data over various API's.
+The most custom format options are the JSON types. The following are common variants of sending JSON encoded data over various APIs.
 
-The example payloads below, are all "prettified" for readability.
+The following example payloads are modified for readability.
 
-_Records shown in example payloads, are the three first commits of the fluent-bit repository_
+Records shown in example payloads are the three first commits of the Fluent Bit repository.
 
-### json
+### `json`
 
-Queued records encoded as a single JSON array of JSON encoded fluent-bit records.
+Queued records encoded as a single JSON array of JSON encoded Fluent Bit records.
 
 #### Example payload
 
@@ -44,13 +41,13 @@ Queued records encoded as a single JSON array of JSON encoded fluent-bit records
 ]
 ```
 
-### json_stream
+### `json_stream`
 
 _a.k.a. Concatenated JSON_
 
-Queued JSON-encoded fluent-bit records, with no separator between records.
+Queued JSON-encoded Fluent Bit records, with no separator between records.
 
-#### Example payload
+#### Example `json_stream` payload
 
 ```json
 {
@@ -71,13 +68,13 @@ Queued JSON-encoded fluent-bit records, with no separator between records.
 }
 ```
 
-### json_lines
+### `json_lines`
 
-_a.k.a. Newline-Delimited JSON_
+Also known as newline-delimited JSON.
 
-Queued JSON-encoded fluent-bit records, separated by line-breaks (`\n`).
+Queued JSON-encoded Fluent Bit records, separated by line-breaks (`\n`).
 
-#### Example payload
+#### Example `json_lines` payload
 
 ```json
 {
@@ -100,27 +97,23 @@ Queued JSON-encoded fluent-bit records, separated by line-breaks (`\n`).
 }
 ```
 
-## msgpack
+## `msgpack`
 
 MessagePack is a binary format for serializing objects.
 
-Please refer to the official MessagePack format specification, found here:
-https://github.com/msgpack/msgpack/blob/master/spec.md
+Refer to the official [MessagePack format specification](https://github.com/msgpack/msgpack/blob/master/spec.md).
 
 ## GELF
 
-**G**raylog **E**xtended **L**og **F**ormat is a JSON based log format which is
-designed to avoid the shortcomings of classic plain syslog.
+Graylog Extended Log Format (GELF) is a JSON based log format which is designed to avoid the shortcomings of classic plain syslog.
 
-The official documentation for the GELF format can be found here:
-https://archivedocs.graylog.org/en/latest/pages/gelf.html
+See the official documentation for the [GELF format](https://archivedocs.graylog.org/en/latest/pages/gelf.html).
 
-It uses a fixed set of keys, with the addition of adding custom keys prefixed
-by one single underscore character.
+It uses a fixed set of keys, with the addition of adding custom keys prefixed by one single underscore character.
 
-### Example payload
+### Example GELF payload
 
-Here is an example payload, copied directly from the official docs (linked above)
+Here is an example payload, copied directly from the official documentation.
 
 ```json
 {
