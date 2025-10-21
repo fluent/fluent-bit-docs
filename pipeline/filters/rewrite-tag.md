@@ -177,7 +177,7 @@ $ fluent-bit -c example.conf
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
 ## Configuration example with multiple rules 
-In cases using multiple rules, the rules are passed through in order until one matches. With `AND_COMBINE` using the value `true` as optional fifth  component, the rule is combined with the following rule like an 'and' combination. I f the first and following rule match, the message is retagged with the tag in the last matched rule.
+In cases using multiple rules, the rules are passed through in order until one matches. With `AND_COMBINE` using the value `true` as optional fifth  component, the rule is combined with the following rule like an 'and' combination. If the first and following rule match, the message is retagged with the tag in the last matched rule.
 
 An `AND_COMBINE` in the last rule is ignored. 
 ```text
@@ -203,7 +203,7 @@ An `AND_COMBINE` in the last rule is ignored.
     Name  stdout
     Match *
 ```
-inputfile /var/tmp/loginput.txt
+Use the input file `/var/tmp/loginput.txt`:
 ```text
 1
 2
