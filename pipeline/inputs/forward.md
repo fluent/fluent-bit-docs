@@ -1,227 +1,153 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The **forward** output plugin allows to provide interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org). There are not configuration steps required besides to specify where [Fluentd](http://fluentd.org) is located, it can be in the local host or a in a remote machine.
+_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
-This plugin offers two different transports and modes:
+## Configuration parameters
 
-* Forward \(TCP\): It uses a plain TCP connection.
-* Secure Forward \(TLS\): when TLS is enabled, the plugin switch to Secure Forward mode.
+The plugin supports the following configuration parameters:
 
-## Configuration Parameters
+| Key                 | Description                                                                                                                                                                                                                                                                                                                                | Default   |
+|:--------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------|
+| `Listen`            | Listener network interface.                                                                                                                                                                                                                                                                                                                | `0.0.0.0` |
+| `Port`              | TCP port to listen for incoming connections.                                                                                                                                                                                                                                                                                               | `24224`   |
+| `Unix_Path`         | Specify the path to Unix socket to receive a Forward message. If set, `Listen` and `Port` are ignored.                                                                                                                                                                                                                                     | _none_    |
+| `Unix_Perm`         | Set the permission of the Unix socket file. If `Unix_Path` isn't set, this parameter is ignored.                                                                                                                                                                                                                                           | _none_    |
+| `Buffer_Max_Size`   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification.                                                                                                                                         | `6144000` |
+| `Buffer_Chunk_Size` | By default the buffer to store the incoming Forward messages, don't allocate the maximum memory allowed, instead it allocate memory when it's required. The rounds of allocations are set by `Buffer_Chunk_Size`. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit/unit-sizes.md)specification. | `1024000` |
+| `Tag_Prefix`        | Prefix incoming tag with the defined value.                                                                                                                                                                                                                                                                                                | _none_    |
+| `Tag`               | Override the tag of the forwarded events with the defined value.                                                                                                                                                                                                                                                                           | _none_    |
+| `Shared_Key`        | Shared key for secure forward authentication.                                                                                                                                                                                                                                                                                              | _none_    |
+| `Empty_Shared_Key`  | Use this option to connect to Fluentd with a zero-length shared key.                                                                                                                                                                                                                                                                       | `false`   |
+| `Self_Hostname`     | Hostname for secure forward authentication.                                                                                                                                                                                                                                                                                                | _none_    |
+| `Security.Users`    | Specify the username and password pairs for secure forward authentication.                                                                                                                                                                                                                                                                 |           |
+| `Threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                    | `false`   |
 
-The following parameters are mandatory for either Forward for Secure Forward modes:
+## Get started
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Host | Target host where Fluent-Bit or Fluentd are listening for Forward messages. | 127.0.0.1 |
-| Port | TCP Port of the target service. | 24224 |
-| Time\_as\_Integer | Set timestamps in integer format, it enable compatibility mode for Fluentd v0.12 series. | False |
-| Upstream | If Forward will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/upstream_servers.md) documentation section. |  |
-| Tag | Overwrite the tag as we transmit. This allows the receiving pipeline start fresh, or to attribute source. |  |
-| Send\_options | Always send options \(with "size"=count of messages\) | False |
-| Require\_ack\_response | Send "chunk"-option and wait for "ack" response from server. Enables at-least-once and receiving server can control rate of traffic. \(Requires Fluentd v0.14.0+ server\) | False |
+To receive Forward messages, you can run the plugin from the command line or through the configuration file as shown in the following examples.
 
-## Secure Forward Mode Configuration Parameters
+### Command line
 
-When using Secure Forward mode, the [TLS](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md) mode requires to be enabled. The following additional configuration parameters are available:
+From the command line you can let Fluent Bit listen for Forward messages with the following options:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| Shared\_Key | A key string known by the remote Fluentd used for authorization. |  |
-| Empty\_Shared\_Key | Use this option to connect to Fluentd with a zero-length secret. | False |
-| Username | Specify the username to present to a Fluentd server that enables `user_auth`. |  |
-| Password | Specify the password corresponding to the username. |  |
-| Self\_Hostname | Default value of the auto-generated certificate common name \(CN\). | localhost |
-| tls | Enable or disable TLS support | Off |
-| tls.verify | Force certificate validation | On |
-| tls.debug | Set TLS debug verbosity level. It accept the following values: 0 \(No debug\), 1 \(Error\), 2 \(State change\), 3 \(Informational\) and 4 Verbose | 1 |
-| tls.ca\_file | Absolute path to CA certificate file |  |
-| tls.crt\_file | Absolute path to Certificate file. |  |
-| tls.key\_file | Absolute path to private Key file. |  |
-| tls.key\_passwd | Optional password for tls.key\_file file. |  |
+```shell
+fluent-bit -i forward -o stdout
+```
 
-## Forward Setup
+By default, the service listens on all interfaces (`0.0.0.0`) through TCP port `24224`. You can change this by passing parameters to the command:
 
-Before proceeding, make sure that [Fluentd](http://fluentd.org) is installed in your system, if it's not the case please refer to the following [Fluentd Installation](http://docs.fluentd.org/v0.12/categories/installation) document and go ahead with that.
+```shell
+fluent-bit -i forward -p listen="192.168.3.2" -p port=9090 -o stdout
+```
 
-Once [Fluentd](http://fluentd.org) is installed, create the following configuration file example that will allow us to stream data into it:
+In the example, the Forward messages arrive only through network interface `192.168.3.2` address and TCP Port `9090`.
+
+### Configuration file
+
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+      buffer_chunk_size: 1M
+      buffer_max_size: 6M
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
-<source>
-  type forward
-  bind 0.0.0.0
-  port 24224
-</source>
-
-<match fluent_bit>
-  type stdout
-</match>
-```
-
-That configuration file specifies that it will listen for _TCP_ connections on the port _24224_ through the **forward** input type. Then for every message with a _fluent\_bit_ **TAG**, will print the message to the standard output.
-
-In one terminal launch [Fluentd](http://fluentd.org) specifying the new configuration file created \(in\_fluent-bit.conf\):
-
-```bash
-$ fluentd -c test.conf
-2017-03-23 11:50:43 -0600 [info]: reading config file path="test.conf"
-2017-03-23 11:50:43 -0600 [info]: starting fluentd-0.12.33
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-mixin-config-placeholders' version '0.3.1'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-docker' version '0.1.0'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-elasticsearch' version '1.4.0'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-flatten-hash' version '0.2.0'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-flowcounter-simple' version '0.0.4'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-influxdb' version '0.2.8'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-json-in-json' version '0.1.4'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-mongo' version '0.7.10'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-out-http' version '0.1.3'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-parser' version '0.6.0'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-record-reformer' version '0.7.0'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-rewrite-tag-filter' version '1.5.1'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-stdin' version '0.1.1'
-2017-03-23 11:50:43 -0600 [info]: gem 'fluent-plugin-td' version '0.10.27'
-2017-03-23 11:50:43 -0600 [info]: adding match pattern="fluent_bit" type="stdout"
-2017-03-23 11:50:43 -0600 [info]: adding source type="forward"
-2017-03-23 11:50:43 -0600 [info]: using configuration file: <ROOT>
-  <source>
-    type forward
-    bind 0.0.0.0
-    port 24224
-  </source>
-  <match fluent_bit>
-    type stdout
-  </match>
-</ROOT>
-2017-03-23 11:50:43 -0600 [info]: listening fluent socket on 0.0.0.0:24224
-```
-
-## Fluent Bit + Forward Setup <a id="forward_setup"></a>
-
-Now that [Fluentd](http://fluentd.org) is ready to receive messages, we need to specify where the **forward** output plugin will flush the information using the following format:
-
-```text
-bin/fluent-bit -i INPUT -o forward://HOST:PORT
-```
-
-If the **TAG** parameter is not set, the plugin will set the tag as _fluent\_bit_. Keep in mind that **TAG** is important for routing rules inside [Fluentd](http://fluentd.org).
-
-Using the [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) input plugin as an example we will flush CPU metrics to [Fluentd](http://fluentd.org):
-
-```bash
-$ bin/fluent-bit -i cpu -t fluent_bit -o forward://127.0.0.1:24224
-```
-
-Now on the [Fluentd](http://fluentd.org) side, you will see the CPU metrics gathered in the last seconds:
-
-```bash
-2017-03-23 11:53:06 -0600 fluent_bit: {"cpu_p":0.0,"user_p":0.0,"system_p":0.0,"cpu0.p_cpu":0.0,"cpu0.p_user":0.0,"cpu0.p_system":0.0,"cpu1.p_cpu":0.0,"cpu1.p_user":0.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
-2017-03-23 11:53:07 -0600 fluent_bit: {"cpu_p":2.25,"user_p":2.0,"system_p":0.25,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":1.0,"cpu1.p_user":1.0,"cpu1.p_system":0.0,"cpu2.p_cpu":1.0,"cpu2.p_user":1.0,"cpu2.p_system":0.0,"cpu3.p_cpu":3.0,"cpu3.p_user":2.0,"cpu3.p_system":1.0}
-2017-03-23 11:53:08 -0600 fluent_bit: {"cpu_p":1.75,"user_p":1.0,"system_p":0.75,"cpu0.p_cpu":2.0,"cpu0.p_user":1.0,"cpu0.p_system":1.0,"cpu1.p_cpu":3.0,"cpu1.p_user":1.0,"cpu1.p_system":2.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":2.0,"cpu3.p_user":1.0,"cpu3.p_system":1.0}
-2017-03-23 11:53:09 -0600 fluent_bit: {"cpu_p":4.75,"user_p":3.5,"system_p":1.25,"cpu0.p_cpu":4.0,"cpu0.p_user":3.0,"cpu0.p_system":1.0,"cpu1.p_cpu":5.0,"cpu1.p_user":4.0,"cpu1.p_system":1.0,"cpu2.p_cpu":3.0,"cpu2.p_user":2.0,"cpu2.p_system":1.0,"cpu3.p_cpu":5.0,"cpu3.p_user":4.0,"cpu3.p_system":1.0}
-```
-
-So we gathered [CPU](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/input/cpu.md) metrics and flushed them out to [Fluentd](http://fluentd.org) properly.
-
-## Fluent Bit + Secure Forward Setup <a id="secure_forward_setup"></a>
-
-> DISCLAIMER: the following example do not consider the generation of certificates for a proper usage of production environments.
-
-Secure Forward aims to provide a secure channel of communication with the remote Fluentd service using [TLS](https://github.com/fluent/fluent-bit-docs/tree/16f30161dc4c79d407cd9c586a0c6839d0969d97/pipeline/configuration/tls_ssl.md). Above there is a minimalist configuration for testing purposes.
-
-### Fluent Bit
-
-Paste this content in a file called _flb.conf_:
-
-```text
-[SERVICE]
-    Flush      5
-    Daemon     off
-    Log_Level  info
-
 [INPUT]
-    Name       cpu
-    Tag        cpu_usage
+  Name              forward
+  Listen            0.0.0.0
+  Port              24224
+  Buffer_Chunk_Size 1M
+  Buffer_Max_Size   6M
 
 [OUTPUT]
-    Name          forward
-    Match         *
-    Host          127.0.0.1
-    Port          24284
-    Shared_Key    secret
-    Self_Hostname flb.local
-    tls           on
-    tls.verify    off
+  Name   stdout
+  Match  *
 ```
 
-### Fluentd
+{% endtab %}
+{% endtabs %}
 
-Paste this content in a file called _fld.conf_:
+## Fluent Bit and secure forward setup
+
+In Fluent Bit v3 or later, `in_forward` can handle secure forward protocol.
+
+For using user-password authentication, specify `security.users` in at least a one-pair. For using shared key, specify `shared_key` in both of forward output and forward input. `self_hostname` isn't able to specify with the same hostname between fluent servers and clients.
+
+{% tabs %}
+{% tab title="fluent-bit-secure-forward.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+      buffer_chunk_size: 1M
+      buffer_max_size: 6M
+      security.users: fluentbit changeme
+      shared_key: secret
+      self_hostname: flb.server.local
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit-secure-forward.conf" %}
 
 ```text
-<source>
-  @type         secure_forward
-  self_hostname myserver.local
-  shared_key    secret
-  secure no
-</source>
+[INPUT]
+  Name              forward
+  Listen            0.0.0.0
+  Port              24224
+  Buffer_Chunk_Size 1M
+  Buffer_Max_Size   6M
+  Security.Users fluentbit changeme
+  Shared_Key secret
+  Self_Hostname flb.server.local
 
-<match **>
- @type stdout
-</match>
+[OUTPUT]
+  Name   stdout
+  Match  *
 ```
 
-If you're using Fluentd v1, set up it as below:
+{% endtab %}
+{% endtabs %}
+
+## Testing
+
+After Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](http://www.fluentd.org):
+
+```shell
+echo '{"key 1": 123456789, "key 2": "abcdefg"}' | fluent-cat my_tag
+```
+
+When you run the plugin with the following command:
+
+```shell
+fluent-bit -i forward -o stdout
+```
+
+In [Fluent Bit](http://fluentbit.io) you should see the following output:
 
 ```text
-<source>
-  @type forward
-  <transport tls>
-    cert_path /etc/td-agent/certs/fluentd.crt
-    private_key_path /etc/td-agent/certs/fluentd.key
-    private_key_passphrase password
-  </transport>
-  <security>
-    self_hostname myserver.local
-    shared_key secret
-  </security>
-</source>
-
-<match **>
- @type stdout
-</match>
+...
+[0] my_tag: [1475898594, {"key 1"=>123456789, "key 2"=>"abcdefg"}]
+...
 ```
-
-### Test Communication
-
-Start Fluentd:
-
-```text
-$ fluentd -c fld.conf
-```
-
-Start Fluent Bit:
-
-```text
-$ fluent-bit -c flb.conf
-```
-
-After five seconds, Fluent Bit will write the records to Fluentd. In Fluentd output you will see a message like this:
-
-```text
-2017-03-23 13:34:40 -0600 [info]: using configuration file: <ROOT>
-  <source>
-    @type secure_forward
-    self_hostname myserver.local
-    shared_key xxxxxx
-    secure no
-  </source>
-  <match **>
-    @type stdout
-  </match>
-</ROOT>
-2017-03-23 13:34:41 -0600 cpu_usage: {"cpu_p":1.0,"user_p":0.75,"system_p":0.25,"cpu0.p_cpu":1.0,"cpu0.p_user":1.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":1.0,"cpu1.p_system":1.0,"cpu2.p_cpu":1.0,"cpu2.p_user":1.0,"cpu2.p_system":0.0,"cpu3.p_cpu":2.0,"cpu3.p_user":1.0,"cpu3.p_system":1.0}
-2017-03-23 13:34:42 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.75,"system_p":0.0,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":1.0,"cpu3.p_system":0.0}
-2017-03-23 13:34:43 -0600 cpu_usage: {"cpu_p":1.75,"user_p":1.25,"system_p":0.5,"cpu0.p_cpu":3.0,"cpu0.p_user":3.0,"cpu0.p_system":0.0,"cpu1.p_cpu":2.0,"cpu1.p_user":2.0,"cpu1.p_system":0.0,"cpu2.p_cpu":0.0,"cpu2.p_user":0.0,"cpu2.p_system":0.0,"cpu3.p_cpu":1.0,"cpu3.p_user":0.0,"cpu3.p_system":1.0}
-2017-03-23 13:34:44 -0600 cpu_usage: {"cpu_p":5.0,"user_p":3.25,"system_p":1.75,"cpu0.p_cpu":4.0,"cpu0.p_user":2.0,"cpu0.p_system":2.0,"cpu1.p_cpu":8.0,"cpu1.p_user":5.0,"cpu1.p_system":3.0,"cpu2.p_cpu":4.0,"cpu2.p_user":3.0,"cpu2.p_system":1.0,"cpu3.p_cpu":4.0,"cpu3.p_user":2.0,"cpu3.p_system":2.0}
-```
-

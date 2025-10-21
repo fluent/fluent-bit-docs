@@ -1,62 +1,80 @@
 # Random
 
-_Random_ input plugin generate very simple random value samples using the device interface _/dev/urandom_, if not available it will use a unix timestamp as value.
+The _Random_ input plugin generates random value samples using the device interface `/dev/urandom`. If that interface is unavailable, it uses a Unix timestamp as a value.
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Samples | If set, it will only generate a specific number of samples. By default this value is set to _-1_, which will generate unlimited samples. |
-| Interval\_Sec | Interval in seconds between samples generation. Default value is _1_. |
-| Internal\_Nsec | Specify a nanoseconds interval for samples generation, it works in conjuntion with the Interval\_Sec configuration key. Default value is _0_. |
+| Key             | Description                                                                                                      | Default |
+|-----------------|------------------------------------------------------------------------------------------------------------------|---------|
+| `Samples`       | Specifies the number of samples to generate. The default value of `-1` generates unlimited samples.              | `-1`    |
+| `Interval_Sec`  | Specifies the interval between generated samples, in seconds.                                                    | `1`     |
+| `Interval_Nsec` | Specifies the interval between generated samples, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0`     |
+| `Threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).          | `false` |
 
-## Getting Started
+## Get started
 
-In order to start generating random samples, you can run the plugin from the command line or through the configuration file:
+To start generating random samples, you can either run the plugin from the command line or through a configuration file.
 
-### Command Line
+### Command line
 
-From the command line you can let Fluent Bit generate the samples with the following options:
+Use the following command line options to generate samples.
 
-```bash
-$ fluent-bit -i random -o stdout
+```shell
+fluent-bit -i random -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+The following examples are sample configuration files for this input plugin:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: random
+      samples: -1
+      interval_sec: 1
+      interval_nsec: 0
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name          random
-    Samples      -1
-    Interval_Sec  1
-    Interval_NSec 0
+  Name          random
+  Samples      -1
+  Interval_Sec  1
+  Interval_NSec 0
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ## Testing
 
-Once Fluent Bit is running, you will see the reports in the output interface similar to this:
+After Fluent Bit starts running, it generates reports in the output interface:
 
-```bash
+```shell
 $ fluent-bit -i random -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
 
-[2016/10/07 20:27:34] [ info] [engine] started
+...
 [0] random.0: [1475893654, {"rand_value"=>1863375102915681408}]
 [1] random.0: [1475893655, {"rand_value"=>425675645790600970}]
 [2] random.0: [1475893656, {"rand_value"=>7580417447354808203}]
 [3] random.0: [1475893657, {"rand_value"=>1501010137543905482}]
 [4] random.0: [1475893658, {"rand_value"=>16238242822364375212}]
+...
 ```
-
