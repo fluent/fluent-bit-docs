@@ -203,6 +203,7 @@
   * [OpenSearch](pipeline/outputs/opensearch.md)
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [Oracle Cloud Infrastructure Logging Analytics](pipeline/outputs/oci-logging-analytics.md)
+  * [Output Formats](pipeline/outputs/output_formats.md)
   * [Parseable](pipeline/outputs/parseable.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
   * [Prometheus exporter](pipeline/outputs/prometheus-exporter.md)
