@@ -2,7 +2,7 @@
 extends: existence
 message: "We don't use '%s'."
 ignorecase: true
-level: suggestion
+level: error
 tokens:
   - a.k.a.
   - aka
