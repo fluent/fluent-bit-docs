@@ -7,7 +7,7 @@ Fluent Bit supports the following architectures:
 - `x86_64`
 - `aarch64`
 
-Fluent Bit supports the following distro versions:
+Fluent Bit supports the following distributions:
 
 - opensuse/leap:15.6
 - sles/15.7
@@ -20,12 +20,12 @@ The recommended secure deployment approach is to use the following instructions:
 
 ## Ensure you select the correct openSUSE verse SLES Package
 
-The openSUSE package is built and tested specifically for openSUSE Leap environments, ensuring compatibility with openSUSE libraries, update cycles, and system dependencies. Using the openSUSE package on openSUSE Leap systems helps avoid potential issues with mismatched dependencies or unsupported features that may arise from using SLES packages.
+The openSUSE package is built and tested specifically for openSUSE Leap environments, ensuring compatibility with openSUSE libraries, update cycles, and system dependencies. Using the openSUSE package on openSUSE Leap systems helps avoid potential issues with mismatched dependencies or unsupported features that might arise from using SLES packages.
 
-The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which may include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it may lead to library incompatibilities.
+The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which may include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it can lead to library incompatibilities.
 
 
-**In summary:**  
+In summary:
 - Use the openSUSE package for openSUSE Leap systems.  
 - Use the SLES package for SUSE Linux Enterprise Server systems.
 
@@ -41,7 +41,7 @@ Ensure your system repositories are up to date. For openSUSE Leap, use the follo
 ### Configure Zypper for openSUSE Leap
 
 1. In `/etc/zypp/repos.d/`, add a new file called `fluent-bit.repo`.
-1. Add the following content to the file (replace `$releaserver` with your Leap version, e.g., `15.6`):
+1. Add the following content to the file (replace `$releaserver` with your Leap version. For example, `15.6`):
 
    ```text
    [fluent-bit]
@@ -115,7 +115,7 @@ The default Fluent Bit configuration collects metrics of CPU usage and sends the
 
 ### Zypper install fails with a `404 - Page not found` error for the package mirror
 
-Ensure you use the correct `$releaserver` (e.g., `15.6`) in your repo path:
+Ensure you use the correct `$releaserver` (for example, `15.6`) in your repo path:
 
 For openSUSE Leap:
 
@@ -133,4 +133,4 @@ zypper knows about special variables like $releasever. It has its own internal l
 
 ### Zypper install fails with incompatible dependencies
 
-OpenSUSE may track more recent dependencies than SLES. If you encounter dependency issues, ensure you are using the correct repository path for your OS distro.
+OpenSUSE might track more recent dependencies than SLES. If you encounter dependency issues, ensure you are using the correct repository path for your OS distro.
