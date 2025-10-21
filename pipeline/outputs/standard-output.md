@@ -8,7 +8,7 @@ The _standard output_ plugin prints ingested data to standard output.
 | --- | ----------- | ------- |
 | `Format` | Specify the data format to be printed. Supported formats are `msgpack`, `json`, `json_lines` and `json_stream`. | `msgpack` |
 | `json_date_key`| Specify the name of the time key in the output record. To disable the time key set the value to `false`. | `date` |
-| `json_date_format` | Specify the format of the date. Supported formats are `double`, `epoch`, `epoch_ms, `iso8601` (for example, `2018-05-30T09:39:52.000681Z`) and `java_sql_timestamp` (for example, `2018-05-30 09:39:52.000681`). | `double` |
+| `json_date_format` | Specify the format of the date. Supported formats are `double`, `epoch`, `epoch_ms`, `iso8601` (for example, `2018-05-30T09:39:52.000681Z`) and `java_sql_timestamp` (for example, `2018-05-30 09:39:52.000681`). | `double` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ### Command line
