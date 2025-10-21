@@ -1,1 +1,1 @@
-# Fluent Bit classic mode
+# Classic mode

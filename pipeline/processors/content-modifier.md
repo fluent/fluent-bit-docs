@@ -1,67 +1,85 @@
-# Content Modifier
-
-The **content_modifier** processor allows you to manipulate the messages, metadata/attributes and content of Logs and Traces.
+# Content modifier
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
 
-Similar to the functionality exposed by filters, this processor presents a unified mechanism to perform such operations for data manipulation. The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
+The _content modifier_ processor lets you manipulate the content, metadata, and attributes of logs and traces.
 
-Note that processors and this specific component can only be enabled using the new YAML configuration format. Classic mode configuration format doesn't support processors.
+Similar to how filters work, this processor uses a unified mechanism to perform operations for data manipulation. The most significant difference is that processors perform better than filters, and when chaining them, there are no encoding/decoding performance penalties.
+
+{% hint style="info" %}
+
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
+
+{% endhint %}
 
 ## Contexts
 
-The processor, works on top of what we call a __context__, meaning _the place_ where the content modification will happen. We provide different contexts to manipulate the desired information, the following contexts are available:
+The content modifier relies on _context_, meaning the place where the content modification will happen. Fluent Bit provides different contexts to manipulate the desired information.
 
-| Context Name | Signal | Description |
-| -- | -- | -- |
-| `attributes` | Logs | Modify the attributes or metadata of a Log record. |
-| `body` | Logs | Modify the content of a Log record. |
-| `span_name` | Traces | Modify the name of a Span. |
-| `span_kind` | Traces | Modify the kind of a Span. |
-| `span_status` | Traces | Modify the status of a Span. |
-| `span_attributes` | Traces | Modify the attributes of a Span. |
+The following contexts are available:
+
+| Name | Telemetry type | Description |
+| ---- | -------------- | ----------- |
+| `attributes` | Logs | Modifies the attributes or metadata of a log record. |
+| `body` | Logs | Modifies the content of a log record. |
+| `span_name` | Traces | Modifies the name of a span. |
+| `span_kind` | Traces | Modifies the kind of a span. |
+| `span_status` | Traces | Modifies the status of a span. |
+| `span_attributes` | Traces | Modifies the attributes of a span. |
 
 
-### OpenTelemetry Contexts
+### OpenTelemetry contexts
 
-In addition, we provide special contexts to operate on data that follows an __OpenTelemetry Log Schema__, all of them operates on shared data across a group of records:
+Additionally, Fluent Bit provides specific contexts for modifying data that follows the OpenTelemetry log schema. All of these contexts operate on shared data across a group of records.
 
-| Context Name | Signal | Description |
-| -- | -- | -- |
-| `otel_resource_attributes` | Logs | Modify the attributes of the Log Resource. |
-| `otel_scope_name` | Logs | Modify the name of a Log Scope. |
-| `otel_scope_version` | Logs | Modify version of a Log Scope. |
-| `otel_scope_attributes` | Logs | Modify the attributes of a Log Scope. |
+The following contexts are available:
 
-> TIP: if your data is not following the OpenTelemetry Log Schema and your backend or destination for your logs expects to be in an OpenTelemetry schema, take a look at the processor called OpenTelemetry Envelope that you can use in conjunbction with this processor to transform your data to be compatible with OpenTelemetry Log schema.
+| Name | Telemetry type | Description |
+| ---- | -------------- | ----------- |
+| `otel_resource_attributes` | Logs | Modifies the attributes of the log resource. |
+| `otel_scope_name` | Logs | Modifies the name of a log scope. |
+| `otel_scope_version` | Logs | Modifies version of a log scope. |
+| `otel_scope_attributes` | Logs | Modifies the attributes of a log scope. |
 
-## Configuration Parameters
+
+{% hint style="info" %}
+
+If your data doesn't follow the OpenTelemetry log schema, but your log destination expects to be in that format, you can use the [OpenTelemetry envelope](opentelemetry-envelope.md) processor to transform your data. You can then pass that transformed data through the content modifier filter and use OpenTelemetry contexts accordingly.
+
+{% endhint %}
+
+## Configuration parameters
+
+The following configuration parameters are available:
 
 | Key         | Description |
-| :---------- | :--- |
-| context | Specify the context where the modifications will happen (more details above).The following contexts are available:  `attributes`, `body`, `span_name`, `span_kind`, `span_status`, `span_attributes`, `otel_resource_attributes`, `otel_scope_name`, `otel_scope_version`, `otel_scope_attributes`. |
-| key | Specify the name of the key that will be used to apply the modification. |
-| value | Based on the action type, `value` might required and represent different things. Check the detailed information for the specific actions. |
-| pattern | Defines a regular expression pattern. This property is only used by the `extract` action. |
-| converted_type | Define the data type to perform the conversion, the available options are: `string`, `boolean`, `int` and `double` . |
+| ----------- | ----------- |
+| `context` | Specifies the [context](#contexts) where the modifications will happen. |
+| `key` | Specifies the name of the key that will be used to apply the modification. |
+| `value` | The role of this parameter changes based on the [action](#actions) type. |
+| `pattern` | Defines a regular expression pattern. This property is only used by the `extract` [action](#actions). |
+| `converted_type` | Defines the data type to perform the conversion. Possible values: `string`, `boolean`, `int` and `double`. |
 
 ### Actions
 
-The actions specify the type of operation to run on top of a specific key or content from a Log or a Trace. The following actions are available:
+The actions specify the type of operation to run on top of a specific key or content from a log or a trace. The following actions are available:
 
 | Action  | Description                                                  |
 | ------- | ------------------------------------------------------------ |
-| `insert`  | Insert a new key with a value into the target context. The `key` and `value` parameters are required. |
-| `upsert`  | Given a specific key with a value, the `upsert` operation will try to update the value of the key. If the key does not exist, the key will be created. The `key` and `value` parameters are required. |
-| `delete`  | Delete a key from the target context. The `key` parameter is required. |
-| `rename`  | Change the name of a key. The `value` set in the configuration will represent the new name. The `key` and `value` parameters are required. |
-| `hash`    | Replace the key value with a hash generated by the SHA-256 algorithm, the binary value generated is finally set as an hex string representation. The `key` parameter is required. |
-| `extract` | Allows to extact the value of a single key as a list of key/value pairs. This action needs the configuration of a regular expression in the  `pattern` property . The `key` and `pattern` parameters are required.  For more details check the examples below. |
-| `convert` | Convert the data type of a key value. The `key` and `converted_type` parameters are required. |
+| `insert`  | Inserts a new key with a value into the target context. The `key` and `value` parameters are required. |
+| `upsert`  | Given a specific key with a value, the `upsert` operation will try to update the value of the key. If the key doesn't exist, a new key will be created. The `key` and `value` parameters are required. |
+| `delete`  | Deletes a key from the target context. The `key` parameter is required. |
+| `rename`  | Changes the name of a key. The `value` set in the configuration will represent the new name. The `key` and `value` parameters are required. |
+| `hash`    | Replaces the key value with a hash generated by the SHA-256 algorithm, the binary value generated is finally set as a hex string representation. The `key` parameter is required. |
+| `extract` | Extracts the value of a single key as a list of key/value pairs. This action needs the configuration of a regular expression in the  `pattern` property. The `key` and `pattern` parameters are required. |
+| `convert` | Converts the data type of a key value. The `key` and `converted_type` parameters are required. |
 
 #### Insert example
 
 The following example appends the key `color` with the value `blue` to the log stream.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -75,15 +93,22 @@ pipeline:
             action: insert
             key: "color"
             value: "blue"
+
   outputs:
     - name : stdout
       match: '*'
       format: json_lines
 ```
 
+{% endtab %}
+{% endtabs %}
+
 #### Upsert example
 
 Update the value of `key1` and insert `key2`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -107,13 +132,17 @@ pipeline:
     - name : stdout
       match: '*'
       format: json_lines
-
 ```
 
+{% endtab %}
+{% endtabs %}
 
 #### Delete example
 
 Delete `key2` from the stream:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -133,9 +162,15 @@ pipeline:
       format: json_lines
 ```
 
+{% endtab %}
+{% endtabs %}
+
 #### Rename example
 
 Change the name of `key2` to `test`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -156,9 +191,15 @@ pipeline:
       format: json_lines
 ```
 
+{% endtab %}
+{% endtabs %}
+
 #### Hash example
 
 Apply the SHA-256 algorithm for the value of the key `password`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -178,11 +219,15 @@ pipeline:
       format: json_lines
 ```
 
-
+{% endtab %}
+{% endtabs %}
 
 #### Extract example
 
-By using a domain address, perform a extraction of the components of it as a list of key value pairs:
+By using a domain address, perform an extraction of the components of it as a list of key value pairs:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -203,11 +248,15 @@ pipeline:
       format: json_lines
 ```
 
-
+{% endtab %}
+{% endtabs %}
 
 #### Convert example
 
 Both keys in the example are strings. Convert the `key1` to a double/float type and `key2` to a boolean:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -232,3 +281,6 @@ pipeline:
       match: '*'
       format: json_lines
 ```
+
+{% endtab %}
+{% endtabs %}
