@@ -1,0 +1,12 @@
+groups:
+  - name: fluent-bit
+    rules:
+      - alert: NoOutputBytesProcessed
+        expr: sum(rate(fluentbit_output_proc_bytes_total[5m])) by (pod) == 0
+        annotations:
+          message: |
+            Fluent Bit pod {{ $labels.pod }} has not processed any output bytes for at least 15 min.
+          summary: No Output Bytes Processed
+        for: 15m
+        labels:
+          severity: critical

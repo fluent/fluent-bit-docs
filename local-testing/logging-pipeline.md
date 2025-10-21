@@ -1,16 +1,29 @@
-# Running a Logging Pipeline Locally
+# Run a logging pipeline locally
 
-You may wish to test a logging pipeline locally to observe how it deals with
-log messages. The following is a walk-through for running Fluent Bit and
-Elasticsearch locally with [Docker Compose](https://docs.docker.com/compose/) which can serve as an example for testing other plugins locally.
+You can test logging pipelines locally to observe how they handles log messages. This guide explains how to use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit and Elasticsearch locally, but you can use the same principles to test other plugins.
 
-## Create a Configuration File
+## Create a configuration file
 
-Refer to the [Configuration File
-section](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file)
-to create a configuration to test.
+Start by creating one of the corresponding Fluent Bit configuration files to start testing.
 
-`fluent-bit.conf`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"top": {".dotted": "value"}}'
+      
+  outputs:       
+    - name: es
+      host: elasticsearch
+      replace_dots: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -23,12 +36,14 @@ to create a configuration to test.
   Replace_Dots On
 ```
 
-## Docker Compose
+{% endtab %}
+{% endtabs %}
 
-Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit (with
-the configuration file mounted) and Elasticsearch.
+## Use Docker Compose
 
-`docker-compose.yaml`:
+Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit (with the configuration file mounted) and Elasticsearch.
+
+{% code title="docker-compose.yaml" %}
 
 ```yaml
 version: "3.7"
@@ -41,25 +56,29 @@ services:
     depends_on:
       - elasticsearch
   elasticsearch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.17.6
     ports:
       - "9200:9200"
     environment:
       - discovery.type=single-node
 ```
 
+{% endcode %}
+
 ## View indexed logs
 
-To view indexed logs run:
+To view indexed logs, run the following command:
 
-```sh
+```shell
 curl "localhost:9200/_search?pretty" \
   -H 'Content-Type: application/json' \
   -d'{ "query": { "match_all": {} }}'
 ```
 
-To "start fresh", delete the index by running:
+## Reset index
 
-```sh
+To reset your index, run the following command:
+
+```shell
 curl -X DELETE "localhost:9200/fluent-bit?pretty"
 ```

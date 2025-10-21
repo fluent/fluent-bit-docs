@@ -1,35 +1,67 @@
-# Regular Expression
+# Regular expression
 
-The **regex** parser allows to define a custom Ruby Regular Expression that will use a named capture feature to define which content belongs to which key name.
+The _Regular expression_ parser lets you define a custom Ruby regular expression that uses named capture to define which content belongs to which key name.
 
-Fluent Bit uses [Onigmo](https://github.com/k-takata/Onigmo) regular expression library on Ruby mode, for testing purposes you can use the following web editor to test your expressions:
+Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
 
-[http://rubular.com/](http://rubular.com/)
+{% hint style="warning" %}
 
-Important: do not attempt to add multiline support in your regular expressions if you are using [Tail](https://github.com/fluent/fluent-bit-docs/tree/1787fd8bfb2035bf10faf8cb7b14c4521e1265b3/pipeline/input/tail.md) input plugin since each line is handled as a separated entity. Instead use Tail [Multiline](https://github.com/fluent/fluent-bit-docs/tree/1787fd8bfb2035bf10faf8cb7b14c4521e1265b3/pipeline/input/tail.md#multiline) support configuration feature.
+This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
-> Note: understanding how regular expressions works is out of the scope of this content.
+{% end hint %}
 
-From a configuration perspective, when the format is set to **regex**, is mandatory and expected that a _Regex_ configuration key exists.
+Setting the format to regular expressions requires a `regex` configuration key.
 
-The following parser configuration example aims to provide rules that can be applied to an Apache HTTP Server log entry:
+## Configuration parameters
 
-```python
-[PARSER]
-    Name   apache
-    Format regex
-    Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
-    Time_Key time
-    Time_Format %d/%b/%Y:%H:%M:%S %z
+The `regex` parser supports the following configuration parameters:
+
+| Key | Description | Default Value |
+| --- | ----------- | ------------- |
+| `Skip_Empty_Values` | If enabled, the parser ignores empty value of the record. | `True` |
+
+Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression library in Ruby mode.
+
+You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
+
+The following parser configuration example provides rules that can be applied to an Apache HTTP Server log entry:
+
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+  - name: apache
+    format: regex
+    regex: '^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$'
+    time_key: time
+    time_format: '%d/%b/%Y:%H:%M:%S %z'
+    types: pid:integer size:integer
 ```
 
-As an example, takes the following Apache HTTP Server log entry:
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
+[PARSER]
+  Name   apache
+  Format regex
+  Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+  Time_Key time
+  Time_Format %d/%b/%Y:%H:%M:%S %z
+  Types code:integer size:integer
+```
+
+{% endtab %}
+{% endtabs %}
+
+As an example, review the following Apache HTTP Server log entry:
 
 ```text
 192.168.2.20 - - [29/Jul/2015:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-The above content do not provide a defined structure for Fluent Bit, but enabling the proper parser we can help to make a structured representation of it:
+This log entry doesn't provide a defined structure for Fluent Bit. Enabling the proper parser can help to make a structured representation of the entry:
 
 ```text
 [1154104030, {"host"=>"192.168.2.20",
@@ -43,8 +75,3 @@ The above content do not provide a defined structure for Fluent Bit, but enablin
               }
 ]
 ```
-
-A common pitfall is that you cannot use characters other than alphabets, numbers and underscore in group names. For example, a group name like `(?<user-name>.*)` will cause an error due to containing an invalid character \(`-`\).
-
-In order to understand, learn and test regular expressions like the example above, we suggest you try the following Ruby Regular Expression Editor: [http://rubular.com/r/X7BH0M4Ivm](http://rubular.com/r/X7BH0M4Ivm)
-

@@ -1,37 +1,23 @@
-# Standard Output
+# Standard output
 
-The **stdout** output plugin allows to print to the standard output the data received through the _input_ plugin. Their usage is very simple as follows:
+The standard output filter allows printing the data flowing through the filter plugin to `stdout`, which can be used while debugging.
 
-## Configuration Parameters
+The plugin has no configuration parameters.
 
-| Key | Description | default |
-| :--- | :--- | :--- |
-| Format | Specify the data format to be printed. Supported formats are _msgpack_ _json_, _json\_lines_ and _json\_stream_. | msgpack |
-| json\_date\_key | Specify the name of the date field in output | date |
-| json\_date\_format | Specify the format of the date. Supported formats are _double_,  _iso8601_ \(eg: _2018-05-30T09:39:52.000681Z_\) and _epoch_. | double |
+## Command line
 
-### Command Line
+Use the following command from the command line:
 
-```bash
-$ bin/fluent-bit -i cpu -o stdout -v
+```shell
+fluent-bit -i cpu -F stdout -m '*' -o null
 ```
 
-We have specified to gather [CPU](https://github.com/fluent/fluent-bit-docs/tree/ddc1cf3d996966b9db39f8784596c8b7132b4d5b/pipeline/input/cpu.md) usage metrics and print them out to the standard output in a human readable way:
+Fluent Bit specifies gathering [CPU](../inputs/cpu-metrics.md) usage metrics and prints them out in a human-readable way when they flow through the stdout plugin.
 
-```bash
-$ bin/fluent-bit -i cpu -o stdout -p format=msgpack -v
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
-
-[2016/10/07 21:52:01] [ info] [engine] started
-[0] cpu.0: [1475898721, {"cpu_p"=>0.500000, "user_p"=>0.250000, "system_p"=>0.250000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>0.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>0.000000, "cpu2.p_cpu"=>0.000000, "cpu2.p_user"=>0.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>1.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>1.000000}]
-[1] cpu.0: [1475898722, {"cpu_p"=>0.250000, "user_p"=>0.250000, "system_p"=>0.000000, "cpu0.p_cpu"=>0.000000, "cpu0.p_user"=>0.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>1.000000, "cpu1.p_user"=>1.000000, "cpu1.p_system"=>0.000000, "cpu2.p_cpu"=>0.000000, "cpu2.p_user"=>0.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>0.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>0.000000}]
-[2] cpu.0: [1475898723, {"cpu_p"=>0.750000, "user_p"=>0.250000, "system_p"=>0.500000, "cpu0.p_cpu"=>2.000000, "cpu0.p_user"=>1.000000, "cpu0.p_system"=>1.000000, "cpu1.p_cpu"=>0.000000, "cpu1.p_user"=>0.000000, "cpu1.p_system"=>0.000000, "cpu2.p_cpu"=>1.000000, "cpu2.p_user"=>0.000000, "cpu2.p_system"=>1.000000, "cpu3.p_cpu"=>0.000000, "cpu3.p_user"=>0.000000, "cpu3.p_system"=>0.000000}]
-[3] cpu.0: [1475898724, {"cpu_p"=>1.000000, "user_p"=>0.750000, "system_p"=>0.250000, "cpu0.p_cpu"=>1.000000, "cpu0.p_user"=>1.000000, "cpu0.p_system"=>0.000000, "cpu1.p_cpu"=>2.000000, "cpu1.p_user"=>1.000000, "cpu1.p_system"=>1.000000, "cpu2.p_cpu"=>1.000000, "cpu2.p_user"=>1.000000, "cpu2.p_system"=>0.000000, "cpu3.p_cpu"=>1.000000, "cpu3.p_user"=>1.000000, "cpu3.p_system"=>0.000000}]
+```text
+...
+[0] cpu.0: [1622789640.379532062, {"cpu_p"=>9.000000, "user_p"=>6.500000, "system_p"=>2.500000, "cpu0.p_cpu"=>8.000000, "cpu0.p_user"=>6.000000, "cpu0.p_system"=>2.000000, "cpu1.p_cpu"=>9.000000, "cpu1.p_user"=>6.000000, "cpu1.p_system"=>3.000000}]
+[0] cpu.0: [1622789641.379529426, {"cpu_p"=>22.500000, "user_p"=>18.000000, "system_p"=>4.500000, "cpu0.p_cpu"=>34.000000, "cpu0.p_user"=>30.000000, "cpu0.p_system"=>4.000000, "cpu1.p_cpu"=>11.000000, "cpu1.p_user"=>6.000000, "cpu1.p_system"=>5.000000}]
+[0] cpu.0: [1622789642.379544020, {"cpu_p"=>26.500000, "user_p"=>16.000000, "system_p"=>10.500000, "cpu0.p_cpu"=>30.000000, "cpu0.p_user"=>24.000000, "cpu0.p_system"=>6.000000, "cpu1.p_cpu"=>22.000000, "cpu1.p_user"=>8.000000, "cpu1.p_system"=>14.000000}]
+[0] cpu.0: [1622789643.379507371, {"cpu_p"=>39.500000, "user_p"=>34.500000, "system_p"=>5.000000, "cpu0.p_cpu"=>52.000000, "cpu0.p_user"=>48.000000, "cpu0.p_system"=>4.000000, "cpu1.p_cpu"=>28.000000, "cpu1.p_user"=>21.000000, "cpu1.p_system"=>7.000000}]
 ```
-
-No more, no less, it just works.
-
