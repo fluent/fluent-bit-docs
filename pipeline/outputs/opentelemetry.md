@@ -4,65 +4,142 @@ description: An output plugin to submit Logs, Metrics, or Traces to an OpenTelem
 
 # OpenTelemetry
 
-The OpenTelemetry plugin allows you to take logs, metrics, and traces from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
+The OpenTelemetry plugin lets you take logs, metrics, and traces from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
 
-Important Note: At the moment only HTTP endpoints are supported.
+Only HTTP endpoints are supported.
 
-| Key                  | Description                                                  | Default   |
-| -------------------- | ------------------------------------------------------------ | --------- |
-| host                 | IP address or hostname of the target HTTP Server             | 127.0.0.1 |
-| http_user            | Basic Auth Username                                          |           |
-| http_passwd          | Basic Auth Password. Requires HTTP_user to be set            |           |
-| port                 | TCP port of the target HTTP Server                           | 80        |
-| proxy                | Specify an HTTP Proxy. The expected format of this value is `http://HOST:PORT`. Note that HTTPS is **not** currently supported. It is recommended not to set this and to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. |           |
-| metrics_uri                  | Specify an optional HTTP URI for the target web server listening for metrics, e.g: /v1/metrics | /         |
-| logs_uri                  | Specify an optional HTTP URI for the target web server listening for logs, e.g: /v1/logs | /         |
-| traces_uri                  | Specify an optional HTTP URI for the target web server listening for traces, e.g: /v1/traces | /         |
-| header               | Add a HTTP header key/value pair. Multiple headers can be set. |           |
-| log_response_payload | Log the response payload within the Fluent Bit log           | false     |
-| add_label            | This allows you to add custom labels to all metrics and logs (resource attributes) exposed through the OpenTelemetry exporter. You may have multiple `add_label` fields for each label you want to add|           |
-| compress            | Set payload compression mechanism. Option available is 'gzip' |           |
+| Key | Description | Default |
+|-----|-------------|---------|
+| `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
+| `http_user` | Basic Auth username. | _none_ |
+| `http_passwd` | Basic Auth password. Requires `HTTP_user` to be set. | _none_ |
+| `port` | TCP port of the target HTTP server. | `80` |
+| `proxy` | Specify an HTTP Proxy. The expected format value is `http://HOST:PORT`. HTTPS isn't supported. It's recommended to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. | _none_ |
+| `http2` | Defines whether HTTP/2 protocol is enabled. This setting also supports the `force` option, which forces HTTP/2 over a plain text connection. | `On` |
+| `grpc` | Enables gRPC over an HTTP/2 connection. This setting applies to HTTP/2 only. | `off` |
+| `metrics_uri` | Specify an optional HTTP URI for the target web server listening for metrics. For example, `/v1/metrics`. | `/` |
+| `logs_uri` | Specify an optional HTTP URI for the target web server listening for logs, For example, `/v1/logs`. | `/` |
+| `traces_uri` | Specify an optional HTTP URI for the target web server listening for traces, For example, `/v1/traces`. | `/` |
+| `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `log_response_payload` | Log the response payload within the Fluent Bit log. | `false` |
+| `logs_body_key` | The log body key to look up in the log events body/message. Sets the `Body` field of the OpenTelemetry logs data model. | `message` |
+| `logs_trace_id_message_key` | The trace id key to look up in the log events body/message. Sets the `TraceId` field of the OpenTelemetry logs data model. | `traceId` |
+| `logs_span_id_message_key` | The span id key to look up in the log events body/message. Sets the `SpanId` field of the OpenTelemetry logs data model. | `spanId` |
+| `logs_severity_text_message_key` | The severity text id key to look up in the log events body/message. Sets the `SeverityText` field of the OpenTelemetry logs data model. | `severityText` |
+| `logs_severity_number_message_key` | The severity number id key to look up in the log events body/message. Sets the `SeverityNumber` field of the OpenTelemetry logs data model. | `severityNumber` |
+| `add_label` | Lets you add custom labels to all metrics exposed through the OpenTelemetry exporter. You can have multiple of these fields. | _none_ |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
+| `logs_observed_timestamp_metadata_key` | Specify an `ObservedTimestamp` key to look up in the metadata. | `$ObservedKey` |
+| `logs_timestamp_metadata_key` | Specify a `Timestamp` key to look up in the metadata.        | `$Timestamp`      |
+| `logs_severity_key_metadata_key`       | Specify a `SeverityText` key to look up in the metadata.     | `$SeverityText`   |
+| `logs_severity_number_metadata_key` | Specify a `SeverityNumber` key to look up in the metadata. | `$SeverityNumber` |
+| `logs_trace_flags_metadata_key` | Specify a `Flags` key to look up in the metadata. | `$Flags` |
+| `logs_span_id_metadata_key`            | Specify a `SpanId` key to look up in the metadata.           | `$SpanId`         |
+| `logs_trace_id_metadata_key`           | Specify a `TraceId` key to look up in the metadata.          | `$TraceId`        |
+| `logs_attributes_metadata_key`         | Specify an `Attributes` key to look up in the metadata.      | `$Attributes`     |
+| `logs_body_key_attributes`             | When enabled (`true`), Fluent Bit will place all parsed JSON fields (except the one mapped by `logs_body_key`) inside the `attributes` section of the OpenTelemetry `LogRecord`. This is useful if you want structured key/value pairs as attributes, while still mapping a specific field (defined by `logs_body_key`) to the `body`. | `false` |
+| `workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-## Getting Started
+## Get started
 
 The OpenTelemetry plugin works with logs and only the metrics collected from one of the metric input plugins. In the following example, log records generated by the dummy plugin and the host metrics collected by the node exporter metrics plugin are exported by the OpenTelemetry output plugin.
 
-```
-# Dummy Logs & traces with Node Exporter Metrics export using OpenTelemetry output plugin
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
 # -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs & traces and delivers
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
+# them through the OpenTelemetry plugin to a local collector :
+#
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: node_exporter_metrics
+      tag: node_metrics
+      scrape_interval: 2
+
+    - name: dummy
+      tag: dummy.log
+      rate: 3
+
+    - name: event_type
+      type: traces
+
+  outputs:
+    - name: opentelemetry
+      match: '*'
+      host: localhost
+      port: 443
+      metrics_uri: /v1/metrics
+      logs_uri: /v1/logs
+      traces_uri: /v1/traces
+      log_response_payload: true
+      tls: on
+      tls.verify: off
+      logs_body_key: $message
+      logs_span_id_message_key: span_id
+      logs_trace_id_message_key: trace_id
+      logs_severity_text_message_key: loglevel
+      logs_severity_number_message_key: lognum
+      # add user-defined labels
+      add_label:
+        - app fluent-bit
+        - color blue
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
+# -------------------------------------------
+# The following example collects host metrics on Linux and dummy logs and traces and delivers
 # them through the OpenTelemetry plugin to a local collector :
 #
 [SERVICE]
-    Flush                1
-    Log_level            info
+  Flush                1
+  Log_level            info
 
 [INPUT]
-    Name                 node_exporter_metrics
-    Tag                  node_metrics
-    Scrape_interval      2
+  Name                 node_exporter_metrics
+  Tag                  node_metrics
+  Scrape_interval      2
 
 [INPUT]
-    Name                 dummy
-    Tag                  dummy.log
-    Rate                 3
+  Name                 dummy
+  Tag                  dummy.log
+  Rate                 3
 
 [INPUT]
-    Name                 event_type
-    Type                 traces
+  Name                 event_type
+  Type                 traces
 
 [OUTPUT]
-    Name                 opentelemetry
-    Match                *
-    Host                 localhost
-    Port                 443
-    Metrics_uri          /v1/metrics
-    Logs_uri             /v1/logs
-    Traces_uri           /v1/traces
-    Log_response_payload True
-    Tls                  On
-    Tls.verify           Off
-    # add user-defined labels
-    add_label            app fluent-bit
-    add_label            color blue
+  Name                 opentelemetry
+  Match                *
+  Host                 localhost
+  Port                 443
+  Metrics_uri          /v1/metrics
+  Logs_uri             /v1/logs
+  Traces_uri           /v1/traces
+  Log_response_payload True
+  Tls                  On
+  Tls.verify           Off
+  logs_body_key $message
+  logs_span_id_message_key span_id
+  logs_trace_id_message_key trace_id
+  logs_severity_text_message_key loglevel
+  logs_severity_number_message_key lognum
+  # add user-defined labels
+  add_label            app fluent-bit
+  add_label            color blue
 ```
+
+{% endtab %}
+{% endtabs %}
