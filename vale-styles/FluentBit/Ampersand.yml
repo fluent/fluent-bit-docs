@@ -1,6 +1,6 @@
 extends: existence
 message: 'Use "and" instead of "&" in content.'
-level: warning
+level: error
 scope: text
 nonword: true
 tokens:

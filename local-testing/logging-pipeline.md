@@ -4,9 +4,27 @@ You can test logging pipelines locally to observe how they handles log messages.
 
 ## Create a configuration file
 
-Start by creating a [Fluent Bit configuration file](../administration/configuring-fluent-bit/classic-mode/configuration-file) to test.
+Start by creating one of the corresponding Fluent Bit configuration files to start testing.
 
-{% code title="fluent-bit.conf" %}
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"top": {".dotted": "value"}}'
+      
+  outputs:       
+    - name: es
+      host: elasticsearch
+      replace_dots: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [INPUT]
   Name dummy
@@ -17,13 +35,16 @@ Start by creating a [Fluent Bit configuration file](../administration/configurin
   Host elasticsearch
   Replace_Dots On
 ```
-{% endcode %}
+
+{% endtab %}
+{% endtabs %}
 
 ## Use Docker Compose
 
 Use [Docker Compose](https://docs.docker.com/compose/) to run Fluent Bit (with the configuration file mounted) and Elasticsearch.
 
 {% code title="docker-compose.yaml" %}
+
 ```yaml
 version: "3.7"
 
@@ -35,19 +56,20 @@ services:
     depends_on:
       - elasticsearch
   elasticsearch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.17.6
     ports:
       - "9200:9200"
     environment:
       - discovery.type=single-node
 ```
+
 {% endcode %}
 
 ## View indexed logs
 
 To view indexed logs, run the following command:
 
-```bash
+```shell
 curl "localhost:9200/_search?pretty" \
   -H 'Content-Type: application/json' \
   -d'{ "query": { "match_all": {} }}'
@@ -57,6 +79,6 @@ curl "localhost:9200/_search?pretty" \
 
 To reset your index, run the following command:
 
-```bash
+```shell
 curl -X DELETE "localhost:9200/fluent-bit?pretty"
 ```

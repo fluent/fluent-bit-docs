@@ -26,7 +26,7 @@ A `SELECT` statement not associated with stream creation will send the results t
 
 You can filter the results of this query by applying a condition by using a `WHERE` statement. For information about the `WINDOW` and `GROUP BY` statements, see [Aggregation functions](#aggregation-functions).
 
-#### Examples
+#### Examples [#select-examples]
 
 Selects all keys from records that originate from a stream called `apache`:
 
@@ -50,7 +50,7 @@ CREATE STREAM stream_name
 
 Creates a new stream of data using the results from a `SELECT` statement. If the `Tag` property in the `WITH` statement is set, this new stream can optionally be re-ingested into the Fluent Bit pipeline.
 
-#### Examples
+#### Examples [#create-stream-examples]
 
 Creates a new stream called `hello_` from a stream called `apache`:
 
@@ -101,6 +101,7 @@ Returns the minimum value of a key in a set of records.
 ```sql
 SELECT MAX(key) FROM STREAM:apache;
 ```
+
 Returns the maximum value of a key in a set of records.
 
 ### `SUM`
@@ -111,7 +112,7 @@ SELECT SUM(key) FROM STREAM:apache;
 
 Calculates the sum of all values of a key in a set of records.
 
-## Time Functions
+## Time functions
 
 Use time functions to add a new key with time data into a record.
 
@@ -131,7 +132,7 @@ SELECT UNIX_TIMESTAMP() FROM STREAM:apache;
 
 Adds the current Unix time to a record. Output example: `1552196165`.
 
-## Record Functions
+## Record functions
 
 Use record functions to append new keys to a record using values from the record's context.
 

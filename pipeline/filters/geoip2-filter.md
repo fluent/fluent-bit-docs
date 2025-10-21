@@ -22,23 +22,52 @@ This plugin supports the following configuration parameters:
 
 The following configuration processes the incoming `remote_addr` and appends country information retrieved from the GeoLite2 database.
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: {"remote_addr": "8.8.8.8"}
+
+  filters:
+    - name: geoip2
+      match: '*'
+      database: GioLite2-City.mmdb
+      lookup_key: remote_addr
+      record:
+        - country remote_addr %{country.names.en}
+        - isocode remote_addr %{country.iso_code}
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name   dummy
-    Dummy  {"remote_addr": "8.8.8.8"}
+  Name   dummy
+  Dummy  {"remote_addr": "8.8.8.8"}
 
 [FILTER]
-    Name geoip2
-    Match *
-    Database GeoLite2-City.mmdb
-    Lookup_key remote_addr
-    Record country remote_addr %{country.names.en}
-    Record isocode remote_addr %{country.iso_code}
+  Name geoip2
+  Match *
+  Database GeoLite2-City.mmdb
+  Lookup_key remote_addr
+  Record country remote_addr %{country.names.en}
+  Record isocode remote_addr %{country.iso_code}
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 Each `Record` parameter specifies the following triplet:
 
@@ -48,6 +77,6 @@ Each `Record` parameter specifies the following triplet:
 
 By running Fluent Bit with this configuration, you will see the following output:
 
-```javascript
+```text
 {"remote_addr": "8.8.8.8", "country": "United States", "isocode": "US"}
 ```
