@@ -36,6 +36,7 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which can help improve throughput when there are transient/random networking issues. Defaults to `true`.             |
 | `external_id`          | Specify an external ID for the STS API, can be used with the `role_arn` parameter if your role requires an external ID.  |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. Default: `1`. |
+| `metric`_storage_resolution` | The granularity each metric should be stored with. Default is `60s`. Valid range is from `1s` to `60s`. See [EMF Specification](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html) for details.|
 
 ## Get started
 
