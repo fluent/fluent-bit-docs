@@ -176,11 +176,11 @@ $ fluent-bit -c example.conf
 ...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
-## Configuration Example with many Rules 
-In case of many rules, they are passed through in order until one rule matches. With`AND_COMBINE`value`true` as optional fifth 
-component, the rule is combined with the following rule like an 'and' combination. Only if first and following rule match, the message is retagged with the tag in the last matched rule.
+## Configuration example with multiple rules 
+In cases using multiple rules, the rules are passed through in order until one matches. With `AND_COMBINE` using the value `true` as optional fifth  component, the rule is combined with the following rule like an 'and' combination. I f the first and following rule match, the message is retagged with the tag in the last matched rule.
+
 An `AND_COMBINE` in the last rule is ignored. 
-```
+```text
 [SERVICE]
     Flush     5
     Log_Level info
@@ -204,7 +204,7 @@ An `AND_COMBINE` in the last rule is ignored.
     Match *
 ```
 inputfile /var/tmp/loginput.txt
-```
+```text
 1
 2
 3
@@ -214,7 +214,7 @@ inputfile /var/tmp/loginput.txt
 42
 ```
 
-the logmessages will be rewritten:
+The log messages will be rewritten:
 ```
 fluent-bit_1  | [0] tail: [1596050753.241336500, {"log"=>"2"}]
 fluent-bit_1  | [1] tail: [1596050753.241356700, {"log"=>"3"}]
@@ -224,10 +224,6 @@ fluent-bit_1  | [1] newtag_or: [1596050753.241427200, {"log"=>"42"}]
 fluent-bit_1  | [0] newtag_and_3: [1596050753.241374500, {"log"=>"9"}]
 fluent-bit_1  | [0] newtag_and_2: [1596050753.241392800, {"log"=>"10and"}]
 ```
-
-
-
-
 
 ## Monitoring
 
