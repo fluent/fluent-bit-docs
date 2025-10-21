@@ -1,10 +1,11 @@
 ---
-description: Strong Commitment to the Openness and Collaboration
+title: License
+description: Fluent Bit license description
 ---
 
 # License
 
-[Fluent Bit](http://fluentbit.io), including it core, plugins and tools are distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0):
+[Fluent Bit](http://fluentbit.io), including its core, plugins, and tools are distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0):
 
 ```text
                                  Apache License
@@ -184,4 +185,3 @@ description: Strong Commitment to the Openness and Collaboration
 
    END OF TERMS AND CONDITIONS
 ```
-

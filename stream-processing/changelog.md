@@ -1,6 +1,6 @@
 # Changelog
 
-Upon new versions of [Fluent Bit](https://fluentbit.io), the Stream Processor engine gets new improvements. In the following section you will find the details of the new additions in the major release versions.
+This page details new additions to the stream processor engine in major release versions of Fluent Bit.
 
 ## Fluent Bit v1.2
 
@@ -8,7 +8,7 @@ Upon new versions of [Fluent Bit](https://fluentbit.io), the Stream Processor en
 
 ### Sub-key selection and conditionals support
 
-It's pretty common that records contains nested maps or sub-keys. Now we provide the ability to use sub-keys to perform conditionals and keys selection. Consider the following record:
+Added the ability to use nested maps and sub-keys to perform conditions and key selections. For example, consider the following record:
 
 ```javascript
 {
@@ -30,26 +30,25 @@ SELECT key3['sub1']['sub2'] FROM STREAM:test WHERE key3['sub1']['sub2'] = 789;
 
 ### New @record functions
 
-On conditionals we have introduced the new _@record_ functions:
+For conditionals, added the new _@record_ functions:
 
 | Function | Description |
 | :--- | :--- |
-| @record.time\(\) | returns the record timestamp |
-| @record.contains\(key\) | returns true or false if _key_ exists in the record |
+| `@record.time()` | Returns the record timestamp. |
+| `@record.contains(key)` | Returns `true` or false if `key` exists in the record, or `false` if not. |
 
-### IS NULL, IS NOT NULL
+### `IS NULL` and `IS NOT NULL`
 
-We currently support different data types such as _strings_, _integers_, _floats_, _maps_ and _null_. In Fluent Bit, a _null_ value is totally valid and is not related to the absence of a value as in normal databases. To compare if an existing key in the record have a _null_ value or not, we have introduced _IS NULL_ and _IS NOT NULL_ statements, e.g:
+Added `IS NULL` and `IS NOT NULL` statements to determine whether an existing key in a record has a null value. For example:
 
 ```sql
 SELECT * FROM STREAM:test WHERE key3['sub1'] IS NOT NULL;
 ```
 
-For more details please review the section [Check Keys and NULL values](getting-started/check-keys-null-values.md)
+For more details, see [Check keys and null values](../stream-processing/getting-started/check-keys-null-values.md).
 
 ## Fluent Bit v1.1
 
-> Release date: May 09, 2019
+> Release date: 2019-05-09
 
-This is the initial version of the Stream Processor into Fluent Bit.
-
+Added the stream processor to Fluent Bit.
