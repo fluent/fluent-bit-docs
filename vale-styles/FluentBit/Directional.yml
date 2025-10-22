@@ -1,0 +1,8 @@
+---
+extends: existence
+message: "Verify your use of '%s' with the Style Guide."
+level: suggestion
+ignorecase: true
+tokens:
+  - above
+  - below
