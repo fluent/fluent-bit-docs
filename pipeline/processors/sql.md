@@ -1,22 +1,29 @@
-# Structured Query Language (SQL)
+# SQL
 
-The **sql** processor provides a simple interface to select content from Logs by also supporting conditional expressions.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=6bd80893-c66f-4950-9e6d-c21358e9e8c9" />
 
-Our SQL processor does not depend on a database or indexing; it runs everything on the fly (this is good). We don't have the concept of tables but you run the query on the STREAM.
+The _SQL_ processor lets you use conditional expressions to select content from logs. This processor doesn't depend on a database or table. Instead, your queries run on the stream.
 
-Note that this processor differs from the "stream processor interface" that runs after the filters; this one can only be used in the processor's section of the input plugins when using YAML configuration mode.
+This processor differs from the stream processor interface that runs after filters.
 
-## Configuration Parameters
+{% hint style="info" %}
 
-| Key         | Description |
-| :---------- | :--- |
-| query | Define the SQL statement to run on top of the Logs stream; it must end with `;` . |
+Only [YAML configuration files](../../administration/configuring-fluent-bit/yaml.md) support processors.
 
+{% endhint %}
 
+## Configuration parameters
 
-### Simple selection example
+| Key | Description |
+| --- | ----------- |
+| `query` | The SQL statement to query your logs stream. This statement must end with `;`. |
 
-The following example generates a sample message with two keys called `key` and `http.url`. By using a simple SQL statement we will select only the key `http.url`. 
+## Basic selection example
+
+The following example generates a sample message with the keys `key` and `http.url`, and then uses a SQL statement to select only the key `http.url`.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -35,9 +42,15 @@ pipeline:
       format: json_lines
 ```
 
-### Extract and select example
+{% endtab %}
+{% endtabs %}
 
-Similar to the example above, now we will extract the parts of `http.url` and only select the domain from the value, for that we will use together content-modifier and sql processors together:
+## Extract and select example
+
+The following example is similar to the previous example, but additionally extracts part of `http.url` to select the domain from the value. To accomplish this, use the `content-modifier` and `sql` processors in tandem:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -52,8 +65,8 @@ pipeline:
             key: "http.url"
             pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
 
-          - name: sql
-            query: "SELECT http_domain FROM STREAM;"
+    - name: sql
+      query: "SELECT http_domain FROM STREAM;"
 
   outputs:
     - name : stdout
@@ -61,7 +74,10 @@ pipeline:
       format: json_lines
 ```
 
-the expected output of this pipeline will be something like this:
+{% endtab %}
+{% endtabs %}
+
+The resulting output resembles the following:
 
 ```json
 {
@@ -69,4 +85,3 @@ the expected output of this pipeline will be something like this:
   "http_domain": "fluentbit.io"
 }
 ```
-
