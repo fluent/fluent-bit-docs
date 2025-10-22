@@ -14,7 +14,7 @@ This plugin supports the following parameters:
 | `Header` | Add a HTTP header key/value pair. Multiple headers can be set.  | _none_ |
 | `Format` | Specify the data format to be used in the HTTP request body. Supported formats: `json`, `json_stream`, `json_lines`, `gelf`. | `msgpack` |
 | `json_date_key` | Specify the name of the date field in output. | `date` |
-| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started

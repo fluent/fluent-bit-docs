@@ -28,7 +28,7 @@ The plugin supports the following configuration parameters:
 | `http_method` | Specify `POST` versus `PUT` HTTP Method. | `POST` |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
 | `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
-| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
 | `gelf_timestamp_key` | Specify the key to use for `timestamp` in `gelf` format. | _none_ |
 | `gelf_host_key` | Specify the key to use for the `host` in `gelf` format. | _none_ |
 | `gelf_short_message_key` | Specify the key to use as the `short` message in `gelf` format. | _none_ |

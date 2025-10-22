@@ -12,7 +12,7 @@ This plugin supports the following parameters:
 | `Port` | TCP Port of the target service. | `5170` |
 | `Format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `msgpack` |
 | `json_date_key`| Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
-| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## TLS configuration parameters
