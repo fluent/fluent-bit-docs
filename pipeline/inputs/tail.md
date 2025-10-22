@@ -484,9 +484,9 @@ Proper conversion ensures that your log data is correctly parsed, indexed, and s
 You should use this feature if your log files or messages are not in UTF-8 and you are seeing garbled or incorrectly rendered characters.
 This is common in environments that use:
 
-* Modern Windows applications that log in UTF-16.
+- Modern Windows applications that log in UTF-16.
 
-* Legacy Windows systems with applications that use traditional code pages (e.g., ShiftJIS, GBK, Win1252).
+- Legacy Windows systems with applications that use traditional code pages (e.g., ShiftJIS, GBK, Win1252).
 
 ### Configuration Parameters
 
@@ -496,37 +496,40 @@ To enable encoding conversion, you will use one of the following two parameters 
 
 Use this parameter for high-performance conversion of UTF-16 encoded logs to UTF-8. This method utilizes modern processor features (SIMD instructions) to accelerate the conversion process, making it highly efficient.
 
-* Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
-* Supported Values:
-    * UTF-16LE (Little-Endian)
-    * UTF-16BE (Big-Endian)
+- Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
+- Supported Values:
+  - UTF-16LE (Little-Endian)
+  - UTF-16BE (Big-Endian)
 
-2. `Generic.Encoding`
+1. `Generic.Encoding`
 
 Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
 
-* Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
-* Supported Values: You can use any of the names or aliases listed below.
+- Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
+- Supported Values: You can use any of the names or aliases listed below.
 
 ### East Asian Encodings
-* `ShiftJIS` (Aliases: `SJIS`, `CP932`, `Windows-31J`)
-* `GB18030`
-* `GBK`: (Alias: `CP936`)
-* `UHC` (Unified Hangul Code): (Aliases: `CP949` and `Windows-949`)
-* `Big5`: (Alias: `CP950`)
+
+- `ShiftJIS` (Aliases: `SJIS`, `CP932`, `Windows-31J`)
+- `GB18030`
+- `GBK`: (Alias: `CP936`)
+- `UHC` (Unified Hangul Code): (Aliases: `CP949` and `Windows-949`)
+- `Big5`: (Alias: `CP950`)
 
 ### Windows (ANSI) Encodings
-* `Win1250` (Central European): (Alias: `CP1250`)
-* `Win1251` (Cyrillic): (Alias: `CP1251`)
-* `Win1252` (Western European / Latin): (Alias: `CP1252`)
-* `Win1253` (Greek): (Alias: `CP1253`)
-* `Win1254` (Turkish): (Alias: `CP1254`)
-* `Win1255` (Hebrew): (Alias: `CP1255`)
-* `Win1256` (Arabic): (Alias: `CP1256`)
+
+- `Win1250` (Central European): (Alias: `CP1250`)
+- `Win1251` (Cyrillic): (Alias: `CP1251`)
+- `Win1252` (Western European / Latin): (Alias: `CP1252`)
+- `Win1253` (Greek): (Alias: `CP1253`)
+- `Win1254` (Turkish): (Alias: `CP1254`)
+- `Win1255` (Hebrew): (Alias: `CP1255`)
+- `Win1256` (Arabic): (Alias: `CP1256`)
 
 ### DOS (OEM) Encodings
-* `Win866` (Cyrillic - DOS): (Alias: `CP866`)
-* `Win874` (Thai): (Alias: `CP874`)
+
+- `Win866` (Cyrillic - DOS): (Alias: `CP866`)
+- `Win874` (Thai): (Alias: `CP874`)
 
 ### Configuration Example
 
