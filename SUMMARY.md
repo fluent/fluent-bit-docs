@@ -162,6 +162,7 @@
   * [Counter](pipeline/outputs/counter.md)
   * [Datadog](pipeline/outputs/datadog.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
+  * [Exit](pipeline/outputs/exit.md)
   * [File](pipeline/outputs/file.md)
   * [FlowCounter](pipeline/outputs/flowcounter.md)
   * [Forward](pipeline/outputs/forward.md)
