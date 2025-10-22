@@ -14,7 +14,7 @@ This plugin supports the following parameters:
 | `Bucket` | InfluxDB bucket name where records will be inserted. If specified, `database` is ignored and v2 of API is used. | _none_ |
 | `Org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
 | `Sequence_Tag` | The name of the tag whose value is incremented for the consecutive simultaneous events. | `_seq` |
-| `Strip_Prefix` | String to be stripped from the front of `tag` when writing influxdb measurement names. | _none_ |
+| `Strip_Prefix` | String to be stripped from the front of `tag` when writing InfluxDB measurement names. | _none_ |
 | `HTTP_User` | Optional username for HTTP Basic Authentication. | _none_ |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ |
 | `HTTP_Token` | Authentication token used with InfluxDB v2. If specified, both `HTTP_User` and `HTTP_Passwd` are ignored. | _none_ |
@@ -226,7 +226,7 @@ When collecting data from many inputs into many buckets, it can be helpful to re
     Strip_prefix  gpu.
 ```
 
-This will result in the buckets `cpubucket` and `gpubucket` each containing two measurement streams named `one` and `two`. Without prefix stripping, the measurement names would be `cpu.one` and `cpu.two (stored in `cpubucket`), and `gpu.one`, `gpu.two` (stored in `gpubucket`).
+This will result in the buckets `cpubucket` and `gpubucket` each containing two measurement streams named `one` and `two`. Without prefix stripping, the measurement names would be `cpu.one` and `cpu.two` (stored in `cpubucket`), and `gpu.one`, `gpu.two` (stored in `gpubucket`).
 
 
 ### Testing
