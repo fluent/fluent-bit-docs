@@ -86,7 +86,7 @@ Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all c
 {% endhint %}
 
 {% hint style="info" %}
-The `Unicode.Encoding` parameter is dependent on the simdutf library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
+The `Unicode.Encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
 
 Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
@@ -473,40 +473,40 @@ While file rotation is handled, there are risks of potential log loss when using
 
 {% endhint %}
 
-## Character Encoding Conversion
+## Character encoding conversion
 
 This feature allows Fluent Bit to convert logs from various character encodings into the standard UTF-8 format.
 This is crucial for processing logs from systems, especially Windows, that use legacy or non-UTF-8 encodings.
 Proper conversion ensures that your log data is correctly parsed, indexed, and searchable.
 
-### When to Use This Feature
+### When to use this feature
 
-You should use this feature if your log files or messages are not in UTF-8 and you are seeing garbled or incorrectly rendered characters.
+You should use this feature if your log files or messages aren't in UTF-8 and you are seeing garbled or incorrectly rendered characters.
 This is common in environments that use:
 
 - Modern Windows applications that log in UTF-16.
 
-- Legacy Windows systems with applications that use traditional code pages (e.g., ShiftJIS, GBK, Win1252).
+- Legacy Windows systems with applications that use traditional code pages (for example, ShiftJIS, GBK, Win1252).
 
-### Configuration Parameters
+### Configuration parameters
 
 To enable encoding conversion, you will use one of the following two parameters within an input plugin configuration.
 
 1. `Unicode.Encoding`
 
-Use this parameter for high-performance conversion of UTF-16 encoded logs to UTF-8. This method utilizes modern processor features (SIMD instructions) to accelerate the conversion process, making it highly efficient.
+   Use this parameter for high-performance conversion of UTF-16 encoded logs to UTF-8. This method utilizes modern processor features (SIMD instructions) to accelerate the conversion process, making it highly efficient. 
 
-- Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
-- Supported Values:
-  - UTF-16LE (Little-Endian)
-  - UTF-16BE (Big-Endian)
+   - Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
+   - Supported Values:
+     - UTF-16LE (Little-Endian)
+     - UTF-16BE (Big-Endian)
 
 1. `Generic.Encoding`
 
-Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
+   Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
 
-- Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
-- Supported Values: You can use any of the names or aliases listed below.
+   - Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
+   - Supported Values: You can use any of the names or aliases listed below.
 
 ### East Asian Encodings
 
@@ -516,7 +516,7 @@ Use this parameter to convert from a wide variety of other character encodings, 
 - `UHC` (Unified Hangul Code): (Aliases: `CP949` and `Windows-949`)
 - `Big5`: (Alias: `CP950`)
 
-### Windows (ANSI) Encodings
+### Windows (ANSI) encodings
 
 - `Win1250` (Central European): (Alias: `CP1250`)
 - `Win1251` (Cyrillic): (Alias: `CP1251`)
@@ -526,12 +526,12 @@ Use this parameter to convert from a wide variety of other character encodings, 
 - `Win1255` (Hebrew): (Alias: `CP1255`)
 - `Win1256` (Arabic): (Alias: `CP1256`)
 
-### DOS (OEM) Encodings
+### DOS (OEM) encodings
 
 - `Win866` (Cyrillic - DOS): (Alias: `CP866`)
 - `Win874` (Thai): (Alias: `CP874`)
 
-### Configuration Example
+### Configuration example
 
 Here is an example of how to use `Generic.Encoding` with the Tail input plugin to read a log file encoded in ShiftJIS.
 
