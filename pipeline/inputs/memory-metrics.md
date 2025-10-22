@@ -1,54 +1,65 @@
-# Memory Metrics
+# Memory metrics
 
-The **mem** input plugin, gathers the information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
+The  _Memory_ (`mem`) input plugin gathers information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
 
-## Getting Started
+## Get started
 
-In order to get memory and swap usage from your system, you can run the plugin from the command line or through the configuration file:
+To get memory and swap usage from your system, you can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
-```bash
-$ fluent-bit -i mem -t memory -o stdout -m '*'
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+Run the following command from the command line, noting this is for a Linux machine:
 
-[2017/03/03 21:12:35] [ info] [engine] started
-[0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[1] memory: [1488543157, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[2] memory: [1488543158, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[3] memory: [1488543159, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
+```shell
+fluent-bit -i mem -t memory -o stdout -m '*'
 ```
 
-### Configuration File
+Which outputs information similar to:
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+```text
+...
+[0] memory: [[1751381087.225589224, {}], {"Mem.total"=>3986708, "Mem.used"=>560708, "Mem.free"=>3426000, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381088.228411537, {}], {"Mem.total"=>3986708, "Mem.used"=>560708, "Mem.free"=>3426000, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381089.225600084, {}], {"Mem.total"=>3986708, "Mem.used"=>561480, "Mem.free"=>3425228, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381090.228345064, {}], {"Mem.total"=>3986708, "Mem.used"=>561480, "Mem.free"=>3425228, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+...
+```
+
+## Threading
+
+You can enable the `threaded` setting to run this input in its own
+[thread](../../administration/multithreading.md#inputs).
+
+### Configuration file
+
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[INPUT]
-    Name   mem
-    Tag    memory
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: memory
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: mem
+      tag: memory
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name   mem
+  Tag    memory
+
+[OUTPUT]
+  Name   stdout
+  Match  *
+```
+
 {% endtab %}
 {% endtabs %}
