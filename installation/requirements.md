@@ -1,11 +1,14 @@
 # Requirements
 
-[Fluent Bit](http://fluentbit.io) uses very low CPU and Memory consumption, it's compatible with most of x86, x86\_64, arm32v7 and arm64v8 based platforms. In order to build it you need the following components in your system for the build process:
+[Fluent Bit](http://fluentbit.io) has very low CPU and memory consumption. It's compatible with most x86-, x86_64-, arm32v7-, and arm64v8-based platforms.
 
-* Compiler: GCC or clang
-* CMake
-* Flex & Bison: only if you enable the Stream Processor or Record Accessor feature \(both enabled by default\)
-* Libyaml development headers and libraries
+The build process requires the following components:
 
-In the core there are not other dependencies, For certain features that depends on third party components like output plugins with special backend libraries \(e.g: kafka\), those are included in the main source code repository.
+- Compiler: GCC or clang
+- CMake
+- Flex and Bison: Required for [Stream Processor](https://docs.fluentbit.io/manual/stream-processing/introduction) or [Record Accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor)
+- Libyaml development headers and libraries
 
+Core has no other dependencies. Some features depend on third-party components. For example, output plugins with special backend libraries like Kafka include those libraries in the main source code repository.
+
+Fluent Bit is supported on Linux on IBM Z(s390x), but the Wasm and Lua filter plugins aren't.

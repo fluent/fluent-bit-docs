@@ -1,0 +1,5 @@
+extends: spelling
+message: "Spelling check: '%s'?"
+level: suggestion
+ignore:
+  - FluentBit/Spelling-exceptions.txt

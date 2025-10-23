@@ -1,20 +1,37 @@
 # JSON
 
-The JSON parser is the simplest option: if the original log source is a JSON map string, it will take its structure and convert it directly to the internal binary representation.
+The _JSON_ parser transforms JSON logs by converting them to internal binary representations.
 
-A simple configuration that can be found in the default parsers configuration file, is the entry to parse Docker log files \(when the tail input plugin is used\):
+For example, the default parsers configuration file includes a parser for parsing Docker logs (when the Tail input plugin is used):
 
-```python
-[PARSER]
-    Name        docker
-    Format      json
-    Time_Key    time
-    Time_Format %Y-%m-%dT%H:%M:%S %z
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+  - name: docker
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S %z'
 ```
 
-The following log entry is a valid content for the parser defined above:
+{% endtab %}
+{% tab title="parsers.conf" %}
 
-```javascript
+```text
+[PARSER]
+  Name        docker
+  Format      json
+  Time_Key    time
+  Time_Format %Y-%m-%dT%H:%M:%S %z
+```
+
+{% endtab %}
+{% endtabs %}
+
+The following log entry is valid content for the previously defined parser:
+
+```text
 {"key1": 12345, "key2": "abc", "time": "2006-07-28T13:22:04Z"}
 ```
 
@@ -24,5 +41,4 @@ After processing, its internal representation will be:
 [1154103724, {"key1"=>12345, "key2"=>"abc"}]
 ```
 
-The time has been converted to Unix timestamp \(UTC\) and the map reduced to each component of the original message.
-
+The time was converted to a UTC timestamp and the map was reduced to each component of the original message.

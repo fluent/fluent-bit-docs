@@ -1,0 +1,16 @@
+extends: existence
+message: "Use the proper noun 'Fluent Bit' with correct casing and spacing."
+level: warning
+ignorecase: false
+scope: text
+tokens:
+  # Matches incorrect variants in plain prose but excludes filenames, links, quotes, and code
+  - '(?<![-[".\w:/\]])\bfluent bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bfluentbit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bFluent bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bfluent Bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bfluent-bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bFluent-Bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bfluent\-Bit\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bFLUENT BIT\b(?![-\]".\w:/\]])'
+  - '(?<![-[".\w:/\]])\bFLUENT-BIT\b(?![-\]".\w:/\]])'

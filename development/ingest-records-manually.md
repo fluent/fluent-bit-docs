@@ -1,18 +1,18 @@
-# Ingest Records Manually
+# Ingest records manually
 
-There are some cases where Fluent Bit library is used to send records from the caller application to some destination, this process is called _manual data ingestion_.
+There are some cases where Fluent Bit library is used to send records from the caller application to some destination. This process is called _manual data ingestion_.
 
-For this purpose a specific input plugin called **lib** exists and can be using in conjunction with the **flb\_lib\_push\(\)** API function.
+For this purpose, a specific input plugin called **lib** exists and can be used in conjunction with the `flb_lib`_push()` API function.
 
-## Data Format
+## Data format
 
-The **lib** input plugin expect the data comes in a fixed JSON format as follows:
+The `lib` input plugin expects the data in the following fixed JSON format:
 
-```text
+```json
 [UNIX_TIMESTAMP, MAP]
 ```
 
-Every record must be a JSON array that contains at least two entries. The first one is the _UNIX\_TIMESTAMP_ which is a number representing time associated to the event generation \(Epoch time\) and the second entry is a JSON map with a list of key/values. A valid entry can be the following:
+Every record must be in a JSON array that contains at least two entries. The first one is the `UNIX_TIMESTAMP` which is a number representing time associated to the event generation (Epoch time). the second entry is a JSON map with a list of keys and values. A valid entry can be the following:
 
 ```javascript
 [1449505010, {"key1": "some value", "key2": false}]
@@ -75,4 +75,3 @@ int main()
     return 0;
 }
 ```
-
