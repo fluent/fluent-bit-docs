@@ -16,6 +16,7 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | `client_id`          | Client id passed to librdkafka.                                                                                                          | _none_       |
 | `group_id`           | Group id passed to librdkafka.                                                                                                           | `fluent-bit` |
 | `poll_ms`            | Kafka brokers polling interval in milliseconds.                                                                                          | `500`        |
+| `async_commit` | Enable Kafka commit operation asynchronously. This parameter accepts a boolean value of `true` or `false`.                                     | `false` |
 | `Buffer_Max_Size`    | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M`         |
 | `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md)                     | _none_       |
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`      |
