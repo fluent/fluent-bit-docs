@@ -12,10 +12,10 @@ The _exit_ plugin is a utility plugin which causes Fluent Bit to exit after one 
 
 At least one of these parameters must be set. If more than one is set the plugin exits when any one of the set conditions is met.
 
-## Configuration Parameters
+## Configuration parameters
 
-| Key | Description | default |
+| Key | Description | Default |
 | :--- | :--- | :--- |
-| Record\_Count | Number of records to wait for before exiting |  |
-| Flush\_Count | Number of flushes to wait for before exiting |  |
-| Time\_Count | Number of seconds to wait for before exiting |  |
+| `Record_Count` | Number of records to wait for before exiting. |  _none_ |
+| `Flush_Count` | Number of flushes to wait for before exiting.| _none_ |
+| `Time_Count` | Number of seconds to wait for before exiting. | _none_ |
