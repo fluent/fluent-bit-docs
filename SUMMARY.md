@@ -184,6 +184,7 @@
   * [Datadog](pipeline/outputs/datadog.md)
   * [Dynatrace](pipeline/outputs/dynatrace.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
+  * [Exit](pipeline/outputs/exit.md)
   * [File](pipeline/outputs/file.md)
   * [Flow counter](pipeline/outputs/flowcounter.md)
   * [Forward](pipeline/outputs/forward.md)
