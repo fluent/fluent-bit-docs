@@ -1,6 +1,6 @@
 # SNMP
 
-The _SNMP_ input plugin lets you collect metrics from devices by SNMP (Simple Network Management Protocol) request.
+The _SNMP_ input plugin lets you collect metrics from devices by Simple Network Management Protocol (SNMP) request.
 
 ## Configuration parameters
 
