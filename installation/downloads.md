@@ -15,7 +15,6 @@ Fluent Bit supports the following operating systems and architectures:
 |  | [Alma Linux 9](downloads/linux/alma-rocky.md) | x86_64, Arm64v8 |
 |  | [Debian 12 (Bookworm)](downloads/linux/debian.md) | x86_64, Arm64v8 |
 |  | [Debian 11 (Bullseye)](downloads/linux/debian.md) | x86_64, Arm64v8 |
-|  | [Debian 10 (Buster)](downloads/linux/debian.md) | x86_64, Arm64v8 |
 |  | [Ubuntu 24.04 (Noble Numbat)](downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
 |  | [Ubuntu 22.04 (Jammy Jellyfish)](downloads/linux/ubuntu.md) | x86_64, Arm64v8 |
 |  | [Raspbian 12 (Bookworm)](downloads/linux/raspbian-raspberry-pi.md) | Arm32v7 |
