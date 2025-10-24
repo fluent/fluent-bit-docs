@@ -1,7 +1,9 @@
 redirects:
     # Installation
     installation/upgrade_notes:       ./installation/upgrade-notes.md
-    installation/supported_platforms: ./installation/supported-platforms.md
+    installation/supported_platforms: ./installation/downloads.md
+    installation/docker.md: ./installation/downloads/docker.md
+    installation/windows.md: ./installation/downloads/windows.md
 
     # Inputs
     input/collectd:        ./pipeline/inputs/
@@ -9,6 +11,7 @@ redirects:
     input/disk:            ./pipeline/inputs/disk-io-metrics.md
     #inputs/docker:          ./pipeline/inputs/
     input/dummy:           ./pipeline/inputs/dummy.md
+    input/elasticsearch:   ./pipeline/inputs/elasticsearch.md
     input/exec:            ./pipeline/inputs/exec.md
     input/fluentbit:       ./pipeline/inputs/fluentbit-metrics.md
     input/forward:         ./pipeline/inputs/forward.md
@@ -20,6 +23,7 @@ redirects:
     input/netif:           ./pipeline/inputs/network-io-metrics.md
     input/proc:            ./pipeline/inputs/process.md
     input/random:          ./pipeline/inputs/random.md
+    input/splunk:          ./pipeline/inputs/splunk.md
     input/serial:          ./pipeline/inputs/serial-interface.md
     #inputs/statsd:          ./pipeline/inputs/
     input/stdin:           ./pipeline/inputs/standard-input.md
@@ -28,11 +32,13 @@ redirects:
     input/tail:            ./pipeline/inputs/tail.md
     input/tcp:             ./pipeline/inputs/tcp.md
     input/thermal:         ./pipeline/inputs/thermal.md
+    input/udp:             ./pipeline/inputs/udp.md
     input/winlog:          ./pipeline/inputs/windows-event-log.md
     input/winevtlog:       ./pipeline/inputs/windows-event-log-winevtlog.md
 
     # Filters
     filter/aws:             ./pipeline/filters/aws-metadata.md
+    filter/ecs:             ./pipeline/filters/ecs-metadata.md
     filter/grep:            ./pipeline/filters/grep.md
     filter/kubernetes:      ./pipeline/filters/kubernetes.md
     filter/lua:             ./pipeline/filters/lua.md
@@ -49,9 +55,11 @@ redirects:
     output/azure_kusto:    ./pipeline/outputs/azure_kusto.md
     output/bigquery:       ./pipeline/outputs/bigquery.md
     output/counter:        ./pipeline/outputs/counter.md
+    output/chronicle:      ./pipeline/outputs/chronicle.md
     output/cloudwatch:     ./pipeline/outputs/cloudwatch.md
     output/datadog:        ./pipeline/outputs/datadog.md
     output/es:             ./pipeline/outputs/elasticsearch.md
+    output/fabric:         ./pipeline/outputs/azure_kusto.md
     output/file:           ./pipeline/outputs/file.md
     output/firehose:       ./pipeline/outputs/firehose.md
     output/flowcounter:    ./pipeline/outputs/flowcounter.md
@@ -71,3 +79,9 @@ redirects:
     output/stdout:         ./pipeline/outputs/standard-output.md
     output/tcp:            ./pipeline/outputs/tcp-and-tls.md
     output/td:             ./pipeline/outputs/treasure-data.md
+
+    # Processors
+    processor/metrics_selector:   ./pipeline/processors/metrics_selector.md
+
+    # Other
+    concepts/buffering: ./pipeline/buffering.md
