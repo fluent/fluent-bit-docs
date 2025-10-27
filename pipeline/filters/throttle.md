@@ -69,7 +69,7 @@ The last pane of the window was overwritten and one message was dropped. If you 
 
 ### Do not drop messages 
 
-When `Retain` isn't set or is set to `false`, if therate limit is exceeded, throttle drops the messages.
+When `Retain` isn't set or is set to `false`, if the rate limit is exceeded, throttle drops the messages.
 
 In cases when Fluent Bit first runs, and there is a input with huge messages which exceeded the throttle's (`window * rate * interval`), then only the first (`window * rate * interval`) records will be collected. Other records collected before Fluent Bit runs will be dropped.
 
