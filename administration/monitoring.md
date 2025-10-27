@@ -476,11 +476,11 @@ Fluent Bit supports the following configurations to set up the health check.
 | `HC_Errors_Count`       | the error count to meet the unhealthy requirement, this is a sum for all output plugins in a defined `HC_Period`, example for output error: `[2022/02/16 10:44:10] [ warn] [engine] failed to flush chunk '1-1645008245.491540684.flb', retry in 7 seconds: task_id=0, input=forward.1 > output=cloudwatch_logs.3 (out_id=3)` | `5` |
 | `HC_Retry_Failure_Count` | the retry failure count to meet the unhealthy requirement, this is a sum for all output plugins in a defined `HC_Period`, example for retry failure: `[2022/02/16 20:11:36] [ warn] [engine] chunk '1-1645042288.260516436.flb' cannot be retried: task_id=0, input=tcp.3 > output=cloudwatch_logs.1` | `5` |
 | `HC_Period` | The time period by second to count the error and retry failure data point | `60` |
-| `HC_Throughput` | Enable throughput health checking (more details below). In this context, throughput means `OUTPUT_RATE/INPUT_RATE` ratio, and the check happens in accordance to `Hc_Period`. If this is `On`, all related options must be set since there are no default values. | `Off` |
+| `HC_Throughput` | Enable throughput health checking. In this context, throughput means `OUTPUT_RATE/INPUT_RATE` ratio, and the check happens in accordance to `Hc_Period`. If this is `On`, all related options must be set since there are no default values. | `Off` |
 | `HC_Throughput_Input_Plugins`    | Comma separated list of input plugins used for the purposes of calculating input rate. | _none_ |
 | `HC_Throughput_Output_Plugins`   | Comma separated list of output plugins used for the purposes of calculating output rate. | _none_ |
-| `HC_Throughput_Ratio_Threshold`  | `OUTPUT_RATE/INPUT_RATE` ratio failure threshold. If the ratio is below this number, then the current check fails. A single check is not enough to trigger a health error, see `Hc_Throughput_Min_Failures` for details.| _none_ |
-| `HC_Throughput_Min_Failures`     | Minimum number of consecutive ratio check failures required before the health endpoint will return an error. For example, if this is 60 and the default Hc_Period, the ratio must be below threshold for 1 minute before an error is returned. |_none_ |
+| `HC_Throughput_Ratio_Threshold`  | `OUTPUT_RATE/INPUT_RATE` ratio failure threshold. If the ratio is under this number, then the current check fails. A single check is not enough to trigger a health error, see `Hc_Throughput_Min_Failures` for details.| _none_ |
+| `HC_Throughput_Min_Failures`     | Minimum number of consecutive ratio check failures required before the health endpoint will return an error. For example, if this is `60` and the default `Hc_Period`, the ratio must be below threshold for 1 minute before an error is returned. | _none_ |
 
 Not every error log means an error to be counted. The error retry failures count only on specific errors, which is the example in configuration table description.
 
@@ -533,6 +533,11 @@ pipeline:
   HC_Retry_Failure_Count 5
   HC_Period 5
   
+  
+[INPUT]
+  Name  cpu
+
+  
 [OUTPUT]
   Name  stdout
   Match *
@@ -540,7 +545,7 @@ pipeline:
 
 ### Throughput health check
 
-If `Hc_Throughput` and other related options are set, fluent-bit will monitor output/input ratio, and the health endpoint will return error if ratio is below the configured threshold. For example:
+If `Hc_Throughput` and other related options are set, Fluent Bit will monitor output/input ratio, and the health endpoint will return error if ratio is beneath the configured threshold. For example:
 
 ```text
 hc_throughput                 On
@@ -553,7 +558,7 @@ hc_throughput_min_failures    60
 {% endtab %}
 {% endtabs %}
 
-In the above example, if the http output rate is below 1/10 of the tail input rate for 1 consecutive minute, then the `/api/v1/health` endpoint will return `error`. Note that if the ratio goes above threshold, it will restore the `OK` status until another minute of consecutive failed checks.
+In the previous example, if the HTTP output rate is below 1/10 of the tail input rate for 1 consecutive minute, then the `/api/v1/health` endpoint will return `error`. If the ratio goes above threshold, it will restore the `OK` status until another minute of consecutive failed checks.
 
 Use the following command to call the health endpoint:
 
