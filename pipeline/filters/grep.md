@@ -22,7 +22,7 @@ The plugin supports the following configuration parameters:
 | `number_greater_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than or equal to `NUMBER`. |
 
 
-If you use the number compare parameters with a KEY that does not have a NUMBER as a value, it will be excluded.
+If you use the number compare parameters with a `KEY` that doesn't have a `NUMBER` as a value, it will be excluded.
 
 If you use `REGEX` or `EXCLUDE` with a number, it will never match it.
 
