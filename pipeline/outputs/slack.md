@@ -2,25 +2,41 @@
 
 The Slack output plugin delivers records or messages to your preferred Slack channel. It formats the outgoing content in JSON format for readability.
 
-This connector uses the Slack _Incoming Webhooks_ feature to post messages to Slack channels. Using this plugin in conjunction with the Stream Processor is a good combination for alerting.
+This connector uses Slack [incoming webhooks](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks) to post messages to Slack channels. Using this plugin in conjunction with the Stream Processor is a good combination for alerting.
 
-## Slack Webhook
+## Slack webhook
 
-Before configuring this plugin, make sure to setup your Incoming Webhook. For detailed step-by-step instructions, review the following official documentation:
+Before configuring this plugin, set up your incoming webhook. For help, see the [Slack documentation](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks).
 
-* [https://api.slack.com/messaging/webhooks\#getting\_started](https://api.slack.com/messaging/webhooks#getting_started)
+After you have obtained the Webhook address you can place it in the configuration.
 
-Once you have obtained the Webhook address you can place it in the configuration below.
+## Configuration parameters
 
-## Configuration Parameters
+This plugin supports the following parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| webhook | Absolute address of the Webhook provided by Slack |  |
+| Key     | Description | Default |
+|:--------|:------------|:--------|
+| `webhook` | Absolute address of the webhook provided by Slack. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-### Configuration File
+### Configuration file
 
-Get started quickly with this configuration file:
+Get started with this configuration file:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+
+  outputs:
+    - name: slack
+      match: '*'
+      webhook: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
@@ -29,3 +45,5 @@ Get started quickly with this configuration file:
     webhook              https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
+{% endtab %}
+{% endtabs %}
