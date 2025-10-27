@@ -145,6 +145,7 @@ OpenTelemetry
 Opsgenie
 OTel
 PagerDuty
+Parquet
 Parseable
 performant
 persistable
