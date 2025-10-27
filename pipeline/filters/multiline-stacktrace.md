@@ -1,28 +1,28 @@
 ---
-description: >-
-  Concatenate Multiline or Stack trace log messages. Available on Fluent Bit >=
-  v1.8.2.
+description: Concatenate multiline or stack trace log messages.
 ---
 
 # Multiline
 
-The Multiline Filter helps to concatenate messages that originally belong to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines. 
+The Multiline filter helps concatenate messages that originally belonged to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines.
 
-As part of the built-in functionality, without major configuration effort, you can enable one of ours built-in parsers with auto detection and multi format support:
+Along with multiline filters, you can enable one of the following built-in Fluent Bit parsers with auto-detection and multi-format support:
 
-* go
-* python
-* java (Google Cloud Platform Java stacktrace format)
+- Go
+- Python
+- Ruby
+- Java (Google Cloud Platform Java stack trace format)
 
-Some comments about this filter:
+When using this filter:
 
-* The usage of this filter depends on a previous configuration of a [Multiline Parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition. 
-* If you wish to concatenate messages read from a log file, it is highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages originally split by Docker or CRI container engines, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support).
+- The usage of this filter depends on a previous configuration of a [multiline parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition.
+- To concatenate messages read from a log file, it's highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages that were originally one line, but split by Docker or CRI container engines because of their size, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) in combination with the `docker` or `cri` parser. To concatenate application logs like stacktraces on top of that, you can use this multiline filter.
 
 {% hint style="warning" %}
-This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter will *process one Chunk at a time* and is not suitable for most inputs which might send multiline messages in separate chunks. 
 
-When buffering is enabled, the filter does not immediately emit messages it receives. It uses the in_emitter plugin, same as the [Rewrite Tag Filter](pipeline/filters/rewrite-tag.md), and emits messages once they are fully concatenated, or a timeout is reached. 
+This filter only performs buffering that persists across different Chunks when `Buffer` is enabled. Otherwise, the filter processes one chunk at a time and isn't suitable for most inputs which might send multiline messages in separate chunks.
+
+When buffering is enabled, the filter doesn't immediately emit messages it receives. It uses the `in_emitter` plugin, similar to the [Rewrite Tag filter](rewrite-tag.md), and emits messages once they're fully concatenated, or a timeout is reached.
 
 {% endhint %}
 
@@ -30,74 +30,99 @@ When buffering is enabled, the filter does not immediately emit messages it rece
 
 Since concatenated records are re-emitted to the head of the Fluent Bit log pipeline, you can not configure multiple multiline filter definitions that match the same tags. This will cause an infinite loop in the Fluent Bit pipeline; to use multiple parsers on the same logs, configure a single filter definitions with a comma separated list of parsers for `multiline.parser`. For more, see issue [#5235](https://github.com/fluent/fluent-bit/issues/5235).
 
-Secondly, for the same reason, the multiline filter should be the **first** filter. Logs will be re-emitted by the multiline filter to the head of the pipeline- the filter will ignore its own re-emitted records, but other filters won't. If there are filters before the multiline filter, they will be applied twice. 
+Secondly, for the same reason, the multiline filter should be the first filter. Logs will be re-emitted by the multiline filter to the head of the pipeline - the filter will ignore its own re-emitted records, but other filters won't. If there are filters before the multiline filter, they will be applied twice.
 
 {% endhint %}
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Property              | Description                                                                                                                                                                                                                                                |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| multiline.parser      | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma.  |
-| multiline.key_content | Key name that holds the content to process. Note that a Multiline Parser definition can already specify the `key_content` to use, but this option allows to overwrite that value for the purpose of the filter.                                            |
-| mode | Mode can be `parser` for regex concat, or `partial_message` to concat split docker logs. |
-| buffer | Enable buffered mode. In buffered mode, the filter can concatenate multilines from inputs that ingest records one by one (ex: Forward), rather than in chunks, re-emitting them into the beggining of the pipeline (with the same tag) using the in_emitter instance. With buffer off, this filter will not work with most inputs, except tail. |
-| flush_ms | Flush time for pending multiline records. Defaults to 2000. |
-| emitter_name | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
-| emitter_storage.type | The storage type for the emitter input instance. This option supports the values `memory` \(default\) and `filesystem`. |
-| emitter\_mem\_buf\_limit | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure.  The default for this limit is `10M`.  The pipeline will pause once the buffer exceeds the value of this setting.  For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`.  The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| Property | Description |
+| -------- | ----------- |
+| `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma. |
+| `multiline.key_content` | Key name that holds the content to process. A multiline parser definition can specify the `key_content` This option allows for overwriting that value for the purpose of the filter. |
+| `mode` | Mode can be `parser` for regular expression concatenation, or `partial_message` to concatenate split Docker logs. |
+| `buffer` | Enable buffered mode. In buffered mode, the filter can concatenate multiple lines from inputs that ingest records one by one (like Forward), rather than in chunks, re-emitting them into the beginning of the pipeline (with the same tag) using the `in_emitter` instance. With buffer off, this filter won't work with most inputs, except Tail. |
+| `flush_ms` | Flush time for pending multiline records. Default: `2000`. |
+| `emitter_name` | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
+| `emitter_storage.type` | The storage type for the emitter input instance. This option supports the values `memory` (default) and `filesystem`. |
+| `emitter_mem_buf_limit` | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure. The default for this limit is `10M`. The pipeline will pause once the buffer exceeds the value of this setting.  or example, if the value is set to `10M` then the pipeline pauses if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
 
+## Configuration example
 
-## Configuration Example
+The following example aims to parse a log file called `test.log` that contains some full lines, a custom Java stack trace and a Go Stack Trace.
 
-The following example aims to parse a log file called `test.log` that contains some full lines, a custom Java stacktrace and a Go stacktrace. 
-
-{% hint style="info" %}
-The following example files can be located at:\
-\
-[https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline)
-{% endhint %}
+The following example files can be located [in the Fluent Bit repository](https://github.com/fluent/fluent-bit/tree/master/documentation/examples/multiline/filter_multiline).
 
 Example files content:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-This is the primary Fluent Bit configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parsers `multiline-regex-test` and `go`. Then it sends the processing to the standard output. 
+{% tab title="fluent-bit.yaml" %}
 
+This is the primary Fluent Bit YAML configuration file. It includes the `parsers_multiline.yaml` and tails the file `test.log` by applying the multiline parsers `multiline-regex-test` and `go`. Then it sends the processing to the standard output.
+
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+  parsers_file: parsers_multiline.yaml
+    
+pipeline:
+  inputs:
+    - name: tail
+      path: test.log
+      read_from_head: true
+
+  filters:
+    - name: multiline
+      match: '*'
+      multiline.key_content: log
+      multiline.parser: go,multiline-regex-test
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+This is the primary Fluent Bit classic configuration file. It includes the `parsers_multiline.conf` and tails the file `test.log` by applying the multiline parsers `multiline-regex-test` and `go`. Then it sends the processing to the standard output.
+
+```text
 [SERVICE]
-    flush                 1
-    log_level             info
-    parsers_file          parsers_multiline.conf
+  flush                 1
+  log_level             info
+  parsers_file          parsers_multiline.conf
 
 [INPUT]
-    name                  tail
-    path                  test.log
-    read_from_head        true
+  name                  tail
+  path                  test.log
+  read_from_head        true
 
 [FILTER]
-    name                  multiline
-    match                 *
-    multiline.key_content log
-    multiline.parser      go, multiline-regex-test
+  name                  multiline
+  match                 *
+  multiline.key_content log
+  multiline.parser      go, multiline-regex-test
 
 [OUTPUT]
-    name                  stdout
-    match                 *
-    
+  name                  stdout
+  match                 *
 ```
+
 {% endtab %}
+{% tab title="parsers_multiline.yaml" %}
 
-{% tab title="parsers_multiline.conf" %}
-This second file defines a multiline parser for the example. Note that a second multiline parser called `go` is used in **fluent-bit.conf**, but this one is a built-in parser.
+This file defines a multiline parser for the example. A second multiline parser called `go` is used in `fluent-bit.yaml`, but this one is a built-in parser.
 
-```
-[MULTILINE_PARSER]
-    name          multiline-regex-test
-    type          regex
-    flush_timeout 1000
+```yaml
+multiline_parsers:
+  - name: multiline-regex-test
+    type: regex
+    flush_timeout: 1000
     #
     # Regex rules for multiline parsing
     # ---------------------------------
@@ -109,16 +134,46 @@ This second file defines a multiline parser for the example. Note that a second 
     #
     # rules |   state name  | regex pattern                  | next state
     # ------|---------------|--------------------------------------------
-    rule      "start_state"   "/(Dec \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-    rule      "cont"          "/^\s+at.*/"                     "cont"
-    
+    rules:
+      - state: start_state
+        regex: '/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/'
+        next_state:  cont
+      - state: cont
+        regex: '/^\s+at.*/'
+        next_state: cont
 ```
+
 {% endtab %}
+{% tab title="parsers_multiline.conf" %}
 
-{% tab title="test.log" %}
-An example file with multiline and multiformat content:
+This file defines a multiline parser for the example. A second multiline parser called `go` is used in `fluent-bit.conf`, but this one is a built-in parser.
 
+```text
+[MULTILINE_PARSER]
+  name          multiline-regex-test
+  type          regex
+  flush_timeout 1000
+  #
+  # Regex rules for multiline parsing
+  # ---------------------------------
+  #
+  # configuration hints:  
+  #
+  #  - first state always has the name: start_state
+  #  - every field in the rule must be inside double quotes 
+  #
+  # rules |   state name  | regex pattern                  | next state
+  # ------|---------------|--------------------------------------------
+  rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
+
+{% endtab %}
+{% tab title="test.log" %}
+
+An example file with multiline and multi-format content:
+
+```text
 single line...
 Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
     at com.myproject.module.MyProject.badMethod(MyProject.java:22)
@@ -179,16 +234,20 @@ runtime.goexit()
 created by runtime.gcenable
   /usr/local/go/src/runtime/mgc.go:216 +0x58
 one more line, no multiline
-
 ```
+
 {% endtab %}
 {% endtabs %}
 
-By running Fluent Bit with the given configuration file you will obtain:
+Running Fluent Bit with the given configuration file:
 
+```shell
+fluent-bit -c fluent-bit.conf
 ```
-$ fluent-bit -c fluent-bit.conf 
 
+Should return something like the following:
+
+```text
 [0] tail.0: [1626736433.143567481, {"log"=>"single line..."}]
 [1] tail.0: [1626736433.143570538, {"log"=>"Dec 14 06:41:08 Exception in thread "main" java.lang.RuntimeException: Something has gone wrong, aborting!
     at com.myproject.module.MyProject.badMethod(MyProject.java:22)
@@ -249,28 +308,47 @@ runtime.goexit()
 created by runtime.gcenable
   /usr/local/go/src/runtime/mgc.go:216 +0x58"}]
 [4] tail.0: [1626736433.143585473, {"log"=>"one more line, no multiline"}]
-
 ```
 
-The lines that did not match a pattern are not considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
+Lines that don't match a pattern aren't considered as part of the multiline message, while the ones that matched the rules were concatenated properly.
 
+## Docker partial message use case
 
-## Docker Partial Message Use Case
+When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16&nbspKB. 
+If your application emits a 100K log line, it will be split into seven partial messages. The docker parser will merge these back to one line. If instead you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
 
-When Fluent Bit is consuming logs from a container runtime, such as docker, these logs will be split above a certain limit, usually 16KB. If your application emits a 100K log line, it will be split into 7 partial messages. If you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
-
-```
+```text
 {"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]
 ```
 
-Fluent Bit can re-combine these logs that were split by the runtime and remove the partial message fields. The filter example below is for this use case. 
+Fluent Bit can re-combine these logs that were split by the runtime and remove the partial message fields. The following filter example is for this use case.
 
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+
+  filters:
+    - name: multiline
+      match: '*'
+      multiline.key_content: log
+      mode: partial_message
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [FILTER]
-     name                  multiline
-     match                 *
-     multiline.key_content log
-     mode                  partial_message
+  name                  multiline
+  match                 *
+  multiline.key_content log
+  mode                  partial_message
 ```
 
-The two options for `mode` are mutually exclusive in the filter. If you set the `mode` to `partial_message` then the `multiline.parser` option is not allowed. 
+{% endtab %}
+{% endtabs %}
+
+The two options for `mode` are mutually exclusive in the filter. If you set the
+`mode` to `partial_message` then the `multiline.parser` option isn't allowed.
