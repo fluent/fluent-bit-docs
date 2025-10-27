@@ -48,13 +48,13 @@ The GPU metrics plugin will automatically scan for supported **AMD GPUs** that a
 
 To check if your AMD GPU will be detected run:
 
-```bash
+```shell
 lspci | grep -i vga | grep -i amd
 ```
 
 Example output:
 
-```bash
+```text
 03:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Navi 31 [Radeon RX 7900 XT/7900 XTX/7900 GRE/7900M] (rev ce)
 73:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Granite Ridge [Radeon Graphics] (rev c5)
 ```
@@ -65,13 +65,13 @@ In systems with multiple GPUs, the GPU metrics plugin will detect all AMD cards 
 
 To list the GPUs running in your system run the following command:
 
-```bash
+```shell
 ls /sys/class/drm/card*/device/vendor
 ```
 
 Example output:
 
-```bash
+```text
 /sys/class/drm/card0/device/vendor
 /sys/class/drm/card1/device/vendor
 ```
@@ -84,13 +84,13 @@ To get GPU metrics from your system, you can run the plugin from either the comm
 
 Run the following command from the command line:
 
-```bash
+```shell
 fluent-bit -i gpu_metrics -o stdout
 ```
 
 Example output:
 
-```json
+```text
 2025-10-25T20:36:55.236905093Z gpu_utilization_percent{card="1",vendor="amd"} = 2
 2025-10-25T20:36:55.237853918Z gpu_utilization_percent{card="0",vendor="amd"} = 0
 2025-10-25T20:36:55.236905093Z gpu_memory_used_bytes{card="1",vendor="amd"} = 1580118016
@@ -119,18 +119,18 @@ In your main configuration file append the following:
 
 ```yaml
 pipeline:
-   inputs:
-      - name: gpu_metrics
-        scrape_interval: 2
-        path_sysfs: /sys
-        cards_include: "1"
-        cards_exclude: "0"
-        enable_power: true
-        enable_temperature: true
+  inputs:
+    - name: gpu_metrics
+      scrape_interval: 2
+      path_sysfs: /sys
+      cards_include: "1"
+      cards_exclude: "0"
+      enable_power: true
+      enable_temperature: true
 
-   outputs:
-      - name: stdout
-        match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -138,17 +138,17 @@ pipeline:
 
 ```text
 [INPUT]
-   Name                gpu_metrics
-   scrape_interval     2
-   path_sysfs          /sys
-   cards_include       1
-   cards_exclude       0
-   enable_power        true
-   enable_temperature  true
+  Name                gpu_metrics
+  scrape_interval     2
+  path_sysfs          /sys
+  cards_include       1
+  cards_exclude       0
+  enable_power        true
+  enable_temperature  true
 
 [OUTPUT]
-   Name   stdout
-   Match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
