@@ -1,28 +1,27 @@
 # Overview
 
-Stream Processing is the ability to query continuous data streams while they are still in motion. [Fluent Bit](https://fluentbit.io) implements a Streaming SQL Engine that can be used for such process.
+Stream processing is a feature that lets you query continuous data streams while they're still in motion. Fluent Bit uses a streaming SQL engine for this process.
 
-In order to understand how Stream Processing works in Fluent Bit, we will go through a quick overview of Fluent Bit architecture and how the data goes through the pipeline.
+To understand how stream processing works in Fluent Bit, follow this overview of Fluent Bit architecture and how data travels through the pipeline.
 
-## Fluent Bit Data Pipeline
+## Fluent Bit data pipeline
 
-[Fluent Bit](https://fluentbit.io) collects and process logs \(records\) from different input sources and allows to parse and filter these records before they hit the Storage interface. One data is processed and it's in a safe state \(either in memory or the file system\), the records are routed through the proper output destinations.
+[Fluent Bit](https://fluentbit.io) collects and process logs (also known as _records_) from different input sources, then parses and filters these records before they're stored. After data is processed and in a safe state, meaning either in memory or in the file system, the records are routed through the proper output destinations.
 
-> Most of the phases in the pipeline are implemented through plugins: Input, Filter and Output.
+Most of the phases in the pipeline are implemented through plugins: input, filter, and output.
 
-![](../.gitbook/assets/flb_pipeline.png)
+![Fluent Bit pipeline flow](../.gitbook/assets/flb_pipeline.png)
 
-The Filtering interface is good to perform specific record modifications like append or remove a key, enrich with specific metadata \(e.g: Kubernetes Filter\) or discard records based on specific conditions. Just after the data will not have any further modification and hits the Storage, optionally, will be redirected to the Stream Processor.
+Filters can perform specific record modifications like appending or removing a key, enriching with metadata (for example, Kubernetes filter), or discarding records based on specific conditions. After data is stored, no further modifications are made, but records can optionally be redirected to the stream processor.
 
-## Stream Processor
+## Stream processor
 
-The Stream Processor is an independent subsystem that check for new records hitting the Storage interface. By configuration the Stream Processor will attach to records coming from a specific Input plugin \(stream\) or by applying Tag and Matching rules.
+The stream processor is an independent subsystem that checks for new records hitting the storage interface. Based on your configuration settings, the stream processor will attach to records that come from a specific input plugin or by applying tag and matching rules.
 
-> Every _Input_ instance is considered a **Stream**, that stream collects data and ingest records into the pipeline.
+Every input instance is considered a stream. These streams collect data and ingest records into the pipeline.
 
-![](../.gitbook/assets/flb_pipeline_sp.png)
+![Fluent Bit pipeline flow plus stream processor](../.gitbook/assets/flb_pipeline_sp.png)
 
-By configuring specific SQL queries \(Structured Query Language\), the user can perform specific tasks like key selections, filtering and data aggregation within others. Note that there is **no** database concept here, everything is **schema-less** and happens **in-memory**, for hence the concept of _Tables_ as in common relational databases don't exists.
+By configuring specific SQL queries, you can perform specific tasks like key selections, filtering, and data aggregation. Keep in mind that there is no database; everything is schema-less and happens in memory. Concepts like tables that are common in relational database don't exist in Fluent Bit.
 
-One of the powerful features of Fluent Bit Stream Processor is that allows to create new streams of data using the results from a previous SQL query, these results are re-ingested back into the pipeline to be consumed again for the Stream Processor \(if desired\) or routed to output destinations such any common record by using Tag/Matching rules \(tip: stream processor results can be Tagged!\)
-
+One powerful feature of the Fluent Bit stream processor is the ability to create new streams of data using the results from a previous SQL query. These results are re-ingested back into the pipeline to be consumed again for the stream processor, if desired, or routed to output destinations by any common record using tag/matching rules. (Stream processor results can be tagged.)
