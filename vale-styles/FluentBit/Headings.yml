@@ -118,6 +118,7 @@ exceptions:
   - Opsgenie
   - Oracle Cloud Infrastructure Logging Analytics
   - PagerDuty
+  - Parquet
   - Pod Identity
   - PostgreSQL
   - Prometheus
