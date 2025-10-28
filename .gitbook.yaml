@@ -1,7 +1,9 @@
 redirects:
     # Installation
     installation/upgrade_notes:       ./installation/upgrade-notes.md
-    installation/supported_platforms: ./installation/supported-platforms.md
+    installation/supported_platforms: ./installation/downloads.md
+    installation/docker.md: ./installation/downloads/docker.md
+    installation/windows.md: ./installation/downloads/windows.md
 
     # Inputs
     input/collectd:        ./pipeline/inputs/
@@ -80,3 +82,6 @@ redirects:
 
     # Processors
     processor/metrics_selector:   ./pipeline/processors/metrics_selector.md
+
+    # Other
+    concepts/buffering: ./pipeline/buffering.md

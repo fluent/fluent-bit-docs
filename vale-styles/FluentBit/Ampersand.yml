@@ -1,9 +1,11 @@
----
 extends: existence
-message: "Don't use an ampersand in place of the word 'and'. Always write out 'and' unless the ampersand is part of a proper name."
+message: 'Use "and" instead of "&" in content.'
+level: error
+scope: text
 nonword: true
-ignorecase: false
-level: suggestion
-scope: sentence
 tokens:
-  - '[^\*{2}].*.&.*[^\*{2}]\n'
+  - '\s&\s'
+  - '^&\s'
+  - '\s&$'
+  - '\s&[^\w]'
+  - '[^\w]&\s'

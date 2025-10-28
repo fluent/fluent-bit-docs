@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' should have one space."
 link: 'https://developers.google.com/style/sentence-spacing'
-level: suggestion
+level: error
 nonword: true
 tokens:
   - '[a-z][.?!] {2,}[A-Z]'

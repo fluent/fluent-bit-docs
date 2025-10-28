@@ -1,14 +1,8 @@
----
-description: This page describes the main configuration file used by Fluent Bit.
----
-
 # Configuration file
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5e67142e-3887-4b56-b940-18494bcc23a7" />
 
-One of the ways to configure Fluent Bit is using a main configuration file. Fluent
-Bit allows the use one configuration file that works at a global scope and uses the
-defined [Format and Schema](format-schema.md).
+One of the ways to configure Fluent Bit is using a main configuration file. Fluent Bit allows the use one configuration file that works at a global scope and uses the defined [Format and Schema](format-schema.md).
 
 The main configuration file supports four sections:
 
@@ -17,13 +11,11 @@ The main configuration file supports four sections:
 - Filter
 - Output
 
-It's also possible to split the main configuration file into multiple files using
-the Include File feature to include external files.
+It's also possible to split the main configuration file into multiple files using the Include File feature to include external files.
 
 ## Service
 
-The `Service` section defines global properties of the service. The following keys
-are:
+The `Service` section defines global properties of the service. The following keys are:
 
 | Key             | Description   | Default Value |
 | --------------- | ------------- | ------------- |
@@ -44,23 +36,22 @@ are:
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
+| `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
 The following is an example of a `SERVICE` section:
 
-```python
+```text
 [SERVICE]
-    Flush           5
-    Daemon          off
-    Log_Level       debug
+  Flush           5
+  Daemon          off
+  Log_Level       debug
 ```
 
 For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
 
 ## Config input
 
-The `INPUT` section defines a source (related to an input plugin). Each
-[input plugin](https://docs.fluentbit.io/manual/pipeline/inputs) can add its own
-configuration keys:
+The `INPUT` section defines a source (related to an input plugin). Each [input plugin](https://docs.fluentbit.io/manual/pipeline/inputs) can add its own configuration keys:
 
 | Key         | Description |
 | ----------- | ------------|
@@ -68,25 +59,21 @@ configuration keys:
 | `Tag`       | Tag name associated to all records coming from this plugin. |
 | `Log_Level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
 
-`Name` is mandatory and tells Fluent Bit which input plugin to load. `Tag` is
-mandatory for all plugins except for the `input forward` plugin, which provides
-dynamic tags.
+`Name` is mandatory and tells Fluent Bit which input plugin to load. `Tag` is mandatory for all plugins except for the `input forward` plugin, which provides dynamic tags.
 
 ### Example
 
 The following is an example of an `INPUT` section:
 
-```python
+```text
 [INPUT]
-    Name cpu
-    Tag  my_cpu
+  Name cpu
+  Tag  my_cpu
 ```
 
 ## Config filter
 
-The `FILTER` section defines a filter (related to an filter plugin). Each filter
-plugin can add it own configuration keys. The base configuration for each
-`FILTER` section contains:
+The `FILTER` section defines a filter (related to an filter plugin). Each filter plugin can add it own configuration keys. The base configuration for each `FILTER` section contains:
 
 | Key         | Description  |
 | ----------- | ------------ |
@@ -95,26 +82,22 @@ plugin can add it own configuration keys. The base configuration for each
 | `Match_Regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
 | `Log_Level`   | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
 
-`Name` is mandatory and lets Fluent Bit know which filter plugin should be loaded.
-`Match` or `Match_Regex` is mandatory for all plugins. If both are specified,
-`Match_Regex` takes precedence.
+`Name` is mandatory and lets Fluent Bit know which filter plugin should be loaded. `Match` or `Match_Regex` is mandatory for all plugins. If both are specified, `Match_Regex` takes precedence.
 
 ### Filter example
 
 The following is an example of a `FILTER` section:
 
-```python
+```text
 [FILTER]
-    Name  grep
-    Match *
-    Regex log aa
+  Name  grep
+  Match *
+  Regex log aa
 ```
 
 ## Config output
 
-The `OUTPUT` section specifies a destination that certain records should go to
-after a `Tag` match. Fluent Bit can route up to 256 `OUTPUT` plugins. The
-configuration supports the following keys:
+The `OUTPUT` section specifies a destination that certain records should go to after a `Tag` match. Fluent Bit can route up to 256 `OUTPUT` plugins. The configuration supports the following keys:
 
 | Key         | Description    |
 | ----------- | -------------- |
@@ -127,52 +110,46 @@ configuration supports the following keys:
 
 The following is an example of an `OUTPUT` section:
 
-```python
+```text
 [OUTPUT]
-    Name  stdout
-    Match my*cpu
+  Name  stdout
+  Match my*cpu
 ```
 
-### Example: collecting CPU metrics
+### Collecting `cpu` metrics example
 
-The following configuration file example demonstrates how to collect CPU metrics and
-flush the results every five seconds to the standard output:
+The following configuration file example demonstrates how to collect CPU metrics and flush the results every five seconds to the standard output:
 
-```python
+```text
 [SERVICE]
-    Flush     5
-    Daemon    off
-    Log_Level debug
+  Flush     5
+  Daemon    off
+  Log_Level debug
 
 [INPUT]
-    Name  cpu
-    Tag   my_cpu
+  Name  cpu
+  Tag   my_cpu
 
 [OUTPUT]
-    Name  stdout
-    Match my*cpu
+  Name  stdout
+  Match my*cpu
 ```
 
-## Config Include File
+## Config include file
 
-To avoid complicated long configuration files is better to split specific parts in
-different files and call them (include) from one main file. The `@INCLUDE` can be used
-in the following way:
+To avoid complicated long configuration files is better to split specific parts in different files and call them (include) from one main file. The `@INCLUDE` can be used in the following way:
 
 ```text
 @INCLUDE somefile.conf
 ```
 
-The configuration reader will try to open the path `somefile.conf`. If not found, the
-reader assumes the file is on a relative path based on the path of the base
-configuration file:
+The configuration reader will try to open the path `somefile.conf`. If not found, the reader assumes the file is on a relative path based on the path of the base configuration file:
 
 - Main configuration path: `/tmp/main.conf`
 - Included file: `somefile.conf`
 - Fluent Bit will try to open `somefile.conf`, if it fails it will try `/tmp/somefile.conf`.
 
-The `@INCLUDE` command only works at top-left level of the configuration line, and
-can't be used inside sections.
+The `@INCLUDE` command only works at top-left level of the configuration line, and can't be used inside sections.
 
 Wildcard character (`*`) supports including multiple files. For example:
 
@@ -180,5 +157,4 @@ Wildcard character (`*`) supports including multiple files. For example:
 @INCLUDE input_*.conf
 ```
 
-Files matching the wildcard character are included unsorted. If plugin ordering
-between files needs to be preserved, the files should be included explicitly.
+Files matching the wildcard character are included unsorted. If plugin ordering between files needs to be preserved, the files should be included explicitly.
