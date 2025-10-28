@@ -1,0 +1,14 @@
+---
+extends: existence
+message: "Use the indicative or imperative moods when writing docs."
+ignorecase: true
+level: suggestion
+tokens:
+  - should
+  - shouldn't
+  - should not
+  - won't
+  - would
+  - wouldn't
+  - could
+  - couldn't

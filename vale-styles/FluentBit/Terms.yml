@@ -1,0 +1,13 @@
+---
+extends: substitution
+message: Use '%s' instead of '%s'.
+level: suggestion
+ignorecase: true
+scope: paragraph
+action:
+  name: replace
+swap:
+  datapoints: data points
+  Terraform Provider: Terraform provider
+  timeseries: time series
+  topology: placement

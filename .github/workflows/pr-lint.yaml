@@ -8,16 +8,36 @@ jobs:
     runs-on: ubuntu-latest
     name: PR - Actionlint
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
           ./actionlint -color -shellcheck=
         shell: bash
 
-  docslint-pr:
+  shellcheck-pr:
     runs-on: ubuntu-latest
-    name: PR - Markdownlint
+    name: PR - Shellcheck
     steps:
-      - name: Run markdownlint
-        uses: actionshub/markdownlint@v3.1.3
+      - uses: actions/checkout@v5
+      - uses: ludeeus/action-shellcheck@master
+
+  markdownlint:
+    name: runner / markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: markdownlint
+        uses: prologic/action-markdownlint@v0.26.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review # Change reporter. (Only `github-pr-check` is supported at the moment).
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: errata-ai/vale-action@v2.1.1
+        with:
+          files: all
+          fail_on_error: true

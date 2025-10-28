@@ -1,0 +1,164 @@
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+link: 'https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings'
+level: suggestion
+scope: heading
+match: $sentence
+indicators:
+  - ':'
+exceptions:
+  - AlmaLinux
+  - Amazon
+  - Amazon CloudWatch
+  - Amazon ECR
+  - Amazon ECR Public Gallery
+  - Amazon Kinesis Data Firehose
+  - Amazon Kinesis Data Streams
+  - Amazon Kinesis Firehose
+  - Amazon Kinesis Streams
+  - Amazon OpenSearch Service
+  - Apache SkyWalking
+  - Amazon S3
+  - Apache Arrow
+  - API
+  - APIs
+  - AWS
+  - AWS MSK IAM
+  - AWS IAM
+  - Azure
+  - Azure Blob
+  - Azure Data Explorer
+  - Azure Logs Ingestion API
+  - Azure Log Analytics
+  - Azure Storage
+  - Azurite
+  - BuildKite
+  - CentOS
+  - CheckList
+  - Chronosphere
+  - CircleCI
+  - CLI
+  - CloudWatch
+  - CNCF
+  - Code
+  - Collector
+  - Cosmos
+  - CPU
+  - Crowdstrike
+  - CSV
+  - cURL
+  - Datadog
+  - DNS
+  - Docker
+  - Docker Hub
+  - DogStatsD
+  - eBPF
+  - EC2
+  - ECS
+  - EKS
+  - Elastic Cloud
+  - Emmet
+  - EventBridge
+  - FlowCounter
+  - Fluent Bit
+  - Fluentd
+  - Forward
+  - GCP
+  - GitLab
+  - GitHub
+  - Go
+  - Google
+  - Google Chronicle
+  - Google Cloud
+  - Google Cloud BigQuery
+  - Google Cloud Platform
+  - GPG
+  - Grafana
+  - Grafana Cloud
+  - Graylog Extended Log Format
+  - GELF
+  - gRPC
+  - gzip
+  - Helm
+  - Homebrew
+  - HTTP
+  - I
+  - InfluxDB
+  - I/O
+  - JSON
+  - Kafka
+  - Kafka Producer
+  - Kafka
+  - Kinesis
+  - KQL
+  - Kubernetes
+  - Kusto
+  - LaunchDarkly
+  - Libpq
+  - Linux
+  - LogDNA
+  - LogEntry
+  - LTSV
+  - macOS
+  - Marketplace
+  - MessagePack
+  - Microsoft Fabric
+  - MongoDB
+  - MQTT
+  - NATS
+  - New Relic
+  - Observability Platform
+  - OIDC
+  - Okta
+  - OpenMetrics
+  - OpenObserve
+  - OpenSearch
+  - OpenShift
+  - OpenTelemetry
+  - Opsgenie
+  - Oracle Cloud Infrastructure Logging Analytics
+  - PagerDuty
+  - Parquet
+  - Pod Identity
+  - PostgreSQL
+  - Prometheus
+  - PromQL
+  - Raspberry Pi
+  - Red Hat
+  - REPL
+  - REST
+  - RHEL
+  - RockyLinux
+  - ServiceMonitor
+  - SignalFx
+  - SIMD
+  - Slack
+  - SQL
+  - SSL
+  - SSM
+  - StatsD
+  - Studio
+  - Sumo Logic
+  - Tanzu
+  - TCP
+  - Telemetry Pipeline
+  - Tensorflow Lite
+  - Terraform
+  - TLS
+  - Transport Layer Security
+  - Treasure Data
+  - TypeScript
+  - Ubuntu
+  - UDP
+  - Unix
+  - URLs
+  - VictorOps
+  - Visual
+  - Vivo Exporter
+  - VS
+  - Wasm
+  - WebSocket
+  - Windows
+  - Windows Event
+  - YAML
+  - YUM
