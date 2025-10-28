@@ -2,4 +2,5 @@ _book/*
 node_modules/*
 .gitignore
 old/*
-
+.DS_Store
+.idea/
