@@ -61,6 +61,7 @@ Make sure that the `fluentbit` user can connect to the `fluentbit` database on t
 | `min_pool_size` | Minimum number of connection in async mode | 1 |
 | `max_pool_size` | Maximum amount of connections in async mode | 4 |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB | false |
+| `Daemon` | Set to `true` if you want run this plugin instance in daemon mode. | `false` |
 
 ### Libpq
 
