@@ -10,14 +10,14 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 
 This plugin has the following configuration parameters:
 
-The **Overridable** column indicates if a key can be overridden in the NODE section of an
+The **Overrides allowed** column indicates whether a key can be overridden in the `NODE` section of an
 [Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
 configuration.
 
-| Key | Description | Default | Overridable |
+| Key | Description | Default | Allows overrides |
 | :--- | :--- | :--- | :--- |
-| `Host` | IP address or hostname of the target Elasticsearch instance. | `127.0.0.1` | Yes. Default value isn't applicable for NODE section of Upstream configuration, which requires `Host` to be specified. |
-| `Port` | TCP port of the target Elasticsearch instance. | `9200` | Yes. Default value isn't applicable for NODE section of Upstream configuration, which requires `Port` to be specified. |
+| `Host` | IP address or hostname of the target Elasticsearch instance. | `127.0.0.1` | Yes. Default value isn't applicable for `NODE` section of Upstream configuration, which requires `Host` to be specified. |
+| `Port` | TCP port of the target Elasticsearch instance. | `9200` | Yes. Default value isn't applicable for `NODE` section of Upstream configuration, which requires `Port` to be specified. |
 | `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string | Yes |
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ | Yes |
 | `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` | Yes |
@@ -63,7 +63,7 @@ If you have used a common relational database, the parameters `index` and `type`
 
 The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
-### AWS Sigv4 Authentication and Upstream Servers
+### AWS Sigv4 authentication and Upstream servers
 
 The `http_proxy`, `no_proxy`, and `TLS` parameters used for AWS Sigv4 Authentication (for connection of plugin to AWS to generate authentication signature) are never picked from the `NODE` section of the [Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) configuration. However, `TLS` parameters for connection of the plugin to Elasticsearch can be overridden in the `NODE` section of Upstream, even if AWS authentication is used.
 
@@ -158,9 +158,9 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Configuration File with Upstream
+### Configuration file with Upstream
 
-#### Classic mode Configuration File with Upstream
+#### Classic mode configuration file with Upstream
 
 In your main classic mode configuration file append the following `Input` and `Output` sections:
 
@@ -200,7 +200,7 @@ configuration file can be similar to the following:
     port     9203
 ```
 
-#### YAML Configuration File with Upstream
+#### YAML configuration file with Upstream
 
 In your main YAML configuration file (fluent-bit.yaml) put the following `Input` and `Output` sections:
 
