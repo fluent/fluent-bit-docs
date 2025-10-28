@@ -26,7 +26,8 @@ This plugin has the following configuration parameters:
 | `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` |
 | `AWS_Profile` | AWS profile name | `default` |
 | `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ |
-| `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud | _none_ |
+| `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud. | _none_ |
+| `Cloud_Apikey` | Specify the APi key to used to connect to Elastic's Elasticsearch Service running on Elastic Cloud. | _none_ |
 | `HTTP_User` | Optional username credential for Elastic X-Pack access | _none_ |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User` | _none_ |
 | `HTTP_API_Key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `HTTP_User` or `Cloud_Auth` are defined, this parameter is ignored.  | _none_ |
@@ -316,6 +317,12 @@ pipeline:
 
 For details, read [the official blog post on that issue](https://www.elastic.co/guide/en/elasticsearch/reference/6.7/removal-of-types.html).
 
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) by providing `cloud_id` setting and the proper credentials. Credentials can be specified by either the `cloud_auth` or `cloud_apikey` setting.
+
+`cloud_auth` uses the `elastic` user and password provided when the cluster was created. For details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
+
+`cloud_apikey` uses the cloud apikey that could be generated in the Elasticsearch Service console. For details, refer to the [Cloud API Keys page](https://www.elastic.co/guide/en/cloud/current/ec-api-keys.html).
+
 ### Mapping type names can't start with underscores (`_`)
 
 Fluent Bit v1.5 changed the default mapping type from `flb_type` to `_doc`, matching the recommendation from Elasticsearch for version 6.2 and greater ([see commit with rationale](https://github.com/fluent/fluent-bit/commit/04ed3d8104ca8a2f491453777ae6e38e5377817e#diff-c9ae115d3acaceac5efb949edbb21196)).
@@ -347,15 +354,24 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name  es
-  Match *
-  Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
-  Port  443
-  Index my_index
-  AWS_Auth On
-  AWS_Region us-west-2
-  tls   On
-  Type  doc
+    Name es
+    Include_Tag_Key true
+    Tag_Key tags
+    tls On
+    tls.verify Off
+    Suppress_Type_Name On
+    cloud_id elastic-obs-deployment:ZXVybxxxxxxxxxxxg==
+    cloud_auth elastic:2vxxxxxxxxYV
+
+    Name  es
+    Match *
+    Host  vpc-test-domain-ke7thhzoo7jawsrhmm6mb7ite7y.us-west-2.es.amazonaws.com
+    Port  443
+    Index my_index
+    AWS_Auth On
+    AWS_Region us-west-2
+    tls   On
+    Type  doc
 ```
 
 {% endtab %}
