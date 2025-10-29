@@ -125,6 +125,8 @@ When processing that new configuration, the internal labels will be:
 job="fluentbit", mystream="stdout"
 ```
 
+Extracting keys to labels through `labels`, `label_keys` or `label_map_path` will remove those keys from the record.
+
 ### Use `label_keys`
 
 The `label_keys` configuration property lets you specify multiple record keys which need to be placed as part of the outgoing Stream Labels. This is another way to set a record key in the Stream, but with the limitation that you can't use a custom name for the key value.
