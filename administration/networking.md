@@ -72,7 +72,7 @@ The following table describes the network configuration properties available and
 | `net.proxy_env_ignore`          | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                              | `false` |
 | `net.tcp_keepalive`             | Enable or disable Keepalive support.                                                                               | `off`   |
 | `net.tcp_keepalive_time`        | Interval between the last data packet sent and the first TCP keepalive probe.                                      | `-1`    |
-| `net.tcp_keepalive_interval`    | Interval between TCP keepalive probes when no response is received on a keepidle probe.                            | `-1`    |
+| `net.tcp_keepalive_interval`    | Interval between TCP keepalive probes when no response is received on a `keepidle` probe.                          | `-1`    |
 | `net.tcp_keepalive_probes`      | Number of unacknowledged probes to consider a connection dead.                                                     | `-1`    |
 | `net.source_address`            | Specify network address to bind for data traffic.                                                                  | _none_  |
 
