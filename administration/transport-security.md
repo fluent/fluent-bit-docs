@@ -5,18 +5,21 @@ Fluent Bit provides integrated support for Transport Layer Security (TLS) and it
 
 Both input and output plugins that perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
-| Property | Description | Default |
-| :--- | :--- | :--- |
-| `tls` | Enable or disable TLS support. | `Off` |
-| `tls.verify` | Force certificate validation. | `On` |
-| `tls.verify_hostname` | Force TLS verification of host names. | `Off` |
-| `tls.debug` | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4`. (Verbose) | `1` |
-| `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
-| `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
-| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
-| `tls.key_file` | Absolute path to private Key file. | _none_ |
-| `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
-| `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
+| Property              | Description                                                                                                                             | Default |
+|:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| `tls`                 | Enable or disable TLS support.                                                                                                          | `off`   |
+| `tls.debug`           | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1`     |
+| `tls.ca_file`         | Absolute path to CA certificate file.                                                                                                   | _none_  |
+| `tls.ca_path`         | Absolute path to scan for certificate files.                                                                                            | _none_  |
+| `tls.ciphers`         | Specify TLS ciphers up to TLSv1.2.                                                                                                      | _none_  |
+| `tls.crt_file`        | Absolute path to Certificate file.                                                                                                      | _none_  |
+| `tls.key_file`        | Absolute path to private Key file.                                                                                                      | _none_  |
+| `tls.key_passwd`      | Optional password for `tls.key_file` file.                                                                                              | _none_  |
+| `tls.max_version`     | Specify the maximum version of TLS.                                                                                                     | _none_  |
+| `tls.min_version`     | Specify the minimum version of TLS.                                                                                                     | _none_  |
+| `tls.verify`          | Force certificate validation.                                                                                                           | `on`    |
+| `tls.vhost`           | Hostname to be used for TLS SNI extension.                                                                                              | _none_  |
+| `tls.verify_hostname` | Force TLS verification of host names.                                                                                                   | `off`   |
 
 To use TLS on input plugins, you must provide both a certificate and a private key.
 
@@ -187,8 +190,8 @@ pipeline:
   Host       192.168.2.3
   Port       80
   URI        /something
-  tls        On
-  tls.verify Off
+  tls        on
+  tls.verify off
 ```
 
 {% endtab %}
@@ -247,8 +250,8 @@ pipeline:
   Match       *
   Host        192.168.10.100
   Port        24224
-  tls         On
-  tls.verify  On
+  tls         on
+  tls.verify  on
   tls.ca_file /etc/certs/fluent.crt
   tls.vhost   fluent.example.com
 ```
@@ -302,8 +305,8 @@ pipeline:
   Match               *
   Host                other.fluent-aggregator.net
   Port                24224
-  tls                 On
-  tls.verify          On
+  tls                 on
+  tls.verify          on
   tls.verify_hostname on
   tls.ca_file         /path/to/fluent-x509v3-alt-name.crt
 ```
