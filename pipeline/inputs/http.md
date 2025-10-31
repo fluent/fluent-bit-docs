@@ -5,16 +5,17 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 ## Configuration parameters
 
-| Key                        | Description                                                                                                                                | Default   |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| `listen`                   | The address to listen on.                                                                                                                  | `0.0.0.0` |
-| `port`                     | The port for Fluent Bit to listen on.                                                                                                      | `9880`    |
-| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                        | _none_    |
-| `buffer_max_size`          | Specify the maximum buffer size in KB to receive a JSON message.                                                                           | `4M`      |
-| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K`    |
-| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`                                                         | `201`     |
-| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`                           | _none_    |
-| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                    | `false`   |
+| Key                        | Description                                                                                                                                   | Default   |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `listen`                   | The address to listen on.                                                                                                                     | `0.0.0.0` |
+| `port`                     | The port for Fluent Bit to listen on.                                                                                                         | `9880`    |
+| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                           | _none_    |
+| `buffer_max_size`          | Specify the maximum buffer size in KB to receive a JSON message.                                                                              | `4M`      |
+| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`.    | `512K`    |
+| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`                                                            | `201`     |
+| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`                              | _none_    |
+| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                       | `false`   |
+| `add_remote_addr`          | Adds a REMOTE_ADDR field to the record. The value of REMOTE_ADDR is the client's address, which is extracted from the X-Forwarded-For header. | `false`   |
 
 ### TLS / SSL
 
@@ -39,6 +40,32 @@ For example, in the following curl message the tag set is `app.log**. **` becaus
 ```shell
 curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
+
+### Add remote addr
+
+Adds a REMOTE_ADDR field to the records. The value of REMOTE_ADDR is the client's address, which is extracted from the X-Forwarded-For header.
+
+In most cases, only a single X-Forwarded-For header is in the request, so the following curl would add a REMOTE_ADDR field which would be set to `host1`:
+
+```shell
+curl -d '{"key1":"value1"}' -XPOST -H 'Content-Type: application/json' -H 'X-Forwarded-For: host1, host2' http://localhost:8888
+```
+
+However, if your system sets multiple `X-Forwarded-For` headers in the request, which one is used (first, or last) will depend on the value of the `http2` config, for example:
+
+Assuming the following X-Forwarded-For headers are in the request:
+
+```
+X-Forwarded-For: host1, host2
+X-Forwarded-For: host3, host4
+```
+
+The value of REMOTE_ADDR will be:
+
+| http2 config     | value of REMOTE_ADDR |
+|------------------|----------------------|
+| `true` (default) | host3                |
+| `false`          | host1                |
 
 ### Configuration file
 
@@ -159,6 +186,46 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+#### Set `add_remote_addr`
+
+The `add_remote_addr` configuration option allows you to activate a feature that will systematically add a REMOTE_ADDR field to events, and set its value to the client's address. The address will be extracted from the X-Forwarded-For header of the request. The format is:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+      add_remote_addr: true
+  outputs:
+    - name: stdout
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  name http
+  listen 0.0.0.0
+  port 8888
+  add_remote_addr true
+[OUTPUT]
+  name stdout
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### Example curl to test this feature
+
+```shell
+curl -d '{"key1":"value1"}' -XPOST -H 'Content-Type: application/json' -H 'X-Forwarded-For: host1, host2' http://localhost:8888
+```
 
 #### Set multiple custom HTTP headers on success
 
