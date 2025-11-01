@@ -35,6 +35,7 @@ The `Service` section defines global properties of the service. The following ke
 | `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
+| `json.escape_unicode` | When Fluent Bit is serializing a MessagePack record into JSON, this option allows to specify the encoding of raw UTF-8 strings. The available options are `escaped` and `raw`. `escaped` is the default and it will escape the UTF-8 characters. `raw` will not escape the UTF-8 characters. | `escaped` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
 | `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
