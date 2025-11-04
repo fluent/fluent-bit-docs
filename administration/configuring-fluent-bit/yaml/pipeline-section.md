@@ -1,21 +1,20 @@
 # Pipeline
 
-The `pipeline` section defines the flow of how data is collected, processed, and sent to its final destination. It encompasses the following core concepts:
+The `pipeline` section defines the flow of how data is collected, processed, and sent to its final destination. This section contains three subsections:
 
 | Name | Description |
 | ---- | ----------- |
 | `inputs` | Specifies the name of the plugin responsible for collecting or receiving data. This component serves as the data source in the pipeline. Examples of input plugins include `tail`, `http`, and `random`. |
-| `processors` | **Unique to YAML configuration**, processors are specialized plugins that handle data processing directly attached to input plugins. Unlike filters, processors aren't dependent on tag or matching rules. Instead, they work closely with the input to modify or enrich the data before it reaches the filtering or output stages. Processors are defined within an input plugin section. |
 | `filters` | Filters are used to transform, enrich, or discard events based on specific criteria. They allow matching tags using strings or regular expressions, providing a more flexible way to manipulate data. Filters run as part of the main event loop and can be applied across multiple inputs and filters. Examples of filters include `modify`, `grep`, and `nest`. |
 | `outputs` | Defines the destination for processed data. Outputs specify where the data will be sent, such as to a remote server, a file, or another service. Each output plugin is configured with matching rules to determine which events are sent to that destination. Common output plugins include `stdout`, `elasticsearch`, and `kafka`. |
 
-## Example configuration
-
 {% hint style="info" %}
 
-**Note:** Processors can be enabled only by using the YAML configuration format. Classic mode configuration format  doesn't support processors.
+Unlike filters,
 
 {% endhint %}
+
+## Example configuration
 
 Here's an example of a pipeline configuration:
 
