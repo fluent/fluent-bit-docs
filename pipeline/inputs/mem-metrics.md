@@ -2,16 +2,16 @@
 
 The _mem_metrics_, or memory metrics plugin, generates metrics for memory statistics for processes using the `smaps_rollup` file for each process in /proc. This plugin works exclusively on Linux.
 
-# Configuration Parameters
+# Configuration parameters
 
 | **Key***      | Description                                        | Default      |
 | :------------ | :------------------------------------------------- | :----------- |
-| proc_path     | The path of the proc pseudo filesystem             | /proc        |
-| filter_exec   | Filter for a single executable by path             | **inactive** |
-| filter_cmd    | Filter by command line                             | **inactive** |
-| filter_pid    | Filter by comma delimited list of PIDs             | **inactive** |
-| interval_sec  | Set the interval seconds between events generation | 5            |
-| interval_nsec | Set the nanoseconds interval (sub seconds)         | 0            |
+| `proc_path`     | The path of the proc pseudo filesystem.             | `/proc`        |
+| `filter_exec`   | Filter for a single executable by path.             | **inactive** |
+| `filter_cmd`    | Filter by command line.                             | **inactive** |
+| `filter_pid`    | Filter by comma delimited list of PIDs.             | **inactive** |
+| `interval_sec` | Set the interval seconds between events generation. | `5`            |
+| `interval_nsec` | Set the nanoseconds interval (sub seconds).         | `0`            |
 
 The `filter_pid` can include or be set to either `0` or `self` to refer to the fluent-bit process itself.
 
