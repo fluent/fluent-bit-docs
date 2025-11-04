@@ -4,9 +4,15 @@ The `pipeline` section defines the flow of how data is collected, processed, and
 
 | Name | Description |
 | ---- | ----------- |
-| `inputs` | Specifies the name of the plugin responsible for collecting or receiving data. This component serves as the data source in the pipeline. Examples of input plugins include `tail`, `http`, and `random`. Each input plugin defined in a configuration file can have its own `processors` key. |
+| `inputs` | Specifies the name of the plugin responsible for collecting or receiving data. This component serves as the data source in the pipeline. Examples of input plugins include `tail`, `http`, and `random`. |
 | `filters` | Filters are used to transform, enrich, or discard events based on specific criteria. They allow matching tags using strings or regular expressions, providing a more flexible way to manipulate data. Filters run as part of the main event loop and can be applied across multiple inputs and filters. Examples of filters include `modify`, `grep`, and `nest`. |
 | `outputs` | Defines the destination for processed data. Outputs specify where the data will be sent, such as to a remote server, a file, or another service. Each output plugin is configured with matching rules to determine which events are sent to that destination. Common output plugins include `stdout`, `elasticsearch`, and `kafka`. |
+
+{% hint style="info" %}
+
+Unlike filters, processors and parsers aren't defined within a unified section of YAML configuration files and don't use tag matching. Instead, each input or output defined in the configuration file can have a `parsers` key and `processors` key to configure the parsers and processors for that specific plugin.
+
+{% endhint %}
 
 ## Example configuration
 
