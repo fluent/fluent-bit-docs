@@ -1,6 +1,6 @@
 # Memory metrics 
 
-The **mem_metrics**, or memory metrics plugin, generates metrics for memory statistics for processes using the `smaps_rollup` file for each process in /proc. At the moment this plugin works exclusively on Linux.
+The _mem_metrics_, or memory metrics plugin, generates metrics for memory statistics for processes using the `smaps_rollup` file for each process in /proc. This plugin works exclusively on Linux.
 
 # Configuration Parameters
 
