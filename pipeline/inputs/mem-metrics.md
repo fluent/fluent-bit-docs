@@ -15,7 +15,7 @@ The _mem_metrics_, or memory metrics plugin, generates metrics for memory statis
 
 The `filter_pid` can include or be set to either `0` or `self` to refer to the fluent-bit process itself.
 
-## Getting Started
+## Get started
 
 You can run the plugin from the command line or through a configuration file. By default metrics will be generated for all processes the current user can analyze.
 
