@@ -81,30 +81,31 @@ Log all instances of Fluent Bit to Prometheus:
     Uri                  /prometheus/v1/write?prometheus_server=mem
 ```
 
-### Exposed Metrics
+### Exposed metrics
 
-All metrics are logged as gauges since they can both increase and decrease. Currenrtly supported gauges are:
-  * node_smaps_rollup_rss
-  * node_smaps_rollup_pss
-    * type=clean
-    * type=dirty
-    * type=anon
-    * type=file
-    * type=shmem
-  *  node_smaps_rollup_shared
-    * type=clean
-    * type=dirty
-  *  node_smaps_rollup_private
-    * type=dirty
-    * type=clean
-  * node_smaps_rollup_referenced
-  * node_smaps_rollup_anonymous
-  * node_smaps_rollup_lazy_free
-  * node_smaps_rollup_anon_huge_pages
-  * node_smaps_rollup_shmem_pmd_mapped
-  * node_smaps_rollup_file_pmd_mapped
-  * node_smaps_rollup_shared_hugetlb
-  * node_smaps_rollup_private_hugetlb
-  * node_smaps_rollup_swap
-  * node_smaps_rollup_swap_pss
-  * node_smaps_rollup_locked
+All metrics are logged as gauges since they can both increase and decrease. Supported gauges are:
+
+  - node_smaps_rollup_rss
+  - node_smaps_rollup_pss
+    - type=clean
+    - type=dirty
+    - type=anon
+    - type=file
+    - type=shmem
+  -  node_smaps_rollup_shared
+    - type=clean
+    - type=dirty
+  -  node_smaps_rollup_private
+    - type=dirty
+    - type=clean
+  - node_smaps_rollup_referenced
+  - node_smaps_rollup_anonymous
+  - node_smaps_rollup_lazy_free
+  - node_smaps_rollup_anon_huge_pages
+  - node_smaps_rollup_shmem_pmd_mapped
+  - node_smaps_rollup_file_pmd_mapped
+  - node_smaps_rollup_shared_hugetlb
+  - node_smaps_rollup_private_hugetlb
+  - node_smaps_rollup_swap
+  - node_smaps_rollup_swap_pss
+  - node_smaps_rollup_locked
