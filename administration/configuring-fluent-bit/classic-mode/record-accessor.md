@@ -1,25 +1,25 @@
 ---
-description: A full feature set to access content of your records
+description: A full feature set to access content of your records.
 ---
 
-# Record Accessor
+# Record accessor syntax
 
 Fluent Bit works internally with structured records and it can be composed of an unlimited number of keys and values. Values can be anything like a number, string, array, or a map.
 
 Having a way to select a specific part of the record is critical for certain core functionalities or plugins, this feature is called _Record Accessor._
 
-> consider Record Accessor a simple grammar to specify record content and other miscellaneous values.
+Consider record accessor to be a basic grammar to specify record content and other miscellaneous values.
 
 ## Format
 
-A _record accessor_ rule starts with the character `$`. Using the structured content above as an example the following table describes how to access a record:
+A record accessor rule starts with the character `$`. Use the structured content as an example. The following table describes how to access a record:
 
-```javascript
+```js
 {
   "log": "some message",
   "stream": "stdout",
   "labels": {
-     "color": "blue", 
+     "color": "blue",
      "unset": null,
      "project": {
          "env": "production"
@@ -28,23 +28,23 @@ A _record accessor_ rule starts with the character `$`. Using the structured con
 }
 ```
 
-The following table describe some accessing rules and the expected returned value:
+The following table describes some accessing rules and the expected returned value:
 
 | Format | Accessed Value |
 | :--- | :--- |
-| $log | "some message" |
-| $labels\['color'\] | "blue" |
-| $labels\['project'\]\['env'\] | "production" |
-| $labels\['unset'\] | null |
-| $labels\['undefined'\] |  |
+| `$log` | `some message` |
+| `$labels['color']` | `blue` |
+| `$labels['project']['env']` | `production` |
+| `$labels['unset']` | `null` |
+| `$labels['undefined']` |  |
 
-If the accessor key does not exist in the record like the last example `$labels['undefined']` , the operation is simply omitted, no exception will occur.
+If the accessor key doesn't exist in the record like the last example `$labels['undefined']`, the operation is omitted, and no exception will occur.
 
-## Usage Example
+## Usage
 
-The feature is enabled on a per plugin basis, not all plugins enable this feature. As an example consider a configuration that aims to filter records using [grep](../../../pipeline/filters/grep.md) that only matches where labels have a color blue:
+The feature is enabled on a per plugin basis. Not all plugins enable this feature. As an example, consider a configuration that aims to filter records using [grep](../../../pipeline/filters/grep.md) that only matches where labels have a color blue:
 
-```text
+```yaml
 [SERVICE]
     flush        1
     log_level    info
@@ -68,17 +68,17 @@ The feature is enabled on a per plugin basis, not all plugins enable this featur
 
 The file content to process in `test.log` is the following:
 
-```javascript
+```js
 {"log": "message 1", "labels": {"color": "blue"}}
 {"log": "message 2", "labels": {"color": "red"}}
 {"log": "message 3", "labels": {"color": "green"}}
 {"log": "message 4", "labels": {"color": "blue"}}
 ```
 
-Running Fluent Bit with the configuration above the output will be:
+When running Fluent Bit with the previous configuration, the output is:
 
 ```text
-$ bin/fluent-bit -c fluent-bit.conf 
+$ bin/fluent-bit -c fluent-bit.conf
 Fluent Bit v1.x.x
 * Copyright (C) 2019-2020 The Fluent Bit Authors
 * Copyright (C) 2015-2018 Treasure Data
@@ -95,11 +95,11 @@ Fluent Bit v1.x.x
 {"date":1599862267.483692,"log":"message 4","labels":{"color":"blue"}}
 ```
 
-### Limitations of record_accessor templating
+### Limitations of `record_accessor` templating
 
-The Fluent Bit record_accessor library has a limitation in the characters that can separate template variables- only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
+The Fluent Bit `record_accessor` library has a limitation in the characters that can separate template variables. Only dots and commas (`.` and `,`) can come after a template variable. This is because the templating library must parse the template and determine the end of a variable.
 
-The following would be invalid templates because the two template variables are not separated by commas or dots:
+The following templates are invalid because the template variables aren't separated by commas or dots:
 
 - `$TaskID-$ECSContainerName`
 - `$TaskID/$ECSContainerName`
@@ -107,11 +107,13 @@ The following would be invalid templates because the two template variables are 
 - `$TaskIDfooo$ECSContainerName`
 
 However, the following are valid:
+
 - `$TaskID.$ECSContainerName`
 - `$TaskID.ecs_resource.$ECSContainerName`
 - `$TaskID.fooo.$ECSContainerName`
 
 And the following are valid since they only contain one template variable with nothing after it:
+
 - `fooo$TaskID`
 - `fooo____$TaskID`
 - `fooo/bar$TaskID`
