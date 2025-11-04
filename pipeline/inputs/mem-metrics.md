@@ -65,7 +65,7 @@ Minimal pipeline for logging memory metrics to the console:
     Match mem
 ```
 
-Log all instances of fluent-bit to prometheus:
+Log all instances of Fluent Bit to Prometheus:
 
 ```ini
 [INPUT]
