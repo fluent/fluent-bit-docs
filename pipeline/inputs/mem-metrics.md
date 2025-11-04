@@ -19,7 +19,7 @@ The `filter_pid` can include or be set to either `0` or `self` to refer to the f
 
 You can run the plugin from the command line or through a configuration file. By default metrics will be generated for all processes the current user can analyze.
 
-### Command Line
+### Command line
 
 ```bash
 $ fluent-bit -i mem_metrics -o stdout
