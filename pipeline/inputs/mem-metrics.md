@@ -51,7 +51,7 @@ Fluent Bit v2.1.8
 2023-07-26T14:37:49.919778443Z node_smaps_rollup_locked{pid="4540"} = 0
 ```
 
-### Configuration File
+### Configuration file
 
 Minimal pipeline for logging memory metrics to the console:
 
