@@ -1,6 +1,6 @@
 # Pipeline
 
-The `pipeline` section defines the flow of how data is collected, processed, and sent to its final destination. This section contains three subsections:
+The `pipeline` section defines the flow of how data is collected, processed, and sent to its final destination. This section contains the following subsections:
 
 | Name | Description |
 | ---- | ----------- |
