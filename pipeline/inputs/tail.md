@@ -39,6 +39,7 @@ The plugin supports the following configuration parameters:
 | `file_cache_advise`   | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux.                                                                                                                                                                                                                                                                                                            | `on`      |
 | `threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                                                                                                                                            | `false`   |
 | `Unicode.Encoding`    | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data is not aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`.                                                                                                                                       | `none`    |
+| `Generic.Encoding`    | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win2513`, `Win1254`, `Win1255`, and `Win1256`.      | `none`    |
 
 ## Buffers and memory management
 
@@ -84,6 +85,13 @@ The `Unicode.Encoding` parameter is dependent on the simdutf library, which is i
 
 Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
+
+{% hint style="info" %}
+The `Unicode.Encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
+
+Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
+{% endhint %}
+
 
 ## Monitor a large number of files
 
@@ -465,3 +473,89 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Character encoding conversion
+
+This feature allows Fluent Bit to convert logs from various character encodings into the standard UTF-8 format.
+This is crucial for processing logs from systems, especially Windows, that use legacy or non-UTF-8 encodings.
+Proper conversion ensures that your log data is correctly parsed, indexed, and searchable.
+
+### When to use this feature
+
+You should use this feature if your log files or messages aren't in UTF-8 and you are seeing garbled or incorrectly rendered characters.
+This is common in environments that use:
+
+- Modern Windows applications that log in UTF-16.
+
+- Legacy Windows systems with applications that use traditional code pages (for example, ShiftJIS, GBK, Win1252).
+
+### Configuration parameters
+
+To enable encoding conversion, you will use one of the following two parameters within an input plugin configuration.
+
+1. `Unicode.Encoding`
+
+   Use this parameter for high-performance conversion of UTF-16 encoded logs to UTF-8. This method utilizes modern processor features (SIMD instructions) to accelerate the conversion process, making it highly efficient. 
+
+   - Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
+   - Supported Values:
+     - UTF-16LE (Little-Endian)
+     - UTF-16BE (Big-Endian)
+
+1. `Generic.Encoding`
+
+   Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
+
+   - Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
+   - Supported Values: You can use any of the names or aliases listed below.
+
+### East Asian Encodings
+
+- `ShiftJIS` (Aliases: `SJIS`, `CP932`, `Windows-31J`)
+- `GB18030`
+- `GBK`: (Alias: `CP936`)
+- `UHC` (Unified Hangul Code): (Aliases: `CP949` and `Windows-949`)
+- `Big5`: (Alias: `CP950`)
+
+### Windows (ANSI) encodings
+
+- `Win1250` (Central European): (Alias: `CP1250`)
+- `Win1251` (Cyrillic): (Alias: `CP1251`)
+- `Win1252` (Western European / Latin): (Alias: `CP1252`)
+- `Win1253` (Greek): (Alias: `CP1253`)
+- `Win1254` (Turkish): (Alias: `CP1254`)
+- `Win1255` (Hebrew): (Alias: `CP1255`)
+- `Win1256` (Arabic): (Alias: `CP1256`)
+
+### DOS (OEM) encodings
+
+- `Win866` (Cyrillic - DOS): (Alias: `CP866`)
+- `Win874` (Thai): (Alias: `CP874`)
+
+### Configuration example
+
+Here is an example of how to use `Generic.Encoding` with the Tail input plugin to read a log file encoded in ShiftJIS.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+    inputs:
+      - name:  tail
+        path: /var/log/containers/*.log
+        generic.encoding:    ShiftJIS
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name                tail
+    Path                C:\path\to\your\sjis.log
+    Generic.Encoding    ShiftJIS
+```
+
+{% endtab %}
+{% endtabs %}
