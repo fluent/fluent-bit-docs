@@ -157,7 +157,9 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Input plugins
 
-Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. The following input plugins are available:
+Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. 
+
+The following input plugins are available:
 
 | Option                                                                                      | Description                                                               | Default |
 |:--------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------|:--------|
@@ -210,11 +212,12 @@ Input plugins gather information from a specific source type like network interf
 | [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
+
 ### Processor plugins
 
-Processors are components that modify, transform, or enhance data as it flows through Fluent Bit. Unlike filters, processors 
-are tightly coupled to inputs, which means they execute immediately and avoid creating a performance bottleneck. The 
-following table describes the filters available on this version:
+Processor plugins handle the events within the processor pipelines to allow modifying, enriching, or dropping events.
+
+The following table describes the processors available:
 
 | Option                                                                                           | Description                                 | Default |
 |:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
@@ -227,7 +230,9 @@ following table describes the filters available on this version:
 
 ### Filter plugins
 
-Filter plugins let you modify, enrich or drop records. The following table describes the filters available on this version:
+Filter plugins let you modify, enrich or drop records. 
+
+The following table describes the filters available on this version:
 
 | Option                                                                       | Description                        | Default |
 |:-----------------------------------------------------------------------------|:-----------------------------------|:--------|
@@ -256,47 +261,55 @@ Filter plugins let you modify, enrich or drop records. The following table descr
 
 ### Output plugins
 
-Output plugins let you flush the information to some external interface, service, or terminal. The following table describes the output plugins available:
+Output plugins let you flush the information to some external interface, service, or terminal. 
 
-| Option                                                                | Description                                                       | Default |
-|:----------------------------------------------------------------------|:------------------------------------------------------------------|:--------|
-| [`FLB_OUT_AZURE`](../../../pipeline/outputs/azure.md)                 | Enable Microsoft Azure output plugin                              | `On`    |
-| [`FLB_OUT_AZURE_KUSTO`](../../../pipeline/outputs/azure_kusto.md)     | Enable Azure Kusto output plugin                                  | `On`    |
-| [`FLB_OUT_BIGQUERY`](../../../pipeline/outputs/bigquery.md)           | Enable Google BigQuery output plugin                              | `On`    |
-| [`FLB_OUT_COUNTER`](../../../pipeline/outputs/counter.md)             | Enable Counter output plugin                                      | `On`    |
-| [`FLB_OUT_CLOUDWATCH_LOGS`](../../../pipeline/outputs/cloudwatch.md)  | Enable Amazon CloudWatch output plugin                            | `On`    |
-| [`FLB_OUT_DATADOG`](../../../pipeline/outputs/datadog.md)             | Enable Datadog output plugin                                      | `On`    |
-| [`FLB_OUT_ES`](../../../pipeline/outputs/elasticsearch.md)            | Enable [Elastic Search](http://www.elastic.co) output plugin      | `On`    |
-| [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                   | Enable File output plugin                                         | `On`    |
-| [`FLB_OUT_KINESIS_FIREHOSE`](../../../pipeline/outputs/firehose.md)   | Enable Amazon Kinesis Data Firehose output plugin                 | `On`    |
-| [`FLB_OUT_KINESIS_STREAMS`](../../../pipeline/outputs/kinesis.md)     | Enable Amazon Kinesis Data Streams output plugin                  | `On`    |
-| [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md)     | Enable Flow counter output plugin                                 | `On`    |
-| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)             | Enable [Fluentd](http://www.fluentd.org) output plugin            | `On`    |
-| [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md)                   | Enable GELF output plugin                                         | `On`    |
-| [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md)                   | Enable HTTP output plugin                                         | `On`    |
-| [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md)           | Enable InfluxDB output plugin                                     | `On`    |
-| [`FLB_OUT_KAFKA`](../../../pipeline/outputs/kafka.md)                 | Enable Kafka output                                               | Off     |
-| [`FLB_OUT_KAFKA_REST`](../../../pipeline/outputs/kafka-rest-proxy.md) | Enable Kafka REST Proxy output plugin                             | `On`    |
-| `FLB_OUT_LIB`                                                         | Enable Lib output plugin                                          | `On`    |
-| [`FLB_OUT_NATS`](../../../pipeline/outputs/nats.md)                   | Enable [NATS](http://www.nats.io) output plugin                   | `On`    |
-| `FLB_OUT_NULL`                                                        | Enable `NULL` output plugin                                       | `On`    |
-| `FLB_OUT_PGSQL`                                                       | Enable PostgreSQL output plugin                                   | `On`    |
-| `FLB_OUT_PLOT`                                                        | Enable Plot output plugin                                         | `On`    |
-| `FLB_OUT_SLACK`                                                       | Enable Slack output plugin                                        | `On`    |
-| [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                       | Enable Amazon S3 output plugin                                    | `On`    |
-| [`FLB_OUT_SPLUNK`](../../../pipeline/outputs/splunk.md)               | Enable Splunk output plugin                                       | `On`    |
-| [`FLB_OUT_STACKDRIVER`](../../../pipeline/outputs/stackdriver.md)     | Enable Google Stackdriver output plugin                           | `On`    |
-| [`FLB_OUT_STDOUT`](build-and-install.md)                              | Enable STDOUT output plugin                                       | `On`    |
-| `FLB_OUT_TCP`                                                         | Enable TCP/TLS output plugin                                      | `On`    |
-| [`FLB_OUT_TD`](../../../pipeline/outputs/treasure-data.md)            | Enable [Treasure Data](http://www.treasuredata.com) output plugin | `On`    |
+The following table describes the output plugins available:
 
-### Processor plugins
-
-Processor plugins handle the events within the processor pipelines to allow modifying, enriching, or dropping events.
-
-The following table describes the processors available:
-
-| Option                                                                               | Description                                 | Default |
-|:-------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
-| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md) | Enable metrics selector processor           | `On`    |
-| [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                     | Enable metrics label manipulation processor | `On`    |
+| Option                                                                                   | Description                                              | Default |
+|:-----------------------------------------------------------------------------------------|:---------------------------------------------------------|:--------|
+| [`FLB_OUT_AZURE`](../../../pipeline/outputs/azure.md)                                    | Enable Microsoft Azure output plugin                     | `On`    |
+| [`FLB_OUT_AZURE_BLOB`](../../../pipeline/outputs/azure_blob.md)                          | Enable Microsoft Azure storage blob output plugin        | `On`    |
+| [`FLB_OUT_AZURE_KUSTO`](../../../pipeline/outputs/azure_kusto.md)                        | Enable Azure Data Explorer (Kusto) output plugin         | `On`    |
+| [`FLB_OUT_AZURE_LOGS_INGESTION`](../../../pipeline/outputs/azure_logs_ingestion.md)      | Enable Azure Log Ingestion output plugin                 | `On`    |
+| [`FLB_OUT_BIGQUERY`](../../../pipeline/outputs/bigquery.md)                              | Enable Google BigQuery output plugin                     | `On`    |
+| [`FLB_OUT_CHRONICLE`](../../../pipeline/outputs/chronicle.md)                            | Enable Google Chronicle output plugin                    | `On`    |
+| [`FLB_OUT_CLOUDWATCH_LOGS`](../../../pipeline/outputs/cloudwatch.md)                     | Enable Amazon CloudWatch output plugin                   | `On`    |
+| [`FLB_OUT_COUNTER`](../../../pipeline/outputs/counter.md)                                | Enable Counter output plugin                             | `On`    |
+| [`FLB_OUT_DATADOG`](../../../pipeline/outputs/datadog.md)                                | Enable Datadog output plugin                             | `On`    |
+| [`FLB_OUT_ES`](../../../pipeline/outputs/elasticsearch.md)                               | Enable Elastic Search output plugin                      | `On`    |
+| [`FLB_OUT_EXIT`](../../../pipeline/outputs/exit.md)                                      | Enable Exit output plugin                                | `On`    |
+| [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                                      | Enable File output plugin                                | `On`    |
+| [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md)                        | Enable Flow counter output plugin                        | `On`    |
+| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](http://www.fluentd.org) output plugin   | `On`    |
+| [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md)                                      | Enable GELF output plugin                                | `On`    |
+| [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md)                                      | Enable HTTP output plugin                                | `On`    |
+| [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md)                              | Enable InfluxDB output plugin                            | `On`    |
+| [`FLB_OUT_KAFKA`](../../../pipeline/outputs/kafka.md)                                    | Enable Kafka output                                      | `On`    |
+| [`FLB_OUT_KAFKA_REST`](../../../pipeline/outputs/kafka-rest-proxy.md)                    | Enable Kafka REST Proxy output plugin                    | `On`    |
+| [`FLB_OUT_KINESIS_FIREHOSE`](../../../pipeline/outputs/firehose.md)                      | Enable Amazon Kinesis Data Firehose output plugin        | `On`    |
+| [`FLB_OUT_KINESIS_STREAMS`](../../../pipeline/outputs/kinesis.md)                        | Enable Amazon Kinesis Data Streams output plugin         | `On`    |
+| [`FLB_OUT_LIB`](../../../pipeline/outputs/library.md)                                    | Enable Library output plugin                             | `On`    |
+| [`FLB_OUT_LOGDNA`](../../../pipeline/outputs/logdna.md)                                  | Enable LogDNA output plugin                              | `On`    |
+| [`FLB_OUT_LOKI`](../../../pipeline/outputs/loki.md)                                      | Enable Loki output plugin                                | `On`    |
+| [`FLB_OUT_NATS`](../../../pipeline/outputs/nats.md)                                      | Enable NATS output plugin                                | `On`    |
+| [`FLB_OUT_NRLOGS`](../../../pipeline/outputs/new-relic.md)                               | Enable New Relic output plugin                           | `On`    |
+| [`FLB_OUT_NULL`](../../../pipeline/outputs/null.md)                                      | Enable NULL output plugin                                | `On`    |
+| [`FLB_OUT_OPENSEARCH`](../../../pipeline/outputs/opensearch.md)                          | Enable OpenSearch output plugin                          | `On`    |
+| [`FLB_OUT_OPENTELEMETRY`](../../../pipeline/outputs/opentelemetry.md)                    | Enable OpenTelemetry output plugin                       | `On`    |
+| [`FLB_OUT_ORACLE_LOG_ANALYTICS`](../../../pipeline/outputs/oci-logging-analytics.md)     | Enable Oracle Cloud Infrastructure Logging output plugin | `On`    |
+| [`FLB_OUT_PGSQL`](../../../pipeline/outputs/postgresql.md)                               | Enable PostgreSQL output plugin                          | `Off`   |
+| [`FLB_OUT_PLOT`](../../../pipeline/outputs/plot.md)                                      | Enable Plot output plugin                                | `On`    |
+| [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/inputs/prometheus-exporter.md)         | Enable Prometheus exporter output plugin                 | `On`    |
+| [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md) | Enable Prometheus remote write output plugin             | `On`    |
+| [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                                          | Enable Amazon S3 output plugin                           | `On`    |
+| [`FLB_OUT_SKYWALKING`](../../../pipeline/outputs/skywalking.md)                          | Enable Apache Skywalking output plugin                   | `On`    |
+| [`FLB_OUT_SLACK`](../../../pipeline/outputs/slack.md)                                    | Enable Slack output plugin                               | `On`    |
+| [`FLB_OUT_SPLUNK`](../../../pipeline/outputs/splunk.md)                                  | Enable Splunk output plugin                              | `On`    |
+| [`FLB_OUT_STACKDRIVER`](../../../pipeline/outputs/stackdriver.md)                        | Enable Stackdriver output plugin                         | `On`    |
+| [`FLB_OUT_STDOUT`](../../../pipeline/outputs/standard-output.md)                         | Enable STDOUT output plugin                              | `On`    |
+| [`FLB_OUT_SYSLOG`](../../../pipeline/outputs/syslog.md)                                  | Enable Syslog output plugin                              | `On`    |
+| [`FLB_OUT_TD`](../../../pipeline/outputs/treasure-data.md)                               | Enable Treasure Data output plugin                       | `On`    |
+| [`FLB_OUT_TCP`](../../../pipeline/outputs/tcp-and-tls.md)                                | Enable TCP/TLS output plugin                             | `On`    |
+| [`FLB_OUT_UDP`](../../../pipeline/outputs/udp.md)                                        | Enable UDP output plugin                                 | `On`    |
+| [`FLB_OUT_VIVO_EXPORTER`](../../../pipeline/outputs/vivo-exporter.md)                    | Enable Vivo exporter output plugin                       | `On`    |
+| [`FLB_OUT_WEBSOCKET`](../../../pipeline/outputs/udp.md)                                  | Enable UDP output plugin                                 | `On`    |
