@@ -150,10 +150,10 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Optimization options
 
-| Option | Description | Default |
-| :--- | :--- | :--- |
-| `FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE` | Determine initial buffer size for `msgpack` to `json` conversion in terms of memory used by payload. | `2.0` |
-| `FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE` | Determine percentage of reallocation size when `msgpack` to `json` conversion buffer runs out of memory. | `0.1` |
+| Option                                    | Description                                                                                              | Default |
+|:------------------------------------------|:---------------------------------------------------------------------------------------------------------|:--------|
+| `FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE`    | Determine initial buffer size for `msgpack` to `json` conversion in terms of memory used by payload.     | `2.0`   |
+| `FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE` | Determine percentage of reallocation size when `msgpack` to `json` conversion buffer runs out of memory. | `0.1`   |
 
 ### Input plugins
 
@@ -170,8 +170,6 @@ Input plugins gather information from a specific source type like network interf
 | [`FLB_IN_DUMMY`](../../../pipeline/inputs/dummy.md)                                         | Enable Dummy input plugin                                                 | `On`    |
 | [`FLB_IN_EBPF`](../../../pipeline/inputs/ebpf.md)                                           | Enable Linux eBPF input plugin                                            | `Off`   |
 | [`FLB_IN_ELASTICSEARCH`](../../../pipeline/inputs/elasticsearch.md)                         | Enable Elasticsearch (Bulk API) input plugin                              | `On`    |
-| [`FLB_IN_EMITTER`](../../../pipeline/inputs/emitter.md)                                     | Enable emitter input plugin                                               | `On`    |
-| [`FLB_IN_EVENT_TYPE`](../../../pipeline/inputs/event-type.md)                               | Enable event type input plugin                                            | `On`    |
 | [`FLB_IN_EXEC`](../../../pipeline/inputs/exec.md)                                           | Enable Exec input plugin                                                  | `On`    |
 | [`FLB_IN_EXEC_WASI`](../../../pipeline/inputs/exec-wasi.md)                                 | Enable Exec WASI input plugin                                             | `On`    |
 | [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md)                 | Enable Fluent Bit metrics input plugin                                    | `On`    |
@@ -231,24 +229,30 @@ following table describes the filters available on this version:
 
 Filter plugins let you modify, enrich or drop records. The following table describes the filters available on this version:
 
-| Option                                                                       | Description                       | Default |
-|:-----------------------------------------------------------------------------|:----------------------------------|:--------|
-| [`FLB_FILTER_AWS`](../../../pipeline/filters/aws-metadata.md)                | Enable AWS metadata filter        | `On`    |
-| [`FLB_FILTER_ECS`](../../../pipeline/filters/ecs-metadata.md)                | Enable AWS metadata filter        | `On`    |
-| `FLB_FILTER_EXPECT`                                                          | Enable Expect data test filter    | `On`    |
-| [`FLB_FILTER_GREP`](../../../pipeline/filters/grep.md)                       | Enable Grep filter                | `On`    |
-| [`FLB_FILTER_KUBERNETES`](../../../pipeline/filters/kubernetes.md)           | Enable Kubernetes metadata filter | `On`    |
-| [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md)                         | Enable Lua scripting filter       | `On`    |
-| [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md)                   | Enable Modify filter              | `On`    |
-| [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md)                       | Enable Nest filter                | `On`    |
-| [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md)                   | Enable Parser filter              | `On`    |
-| [`FLB_FILTER_RECORD_MODIFIER`](../../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter     | `On`    |
-| [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md)         | Enable Rewrite Tag filter         | `On`    |
-| [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md)          | Enable Stdout filter              | `On`    |
-| [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md)                 | Enable Sysinfo filter             | `On`    |
-| [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md)               | Enable Throttle filter            | `On`    |
-| [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md)   | Enable Type Converter filter      | `On`    |
-| [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md)                       | Enable Wasm filter                | `On`    |
+| Option                                                                       | Description                        | Default |
+|:-----------------------------------------------------------------------------|:-----------------------------------|:--------|
+| [`FLB_FILTER_AWS`](../../../pipeline/filters/aws-metadata.md)                | Enable AWS metadata filter         | `On`    |
+| [`FLB_FILTER_CHECKLIST`](../../../pipeline/filters/checklist.md)             | Enable Checklist filter            | `On`    |
+| [`FLB_FILTER_ECS`](../../../pipeline/filters/ecs-metadata.md)                | Enable AWS ECS metadata filter     | `On`    |
+| [`FLB_FILTER_EXPECT`](../../../pipeline/filters/expect.md)                   | Enable Expect data test filter     | `On`    |
+| [`FLB_FILTER_GIOIP2`](../../../pipeline/filters/geoip2-filter.md)            | Enable Geoip2 filter               | `On`    |
+| [`FLB_FILTER_GREP`](../../../pipeline/filters/grep.md)                       | Enable Grep filter                 | `On`    |
+| [`FLB_FILTER_KUBERNETES`](../../../pipeline/filters/kubernetes.md)           | Enable Kubernetes metadata filter  | `On`    |
+| [`FLB_FILTER_LOG_TO_METRICS`](../../../pipeline/filters/log_to_metrics.md)   | Enable Log derived metrics filter  | `On`    |
+| [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md)                         | Enable Lua scripting filter        | `On`    |
+| [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md)                   | Enable Modify filter               | `On`    |
+| [`FLB_FILTER_MULTILINE`](../../../pipeline/filters/multiline-stacktrace.md)  | Enable Multiline stacktrace filter | `On`    |
+| [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md)                       | Enable Nest filter                 | `On`    |
+| [`FLB_FILTER_NIGHTFALL`](../../../pipeline/filters/nightfall.md)             | Enable Nightfall filter            | `On`    |
+| [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md)                   | Enable Parser filter               | `On`    |
+| [`FLB_FILTER_RECORD_MODIFIER`](../../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter      | `On`    |
+| [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md)         | Enable Rewrite Tag filter          | `On`    |
+| [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md)          | Enable Stdout filter               | `On`    |
+| [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md)                 | Enable Sysinfo filter              | `On`    |
+| [`FLB_FILTER_TYPE_TENSORFLOW`](../../../pipeline/filters/tensorflow.md)      | Enable Tensorflow filter           | `Off`   |
+| [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md)               | Enable Throttle filter             | `On`    |
+| [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md)   | Enable Type Converter filter       | `On`    |
+| [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md)                       | Enable Wasm filter                 | `On`    |
 
 ### Output plugins
 
