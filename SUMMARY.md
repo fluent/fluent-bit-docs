@@ -84,6 +84,7 @@
 ## Data pipeline
 
 * [Inputs](pipeline/inputs.md)
+  * [Blob](pipeline/inputs/blob.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU metrics](pipeline/inputs/cpu-metrics.md)
   * [Disk I/O metrics](pipeline/inputs/disk-io-metrics.md)
