@@ -212,6 +212,21 @@ Input plugins gather information from a specific source type like network interf
 | [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
+### Processor plugins
+
+Processors are components that modify, transform, or enhance data as it flows through Fluent Bit. Unlike filters, processors 
+are tightly coupled to inputs, which means they execute immediately and avoid creating a performance bottleneck. The 
+following table describes the filters available on this version:
+
+| Option                                                                                           | Description                                 | Default |
+|:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
+| [`FLB_PROCESSOR_CONTENT_MODIFIER`](../../../pipeline/processors/content-modifier.md)             | Enable content modifier processor           | `On`    |
+| [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                                 | Enable metrics label manipulation processor | `On`    |
+| [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
+| [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
+| [`FLB_PROCESSOR_SAMPLING`](../../../pipeline/processors/sampling.md)                             | Enable sampling processor                   | `On`    |
+| [`FLB_PROCESSOR_SQl`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
+
 ### Filter plugins
 
 Filter plugins let you modify, enrich or drop records. The following table describes the filters available on this version:
