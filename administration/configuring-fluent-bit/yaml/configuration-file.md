@@ -7,15 +7,15 @@ description: Learn about the YAML configuration file used by Fluent Bit
 <img referrerpolicy="no-referrer-when-downgrade"
 src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" alt="" />
 
-One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope. These YAML configuration files support the following sections:
+One of the ways to configure Fluent Bit is using a YAML configuration file that works at a global scope. These YAML configuration files support the following top-level sections:
 
-- `env`
-- `includes`
-- `service`
-- `pipeline`
-  - `inputs`
-  - `outputs`
-  - `filters`
+- `env`: Configures [environment variables](../administration/configuring-fluent-bit/yaml/environment-variables-section).
+- `includes`: Specifies additional YAML configuration files to [include as part of a parent file](../manual/administration/configuring-fluent-bit/yaml/includes-section).
+- `service`: Configures global properties of the Fluent Bit [service](../manual/administration/configuring-fluent-bit/yaml/service-section).
+- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`.](/manual/administration/configuring-fluent-bit/yaml/pipeline-section).
+- `parsers`: Defines [custom parsers](../administration/configuring-fluent-bit/yaml/parsers-section).
+- `multiline_parsers`: Defines [custom multiline parsers](../manual/administration/configuring-fluent-bit/yaml/multiline-parsers-section).
+- `plugins`: Defines paths for [custom plugins](/manual/administration/configuring-fluent-bit/yaml/plugins-section).
 
 {% hint style="info" %}
 YAML configuration is used in the smoke tests for containers. An always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
