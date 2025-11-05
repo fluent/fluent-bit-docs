@@ -159,42 +159,58 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. The following input plugins are available:
 
-| Option                                                                      | Description                                  | Default |
-|:----------------------------------------------------------------------------|:---------------------------------------------|:--------|
-| [`FLB_IN_BLOB`](../../../pipeline/inputs/blob.md)                           | Enable Blob input plugin                     | `On`    |
-| [`FLB_IN_COLLECTD`](../../../pipeline/inputs/collectd.md)                   | Enable Collectd input plugin                 | `On`    |
-| [`FLB_IN_CPU`](../../../pipeline/inputs/cpu-metrics.md)                     | Enable CPU input plugin                      | `On`    |
-| [`FLB_IN_DISK`](../../../pipeline/inputs/disk-io-metrics.md)                | Enable Disk I/O Metrics input plugin         | `On`    |
-| [`FLB_IN_DOCKER`](../../../pipeline/inputs/docker-metrics.md)               | Enable Docker input plugin                   | `On`    |
-| [`FLB_IN_DOCKER_EVENTS`](../../../pipeline/inputs/docker-events.md)         | Enable Docker events input plugin            | `On`    |
-| [`FLB_IN_DUMMY`](../../../pipeline/inputs/dummy.md)                         | Enable Dummy input plugin                    | `On`    |
-| [`FLB_IN_ELASTICSEARCH`](../../../pipeline/inputs/elasticsearch.md)         | Enable Elasticsearch (Bulk API) input plugin | `On`    |
-| [`FLB_IN_EMITTER`](../../../pipeline/inputs/emitter.md)                     | Enable emitter input plugin                  | `On`    |
-| [`FLB_IN_EVENT_TYPE`](../../../pipeline/inputs/event-type.md)               | Enable event type input plugin               | `On`    |
-| [`FLB_IN_EXEC`](../../../pipeline/inputs/exec.md)                           | Enable Exec input plugin                     | `On`    |
-| [`FLB_IN_EXEC_WASI`](../../../pipeline/inputs/exec-wasi.md)                 | Enable Exec WASI input plugin                | `On`    |
-| [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md) | Enable Fluent Bit metrics input plugin       | `On`    |
-| [`FLB_IN_FORWARD`](../../../pipeline/inputs/forward.md)                     | Enable Forward input plugin                  | `On`    |
-| [`FLB_IN_GPU_METRICS`](../../../pipeline/inputs/gpu-metrics.md)             | Enable GPU metrics input plugin              | `On`    |
-| [`FLB_IN_HEAD`](../../../pipeline/inputs/head.md)                           | Enable Head input plugin                     | `On`    |
-| [`FLB_IN_HEALTH`](../../../pipeline/inputs/health.md)                       | Enable Health input plugin                   | `On`    |
-
-| [`FLB_IN_KMSG`](../../pipeline/inputs/kernel-logs.md)                      | Enable Kernel log input plugin                                            | `On`    |
-| [`FLB_IN_MEM`](../../pipeline/inputs/memory-metrics.md)                    | Enable Memory input plugin                                                | `On`    |
-| [`FLB_IN_MQTT`](../../pipeline/inputs/mqtt.md)                             | Enable MQTT Server input plugin                                           | `On`    |
-| [`FLB_IN_NETIF`](../../pipeline/inputs/network-io-metrics.md)              | Enable Network I/O metrics input plugin                                   | `On`    |
-| [`FLB_IN_PROC`](../../pipeline/inputs/process.md)                          | Enable Process monitoring input plugin                                    | `On`    |
-| [`FLB_IN_RANDOM`](../../pipeline/inputs/random.md)                         | Enable Random input plugin                                                | `On`    |
-| [`FLB_IN_SERIAL`](../../pipeline/inputs/serial-interface.md)               | Enable Serial input plugin                                                | `On`    |
-| [`FLB_IN_STDIN`](../../pipeline/inputs/standard-input.md)                  | Enable Standard input plugin                                              | `On`    |
-| [`FLB_IN_SYSLOG`](../../pipeline/inputs/syslog.md)                         | Enable Syslog input plugin                                                | `On`    |
-| [`FLB_IN_SYSTEMD`](../../pipeline/inputs/systemd.md)                       | Enable Systemd / Journald input plugin                                    | `On`    |
-| [`FLB_IN_TAIL`](../../pipeline/inputs/tail.md)                             | Enable Tail (follow files) input plugin                                   | `On`    |
-| [`FLB_IN_TCP`](../../pipeline/inputs/tcp.md)                               | Enable TCP input plugin                                                   | `On`    |
-| [`FLB_IN_THERMAL`](../../pipeline/inputs/thermal.md)                       | Enable system temperature input plugin                                    | `On`    |
-| [`FLB_IN_UDP`](../../pipeline/inputs/udp.md)                               | Enable UDP input plugin                                                   | `On`    |
-| [`FLB_IN_WINLOG`](../../pipeline/inputs/windows-event-log.md)              | Enable Windows Event Log input plugin (Windows Only)                      | `On`    |
-| [`FLB_IN_WINEVTLOG`](../../pipeline/inputs/windows-event-log-winevtlog.md) | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `On`    |
+| Option                                                                                      | Description                                                               | Default |
+|:--------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------|:--------|
+| [`FLB_IN_BLOB`](../../../pipeline/inputs/blob.md)                                           | Enable Blob input plugin                                                  | `On`    |
+| [`FLB_IN_COLLECTD`](../../../pipeline/inputs/collectd.md)                                   | Enable Collectd input plugin                                              | `On`    |
+| [`FLB_IN_CPU`](../../../pipeline/inputs/cpu-metrics.md)                                     | Enable CPU input plugin                                                   | `On`    |
+| [`FLB_IN_DISK`](../../../pipeline/inputs/disk-io-metrics.md)                                | Enable Disk I/O Metrics input plugin                                      | `On`    |
+| [`FLB_IN_DOCKER`](../../../pipeline/inputs/docker-metrics.md)                               | Enable Docker input plugin                                                | `On`    |
+| [`FLB_IN_DOCKER_EVENTS`](../../../pipeline/inputs/docker-events.md)                         | Enable Docker events input plugin                                         | `On`    |
+| [`FLB_IN_DUMMY`](../../../pipeline/inputs/dummy.md)                                         | Enable Dummy input plugin                                                 | `On`    |
+| [`FLB_IN_EBPF`](../../../pipeline/inputs/ebpf.md)                                           | Enable Linux eBPF input plugin                                            | `Off`   |
+| [`FLB_IN_ELASTICSEARCH`](../../../pipeline/inputs/elasticsearch.md)                         | Enable Elasticsearch (Bulk API) input plugin                              | `On`    |
+| [`FLB_IN_EMITTER`](../../../pipeline/inputs/emitter.md)                                     | Enable emitter input plugin                                               | `On`    |
+| [`FLB_IN_EVENT_TYPE`](../../../pipeline/inputs/event-type.md)                               | Enable event type input plugin                                            | `On`    |
+| [`FLB_IN_EXEC`](../../../pipeline/inputs/exec.md)                                           | Enable Exec input plugin                                                  | `On`    |
+| [`FLB_IN_EXEC_WASI`](../../../pipeline/inputs/exec-wasi.md)                                 | Enable Exec WASI input plugin                                             | `On`    |
+| [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md)                 | Enable Fluent Bit metrics input plugin                                    | `On`    |
+| [`FLB_IN_FORWARD`](../../../pipeline/inputs/forward.md)                                     | Enable Forward input plugin                                               | `On`    |
+| [`FLB_IN_GPU_METRICS`](../../../pipeline/inputs/gpu-metrics.md)                             | Enable GPU metrics input plugin                                           | `On`    |
+| [`FLB_IN_HEAD`](../../../pipeline/inputs/head.md)                                           | Enable Head input plugin                                                  | `On`    |
+| [`FLB_IN_HEALTH`](../../../pipeline/inputs/health.md)                                       | Enable Health input plugin                                                | `On`    |
+| [`FLB_IN_HTTP`](../../../pipeline/inputs/http.md)                                           | Enable HTTP input plugin                                                  | `On`    |
+| [`FLB_IN_KAFKA`](../../../pipeline/inputs/kafka.md)                                         | Enable Kafka input plugin                                                 | `On`    |
+| [`FLB_IN_KMSG`](../../../pipeline/inputs/kernel-logs.md)                                    | Enable Kernel log input plugin                                            | `On`    |
+| [`FLB_IN_KUBERNETES_EVENTS`](../../../pipeline/inputs/kubernetes-events.md)                 | Enable Kubernetes Events input plugin                                     | `On`    |
+| [`FLB_IN_MEM`](../../../pipeline/inputs/memory-metrics.md)                                  | Enable Memory input plugin                                                | `On`    |
+| [`FLB_IN_MQTT`](../../../pipeline/inputs/mqtt.md)                                           | Enable MQTT Broker input plugin                                           | `On`    |
+| [`FLB_IN_NETIF`](../../../pipeline/inputs/network-io-metrics.md)                            | Enable Network I/O metrics input plugin                                   | `On`    |
+| [`FLB_IN_NGINX_EXPORTER_METRICS`](../../../pipeline/inputs/nginx.md)                        | Enable NGINX metrics input plugin                                         | `On`    |
+| [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
+| [`FLB_IN_OPENTELEMETRY`](../../../pipeline/inputs/opentelemetry.md)                         | Enable OpenTelemetry input plugin                                         | `On`    |
+| [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
+| [`FLB_IN_PODMAN_METRICS`](../../../pipeline/inputs/podman-metrics.md)                       | Enable Podman metrics input plugin                                        | `On`    |
+| [`FLB_IN_PROC`](../../../pipeline/inputs/process.md)                                        | Enable Process input plugin                                               | `On`    |
+| [`FLB_IN_PROCESS_EXPORTER_METRICS`](../../../pipeline/inputs/process-exporter-metrics.md)   | Enable Process exporter metrics input plugin                              | `On`    |
+| [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md)     | Enable Prometheus remote write input plugin                               | `On`    |
+| [`FLB_IN_PROMETHEUS_SCRAPE_METRICS`](../../../pipeline/inputs/prometheus-scrape-metrics.md) | Enable Prometheus scrape metrics input plugin                             | `On`    |
+| [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-textfile.md)         | Enable Prometheus textfile input plugin                                   | `On`    |
+| [`FLB_IN_RANDOM`](../../../pipeline/inputs/random.md)                                       | Enable Random input plugin                                                | `On`    |
+| [`FLB_IN_SERIAL`](../../../pipeline/inputs/serial-interface.md)                             | Enable Serial input plugin                                                | `On`    |
+| [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Serial input plugin                                                | `On`    |
+| [`FLB_IN_STATSD`](../../../pipeline/inputs/statsd.md)                                       | Enable Statsd input plugin                                                | `On`    |
+| [`FLB_IN_STDIN`](../../../pipeline/inputs/standard-input.md)                                | Enable Standard input plugin                                              | `On`    |
+| [`FLB_IN_SYSLOG`](../../../pipeline/inputs/syslog.md)                                       | Enable Syslog input plugin                                                | `On`    |
+| [`FLB_IN_SYSTEMD`](../../../pipeline/inputs/systemd.md)                                     | Enable Systemd input plugin                                               | `On`    |
+| [`FLB_IN_TAIL`](../../../pipeline/inputs/tail.md)                                           | Enable Tail input plugin                                                  | `On`    |
+| [`FLB_IN_TCP`](../../../pipeline/inputs/tcp.md)                                             | Enable TCP input plugin                                                   | `On`    |
+| [`FLB_IN_THERMAL`](../../../pipeline/inputs/thermal.md)                                     | Enable Thermal input plugin                                               | `On`    |
+| [`FLB_IN_UDP`](../../../pipeline/inputs/udp.md)                                             | Enable UDP input plugin                                                   | `On`    |
+| [`FLB_IN_WINLOG`](../../../pipeline/inputs/windows-event-log.md)                            | Enable Windows Event Log input plugin (Windows Only)                      | `Off`   |
+| [`FLB_IN_WINEVTLOG`](../../../pipeline/inputs/windows-event-log-winevtlog.md)               | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `Off`   |
+| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
+| [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
 ### Filter plugins
 
