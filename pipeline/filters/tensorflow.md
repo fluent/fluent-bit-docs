@@ -13,12 +13,12 @@ The Tensorflow plugin for Fluent Bit has the following limitations:
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `input_field` | Specify the name of the field in the record to apply inference on. | _none_ |
-| `model_file` | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_ |
-| `include_input_fields` | Include all input filed in filter's output. | `True` |
-| `normalization_value` | Divide input values to `normalization_value`. | _none_ |
+| Key                    | Description                                                         | Default |
+|:-----------------------|:--------------------------------------------------------------------|:--------|
+| `include_input_fields` | Include all input filed in filter's output.                         | `True`  |
+| `input_field`          | Specify the name of the field in the record to apply inference on.  | _none_  |
+| `model_file`           | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_  |
+| `normalization_value`  | Divide input values to `normalization_value`.                       | _none_  |
 
 ## Creating a Tensorflow Lite shared library
 
@@ -32,8 +32,8 @@ To create a Tensorflow Lite shared library:
    bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
    ```
 
-   The script creates the shared library
-   `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
+   The script creates the shared library `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
+  
 1. Copy the library to a location such as `/usr/lib` that can be used by Fluent Bit.
 
 ## Building Fluent Bit with Tensorflow filter plugin
