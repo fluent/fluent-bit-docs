@@ -254,7 +254,7 @@ The following table describes the filters available on this version:
 | [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md)         | Enable Rewrite Tag filter          | `On`    |
 | [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md)          | Enable Stdout filter               | `On`    |
 | [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md)                 | Enable Sysinfo filter              | `On`    |
-| [`FLB_FILTER_TYPE_TENSORFLOW`](../../../pipeline/filters/tensorflow.md)      | Enable Tensorflow filter           | `Off`   |
+| [`FLB_FILTER_TENSORFLOW`](../../../pipeline/filters/tensorflow.md)           | Enable Tensorflow filter           | `Off`   |
 | [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md)               | Enable Throttle filter             | `On`    |
 | [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md)   | Enable Type Converter filter       | `On`    |
 | [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md)                       | Enable Wasm filter                 | `On`    |
