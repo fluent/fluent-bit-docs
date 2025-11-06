@@ -288,12 +288,12 @@ The following table describes the output plugins available:
 | [`FLB_OUT_KAFKA_REST`](../../../pipeline/outputs/kafka-rest-proxy.md)                    | Enable Kafka REST Proxy output plugin                    | `On`    |
 | [`FLB_OUT_KINESIS_FIREHOSE`](../../../pipeline/outputs/firehose.md)                      | Enable Amazon Kinesis Data Firehose output plugin        | `On`    |
 | [`FLB_OUT_KINESIS_STREAMS`](../../../pipeline/outputs/kinesis.md)                        | Enable Amazon Kinesis Data Streams output plugin         | `On`    |
-| [`FLB_OUT_LIB`](../../../pipeline/outputs/library.md)                                    | Enable Library output plugin                             | `On`    |
+| `FLB_OUT_LIB`                                                                            | Enable Library output plugin                             | `On`    |
 | [`FLB_OUT_LOGDNA`](../../../pipeline/outputs/logdna.md)                                  | Enable LogDNA output plugin                              | `On`    |
 | [`FLB_OUT_LOKI`](../../../pipeline/outputs/loki.md)                                      | Enable Loki output plugin                                | `On`    |
 | [`FLB_OUT_NATS`](../../../pipeline/outputs/nats.md)                                      | Enable NATS output plugin                                | `On`    |
 | [`FLB_OUT_NRLOGS`](../../../pipeline/outputs/new-relic.md)                               | Enable New Relic output plugin                           | `On`    |
-| [`FLB_OUT_NULL`](../../../pipeline/outputs/null.md)                                      | Enable `NULL` output plugin                                | `On`    |
+| [`FLB_OUT_NULL`](../../../pipeline/outputs/null.md)                                      | Enable `NULL` output plugin                              | `On`    |
 | [`FLB_OUT_OPENSEARCH`](../../../pipeline/outputs/opensearch.md)                          | Enable OpenSearch output plugin                          | `On`    |
 | [`FLB_OUT_OPENTELEMETRY`](../../../pipeline/outputs/opentelemetry.md)                    | Enable OpenTelemetry output plugin                       | `On`    |
 | [`FLB_OUT_ORACLE_LOG_ANALYTICS`](../../../pipeline/outputs/oci-logging-analytics.md)     | Enable Oracle Cloud Infrastructure Logging output plugin | `On`    |
