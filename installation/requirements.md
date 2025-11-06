@@ -6,7 +6,7 @@ The build process requires the following components:
 
 - Compiler: GCC or clang
 - CMake
-- Flex and Bison: Required for [Stream Processor](https://docs.fluentbit.io/manual/stream-processing/introduction) or [Record Accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor)
+- Flex and Bison: Required for [Stream Processor](https://docs.fluentbit.io/manual/stream-processing/overview) or [Record Accessor](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor)
 - Libyaml development headers and libraries
 
 Core has no other dependencies. Some features depend on third-party components. For example, output plugins with special backend libraries like Kafka include those libraries in the main source code repository.
