@@ -12,7 +12,7 @@ One of the ways to configure Fluent Bit is using a YAML configuration file that 
 - `env`: Configures [environment variables](../administration/configuring-fluent-bit/yaml/environment-variables-section).
 - `includes`: Specifies additional YAML configuration files to [include as part of a parent file](../manual/administration/configuring-fluent-bit/yaml/includes-section).
 - `service`: Configures global properties of the Fluent Bit [service](../manual/administration/configuring-fluent-bit/yaml/service-section).
-- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`.](/manual/administration/configuring-fluent-bit/yaml/pipeline-section).
+- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`](/manual/administration/configuring-fluent-bit/yaml/pipeline-section).
 - `parsers`: Defines [custom parsers](../administration/configuring-fluent-bit/yaml/parsers-section).
 - `multiline_parsers`: Defines [custom multiline parsers](../manual/administration/configuring-fluent-bit/yaml/multiline-parsers-section).
 - `plugins`: Defines paths for [custom plugins](/manual/administration/configuring-fluent-bit/yaml/plugins-section).
