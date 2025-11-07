@@ -68,7 +68,7 @@ The `service` section defines the global properties of the service. The Service 
 | `log_level` | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are accumulative. For example, if `debug` is set, it will include `error`, `warning`, `info`, and `debug`. `trace` mode is only available if Fluent Bit was built with the `WITH_TRACE` option enabled. | `info` |
 | `parsers_file` | Path for a file that defines custom parsers. Only a single entry is supported. | _none_ |
 | `plugins_file` | Path for a `plugins` configuration file. A `plugins` configuration file allows the definition of paths for external plugins; for an example, [see here](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
-| `streams_file` | Path for the Stream Processor configuration file. Learn more about [Stream Processing configuration](../../../stream-processing/introduction.md). | _none_ |
+| `streams_file` | Path for the Stream Processor configuration file. Learn more about [Stream Processing configuration](../../../stream-processing/overview.md). | _none_ |
 | `http_server` | Enable built-in HTTP server. | `Off` |
 | `http_listen` | Set listening interface for HTTP server when it's enabled. | `0.0.0.0` |
 | `http_port` | Set TCP Port for the HTTP server | `2020` |

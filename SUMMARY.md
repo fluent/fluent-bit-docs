@@ -46,7 +46,7 @@
   * [YAML configuration](administration/configuring-fluent-bit/yaml.md)
     * [Configuration file](administration/configuring-fluent-bit/yaml/configuration-file.md)
     * [Environment variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
-    * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md) 
+    * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
     * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
     * [Multiline parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
@@ -54,15 +54,15 @@
     * [Plugins](administration/configuring-fluent-bit/yaml/plugins-section.md)
     * [Upstream servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md)
   * [Classic mode](administration/configuring-fluent-bit/classic-mode.md)
-    * [Configuration file](administration/configuring-fluent-bit/classic-mode/configuration-file.md) 
+    * [Configuration file](administration/configuring-fluent-bit/classic-mode/configuration-file.md)
     * [Commands](administration/configuring-fluent-bit/classic-mode/commands.md)
     * [Format and schema](administration/configuring-fluent-bit/classic-mode/format-schema.md)
-    * [Record accessor syntax](administration/configuring-fluent-bit/classic-mode/record-accessor.md) 
+    * [Record accessor syntax](administration/configuring-fluent-bit/classic-mode/record-accessor.md)
     * [Upstream servers](administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
     * [Variables](administration/configuring-fluent-bit/classic-mode/variables.md)
   * [Multiline parsing](administration/configuring-fluent-bit/multiline-parsing.md)
   * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
-* [AWS credentials](administration/aws-credentials.md) 
+* [AWS credentials](administration/aws-credentials.md)
 * [Backpressure](administration/backpressure.md)
 * [Buffering and storage](administration/buffering-and-storage.md)
 * [Hot reload](administration/hot-reload.md)
@@ -73,7 +73,7 @@
 * [Networking](administration/networking.md)
 * [Performance tips](administration/performance.md)
 * [Scheduling and retries](administration/scheduling-and-retries.md)
-* [TLS](administration/transport-security.md) 
+* [TLS](administration/transport-security.md)
 * [Troubleshooting](administration/troubleshooting.md)
 
 ## Local testing
@@ -225,13 +225,10 @@
 
 ## Stream processing
 
-* [Introduction to stream processing](stream-processing/introduction.md)
 * [Overview](stream-processing/overview.md)
-* [Changelog](stream-processing/changelog.md)
-* [Get started](stream-processing/get-started.md)
-  * [Fluent Bit and SQL](stream-processing/getting-started/fluent-bit-sql.md)
-  * [Check keys and null values](stream-processing/getting-started/check-keys-null-values.md)
-  * [Tutorial](stream-processing/getting-started/hands-on.md)
+* [Fluent Bit and SQL](stream-processing/fluent-bit-sql.md)
+* [Check keys and null values](stream-processing/check-keys-null-values.md)
+* [Tutorial](stream-processing/tutorial.md)
 
 ## Fluent Bit for developers
 

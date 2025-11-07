@@ -53,7 +53,7 @@ In your main configuration file append the following:
 pipeline:
 
   outputs:
-    - name: kinesis_steams
+    - name: kinesis_streams
       match: '*'
       region: us-east-1
       stream: my-stream
