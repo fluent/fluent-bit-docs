@@ -221,7 +221,6 @@
   * [Treasure Data](pipeline/outputs/treasure-data.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
-* [Pipeline monitoring](pipeline/pipeline-monitoring.md)
 
 ## Stream processing
 
