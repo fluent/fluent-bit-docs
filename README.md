@@ -45,4 +45,4 @@ Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in
 
 ## License
 
-Fluent Bit, including its core, plugins, and tools are distributed under the terms of the [Apache License v2.0](https://github.com/fluent/fluent-bit?tab=Apache-2.0-1-ov-file#readme).
+Fluent Bit, including its core, plugins, and tools, is distributed under the terms of the [Apache License v2.0](https://github.com/fluent/fluent-bit?tab=Apache-2.0-1-ov-file#readme).
