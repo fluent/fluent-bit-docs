@@ -39,6 +39,10 @@ For more details about changes in each release, refer to the [official release n
 
 ## Fluent Bit, Fluentd, and CNCF
 
-[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org).
 
 Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
+
+## License
+
+Fluent Bit, including its core, plugins, and tools are distributed under the terms of the [Apache License v2.0](https://github.com/fluent/fluent-bit?tab=Apache-2.0-1-ov-file#readme).
