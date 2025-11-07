@@ -91,3 +91,4 @@ redirects:
     stream-processing/getting-started/fluent-bit-sql: ./stream-processing/fluent-bit-sql.md
     stream-processing/getting-started/check-keys-null-values: ./stream-processing/check-keys-null-values.md
     stream-processing/getting-started/hands-on: stream-processing/tutorial.md
+    pipeline/pipeline-monitoring: ./administration/monitoring.md
