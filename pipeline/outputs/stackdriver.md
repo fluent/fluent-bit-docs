@@ -295,4 +295,4 @@ Check the following:
 
 Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
 
-Fluent Bit plans to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). For more information, see the documentation about [special fields](./stackdriver_special_fields.md#log-entry-fields).
+Fluent Bit plans to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). For more information, see the documentation about [Stackdriver Special Fields](./stackdriver_special_fields.md#log-entry-fields).
