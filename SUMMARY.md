@@ -214,6 +214,7 @@
   * [Slack](pipeline/outputs/slack.md)
   * [Splunk](pipeline/outputs/splunk.md)
   * [Stackdriver](pipeline/outputs/stackdriver.md)
+  * [Stackdriver special fields](pipeline/outputs/stackdriver_special_fields.md)
   * [Standard output](pipeline/outputs/standard-output.md)
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP and TLS](pipeline/outputs/tcp-and-tls.md)
