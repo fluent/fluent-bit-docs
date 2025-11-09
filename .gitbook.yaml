@@ -76,6 +76,7 @@ redirects:
     output/slack:          ./pipeline/outputs/slack.md
     output/splunk:         ./pipeline/outputs/splunk.md
     output/stackdriver:    ./pipeline/outputs/stackdriver.md
+    output/stackdriver_special_fields:    ./pipeline/outputs/stackdriver_special_fields.md
     output/stdout:         ./pipeline/outputs/standard-output.md
     output/tcp:            ./pipeline/outputs/tcp-and-tls.md
     output/td:             ./pipeline/outputs/treasure-data.md
