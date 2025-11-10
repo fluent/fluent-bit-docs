@@ -91,6 +91,7 @@ exceptions:
   - OEM
   - OOM
   - OSS
+  - OTLP
   - PATH
   - PEM
   - PDF
