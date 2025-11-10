@@ -100,6 +100,7 @@ Homebrew
 hostname
 Hostname
 Ingester
+Ingestor
 inotify
 Keepalive
 Istio
