@@ -91,9 +91,9 @@ The `conditions.rules.op` parameter has the following possible values:
 - `gte`: greater than or equal to
 - `lte`: less than or equal to
 - `regex`: matches a regular expression
-- `not_regex`: does not match a regular expression
+- `not_regex`: doesn't match a regular expression
 - `in`: is included in the specified array
-- `not_in`: is not included in the specified array
+- `not_in`: isn't included in the specified array
 
 ## Examples
 
