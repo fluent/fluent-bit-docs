@@ -2,6 +2,7 @@ accessor
 accessors
 allowlist
 Ansible
+Apache Skywalking
 API
 APIs
 Appname
@@ -198,6 +199,7 @@ sharding
 SignalFx
 Signup
 Sigstore
+Skywalking
 sparkline
 sparklines
 Sparklines
@@ -242,6 +244,7 @@ upsert
 upserts
 untrusted
 UUIDs
+Valgrind
 Vectra
 Vercel
 VictoriaMetrics

@@ -95,7 +95,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_ARROW`              | Build with Apache Arrow support                                                                                             | `No`                          |
 | `FLB_AVRO_ENCODER`       | Build with Avro encoding support                                                                                            | `No`                          |
 | `FLB_AWS`                | Enable AWS support                                                                                                          | `Yes`                         |
-| `FLB_AWS_ERROR_REPORTER` | Build with aws error reporting support                                                                                      | `No`                          |
+| `FLB_AWS_ERROR_REPORTER` | Build with AWS error reporting support                                                                                      | `No`                          |
 | `FLB_BENCHMARKS`         | Enable benchmarks                                                                                                           | `No`                          |
 | `FLB_BINARY`             | Build executable                                                                                                            | `Yes`                         |
 | `FLB_CHUNK_TRACE`        | Enable chunk traces                                                                                                         | `Yes`                         |
@@ -138,7 +138,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 | Option                    | Description                  | Default |
 |:--------------------------|:-----------------------------|:--------|
-| `FLB_BACKTRACE`           | Enable stacktrace support    | `Yes`   |
+| `FLB_BACKTRACE`           | Enable stack trace support    | `Yes`   |
 | `FLB_DEBUG`               | Build with debug mode (`-g`) | `No`    |
 | `FLB_SMALL`               | Optimize for small size      | `No`    |
 | `FLB_TESTS_INTERNAL`      | Enable internal tests        | `No`    |
@@ -157,7 +157,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Input plugins
 
-Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device. 
+Input plugins gather information from a specific source type like network interfaces, some built-in metrics, or through a specific input device.
 
 The following input plugins are available:
 
@@ -199,7 +199,7 @@ The following input plugins are available:
 | [`FLB_IN_RANDOM`](../../../pipeline/inputs/random.md)                                       | Enable Random input plugin                                                | `On`    |
 | [`FLB_IN_SERIAL`](../../../pipeline/inputs/serial-interface.md)                             | Enable Serial input plugin                                                | `On`    |
 | [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Serial input plugin                                                | `On`    |
-| [`FLB_IN_STATSD`](../../../pipeline/inputs/statsd.md)                                       | Enable Statsd input plugin                                                | `On`    |
+| [`FLB_IN_STATSD`](../../../pipeline/inputs/statsd.md)                                       | Enable StatsD input plugin                                                | `On`    |
 | [`FLB_IN_STDIN`](../../../pipeline/inputs/standard-input.md)                                | Enable Standard input plugin                                              | `On`    |
 | [`FLB_IN_SYSLOG`](../../../pipeline/inputs/syslog.md)                                       | Enable Syslog input plugin                                                | `On`    |
 | [`FLB_IN_SYSTEMD`](../../../pipeline/inputs/systemd.md)                                     | Enable Systemd input plugin                                               | `On`    |
@@ -230,7 +230,7 @@ The following table describes the processors available:
 
 ### Filter plugins
 
-Filter plugins let you modify, enrich or drop records. 
+Filter plugins let you modify, enrich or drop records.
 
 The following table describes the filters available on this version:
 
@@ -246,7 +246,7 @@ The following table describes the filters available on this version:
 | [`FLB_FILTER_LOG_TO_METRICS`](../../../pipeline/filters/log_to_metrics.md)   | Enable Log derived metrics filter  | `On`    |
 | [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md)                         | Enable Lua scripting filter        | `On`    |
 | [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md)                   | Enable Modify filter               | `On`    |
-| [`FLB_FILTER_MULTILINE`](../../../pipeline/filters/multiline-stacktrace.md)  | Enable Multiline stacktrace filter | `On`    |
+| [`FLB_FILTER_MULTILINE`](../../../pipeline/filters/multiline-stacktrace.md)  | Enable Multiline stack trace filter | `On`    |
 | [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md)                       | Enable Nest filter                 | `On`    |
 | [`FLB_FILTER_NIGHTFALL`](../../../pipeline/filters/nightfall.md)             | Enable Nightfall filter            | `On`    |
 | [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md)                   | Enable Parser filter               | `On`    |
@@ -261,7 +261,7 @@ The following table describes the filters available on this version:
 
 ### Output plugins
 
-Output plugins let you flush the information to some external interface, service, or terminal. 
+Output plugins let you flush the information to some external interface, service, or terminal.
 
 The following table describes the output plugins available:
 

@@ -50,6 +50,7 @@ exceptions:
   - Datadog
   - DNS
   - Docker
+  - Docker Compose
   - Docker Hub
   - DogStatsD
   - DOS
@@ -60,6 +61,7 @@ exceptions:
   - Elastic Cloud
   - Emmet
   - EventBridge
+  - FAQ
   - FlowCounter
   - Fluent Bit
   - Fluentd

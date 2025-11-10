@@ -9,6 +9,8 @@ second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
   - AAD
+  - ABI
+  - APT
   - ACL
   - AMD
   - ANSI
@@ -102,6 +104,7 @@ exceptions:
   - POST
   - PWM
   - RAM
+  - RBAC
   - REPL
   - REST
   - RHEL
@@ -142,6 +145,7 @@ exceptions:
   - VPC
   - VRAM
   - WASI
+  - WASM
   - WMI
   - XML
   - XSS
