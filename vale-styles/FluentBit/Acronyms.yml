@@ -15,9 +15,11 @@ exceptions:
   - API
   - ARN
   - ASC
+  - ASCII
   - ASP
   - ASYNC
   - AWS
+  - BMP
   - BSD
   - CIDR
   - CLI
