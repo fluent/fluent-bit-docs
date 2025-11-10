@@ -16,6 +16,7 @@ exceptions:
   - ARN
   - ASC
   - ASP
+  - ASYNC
   - AWS
   - BSD
   - CIDR
