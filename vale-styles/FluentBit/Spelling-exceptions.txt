@@ -67,6 +67,7 @@ dri
 Dynatrace
 Elasticsearch
 endcode
+endembed
 endhint
 endtab
 endtabs
