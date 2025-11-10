@@ -34,7 +34,7 @@ pipeline:
   filters:
     - name: geoip2
       match: '*'
-      database: GioLite2-City.mmdb
+      database: GeoLite2-City.mmdb
       lookup_key: remote_addr
       record:
         - country remote_addr %{country.names.en}
