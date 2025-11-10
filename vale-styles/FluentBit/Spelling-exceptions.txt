@@ -86,6 +86,7 @@ github
 glibc
 Golang
 golib
+GPUs
 Grafana
 Graphite
 Graylog
@@ -152,6 +153,7 @@ Parquet
 Parseable
 performant
 persistable
+pluggable
 Podman
 popen
 Postgres

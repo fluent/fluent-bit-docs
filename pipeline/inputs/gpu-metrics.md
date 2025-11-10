@@ -1,23 +1,23 @@
 # GPU metrics
 
-The **gpu_metrics** input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
+The _gpu_metrics_ input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
 
-The plugin reads metrics directly from the Linux sysfs filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Currently, **only AMD GPUs are supported** through the amdgpu kernel driver. NVIDIA and Intel GPUs aren't supported at this time.
+The plugin reads metrics directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Only AMD GPUs are supported through the `amdgpu` kernel driver. NVIDIA and Intel GPUs aren't supported at this time.
 
 ## Metrics collected
 
 The plugin collects the following metrics for each detected GPU:
 
-| Key                       | Description                                                                                                                              |
-|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `gpu_utilization_percent` | GPU core utilization as a percentage (0-100). Indicates how busy the GPU is processing workloads.                                        |
-| `gpu_memory_used_bytes`   | Amount of video RAM (VRAM) currently in use, measured in bytes.                                                                          |
-| `gpu_memory_total_bytes`  | Total video RAM (VRAM) capacity available on the GPU, measured in bytes.                                                                 |
+| Key                       | Description      |
+|---------------------------|------------------|
+| `gpu_utilization_percent` | GPU core utilization as a percentage (0-100). Indicates how busy the GPU is processing workloads.   |
+| `gpu_memory_used_bytes`   | Amount of video RAM (VRAM) currently in use, measured in bytes.  |
+| `gpu_memory_total_bytes`  | Total video RAM (VRAM) capacity available on the GPU, measured in bytes. |
 | `gpu_clock_mhz`           | Current GPU clock frequency in MHz. This metric has multiple instances with different type labels (see [Clock metrics](#clock-metrics)). |
-| `gpu_power_watts`         | Current power consumption in watts. Can be disabled with enable_power false.                                                             |
-| `gpu_temperature_celsius` | GPU die temperature in degrees Celsius. Can be disabled with enable_temperature false.                                                   |
-| `gpu_fan_speed_rpm`       | Fan rotation speed in revolutions per minute (RPM).                                                                                      |
-| `gpu_fan_pwm_percent`     | Fan PWM duty cycle as a percentage (0-100). Indicates fan intensity.                                                                     |
+| `gpu_power_watts`         | Current power consumption in watts. Can be disabled with `enable_power` set to `false`.|
+| `gpu_temperature_celsius` | GPU die temperature in degrees Celsius. Can be disabled with `enable_temperature`set to `false`. |
+| `gpu_fan_speed_rpm`       | Fan rotation speed in Revolutions per Minute (RPM). |
+| `gpu_fan_pwm_percent`     | Fan PWM duty cycle as a percentage (0-100). Indicates fan intensity.  |
 
 ### Clock metrics
 
@@ -33,18 +33,18 @@ The `gpu_clock_mhz` metric is reported separately for three clock domains:
 
 The plugin supports the following configuration parameters:
 
-| Key                  | Description                                                                                                             | Default   |
+| Key                  | Description              | Default   |
 |----------------------|-------------------------------------------------------------------------------------------------------------------------|-----------|
 | `scrape_interval`    | Interval in seconds between metric collection cycles.                                                                   | `5`       |
-| `path_sysfs`         | Path to the sysfs root directory. Typically used for testing or non-standard systems.                                   | `/sys`    |
+| `path_sysfs`         | Path to the `sysfs` root directory. Typically used for testing or non-standard systems.                                   | `/sys`    |
 | `cards_include`      | Pattern specifying which GPU cards to monitor. Supports wildcards (*), ranges (0-3), and comma-separated lists (0,2,4). | `*`       |
-| `cards_exclude`      | Pattern specifying which GPU cards to exclude from monitoring. Uses the same syntax as cards_include.                   | _none_    |
+| `cards_exclude`      | Pattern specifying which GPU cards to exclude from monitoring. Uses the same syntax as `cards_include`.                   | _none_    |
 | `enable_power`       | Enable collection of power consumption metrics (`gpu_power_watts`).                                                     | `true`    |
 | `enable_temperature` | Enable collection of temperature metrics (`gpu_temperature_celsius`).                                                   | `true`    |
 
 ## GPU detection
 
-The GPU metrics plugin will automatically scan for supported **AMD GPUs** that are using the `amdgpu` kernel driver. GPUs using legacy drivers will be ignored.
+The GPU metrics plugin will automatically scan for any supported AMD GPU are using the `amdgpu` kernel driver. A GPU using legacy drivers will be ignored.
 
 To check if your AMD GPU will be detected run:
 
@@ -153,5 +153,3 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
-
-

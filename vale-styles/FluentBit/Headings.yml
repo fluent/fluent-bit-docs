@@ -74,6 +74,7 @@ exceptions:
   - Google Cloud BigQuery
   - Google Cloud Platform
   - GPG
+  - GPU
   - Grafana
   - Grafana Cloud
   - Graylog Extended Log Format
