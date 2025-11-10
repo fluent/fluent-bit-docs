@@ -44,7 +44,7 @@ The plugin supports the following configuration parameters:
 
 ## GPU detection
 
-The GPU metrics plugin will automatically scan for any supported AMD GPU are using the `amdgpu` kernel driver. A GPU using legacy drivers will be ignored.
+The GPU metrics plugin will automatically scan for any supported AMD GPU using the `amdgpu` kernel driver. A GPU using legacy drivers will be ignored.
 
 To check if your AMD GPU will be detected run:
 
