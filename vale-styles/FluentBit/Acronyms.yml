@@ -10,11 +10,11 @@ second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 exceptions:
   - AAD
   - ABI
-  - APT
   - ACL
   - AMD
   - ANSI
   - API
+  - APT
   - ARN
   - ASC
   - ASCII
@@ -36,8 +36,8 @@ exceptions:
   - DEBUG
   - DESC
   - DOM
-  - DOS
   - DNS
+  - DOS
   - DPI
   - DPPS
   - DST
