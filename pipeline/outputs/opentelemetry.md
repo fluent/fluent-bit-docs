@@ -79,7 +79,7 @@ Only HTTP endpoints are supported.
 | `tls.ciphers`                             | Specify TLS ciphers up to TLSv1.2.                                             | _none_ |
 | `tls.debug`                               | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                     | `1`    |
 | `tls.key_file`                            | Absolute path to private Key file.                                             | _none_ |
-| `tls.key_passwd`                          | Optional password for tls.key_file file.                                       | _none_ |
+| `tls.key_passwd`                          | Optional password for tls.key_file.                                             | _none_ |
 | `tls.max_version`                         | Specify the maximum version of TLS.                                            | _none_ |
 | `tls.min_version`                         | Specify the minimum version of TLS.                                            | _none_ |
 | `tls.verify_hostname`                     | Enable or disable to verify hostname.                                          | `off`  |
