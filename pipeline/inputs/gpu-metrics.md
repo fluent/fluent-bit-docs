@@ -2,7 +2,7 @@
 
 The _gpu_metrics_ input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
 
-The plugin reads metrics directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Only AMD GPUs are supported through the `amdgpu` kernel driver. NVIDIA and Intel GPUs aren't supported at this time.
+The plugin reads metrics directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Only AMD GPUs are supported through the `amdgpu` kernel driver. NVIDIA and Intel GPUs aren't supported.
 
 ## Metrics collected
 
@@ -10,7 +10,7 @@ The plugin collects the following metrics for each detected GPU:
 
 | Key                       | Description      |
 |---------------------------|------------------|
-| `gpu_utilization_percent` | GPU core utilization as a percentage (0-100). Indicates how busy the GPU is processing workloads.   |
+| `gpu_utilization_percent` | GPU core utilization as a percentage (`0` to `100`). Indicates how busy the GPU is when processing workloads. |
 | `gpu_memory_used_bytes`   | Amount of video RAM (VRAM) currently in use, measured in bytes.  |
 | `gpu_memory_total_bytes`  | Total video RAM (VRAM) capacity available on the GPU, measured in bytes. |
 | `gpu_clock_mhz`           | Current GPU clock frequency in MHz. This metric has multiple instances with different type labels (see [Clock metrics](#clock-metrics)). |
@@ -44,7 +44,7 @@ The plugin supports the following configuration parameters:
 
 ## GPU detection
 
-The GPU metrics plugin will automatically scan for any supported AMD GPU using the `amdgpu` kernel driver. A GPU using legacy drivers will be ignored.
+The GPU metrics plugin scans for any supported AMD GPU using the `amdgpu` kernel driver. Any GPU using legacy drivers is ignored.
 
 To check if your AMD GPU will be detected run:
 
