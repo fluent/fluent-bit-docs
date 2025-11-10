@@ -31,6 +31,7 @@ exceptions:
   - DEBUG
   - DESC
   - DOM
+  - DOS
   - DNS
   - DPI
   - DPPS
@@ -40,6 +41,7 @@ exceptions:
   - EKS
   - FAQ
   - FIPS
+  - GBK
   - GCC
   - GCP
   - GCS
@@ -85,6 +87,7 @@ exceptions:
   - NSIS
   - NVDA
   - OAP
+  - OEM
   - OOM
   - OSS
   - PATH
@@ -106,6 +109,7 @@ exceptions:
   - SDS
   - SHA
   - SIEM
+  - SIMD
   - SLA
   - SLES
   - SNI
