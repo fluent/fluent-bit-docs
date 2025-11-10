@@ -4,7 +4,7 @@ description: Send logs, metrics, and traces to Parseable
 
 # Parseable
 
-Stream logs, metrics, and traces to [Parseable](https://www.parseable.com) by utilizing the [OpenTelemetry plugin](opentelemetry.md) to send telemetry data to Parseable's OpenTelemetry-compatible Ingestor endpoints.
+Stream logs, metrics, and traces to [Parseable](https://www.parseable.com) by utilizing the [OpenTelemetry plugin](opentelemetry.md) to send telemetry data to the Parseable OpenTelemetry-compatible Ingestor endpoints.
 
 ## Configuration parameters
 
@@ -136,12 +136,12 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Stream Configuration
+## Stream configuration
 
 Parseable uses streams to organize your telemetry data. The `X-P-Stream` header specifies which stream the data should be sent to:
 
 - `otellogs`: Stream for log data
-- `otelmetrics`: Stream for metrics data  
+- `otelmetrics`: Stream for metrics data
 - `oteltraces`: Stream for trace data
 
 The `X-P-Log-Source` header helps identify the source of the telemetry data for better organization and filtering. The header must be set to `otel-logs`, `otel-metrics`, or `otel-traces` based on the telemetry type.

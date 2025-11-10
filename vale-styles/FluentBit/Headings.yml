@@ -50,8 +50,10 @@ exceptions:
   - Datadog
   - DNS
   - Docker
+  - Docker Compose
   - Docker Hub
   - DogStatsD
+  - DOS
   - eBPF
   - EC2
   - ECS
@@ -59,6 +61,7 @@ exceptions:
   - Elastic Cloud
   - Emmet
   - EventBridge
+  - FAQ
   - FlowCounter
   - Fluent Bit
   - Fluentd
@@ -73,6 +76,7 @@ exceptions:
   - Google Cloud BigQuery
   - Google Cloud Platform
   - GPG
+  - GPU
   - Grafana
   - Grafana Cloud
   - Graylog Extended Log Format
@@ -108,6 +112,7 @@ exceptions:
   - NATS
   - New Relic
   - Observability Platform
+  - OEM
   - OIDC
   - Okta
   - OpenMetrics
