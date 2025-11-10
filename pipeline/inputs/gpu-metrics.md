@@ -15,7 +15,7 @@ The plugin collects the following metrics for each detected GPU:
 | `gpu_memory_total_bytes`  | Total video RAM (VRAM) capacity available on the GPU, measured in bytes. |
 | `gpu_clock_mhz`           | Current GPU clock frequency in MHz. This metric has multiple instances with different type labels (see [Clock metrics](#clock-metrics)). |
 | `gpu_power_watts`         | Current power consumption in watts. Can be disabled with `enable_power` set to `false`.|
-| `gpu_temperature_celsius` | GPU die temperature in degrees Celsius. Can be disabled with `enable_temperature`set to `false`. |
+| `gpu_temperature_celsius` | GPU die temperature in degrees Celsius. Can be disabled with `enable_temperature` set to `false`. |
 | `gpu_fan_speed_rpm`       | Fan rotation speed in Revolutions per Minute (RPM). |
 | `gpu_fan_pwm_percent`     | Fan PWM duty cycle as a percentage (0-100). Indicates fan intensity.  |
 

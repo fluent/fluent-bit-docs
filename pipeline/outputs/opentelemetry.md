@@ -19,7 +19,7 @@ Only HTTP endpoints are supported.
 | `grpc`                                    | Enable, disable or force gRPC usage. Accepted values : `on`, `off`, `auto`.    | `off`  |
 | `batch_size`                              | Set the maximum number of log records to be flushed at a time.                 | `1000` |
 | `compress`                                | Set payload compression mechanism. Options available are `gzip` and `zstd`.    | _none_ |
-| `grpc_logs_uri`                           | Specify an optional gRPCß URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
+| `grpc_logs_uri`                           | Specify an optional gRPC URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
 | `grpc_metrics_uri`                        | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
 | `grpc_profiles_uri`                       | Specify an optional gRPC URI for profiles OTel endpoint.                       | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
 | `grpc_traces_uri`                         | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
@@ -36,7 +36,7 @@ Only HTTP endpoints are supported.
 | `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
 | `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
-| `logs_metadata_key`                       | Set the key to lookup in the metadata.                                         | `otlp` |
+| `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
 | `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
