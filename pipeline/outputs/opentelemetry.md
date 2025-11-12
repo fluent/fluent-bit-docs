@@ -75,7 +75,7 @@ Only HTTP endpoints are supported.
 | `tls`                                     | Enable or disable TLS/SSL support.                                             | `off`  |
 | `tls.ca_file`                             | Absolute path to CA certificate file.                                          | _none_ |
 | `tls.ca_path`                             | Absolute path to scan for certificate files.                                   | _none_ |
-| `tls.cert_file`                           | Absolute path to Certificate file.                                             | _none_ |
+| `tls.crt_file`                           | Absolute path to Certificate file.                                             | _none_ |
 | `tls.ciphers`                             | Specify TLS ciphers up to TLSv1.2.                                             | _none_ |
 | `tls.debug`                               | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                     | `1`    |
 | `tls.key_file`                            | Absolute path to private Key file.                                             | _none_ |

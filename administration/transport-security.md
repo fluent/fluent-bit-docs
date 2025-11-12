@@ -5,8 +5,8 @@ Fluent Bit provides integrated support for Transport Layer Security (TLS) and it
 
 {% hint style="info" %}
 
-Fluent Bit 4.1.0 introduced the replacement of Next Protocol Negotiation (NPN) with Application Layer Protocol Negotiation (ALPN) as its implementation for TLS. 
-Both NPN and ALPN are used when client and server are establishing SSL/TLS connections. ALPN avoids an additional round trip because the client list the application layer protocols supported by the client in the client hello message.   
+Fluent Bit 4.1.0 introduced the replacement of Next Protocol Negotiation (NPN) with Application Layer Protocol Negotiation (ALPN) as its implementation for TLS.
+Both NPN and ALPN are used when client and server are establishing SSL/TLS connections. ALPN avoids an additional round trip because the client list the application layer protocols supported by the client in the client hello message.
 
 {% endhint %}
 
@@ -121,7 +121,7 @@ pipeline:
       port: 9999
       tls: on
       tls.verify: off
-      tls.cert_file: self_signed.crt
+      tls.crt_file: self_signed.crt
       tls.key_file: self_signed.key
 
   outputs:
