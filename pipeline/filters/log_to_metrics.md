@@ -10,12 +10,6 @@ The _log to metrics_ filter lets you generate log-derived metrics. It supports m
 
 This filter doesn't actually act as a record filter and therefore doesn't change or drop records. All records will pass through this filter untouched, and any generated metrics will be emitted into a separate metric pipeline.
 
-{% hint style="warning" %}
-
-This filter is an experimental feature and isn't recommended for production use. Configuration parameters and other capabilities are subject to change without notice.
-
-{% endhint %}
-
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
