@@ -3,13 +3,11 @@
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e9732f9c-44a4-46d3-ab87-86138455c698" />
 
-Fluent Bit is compatible with a variety of platforms and can be installed using several different methods.
+Fluent Bit is compatible with most x86-based, x86_64-based, arm32v7-based, and arm64v8-based systems.
 
 ## Requirements
 
-Fluent Bit has very low CPU and memory consumption. It's compatible with most x86-based, x86_64-based, arm32v7-based, and arm64v8-based systems.
-
-The build process requires the following components:
+The Fluent Bit build process requires the following components:
 
 - Compiler: GCC or clang
 - CMake
