@@ -94,3 +94,6 @@ redirects:
     stream-processing/getting-started/hands-on: ./stream-processing/tutorial.md
     pipeline/pipeline-monitoring: ./administration/monitoring.md
     about/license: ./README.md
+    /installation/getting-started-with-fluent-bit: ./installation/downloads.md
+    /installation/requirements: ./installation/downloads.md
+    /installation/supported-platforms: ./installation/downloads.md
