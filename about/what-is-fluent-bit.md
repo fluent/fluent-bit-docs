@@ -10,5 +10,10 @@ Rather than serving as a drop-in replacement, Fluent Bit enhances the observabil
 
 Fluent Bit can be deployed as an edge agent for localized telemetry data handling or utilized as a central aggregator/collector for managing telemetry data across multiple sources and environments.
 
-
 {% embed url="https://www.youtube.com/watch?v=3ELc1helke4" %}
+
+## The history of Fluent Bit
+
+In 2014, the [Fluentd](https://www.fluentd.org/) team at [Treasure Data](https://www.treasuredata.com/) was forecasting the need for a lightweight log processor for constraint environments like embedded Linux and gateways. To meet this need, Eduardo Silva created Fluent Bit, a new open-source solution and part of the Fluentd ecosystem.
+
+After the project matured, it gained traction for normal Linux systems. With the new containerized world, the cloud native community asked to extend the project scope to support more sources, filters, and destinations. Not long after, Fluent Bit became one of the preferred solutions to solve the logging challenges in cloud environments.
