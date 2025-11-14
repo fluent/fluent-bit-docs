@@ -7,7 +7,7 @@
 * [What is Fluent Bit?](about/what-is-fluent-bit.md)
 * [A brief history of Fluent Bit](about/history.md)
 * [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
-* [Sandbox and lab resources](about/resources.md)
+* [Lab resources](about/resources.md)
 
 ## Concepts
 
