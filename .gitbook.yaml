@@ -94,3 +94,4 @@ redirects:
     stream-processing/getting-started/hands-on: ./stream-processing/tutorial.md
     pipeline/pipeline-monitoring: ./administration/monitoring.md
     about/license: ./README.md
+    about/sandbox-and-lab-resources: /about/resources.md
