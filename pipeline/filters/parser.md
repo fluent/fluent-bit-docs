@@ -8,10 +8,11 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Key_Name` | Specify field name in record to parse. | _none_ |
-| `Parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
-| `Preserve_Key` | Keep the original `Key_Name` field in the parsed result. If false, the field will be removed. | `False` |
-| `Reserve_Data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `False` |
+| Key\_Name | Specify field name in record to parse. |  |
+| Parser | Specify the parser name to interpret the field. Multiple _Parser_ entries are allowed \(one per line\). |  |
+| Preserve\_Key | Keep original `Key_Name` field in the parsed result. If false, the field will be removed. | False |
+| Reserve\_Data | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | False |
+| Hash_Value_Field | Stores the parsed values as a hash value in a field. By default this is not enabled | |
 
 ## Get started
 
