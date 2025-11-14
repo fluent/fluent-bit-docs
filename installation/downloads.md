@@ -11,14 +11,14 @@ The Fluent Bit build process requires the following components:
 
 - Compiler: GCC or clang
 - CMake
-- Flex and Bison: Required for [Stream Processor](../stream-processing/overview) or [Record Accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor)
+- Flex and Bison: Required for [Stream Processor](../stream-processing/overview.md) or [Record Accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md)
 - Libyaml development headers and libraries
 
 Certain features of Fluent Bit depend on additional third-party components. For example, output plugins with special backend libraries like Kafka include those libraries in the main source code repository.
 
 ## Build from source code
 
-You can [build and install Fluent Bit from its source code](../installation/downloads/source). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos#compile-from-source) and [Windows](../installation/downloads/windows#compile-from-source).
+You can [build and install Fluent Bit from its source code](../installation/downloads/source.md). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos#compile-from-source.md) and [Windows](../installation/downloads/windows#compile-from-source.md).
 
 ## Supported platforms and packages
 
@@ -28,30 +28,30 @@ To install Fluent Bit from one of the available packages, use the installation m
 
 Fluent Bit is available for the following container deployments:
 
-- [Containers on AWS](../installation/downloads/aws-container)
-- [Docker](../installation/downloads/docker)
-- [Kubernetes](../installation/downloads/kubernetes)
+- [Containers on AWS](../installation/downloads/aws-container.md)
+- [Docker](../installation/downloads/docker.md)
+- [Kubernetes](../installation/downloads/kubernetes.md)
 
 ### Linux
 
-Fluent Bit is available on [Linux](../installation/downloads/linux), including the following distributions:
+Fluent Bit is available on [Linux](../installation/downloads/linux.md), including the following distributions:
 
-- [Amazon Linux](../installation/downloads/linux/amazon-linux)
-- [Buildroot embedded Linux](../installation/downloads/linux/buildroot-embedded-linux)
-- [Debian](../installation/downloads/linux/debian)
-- [Raspbian and Raspberry Pi](../installation/downloads/linux/raspbian-raspberry-pi)
-- [Red Hat and CentOS](../installation/downloads/linux/redhat-centos)
-- [Rocky Linux and Alma Linux](../installation/downloads/linux/alma-rocky)
-- [Ubuntu](../installation/downloads/linux/ubuntu)
-- [Yocto embedded Linux](../installation/downloads/linux/yocto-embedded-linux)
+- [Amazon Linux](../installation/downloads/linux/amazon-linux.md)
+- [Buildroot embedded Linux](../installation/downloads/linux/buildroot-embedded-linux.md)
+- [Debian](../installation/downloads/linux/debian.md)
+- [Raspbian and Raspberry Pi](../installation/downloads/linux/raspbian-raspberry-pi.md)
+- [Red Hat and CentOS](../installation/downloads/linux/redhat-centos.md)
+- [Rocky Linux and Alma Linux](../installation/downloads/linux/alma-rocky.md)
+- [Ubuntu](../installation/downloads/linux/ubuntu.md)
+- [Yocto embedded Linux](../installation/downloads/linux/yocto-embedded-linux.md)
 
 ### macOS
 
-Fluent Bit is available on [macOS](../installation/downloads/macos).
+Fluent Bit is available on [macOS](../installation/downloads/macos.md).
 
 ### Windows
 
-Fluent Bit is available on [Windows](../installation/downloads/windows).
+Fluent Bit is available on [Windows](../installation/downloads/windows.md).
 
 ### Other platforms
 

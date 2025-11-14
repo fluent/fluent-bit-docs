@@ -6,7 +6,7 @@ description: An overview of free public labs for learning how to successfully us
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=83d7b072-bdfc-4f7d-810d-3ab42267ff54" />
 
-To use these lab resources to their full extent, you'll need to [install](../installation/downloads) resources in your local environment to test and run Fluent Bit.
+To use these lab resources to their full extent, you'll need to [install](../installation/downloads.md) resources in your local environment to test and run Fluent Bit.
 
 ## O11y workshops by Chronosphere
 
