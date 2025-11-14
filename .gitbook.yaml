@@ -95,3 +95,7 @@ redirects:
     pipeline/pipeline-monitoring: ./administration/monitoring.md
     about/license: ./README.md
     about/history: ./about/what-is-fluent-bit.md
+    installation/getting-started-with-fluent-bit: ./installation/downloads.md
+    installation/requirements: ./installation/downloads.md
+    installation/supported-platforms: ./installation/downloads.md
+    about/sandbox-and-lab-resources: /about/resources.md

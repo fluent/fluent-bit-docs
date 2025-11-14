@@ -6,7 +6,7 @@
 
 * [What is Fluent Bit?](about/what-is-fluent-bit.md)
 * [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
-* [Sandbox and lab resources](about/sandbox-and-lab-resources.md)
+* [Lab resources](about/resources.md)
 
 ## Concepts
 
@@ -15,8 +15,6 @@
 
 ## Installation
 
-* [Get started with Fluent Bit](installation/getting-started-with-fluent-bit.md)
-* [Requirements](installation/requirements.md)
 * [Download and install Fluent Bit](installation/downloads.md)
   * [Build from source code](installation/downloads/source.md)
     * [Build and install](installation/downloads/source/build-and-install.md)
