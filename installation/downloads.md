@@ -18,7 +18,7 @@ Certain features of Fluent Bit depend on additional third-party components. For 
 
 ## Build from source code
 
-You can [build and install Fluent Bit from its source code](../installation/downloads/source.md). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos.md#compile-from-source.md) and [Windows](../installation/downloads/windows.md#compile-from-source.md).
+You can [build and install Fluent Bit from its source code](../installation/downloads/source.md). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos.md#compile-from-source) and [Windows](../installation/downloads/windows.md#compile-from-source).
 
 ## Supported platforms and packages
 
