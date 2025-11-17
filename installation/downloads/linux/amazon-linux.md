@@ -1,21 +1,22 @@
 # Amazon Linux
 
-## Install on Amazon Linux
-
-Fluent Bit is distributed as the `fluent-bit` package and is available for the latest Amazon Linux 2 and Amazon Linux 2023. The following architectures are supported
+Fluent Bit is distributed as the `fluent-bit` package and is available for Amazon Linux 2 and Amazon Linux 2023. The following architectures are supported:
 
 - x86_64
 - aarch64 / arm64v8
 
-Amazon Linux 2022 is no longer supported.
+## Install on Amazon EC2
 
-The recommended secure deployment approach is to use the following instructions:
+To install Fluent Bit and related AWS output plugins on Amazon Linux 2 on EC2 using AWS Systems Manager, follow [this AWS guide](https://github.com/aws/aws-for-fluent-bit/tree/mainline/examples/fluent-bit/systems-manager-ec2).
 
-## Configure YUM
+## General installation
 
-The `fluent-bit` is provided through a Yum repository. To add the repository reference to your system, add a new file called `fluent-bit.repo` in `/etc/yum.repos.d/` with the following content:
+To install Fluent Bit on any Amazon Linux instance, follow these steps.
 
-### Amazon Linux 2
+1. Fluent Bit is provided through a Yum repository. To add the repository reference to your system, add a new file called `fluent-bit.repo` in `/etc/yum.repos.d/` with the following content:
+
+{% tabs %}
+{% tab title="Amazon Linux 2" %}
 
 ```text
 [fluent-bit]
@@ -26,7 +27,8 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
   enabled=1
 ```
 
-### Amazon Linux 2023
+{% endtab %}
+{% tab title="Amazon Linux 2023" %}
 
 ```text
 [fluent-bit]
@@ -37,9 +39,14 @@ The `fluent-bit` is provided through a Yum repository. To add the repository ref
   enabled=1
 ```
 
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+
 You should always enable `gpgcheck` for security reasons. All Fluent Bit packages are signed.
 
-### Install
+{% endhint %}
 
 1. Ensure your [GPG key](../linux.md#gpg-key-updates) is up to date.
 1. After your repository is configured, run the following command to install it:
