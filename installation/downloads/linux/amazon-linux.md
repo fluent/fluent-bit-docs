@@ -13,6 +13,8 @@ To install Fluent Bit and related AWS output plugins on Amazon Linux 2 on EC2 us
 
 To install Fluent Bit on any Amazon Linux instance, follow these steps.
 
+<!-- markdownlint-disable MD029 -->
+
 1. Fluent Bit is provided through a Yum repository. To add the repository reference to your system, add a new file called `fluent-bit.repo` in `/etc/yum.repos.d/` with the following content:
 
 {% tabs %}
@@ -48,14 +50,14 @@ You should always enable `gpgcheck` for security reasons. All Fluent Bit package
 
 {% endhint %}
 
-1. Ensure your [GPG key](../linux.md#gpg-key-updates) is up to date.
-1. After your repository is configured, run the following command to install it:
+2. Ensure your [GPG key](../linux.md#gpg-key-updates) is up to date.
+3. After your repository is configured, run the following command to install it:
 
    ```shell
    sudo yum install fluent-bit
    ```
 
-1. Instruct `systemd` to enable the service:
+4. Instruct `systemd` to enable the service:
 
 ```shell
 sudo systemctl start fluent-bit
@@ -76,3 +78,5 @@ $ systemctl status fluent-bit
 ```
 
 The default Fluent Bit configuration collect metrics of CPU usage and sends the records to the standard output. You can see the outgoing data in your `/var/log/messages` file.
+
+<!-- markdownlint-enable MD029 -->
