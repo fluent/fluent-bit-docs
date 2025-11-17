@@ -5,17 +5,6 @@
 
 Fluent Bit is compatible with most x86-based, x86_64-based, arm32v7-based, and arm64v8-based systems.
 
-## Requirements
-
-The Fluent Bit build process requires the following components:
-
-- Compiler: GCC or clang
-- CMake
-- Flex and Bison: Required for [Stream Processor](../stream-processing/overview.md) or [Record Accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor.md)
-- Libyaml development headers and libraries
-
-Certain features of Fluent Bit depend on additional third-party components. For example, output plugins with special backend libraries like Kafka include those libraries in the main source code repository.
-
 ## Build from source code
 
 You can [build and install Fluent Bit from its source code](../installation/downloads/source.md). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos.md#compile-from-source) and [Windows](../installation/downloads/windows.md#compile-from-source).

@@ -4,11 +4,18 @@
 
 ## Requirements
 
-- CMake 3.12 or greater. You might need to use `cmake3` instead of `cmake`.
-- Flex
-- Bison 3 or greater
-- YAML headers
-- OpenSSL headers
+To build and install Fluent Bit from source, you must also install the following packages:
+
+- `bison`
+- `build-essentials`
+- `cmake`
+- `flex`
+- `libfl`
+- `libssl`
+- `libyaml`
+- `pkg-config`
+
+Additionally, certain [input](../data-pipeline/inputs.md) or [output](../data-pipeline/outputs.md) plugins might depend on additional components. For example, some plugins require Kafka.
 
 ## Prepare environment
 
