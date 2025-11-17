@@ -15,7 +15,7 @@ To build and install Fluent Bit from source, you must also install the following
 - `libyaml-dev`
 - `pkg-config`
 
-Additionally, certain [input](../data-pipeline/inputs.md) or [output](../data-pipeline/outputs.md) plugins might depend on additional components. For example, some plugins require Kafka.
+Additionally, certain [input](../pipeline/inputs.md) or [output](../pipeline/outputs.md) plugins might depend on additional components. For example, some plugins require Kafka.
 
 ## Prepare environment
 
