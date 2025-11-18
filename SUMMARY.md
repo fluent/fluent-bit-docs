@@ -28,7 +28,6 @@
     * [Rocky Linux and Alma Linux ](installation/downloads/linux/alma-rocky.md)
     * [Ubuntu](installation/downloads/linux/ubuntu.md)
     * [Yocto embedded Linux](installation/downloads/linux/yocto-embedded-linux.md)
-  * [Amazon EC2](installation/downloads/amazon-ec2.md)
   * [Containers on AWS](installation/downloads/aws-container.md)
   * [Docker](installation/downloads/docker.md)
   * [Kubernetes](installation/downloads/kubernetes.md)
