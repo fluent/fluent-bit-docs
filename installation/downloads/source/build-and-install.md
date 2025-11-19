@@ -8,7 +8,7 @@ To build and install Fluent Bit from source, you must also install the following
 
 - `bison`
 - `build-essentials`
-- `cmake`
+- `cmake` (version 3.31.6 or later)
 - `flex`
 - `libssl-dev`
 - `libyaml-dev`
