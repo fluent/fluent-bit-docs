@@ -37,6 +37,8 @@ The plugin supports the following configuration parameters:
 | `tag_regex`           | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`.                   | _none_    |
 | `static_batch_size`   | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start).  | `50M`     |
 | `file_cache_advise`   | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux.                                                             | `on`      |
+| `keep_file_handle`    | Keep file handles open while tailing files. When set to `false`, file handles are closed after reading, which is useful for SMB/SAMBA storage backends that prevent file deletion when handles are open. **Note:** When set to `false`, log rotation detection does not work as it requires an active handle to determine where the original file was rotated to. Rotation will be detected as a truncation, so some logs might be lost. | `true`    |
+| `fstat_interval_nsec` | Set the interval for checking file status (`fstat`). This controls how often file metadata is checked, which is important for cloud storage backends that are sensitive to IOPS (Input/Output Operations Per Second). The value accepts time units (for example, `1s`, `500ms`, `1000000000ns`) and will be converted to nanoseconds internally. | `250ms`   |
 | `threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).              | `false`   |
 | `Unicode.Encoding`    | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`.                                        | `none`    |
 | `Generic.Encoding`    | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win2513`, `Win1254`, `Win1255`, and `Win1256`.      | `none`    |
@@ -473,6 +475,38 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Tailing files from SMB/SAMBA
+
+When tailing files from SMB/SAMBA shares on POSIX systems or Kubernetes CSI volume mounts, file handles can prevent file deletion. Although the `FILE_SHARE_DELETE` flag is supported on Windows, it's not available on POSIX systems or when using intermediate abstractions such as Kubernetes CSI volume mounts. Set `keep_file_handle` to `false` to allow file deletion while files are being tailed. Note that this disables log rotation detection.
+
+Example configuration:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /mnt/samba/logs/*.log
+      keep_file_handle: false
+      fstat_interval_nsec: 1s
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                tail
+  Path                /mnt/samba/logs/*.log
+  Keep_File_Handle    false
+  Fstat_Interval_Nsec 1s
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Character encoding conversion
 
