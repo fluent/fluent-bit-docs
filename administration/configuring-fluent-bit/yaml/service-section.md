@@ -21,7 +21,7 @@ The `service` section defines global properties of the service. The available co
 | `coro_stack_size` | Sets the coroutines stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (for example, `4096`) can cause coroutine threads to overrun the stack buffer. For best results, don't change this parameter from its default value. | `24576` |
 | `scheduler.cap`   | Sets a maximum retry time in seconds. | `2000` |
 | `scheduler.base`  | Sets the base of exponential backoff.  | `5` |
-| `json.convert_nan_to_null` | f enabled, `NaN` is converted to `null` when Fluent Bit converts msgpack to json. | `false` |
+| `json.convert_nan_to_null` | If enabled, `NaN` is converted to `null` when Fluent Bit converts msgpack to JSON. | `false` |
 | `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
 | `sp.convert_from_str_to_num` | If enabled, the stream processor converts strings that represent numbers to a numeric type. | `true` |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
