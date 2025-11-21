@@ -2,15 +2,27 @@
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" />
 
-## Before you get started
+In Fluent Bit v3.2 and later, YAML configuration files support all of the settings
+and features that [classic configuration files](../administration/configuring-fluent-bit/classic-mode.md) support, plus additional features that classic configuration files
+don't support, like processors.
 
-YAML has become essential in a cloud ecosystem. To minimize friction and provide a more intuitive experience for creating data pipelines, users are encouraged to transition to YAML.
+YAML configuration files support the following top-level sections:
 
-Fluent Bit traditionally offered a `classic` configuration mode, a custom configuration format that's phasing out. While `classic` mode has served well for many years, it has several limitations. Its basic design only supports grouping sections with key-value pairs and lacks the ability to handle sub-sections or complex data structures like lists.
+- `env`: Configures [environment variables](../administration/configuring-fluent-bit/yaml/environment-variables-section).
+- `includes`: Specifies additional YAML configuration files to [include as part of a parent file](../administration/configuring-fluent-bit/yaml/includes-section).
+- `service`: Configures global properties of the Fluent Bit [service](../administration/configuring-fluent-bit/yaml/service-section).
+- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`](../administration/configuring-fluent-bit/yaml/pipeline-section).
+- `parsers`: Defines [custom parsers](../administration/configuring-fluent-bit/yaml/parsers-section).
+- `multiline_parsers`: Defines [custom multiline parsers](../administration/configuring-fluent-bit/yaml/multiline-parsers-section).
+- `plugins`: Defines paths for [custom plugins](../administration/configuring-fluent-bit/yaml/plugins-section).
+- `upstream_servers`: Defines [nodes](../administration/configuring-fluent-bit/yaml/upstream-servers-section) for output plugins.
 
-The YAML format enables features, such as processors, that aren't possible to configure in `classic` mode.
+{% hint style="info" %}
+YAML configuration is used in the smoke tests for containers. An always-correct up-to-date example is here: <https://github.com/fluent/fluent-bit/blob/master/packaging/testing/smoke/container/fluent-bit.yaml>.
+{% endhint %}
 
-As of Fluent Bit v3.2, you can configure everything in YAML.
+----
+
 
 ## List of available sections
 
