@@ -16,7 +16,7 @@ Unlike filters, processors and parsers aren't defined within a unified section o
 
 ## Format
 
-A `pipeline` section will define a complete pipeline configuration, including `inputs`, `filters`, and `outputs` subsections.
+A `pipeline` section will define a complete pipeline configuration, including `inputs`, `filters`, and `outputs` subsections. You can define multiple `pipeline` sections, but they won't operate independently. Instead, all components will be merged into a single pipeline internally.
 
 ```yaml
 pipeline:
