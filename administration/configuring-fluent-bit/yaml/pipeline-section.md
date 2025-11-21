@@ -14,6 +14,127 @@ Unlike filters, processors and parsers aren't defined within a unified section o
 
 {% endhint %}
 
+## Format
+
+A `pipeline` section will define a complete pipeline configuration, including `inputs`, `filters`, and `outputs` subsections. You can define multiple `pipeline` sections, but they won't operate independently. Instead, all components will be merged into a single pipeline internally.
+
+```yaml
+pipeline:
+    inputs:
+        ...
+    filters:
+        ...
+    outputs:
+        ...
+```
+
+Each of the subsections for `inputs`, `filters`, and `outputs` constitutes an array of maps that has the parameters for each. Most properties are either strings or numbers and can be defined directly.
+
+For example:
+
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          tag: syslog
+          path: /var/log/syslog
+        - name: http
+          tag: http_server
+          port: 8080
+```
+
+This pipeline consists of two `inputs`: a tail plugin and an HTTP server plugin. Each plugin has its own map in the array of `inputs` consisting of basic properties. To use more advanced properties that consist of multiple values the property itself can be defined using an array, such as the `record` and `allowlist_key` properties for the `record_modifier` `filter`:
+
+```yaml
+pipeline:
+    inputs:
+        - name: tail
+          tag: syslog
+          path: /var/log/syslog
+    filters:
+        - name: record_modifier
+          match: syslog
+          record:
+              - powered_by calyptia
+        - name: record_modifier
+          match: syslog
+          allowlist_key:
+              - powered_by
+              - message
+```
+
+In the cases where each value in a list requires two values they must be separated by a space, such as in the `record` property for the `record_modifier` filter.
+
+### Input
+
+An `input` section defines a source (related to an input plugin). Each section has a base configuration. Each input plugin can add it own configuration keys:
+
+| Key | Description |
+| --- |------------ |
+| `Name` | Name of the input plugin. Defined as subsection of the `inputs` section. |
+| `Tag` | Tag name associated to all records coming from this plugin. |
+| `Log_Level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
+
+The `Name` is mandatory and defines for Fluent Bit which input plugin should be loaded. `Tag` is mandatory for all plugins except for the `input forward` plugin which provides dynamic tags.
+
+#### Example input
+
+The following is an example of an `input` section for the `cpu` plugin.
+
+```yaml
+pipeline:
+    inputs:
+        - name: cpu
+          tag: my_cpu
+```
+
+### Filter
+
+A `filter` section defines a filter (related to a filter plugin). Each section has a base configuration and each filter plugin can add its own configuration keys:
+
+| Key         | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `Name`        | Name of the filter plugin. Defined as a subsection of the `filters` section. |
+| `Match`       | A pattern to match against the tags of incoming records. It's case-sensitive and supports the star (`*`) character as a wildcard. |
+| `Match_Regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
+| `Log_Level`   | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
+
+`Name` is mandatory and lets Fluent Bit know which filter plugin should be loaded. The `Match` or `Match_Regex` is mandatory for all plugins. If both are specified, `Match_Regex` takes precedence.
+
+#### Example filter
+
+The following is an example of a `filter` section for the `grep` plugin:
+
+```yaml
+pipeline:
+    filters:
+        - name: grep
+          match: '*'
+          regex: log aa
+```
+
+### Output
+
+The `outputs` section specifies a destination that certain records should follow after a `Tag` match. Fluent Bit can route up to 256 `OUTPUT` plugins. The configuration supports the following keys:
+
+| Key         | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `Name`        | Name of the output plugin. Defined as a subsection of the `outputs` section. |
+| `Match`       | A pattern to match against the tags of incoming records. It's case-sensitive and supports the star (`*`) character as a wildcard. |
+| `Match_Regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
+| `Log_Level`   | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. The output log level defaults to the `SERVICE` section's `Log_Level`. |
+
+#### Example output
+
+The following is an example of an `output` section:
+
+```yaml
+pipeline:
+    outputs:
+        - name: stdout
+          match: 'my*cpu'
+```
+
 ## Example configuration
 
 Here's an example of a pipeline configuration:
@@ -37,143 +158,6 @@ pipeline:
           match: '*'
           regex: key pattern
 
-    outputs:
-        - name: stdout
-          match: '*'
-```
-
-{% endtab %}
-{% endtabs %}
-
-## Pipeline processors
-
-Processors operate on specific signals such as logs, metrics, and traces. They're attached to an input plugin and must specify the signal type they will process.
-
-### Example of a processor
-
-In the following example, the `content_modifier` processor inserts or updates (upserts) the key `my_new_key` with the value `123` for all log records generated by the tail plugin. This processor is only applied to log signals:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-parsers:
-    - name: json
-      format: json
-
-pipeline:
-      inputs:
-          - name: tail
-            path: /var/log/example.log
-            parser: json
-
-            processors:
-                logs:
-                    - name: content_modifier
-                      action: upsert
-                      key: my_new_key
-                      value: 123
-
-      filters:
-          - name: grep
-            match: '*'
-            regex: key pattern
-
-      outputs:
-          - name: stdout
-            match: '*'
-```
-
-{% endtab %}
-{% endtabs %}
-
-Here is a more complete example with multiple processors:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-service:
-    log_level: info
-    http_server: on
-    http_listen: 0.0.0.0
-    http_port: 2021
-
-pipeline:
-    inputs:
-        - name: random
-          tag: test-tag
-          interval_sec: 1
-
-          processors:
-              logs:
-                  - name: modify
-                    add: hostname monox
-
-                  - name: lua
-                    call: append_tag
-                    code: |
-                      function append_tag(tag, timestamp, record)
-                          new_record = record
-                          new_record["tag"] = tag
-                          return 1, timestamp, new_record
-                      end
-
-    outputs:
-        - name: stdout
-          match: '*'
-
-          processors:
-              logs:
-                  - name: lua
-                    call: add_field
-                    code: |
-                      function add_field(tag, timestamp, record)
-                          new_record = record
-                          new_record["output"] = "new data"
-                          return 1, timestamp, new_record
-                      end
-```
-
-{% endtab %}
-{% endtabs %}
-
-Processors can be attached to inputs and outputs.
-
-### How processors are different from filters
-
-While processors and filters are similar in that they can transform, enrich, or drop data from the pipeline, there is a significant difference in how they operate:
-
-- Processors: Run in the same thread as the input plugin when the input plugin is configured to be threaded (threaded: true). This design provides better performance, especially in multi-threaded setups.
-
-- Filters: Run in the main event loop. When multiple filters are used, they can introduce performance overhead, particularly under heavy workloads.
-
-## Running filters as processors
-
-You can configure existing [Filters](https://docs.fluentbit.io/manual/pipeline/filters) to run as processors. There are no specific changes needed; you use the filter name as if it were a native processor.
-
-### Example of a filter running as a processor
-
-In the following example, the `grep` filter is used as a processor to filter log events based on a pattern:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-parsers:
-    - name: json
-      format: json
-
-pipeline:
-    inputs:
-        - name: tail
-          path: /var/log/example.log
-          parser: json
-
-          processors:
-              logs:
-                  - name: grep
-                    regex: log aa
     outputs:
         - name: stdout
           match: '*'
