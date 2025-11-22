@@ -478,7 +478,7 @@ While file rotation is handled, there are risks of potential log loss when using
 
 ## Tailing files from SMB/Samba
 
-When tailing files from SMB/SAMBA shares on POSIX systems or Kubernetes CSI volume mounts, file handles can prevent file deletion. Although the `FILE_SHARE_DELETE` flag is supported on Windows, it's not available on POSIX systems or when using intermediate abstractions such as Kubernetes CSI volume mounts. Set `keep_file_handle` to `false` to allow file deletion while files are being tailed. Note that this disables log rotation detection.
+When tailing files from SMB/Samba shares on POSIX systems or Kubernetes CSI volume mounts, file handles can prevent file deletion. Although the `FILE_SHARE_DELETE` flag is supported on Windows, it's not available on POSIX systems or when using intermediate abstractions such as Kubernetes CSI volume mounts. Set `keep_file_handle` to `false` to allow file deletion while files are being tailed. However, keep in mind that this disables log rotation detection.
 
 Example configuration:
 
