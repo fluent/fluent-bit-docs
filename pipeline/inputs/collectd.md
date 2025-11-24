@@ -73,11 +73,11 @@ pipeline:
 
 With this configuration, Fluent Bit listens to `0.0.0.0:25826`, and outputs incoming datagram packets to `stdout`.
 
-## TypesDB configuration
+## `typesdb` configuration
 
 You must set the same `types.db` files that your `collectd` server uses. Otherwise, Fluent Bit might not be able to interpret the payload properly.
 
-The `TypesDB` parameter supports multiple files separated by commas. When multiple files are specified, later entries take precedence over earlier ones if there are duplicate type definitions. This allows you to override default types with custom definitions.
+The `typesdb` parameter supports multiple files separated by commas. When multiple files are specified, later entries take precedence over earlier ones if there are duplicate type definitions. This allows you to override default types with custom definitions.
 
 For example:
 
