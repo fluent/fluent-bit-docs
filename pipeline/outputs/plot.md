@@ -101,7 +101,7 @@ This command collects CPU metrics, extracts the `cpu_p` field (CPU percentage), 
 1704067202.123456 28.7
 ```
 
-2. Create a `gnuplot` script (e.g., `plot.gp`):
+2. Create a `gnuplot` script (for example, `plot.gp`):
 
 ```text
 set terminal png
