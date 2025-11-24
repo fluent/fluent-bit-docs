@@ -100,3 +100,4 @@ redirects:
     installation/supported-platforms: ./installation/downloads.md
     about/sandbox-and-lab-resources: ./about/resources.md
     installation/downloads/amazon-ec2: ./installation/downloads/linux/amazon-linux.md
+    administration/configuring-fluent-bit/yaml/configuration-file: ./administration/configuring-fluent-bit/yaml.md
