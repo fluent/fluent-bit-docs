@@ -122,6 +122,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [UDP](pipeline/inputs/udp.md)
+  * [Unix socket](pipeline/inputs/unix-socket.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
