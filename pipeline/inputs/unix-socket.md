@@ -122,9 +122,9 @@ pipeline:
 `DGRAM` mode provides datagram-oriented communication, similar to `UDP`. This mode:
 
 - Receives records as individual datagrams
-- Does not maintain persistent connections
+- Doesn't maintain persistent connections
 - May be faster for high-throughput scenarios
-- Is suitable for scenarios where connection state is not needed
+- Is suitable for scenarios where connection state isn't needed
 
 Example configuration:
 
@@ -353,7 +353,7 @@ The Unix socket input plugin is available on Unix-like operating systems, includ
 - Linux
 - macOS (Darwin)
 
-Unix domain sockets are not available on Windows.
+Unix domain sockets aren't available on Windows.
 
 ## Notes
 
