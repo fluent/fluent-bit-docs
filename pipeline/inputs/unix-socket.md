@@ -123,7 +123,7 @@ pipeline:
 
 - Receives records as individual datagrams
 - Doesn't maintain persistent connections
-- May be faster for high-throughput scenarios
+- Can be faster for high-throughput scenarios
 - Is suitable for scenarios where connection state isn't needed
 
 Example configuration:
