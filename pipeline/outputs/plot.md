@@ -4,7 +4,7 @@ description: Generate data file for GNU Plot
 
 # Plot
 
-The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](http://www.gnuplot.info/) (gnuplot), a command-line graphing tool. This plugin allows you to export your telemetry data for visualization and analysis using gnuplot.
+The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](http://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin allows you to export your telemetry data for visualization and analysis using `gnuplot`.
 
 ## Configuration parameters
 
@@ -17,7 +17,7 @@ This plugin supports the following parameters:
 
 ## Output format
 
-The Plot output plugin generates data files in a format suitable for gnuplot. The output format is space-separated values with two columns: timestamp and value.
+The Plot output plugin generates data files in a format suitable for `gnuplot`. The output format is space-separated values with two columns: timestamp and value.
 
 The output format is:
 
@@ -83,9 +83,9 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-## Example usage with gnuplot
+## Example usage with `gnuplot`
 
-After generating the data file with Fluent Bit, you can use gnuplot to visualize the data:
+After generating the data file with Fluent Bit, you can use `gnuplot` to visualize the data:
 
 1. Generate the data file:
 
@@ -101,7 +101,7 @@ This command collects CPU metrics, extracts the `cpu_p` field (CPU percentage), 
 1704067202.123456 28.7
 ```
 
-2. Create a gnuplot script (e.g., `plot.gp`):
+2. Create a `gnuplot` script (e.g., `plot.gp`):
 
 ```text
 set terminal png
@@ -114,7 +114,7 @@ set format x "%H:%M:%S"
 plot "cpu_data.dat" using 1:2 with lines title "CPU Usage"
 ```
 
-3. Run gnuplot:
+3. Run `gnuplot`:
 
 ```shell
 gnuplot plot.gp
@@ -127,5 +127,5 @@ This will generate a PNG image file showing the CPU usage over time.
 - The `Key` parameter is optional. If not specified, the plugin uses the first field from the record.
 - Only numeric values (integers or floats) are supported. Non-numeric values will cause the record to be skipped with an error logged.
 - If the specified `Key` is not found in a record, an error is logged and that record is skipped.
-- If the output file cannot be opened (e.g., due to permissions), the plugin automatically falls back to writing to STDOUT.
+- If the output file can't be opened (for example, due to permissions), the plugin automatically falls back to writing to STDOUT.
 - The output file is opened in append mode, so new data is added to existing files.
