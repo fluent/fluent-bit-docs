@@ -64,7 +64,7 @@ The Version column specifies the Fluent Bit version where the collector is avail
 
 | Name           | Description                                                                                                 | OS      | Version |
 |----------------|-------------------------------------------------------------------------------------------------------------|---------|---------|
-| `cpu`          | Exposes CPU statistics including utilization, interrupts, and DPCs.                                        | Windows | v1.9    |
+| `cpu`          | Exposes CPU statistics including `utilization`, `interrupts`, and `DPCs`.                                        | Windows | v1.9    |
 | `net`          | Exposes network interface statistics such as bytes transferred, packets, and errors.                       | Windows | v2.0.8  |
 | `logical_disk` | Exposes logical disk statistics including read/write operations, latency, and free space.                 | Windows | v2.0.8  |
 | `cs`           | Exposes computer system statistics including model, manufacturer, and system type.                        | Windows | v2.0.8  |
@@ -424,7 +424,7 @@ In this example, CPU and memory metrics are collected every 5 seconds, while sys
 The Windows Exporter metrics plugin uses Windows Management Instrumentation (WMI) to collect metrics. The following requirements apply:
 
 - **Operating System**: Windows only (Windows 7/Server 2008 R2 or later)
-- **Permissions**: The Fluent Bit process must have appropriate permissions to query WMI. Most metrics can be collected with standard user permissions, but some collectors may require elevated privileges.
+- **Permissions**: The Fluent Bit process must have appropriate permissions to query WMI. Most metrics can be collected with standard user permissions, but some collectors might require elevated privileges.
 - **WMI Service**: The Windows Management Instrumentation service must be running.
 
 If you encounter permission errors, try running Fluent Bit with administrator privileges or ensure the service account has the necessary WMI query permissions.
