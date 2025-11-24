@@ -345,7 +345,7 @@ You should see output similar to:
 - When receiving payloads in `JSON` format, there are high performance penalties. Parsing `JSON` is a very expensive task, so you could expect your CPU usage to increase under high load environments.
 - To get faster data ingestion, consider using the option `Format none` to avoid `JSON` parsing if not needed.
 - Unix domain sockets provide lower latency and higher throughput than `TCP/IP` sockets for local communication.
-- `STREAM` mode maintains connection state and may use more resources than `DGRAM` mode for high-throughput scenarios.
+- `STREAM` mode maintains connection state and can use more resources than `DGRAM` mode for high-throughput scenarios.
 
 ## Platform support
 
