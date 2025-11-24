@@ -1,4 +1,4 @@
-# Windows System Statistics (winstat)
+# Windows system statistics (winstat)
 
 The _Windows System Statistics_ (`winstat`) input plugin collects system-level statistics from Windows environments, including CPU usage, memory consumption, disk I/O, and network activity. This plugin uses Windows Performance Counters to gather real-time system metrics.
 
@@ -95,5 +95,5 @@ For example: `1.5s` = `1s` + `500000000ns`
 ## Notes
 
 - The `winstat` plugin requires Windows Performance Counters access. Ensure Fluent Bit is running with appropriate permissions.
-- This plugin is Windows-only and will not work on Linux, macOS, or other operating systems.
+- This plugin is Windows-only and won't work on Linux, macOS, or other operating systems.
 - For Prometheus-based metrics collection on Windows, consider using the [Windows Exporter Metrics](windows-exporter-metrics.md) input plugin instead.
