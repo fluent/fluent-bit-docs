@@ -188,7 +188,7 @@ pipeline:
 
 ## Message size limitations
 
-`UDP` has a maximum datagram size of 65535 bytes. If a record exceeds this size, the plugin will send it but log a debug message. For large messages, consider using `TCP` or `HTTP` output plugins instead.
+`UDP` has a maximum datagram size of `65535` bytes. If a record exceeds this size, the plugin will send it but log a debug message. For large messages, consider using `TCP` or `HTTP` output plugins instead.
 
 ## Testing
 
