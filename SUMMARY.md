@@ -205,6 +205,7 @@
   * [OpenTelemetry](pipeline/outputs/opentelemetry.md)
   * [Output Formats](pipeline/outputs/output_formats.md)
   * [Parseable](pipeline/outputs/parseable.md)
+  * [Plot](pipeline/outputs/plot.md)
   * [PostgreSQL](pipeline/outputs/postgresql.md)
   * [Prometheus exporter](pipeline/outputs/prometheus-exporter.md)
   * [Prometheus remote write](pipeline/outputs/prometheus-remote-write.md)
