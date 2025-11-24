@@ -16,7 +16,7 @@ This plugin supports the following parameters:
 | `Port` | TCP port of the target OpenSearch instance. | `9200` |
 | `Path` | OpenSearch accepts new data on HTTP query path `/_bulk`. It's possible to serve OpenSearch behind a reverse proxy on a sub-path. This option defines such path on the Fluent Bit side. It adds a path prefix in the indexing HTTP POST URI. | Empty string |
 | `Buffer_Size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `512KB` |
-| `Pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons, it is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
+| `Pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
 | `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
 | `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
 | `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ |
@@ -47,7 +47,7 @@ This plugin supports the following parameters:
 | `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` |
 | `Suppress_Type_Name` | When enabled, mapping types is removed and the `Type` option is ignored. OpenSearch 2.0 and later no longer support mapping types, so this should be set to `On` for these versions. | `Off` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
-| `Compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but may increase CPU usage. | _none_ (no compression) |
+| `Compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ (no compression) |
 
 The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq).
 
@@ -191,7 +191,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-For records that do not have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
+For records that don't have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
 
 ### Fluent Bit and Amazon OpenSearch Service
 
