@@ -125,6 +125,7 @@
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
+  * [Windows System Statistics (winstat)](pipeline/inputs/windows-system-statistics.md)
 * [Parsers](pipeline/parsers.md)
   * [Configuring parsers](pipeline/parsers/configuring-parser.md)
   * [Decoders](pipeline/parsers/decoders.md)
