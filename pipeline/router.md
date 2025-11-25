@@ -247,7 +247,21 @@ Each rule in the `condition.rules` array must include:
 | `field` | The field within your logs to evaluate. Uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
 | `op` | The comparison operator. |
 | `value` | This is the value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
-| `context` | Optional. Specifies where to look for the field. Valid values are `body`, `metadata`, `otel_resource_attributes`, `otel_scope_attributes`. Defaults to `body`. |
+| `context` | Optional. Specifies where to look for the field. See the Context types section. Defaults to `body`. |
+
+### Context types
+
+The `context` parameter determines where Fluent Bit looks for the field when evaluating a condition rule. This enables routing decisions based on different parts of a record's data structure:
+
+| Context | Description |
+| --- | --- |
+| `body` | The main record body containing the log message and fields. This is the default context. |
+| `metadata` | Record-level metadata associated with individual records. |
+| `group_metadata` | Group-level metadata shared across records in the same group. |
+| `group_attributes` | Group-level attributes shared across records in the same group. |
+| `otel_resource_attributes` | OpenTelemetry resource attributes that identify the entity producing telemetry. |
+| `otel_scope_attributes` | OpenTelemetry scope attributes that identify the instrumentation scope. |
+| `otel_scope_metadata` | OpenTelemetry scope metadata containing scope name, version, and other scope information. |
 
 ### Comparison operators
 
@@ -929,6 +943,86 @@ To get the most benefit from label-based matching:
 2. **Keep aliases unique**: Ensure that aliases are unique within your configuration to avoid ambiguity
 3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `metrics_backend`, or `trace_collector`)
 4. **Combine with direct routing**: Label-based matching works best when used with direct routing (conditional routing or direct input-output connections)
+
+## Routing metrics
+
+Fluent Bit provides comprehensive routing metrics to help you monitor routing performance and identify issues such as dropped records or unmatched logs. These metrics are available through the built-in HTTP server's `/metrics` endpoint.
+
+{% hint style="info" %}
+Routing metrics are available in Fluent Bit version 4.2 and greater. To access these metrics, enable the [HTTP server](/administration/monitoring.md) in your configuration.
+{% endhint %}
+
+### Available metrics
+
+The following routing metrics are exposed in Prometheus format:
+
+| Metric | Type | Description | Labels |
+| --- | --- | --- | --- |
+| `fluentbit_routing_logs_records_total` | Counter | Total number of log records routed from input to output. | `input`, `output` |
+| `fluentbit_routing_logs_bytes_total` | Counter | Total bytes routed from input to output for logs. | `input`, `output` |
+| `fluentbit_routing_logs_drop_records_total` | Counter | Total number of log records dropped during routing. | `input`, `output` |
+| `fluentbit_routing_logs_drop_bytes_total` | Counter | Total bytes dropped during routing for logs. | `input`, `output` |
+
+### Metric labels
+
+Each routing metric includes labels to help identify the source and destination:
+
+- **input**: The name or alias of the input plugin that generated the data
+- **output**: The name or alias of the output plugin that received the data, or `unmatched` for records that didn't match any route
+
+### Accessing routing metrics
+
+Routing metrics are automatically integrated into the `/metrics` endpoint when the HTTP server is enabled. To enable the HTTP server, add the following to your configuration:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  http_server: true
+  http_listen: 0.0.0.0
+  http_port: 2020
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  HTTP_Server  On
+  HTTP_Listen  0.0.0.0
+  HTTP_Port    2020
+```
+
+{% endtab %}
+{% endtabs %}
+
+Once enabled, access routing metrics at `http://localhost:2020/api/v2/metrics` (or `/api/v2/metrics/prometheus` for Prometheus format). The metrics appear alongside other Fluent Bit internal metrics.
+
+### Example metric output
+
+When routing is active, you'll see metrics similar to:
+
+```text
+# HELP fluentbit_routing_logs_records_total Total log records routed from input to output
+# TYPE fluentbit_routing_logs_records_total counter
+fluentbit_routing_logs_records_total{input="tail.0",output="elasticsearch.0"} 1523
+fluentbit_routing_logs_records_total{input="tail.0",output="stdout.0"} 847
+
+# HELP fluentbit_routing_logs_drop_records_total Total log records dropped during routing
+# TYPE fluentbit_routing_logs_drop_records_total counter
+fluentbit_routing_logs_drop_records_total{input="tail.0",output="unmatched"} 12
+```
+
+### Use cases for routing metrics
+
+Routing metrics enable several observability use cases:
+
+- **Monitor routing health**: Track the volume of records flowing through each route to ensure data is reaching expected destinations
+- **Detect unmatched records**: Identify records that don't match any routing rules by monitoring the `unmatched` output label
+- **Track dropped data**: Monitor dropped records to detect potential data loss issues
+- **Capacity planning**: Use bytes metrics to understand data volume flowing through different routes
+- **Troubleshooting**: Compare records routed versus dropped to diagnose routing configuration issues
 
 ## Choosing a routing approach
 
