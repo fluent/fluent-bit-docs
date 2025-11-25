@@ -173,7 +173,7 @@ In this configuration, the `Match_regex` rule is set to `.*_sensor_[AB]`. This r
 Conditional routing lets you route individual records to different outputs based on the content of each record. Unlike tag-based routing, which operates on entire data chunks, conditional routing evaluates conditions against each record and routes them accordingly.
 
 {% hint style="info" %}
-Conditional routing is available in Fluent Bit version 4.0 and greater. This feature requires YAML configuration files.
+Conditional routing is available in Fluent Bit version 4.2 and greater. This feature requires YAML configuration files.
 {% endhint %}
 
 ### How conditional routing works
