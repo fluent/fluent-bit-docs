@@ -247,7 +247,7 @@ Each rule in the `condition.rules` array must include:
 | `field` | The field within your logs to evaluate. Uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
 | `op` | The comparison operator. |
 | `value` | This is the value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
-| `context` | Optional. Specifies where to look for the field. See context types below. Defaults to `body`. |
+| `context` | Optional. Specifies where to look for the field. See the Context types section. Defaults to `body`. |
 
 ### Context types
 
@@ -997,7 +997,7 @@ service:
 {% endtab %}
 {% endtabs %}
 
-Once enabled, access routing metrics at `http://localhost:2020/api/v2/metrics` (or `/api/v1/metrics/prometheus` for Prometheus format). The metrics appear alongside other Fluent Bit internal metrics.
+Once enabled, access routing metrics at `http://localhost:2020/api/v2/metrics` (or `/api/v2/metrics/prometheus` for Prometheus format). The metrics appear alongside other Fluent Bit internal metrics.
 
 ### Example metric output
 
