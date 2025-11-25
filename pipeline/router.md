@@ -245,7 +245,7 @@ Each rule in the `condition.rules` array must include:
 | --- | --- |
 | `field` | The field within your logs to evaluate. Uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
 | `op` | The comparison operator. |
-| `value` | The value to compare against. Can be a single value or an array for `in` and `not_in` operators. |
+| `value` | This is thee value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
 | `context` | Optional. Specifies where to look for the field. Valid values are `body`, `metadata`, `otel_resource_attributes`, `otel_scope_attributes`. Defaults to `body`. |
 
 ### Comparison operators
@@ -513,6 +513,6 @@ Use the following guidelines to choose between tag-based and conditional routing
 | Route individual records based on content | Conditional routing |
 | Split logs by severity or other field values | Conditional routing |
 | Apply different processing to subsets of data | Conditional routing |
-| Simple routing without content inspection | Tag-based routing |
+| Routing without content inspection | Tag-based routing |
 
 You can combine both approaches in a single configuration. Use tag-based routing for broad categorization and conditional routing for fine-grained decisions within those categories.
