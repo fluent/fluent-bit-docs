@@ -767,7 +767,7 @@ Label-based matching is automatically used when direct routing is enabled. This 
 When chunks are created with direct routes (routes defined directly in input configurations), Fluent Bit stores routing information in chunk metadata. This metadata includes:
 
 - **Labels**: Textual identifiers used to match output instances. Labels come in two forms:
-  - **Aliases**: User-provided identifiers set via the `alias` configuration property
+  - **Aliases**: User-provided identifiers set by the `alias` configuration property
   - **Generated names**: Automatically created when no alias is provided, following the pattern `{plugin_name}.{sequence_number}` (for example, `stdout.0`, `stdout.1`, or `http.0`)
 - **Plugin names**: The plugin type name (for example, `stdout`, `http`, or `elasticsearch`) to enable type-safe matching
 
