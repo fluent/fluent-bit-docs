@@ -23,12 +23,12 @@ The plugin supports the following configuration parameters:
 | `threaded`                          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). When enabled, the plugin runs in a separate thread, which can improve performance for I/O-bound operations.                                                                                                                                                          | `false`  |
 | `threaded.ring_buffer.capacity`     | Set custom ring buffer capacity when the input runs in threaded mode. This determines how many records can be buffered in the ring buffer before blocking.                                                                                                                                                                                            | `1024`   |
 | `threaded.ring_buffer.window`       | Set custom ring buffer window percentage for threaded inputs. This controls when the ring buffer is considered "full" and triggers backpressure handling.                                                                                                                                                                                                    | `5`      |
-| `upload_success_action`             | Action to perform on the file after successful processing. Supported values: `delete` (delete the file), `move` (move the file), `none` (no action). When set to `move`, use `upload_success_suffix` to specify the destination.                                                                                                                                                                                                                           | _none_   |
-| `upload_success_suffix`             | Suffix to append to the filename when moving a file after successful processing. Only used when `upload_success_action` is set to `move`. For example, if set to `.processed`, a file named `data.bin` will be moved to `data.bin.processed`.                                                                                                                                                                                                                           | _none_   |
-| `upload_success_message`            | Custom message to include in the log when a file is successfully processed. This can be used for debugging or monitoring purposes.                                                                                                                                                                                                                          | _none_   |
-| `upload_failure_action`             | Action to perform on the file after processing failure. Supported values: `delete` (delete the file), `move` (move the file), `none` (no action). When set to `move`, use `upload_failure_suffix` to specify the destination.                                                                                                                                                                                                                           | _none_   |
-| `upload_failure_suffix`             | Suffix to append to the filename when moving a file after processing failure. Only used when `upload_failure_action` is set to `move`. For example, if set to `.failed`, a file named `data.bin` will be moved to `data.bin.failed` if processing fails.                                                                                                                                                                                                                           | _none_   |
-| `upload_failure_message`            | Custom message to include in the log when file processing fails. This can be used for debugging or monitoring purposes.                                                                                                                                                                                                                          | _none_   |
+| `upload_success_action`             | Action to perform on the file after successful upload. Supported values: `delete` (delete the file), `add_suffix` (rename file by appending a suffix), `emit_log` (emit a log record with a custom message). When set to `add_suffix`, use `upload_success_suffix` to specify the suffix. When set to `emit_log`, use `upload_success_message` to specify the message.                                                                                                                                                                                                                           | _none_   |
+| `upload_success_suffix`             | Suffix to append to the filename after successful upload. Only used when `upload_success_action` is set to `add_suffix`. For example, if set to `.processed`, a file named `data.bin` will be renamed to `data.bin.processed`.                                                                                                                                                                                                                           | _none_   |
+| `upload_success_message`            | Message to emit as a log record after successful upload. Only used when `upload_success_action` is set to `emit_log`. This can be used for debugging or monitoring purposes.                                                                                                                                                                                                                          | _none_   |
+| `upload_failure_action`             | Action to perform on the file after upload failure. Supported values: `delete` (delete the file), `add_suffix` (rename file by appending a suffix), `emit_log` (emit a log record with a custom message). When set to `add_suffix`, use `upload_failure_suffix` to specify the suffix. When set to `emit_log`, use `upload_failure_message` to specify the message.                                                                                                                                                                                                                           | _none_   |
+| `upload_failure_suffix`             | Suffix to append to the filename after upload failure. Only used when `upload_failure_action` is set to `add_suffix`. For example, if set to `.failed`, a file named `data.bin` will be renamed to `data.bin.failed`.                                                                                                                                                                                                                           | _none_   |
+| `upload_failure_message`            | Message to emit as a log record after upload failure. Only used when `upload_failure_action` is set to `emit_log`. This can be used for debugging or monitoring purposes.                                                                                                                                                                                                                          | _none_   |
 
 ## How it works
 
@@ -206,9 +206,9 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Configuration with file actions after processing
+### Configuration with file actions after upload
 
-This example moves files after successful processing and handles failures:
+This example renames files after successful upload and handles failures:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -219,9 +219,9 @@ pipeline:
     - name: blob
       path: /var/log/binaries/*.bin
       database_file: /var/lib/fluent-bit/blob.db
-      upload_success_action: move
+      upload_success_action: add_suffix
       upload_success_suffix: .processed
-      upload_failure_action: move
+      upload_failure_action: add_suffix
       upload_failure_suffix: .failed
       tag: blob.data
 
@@ -238,9 +238,9 @@ pipeline:
   Name                  blob
   Path                  /var/log/binaries/*.bin
   Database_File         /var/lib/fluent-bit/blob.db
-  Upload_Success_Action move
+  Upload_Success_Action add_suffix
   Upload_Success_Suffix .processed
-  Upload_Failure_Action move
+  Upload_Failure_Action add_suffix
   Upload_Failure_Suffix .failed
   Tag                   blob.data
 
