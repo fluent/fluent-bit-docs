@@ -4,10 +4,11 @@ description: Create flexible routing rules
 
 # Routing
 
-Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. Fluent Bit provides two routing mechanisms:
+Routing is a core feature that lets you route your data through filters and then to one or multiple destinations. Fluent Bit provides multiple routing mechanisms:
 
 - **Tag-based routing**: The traditional approach that uses tags and matching rules to determine where data flows. This method routes entire chunks of data based on their assigned tags.
 - **Conditional routing**: A newer approach that uses conditions to evaluate individual records and route them to different outputs based on their content. This method provides fine-grained, per-record routing decisions.
+- **Label-based matching**: A mechanism used with direct routing that stores labels and plugin names in chunk metadata to enable stable routing even when output configuration changes. This ensures chunks continue routing to the correct outputs after restarts or configuration reordering.
 
 ```mermaid
 graph LR
@@ -753,9 +754,185 @@ pipeline:
 
 This configuration shows how to define separate routing rules for each signal type within the same input, enabling unified observability data collection with differentiated routing.
 
+## Label-based matching
+
+Label-based matching is a feature that enhances direct routing by storing labels and plugin names in chunk metadata. This enables stable routing that survives configuration changes, restarts, and output reordering.
+
+{% hint style="info" %}
+Label-based matching is automatically used when direct routing is enabled. This feature is available in Fluent Bit version 4.2 and greater.
+{% endhint %}
+
+### How label-based matching works
+
+When chunks are created with direct routes (routes defined directly in input configurations), Fluent Bit stores routing information in chunk metadata. This metadata includes:
+
+- **Labels**: Textual identifiers used to match output instances. Labels come in two forms:
+  - **Aliases**: User-provided identifiers set by the `alias` configuration property
+  - **Generated names**: Automatically created when no alias is provided, following the pattern `{plugin_name}.{sequence_number}` (for example, `stdout.0`, `stdout.1`, or `http.0`)
+- **Plugin names**: The plugin type name (for example, `stdout`, `http`, or `elasticsearch`) to enable type-safe matching
+
+When Fluent Bit restarts or loads chunks from storage, it restores routes by matching stored labels against current output configurations. The matching process follows this order:
+
+1. First attempts to match stored labels against current output aliases
+2. Then attempts to match against current generated names
+3. Falls back to numeric ID matching if no label was stored
+
+Plugin name matching ensures that chunks only route to outputs of the same plugin type, preventing routing to outputs of different types that might share the same alias or name.
+
+### Benefits of label-based matching
+
+Label-based matching provides several advantages:
+
+- **Configuration resilience**: Chunks continue routing to the correct outputs even when output IDs change due to configuration reordering
+- **Stable routing after restarts**: When Fluent Bit restarts and loads chunks from storage, it can restore routes using labels instead of relying solely on numeric IDs
+- **Type safety**: Plugin name matching prevents routing to outputs of different plugin types
+- **Backward compatibility**: Chunks without labels fall back to numeric ID matching, maintaining compatibility with older Fluent Bit versions
+
+### Configuration
+
+Label-based matching works automatically with direct routing. To use it effectively, assign aliases to your outputs:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/app/*.log
+      tag: app.logs
+      routes:
+        logs:
+          - name: error_logs
+            condition:
+              op: and
+              rules:
+                - field: "$level"
+                  op: eq
+                  value: "error"
+            to:
+              outputs:
+                - error_destination
+
+  outputs:
+    - name: elasticsearch
+      alias: error_destination
+      host: errors.example.com
+      index: error-logs
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name tail
+  Path /var/log/app/*.log
+  Tag  app.logs
+
+[OUTPUT]
+  Name  elasticsearch
+  Alias error_destination
+  Host  errors.example.com
+  Index error-logs
+  Match app.logs
+```
+
+{% endtab %}
+{% endtabs %}
+
+In this example, the output has an alias `error_destination`. When chunks are created with direct routes to this output, Fluent Bit stores the alias `error_destination` in chunk metadata. If the configuration is later reordered or Fluent Bit restarts, the chunks can still be routed to the correct output by matching the stored alias.
+
+### Label matching behavior
+
+When restoring routes from chunk metadata, Fluent Bit uses the following matching logic:
+
+1. **Alias matching**: If a stored label matches an output's alias, that output is selected (assuming plugin names also match)
+2. **Generated name matching**: If no alias match is found, Fluent Bit attempts to match the stored label against generated names
+3. **ID fallback**: If no label match is found, Fluent Bit falls back to matching by numeric output ID
+
+This multi-step matching process ensures that routing remains stable even when:
+- Outputs are reordered in the configuration
+- New outputs are added before existing ones
+- Output IDs are reassigned
+
+### Plugin name matching
+
+Plugin name matching provides type safety by ensuring that chunks only route to outputs of the same plugin type. For example, if a chunk was originally routed to an Elasticsearch output, it won't accidentally route to an HTTP output that happens to have the same alias.
+
+Plugin names are stored alongside labels in chunk metadata and are checked during route restoration to ensure type compatibility.
+
+### Example: Routing with aliases
+
+This example demonstrates how label-based matching works with output aliases:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/app/*.log
+      tag: app.logs
+      routes:
+        logs:
+          - name: production_logs
+            condition:
+              op: and
+              rules:
+                - field: "$environment"
+                  op: eq
+                  value: "production"
+            to:
+              outputs:
+                - prod_logs_output
+
+          - name: development_logs
+            condition:
+              op: and
+              rules:
+                - field: "$environment"
+                  op: eq
+                  value: "development"
+            to:
+              outputs:
+                - dev_logs_output
+
+  outputs:
+    - name: elasticsearch
+      alias: prod_logs_output
+      host: prod-logs.example.com
+      index: production-logs
+
+    - name: elasticsearch
+      alias: dev_logs_output
+      host: dev-logs.example.com
+      index: development-logs
+```
+
+{% endtab %}
+{% endtabs %}
+
+In this configuration:
+
+- Production logs are routed to the `prod_logs_output` output (aliased Elasticsearch instance)
+- Development logs are routed to the `dev_logs_output` output (aliased Elasticsearch instance)
+- When chunks are created, Fluent Bit stores the aliases (`prod_logs_output` and `dev_logs_output`) in chunk metadata
+- If Fluent Bit restarts or the configuration is reordered, chunks can still be routed correctly by matching the stored aliases
+
+### Best practices
+
+To get the most benefit from label-based matching:
+
+1. **Use aliases**: Assign meaningful aliases to your outputs to make routing more stable and easier to understand
+2. **Keep aliases unique**: Ensure that aliases are unique within your configuration to avoid ambiguity
+3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `metrics_backend`, or `trace_collector`)
+4. **Combine with direct routing**: Label-based matching works best when used with direct routing (conditional routing or direct input-output connections)
+
 ## Choosing a routing approach
 
-Use the following guidelines to choose between tag-based and conditional routing:
+Use the following guidelines to choose between tag-based routing, conditional routing, and label-based matching:
 
 | Use case | Recommended approach |
 | --- | --- |
@@ -765,5 +942,7 @@ Use the following guidelines to choose between tag-based and conditional routing
 | Split logs by severity or other field values | Conditional routing |
 | Apply different processing to subsets of data | Conditional routing |
 | Routing without content inspection | Tag-based routing |
+| Stable routing that survives configuration changes | Label-based matching (with direct routing) |
+| Routing after restarts with storage backlog | Label-based matching (with direct routing) |
 
-You can combine both approaches in a single configuration. Use tag-based routing for broad categorization and conditional routing for fine-grained decisions within those categories.
+You can combine multiple approaches in a single configuration. Use tag-based routing for broad categorization, conditional routing for fine-grained decisions, and label-based matching to ensure stable routing when using direct routing with storage backlogs.
