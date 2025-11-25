@@ -9,7 +9,7 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :-- | :---------- | :------ |
 | `data_source` | Path to the CSV file that the Lookup filter will use as a lookup table. This file must contain one column of keys and one column of values. See [Key Considerations](#key-considerations) for details. | _none_ (required) |
-| `lookup_key` | Specifies the record key whose value to search for in the CSV file's first column. Supports [record accessor](../administration/configuring-fluent-bit/classic-mode/record-accessor) syntax for nested fields and array indexing (for example, `$user['profile']['id']`, `$users[0]['id']`). | _none_ (required) |
+| `lookup_key` | Specifies the record key whose value to search for in the CSV file's first column. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) syntax for nested fields and array indexing (for example, `$user['profile']['id']`, `$users[0]['id']`). | _none_ (required) |
 | `result_key` | If a CSV entry whose value matches the value of `lookup_key` is found, specifies the name of the new key to add to the output record. This new key uses the corresponding value from the second column of the CSV file in the same row where `lookup_key` was found. If this key already exists in the record, it will be overwritten. | _none_ (required) |
 | `ignore_case` | Specifies whether to ignore case when searching for `lookup_key`. If `true`, searches are case-insensitive. If `false`, searches are case-sensitive. Case normalization applies to both the lookup key from the record and the keys in the CSV file. | `false` |
 | `skip_header_row` | If `true`, the filter skips the first row of the CSV file, treating it as a header. If `false`, the first row is processed as data. | `false` |
@@ -142,7 +142,7 @@ Each metric includes a `name` label to identify the filter instance.
 
 ## Key considerations
 
-- The CSV is used to create an in-memory key value lookup table. Column 1 of the CSV is always used as key, while column 2 is assumed to be the value. All other columns in the CSV are ignored.
+- The CSV is used to create an in-memory key-value lookup table. Column 1 of the CSV is always used as key, while column 2 is assumed to be the value. All other columns in the CSV are ignored.
 - CSV fields can be enclosed in double quotes (`"`). Lines with unmatched quotes are logged as warnings and skipped.
 - Multiline values in CSV file aren't currently supported.
 - Duplicate keys (values in first column) in the CSV will use the last occurrence (hash table behavior)
