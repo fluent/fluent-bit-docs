@@ -245,7 +245,7 @@ Each rule in the `condition.rules` array must include:
 | --- | --- |
 | `field` | The field within your logs to evaluate. Uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
 | `op` | The comparison operator. |
-| `value` | This is thee value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
+| `value` | This is the value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
 | `context` | Optional. Specifies where to look for the field. Valid values are `body`, `metadata`, `otel_resource_attributes`, `otel_scope_attributes`. Defaults to `body`. |
 
 ### Comparison operators
