@@ -8,7 +8,7 @@
 
 ## Dead letter queue
 
-The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. This is useful for troubleshooting delivery failures without losing data.
+The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. This enables troubleshooting delivery failures without losing data.
 
 ### Enable dead letter queue
 
