@@ -32,6 +32,8 @@ pipeline:
   outputs:
     - name: vivo_exporter
       match: '*'
+      host: 0.0.0.0
+      port: 2025
       empty_stream_on_read: off
       stream_queue_size: 20M
       http_cors_allow_origin: '*'
@@ -49,6 +51,8 @@ pipeline:
 [OUTPUT]
   name                   vivo_exporter
   match                  *
+  host                   0.0.0.0
+  port                   2025
   empty_stream_on_read   off
   stream_queue_size      20M
   http_cors_allow_origin *
@@ -183,34 +187,80 @@ Vivo-Stream-End-ID: 1
 
 ### Log output format with groups
 
-When log events contain group metadata or attributes, the Vivo Exporter includes additional fields in the JSON output. The output format depends on whether the data is `OTLP` (OpenTelemetry) formatted or standard Fluent Bit data.
+Fluent Bit log events can include group metadata and attributes that provide additional context about the log source. Groups are automatically included in Vivo Exporter output when the input plugin provides them. No additional configuration is required on the Vivo Exporter.
 
-For `OTLP` data (when `schema` is set to `otlp`), the output includes an `otlp` field:
+Groups appear in the output when using input plugins that support log event grouping, such as the [OpenTelemetry input](../inputs/opentelemetry.md). The output format depends on whether the data is OpenTelemetry (`OTLP`) formatted or standard Fluent Bit data.
+
+#### OTLP grouped output format
+
+When receiving logs from the OpenTelemetry input (where `schema` is set to `otlp` in the group metadata), the output includes an `otlp` field containing `resource` and `scope` attributes:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: opentelemetry
+      tag: otel.logs
+      port: 4318
+
+  outputs:
+    - name: vivo_exporter
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  name opentelemetry
+  tag  otel.logs
+  port 4318
+
+[OUTPUT]
+  name  vivo_exporter
+  match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+Retrieve the grouped logs:
+
+```shell
+curl -i http://127.0.0.1:2025/api/v1/logs
+```
+
+Example output with OTLP groups:
 
 ```json
 {
   "source_type": "opentelemetry",
   "source_name": "opentelemetry.0",
-  "tag": "my.logs",
-  "records": [...],
+  "tag": "otel.logs",
+  "records": [[1679416945459254000, {"severity_text": "INFO"}, {"message": "example log"}]],
   "otlp": {
-    "resource": {...},
-    "scope": {...}
+    "resource": {"service.name": "my-service", "host.name": "server-1"},
+    "scope": {"name": "my-library", "version": "1.0.0"}
   }
 }
 ```
 
-For non-`OTLP` data with group information, the output includes a `flb_group` field:
+#### Non-OTLP grouped output format
+
+For non-OTLP data with group information (from other inputs that support grouping), the output includes a `flb_group` field containing `metadata` and `body` attributes:
 
 ```json
 {
   "source_type": "forward",
   "source_name": "forward.0",
   "tag": "my.logs",
-  "records": [...],
+  "records": [[1679416945459254000, {}, {"message": "example log"}]],
   "flb_group": {
-    "metadata": {...},
-    "body": {...}
+    "metadata": {"custom_field": "value"},
+    "body": {"additional_context": "data"}
   }
 }
 ```
