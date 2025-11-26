@@ -26,7 +26,26 @@ The `service` section defines global properties of the service. The available co
 | `sp.convert_from_str_to_num` | If enabled, the stream processor converts strings that represent numbers to a numeric type. | `true` |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
+### Storage configuration
+
+The following storage-related keys can be set in the `service` section:
+
+| Key | Description | Default Value |
+| --- | ----------- | ------------- |
+| `storage.path` | Set a location in the file system to store streams and chunks of data. Required for filesystem buffering. | _none_ |
+| `storage.sync` | Configure the synchronization mode used to store data in the file system. Accepted values: `normal` or `full`. | `normal` |
+| `storage.checksum` | Enable data integrity check when writing and reading data from the filesystem. Accepted values: `off` or `on`. | `off` |
+| `storage.max_chunks_up` | Set the maximum number of chunks that can be `up` in memory when using filesystem storage. | `128` |
+| `storage.backlog.mem_limit` | Set the memory limit for backlog data chunks. | `5M` |
+| `storage.backlog.flush_on_shutdown` | Attempt to flush all backlog chunks during shutdown. Accepted values: `off` or `on`. | `off` |
+| `storage.metrics` | Enable storage layer metrics on the HTTP endpoint. Accepted values: `off` or `on`. | `off` |
+| `storage.delete_irrecoverable_chunks` | Delete irrecoverable chunks during runtime and at startup. Accepted values: `off` or `on`. | `off` |
+| `storage.keep.rejected` | Enable the dead letter queue (DLQ) to preserve chunks that fail to be delivered. Accepted values: `off` or `on`. | `off` |
+| `storage.rejected.path` | Subdirectory name under `storage.path` for storing rejected chunks. | `rejected` |
+
 For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
+
+For storage and buffering details, see [buffering and storage](../../buffering-and-storage.md).
 
 ## Configuration example
 
