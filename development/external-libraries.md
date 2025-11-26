@@ -34,7 +34,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 |---------|---------|---------|
 | [`msgpack-c`](https://github.com/msgpack/msgpack-c) | MessagePack serialization library. Used for internal data format for records in Fluent Bit. | Boost 1.0 |
 | [`Jansson`](https://github.com/akheron/jansson) | JSON encoding, decoding, and manipulation with full Unicode support. | Massachusetts Institute of Technology (MIT) |
-| [`yyjson`](https://github.com/ibireme/yyjson) | High-performance JSON library capable of processing gigabytes per second. Used for fast JSON operations. | assachusetts Institute of Technology (MIT) |
+| [`yyjson`](https://github.com/ibireme/yyjson) | High-performance JSON library capable of processing gigabytes per second. Used for fast JSON operations. | Massachusetts Institute of Technology (MIT) |
 | [`jsmn`](https://github.com/zserge/jsmn) | Minimalistic JSON parser (~200 lines of code). Zero-copy, no dynamic allocation. | Massachusetts Institute of Technology (MIT) |
 
 ## Text processing
