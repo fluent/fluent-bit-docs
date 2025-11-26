@@ -79,12 +79,13 @@ These libraries are developed and maintained by the Fluent Bit team:
 
 ## Version information
 
-When Fluent Bit starts, it logs the versions of key libraries. For example, as of Fluent Bit 4.2 the logs would be showing:
+When Fluent Bit starts, it logs the versions of key libraries. For example, as of Fluent Bit 4.2:
 
 ```text
-[2025/01/15 10:30:00] [ info] [ctraces ] version=0.6.6
-[2025/01/15 10:30:00] [ info] [cmetrics] version=1.0.5
-[2025/01/15 10:30:00] [ info] [cprofiles] version=0.1.1
++[2025/01/15 10:30:00] [ info] [chunkio ] version=1.5.4
++[2025/01/15 10:30:00] [ info] [ctraces ] version=1.0.5
++[2025/01/15 10:30:00] [ info] [monkey  ] version=1.8.5
++[2025/01/15 10:30:00] [ info] [wamr    ] version=2.4.1
 ```
 
 ## Build options
