@@ -6,6 +6,8 @@ If you have some knowledge of C, this guide should help you understand how to ma
 
 Most external libraries are embedded in the project in the [/lib](https://github.com/fluent/fluent-bit/tree/master/lib) folder. To keep its footprint low and maximize compatibility in cross-platform builds, Fluent Bit attempts to keep its dependency graph small.
 
+For a complete list of embedded libraries and their purposes, see [External libraries](external-libraries.md).
+
 The external library that you're mostly likely to interact with is [MessagePack](https://github.com/msgpack/msgpack-c).
 
 For cryptographic support, Fluent Bit uses the system installed version of OpenSSL. You must install OpenSSL libraries and headers before Building Fluent Bit.
