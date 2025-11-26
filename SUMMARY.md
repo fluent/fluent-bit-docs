@@ -230,6 +230,7 @@
 ## Fluent Bit for developers
 
 * [C library API](development/library_api.md)
+* [External libraries](development/external-libraries.md)
 * [Ingest records manually](development/ingest-records-manually.md)
 * [Golang output plugins](development/golang-output-plugins.md)
 * [MessagePack format](development/msgpack-format.md)
