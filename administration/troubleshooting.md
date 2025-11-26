@@ -2,8 +2,63 @@
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=759ddb3d-b363-4ee6-91fa-21025259767a" />
 
+- [Dead letter queue: preserve failed chunks](#dead-letter-queue)
 - [Tap: generate events or records](#tap)
 - [Dump internals signal](#dump-internals-and-signal)
+
+## Dead letter queue
+
+The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. This enables troubleshooting delivery failures without losing data.
+
+### Enable dead letter queue
+
+To enable the DLQ, add the following to your Service section:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  storage.path: /var/log/flb-storage/
+  storage.keep.rejected: on
+  storage.rejected.path: rejected
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  storage.path          /var/log/flb-storage/
+  storage.keep.rejected on
+  storage.rejected.path rejected
+```
+
+{% endtab %}
+{% endtabs %}
+
+### What gets stored
+
+Chunks are copied to the DLQ when:
+
+- An output plugin returns an unrecoverable error.
+- A chunk exhausts all configured retry attempts.
+- Retries are disabled (`retry_limit: no_retries`) and the flush fails.
+- The scheduler fails to schedule a retry.
+
+### Examine dead letter queue files
+
+DLQ files are stored in the configured path (for example, `/var/log/flb-storage/rejected/`) with names that include the tag, status code, and output plugin name. This helps identify which records failed and why.
+
+For example, a file named `kube_var_log_containers_test_400_http_0x7f8b4c.flb` indicates a chunk with tag `kube.var.log.containers.test` that failed with status code `400` when sending to the `http` output.
+
+### Dead letter queue management
+
+{% hint style="warning" %}
+DLQ files remain on disk until manually removed. Monitor disk usage and implement a cleanup policy.
+{% endhint %}
+
+For more details on DLQ configuration, see [Buffering and Storage](buffering-and-storage.md#dead-letter-queue-dlq).
 
 ## Tap
 

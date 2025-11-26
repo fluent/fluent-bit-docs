@@ -151,6 +151,64 @@ The Service section refers to the section defined in the main [configuration fil
 | `storage.keep.rejected` | When enabled, the dead-letter queue feature stores failed chunks that can't be delivered. Accepted values: `Off`, `On`. | `Off`|
 | `storage.rejected.path` | When specified, the dead-letter queue is stored in a subdirectory (stream) under `storage.path`. The default value `rejected` is used at runtime if not set. | _none_ |
 
+### Dead letter queue (DLQ)
+
+The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. Instead of losing this data, Fluent Bit copies the rejected chunks to a dedicated storage location for later analysis and troubleshooting.
+
+#### When dead letter queue is triggered
+
+Chunks are copied to the DLQ in the following failure scenarios:
+
+- **Permanent errors**: When an output plugin returns an unrecoverable error (`FLB_ERROR`).
+- **Retry limit reached**: When a chunk exhausts all configured retry attempts.
+- **Retries disabled**: When `retry_limit` is set to `no_retries` and a flush fails.
+- **Scheduler failures**: When the retry scheduler can't schedule a retry (for example, due to resource constraints).
+
+#### Requirements
+
+The DLQ feature requires:
+
+- `storage.path` must be configured (filesystem storage must be enabled).
+- `storage.keep.rejected` must be set to `On`.
+
+#### Dead letter queue file location and format
+
+Rejected chunks are stored in a subdirectory under `storage.path`. For example, with the following configuration:
+
+```yaml
+service:
+  storage.path: /var/log/flb-storage/
+  storage.keep.rejected: on
+  storage.rejected.path: rejected
+```
+
+Rejected chunks are stored at `/var/log/flb-storage/rejected/`.
+
+Each DLQ file is named using this format:
+
+```text
+<sanitized_tag>_<status_code>_<output_name>_<unique_id>.flb
+```
+
+For example: `kube_var_log_containers_test_400_http_0x7f8b4c.flb`
+
+The file contains the original chunk data in the internal format of Fluent Bit, preserving all records and metadata.
+
+#### Troubleshooting with dead letter queue
+
+The DLQ feature enables the following capabilities:
+
+- **Data preservation**: Invalid or rejected chunks are preserved instead of being permanently lost.
+- **Root cause analysis**: Investigate why specific data failed to be delivered without impacting live processing.
+- **Data recovery**: Replay or transform rejected chunks after fixing the underlying issue.
+- **Debugging**: Analyze the exact content of problematic records.
+
+To examine DLQ chunks, you can use the storage metrics endpoint (when `storage.metrics` is enabled) or directly inspect the files in the rejected directory.
+
+{% hint style="info" %}
+DLQ files remain on disk until manually removed. Monitor disk usage in the rejected directory and implement a cleanup policy for older files.
+{% endhint %}
+
 A Service section will look like this:
 
 {% tabs %}
@@ -165,6 +223,8 @@ service:
   storage.checksum: off
   storage.backlog.mem_limit: 5M
   storage.backlog.flush_on_shutdown: off
+  storage.keep.rejected: on
+  storage.rejected.path: rejected
 ```
 
 {% endtab %}
@@ -179,12 +239,14 @@ service:
   storage.checksum          off
   storage.backlog.mem_limit 5M
   storage.backlog.flush_on_shutdown off
+  storage.keep.rejected     on
+  storage.rejected.path     rejected
 ```
 
 {% endtab %}
 {% endtabs %}
 
-This configuration sets an optional buffering mechanism where the route to the data is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without running a checksum and up to a maximum of 5&nbsp;MB of memory when processing backlog data.
+This configuration sets an optional buffering mechanism where the route to the data is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without running a checksum and up to a maximum of 5 MB of memory when processing backlog data. Additionally, the dead letter queue is enabled, and rejected chunks are stored in `/var/log/flb-storage/rejected/`.
 
 ### Input section configuration
 
