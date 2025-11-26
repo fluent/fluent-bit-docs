@@ -25,24 +25,24 @@ These libraries are developed and maintained by the Fluent Bit team:
 | Library | Purpose | License |
 |---------|---------|---------|
 | [Monkey](https://github.com/monkey/monkey) | Fast, lightweight HTTP server providing the embedded web server HTTP endpoints (health checks, metrics, and so on) for Fluent Bit. | Apache 2.0 |
-| [c-ares](https://c-ares.org/) | Modern asynchronous DNS resolver library. Enables non-blocking DNS queries for network operations. | Massachusettes Institute of Technology (MIT) |
-| [nghttp2](https://nghttp2.org/) | HTTP/2 C library implementing the framing layer. Enables HTTP/2 client and server capabilities. | Massachusettes Institute of Technology (MIT) |
+| [c-ares](https://c-ares.org/) | Modern asynchronous DNS resolver library. Enables non-blocking DNS queries for network operations. | Massachusetts Institute of Technology (MIT) |
+| [nghttp2](https://nghttp2.org/) | HTTP/2 C library implementing the framing layer. Enables HTTP/2 client and server capabilities. | Massachusetts Institute of Technology (MIT) |
 
 ## Data serialization and parsing
 
 | Library | Purpose | License |
 |---------|---------|---------|
 | [msgpack-c](https://github.com/msgpack/msgpack-c) | MessagePack serialization library. Used for internal data format for records in Fluent Bit. | Boost 1.0 |
-| [Jansson](https://github.com/akheron/jansson) | JSON encoding, decoding, and manipulation with full Unicode support. | Massachusettes Institute of Technology (MIT) |
-| [yyjson](https://github.com/ibireme/yyjson) | High-performance JSON library capable of processing gigabytes per second. Used for fast JSON operations. | MIT |
-| [jsmn](https://github.com/zserge/jsmn) | Minimalistic JSON parser (~200 lines of code). Zero-copy, no dynamic allocation. | Massachusettes Institute of Technology (MIT) |
+| [Jansson](https://github.com/akheron/jansson) | JSON encoding, decoding, and manipulation with full Unicode support. | Massachusetts Institute of Technology (MIT) |
+| [yyjson](https://github.com/ibireme/yyjson) | High-performance JSON library capable of processing gigabytes per second. Used for fast JSON operations. | assachusetts Institute of Technology (MIT) |
+| [jsmn](https://github.com/zserge/jsmn) | Minimalistic JSON parser (~200 lines of code). Zero-copy, no dynamic allocation. | Massachusetts Institute of Technology (MIT) |
 
 ## Text processing
 
 | Library | Purpose | License |
 |---------|---------|---------|
 | [Onigmo](https://github.com/k-takata/Onigmo) | Regular expression library (fork of Oniguruma). Supports Perl 5.10+ expressions like `\K`, `\R`, and conditional patterns. Default regular expression engine for Ruby 2.0+. | BSD |
-| [tutf8e](https://github.com/papplampe/tutf8e) | Tiny UTF-8 encoder supporting ISO-8859-x and Windows-125x character set conversions. | Massachusettes Institute of Technology (MIT) |
+| [tutf8e](https://github.com/papplampe/tutf8e) | Tiny UTF-8 encoder supporting ISO-8859-x and Windows-125x character set conversions. | Massachusetts Institute of Technology (MIT) |
 | [simdutf](https://github.com/simdutf/simdutf) | SIMD-accelerated Unicode validation and transcoding (UTF-8, UTF-16, UTF-32). | Apache 2.0 |
 
 ## Compression
@@ -57,7 +57,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 
 | Library | Purpose | License |
 |---------|---------|---------|
-| [LuaJIT](https://luajit.org/) | `Just-in-time (JIT)` compiler for Lua. Powers the [Lua filter](../pipeline/filters/lua.md) plugin for custom record processing. | Massachusettes Institute of Technology (MIT) |
+| [LuaJIT](https://luajit.org/) | `Just-in-time (JIT)` compiler for Lua. Powers the [Lua filter](../pipeline/filters/lua.md) plugin for custom record processing. | Massachusetts Institute of Technology (MIT) |
 | [WAMR](https://github.com/bytecodealliance/wasm-micro-runtime) | WebAssembly Micro Runtime from the Bytecode Alliance. Enables [WASM filter plugins](wasm-filter-plugins.md) and [WASM input plugins](wasm-input-plugins.md). Supports `interpreter`, `AOT`, and `JIT` execution modes. | Apache 2.0 |
 
 ## Integration libraries
@@ -73,8 +73,8 @@ These libraries are developed and maintained by the Fluent Bit team:
 |---------|---------|---------|
 | [SQLite](https://sqlite.org/) | Self-contained SQL database engine. Used for persistent storage operations. | Public Domain |
 | [jemalloc](https://github.com/jemalloc/jemalloc) | General-purpose memory allocator emphasizing fragmentation avoidance and scalable concurrency. Optional alternative to system malloc. | BSD-2 |
-| [lwrb](https://github.com/MaJerle/lwrb) | Lightweight ring buffer implementation. Thread-safe FIFO buffer with zero-copy DMA support. | Massachusettes Institute of Technology (MIT) |
-| [mpack](https://github.com/ludocode/mpack) | Simple and fast MessagePack encoder/decoder. | Massachusettes Institute of Technology (MIT) |
+| [lwrb](https://github.com/MaJerle/lwrb) | Lightweight ring buffer implementation. Thread-safe FIFO buffer with zero-copy DMA support. | Massachusetts Institute of Technology (MIT) |
+| [mpack](https://github.com/ludocode/mpack) | Simple and fast MessagePack encoder/decoder. | Massachusetts Institute of Technology (MIT) |
 | [libbacktrace](https://github.com/ianlancetaylor/libbacktrace) | Library for producing symbolic back traces. Used for debugging and error reporting. | BSD |
 
 ## Version information
