@@ -8,38 +8,47 @@ The plugin reads every matched file in the `Path` pattern. For every new line fo
 
 The plugin supports the following configuration parameters:
 
-| Key | Description    | Default   |
-|:----|:---------------|:----------|
-| `buffer_chunk_size`   | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k`     |
-| `buffer_max_size`     | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k`     |
-| `path`                | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_    |
-| `path_key`            | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map.                | _none_    |
-| `exclude_path`        | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `exclude_path *.gz,*.zip`. | _none_    |
-| `offset_key`          | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map.                                                                       | _none_    |
-| `read_from_head`      | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail.              | `false`   |
-| `refresh_interval`    | The interval of refreshing the list of watched files in seconds.                                                     | `60`      |
-| `rotate_wait`         | Specify the number of extra time in seconds to monitor a file once is rotated in case some pending data is flushed.  | `5`       |
-| `ignore_older`        | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax.                       | Read all. |
-| `ignore_active_older_files`| Ignore files that are older than the value set in `ignore_older` even if the file is being ingested.  | `false`       |
-| `skip_long_lines`     | When a monitored file reaches its buffer capacity due to a very long line (`buffer_max_size`), the default behavior is to stop monitoring that file. `skip_long_lines` alter that behavior and instruct Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size.                                                            | `off`     |
-| `skip_empty_lines`    | Skips empty lines in the log file from any further processing or output.                                             | `off`     |
-| `db`                  | Specify the database file to keep track of monitored files and offsets. Recommended to be unique per plugin.                                            | _none_    |
-| `db.sync`             | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine do synchronization to disk, for more details about each option see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most scenarios will be fine with `normal` mode. If you need full synchronization after every write operation set `full` mode. `full` has a high I/O performance cost. Values: `extra`, `full`, `normal`, `off`. | `normal`  |
-| `db.locking`          | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts externals tool from querying the content.                 | `false`   |
-| `db.journal_mode`     | Sets the journal mode for databases (`wal`). Enabling `wal` provides higher performance. `wal` isn't compatible with shared network file systems.                                                                   | `wal`     |
-| `db.compare_filename` | This option determines whether to review both `inode` and `filename` when retrieving stored file information from the database. `true` verifies both `inode` and `filename`, while `false` checks only the `inode`. To review the `inode` and `filename` in the database, refer [see `keep_state`](#tailing-files-keeping-state).                                   | `false`   |
-| `mem_buf_limit`       | Set a memory limit that Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed it resumes.                                                     | _none_    |
-| `exit_on_eof`         | When reading a file will exit as soon as it reach the end of the file. Used for bulk load and tests.                 | `false`   |
-| `parser`              | Specify the name of a parser to interpret the entry as a structured message.                                         | _none_    |
-| `key`                 | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key.                                               | `log`     |
-| `inotify_watcher`     | Set to `false` to use file stat watcher instead of `inotify`.                                                        | `true`    |
-| `tag`                 | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter).                  | _none_    |
-| `tag_regex`           | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`.                   | _none_    |
-| `static_batch_size`   | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start).  | `50M`     |
-| `file_cache_advise`   | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux.                                                             | `on`      |
-| `threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).              | `false`   |
-| `Unicode.Encoding`    | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`.                                        | `none`    |
-| `Generic.Encoding`    | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win2513`, `Win1254`, `Win1255`, and `Win1256`.      | `none`    |
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `buffer_chunk_size` | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k` |
+| `buffer_max_size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k` |
+| `db` | Specify the database file to keep track of monitored files and offsets. Recommended to be unique per plugin. | _none_ |
+| `db.compare_filename` | This option determines whether to review both `inode` and `filename` when retrieving stored file information from the database. `true` verifies both `inode` and `filename`, while `false` checks only the `inode`. To review the `inode` and `filename` in the database, refer [see `keep_state`](#tailing-files-keeping-state). | `false` |
+| `db.journal_mode` | Sets the journal mode for databases (`wal`). Enabling `wal` provides higher performance. `wal` isn't compatible with shared network file systems. | `wal` |
+| `db.locking` | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts external tools from querying the content. | `false` |
+| `db.sync` | Set a default synchronization (I/O) method. This flag affects how the internal SQLite engine does synchronization to disk. For more details about each option, see [the SQLite documentation](https://www.sqlite.org/pragma.html#pragma_synchronous). Most scenarios will be fine with `normal` mode. If you need full synchronization after every write operation, set `full` mode. `full` has a high I/O performance cost. Values: `extra`, `full`, `normal`, `off`. | `normal` |
+| `docker_mode` | If enabled, the plugin will recombine split Docker log lines before passing them to any parser. This mode can't be used at the same time as Multiline. | `false` |
+| `docker_mode_flush` | Wait period time in seconds to flush queued unfinished split lines. | `4` |
+| `docker_mode_parser` | Specify an optional parser for the first line of the Docker multiline mode. The parser name must be registered in the `parsers.conf` file. | _none_ |
+| `event_batch_size` | Set the maximum number of bytes to process per iteration for files monitored in event mode (files promoted from static to event-based monitoring). This prevents a single input plugin from consuming too many resources when large amounts of data is available. | `50M` |
+| `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_path *.gz,*.zip`. | _none_ |
+| `exit_on_eof` | When reading a file, exit as soon as it reaches the end of the file. Used for bulk load and tests. | `false` |
+| `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `on` |
+| `Generic.Encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
+| `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
+| `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
+| `inotify_watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
+| `key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
+| `mem_buf_limit` | Set a memory limit that the Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed, it resumes. | _none_ |
+| `offset_key` | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
+| `parser` | Specify the name of a parser to interpret the entry as a structured message. | _none_ |
+| `path` | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_ |
+| `path_key` | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
+| `progress_check_interval` | Set the interval for checking file progress. This is an advanced option for fine-tuning file monitoring behavior. | `2s` |
+| `progress_check_interval_nsec` | Set the nanosecond component of the progress check interval. This is an advanced option used in conjunction with `progress_check_interval` for sub-second precision. | `0` |
+| `read_from_head` | For new discovered files on start (without a database offset/position), read the content from the head of the file, not tail. | `false` |
+| `read_newly_discovered_files_from_head` | For newly discovered files after startup (without a database offset/position), read the content from the head of the file, not tail. This differs from `read_from_head` which only applies to files discovered at startup. | `true` |
+| `refresh_interval` | The interval of refreshing the list of watched files in seconds. | `60` |
+| `rotate_wait` | Specify the number of extra time in seconds to monitor a file once it's rotated in case some pending data is flushed. | `5` |
+| `skip_empty_lines` | Skips empty lines in the log file from any further processing or output. | `off` |
+| `skip_long_lines` | When a monitored file reaches its buffer capacity due to a very long line (`buffer_max_size`), the default behavior is to stop monitoring that file. `skip_long_lines` alters that behavior and instructs Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `off` |
+| `static_batch_size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
+| `tag` | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter). | _none_ |
+| `tag_regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `truncate_long_lines` | When enabled, truncates lines that exceed the buffer capacity after input encoding conversion to UTF-8. Use this option when dealing with character encoding conversions that might expand the line length. | `false` |
+| `Unicode.Encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
+| `watcher_interval` | Set the interval for the watcher that monitors symbolic link rotation. This is an advanced option for fine-tuning how often Fluent Bit checks if symbolic links have been rotated. | `2s` |
 
 ## Buffers and memory management
 
@@ -85,13 +94,6 @@ The `Unicode.Encoding` parameter is dependent on the `simdutf` library, which is
 
 Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
-
-{% hint style="info" %}
-The `Unicode.Encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
-
-Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
-{% endhint %}
-
 
 ## Monitor a large number of files
 
@@ -499,17 +501,17 @@ To enable encoding conversion, you will use one of the following two parameters 
 
    - Use Case: Ideal for logs coming from modern Windows environments that default to UTF-16.
    - Supported Values:
-     - UTF-16LE (Little-Endian)
-     - UTF-16BE (Big-Endian)
+     - `UTF-16LE` (Little-Endian)
+     - `UTF-16BE` (Big-Endian)
 
 1. `Generic.Encoding`
 
    Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
 
    - Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
-   - Supported values: You can use any of the names or aliases listed below.
+   - Supported values: You can use any of the names or aliases in the following list.
 
-### East Asian encodings
+### East asian encodings
 
 - `ShiftJIS` (Aliases: `SJIS`, `CP932`, `Windows-31J`)
 - `GB18030`
