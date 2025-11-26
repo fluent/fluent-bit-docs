@@ -9,8 +9,10 @@ This plugin supports the following configuration parameters:
 | Key | Description | Default |
 | --- | ----------- | ---------|
 | `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `Off` |
-| `stream_queue_size`| Specify the maximum queue size per stream. Each specific stream for logs, metrics, and traces can hold up to `stream_queue_size` bytes. | `20M` |
+| `host` | The network address for the HTTP server to listen on. | `0.0.0.0` |
 | `http_cors_allow_origin` | Specify the value for the HTTP `Access-Control-Allow-Origin` header (CORS). | _none_ |
+| `port` | The TCP port for the HTTP server to listen on. | `2025` |
+| `stream_queue_size`| Specify the maximum queue size per stream. Each specific stream for logs, metrics, and traces can hold up to `stream_queue_size` bytes. | `20M` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ### Get started
@@ -65,11 +67,12 @@ The `data` that arrives is a `chunk`. A chunk is a group of events that belongs 
 
 By using an HTTP request, you can retrieve the data from the streams. The following are the endpoints available:
 
-| endpoint   | Description                                                                                                                   |
-|------------|-------------------------------------------------------------------------------------------------------------------------------|
-| `/logs`    | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
-| `/metrics` | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
-| `/traces`  | Exposes trace events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
+| Endpoint                     | Description                                                                                                                   |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `/api/v1/logs`               | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
+| `/api/v1/metrics`            | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
+| `/api/v1/traces`             | Exposes trace events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
+| `/api/v1/internal/metrics`   | Exposes internal Fluent Bit metrics in JSON format.                                                                          |
 
 The following example generates dummy log events for consumption by using `curl` HTTP command line client:
 
@@ -110,7 +113,7 @@ The following example generates dummy log events for consumption by using `curl`
 1. Retrieve the data.
 
    ```shell
-   curl -i http://127.0.0.1:2025/logs
+   curl -i http://127.0.0.1:2025/api/v1/logs
    ```
 
    The `-i` curl option prints the HTTP response headers.
@@ -159,7 +162,7 @@ To query ranges or starting from specific chunks IDs, remember that they're incr
 The following example specifies the range from chunk ID `1` to chunk ID `3` and only one chunk:
 
 ```shell
-curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"`&#x20;
+curl -i "http://127.0.0.1:2025/api/v1/logs?from=1&to=3&limit=1"
 ```
 
 Output:
@@ -176,4 +179,38 @@ Vivo-Stream-End-ID: 1
 [[1679416945959398000,{"_tag":"events"}],{"message":"dummy"}]
 [[1679416946459271000,{"_tag":"events"}],{"message":"dummy"}]
 ...
+```
+
+### Log output format with groups
+
+When log events contain group metadata or attributes, the Vivo Exporter includes additional fields in the JSON output. The output format depends on whether the data is `OTLP` (OpenTelemetry) formatted or standard Fluent Bit data.
+
+For `OTLP` data (when `schema` is set to `otlp`), the output includes an `otlp` field:
+
+```json
+{
+  "source_type": "opentelemetry",
+  "source_name": "opentelemetry.0",
+  "tag": "my.logs",
+  "records": [...],
+  "otlp": {
+    "resource": {...},
+    "scope": {...}
+  }
+}
+```
+
+For non-`OTLP` data with group information, the output includes a `flb_group` field:
+
+```json
+{
+  "source_type": "forward",
+  "source_name": "forward.0",
+  "tag": "my.logs",
+  "records": [...],
+  "flb_group": {
+    "metadata": {...},
+    "body": {...}
+  }
+}
 ```
