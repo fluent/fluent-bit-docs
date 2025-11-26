@@ -40,7 +40,7 @@ The following storage-related keys can be set in the `service` section:
 | `storage.backlog.flush_on_shutdown` | Attempt to flush all backlog chunks during shutdown. Accepted values: `off` or `on`. | `off` |
 | `storage.metrics` | Enable storage layer metrics on the HTTP endpoint. Accepted values: `off` or `on`. | `off` |
 | `storage.delete_irrecoverable_chunks` | Delete irrecoverable chunks during runtime and at startup. Accepted values: `off` or `on`. | `off` |
-| `storage.keep.rejected` | Enable the dead letter queue (DLQ) to preserve chunks that fail to be delivered. Accepted values: `off` or `on`. | `off` |
+| `storage.keep.rejected` | Enable the Dead Letter Queue (DLQ) to preserve chunks that fail to be delivered. Accepted values: `off` or `on`. | `off` |
 | `storage.rejected.path` | Subdirectory name under `storage.path` for storing rejected chunks. | `rejected` |
 
 For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
