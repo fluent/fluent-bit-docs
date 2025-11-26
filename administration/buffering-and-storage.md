@@ -151,11 +151,11 @@ The Service section refers to the section defined in the main [configuration fil
 | `storage.keep.rejected` | When enabled, the dead-letter queue feature stores failed chunks that can't be delivered. Accepted values: `Off`, `On`. | `Off`|
 | `storage.rejected.path` | When specified, the dead-letter queue is stored in a subdirectory (stream) under `storage.path`. The default value `rejected` is used at runtime if not set. | _none_ |
 
-### Dead Letter Queue (DLQ)
+### Dead letter queue (DLQ)
 
 The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. Instead of losing this data, Fluent Bit copies the rejected chunks to a dedicated storage location for later analysis and troubleshooting.
 
-#### When DLQ is triggered
+#### When dead letter queue is triggered
 
 Chunks are copied to the DLQ in the following failure scenarios:
 
@@ -171,7 +171,7 @@ The DLQ feature requires:
 - `storage.path` must be configured (filesystem storage must be enabled).
 - `storage.keep.rejected` must be set to `On`.
 
-#### DLQ file location and format
+#### Dead letter queue file location and format
 
 Rejected chunks are stored in a subdirectory under `storage.path`. For example, with the following configuration:
 
@@ -192,11 +192,11 @@ Each DLQ file is named using this format:
 
 For example: `kube_var_log_containers_test_400_http_0x7f8b4c.flb`
 
-The file contains the original chunk data in Fluent Bit's internal format, preserving all records and metadata.
+The file contains the original chunk data in the internal format of Fluent Bit, preserving all records and metadata.
 
-#### Troubleshooting with DLQ
+#### Troubleshooting with dead letter queue
 
-The DLQ feature is particularly useful for:
+The DLQ feature enables the following capabilities:
 
 - **Data preservation**: Invalid or rejected chunks are preserved instead of being permanently lost.
 - **Root cause analysis**: Investigate why specific data failed to be delivered without impacting live processing.
@@ -246,7 +246,7 @@ service:
 {% endtab %}
 {% endtabs %}
 
-This configuration sets an optional buffering mechanism where the route to the data is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without running a checksum and up to a maximum of 5MB of memory when processing backlog data. Additionally, the dead letter queue is enabled, and rejected chunks are stored in `/var/log/flb-storage/rejected/`.
+This configuration sets an optional buffering mechanism where the route to the data is `/var/log/flb-storage/`. It uses `normal` synchronization mode, without running a checksum and up to a maximum of 5 MB of memory when processing backlog data. Additionally, the dead letter queue is enabled, and rejected chunks are stored in `/var/log/flb-storage/rejected/`.
 
 ### Input section configuration
 
