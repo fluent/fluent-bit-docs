@@ -6,11 +6,11 @@
 - [Tap: generate events or records](#tap)
 - [Dump internals signal](#dump-internals-and-signal)
 
-## Dead Letter Queue
+## Dead letter queue
 
 The Dead Letter Queue (DLQ) feature preserves chunks that fail to be delivered to output destinations. This is useful for troubleshooting delivery failures without losing data.
 
-### Enable DLQ
+### Enable dead letter queue
 
 To enable the DLQ, add the following to your Service section:
 
@@ -46,13 +46,13 @@ Chunks are copied to the DLQ when:
 - Retries are disabled (`retry_limit: no_retries`) and the flush fails.
 - The scheduler fails to schedule a retry.
 
-### Examine DLQ files
+### Examine dead letter queue files
 
 DLQ files are stored in the configured path (for example, `/var/log/flb-storage/rejected/`) with names that include the tag, status code, and output plugin name. This helps identify which records failed and why.
 
 For example, a file named `kube_var_log_containers_test_400_http_0x7f8b4c.flb` indicates a chunk with tag `kube.var.log.containers.test` that failed with status code `400` when sending to the `http` output.
 
-### DLQ management
+### Dead letter queue management
 
 {% hint style="warning" %}
 DLQ files remain on disk until manually removed. Monitor disk usage and implement a cleanup policy.
