@@ -16,7 +16,7 @@ This plugin has the following configuration parameters:
 | `Port` | TCP port of the target Elasticsearch instance | `9200` |
 | `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string |
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
-| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md). | `512KB` |
+| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` |
 | `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ |
 | `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
 | `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |

@@ -22,8 +22,8 @@ The plugin supports the following configuration parameters:
 | `Event_Format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
 | `Function_Name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
 | `Accessible_Paths` | Specify the allowlist of paths to be able to access paths from Wasm programs. |
-| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
+| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
+| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
 
 ## Configuration example
 
@@ -46,7 +46,7 @@ pipeline:
       function_name: filter_function_name
       # Note: run Fluent Bit from the 'wasm_path' location.
       accessible_paths: /path/to/accessible
-    
+
   outputs:
     - name: stdout
       match: '*'

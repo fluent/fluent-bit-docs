@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 
 | Key | Description    | Default   |
 |:----|:---------------|:----------|
-| `buffer_chunk_size`   | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k`     |
-| `buffer_max_size`     | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `32k`     |
+| `buffer_chunk_size`   | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k`     |
+| `buffer_max_size`     | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k`     |
 | `path`                | Pattern specifying a specific log file or multiple ones through the use of common wildcards. Allows multiple patterns separated by commas. | _none_    |
 | `path_key`            | If enabled, it appends the name of the monitored file as part of the record. The value assigned becomes the key in the map.                | _none_    |
 | `exclude_path`        | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria, For example, `exclude_path *.gz,*.zip`. | _none_    |
