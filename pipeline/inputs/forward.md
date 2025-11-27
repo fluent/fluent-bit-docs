@@ -128,9 +128,9 @@ pipeline:
   Port              24224
   Buffer_Chunk_Size 1M
   Buffer_Max_Size   6M
-  Security.Users fluentbit changeme
-  Shared_Key secret
-  Self_Hostname flb.server.local
+  Security.Users    fluentbit changeme
+  Shared_Key        secret
+  Self_Hostname     flb.server.local
 
 [OUTPUT]
   Name   stdout
@@ -174,9 +174,9 @@ pipeline:
   Port              24224
   Buffer_Chunk_Size 1M
   Buffer_Max_Size   6M
-  Security.Users fluentbit changeme
-  Empty_Shared_Key true
-  Self_Hostname flb.server.local
+  Security.Users    fluentbit changeme
+  Empty_Shared_Key  true
+  Self_Hostname     flb.server.local
 
 [OUTPUT]
   Name   stdout
