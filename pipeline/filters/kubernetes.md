@@ -78,6 +78,23 @@ The plugin supports the following configuration parameters:
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
 | `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
+### AWS pod association
+
+The `aws_*` configuration options enable pod-to-service name mapping for AWS environments. When `aws_use_pod_association` is enabled, Fluent Bit connects to a local agent endpoint (by default, the Amazon CloudWatch agent) to retrieve mappings between pod names and their associated service names and environments. This enriches log records with service context for AWS observability features like Application Signals.
+
+The mapping response follows this format:
+
+```json
+{
+  "pod-name-12345": {
+    "ServiceName": "my-service",
+    "Environment": "production"
+  }
+}
+```
+
+For more information about automatic platform detection when using this feature, see [EKS platform detection](#eks-platform-detection).
+
 ## Processing the `log` value
 
 Kubernetes filter provides several ways to process the data contained in the `log` key. The following explanation of the workflow assumes that your original Docker parser defined in a `parsers` file is as follows:
