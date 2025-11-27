@@ -26,18 +26,18 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `annotations` | Include Kubernetes pod resource annotations in the extra metadata. | `On` |
-| `aws_pod_association_endpoint` | Endpoint path for pod to service name association. Only used when `aws_use_pod_association` is enabled. | `/kubernetes/pod-to-service-env-map` |
-| `aws_pod_association_host` | Host to connect with when performing pod to service name association. Only used when `aws_use_pod_association` is enabled. | `cloudwatch-agent.amazon-cloudwatch` |
+| `aws_pod_association_endpoint` | Endpoint path for pod-to-service name association. Only used when `aws_use_pod_association` is enabled. | `/kubernetes/pod-to-service-env-map` |
+| `aws_pod_association_host` | Host to connect with when performing pod-to-service name association. Only used when `aws_use_pod_association` is enabled. | `cloudwatch-agent.amazon-cloudwatch` |
 | `aws_pod_association_host_client_cert_file` | Client certificate path for enabling mTLS on calls to the agent server. | `/etc/amazon-cloudwatch-observability-agent-client-cert/client.crt` |
 | `aws_pod_association_host_client_key_file` | Client certificate key path for enabling mTLS on calls to the agent server. | `/etc/amazon-cloudwatch-observability-agent-client-cert/client.key` |
 | `aws_pod_association_host_server_ca_file` | TLS CA certificate path for communication with the agent server. | `/etc/amazon-cloudwatch-observability-agent-server-cert/tls-ca.crt` |
 | `aws_pod_association_host_tls_debug` | TLS debug level for agent server connection: `0` (no debug), `1` (error), `2` (state change), `3` (info), `4` (verbose). | `0` |
 | `aws_pod_association_host_tls_verify` | Enable or disable verification of TLS peer certificate for agent server connection. | `On` |
-| `aws_pod_association_port` | Port to connect with for pod to service name association. Only used when `aws_use_pod_association` is enabled. | `4311` |
-| `aws_pod_service_map_refresh_interval` | Refresh interval in seconds for the pod to service map. | `60` |
-| `aws_pod_service_map_ttl` | Time-To-Live (TTL) for pod to service map cache entries. Set to `0` to disable TTL and evict entries at random when capacity is reached. | `0` |
-| `aws_pod_service_preload_cache_dir` | Directory containing pod to service map files for pre-loading cache. | _none_ |
-| `aws_use_pod_association` | Enable custom endpoint to get pod to service name mapping. Required for [EKS platform detection](#eks-platform-detection). | `Off` |
+| `aws_pod_association_port` | Port to connect with for pod-to-service name association. Only used when `aws_use_pod_association` is enabled. | `4311` |
+| `aws_pod_service_map_refresh_interval` | Refresh interval in seconds for the pod-to-service map. | `60` |
+| `aws_pod_service_map_ttl` | Time-To-Live (TTL) for pod-to-service map cache entries. Set to `0` to disable TTL and evict entries at random when capacity is reached. | `0` |
+| `aws_pod_service_preload_cache_dir` | Directory containing pod-to-service map files for pre-loading cache. | _none_ |
+| `aws_use_pod_association` | Enable custom endpoint to get pod-to-service name mapping. Required for [EKS platform detection](#eks-platform-detection). | `Off` |
 | `buffer_size` | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must conform to the [unit size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. A value of `0` results in no limit, and the buffer will expand as-needed. If pod specifications exceed the buffer limit, the API response is discarded when retrieving metadata, and some Kubernetes metadata will fail to be injected to the logs. | `32k` |
 | `cache_use_docker_id` | When enabled, metadata will be fetched from Kubernetes when `docker_id` is changed. | `Off` |
 | `dns_retries` | Number of DNS lookup retries until the network starts working. | `6` |
@@ -68,7 +68,7 @@ The plugin supports the following configuration parameters:
 | `namespace_metadata_only` | Include Kubernetes namespace metadata only and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
 | `owner_references` | Include Kubernetes owner references in the extra metadata. | `Off` |
 | `regex_parser` | Set an alternative Parser to process record tags and extract `pod_name`, `namespace_name`, `container_name`, and `docker_id`. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) (refer to parser `filter-kube-test` as an example). | _none_ |
-| `set_platform` | Manually set the Kubernetes platform type. Possible values are `k8s` (native Kubernetes) and `eks` (Amazon EKS). This overrides automatic detection. Typically used for testing purposes only. | Auto-detected |
+| `set_platform` | Manually set the Kubernetes platform type. Possible values are `k8s` (native Kubernetes) and `eks` (Amazon EKS). When set, this completely overrides automatic detection based on the service account token issuer; automatic detection is skipped entirely. Intended for testing or environments where token-based detection isn't available. | Auto-detected |
 | `tls.debug` | Debug level between `0` (no information) and `4` (all details). | `-1` |
 | `tls.verify` | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | `On` |
 | `tls.verify_hostname` | When enabled, turns on hostname validation for certificates. | `Off` |
