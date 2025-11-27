@@ -25,43 +25,58 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Buffer_Size` | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must conform to the [unit size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. A value of `0` results in no limit, and the buffer will expand as-needed. If pod specifications exceed the buffer limit, the API response is discarded when retrieving metadata, and some Kubernetes metadata will fail to be injected to the logs. | `32k` |
-| `Kube_URL` | API Server endpoint | `https://kubernetes.default.svc:443` |
-| `Kube_CA_File` | CA certificate file | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt` |
-| `Kube_CA_Path` | Absolute path to scan for certificate files | _none_ |
-| `Kube_Token_File` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
-| `Kube_Tag_Prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
-| `Merge_Log` | When enabled, check if the `log` field content is a JSON string map. If it is, append the map fields as part of the log structure. | `Off` |
-| `Merge_Log_Key` | When `Merge_Log` is enabled, the filter assumes the `log` field from the incoming message is a JSON string message and attempts to create a structured representation of it at the same level of the `log` field in the map. If `Merge_Log_Key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. | _none_ |
-| `Merge_Log_Trim` | When `Merge_Log` is enabled, trim (remove possible `\n` or `\r\`) field values. | `On` |
-| `Merge_Parser` | Optional parser name to specify how to parse the data contained in the `log` key. Recommended for developers or testing only. | _none_ |
-| `Keep_Log` | When `Keep_Log` is disabled and `Merge_Log` enabled, the `log` field is removed from the incoming message once it has been successfully merged. | `On` |
+| `annotations` | Include Kubernetes pod resource annotations in the extra metadata. | `On` |
+| `aws_pod_association_endpoint` | Endpoint path for pod to service name association. Only used when `aws_use_pod_association` is enabled. | `/kubernetes/pod-to-service-env-map` |
+| `aws_pod_association_host` | Host to connect with when performing pod to service name association. Only used when `aws_use_pod_association` is enabled. | `cloudwatch-agent.amazon-cloudwatch` |
+| `aws_pod_association_host_client_cert_file` | Client certificate path for enabling mTLS on calls to the agent server. | `/etc/amazon-cloudwatch-observability-agent-client-cert/client.crt` |
+| `aws_pod_association_host_client_key_file` | Client certificate key path for enabling mTLS on calls to the agent server. | `/etc/amazon-cloudwatch-observability-agent-client-cert/client.key` |
+| `aws_pod_association_host_server_ca_file` | TLS CA certificate path for communication with the agent server. | `/etc/amazon-cloudwatch-observability-agent-server-cert/tls-ca.crt` |
+| `aws_pod_association_host_tls_debug` | TLS debug level for agent server connection: `0` (no debug), `1` (error), `2` (state change), `3` (info), `4` (verbose). | `0` |
+| `aws_pod_association_host_tls_verify` | Enable or disable verification of TLS peer certificate for agent server connection. | `On` |
+| `aws_pod_association_port` | Port to connect with for pod to service name association. Only used when `aws_use_pod_association` is enabled. | `4311` |
+| `aws_pod_service_map_refresh_interval` | Refresh interval in seconds for the pod to service map. | `60` |
+| `aws_pod_service_map_ttl` | Time-To-Live (TTL) for pod to service map cache entries. Set to `0` to disable TTL and evict entries at random when capacity is reached. | `0` |
+| `aws_pod_service_preload_cache_dir` | Directory containing pod to service map files for pre-loading cache. | _none_ |
+| `aws_use_pod_association` | Enable custom endpoint to get pod to service name mapping. Required for [EKS platform detection](#eks-platform-detection). | `Off` |
+| `buffer_size` | Set the buffer size for HTTP client when reading responses from Kubernetes API server. The value must conform to the [unit size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. A value of `0` results in no limit, and the buffer will expand as-needed. If pod specifications exceed the buffer limit, the API response is discarded when retrieving metadata, and some Kubernetes metadata will fail to be injected to the logs. | `32k` |
+| `cache_use_docker_id` | When enabled, metadata will be fetched from Kubernetes when `docker_id` is changed. | `Off` |
+| `dns_retries` | Number of DNS lookup retries until the network starts working. | `6` |
+| `dns_wait_time` | DNS lookup interval between network status checks. | `30` |
+| `dummy_meta` | If set, use dummy-meta data (for test/dev purposes). | `Off` |
+| `k8s-logging.exclude` | Allow Kubernetes pods to exclude their logs from the log processor. | `Off` |
+| `k8s-logging.parser` | Allow Kubernetes pods to suggest a pre-defined parser. | `Off` |
+| `keep_log` | When `keep_log` is disabled and `merge_log` enabled, the `log` field is removed from the incoming message once it has been successfully merged. | `On` |
+| `kube_ca_file` | CA certificate file | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt` |
+| `kube_ca_path` | Absolute path to scan for certificate files | _none_ |
+| `kube_meta_cache_ttl` | Configurable time-to-live for Kubernetes cached pod metadata. By default, it's set to `0` which means `TTL` for cache entries is disabled and cache entries are evicted at random when capacity is reached. To enable this option, set the number to a time interval. For example, set the value to `60` or `60s` and cache entries which have been created more than 60 seconds ago will be evicted. | `0` |
+| `kube_meta_namespace_cache_ttl` | Configurable time-to-live for Kubernetes cached namespace metadata. If set to `0`, entries are evicted at random when capacity is reached. | `900` (seconds) |
+| `kube_meta_preload_cache_dir` | If set, Kubernetes metadata can be cached or pre-loaded from files in JSON format in this directory, named `namespace-pod.meta`. | _none_ |
+| `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
+| `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
+| `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
+| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`.| `600` |
+| `kube_url` | API Server endpoint | `https://kubernetes.default.svc:443` |
+| `kubelet_host` | Kubelet host to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `127.0.0.1` |
+| `kubelet_port` | Kubelet port to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `10250` |
+| `labels` | Include Kubernetes pod resource labels in the extra metadata. | `On` |
+| `merge_log` | When enabled, check if the `log` field content is a JSON string map. If it's, append the map fields as part of the log structure. | `Off` |
+| `merge_log_key` | When `merge_log` is enabled, the filter assumes the `log` field from the incoming message is a JSON string message and attempts to create a structured representation of it at the same level of the `log` field in the map. If `merge_log_key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. | _none_ |
+| `merge_log_trim` | When `merge_log` is enabled, trim (remove possible `\n` or `\r\`) field values. | `On` |
+| `merge_parser` | Optional parser name to specify how to parse the data contained in the `log` key. Recommended for developers or testing only. | _none_ |
+| `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
+| `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
+| `namespace_metadata_only` | Include Kubernetes namespace metadata only and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
+| `owner_references` | Include Kubernetes owner references in the extra metadata. | `Off` |
+| `regex_parser` | Set an alternative Parser to process record tags and extract `pod_name`, `namespace_name`, `container_name`, and `docker_id`. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) (refer to parser `filter-kube-test` as an example). | _none_ |
+| `set_platform` | Manually set the Kubernetes platform type. Possible values are `k8s` (native Kubernetes) and `eks` (Amazon EKS). This overrides automatic detection. Typically used for testing purposes only. | Auto-detected |
 | `tls.debug` | Debug level between `0` (no information) and `4` (all details). | `-1` |
 | `tls.verify` | When enabled, turns on certificate validation when connecting to the Kubernetes API server. | `On` |
 | `tls.verify_hostname` | When enabled, turns on hostname validation for certificates. | `Off` |
-| `Use_Journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
-| `Cache_Use_Docker_Id` | When enabled, metadata will be fetched from Kubernetes when `docker_id` is changed. | `Off` |
-| `Regex_Parser` | Set an alternative Parser to process record tags and extract `pod_name`, `namespace_name`, `container_name`, and `docker_id`. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) (refer to parser `filter-kube-test` as an example). | _none_ |
-| `K8S-Logging.Parser` | Allow Kubernetes pods to suggest a pre-defined parser. | `Off` |
-| `K8S-Logging.Exclude` | Allow Kubernetes pods to exclude their logs from the log processor. | `Off` |
-| `Labels` | Include Kubernetes pod resource labels in the extra metadata. | `On` |
-| `Annotations` | Include Kubernetes pod resource annotations in the extra metadata. | `On` |
-| `Kube_meta_preload_cache_dir` | If set, Kubernetes metadata can be cached or pre-loaded from files in JSON format in this directory, named `namespace-pod.meta`. | _none_ |
-| `Dummy_Meta` | If set, use dummy-meta data (for test/dev purposes). | `Off` |
-| `DNS_Retries` | Number of DNS lookup retries until the network starts working. | `6` |
-| `DNS_Wait_Time` | DNS lookup interval between network status checks. | `30` |
-| `Use_Kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `Kube_URL` settings.| `Off` |
-| `Use_Tag_For_Meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
-| `Kubelet_Port` | Kubelet port to use for HTTP requests. This only works when `Use_Kubelet` is set to `On`. | `10250` |
-| `Kubelet_Host` | Kubelet host to use for HTTP requests. This only works when `Use_Kubelet` is set to `On`. | `127.0.0.1` |
-| `Kube_Meta_Cache_TTL` | Configurable time-to-live for Kubernetes cached pod metadata. By default, it's set to `0` which means `TTL` for cache entries is disabled and cache entries are evicted at random when capacity is reached. To enable this option, set the number to a time interval. For example, set the value to `60` or `60s` and cache entries which have been created more than 60 seconds ago will be evicted. | `0` |
-| `Kube_Token_TTL` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `Kube_Token_File` or the `Kube_Token_Command`.| `600` |
-| `Kube_Token_Command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
-| `Kube_Meta_Namespace_Cache_TTL` | Configurable time-to-live for Kubernetes cached namespace metadata. If set to `0`, entries are evicted at random when capacity is reached. | `900` (seconds) |
-| `Namespace_Labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `Namespace_Annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `Namespace_Metadata_Only` | Include Kubernetes namespace metadata only and no pod metadata. When set, the values of `Labels` and `Annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `Owner_References` | Include Kubernetes owner references in the extra metadata. | `Off` |
+| `tls.vhost` | Set an optional TLS virtual host for the Kubernetes API server connection. | _none_ |
+| `use_journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
+| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings.| `Off` |
+| `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
+| `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
 ## Processing the `log` value
 
@@ -534,6 +549,62 @@ If you are in debug mode, you can see more:
 [2021/02/05 10:33:35] [debug] [filter:kubernetes:kubernetes.0] kubelet find pod: <podName> and ns: <Namespace> match
 ```
 
+## EKS platform detection
+
+When `aws_use_pod_association` is enabled, the Kubernetes filter automatically detects whether Fluent Bit is running on Amazon EKS or native Kubernetes. This detection is performed by inspecting the Kubernetes service account token issuer.
+
+### How detection works
+
+1. Fluent Bit reads the service account token from `/var/run/secrets/kubernetes.io/serviceaccount/token`
+2. The JSON Web Token (JWT) payload is decoded to extract the `iss` (issuer) field
+3. If the issuer contains `oidc.eks.` (matching the EKS OpenID Connect (OIDC) URL pattern `https://oidc.eks.{region}.amazonaws.com/id/{cluster-id}`), the platform is set to `eks`
+4. Otherwise, the platform is set to `k8s` for native Kubernetes
+
+### Platform metadata field
+
+When platform detection is active, an `aws_entity_platform` field is added to the Kubernetes metadata in each record:
+
+```text
+"kubernetes" => {
+  ...
+  "aws_entity_platform" => "eks"
+}
+```
+
+Possible values:
+- `eks`: Running on Amazon EKS
+- `k8s`: Running on native Kubernetes
+
+### Override platform detection
+
+Use the `set_platform` configuration option to manually override automatic detection:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  filters:
+    - name: kubernetes
+      match: 'kube.*'
+      aws_use_pod_association: true
+      set_platform: eks
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[FILTER]
+    Name                    kubernetes
+    Match                   kube.*
+    aws_use_pod_association true
+    set_platform            eks
+```
+
+{% endtab %}
+{% endtabs %}
+
 ## Troubleshooting
 
 Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is operating properly. You might receive log messages like the following:
@@ -588,4 +659,4 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
 ## Credit
 
-The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [Jimmi Dyson](https://github.com/jimmidyson).
+The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [`Jimmi Dyson`](https://github.com/jimmidyson).
