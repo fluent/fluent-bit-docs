@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 
 | Key           | Description                                                                                                                                                                                         | Default |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `16k`   |
+| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `16k`   |
 | `Parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
 | `Threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
 
@@ -83,7 +83,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
     ```bash
     #!/bin/sh
-    
+
     for ((i=0; i<=5; i++)); do
       echo -n "
         [
@@ -198,13 +198,13 @@ You can then use the parsers file in a `stdin` plugin in the main Fluent Bit con
 ```yaml
 service:
   parsers_file: parsers.yaml
-    
+
 pipeline:
   inputs:
     - name: stdin
       tag: stdin
       parser: stringify_message
-       
+
   outputs:
     - name: stdout
       match: '*'
@@ -216,7 +216,7 @@ pipeline:
 ```text
 [SERVICE]
   parsers_file parsers.conf
-    
+
 [INPUT]
   Name    stdin
   Tag     stdin

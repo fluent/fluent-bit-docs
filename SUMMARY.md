@@ -38,7 +38,7 @@
 ## Administration
 
 * [Configure Fluent Bit](administration/configuring-fluent-bit.md)
-  * [YAML configuration](administration/configuring-fluent-bit/yaml.md)
+  * [YAML configuration files](administration/configuring-fluent-bit/yaml.md)
     * [Environment variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
     * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
@@ -47,7 +47,7 @@
     * [Pipeline](administration/configuring-fluent-bit/yaml/pipeline-section.md)
     * [Plugins](administration/configuring-fluent-bit/yaml/plugins-section.md)
     * [Upstream servers](administration/configuring-fluent-bit/yaml/upstream-servers-section.md)
-  * [Classic mode](administration/configuring-fluent-bit/classic-mode.md)
+  * [Classic configuration files](administration/configuring-fluent-bit/classic-mode.md)
     * [Configuration file](administration/configuring-fluent-bit/classic-mode/configuration-file.md)
     * [Commands](administration/configuring-fluent-bit/classic-mode/commands.md)
     * [Format and schema](administration/configuring-fluent-bit/classic-mode/format-schema.md)
@@ -55,7 +55,6 @@
     * [Upstream servers](administration/configuring-fluent-bit/classic-mode/upstream-servers.md)
     * [Variables](administration/configuring-fluent-bit/classic-mode/variables.md)
   * [Multiline parsing](administration/configuring-fluent-bit/multiline-parsing.md)
-  * [Unit Sizes](administration/configuring-fluent-bit/unit-sizes.md)
 * [AWS credentials](administration/aws-credentials.md)
 * [Backpressure](administration/backpressure.md)
 * [Buffering and storage](administration/buffering-and-storage.md)

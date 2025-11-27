@@ -1,4 +1,4 @@
-# YAML configuration
+# YAML configuration files
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=864c6f0e-8977-4838-8772-84416943548e" />
 

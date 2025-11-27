@@ -13,9 +13,9 @@ The plugin supports the following configuration parameters:
 | `Accessible_Paths` | Specify the allowed list of paths to be able to access paths from Wasm programs.                                                             |
 | `Interval_Sec`     | Polling interval (seconds).                                                                                                                  |
 | `Interval_NSec`    | Polling interval (nanosecond).                                                                                                               |
-| `Wasm_Heap_Size`   | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.  |
-| `Wasm_Stack_Size`  | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values. |
-| `Buf_Size`         | Size of the buffer See [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.                           |
+| `Wasm_Heap_Size`   | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values.  |
+| `Wasm_Stack_Size`  | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
+| `Buf_Size`         | Size of the buffer See [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values.                           |
 | `Oneshot`          | Only run once at startup. This allows collection of data precedent to the Fluent Bit startup (Boolean, default: `false`).                    |
 | `Threaded`         | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`.                    |
 
