@@ -165,7 +165,26 @@ The OpenTelemetry input plugin provides detailed error status information when p
 - `FLB_OTEL_TRACES_ERR_INVALID_EVENT_ENTRY` - Invalid span event
 - `FLB_OTEL_TRACES_ERR_INVALID_LINK_ENTRY` - Invalid span link
 
-Error messages are logged with the specific error status code to help diagnose issues with incoming trace data.
+#### Valid span status codes
+
+The OpenTelemetry specification defines three valid span status codes. When processing trace data, the plugin accepts the following status code values (case-insensitive):
+
+- `OK` - The operation completed successfully
+- `ERROR` - The operation has an error
+- `UNSET` - The status isn't set (default)
+
+Any other status code value triggers `FLB_OTEL_TRACES_ERR_STATUS_FAILURE` and causes the trace data to be rejected. The status code must be provided as a string in the `status.code` field of the span object.
+
+#### Error handling behavior
+
+When trace validation fails, the following behavior applies:
+
+- **Trace data is dropped**: Invalid trace data isn't processed or forwarded. The trace payload is rejected immediately.
+- **Error logging**: The plugin logs an error message with the specific error status code to help diagnose issues. Error messages include the error code number and description.
+- **No retry mechanism**: Failed requests aren't automatically retried. The client must resend corrected trace data.
+- **HTTP response codes**:
+  - **HTTP/1.1**: Returns `400 Bad Request` with an error message when validation fails. Returns the configured `successful_response_code` (default `201 Created`) when processing succeeds.
+  - **gRPC**: Returns gRPC status `2 (UNKNOWN)` with message "Serialization error." when validation fails. Returns gRPC status `0 (OK)` with an empty `ExportTraceServiceResponse` when processing succeeds.
 
 ### Strict ID decoding
 
@@ -236,3 +255,5 @@ The following example shows a valid OpenTelemetry JSON trace payload that can be
 ```
 
 Trace IDs must be exactly 32 hex characters and span IDs must be exactly 16 hex characters. Invalid IDs will be rejected with appropriate error messages.
+
+In the example, the `status.code` field uses `"OK"`. Valid status code values are `"OK"`, `"ERROR"`, and `"UNSET"` (case-insensitive). Any other value triggers `FLB_OTEL_TRACES_ERR_STATUS_FAILURE` and causes the trace to be rejected.
