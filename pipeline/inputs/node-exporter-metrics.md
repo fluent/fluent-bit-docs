@@ -52,7 +52,7 @@ This helps with down-sampling when collecting metrics.
 | `collector.systemd.scrape_interval` | The rate in seconds at which `systemd` metrics are collected from the host operating system. | `0` |
 | `collector.textfile.path` | Specify path or directory to collect textfile metrics from the host operating system. | Not set by default. |
 | `collector.textfile.scrape_interval` | The rate in seconds at which `textfile` metrics are collected from the host operating system. | `0` |
-| `collector.thermalzone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
+| `collector.thermal_zone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
 | `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
 | `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
 | `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
