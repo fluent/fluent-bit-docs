@@ -17,7 +17,7 @@ The plugin supports the following configuration parameters:
 | `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
 | `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
-| `version`           | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version.     | `8.0.0`       |
+| `version`           | Specify the Elasticsearch version that Fluent Bit reports to clients during sniffing and API requests.                                   | `8.0.0`       |
 
 ### TLS / SSL
 
