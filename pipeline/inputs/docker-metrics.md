@@ -1,20 +1,22 @@
 # Docker metrics
 
-The _Docker_ input plugin you collect Docker container metrics, including memory usage and CPU consumption.
+The _Docker_ input plugin lets you collect Docker container metrics, including memory usage and CPU consumption.
 
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key               | Description                                                                                             | Default                      |
-|-------------------|---------------------------------------------------------------------------------------------------------|------------------------------|
-| `Interval_Sec`    | Polling interval in seconds                                                                             | `1`                          |
-| `Include`         | A space-separated list of containers to include.                                                        | _none_                       |
-| `Exclude`         | A space-separated list of containers to exclude.                                                        | _none_                       |
-| `Threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                      |
-| `path.containers` | Used to specify the container directory if Docker is configured with a custom `data-root` directory.    | `/var/lib/docker/containers` |
+|:------------------|:--------------------------------------------------------------------------------------------------------|:-----------------------------|
+| `exclude`         | A space-separated list of containers to exclude.                                                        | _none_                       |
+| `include`         | A space-separated list of containers to include.                                                        | _none_                       |
+| `interval_nsec`   | Polling interval in nanoseconds.                                                                        | `0`                          |
+| `interval_sec`    | Polling interval in seconds.                                                                            | `1`                          |
+| `path.containers` | Container directory path, for custom Docker `data-root` configurations.                                 | `/var/lib/docker/containers` |
+| `path.sysfs`      | Sysfs cgroup mount point.                                                                               | `/sys/fs/cgroup`             |
+| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                      |
 
-If you set neither `Include` nor `Exclude`, the plugin will try to get metrics from all running containers.
+If you set neither `include` nor `exclude`, the plugin will try to get metrics from all running containers.
 
 ## Configuration file
 
