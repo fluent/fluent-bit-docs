@@ -10,10 +10,10 @@ The plugin supports the following configuration parameters:
 
 | Key             | Description                                                                                                                       | Default   |
 |:----------------|:----------------------------------------------------------------------------------------------------------------------------------|:----------|
-| `Interval_Sec`  | Polling interval (seconds).                                                                                                       | `1`       |
-| `Interval_NSec` | Polling interval (nanosecond).                                                                                                    | `0`       |
-| `Dev_Name`      | Device name to limit the target (for example, `sda`). If not set, `in_disk` gathers information from all of disks and partitions. | all disks |
-| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                           | `false`   |
+| `dev_name`      | Device name to limit the target (for example, `sda`). If not set, `in_disk` gathers information from all of disks and partitions. | all disks |
+| `interval_nsec` | Polling interval in nanoseconds.                                                                                                  | `0`       |
+| `interval_sec`  | Polling interval in seconds.                                                                                                      | `1`       |
+| `threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                           | `false`   |
 
 ## Get started
 
@@ -76,6 +76,6 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Total interval (sec) = `Interval_Sec` + `(Interval_Nsec` / 1000000000)
+Total interval (sec) = `interval_sec` + (`interval_nsec` / 1000000000)
 
 For example: `1.5s` = `1s` + `500000000ns`
