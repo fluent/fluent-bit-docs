@@ -33,7 +33,7 @@ The plugin supports the following configuration parameters:
 
 ## Get started
 
-In order to get the statistics of the CPU usage of your system, you can run the plugin from the command line or through the configuration file:
+To get the statistics of the CPU usage of your system, you can run the plugin from the command line or through the configuration file:
 
 ### Command line
 
