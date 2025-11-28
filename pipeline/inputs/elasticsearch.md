@@ -21,9 +21,19 @@ The plugin supports the following configuration parameters:
 
 ### TLS / SSL
 
-The Elasticsearch input plugin supports TLS/SSL. For more details about the properties available and general configuration, refer to [Transport Security](../../administration/transport-security.md).
+The Elasticsearch input plugin supports TLS/SSL for receiving data from Beats agents or other clients over encrypted connections. For more details about the properties available and general configuration, refer to [Transport Security](../../administration/transport-security.md).
 
-The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients, which means it builds its cluster and dynamically generate a connection list. The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
+When configuring TLS for Elasticsearch ingestion, common options include:
+
+- `tls.verify`: Enable or disable certificate validation for incoming connections.
+- `tls.ca_file`: Specify a CA certificate to validate client certificates when using mutual TLS (mTLS).
+- `tls.crt_file` and `tls.key_file`: Provide the server certificate and private key.
+
+### Sniffing
+
+Elasticsearch clients use a process called "sniffing" to automatically discover cluster nodes. When a client connects, it can query the cluster to retrieve a list of available nodes and their addresses. This allows the client to distribute requests across the cluster and adapt when nodes join or leave.
+
+The `hostname` parameter specifies the hostname or fully qualified domain name that Fluent Bit returns during sniffing requests. Clients use this information to build their connection list. Set this value to match how clients should reach this Fluent Bit instance (for example, an external IP or load balancer address rather than `localhost` in production environments).
 
 ## Get started
 
