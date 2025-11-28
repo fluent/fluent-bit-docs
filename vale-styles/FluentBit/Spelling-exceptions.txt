@@ -23,6 +23,7 @@ Buildkite
 Buildroot
 cAdvisor
 Calyptia
+cgroup
 Chronosphere
 chronotf
 clickstreams
@@ -220,6 +221,7 @@ sysinfo
 syslog
 systemctl
 systemd
+Sysfs
 Tanzu
 Telegraf
 templated
