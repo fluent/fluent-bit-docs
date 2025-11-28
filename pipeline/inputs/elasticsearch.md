@@ -8,15 +8,32 @@ The plugin supports the following configuration parameters:
 
 | Key                 | Description                                                                                                                              | Default value |
 |:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
-| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
 | `buffer_chunk_size` | Set the buffer chunk size.                                                                                                               | `512K`        |
-| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
-| `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
+| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
 | `hostname`          | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | `localhost`   |
-| `version`           | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version.     | `8.0.0`       |
+| `http2`             | Enable HTTP/2 support.                                                                                                                   | `true`        |
+| `listen`            | The address to listen on.                                                                                                                | `0.0.0.0`     |
+| `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
+| `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
+| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
+| `version`           | Specify the Elasticsearch version that Fluent Bit reports to clients during sniffing and API requests.                                   | `8.0.0`       |
 
-The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients, which means it builds its cluster and dynamically generate a connection list. The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
+### TLS / SSL
+
+The Elasticsearch input plugin supports TLS/SSL for receiving data from Beats agents or other clients over encrypted connections. For more details about the properties available and general configuration, refer to [Transport Security](../../administration/transport-security.md).
+
+When configuring TLS for Elasticsearch ingestion, common options include:
+
+- `tls.verify`: Enable or disable certificate validation for incoming connections.
+- `tls.ca_file`: Specify a CA certificate to validate client certificates when using mutual TLS (mTLS).
+- `tls.crt_file` and `tls.key_file`: Provide the server certificate and private key.
+
+### Sniffing
+
+Elasticsearch clients use a process called "sniffing" to automatically discover cluster nodes. When a client connects, it can query the cluster to retrieve a list of available nodes and their addresses. This allows the client to distribute requests across the cluster and adapt when nodes join or leave.
+
+The `hostname` parameter specifies the hostname or fully qualified domain name that Fluent Bit returns during sniffing requests. Clients use this information to build their connection list. Set this value to match how clients should reach this Fluent Bit instance (for example, an external IP or load balancer address rather than `localhost` in production environments).
 
 ## Get started
 
