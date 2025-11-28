@@ -6,19 +6,20 @@ The _Dummy_ input plugin generates dummy events. Use this plugin for testing, de
 
 The plugin supports the following configuration parameters:
 
-| Key                | Description                                                                                                             | Default               |
-|:-------------------|:------------------------------------------------------------------------------------------------------------------------|:----------------------|
-| `Dummy`            | Dummy JSON record.                                                                                                      | `{"message":"dummy"}` |
-| `Metadata`         | Dummy JSON metadata.                                                                                                    | `{}`                  |
-| `Start_time_sec`   | Dummy base timestamp, in seconds.                                                                                       | `0`                   |
-| `Start_time_nsec`  | Dummy base timestamp, in nanoseconds.                                                                                   | `0`                   |
-| `Rate`             | Rate at which messages are generated expressed in how many times per second.                                            | `1`                   |
-| `Interval_sec`     | Set time interval, in seconds, at which every message is generated. If set, `Rate` configuration is ignored.            | `0`                   |
-| `Interval_nsec`    | Set time interval, in nanoseconds, at which every message is generated. If set, `Rate` configuration is ignored.        | `0`                   |
-| `Samples`          | If set, the events number will be limited. For example, if Samples=3, the plugin generates only three events and stops. | _none_                |
-| `Copies`           | Number of messages to generate each time messages generate.                                                             | `1`                   |
-| `Flush_on_startup` | If set to `true`, the first dummy event is generated at startup.                                                        | `false`               |
-| `Threaded`         | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                 | `false`               |
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `copies` | Number of messages to generate each time messages are generated. | `1` |
+| `dummy` | Dummy JSON record. | `{"message":"dummy"}` |
+| `fixed_timestamp` | If enabled, use a fixed timestamp. This allows the message to be pre-generated once. | `false` |
+| `flush_on_startup` | If set to `true`, the first dummy event is generated at startup. | `false` |
+| `interval_nsec` | Set time interval, in nanoseconds, at which every message is generated. If set, `rate` configuration is ignored. | `0` |
+| `interval_sec` | Set time interval, in seconds, at which every message is generated. If set, `rate` configuration is ignored. | `0` |
+| `metadata` | Dummy JSON metadata. | `{}` |
+| `rate` | Rate at which messages are generated, expressed in how many times per second. | `1` |
+| `samples` | Limit the number of events generated. For example, if `samples=3`, the plugin generates only three events and stops. `0` means no limit. | `0` |
+| `start_time_nsec` | Set a dummy base timestamp, in nanoseconds. If set to `-1`, the current time is used. | `-1` |
+| `start_time_sec` | Set a dummy base timestamp, in seconds. If set to `-1`, the current time is used. | `-1` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Get started
 
@@ -65,7 +66,7 @@ pipeline:
 ```text
 [INPUT]
   Name   dummy
-  Dummy {"message": "custom dummy"}
+  Dummy  {"message": "custom dummy"}
 
 [OUTPUT]
   Name   stdout
