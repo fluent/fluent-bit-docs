@@ -99,6 +99,7 @@ exceptions:
   - PATH
   - PEM
   - PDF
+  - PID
   - PHP
   - POSIX
   - POST

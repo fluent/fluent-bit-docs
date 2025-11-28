@@ -9,35 +9,35 @@ The CPU metrics plugin creates metrics that are log-based, such as JSON payload.
 | Key        | Description                                                                                                                                                                    |
 |:-----------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `cpu_p`    | CPU usage of the overall system, this value is the summation of time spent on user and kernel space. The result takes in consideration the numbers of CPU cores in the system. |
-| `user_p`   | CPU usage in User mode, for short it means the CPU usage by user space programs. The result of this value takes in consideration the numbers of CPU cores in the system.       |
 | `system_p` | CPU usage in Kernel mode, for short it means the CPU usage by the Kernel. The result of this value takes in consideration the numbers of CPU cores in the system.              |
-| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`.                                                      |
+| `user_p`   | CPU usage in User mode, for short it means the CPU usage by user space programs. The result of this value takes in consideration the numbers of CPU cores in the system.       |
 
 In addition to the keys reported in the previous table, a similar content is created per CPU core. The cores are listed from `0` to `N` as the Kernel reports:
 
 | Key             | Description                                                                  |
 |:----------------|:-----------------------------------------------------------------------------|
 | `cpuN.p_cpu`    | Represents the total CPU usage by core `N`.                                  |
-| `cpuN.p_user`   | Total CPU spent in user mode or user space programs associated to this core. |
 | `cpuN.p_system` | Total CPU spent in system or kernel mode associated to this core.            |
+| `cpuN.p_user`   | Total CPU spent in user mode or user space programs associated to this core. |
 
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key            | Description                                                                                                                                                                         | Default |
-|:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `Interval_Sec` | Polling interval in seconds.                                                                                                                                                        | `1`     |
-| `Interval_NSec | Polling interval in nanoseconds`                                                                                                                                                    | `0`     |
-| `PID`          | Specify the `ID` (`PID`) of a running process in the system. By default, the plugin monitors the whole system but if this option is set, it will only monitor the given process ID. | _none_  |
+| Key              | Description                                                                                                                                                                             | Default |
+|:-----------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| `interval_nsec`  | Polling interval in nanoseconds.                                                                                                                                                        | `0`     |
+| `interval_sec`   | Polling interval in seconds.                                                                                                                                                            | `1`     |
+| `pid`            | Specify the process ID (PID) of a running process in the system. By default, the plugin monitors the whole system but if this option is set, it will only monitor the given process ID. | _none_  |
+| `threaded`       | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                 | `false` |
 
 ## Get started
 
-In order to get the statistics of the CPU usage of your system, you can run the plugin from the command line or through the configuration file:
+To get the statistics of the CPU usage of your system, you can run the plugin from the command line or through the configuration file:
 
 ### Command line
 
-You can run this filter from the command line using a command like the following:
+You can run this input plugin from the command line using a command like the following:
 
 ```shell
 build/bin/fluent-bit -i cpu -t my_cpu -o stdout -m '*'
