@@ -8,13 +8,20 @@ The plugin supports the following configuration parameters:
 
 | Key                 | Description                                                                                                                              | Default value |
 |:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
-| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
 | `buffer_chunk_size` | Set the buffer chunk size.                                                                                                               | `512K`        |
-| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
-| `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
+| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
 | `hostname`          | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | `localhost`   |
-| `version`           | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version.     | `8.0.0`       |
+| `http2`             | Enable HTTP/2 support.                                                                                                                   | `true`        |
+| `listen`            | The address to listen on.                                                                                                                | `0.0.0.0`     |
+| `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
+| `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
+| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
+| `version`           | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version.     | `8.0.0`       |
+
+### TLS / SSL
+
+The Elasticsearch input plugin supports TLS/SSL. For more details about the properties available and general configuration, refer to [Transport Security](../../administration/transport-security.md).
 
 The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients, which means it builds its cluster and dynamically generate a connection list. The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
 
