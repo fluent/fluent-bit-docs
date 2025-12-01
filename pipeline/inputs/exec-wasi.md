@@ -76,6 +76,7 @@ pipeline:
       wasi_path: /path/to/wasi/program.wasm
       # Note: run from the 'wasi_path' location.
       accessible_paths: /path/to/accessible
+      parser: wasi
 
   outputs:
     - name: stdout
