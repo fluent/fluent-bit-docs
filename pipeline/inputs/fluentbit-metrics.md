@@ -8,15 +8,15 @@ Fluent Bit exposes [metrics](../../administration/monitoring.md) to let you moni
 
 {% hint style="info" %}
 
-Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
+Metrics collected with Fluent Bit Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
 
 {% endhint %}
 
-## Configuration
+## Configuration parameters
 
 | Key               | Description                                                                                             | Default     |
 |-------------------|---------------------------------------------------------------------------------------------------------|-------------|
-| `scrape_interval` | The rate at which metrics are collected from the host operating system.                                 | `2` seconds |
+| `scrape_interval` | The rate at which Fluent Bit internal metrics are collected.                                            | `2` seconds |
 | `scrape_on_start` | Scrape metrics upon start, use to avoid waiting for `scrape_interval` for the first round of metrics.   | `false`     |
 | `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`     |
 
@@ -24,7 +24,7 @@ Metrics collected with Node Exporter Metrics flow through a separate pipeline fr
 
 ### Configuration file
 
-In the following configuration file, the input plugin `node_exporter_metrics` collects metrics every `2` seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
+In the following configuration file, the input plugin `fluentbit_metrics` collects metrics every `2` seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
