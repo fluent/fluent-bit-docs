@@ -11,22 +11,22 @@ The `service` section defines global properties of the service. The available co
 | `dns.mode` | Sets the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per-plugin basis. | `UDP` |
 | `log_file` | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (`stderr`). | _none_ |
 | `log_level` | Sets the logging verbosity level. Possible values: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. For example, if `debug` is set, it will include `error`, `warning`, `info`, and `debug`. The `trace` mode is only available if Fluent Bit was built with the `WITH_TRACE` option enabled. | `info` |
-| `parsers_file` | Path for a parsers configuration file. Multiple `parsers_file` entries can be defined within the section. Parsers can be declared directly in the [`parsers` section](../administration/configuring-fluent-bit/yaml/parsers-section.md) of YAML configuration files. | _none_ |
-| `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to custom plugins (.so files) that Fluent Bit can load at runtime. Plugins can be declared directly in the [`plugins` section](../administration/configuring-fluent-bit/yaml/plugins-section.md) of YAML configuration files. | _none_ |
-| `streams_file` | Path for the [stream processor](../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
+| `parsers_file` | Path for a parsers configuration file. Multiple `parsers_file` entries can be defined within the section. Parsers can be declared directly in the [`parsers` section](./parsers-section.md) of YAML configuration files. | _none_ |
+| `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to custom plugins (.so files) that Fluent Bit can load at runtime. Plugins can be declared directly in the [`plugins` section](./plugins-section.md) of YAML configuration files. | _none_ |
+| `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
 | `http_server` | Enables the built-in HTTP server. | `off` |
 | `http_listen` | Sets the listening interface for the HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port` | Sets the TCP port for the HTTP server. | `2020` |
-| `hot_reload` | Enables [hot reloading](../administration/hot-reload.md) of configuration with SIGHUP. | `on` |
+| `hot_reload` | Enables [hot reloading](../../../administration/hot-reload.md) of configuration with SIGHUP. | `on` |
 | `coro_stack_size` | Sets the coroutines stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (for example, `4096`) can cause coroutine threads to overrun the stack buffer. For best results, don't change this parameter from its default value. | `24576` |
 | `scheduler.cap`   | Sets a maximum retry time in seconds. | `2000` |
 | `scheduler.base`  | Sets the base of exponential backoff.  | `5` |
-| `json.convert_nan_to_null` | If enabled, `NaN` is converted to `null` when Fluent Bit converts msgpack to JSON. | `false` |
+| `json.convert_nan_to_null` | If enabled, `NaN` is converted to `null` when Fluent Bit converts `msgpack` to JSON. | `false` |
 | `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
 | `sp.convert_from_str_to_num` | If enabled, the stream processor converts strings that represent numbers to a numeric type. | `true` |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
-### Storage configuration
+## Storage configuration
 
 The following storage-related keys can be set in the `service` section:
 

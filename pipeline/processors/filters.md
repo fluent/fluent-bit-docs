@@ -44,7 +44,7 @@ pipeline:
 
 ### Lua
 
-In this example configuration, an input plugin uses the [Lua](../pipeline/filters/lua.md) filter as a processor to add a new key `hostname` with the value `monox`. Then, an output plugin adds a new key named `output` with the value `new data`.
+In this example configuration, an input plugin uses the [Lua](../filters/lua.md) filter as a processor to add a new key `hostname` with the value `monox`. Then, an output plugin adds a new key named `output` with the value `new data`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
