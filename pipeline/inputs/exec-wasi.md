@@ -25,7 +25,7 @@ Here is a configuration example.
 
 `in_exec_wasi` can handle parsers. To retrieve from structured data from a Wasm program, you must create a `parser.conf`:
 
-The `time_format` should be aligned for the format of your using timestamp.
+The `time_format` should be aligned for the format your using for timestamps.
 
 This example assumes the Wasm program writes JSON style strings to `stdout`.
 
