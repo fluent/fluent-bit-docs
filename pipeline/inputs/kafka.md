@@ -8,17 +8,19 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 
 ## Configuration parameters
 
-| Key                  | Description                                                                                                                              | default      |
+| Key                  | Description                                                                                                                              | Default      |
 |:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:-------------|
 | `brokers`            | Single or multiple list of Kafka Brokers. For example: `192.168.1.3:9092`, `192.168.1.4:9092`.                                           | _none_       |
-| `topics`             | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to.                                                  | _none_       |
-| `format`             | Serialization format of the messages. If set to `json`, the payload will be parsed as JSON.                                              | _none_       |
+| `buffer_max_size`    | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M`         |
 | `client_id`          | Client id passed to librdkafka.                                                                                                          | _none_       |
+| `enable_auto_commit` | Rely on Kafka auto-commit and commit messages in batches.                                                                                | `false`      |
+| `format`             | Serialization format of the messages. If set to `json`, the payload will be parsed as JSON.                                              | `none`       |
 | `group_id`           | Group id passed to librdkafka.                                                                                                           | `fluent-bit` |
 | `poll_ms`            | Kafka brokers polling interval in milliseconds.                                                                                          | `500`        |
-| `Buffer_Max_Size`    | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M`         |
-| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md)                     | _none_       |
+| `poll_timeout_ms`    | Timeout in milliseconds for Kafka consumer poll operations. Only effective when `threaded` is enabled.                                   | `1`          |
+| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).                    | _none_       |
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`      |
+| `topics`             | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to.                                                  | _none_       |
 
 ## Get started
 
@@ -57,14 +59,14 @@ pipeline:
 
 ```text
 [INPUT]
-  Name        kafka
-  Brokers     192.168.1.3:9092
-  Topics      some-topic
-  poll_ms     100
+  Name     kafka
+  Brokers  192.168.1.3:9092
+  Topics   some-topic
+  Poll_ms  100
 
 [OUTPUT]
-  Name        stdout
-  Match       *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
@@ -103,22 +105,22 @@ pipeline:
 
 ```text
 [INPUT]
-  Name kafka
-  brokers kafka-broker:9092
-  topics fb-source
-  poll_ms 100
-  format json
+  Name     kafka
+  Brokers  kafka-broker:9092
+  Topics   fb-source
+  Poll_ms  100
+  Format   json
 
 [FILTER]
   Name    lua
   Match   *
-  script  kafka.lua
-  call    modify_kafka_message
+  Script  kafka.lua
+  Call    modify_kafka_message
 
 [OUTPUT]
-  Name kafka
-  brokers kafka-broker:9092
-  topics fb-sink
+  Name    kafka
+  Brokers kafka-broker:9092
+  Topics  fb-sink
 ```
 
 {% endtab %}
