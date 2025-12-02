@@ -8,15 +8,15 @@ The plugin supports the following configuration parameters:
 
 | Key             | Description                                                                                             | Default |
 |:----------------|:--------------------------------------------------------------------------------------------------------|:--------|
-| `Add_Path`      | If enabled, the path is appended to each record.                                                        | `false` |
-| `Buf_Size`      | Buffer size to read the file.                                                                           | `256`   |
-| `File`          | Absolute path to the target file. For example: `/proc/uptime`.                                          | _none_  |
-| `Interval_NSec` | Polling interval (nanoseconds).                                                                         | `0`     |
-| `Interval_Sec`  | Polling interval (seconds).                                                                             | `1`     |
-| `Key`           | Rename a key.                                                                                           | `head`  |
-| `Lines`         | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`.           | `0`     |
-| `Split_line`    | If enabled, `in_head` generates key-value pair per line.                                                | `false` |
-| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `add_path`      | If enabled, the path is appended to each record.                                                        | `false` |
+| `buf_size`      | Buffer size to read the file.                                                                           | `256`   |
+| `file`          | Absolute path to the target file. For example: `/proc/uptime`.                                          | _none_  |
+| `interval_nsec` | Polling interval (nanoseconds).                                                                         | `0`     |
+| `interval_sec`  | Polling interval (seconds).                                                                             | `1`     |
+| `key`           | Rename a key.                                                                                           | `head`  |
+| `lines`         | Line number to read. If the number N is set, `in_head` reads first N lines like `head(1) -n`.           | `0`     |
+| `split_line`    | If enabled, `in_head` generates key-value pair per line.                                                | `false` |
+| `threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Getting started
 
@@ -78,7 +78,7 @@ pipeline:
   File          /proc/uptime
   Buf_Size      256
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout
@@ -90,7 +90,7 @@ pipeline:
 
 The interval is calculated like this:
 
-`Total interval (sec) = Interval_Sec + (Interval_Nsec / 1000000000)`.
+`Total interval (sec) = interval_sec + (interval_nsec / 1000000000)`.
 
 For example: `1.5s = 1s + 500000000ns`.
 
@@ -147,7 +147,7 @@ pipeline:
   Tag            head.cpu
   File           /proc/cpuinfo
   Lines          8
-  Split_line     true
+  Split_Line     true
   # {"line0":"processor    : 0", "line1":"vendor_id    : GenuineIntel" ...}
 
 [FILTER]
