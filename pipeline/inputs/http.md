@@ -7,13 +7,14 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 | Key                        | Description                                                                                                                                | Default   |
 |----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K`    |
+| `buffer_max_size`          | Specify the maximum buffer size to receive a JSON message.                                                                                 | `4M`      |
+| `http2`                    | Enable HTTP/2 support.                                                                                                                     | `true`    |
 | `listen`                   | The address to listen on.                                                                                                                  | `0.0.0.0` |
 | `port`                     | The port for Fluent Bit to listen on.                                                                                                      | `9880`    |
+| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`.                          | _none_    |
+| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`.                                                        | `201`     |
 | `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                        | _none_    |
-| `buffer_max_size`          | Specify the maximum buffer size in KB to receive a JSON message.                                                                           | `4M`      |
-| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K`    |
-| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`                                                         | `201`     |
-| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`                           | _none_    |
 | `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                    | `false`   |
 
 ### TLS / SSL
@@ -34,7 +35,7 @@ This plugin supports dynamic tags which let you send data with different tags th
 
 The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system.
 
-For example, in the following curl message the tag set is `app.log**. **` because the end path is `/app_log`:
+For example, in the following curl message the tag set is `app.log` because the end path is `/app.log`:
 
 ```shell
 curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
@@ -62,13 +63,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name stdout
-  match app.log
+  Name  stdout
+  Match app.log
 ```
 
 {% endtab %}
@@ -102,13 +103,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name  stdout
-  match  http.0
+  Name  stdout
+  Match http.0
 ```
 
 {% endtab %}
@@ -147,14 +148,14 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
-  tag_key key1
+  Name    http
+  Listen  0.0.0.0
+  Port    8888
+  Tag_Key key1
 
 [OUTPUT]
-  name stdout
-  match value1
+  Name  stdout
+  Match value1
 ```
 
 {% endtab %}
@@ -181,9 +182,9 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  success_header X-Custom custom-answer
-  success_header X-Another another-answer
+  Name           http
+  Success_Header X-Custom custom-answer
+  Success_Header X-Another another-answer
 ```
 
 {% endtab %}
@@ -217,13 +218,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -232,5 +233,5 @@ pipeline:
 ### Command line
 
 ```shell
- fluent-bit -i http -p port=8888 -o stdout
+fluent-bit -i http -p port=8888 -o stdout
 ```
