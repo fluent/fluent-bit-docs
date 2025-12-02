@@ -12,7 +12,7 @@ The plugin supports the following configuration parameters:
 | `add_port`      | If enabled, port number is appended to each record.                                                                | `false` |
 | `alert`         | If enabled, it generates messages only when the target TCP service is down.                                        | `false` |
 | `host`          | Name of the target host or IP address.                                                                             | _none_  |
-| `interval_nsec` | Specify a nanoseconds interval for service checks. Works in conjunction with the `interval_sec` configuration key. | `0`     |
+| `interval_nsec` | Specify a nanoseconds interval for service checks. Works with the `interval_sec` configuration key.                | `0`     |
 | `interval_sec`  | Interval in seconds between the service checks.                                                                    | `1`     |
 | `port`          | TCP port where to perform the connection request.                                                                  | _none_  |
 | `threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).            | `false` |
