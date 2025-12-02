@@ -8,14 +8,14 @@ The plugin supports the following configuration parameters:
 
 | Key             | Description                                                                                                        | Default |
 |:----------------|:-------------------------------------------------------------------------------------------------------------------|:--------|
-| `Host`          | Name of the target host or IP address.                                                                             | _none_  |
-| `Port`          | TCP port where to perform the connection request.                                                                  | _none_  |
-| `Interval_Sec`  | Interval in seconds between the service checks.                                                                    | `1`     |
-| `Internal_Nsec` | Specify a nanoseconds interval for service checks. Works in conjunction with the `Interval_Sec` configuration key. | `0`     |
-| `Alert`         | If enabled, it generates messages if the target TCP service is down.                                               | `false` |
-| `Add_Host`      | If enabled, hostname is appended to each records.                                                                  | `false` |
-| `Add_Port`      | If enabled, port number is appended to each records.                                                               | `false` |
-| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).            | `false` |
+| `add_host`      | If enabled, hostname is appended to each record.                                                                   | `false` |
+| `add_port`      | If enabled, port number is appended to each record.                                                                | `false` |
+| `alert`         | If enabled, it generates messages only when the target TCP service is down.                                        | `false` |
+| `host`          | Name of the target host or IP address.                                                                             | _none_  |
+| `interval_nsec` | Specify a nanoseconds interval for service checks. Works in conjunction with the `interval_sec` configuration key. | `0`     |
+| `interval_sec`  | Interval in seconds between the service checks.                                                                    | `1`     |
+| `port`          | TCP port where to perform the connection request.                                                                  | _none_  |
+| `threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).            | `false` |
 
 ## Get started
 
@@ -44,7 +44,7 @@ pipeline:
       port: 80
       interval_sec: 1
       interval_nsec: 0
-      
+
   outputs:
     - name: stdout
       match: '*'
@@ -71,7 +71,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you will see some random values in the output interface similar to this:
+Once Fluent Bit is running, you will see health check results in the output interface similar to this:
 
 ```shell
 $ fluent-bit -i health -p host=127.0.0.1 -p port=80 -o stdout
