@@ -4,12 +4,14 @@ The _Kernel logs_ (`kmsg`) input plugin reads the Linux Kernel log buffer from t
 
 ## Configuration parameters
 
+The plugin supports the following configuration parameters:
+
 | Key          | Description                                                                                                                                             | Default |
 |:-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `Prio_Level` | The log level to filter. The kernel log is dropped if its priority is more than `prio_level`. Allowed values are `0`-`8`. `8` means all logs are saved. | `8`     |
-| `Threaded`   | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                 | `false` |
+| `prio_level` | The log level to filter. The kernel log is dropped if its priority is more than `prio_level`. Allowed values are `0`-`8`. `8` means all logs are saved. | `8`     |
+| `threaded`   | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                 | `false` |
 
-## Get started
+## Getting started
 
 To start getting the Linux Kernel messages, you can run the plugin from the command line or through the configuration file:
 
