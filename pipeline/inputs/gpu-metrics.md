@@ -35,12 +35,12 @@ The plugin supports the following configuration parameters:
 
 | Key                  | Description              | Default   |
 |----------------------|-------------------------------------------------------------------------------------------------------------------------|-----------|
-| `scrape_interval`    | Interval in seconds between metric collection cycles.                                                                   | `5`       |
-| `path_sysfs`         | Path to the `sysfs` root directory. Typically used for testing or non-standard systems.                                   | `/sys`    |
-| `cards_include`      | Pattern specifying which GPU cards to monitor. Supports wildcards (*), ranges (0-3), and comma-separated lists (0,2,4). | `*`       |
 | `cards_exclude`      | Pattern specifying which GPU cards to exclude from monitoring. Uses the same syntax as `cards_include`.                   | _none_    |
+| `cards_include`      | Pattern specifying which GPU cards to monitor. Supports wildcards (*), ranges (0-3), and comma-separated lists (0,2,4). | `*`       |
 | `enable_power`       | Enable collection of power consumption metrics (`gpu_power_watts`).                                                     | `true`    |
 | `enable_temperature` | Enable collection of temperature metrics (`gpu_temperature_celsius`).                                                   | `true`    |
+| `path_sysfs`         | Path to the `sysfs` root directory. Typically used for testing or non-standard systems.                                   | `/sys`    |
+| `scrape_interval`    | Interval in seconds between metric collection cycles.                                                                   | `5`       |
 
 ## GPU detection
 
@@ -121,12 +121,12 @@ In your main configuration file append the following:
 pipeline:
   inputs:
     - name: gpu_metrics
-      scrape_interval: 2
-      path_sysfs: /sys
-      cards_include: "1"
       cards_exclude: "0"
+      cards_include: "1"
       enable_power: true
       enable_temperature: true
+      path_sysfs: /sys
+      scrape_interval: 2
 
   outputs:
     - name: stdout
@@ -139,12 +139,12 @@ pipeline:
 ```text
 [INPUT]
   Name                gpu_metrics
-  scrape_interval     2
-  path_sysfs          /sys
-  cards_include       1
-  cards_exclude       0
-  enable_power        true
-  enable_temperature  true
+  Cards_Exclude       0
+  Cards_Include       1
+  Enable_Power        true
+  Enable_Temperature  true
+  Path_Sysfs          /sys
+  Scrape_Interval     2
 
 [OUTPUT]
   Name   stdout
