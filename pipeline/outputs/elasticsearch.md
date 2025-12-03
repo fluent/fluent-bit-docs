@@ -32,6 +32,7 @@ This plugin has the following configuration parameters:
 | `HTTP_API_Key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `HTTP_User` or `Cloud_Auth` are defined, this parameter is ignored.  | _none_ |
 | `Index` | Index name | `fluent-bit` |
 | `Type` | Type name | `_doc` |
+| `Target_index` | When included: destination index will be rendered using this record accessor syntax. If any field in the record accessor expression is not found in the record, the value of `Index` setting is used. | _none_ |
 | `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off` | `Off` |
 | `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, e.g: If `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
 | `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
@@ -434,3 +435,20 @@ pipeline:
 {% endtabs %}
 
 For records that don't have the field `kubernetes.namespace_name`, the default prefix `logstash` will be used.
+
+### Target_index
+
+The following snippet demonstrates using `destination_index` record value as elasticsearch destination index,
+using `fallback` as default index name if `destination_index` value is not present in record.
+
+```text
+[OUTPUT]
+    Name es
+    Match *
+    # ...
+    Index fallback
+    Target_index fluent-$destination_index
+    # ...
+```
+
+For records that do not have the field `destination__index`, the value of `Index` (`fallback`) will be used.
