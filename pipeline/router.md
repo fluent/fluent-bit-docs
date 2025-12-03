@@ -177,6 +177,21 @@ Conditional routing lets you route individual records to different outputs based
 Conditional routing is available in Fluent Bit version 4.2 and greater. This feature requires YAML configuration files.
 {% endhint %}
 
+### Supported signal types
+
+Conditional routing defines signal types for routing logs, metrics, and traces:
+
+| Signal | Description | Supported |
+| --- | --- | --- |
+| `logs` | Routes log records | Yes |
+| `metrics` | Routes metric records | No |
+| `traces` | Routes trace records | No |
+| `any` | Routes all signal types | Logs only |
+
+{% hint style="warning" %}
+Currently, only the `logs` signal type is fully implemented. The `metrics` and `traces` signal types are parsed by the configuration but condition evaluation always returns false, meaning routes defined for these types won't match any records. When using `any`, only logs are evaluated. Support for metrics and traces conditional routing is planned for a future release.
+{% endhint %}
+
 ### How conditional routing works
 
 Conditional routing uses a `routes` block within input configurations to define routing rules. Each route specifies:
@@ -279,17 +294,6 @@ The following comparison operators are available for condition rules:
 | `not_regex` | Doesn't match a regular expression |
 | `in` | Is included in the specified array |
 | `not_in` | Isn't included in the specified array |
-
-### Signal types
-
-Conditional routing supports different signal types to route logs, metrics, and traces separately:
-
-| Signal | Description | Supported |
-| --- | --- |---|
-| `logs` | Routes log records | Yes |
-| `metrics` | Routes metric records | No | 
-| `traces` | Routes trace records | No |
-| `any` | Routes all signal types | No |
 
 ## Conditional routing examples
 
@@ -691,7 +695,7 @@ To get the most benefit from label-based matching:
 
 1. **Use aliases**: Assign meaningful aliases to your outputs to make routing more stable and easier to understand
 2. **Keep aliases unique**: Ensure that aliases are unique within your configuration to avoid ambiguity
-3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `metrics_backend`, or `trace_collector`)
+3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `audit_logs_destination`, or `debug_logs_archive`)
 4. **Combine with direct routing**: Label-based matching works best when used with direct routing (conditional routing or direct input-output connections)
 
 ## Routing metrics
