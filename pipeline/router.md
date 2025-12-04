@@ -177,6 +177,21 @@ Conditional routing lets you route individual records to different outputs based
 Conditional routing is available in Fluent Bit version 4.2 and greater. This feature requires YAML configuration files.
 {% endhint %}
 
+### Supported signal types
+
+Conditional routing defines signal types for routing logs, metrics, and traces:
+
+| Signal | Description | Supported |
+| --- | --- | --- |
+| `logs` | Routes log records | Yes |
+| `metrics` | Routes metric records | No |
+| `traces` | Routes trace records | No |
+| `any` | Routes all signal types | Logs only |
+
+{% hint style="warning" %}
+Currently, only the `logs` signal type is fully implemented. The `metrics` and `traces` signal types are parsed by the configuration but condition evaluation always returns false, meaning routes defined for these types won't match any records. When using `any`, only logs are evaluated. Support for metrics and traces conditional routing is planned for a future release.
+{% endhint %}
+
 ### How conditional routing works
 
 Conditional routing uses a `routes` block within input configurations to define routing rules. Each route specifies:
@@ -279,17 +294,6 @@ The following comparison operators are available for condition rules:
 | `not_regex` | Doesn't match a regular expression |
 | `in` | Is included in the specified array |
 | `not_in` | Isn't included in the specified array |
-
-### Signal types
-
-Conditional routing supports different signal types to route logs, metrics, and traces separately:
-
-| Signal | Description |
-| --- | --- |
-| `logs` | Routes log records |
-| `metrics` | Routes metric records |
-| `traces` | Routes trace records |
-| `any` | Routes all signal types |
 
 ## Conditional routing examples
 
@@ -517,256 +521,6 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Route metrics by name or labels
-
-This example routes metrics to different backends based on metric name patterns:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  inputs:
-    - name: node_exporter_metrics
-      tag: node.metrics
-      routes:
-        metrics:
-          - name: cpu_metrics
-            condition:
-              op: or
-              rules:
-                - field: "$metric.name"
-                  op: regex
-                  value: "^node_cpu_.*"
-                - field: "$metric.name"
-                  op: regex
-                  value: "^process_cpu_.*"
-            to:
-              outputs:
-                - cpu_metrics_output
-
-          - name: memory_metrics
-            condition:
-              op: or
-              rules:
-                - field: "$metric.name"
-                  op: regex
-                  value: "^node_memory_.*"
-                - field: "$metric.name"
-                  op: regex
-                  value: "^process_resident_memory_.*"
-            to:
-              outputs:
-                - memory_metrics_output
-
-          - name: all_metrics
-            condition:
-              default: true
-            to:
-              outputs:
-                - general_metrics_output
-
-  outputs:
-    - name: prometheus_remote_write
-      alias: cpu_metrics_output
-      host: prometheus-cpu.example.com
-      uri: /api/v1/write
-
-    - name: prometheus_remote_write
-      alias: memory_metrics_output
-      host: prometheus-memory.example.com
-      uri: /api/v1/write
-
-    - name: prometheus_remote_write
-      alias: general_metrics_output
-      host: prometheus.example.com
-      uri: /api/v1/write
-```
-
-{% endtab %}
-{% endtabs %}
-
-This configuration routes CPU-related metrics to a dedicated Prometheus instance, memory metrics to another, and all other metrics to a general metrics backend.
-
-### Route traces by service or attributes
-
-This example routes traces to different backends based on service name and span attributes:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  inputs:
-    - name: opentelemetry
-      listen: 0.0.0.0
-      port: 4318
-      tag: otel.traces
-      routes:
-        traces:
-          - name: critical_service_traces
-            condition:
-              op: or
-              rules:
-                - field: "$resource['service.name']"
-                  op: in
-                  value: ["payment-service", "auth-service", "order-service"]
-                  context: otel_resource_attributes
-                - field: "$span.status_code"
-                  op: eq
-                  value: "ERROR"
-            to:
-              outputs:
-                - critical_traces_output
-
-          - name: high_latency_traces
-            condition:
-              op: and
-              rules:
-                - field: "$span.duration"
-                  op: gt
-                  value: 5000000000
-            to:
-              outputs:
-                - latency_traces_output
-
-          - name: default_traces
-            condition:
-              default: true
-            to:
-              outputs:
-                - general_traces_output
-
-  outputs:
-    - name: opentelemetry
-      alias: critical_traces_output
-      host: jaeger-critical.example.com
-      port: 4317
-
-    - name: opentelemetry
-      alias: latency_traces_output
-      host: jaeger-latency.example.com
-      port: 4317
-
-    - name: opentelemetry
-      alias: general_traces_output
-      host: jaeger.example.com
-      port: 4317
-```
-
-{% endtab %}
-{% endtabs %}
-
-This configuration routes traces from critical services and error traces to a dedicated tracing backend, high-latency traces to a latency analysis backend, and all other traces to a general backend.
-
-### Route multiple signal types
-
-This example demonstrates routing logs, metrics, and traces with a single input configuration:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  inputs:
-    - name: opentelemetry
-      listen: 0.0.0.0
-      port: 4318
-      tag: otel.data
-      routes:
-        logs:
-          - name: error_logs
-            condition:
-              op: and
-              rules:
-                - field: "$severity_text"
-                  op: in
-                  value: ["ERROR", "FATAL", "CRITICAL"]
-            to:
-              outputs:
-                - error_logs_output
-
-          - name: all_logs
-            condition:
-              default: true
-            to:
-              outputs:
-                - general_logs_output
-
-        metrics:
-          - name: application_metrics
-            condition:
-              op: and
-              rules:
-                - field: "$resource['service.namespace']"
-                  op: eq
-                  value: "production"
-                  context: otel_resource_attributes
-            to:
-              outputs:
-                - prod_metrics_output
-
-          - name: all_metrics
-            condition:
-              default: true
-            to:
-              outputs:
-                - general_metrics_output
-
-        traces:
-          - name: sampled_traces
-            condition:
-              op: and
-              rules:
-                - field: "$resource['environment']"
-                  op: eq
-                  value: "production"
-                  context: otel_resource_attributes
-            to:
-              outputs:
-                - prod_traces_output
-
-          - name: all_traces
-            condition:
-              default: true
-            to:
-              outputs:
-                - general_traces_output
-
-  outputs:
-    - name: loki
-      alias: error_logs_output
-      host: loki-errors.example.com
-
-    - name: loki
-      alias: general_logs_output
-      host: loki.example.com
-
-    - name: prometheus_remote_write
-      alias: prod_metrics_output
-      host: prometheus-prod.example.com
-      uri: /api/v1/write
-
-    - name: prometheus_remote_write
-      alias: general_metrics_output
-      host: prometheus.example.com
-      uri: /api/v1/write
-
-    - name: opentelemetry
-      alias: prod_traces_output
-      host: jaeger-prod.example.com
-      port: 4317
-
-    - name: opentelemetry
-      alias: general_traces_output
-      host: jaeger.example.com
-      port: 4317
-```
-
-{% endtab %}
-{% endtabs %}
-
-This configuration shows how to define separate routing rules for each signal type within the same input, enabling unified observability data collection with differentiated routing.
 
 ## Label-based matching
 
@@ -941,7 +695,7 @@ To get the most benefit from label-based matching:
 
 1. **Use aliases**: Assign meaningful aliases to your outputs to make routing more stable and easier to understand
 2. **Keep aliases unique**: Ensure that aliases are unique within your configuration to avoid ambiguity
-3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `metrics_backend`, or `trace_collector`)
+3. **Use descriptive names**: Choose aliases that clearly indicate the purpose of each output (for example, `error_logs_output`, `audit_logs_destination`, or `debug_logs_archive`)
 4. **Combine with direct routing**: Label-based matching works best when used with direct routing (conditional routing or direct input-output connections)
 
 ## Routing metrics

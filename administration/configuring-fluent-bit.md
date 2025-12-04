@@ -1,6 +1,6 @@
 # Configure Fluent Bit
 
-Fluent Bit uses configuration files to store information about your specified [inputs](../data-pipeline/inputs.md), [outputs](../data-pipeline/outputs.md), [filters](../data-pipeline/filters.md), and more. You can write these configuration files in one of these formats:
+Fluent Bit uses configuration files to store information about your specified [inputs](../pipeline/inputs.md), [outputs](../pipeline/outputs.md), [filters](../pipeline/filters.md), and more. You can write these configuration files in one of these formats:
 
 - [YAML configuration files](./configuring-fluent-bit/yaml.md) are the standard configuration format as of Fluent Bit v3.2. They use the `.yaml` file extension.
 - [Classic configuration files](./configuring-fluent-bit/classic-mode.md) will be deprecated at the end of 2026. They use the `.conf` file extension.

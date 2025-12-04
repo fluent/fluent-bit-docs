@@ -4,9 +4,9 @@ description: External libraries embedded in Fluent Bit
 
 # External libraries
 
-Fluent Bit embeds several external libraries in its [/lib](https://github.com/fluent/fluent-bit/tree/master/lib) directory. These libraries are included to minimize external dependencies and maximize cross-platform compatibility.
+Fluent Bit embeds several external libraries in its [`/lib`](https://github.com/fluent/fluent-bit/tree/master/lib) directory. These libraries are included to minimize external dependencies and maximize cross-platform compatibility.
 
-## Core fluent libraries
+## Core Fluent Bit libraries
 
 These libraries are developed and maintained by the Fluent Bit team:
 
@@ -18,7 +18,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 | [`CTraces`](https://github.com/fluent/ctraces) | Creates and manages trace contexts with encoding/decoding support for OpenTelemetry and other formats. | Apache 2.0 |
 | [`CProfiles`](https://github.com/fluent/cprofiles) | Creates and manages profiling data based on the OpenTelemetry Profiles schema. | Apache 2.0 |
 | [`Fluent OTel Proto`](https://github.com/fluent/fluent-otel-proto) | Provides C interfaces for OpenTelemetry protocol buffer definitions (common, resource, trace, logs, metrics). | Apache 2.0 |
-| [`flb_libco`](https://github.com/fluent/flb_libco) | Fork of [libco](https://byuu.org/library/libco/) for cooperative multithreading (coroutines). Includes ARMv8 fixes and macOS support. | Internet Systems Consortium |
+| [`flb_libco`](https://github.com/fluent/fluent-bit/tree/master/lib/flb_libco) | Fork of [`libco`](https://github.com/higan-emu/libco) for cooperative multithreading (coroutines). Includes ARMv8 fixes and macOS support. | Internet Systems Consortium |
 
 ## HTTP and networking
 
@@ -42,7 +42,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 | Library | Purpose | License |
 |---------|---------|---------|
 | [`Onigmo`](https://github.com/k-takata/Onigmo) | Regular expression library (fork of Oniguruma). Supports Perl 5.10+ expressions like `\K`, `\R`, and conditional patterns. Default regular expression engine for Ruby 2.0+. | BSD |
-| [`tutf8e`](https://github.com/papplampe/tutf8e) | Tiny UTF-8 encoder supporting ISO-8859-x and Windows-125x character set conversions. | Massachusetts Institute of Technology (MIT) |
+| [`tutf8e`](https://github.com/nigels-com/tutf8e) | Tiny UTF-8 encoder supporting ISO-8859-x and Windows-125x character set conversions. | Massachusetts Institute of Technology (MIT) |
 | [`simdutf`](https://github.com/simdutf/simdutf) | SIMD-accelerated Unicode validation and transcoding (UTF-8, UTF-16, UTF-32). | Apache 2.0 |
 
 ## Compression
@@ -53,7 +53,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 | [`Snappy`](https://github.com/google/snappy) | Fast compression/decompression library. Prioritizes speed over compression ratio. | BSD |
 | [`zstd`](https://github.com/facebook/zstd) | Zstandard compression providing high compression ratios at fast speeds. | BSD |
 
-## Scripting and webassembly
+## Scripting and WebAssembly
 
 | Library | Purpose | License |
 |---------|---------|---------|
@@ -100,4 +100,3 @@ Some libraries are optional and can be enabled or disabled at build time:
 | `FLB_JEMALLOC` | `jemalloc` | Off (platform dependent) |
 
 For more information on build options, see [Build and install](../installation/downloads/source/build-and-install.md).
-

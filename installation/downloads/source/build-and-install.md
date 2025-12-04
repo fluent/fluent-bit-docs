@@ -14,7 +14,7 @@ To build and install Fluent Bit from source, you must also install the following
 - `libyaml-dev`
 - `pkg-config`
 
-Additionally, certain [input](../pipeline/inputs.md) or [output](../pipeline/outputs.md) plugins might depend on additional components. For example, some plugins require Kafka.
+Additionally, certain [input](../../../pipeline/inputs.md) or [output](../../../pipeline/outputs.md) plugins might depend on additional components. For example, some plugins require Kafka.
 
 ## Prepare environment
 
@@ -305,7 +305,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_ORACLE_LOG_ANALYTICS`](../../../pipeline/outputs/oci-logging-analytics.md)     | Enable Oracle Cloud Infrastructure Logging output plugin | `On`    |
 | [`FLB_OUT_PGSQL`](../../../pipeline/outputs/postgresql.md)                               | Enable PostgreSQL output plugin                          | `Off`   |
 | [`FLB_OUT_PLOT`](../../../pipeline/outputs/plot.md)                                      | Enable Plot output plugin                                | `On`    |
-| [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/inputs/prometheus-exporter.md)         | Enable Prometheus exporter output plugin                 | `On`    |
+| [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/outputs/prometheus-exporter.md)         | Enable Prometheus exporter output plugin                 | `On`    |
 | [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md) | Enable Prometheus remote write output plugin             | `On`    |
 | [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                                          | Enable Amazon S3 output plugin                           | `On`    |
 | [`FLB_OUT_SKYWALKING`](../../../pipeline/outputs/skywalking.md)                          | Enable Apache Skywalking output plugin                   | `On`    |
