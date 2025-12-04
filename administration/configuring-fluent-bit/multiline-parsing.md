@@ -451,7 +451,7 @@ $ ./fluent-bit --config fluent-bit.conf
 
 The following examples show how to use each built-in multiline parser.
 
-### cri
+### Cri
 
 The `cri` parser handles logs from CRI-O container runtime. It uses the `_p` field to determine if a line is complete (`F`) or partial (`P`).
 
@@ -480,18 +480,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/log/containers/*.log
-  read_from_head   true
-  multiline.parser cri
+  Name             tail
+  Path             /var/log/containers/*.log
+  Read_From_Head   true
+  Multiline.Parser cri
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -515,7 +515,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### docker
+### Docker
 
 The `docker` parser handles Docker JSON logs. Lines ending with `\n` are complete; lines without are partial and concatenated.
 
@@ -544,18 +544,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/lib/docker/containers/*/*.log
-  read_from_head   true
-  multiline.parser docker
+  Name             tail
+  Path             /var/lib/docker/containers/*/*.log
+  Read_From_Head   true
+  Multiline.Parser docker
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -579,7 +579,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### go
+### Go
 
 The `go` parser handles Go panic stack traces. It detects `panic:` messages and captures the full goroutine stack.
 
@@ -608,18 +608,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/log/myapp/*.log
-  read_from_head   true
-  multiline.parser go
+  Name             tail
+  Path             /var/log/myapp/*.log
+  Read_From_Head   true
+  Multiline.Parser go
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -644,9 +644,9 @@ main.main()
 {% endtab %}
 {% endtabs %}
 
-### java
+### Java
 
-The `java` parser handles Java exception stack traces. It detects Exception, Error, and Throwable patterns with their stack frames.
+The `java` parser handles Java exception stack traces. It detects `Exception`, `Error`, and `Throwable` patterns with their stack frames.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -673,18 +673,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/log/myapp/*.log
-  read_from_head   true
-  multiline.parser java
+  Name             tail
+  Path             /var/log/myapp/*.log
+  Read_From_Head   true
+  Multiline.Parser java
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -710,7 +710,7 @@ Caused by: java.lang.IllegalArgumentException: Invalid input
 {% endtab %}
 {% endtabs %}
 
-### python
+### Python
 
 The `python` parser handles Python tracebacks. It detects `Traceback (most recent call last):` and captures the full stack.
 
@@ -739,18 +739,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/log/myapp/*.log
-  read_from_head   true
-  multiline.parser python
+  Name             tail
+  Path             /var/log/myapp/*.log
+  Read_From_Head   true
+  Multiline.Parser python
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -775,7 +775,7 @@ AttributeError: 'NoneType' object has no attribute 'strip'
 {% endtab %}
 {% endtabs %}
 
-### ruby
+### Ruby
 
 The `ruby` parser handles Ruby exception back traces. It detects patterns like `file.rb:line:in 'method'` and continuation lines starting with `from`.
 
@@ -804,18 +804,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
+  Flush        1
+  Log_Level    info
 
 [INPUT]
-  name             tail
-  path             /var/log/myapp/*.log
-  read_from_head   true
-  multiline.parser ruby
+  Name             tail
+  Path             /var/log/myapp/*.log
+  Read_From_Head   true
+  Multiline.Parser ruby
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
