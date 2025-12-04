@@ -1,8 +1,8 @@
-# Logfmt
+# Logfmt format
 
-The _logfmt_ parser lets you parse data in the [logfmt](https://pkg.go.dev/github.com/kr/logfmt?utm_source=godoc) format.
+Use the _logfmt_ parser format to create custom parsers compatible with [logfmt](https://pkg.go.dev/github.com/kr/logfmt?utm_source=godoc) data.
 
-Here is an example parsers configuration:
+The following example shows a custom parser that uses the `logfmt` format:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}

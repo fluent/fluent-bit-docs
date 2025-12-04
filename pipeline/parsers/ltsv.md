@@ -1,6 +1,6 @@
-# LTSV
+# LTSV format
 
-The _LTSV_ parser lets you parse data in the [Labeled Tab-separated Values (LTSV)](http://ltsv.org/) format.
+Use the _LTSV_ parser format to create custom parsers compatible with [Labeled Tab-separated Values (LTSV)](http://ltsv.org/) data.
 
 LTSV is a variant of the Tab-separated Values (TSV) format. Each record in an LTSV file is represented as a single line. Each field is separated by a tab and has a label and a value. The label and its value are separated by a colon (`:`).
 
@@ -13,7 +13,7 @@ LogFormat "host:%h\tident:%l\tuser:%u\ttime:%t\treq:%r\tstatus:%>s\tsize:%b\tref
 CustomLog "logs/access_log" combined_ltsv
 ```
 
-The following is an example parsers configuration file:
+The following example shows a custom parser that uses the `ltsv` format:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}

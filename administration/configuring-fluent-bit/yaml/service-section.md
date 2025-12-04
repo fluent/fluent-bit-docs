@@ -2,7 +2,6 @@
 
 The `service` section defines global properties of the service. The available configuration keys are:
 
-
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
 | `flush`  | Sets the flush time in `seconds.nanoseconds`. The engine loop uses a flush timeout to define when to flush the records ingested by input plugins through the defined output plugins. | `1` |
@@ -11,9 +10,9 @@ The `service` section defines global properties of the service. The available co
 | `dns.mode` | Sets the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per-plugin basis. | `UDP` |
 | `log_file` | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (`stderr`). | _none_ |
 | `log_level` | Sets the logging verbosity level. Possible values: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. For example, if `debug` is set, it will include `error`, `warning`, `info`, and `debug`. The `trace` mode is only available if Fluent Bit was built with the `WITH_TRACE` option enabled. | `info` |
-| `parsers_file` | Path for a parsers configuration file. Multiple `parsers_file` entries can be defined within the section. Parsers can be declared directly in the [`parsers` section](./parsers-section.md) of YAML configuration files. | _none_ |
-| `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to custom plugins (.so files) that Fluent Bit can load at runtime. Plugins can be declared directly in the [`plugins` section](./plugins-section.md) of YAML configuration files. | _none_ |
-| `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
+| `parsers_file` | Path for [standalone parsers configuration files](../administration/configuring-fluent-bit/yaml/parsers-section.md#standalone-parsers-files). You can include one or more files. | _none_ |
+| `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to custom plugins (.so files) that Fluent Bit can load at runtime. Plugins can be declared directly in the [`plugins` section](../administration/configuring-fluent-bit/yaml/plugins-section.md) of YAML configuration files. | _none_ |
+| `streams_file` | Path for the [stream processor](../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
 | `http_server` | Enables the built-in HTTP server. | `off` |
 | `http_listen` | Sets the listening interface for the HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port` | Sets the TCP port for the HTTP server. | `2020` |
@@ -28,7 +27,7 @@ The `service` section defines global properties of the service. The available co
 
 ## Storage configuration
 
-The following storage-related keys can be set in the `service` section:
+The following storage-related keys can be set as children to the `storage` key:
 
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
