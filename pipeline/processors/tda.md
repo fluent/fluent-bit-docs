@@ -160,7 +160,7 @@ Some practical patterns:
 1. **Stable regime**
 
    * Metrics fluctuate near a single attractor.
-   * Betti₀ is small (often close to 1–few), Betti₁ and Betti₂ are typically `0` or very small.
+   * Betti₀ is small (often close to 1–few and saturated on a long running), Betti₁ and Betti₂ are typically `0` or very small.
 
 2. **Single, one-off failure**
 
