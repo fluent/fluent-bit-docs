@@ -14,8 +14,6 @@ Kubernetes exports events through the API server. This input plugin lets you ret
 | `db.journal_mode` | Set the journal mode for databases. Values: `DELETE`, `TRUNCATE`, `PERSIST`, `MEMORY`, `WAL`, `OFF`. | `WAL` |
 | `db.locking` | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts external tools from querying the content. | `false` |
 | `db.sync` | Set a database sync method. Values: `extra`, `full`, `normal`, `off`. | `normal` |
-| `dns_retries` | Set the number of DNS lookup retries until the network starts working. | `6` |
-| `dns_wait_time` | Set the time interval between network status checks (in seconds). | `30` |
 | `interval_nsec` | Set the reconnect interval (sub seconds: nanoseconds). | `500000000` |
 | `interval_sec` | Set the reconnect interval (seconds). | `0` |
 | `kube_ca_file` | Kubernetes TLS CA file. | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt` |
