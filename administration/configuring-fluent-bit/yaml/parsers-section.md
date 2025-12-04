@@ -4,7 +4,7 @@ You can define customer [parsers](../pipeline/parsers.md) in the `parsers` secti
 
 {% hint style="info" %}
 
-To define custom multiline parsers, use [the `multiline_parsers` section](..administration/configuring-fluent-bit/yaml/multiline-parsers-section) of YAML configuration files.
+To define custom multiline parsers, use [the `multiline_parsers` section](../administration/configuring-fluent-bit/yaml/multiline-parsers-section.md) of YAML configuration files.
 
 {% endhint %}
 
@@ -23,7 +23,7 @@ parsers:
     time_format: '%Y-%m-%dT%H:%M:%S.%L'
     time_keep: on
 
-  - name: customer_parser2
+  - name: custom_parser2
     format: regex
     regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
     time_key: time
