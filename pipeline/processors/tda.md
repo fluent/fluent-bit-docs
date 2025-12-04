@@ -176,7 +176,7 @@ Some practical patterns:
 
    In the sample output, as the HTTP output oscillates between success and various `Connection refused` / `broken connection` errors, `fluentbit_tda_betti1` and `fluentbit_tda_betti2` grow from small values to larger plateaus (e.g., Betti₁ around 10–13, Betti₂ around 1–2) while Betti₀ also increases. This is a direct signature of a **phase transition** from a stable regime to one with persistent, intermittent instability.
 
-These interpretations are consistent with results from condensed matter physics and dynamical systems, where persistent homology has been used to detect phase transitions and changes in underlying order purely from data [1][2].
+These interpretations are consistent with results from condensed matter physics and dynamical systems, where persistent homology has been used to detect phase transitions and changes in underlying order purely from data (References 1 and 2).
 
 ---
 
@@ -279,5 +279,5 @@ Because the plugin operates on an arbitrary selection of metrics (chosen upstrea
 
 ## References
 
-1. I. Donato, M. Gori, A. Sarti, “Persistent homology analysis of phase transitions,” *Physical Review E*, 93, 052138, 2016.
-2. F. Takens, “Detecting strange attractors in turbulence,” in D. Rand and L.-S. Young (eds.), *Dynamical Systems and Turbulence*, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366–381.
+1. I. Donato, M. Gori, A. Sarti, “Persistent homology analysis of phase transitions,” _Physical Review E_, 93, 052138, 2016.
+2. F. Takens, “Detecting strange attractors in turbulence,” in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366–381.
