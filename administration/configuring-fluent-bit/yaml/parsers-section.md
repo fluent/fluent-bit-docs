@@ -1,7 +1,6 @@
 # Parsers
 
-You can define customer [parsers](../pipeline/parsers.md) in the `parsers`
-section of YAML configuration files.
+You can define customer [parsers](../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
 
 {% hint style="info" %}
 
@@ -11,8 +10,7 @@ To define custom multiline parsers, use [the `multiline_parsers` section](..admi
 
 ## Syntax
 
-To define customers parsers in the `parsers` section of a YAML configuration file,
-use the following syntax.
+To define customers parsers in the `parsers` section of a YAML configuration file, use the following syntax.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
