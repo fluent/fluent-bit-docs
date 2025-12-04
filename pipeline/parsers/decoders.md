@@ -1,4 +1,4 @@
-# Decoders
+# Decoder settings
 
 There are cases where the log messages you want to parse contain encoded data. A typical use case can be found in containerized environments with Docker. Docker logs its data in JSON format, which uses escaped strings.
 

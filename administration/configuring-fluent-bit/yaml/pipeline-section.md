@@ -65,7 +65,7 @@ pipeline:
 
 In the cases where each value in a list requires two values they must be separated by a space, such as in the `record` property for the `record_modifier` filter.
 
-### Input
+### Inputs
 
 An `input` section defines a source (related to an input plugin). Each section has a base configuration. Each input plugin can add it own configuration keys:
 
@@ -88,7 +88,7 @@ pipeline:
           tag: my_cpu
 ```
 
-### Filter
+### Filters
 
 A `filter` section defines a filter (related to a filter plugin). Each section has a base configuration and each filter plugin can add its own configuration keys:
 
@@ -113,7 +113,7 @@ pipeline:
           regex: log aa
 ```
 
-### Output
+### Outputs
 
 The `outputs` section specifies a destination that certain records should follow after a `Tag` match. Fluent Bit can route up to 256 `OUTPUT` plugins. The configuration supports the following keys:
 
