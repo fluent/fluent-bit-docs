@@ -777,7 +777,7 @@ AttributeError: 'NoneType' object has no attribute 'strip'
 
 ### ruby
 
-The `ruby` parser handles Ruby exception backtraces. It detects patterns like `file.rb:line:in 'method'` and continuation lines starting with `from`.
+The `ruby` parser handles Ruby exception back traces. It detects patterns like `file.rb:line:in 'method'` and continuation lines starting with `from`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
