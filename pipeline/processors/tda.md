@@ -1,4 +1,6 @@
-# TDA
+# TDA (Topological Data Analysis)
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
 
 The `tda` processor applies **Topological Data Analysis (TDA)**—specifically, **persistent homology**—to Fluent Bit metrics stream and exports **Betti numbers** that summarize the shape of recent behavior in metric space.
 
@@ -16,7 +18,7 @@ The `tda` processor supports the following configuration parameters:
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `window_size` | Number of samples to keep in the TDA sliding window. This controls how far back in time the topology is estimated.                                                                                   | `60`    |
 | `min_points`  | Minimum number of samples required in the window before running TDA. Until this limit is reached, no Betti metrics are emitted.                                                                      | `10`    |
-| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by Takens’ theorem.           | `3`     |
+| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by Takens theorem.           | `3`     |
 | `embed_delay` | Delay `τ` in samples between successive lags used in delay embedding.                                                                                                                                | `1`     |
 | `threshold`   | Distance scale selector. `0` enables an automatic **multi-quantile scan** across several candidate thresholds; a value in `(0, 1)` is interpreted as a single quantile used to pick the Rips radius. | `0`     |
 
@@ -74,7 +76,7 @@ $$
 
 If `n_raw < (m − 1)τ + 1`, TDA is skipped until enough data has accumulated.
 
-This embedding follows the idea of **Takens’ theorem**, which states that, under mild conditions, the dynamics of a system can be reconstructed from delay-embedded observations of a single time series or a low-dimensional observable [2]. In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
+This embedding follows the idea of **Takens theorem**, which states that, under mild conditions, the dynamics of a system can be reconstructed from delay-embedded observations of a single time series or a low-dimensional observable [2]. In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
 
 Intuitively:
 
@@ -115,11 +117,11 @@ Once the compressed lower-triangular distance matrix is built, it is passed to a
 1. **Compression and C API**
 
    * The dense `n_embed × n_embed` matrix is converted into Ripser's `compressed_lower_distance_matrix`.
-   * The wrapper function `flb_ripser_compute_betti_from_dense_distance` runs Ripser up to `max_dim = 2` (H₀, H₁, H₂), using coefficients in (\mathbb{Z}/2\mathbb{Z}), and accumulates persistence intervals into Betti numbers with a small persistence cutoff to ignore very short-lived noise features.
+   * The wrapper function `flb_ripser_compute_betti_from_dense_distance` runs Ripser up to `max_dim = 2` (H₀, H₁, H₂), using coefficients in ($\mathbb{Z}/2\mathbb{Z}$), and accumulates persistence intervals into Betti numbers with a small persistence cutoff to ignore very short-lived noise features.
 
 2. **Interval aggregation**
 
-   * A callback (`interval_recorder`) receives all persistence intervals ((\text{birth}, \text{death})) from Ripser.
+   * A callback (`interval_recorder`) receives all persistence intervals ($\text{birth}$, $\text{death}$) from Ripser.
    * Intervals with very small persistence are filtered out, and the remaining ones are counted per homology dimension to form Betti numbers.
 
 3. **Multi-scale selection**
@@ -144,7 +146,7 @@ Each metric is timestamped with the current time at the moment of TDA computatio
 
 ## Interpreting Betti numbers
 
-Topologically, Betti numbers count the number of “holes” of each dimension in a space:
+Topologically, Betti numbers count the number of "holes" of each dimension in a space:
 
 * **Betti₀** – connected components (0-dimensional clusters).
 * **Betti₁** – 1-dimensional holes (loops / cycles).
@@ -265,11 +267,11 @@ This configuration reconstructs the system in an effective dimension of `4 × fe
 `tda` is particularly useful when:
 
 * You suspect **non-linear or multi-modal behavior** in your system (e.g., on/off regimes, congestion collapse, periodic retries).
-* Standard indicators (mean, percentiles, error rates) show “noise,” but you want to know whether that noise hides **coherent structure**.
+* Standard indicators (mean, percentiles, error rates) show "noise," but you want to know whether that noise hides **coherent structure**.
 * You want to build alerts not just on “levels” of metrics, but on **changes in the topology** of system behavior – for example:
 
-  * “Raise an alert if Betti₁ remains above 5 for more than 5 minutes.”
-  * “Mark windows where Betti₂ becomes non-zero as potential phase transitions.”
+  * "Raise an alert if Betti₁ remains above 5 for more than 5 minutes."
+  * "Mark windows where Betti₂ becomes non-zero as potential phase transitions."
 
 Because the plugin operates on an arbitrary selection of metrics (chosen upstream via `metrics_selector` or by how you configure `fluentbit_metrics`), you can tailor the TDA to focus on:
 
@@ -282,5 +284,5 @@ Because the plugin operates on an arbitrary selection of metrics (chosen upstrea
 
 ## References
 
-1. I. Donato, M. Gori, A. Sarti, “Persistent homology analysis of phase transitions,” _Physical Review E_, 93, 052138, 2016.
-2. F. Takens, “Detecting strange attractors in turbulence,” in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366–381.
+1. I. Donato, M. Gori, A. Sarti, "Persistent homology analysis of phase transitions," _Physical Review E_, 93, 052138, 2016.
+2. F. Takens, "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366–381.
