@@ -15,7 +15,6 @@ Before you contribute to the Fluent Bit docs, review these critical tips:
 
 - [Sign off](#sign-off-your-git-commits) your Git commits.
 - Use [soft line wraps](#line-wraps) in Markdown files.
-- To link between pages, use [absolute file paths](#links).
 - Review the results of [linters](#linters) for style and formatting guidance.
 
 ## Review process
@@ -68,14 +67,6 @@ The active [linters](#linters) in this repository flag certain style errors and,
 ## Formatting guidelines
 
 The Fluent Bit docs library is built and hosted through [GitBook](https://docs.gitbook.com/). Unfortunately, GitBook doesn't support local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook account can verify that things are formatted correctly after you open a new pull request.
-
-### Links
-
-When cross-linking between in this repository, use a full absolute path whenever possible. For example:
-
-```text
-[LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
-```
 
 ### Line wraps
 
