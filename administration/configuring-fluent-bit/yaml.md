@@ -11,7 +11,7 @@ YAML configuration files support the following top-level sections:
 - `env`: Configures [environment variables](./yaml/environment-variables-section.md).
 - `includes`: Specifies additional YAML configuration files to [include as part of a parent file](./yaml/includes-section.md).
 - `service`: Configures global properties of the Fluent Bit [service](./yaml/service-section.md).
-- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`](.yaml/pipeline-section.md).
+- `pipeline`: Configures active [`inputs`, `filters`, and `outputs`](./yaml/pipeline-section.md).
 - `parsers`: Defines [custom parsers](./yaml/parsers-section.md).
 - `multiline_parsers`: Defines [custom multiline parsers](./yaml/multiline-parsers-section.md).
 - `plugins`: Defines paths for [custom plugins](./yaml/plugins-section.md).
