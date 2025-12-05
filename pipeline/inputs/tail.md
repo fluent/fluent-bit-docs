@@ -158,9 +158,9 @@ Multiline core is exposed by the following configuration:
 
 | Key                | Description    |
 |:-------------------|:---------------|
-| `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. |
+| `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../parsers/multiline-parsing.md) to apply to the content. |
 
-[Multiline Parser](../../administration/configuring-fluent-bit/multiline-parsing.md) provides built-in configuration modes. When using a new `multiline.parser` definition, you must disable the old configuration from your tail section like:
+[Multiline Parser](../parsers/multiline-parsing.md) provides built-in configuration modes. When using a new `multiline.parser` definition, you must disable the old configuration from your tail section like:
 
 - `parser`
 - `parser_firstline`
