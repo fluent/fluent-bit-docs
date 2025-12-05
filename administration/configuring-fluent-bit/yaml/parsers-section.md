@@ -10,7 +10,7 @@ To define custom multiline parsers, use [the `multiline_parsers` section](./mult
 
 ## Syntax
 
-To define customers parsers in the `parsers` section of a YAML configuration file, use the following syntax.
+To define custom parsers in the `parsers` section of a YAML configuration file, use the following syntax.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
