@@ -10,7 +10,7 @@ The plugin supports the following configuration parameters:
 |:--------------|:--------------------------------------------------------------------------------------------------------|:-------------|
 | `buffer_size` | Maximum payload size (in bytes) for a single MQTT message.                                              | `2048`       |
 | `listen`      | Listener network interface.                                                                             | `0.0.0.0`    |
-| `payload_key` | Specify the key where the payload key/value will be preserved.                                          | _none_       |
+| `payload_key` | Field name where the MQTT message payload will be stored in the output record.                          | _none_       |
 | `port`        | TCP port where listening for connections.                                                               | `1883`       |
 | `threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`      |
 
