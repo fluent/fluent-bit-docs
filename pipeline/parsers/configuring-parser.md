@@ -1,10 +1,10 @@
 # Configuring custom parsers
 
-Use the information on this page to configure custom [parsers](../pipeline/parsers).
+Use the information on this page to configure custom [parsers](../pipeline/parsers.md).
 
 {% hint style="info" %}
 
-To define a custom parser, add an entry to the [`parsers` section](../configuring-fluent-bit/yaml/parsers-section.md) of your YAML configuration file, or create a [standalone parser file](../administration/configuring-fluent-bit/yaml/parsers-section.md#standalone-parsers-files).
+To define a custom parser, add an entry to the [`parsers` section](../administration/configuring-fluent-bit/yaml/parsers-section.md) of your YAML configuration file, or create a [standalone parser file](../administration/configuring-fluent-bit/yaml/parsers-section.md#standalone-parsers-files.md).
 
 {% endhint %}
 

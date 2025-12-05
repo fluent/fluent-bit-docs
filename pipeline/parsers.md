@@ -39,19 +39,19 @@ For example, a parser can turn an unstructured log entry like this:
 
 ## How parsers work
 
-Parsers modify the data ingested by input plugins. This modification happens before Fluent Bit applies any [filters](../pipeline/filters.md) or [processors](..pipeline/processors.md) to that data.
+Parsers modify the data ingested by input plugins. This modification happens before Fluent Bit applies any [filters](../pipeline/filters.md) or [processors](../pipeline/processors.md) to that data.
 
 Each input plugin can have one active parser. Multiple plugins within the same Fluent Bit configuration file can use the same parser or use different parsers from each other.
 
 ### Default parsers and custom parsers
 
-Fluent Bit includes a variety of [default parsers](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) for parsing common data formats, like Apache and Docker logs. You can also [define custom parsers](../configuring-fluent-bit/yaml/parsers-section.md).
+Fluent Bit includes a variety of [default parsers](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) for parsing common data formats, like Apache and Docker logs. You can also [define custom parsers](../administration/configuring-fluent-bit/yaml/parsers-section.md).
 
 ## Add a parser to an input plugin
 
 To add a parser to an input plugin, follow these steps.
 
-1. Either identify the name of the [default parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) you want to use, or [define a custom parser](../configuring-fluent-bit/yaml/parsers-section.md) with your desired [configuration settings](../pipeline/parsers/configuring-parser.md).
+1. Either identify the name of the [default parser](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) you want to use, or [define a custom parser](../administration/configuring-fluent-bit/yaml/parsers-section.md) with your desired [configuration settings](../pipeline/parsers/configuring-parser.md).
 
 1. Add a `parsers` key to the plugin's settings in the [`inputs`](../administration/configuring-fluent-bit/yaml/pipeline-section.md#inputs) section of your YAML configuration file.
 
