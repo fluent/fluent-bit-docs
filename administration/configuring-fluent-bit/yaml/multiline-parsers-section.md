@@ -1,10 +1,10 @@
 # Multiline parsers
 
-You can define custom [multiline parsers](../pipeline/parsers/multiline-parsing.md) in the `multiline_parsers` section of YAML configuration files.
+You can define custom [multiline parsers](../../pipeline/parsers/multiline-parsing.md) in the `multiline_parsers` section of YAML configuration files.
 
 {% hint style="info" %}
 
-To define standard custom parsers, use [the `parsers` section](../administration/configuring-fluent-bit/yaml/parsers-section.md) of YAML configuration files.
+To define standard custom parsers, use [the `parsers` section](./parsers-section.md) of YAML configuration files.
 
 {% endhint %}
 
@@ -34,4 +34,4 @@ multiline_parsers:
 
 This example defines a multiline parser named `multiline-regex-test` that uses regular expressions to handle multi-event logs. The parser contains two rules: the first rule transitions from `start_state` to cont when a matching log entry is detected, and the second rule continues to match subsequent lines.
 
-For information about supported configuration options for custom multiline parsers, see [configuring multiline parsers](./pipeline/parsers/multiline-parsing.md#configuring-multiline-parsers).
+For information about supported configuration options for custom multiline parsers, see [configuring multiline parsers](../../pipeline/parsers/multiline-parsing.md#configuring-multiline-parsers).
