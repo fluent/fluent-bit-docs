@@ -112,7 +112,7 @@ Internally, quantile selection is handled by `tda_choose_threshold_from_dist`, w
 
 ### 5. Persistent Homology through Ripser
 
-Once the compressed lower-triangular distance matrix is built, it is passed to a thin wrapper around **Ripser**, a well-known implementation of Vietoris–Rips persistent homology:
+Once the compressed lower-triangular distance matrix is built, it is passed to a thin wrapper around **Ripser**, a well-known implementation of Vietoris-Rips persistent homology:
 
 1. **Compression and C API**
 
@@ -136,11 +136,11 @@ Once the compressed lower-triangular distance matrix is built, it is passed to a
 
 | Metric name            | Type  | Description                                                                                                                                                                                                                                      |
 | ---------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fluentbit_tda_betti0` | gauge | Approximate Betti₀ - number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes".                                                                 |
-| `fluentbit_tda_betti1` | gauge | Approximate Betti₁ - number of 1-dimensional loops / cycles in the Rips complex. Non-zero values often signal **recurrent, quasi-periodic, or cycling behavior**, typical of intermittent failure / recovery patterns and other regime switches. |
-| `fluentbit_tda_betti2` | gauge | Approximate Betti₂ - number of 2-dimensional voids (higher-order structures). These can appear when the system explores different “surfaces” in state space, e.g., transitioning between distinct operating modes.                               |
+| `fluentbit_tda_betti0` | gauge | Approximate Betti₀. The number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes".                                                                 |
+| `fluentbit_tda_betti1` | gauge | Approximate Betti₁. The number of 1-dimensional loops / cycles in the Rips complex. Non-zero values often signal **recurrent, quasi-periodic, or cycling behavior**, typical of intermittent failure / recovery patterns and other regime switches. |
+| `fluentbit_tda_betti2` | gauge | Approximate Betti₂. The number of 2-dimensional voids (higher-order structures). These can appear when the system explores different "surfaces" in state space, for example, transitioning between distinct operating modes.                               |
 
-Each metric is timestamped with the current time at the moment of TDA computation and is exported via the same metrics context it received, so downstream metric outputs can scrape or forward them like any other Fluent Bit metric.
+Each metric is timestamped with the current time at the moment of TDA computation and is exported through the same metrics context it received, so downstream metric outputs can scrape or forward them like any other Fluent Bit metric.
 
 ---
 
@@ -148,9 +148,9 @@ Each metric is timestamped with the current time at the moment of TDA computatio
 
 Topologically, Betti numbers count the number of "holes" of each dimension in a space:
 
-* **Betti₀** – connected components (0-dimensional clusters).
-* **Betti₁** – 1-dimensional holes (loops / cycles).
-* **Betti₂** – 2-dimensional voids, and so on.
+* **Betti₀**: connected components (0-dimensional clusters).
+* **Betti₁**: 1-dimensional holes (loops / cycles).
+* **Betti₂**: 2-dimensional voids, and so on.
 
 In our context:
 
@@ -163,7 +163,7 @@ Some practical patterns:
 1. **Stable regime**
 
    * Metrics fluctuate near a single attractor.
-   * Betti₀ is small (often close to 1–few and saturated on a long running), Betti₁ and Betti₂ are typically `0` or very small.
+   * Betti₀ is small (often close to 1-few and saturated on a long running), Betti₁ and Betti₂ are typically `0` or very small.
 
 2. **Single, one-off failure**
 
@@ -173,7 +173,7 @@ Some practical patterns:
 
 3. **Intermittent failure / unstable regime**
 
-   * The system repeatedly bounces between "healthy" and "unhealthy" states (e.g., repeated `Connection refused` / `broken connection` errors interspersed with 200 responses).
+   * The system repeatedly bounces between "healthy" and "unhealthy" states (For example, repeated `Connection refused` / `broken connection` errors interspersed with 200 responses).
    * The trajectory in phase space forms **loops**: metrics move away from the healthy region and then return, many times.
    * Betti₁ (and occasionally Betti₂) increases noticeably while this behavior persists, reflecting the emergence of non-trivial cycles in the metric dynamics.
 
@@ -258,7 +258,7 @@ processors:
       threshold: 0.2       # use 20th percentile of distances
 ```
 
-This configuration reconstructs the system in an effective dimension of `4 × feature_dim` and tends to highlight tight loops that occur within roughly 4–10 sampling intervals.
+This configuration reconstructs the system in an effective dimension of `4 × feature_dim` and tends to highlight tight loops that occur within roughly 4-10 sampling intervals.
 
 ---
 
@@ -266,14 +266,14 @@ This configuration reconstructs the system in an effective dimension of `4 × fe
 
 `tda` is particularly useful when:
 
-* You suspect **non-linear or multi-modal behavior** in your system (e.g., on/off regimes, congestion collapse, periodic retries).
+* You suspect **non-linear or multi-modal behavior** in your system (For example, on/off regimes, congestion collapse, periodic retries).
 * Standard indicators (mean, percentiles, error rates) show "noise," but you want to know whether that noise hides **coherent structure**.
-* You want to build alerts not just on “levels” of metrics, but on **changes in the topology** of system behavior – for example:
+* You want to build alerts not simply on "levels" of metrics, but on **changes in the topology** of system behavior. For example:
 
   * "Raise an alert if Betti₁ remains above 5 for more than 5 minutes."
   * "Mark windows where Betti₂ becomes non-zero as potential phase transitions."
 
-Because the plugin operates on an arbitrary selection of metrics (chosen upstream via `metrics_selector` or by how you configure `fluentbit_metrics`), you can tailor the TDA to focus on:
+Because the plugin operates on an arbitrary selection of metrics (chosen upstream through `metrics_selector` or by how you configure `fluentbit_metrics`), you can tailor the TDA to focus on:
 
 * Network health (latency histograms, connection failures, TLS handshake errors),
 * Resource saturation (CPU, memory, buffer usage),
@@ -285,4 +285,4 @@ Because the plugin operates on an arbitrary selection of metrics (chosen upstrea
 ## References
 
 1. I. Donato, M. Gori, A. Sarti, "Persistent homology analysis of phase transitions," _Physical Review E_, 93, 052138, 2016.
-2. F. Takens, "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366–381.
+2. F. Takens, "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366-381.
