@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 |:-----------|:--------------------------------------------------------------------------------------------------------|:-------------------------------|
 | `listen`   | Set the address to listen to.                                                                           | `0.0.0.0`                      |
 | `port`     | Set the port to listen to.                                                                              | `25826`                        |
-| `typesdb`  | Set the data specification file. You can specify multiple files separated by commas. Later entries take precedence over earlier ones. | `/usr/share/collectd/types.db` |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                        |
+| `typesdb`  | Set the data specification file. You can specify multiple files separated by commas. Later entries take precedence over earlier ones. | `/usr/share/collectd/types.db` |
 
 ## Get started
 
@@ -77,7 +77,7 @@ With this configuration, Fluent Bit listens to `0.0.0.0:25826`, and outputs inco
 
 You must set the same `types.db` files that your `collectd` server uses. Otherwise, Fluent Bit might not be able to interpret the payload properly.
 
-The `typesdb` parameter supports multiple files separated by commas. When multiple files are specified, later entries take precedence over earlier ones if there are duplicate type definitions. This allows you to override default types with custom definitions.
+The `typesdb` parameter supports multiple files separated by commas. When multiple files are specified, later entries take precedence over earlier ones if there are duplicate type definitions. This lets you override default types with custom definitions.
 
 For example:
 
@@ -85,4 +85,4 @@ For example:
 typesdb: '/usr/share/collectd/types.db,/etc/collectd/custom.db'
 ```
 
-In this configuration, custom type definitions in `/etc/collectd/custom.db` will override any matching definitions from `/usr/share/collectd/types.db`.
+In this configuration, custom type definitions in `/etc/collectd/custom.db` override any matching definitions from `/usr/share/collectd/types.db`.
