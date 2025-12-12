@@ -22,12 +22,12 @@ The plugin supports the following configuration parameters:
 
 The `winstat` plugin collects the following system statistics:
 
-| Metric Category | Description                                                                 |
-|:----------------|:----------------------------------------------------------------------------|
-| CPU             | CPU usage percentage, including user and system time                      |
-| Memory          | Memory usage including total, available, and used memory                  |
-| Disk            | Disk I/O statistics including read/write operations and throughput       |
-| Network         | Network interface statistics including bytes sent/received and packet counts |
+| Metric Category | Description                                                                   |
+|:----------------|:------------------------------------------------------------------------------|
+| CPU             | CPU usage percentage, including user and system time.                         |
+| Memory          | Memory usage including total, available, and used memory.                     |
+| Disk            | Disk I/O statistics including read/write operations and throughput.           |
+| Network         | Network interface statistics including bytes sent/received and packet counts. |
 
 ## Get started
 
@@ -92,8 +92,8 @@ Total interval (sec) = `Interval_Sec` + (`Interval_NSec` / 1000000000)
 
 For example: `1.5s` = `1s` + `500000000ns`
 
-## Notes
+{% hint style="info" %}
 
-- The `winstat` plugin requires Windows Performance Counters access. Ensure Fluent Bit is running with appropriate permissions.
-- This plugin is Windows-only and won't work on Linux, macOS, or other operating systems.
-- For Prometheus-based metrics collection on Windows, consider using the [Windows Exporter Metrics](windows-exporter-metrics.md) input plugin instead.
+For Prometheus-based metrics collection on Windows, consider using the [Windows Exporter Metrics](windows-exporter-metrics.md) input plugin instead.
+
+{% endhint %}
