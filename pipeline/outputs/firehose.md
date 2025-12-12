@@ -27,6 +27,7 @@ This plugin uses the following configuration parameters:
 | `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
 | `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which can help improve throughput when there are transient/random networking issues. | `true` |
 | `external_id` | Specify an external ID for the STS API. Can be used with the `role_arn` parameter if your role requires an external ID. | _none_ |
+| `simple_aggregation` | Enable simple aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. When enabled, multiple log records are concatenated with newlines and sent as a single record to Firehose, up to the maximum record size limit (1,024,000 bytes). | `false` |
 | `profile` | AWS profile name to use. | `default` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. |  `1` |
 
