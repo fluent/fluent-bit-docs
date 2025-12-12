@@ -12,11 +12,11 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `Host` | Target host where the UDP server is listening. | `127.0.0.1` |
-| `Port` | `UDP` Port of the target service. | `5170` |
-| `Format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `json_lines` |
-| `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
+| `format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `json_lines` |
+| `host` | Target host where the UDP server is listening. | `127.0.0.1` |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
+| `port` | UDP port of the target service. | `5170` |
 | `raw_message_key` | Use a raw message key for the message. When set, the plugin sends the value of this key as the raw message instead of formatting it as JSON. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
@@ -41,8 +41,8 @@ fluent-bit -i cpu -t cpu -o udp://192.168.2.3:5170 -p format=json_lines -v
 which is similar to:
 
 ```shell
-fluent-bit -i cpu -t cpu -o udp -p Host=192.168.2.3 -p Port=5170 \
-  -p Format=json_lines -o stdout -m '*'
+fluent-bit -i cpu -t cpu -o udp -p host=192.168.2.3 -p port=5170 \
+  -p format=json_lines -o stdout -m '*'
 ```
 
 ### Configuration file
