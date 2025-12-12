@@ -4,7 +4,7 @@ description: Generate data file for GNU Plot
 
 # Plot
 
-The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](http://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin allows you to export your telemetry data for visualization and analysis using `gnuplot`.
+The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](http://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin lets you export your telemetry data for visualization and analysis using `gnuplot`.
 
 ## Configuration parameters
 
@@ -12,7 +12,7 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `File` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. If the file cannot be opened, the plugin falls back to writing to STDOUT. | _none_ |
+| `File` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. If the file can't be opened, the plugin falls back to writing to STDOUT. | _none_ |
 | `Key` | Specify the key name from the record to extract as the value. The value must be a numeric type (integer or float). If not specified, the plugin uses the first field from the record. | _none_ |
 
 ## Output format
@@ -27,9 +27,9 @@ timestamp value
 
 Where:
 - `timestamp` is a floating-point Unix timestamp
-- `value` is the numeric value extracted from the specified key (or the first field if `Key` is not specified)
+- `value` is the numeric value extracted from the specified key (or the first field if `Key` isn't specified)
 
-The plugin only supports numeric values (integers or floats). If the specified key is not found or the value is not numeric, an error is logged and the record is skipped.
+The plugin only supports numeric values (integers or floats). If the specified key isn't found or the value isn't numeric, an error is logged and the record is skipped.
 
 ## Get started
 
@@ -120,12 +120,14 @@ plot "cpu_data.dat" using 1:2 with lines title "CPU Usage"
 gnuplot plot.gp
 ```
 
-This will generate a PNG image file showing the CPU usage over time.
+This will generate a `PNG` image file showing the CPU usage over time.
 
-## Notes
+{% hint style="info" %}
 
 - The `Key` parameter is optional. If not specified, the plugin uses the first field from the record.
 - Only numeric values (integers or floats) are supported. Non-numeric values will cause the record to be skipped with an error logged.
-- If the specified `Key` is not found in a record, an error is logged and that record is skipped.
+- If the specified `Key` isn't found in a record, an error is logged and that record is skipped.
 - If the output file can't be opened (for example, due to permissions), the plugin automatically falls back to writing to STDOUT.
 - The output file is opened in append mode, so new data is added to existing files.
+
+{% endhint %}
