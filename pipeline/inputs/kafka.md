@@ -136,24 +136,26 @@ The example can be executed locally with `make start` in the `examples/kafka_fil
 
 ## AWS MSK IAM authentication
 
-Starting with version 4.0.4, Fluent Bit supports AWS IAM authentication for Amazon MSK clusters. This allows you to use your AWS credentials and IAM policies to control access to Kafka topics.
+In Fluent Bit version 4.0.4 and later, you can use AWS IAM authentication for Amazon MSK clusters. This lets you use your AWS credentials and IAM policies to control access to Kafka topics.
 
 ### Prerequisites
 
-- Access to an AWS MSK cluster with IAM authentication enabled
-- Valid AWS credentials (IAM role, access keys, or instance profile)
-- Network connectivity to your MSK brokers
+To use AWS MSK IAM authentication, you must meet these requirements:
+
+- You must have access to an AWS MSK cluster with IAM authentication enabled.
+- You must have valid AWS credentials (IAM role, access keys, or instance profile).
+- You must have network connectivity to your MSK brokers.
 
 ### Configuration parameters [#config-aws]
 
 | Property | Description | Default |
 | -------- | ----------- | ------- |
-| `rdkafka.sasl.mechanism` | Set to `aws_msk_iam` to enable MSK IAM authentication | _none_ |
-| `aws_region` | AWS region (optional, automatically detected from broker hostname for standard MSK endpoints) | auto-detected |
+| `rdkafka.sasl.mechanism` | Set to `aws_msk_iam` to enable MSK IAM authentication. | _none_ |
+| `aws_region` | The name of your AWS region. This value is optional. If you don't set a value, but MSK IAM authentication is enabled, Fluent Bit detects your AWS region from the broker hostname for standard MSK endpoints. | _none_ |
 
 ### Basic configuration
 
-For most use cases, simply set `rdkafka.sasl.mechanism` to `aws_msk_iam`:
+For most use cases, the only necessary configuration step is to set `rdkafka.sasl.mechanism` to `aws_msk_iam`:
 
 ```yaml
 pipeline:
@@ -166,7 +168,11 @@ pipeline:
 
 The AWS region is automatically detected from the broker hostname for standard MSK endpoints.
 
-**Note:** When using `aws_msk_iam`, Fluent Bit automatically sets `rdkafka.security.protocol` to `SASL_SSL`. You don't need to configure it manually.
+{% hint style="info" %}
+
+When using `aws_msk_iam`, Fluent Bit automatically sets `rdkafka.security.protocol` to `SASL_SSL`. You don't need to configure it manually.
+
+{% endhint %}
 
 ### Using custom DNS or PrivateLink
 
@@ -187,12 +193,18 @@ pipeline:
 Fluent Bit uses the standard AWS credentials chain to authenticate:
 
 1. Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
-2. AWS credentials file (`~/.aws/credentials`)
-3. IAM instance profile (recommended for EC2)
-4. IAM task role (recommended for ECS)
-5. IAM service account (recommended for EKS)
+1. AWS credentials file (`~/.aws/credentials`)
+1. IAM instance profile (recommended for EC2)
+1. IAM task role (recommended for ECS)
+1. IAM service account (recommended for EKS)
 
 ### Required IAM permissions
+
+{% hint style="info" %}
+
+For detailed IAM policy configuration, consult your AWS administrator or refer to the [AWS MSK documentation](https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html).
+
+{% endhint %}
 
 Your AWS credentials need the following permissions to consume from MSK topics:
 
@@ -219,10 +231,11 @@ Your AWS credentials need the following permissions to consume from MSK topics:
 }
 ```
 
-Replace `REGION`, `ACCOUNT`, `CLUSTER_NAME`, `CLUSTER_UUID`, and topic/group names with your actual values.
-
-**Note:** The `CLUSTER_UUID` segment is required in all topic and group ARNs. You can find your cluster's UUID in the MSK console or by describing the cluster with the AWS CLI.
+Replace `REGION`, `ACCOUNT`, `CLUSTER_NAME`, `CLUSTER_UUID`, and topic and group names with your actual values.
 
 {% hint style="info" %}
-For detailed IAM policy configuration, consult your AWS administrator or refer to the [AWS MSK documentation](https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html).
+	
+The `CLUSTER_UUID` segment is required in all topic and group ARNs. You can find your cluster's UUID in the MSK console or by describing the cluster with the AWS CLI.
+	
 {% endhint %}
+
