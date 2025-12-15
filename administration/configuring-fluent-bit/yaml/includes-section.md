@@ -27,4 +27,4 @@ Ensure that the included files are formatted correctly and contain valid YAML co
 
 If a path isn't specified as absolute, it will be treated as relative to the file that includes it.
 
-Environment variables are not supported in includes section. The file path must be specified as a literal string.
+Environment variables aren't supported in includes section. The file path must be specified as a literal string.
