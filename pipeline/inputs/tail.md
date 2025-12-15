@@ -24,7 +24,7 @@ The plugin supports the following configuration parameters:
 | `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_path *.gz,*.zip`. | _none_ |
 | `exit_on_eof` | When reading a file, exit as soon as it reaches the end of the file. Used for bulk load and tests. | `false` |
 | `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `on` |
-| `Generic.Encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
+| `generic.encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
 | `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
 | `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
 | `inotify_watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
@@ -47,7 +47,7 @@ The plugin supports the following configuration parameters:
 | `tag_regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 | `truncate_long_lines` | When enabled, truncates lines that exceed the buffer capacity after input encoding conversion to UTF-8. Use this option when dealing with character encoding conversions that might expand the line length. | `false` |
-| `Unicode.Encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
+| `unicode.encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
 | `watcher_interval` | Set the interval for the watcher that monitors symbolic link rotation. This is an advanced option for fine-tuning how often Fluent Bit checks if symbolic links have been rotated. | `2s` |
 
 ## Buffers and memory management
@@ -90,9 +90,9 @@ If no database file is present, positioning behavior depends on the value of `re
 The database file essentially stores `inode=offset` so it should be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
 
 {% hint style="info" %}
-The `Unicode.Encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `Unicode.Encoding` parameter will fail.
+The `unicode.encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `unicode.encoding` parameter will fail.
 
-Additionally, the `auto` setting for `Unicode.Encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
+Additionally, the `auto` setting for `unicode.encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
 {% endhint %}
 
 ## Monitor a large number of files
@@ -495,7 +495,7 @@ This is common in environments that use:
 
 To enable encoding conversion, you will use one of the following two parameters within an input plugin configuration.
 
-1. `Unicode.Encoding`
+1. `unicode.encoding`
 
    Use this parameter for high-performance conversion of UTF-16 encoded logs to UTF-8. This method utilizes modern processor features (SIMD instructions) to accelerate the conversion process, making it highly efficient.
 
@@ -504,14 +504,14 @@ To enable encoding conversion, you will use one of the following two parameters 
      - `UTF-16LE` (Little-Endian)
      - `UTF-16BE` (Big-Endian)
 
-1. `Generic.Encoding`
+1. `generic.encoding`
 
    Use this parameter to convert from a wide variety of other character encodings, particularly legacy Windows code pages.
 
    - Use Case: Essential for logs from older systems or applications configured for specific regions, common in East Asia and Eastern Europe.
    - Supported values: You can use any of the names or aliases in the following list.
 
-### East asian encodings
+### East Asian encodings
 
 - `ShiftJIS` (Aliases: `SJIS`, `CP932`, `Windows-31J`)
 - `GB18030`
@@ -536,7 +536,7 @@ To enable encoding conversion, you will use one of the following two parameters 
 
 ### Configuration example
 
-Here is an example of how to use `Generic.Encoding` with the Tail input plugin to read a log file encoded in ShiftJIS.
+Here is an example of how to use `generic.encoding` with the Tail input plugin to read a log file encoded in ShiftJIS.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
