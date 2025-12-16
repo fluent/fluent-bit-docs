@@ -2,7 +2,7 @@
 
 There are some cases where Fluent Bit library is used to send records from the caller application to some destination. This process is called _manual data ingestion_.
 
-For this purpose, a specific input plugin called **lib** exists and can be used in conjunction with the `flb_lib`_push()` API function.
+For this purpose, a specific input plugin called **lib** exists and can be used in conjunction with the `flb_lib_push()` API function.
 
 ## Data format
 
