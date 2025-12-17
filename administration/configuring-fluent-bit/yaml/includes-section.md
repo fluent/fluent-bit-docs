@@ -26,3 +26,5 @@ includes:
 Ensure that the included files are formatted correctly and contain valid YAML configurations for seamless integration.
 
 If a path isn't specified as absolute, it will be treated as relative to the file that includes it.
+
+Environment variables aren't supported in includes section. The file path must be specified as a literal string.
