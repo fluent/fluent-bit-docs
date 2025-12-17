@@ -1,15 +1,15 @@
 extends: existence
-message: "Instead of using `>` to call out information, use GitBook hint syntax. https://gitbook.com/docs/creating-content/blocks/hint#representation-in-markdown"
+message: "To call out information, use GitBook hint syntax. https://gitbook.com/docs/creating-content/blocks/hint#representation-in-markdown"
 level: error
 nonword: true
 scope: raw
 tokens:
-  - '> \**_*(?i)note'
-  - '> \**_*(?i)caution'
-  - '> \**_*(?i)warning'
-  - '> \**_*(?i)danger'
-  - '> \**_*(?i)important'
-  - '> \**_*(?i)info'
-  - '> \**_*(?i)hint'
-  - '> \**_*(?i)tip'
-  - '> \**_*(?i)success'
+  - '(> |^| )\**_*(?i)note:*\**_*:*'
+  - '(> |^| )\**_*(?i)caution:*\**_*:*'
+  - '(> |^| )\**_*(?i)warning:*\**_*:*'
+  - '(> |^| )\**_*(?i)danger:*\**_*:*'
+  - '(> |^| )\**_*(?i)important:*\**_*:*'
+  - '(> |^| )\**_*(?i)info:*\**_*:*'
+  - '(> |^| )\**_*(?i)hint:*\**_*:*'
+  - '(> |^| )\**_*(?i)tip:*\**_*:*'
+  - '(> |^| )\**_*(?i)success:*\**_*:*'
