@@ -76,7 +76,7 @@ The plugin supports the following configuration parameters:
 | `use_journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
 | `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings.| `Off` |
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
-| `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
+| `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail and Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
 ### AWS pod association
 
@@ -572,10 +572,13 @@ When `aws_use_pod_association` is enabled, the Kubernetes filter automatically d
 
 ### How detection works
 
-1. Fluent Bit reads the service account token from `/var/run/secrets/kubernetes.io/serviceaccount/token`
-2. The JSON Web Token (JWT) payload is decoded to extract the `iss` (issuer) field
-3. If the issuer contains `oidc.eks.` (matching the EKS OpenID Connect (OIDC) URL pattern `https://oidc.eks.{region}.amazonaws.com/id/{cluster-id}`), the platform is set to `eks`
-4. Otherwise, the platform is set to `k8s` for native Kubernetes
+1. Fluent Bit reads the service account token from `/var/run/secrets/kubernetes.io/serviceaccount/token`.
+
+1. The JSON Web Token (JWT) payload is decoded to extract the `iss` (issuer) field.
+
+1. If the issuer contains `oidc.eks.` (matching the EKS OpenID Connect (OIDC) URL pattern `https://oidc.eks.{region}.amazonaws.com/id/{cluster-id}`), the platform is set to `eks`.
+
+1. Otherwise, the platform is set to `k8s` for native Kubernetes.
 
 ### Platform metadata field
 
