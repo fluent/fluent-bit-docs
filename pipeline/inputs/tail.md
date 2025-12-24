@@ -90,6 +90,18 @@ If no database file is present, positioning behavior depends on the value of `re
 The database file essentially stores `inode=offset` so it should be unique per instance of the plugin, for example if you have two tail inputs then use two separate `db` files for each. That way each tail input can independently track its own state.
 
 {% hint style="info" %}
+
+**Data Reliability and Recovery**
+
+During normal operations and graceful shutdowns (SIGTERM), Fluent Bit synchronizes file offsets with the database to ensure no data is lost.
+
+In unexpected shutdowns (for example, system crash, power loss, SIGKILL), Fluent Bit guarantees _at-least-once_ delivery. The database offset might slightly trail the actual processed position if an unexpected shutdown occurs after data is processed but before the new offset is committed to the database.
+
+Upon restart, Fluent Bit resumes from the last committed checkpoint. This ensures no data is lost, though it might result in the re-ingestion of a minimal amount of previously processed records (duplication).
+
+{% endhint %}
+
+{% hint style="info" %}
 The `unicode.encoding` parameter is dependent on the `simdutf` library, which is itself dependent on C++ version 11 or later. In environments that use earlier versions of C++, the `unicode.encoding` parameter will fail.
 
 Additionally, the `auto` setting for `unicode.encoding` isn't supported in all cases, and can make mistakes when it tries to guess the correct encoding. For best results, use either the `UTF-16LE` or `UTF-16BE` setting if you know the encoding type of the target file.
