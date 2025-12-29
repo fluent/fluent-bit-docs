@@ -245,7 +245,11 @@ If you are compiling Fluent Bit from source, ensure the following requirements a
 
 - Build Requirements
 
-  The packages `libsasl2` and `libsasl2-dev` must be installed on your build environment.
+| Platform | Requirements |
+|----------|-------------|
+| **Linux/macOS** | The packages `libsasl2` and `libsasl2-dev` must be installed on your build environment. |
+| **Windows** | No additional SASL libraries required. Windows uses the built-in Security Support Provider Interface (SSPI) for SASL authentication, which only requires OpenSSL/TLS to be enabled. |
+
 
 - Runtime Requirements:
 
