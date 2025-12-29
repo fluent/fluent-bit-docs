@@ -16,19 +16,20 @@ This plugin uses the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | --------- |
-| `region` | The AWS region . | _none_ |
+| `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which can help improve throughput when there are transient/random networking issues. | `true` |
+| `compression` | Compression type for Firehose records. Each log record is individually compressed and sent to Firehose. Supported values: `gzip`, `arrow`. `arrow` is only available if Apache Arrow was enabled at compile time. | _none_ |
 | `delivery_stream` | The name of the Kinesis Firehose Delivery stream that you want log records sent to. | _none_ |
+| `endpoint` | Specify a custom endpoint for the Firehose API. | _none_ |
+| `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
+| `log_key` | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. | _none_ |
+| `profile` | AWS profile name to use. | `default` |
+| `region` | The AWS region. | _none_ |
+| `role_arn` | ARN of an IAM role to assume (for cross-account access). | _none_ |
+| `simple_aggregation` | Enable record aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. | `false` |
+| `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
 | `time_key` | Add the timestamp to the record under this key. By default, the timestamp from Fluent Bit won't be added to records sent to Kinesis. | _none_ |
 | `time_key_format` | strftime compliant format string for the timestamp; for example, the default is `%Y-%m-%dT%H:%M:%S`. Supports millisecond precision with `%3N` and nanosecond precision with `%9N` and `%L`. For example, adding `%3N` to support millisecond `%Y-%m-%dT%H:%M:%S.%3N`. This option is used with `time_key`. | _none_ |
-| `log_key` | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. | _none_ |
-| `compression` | Compression type for Firehose records. Each log record is individually compressed and sent to Firehose. Supported values: `gzip`. `arrow`. `arrow` is only an available if Apache Arrow was enabled at compile time. Defaults to no compression. | _none_ |
-| `role_arn` | ARN of an IAM role to assume (for cross account access`). | _none_ |
-| `endpoint` | Specify a custom endpoint for the Firehose API. | _none_ |
-| `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
-| `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which can help improve throughput when there are transient/random networking issues. | `true` |
-| `external_id` | Specify an external ID for the STS API. Can be used with the `role_arn` parameter if your role requires an external ID. | _none_ |
-| `profile` | AWS profile name to use. | `default` |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. |  `1` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Get started
 
@@ -64,10 +65,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name  kinesis_firehose
-  Match *
-  region us-east-1
-  delivery_stream my-stream
+  Name            kinesis_firehose
+  Match           *
+  Region          us-east-1
+  Delivery_Stream my-stream
 ```
 
 {% endtab %}
@@ -115,11 +116,11 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name  kinesis_firehose
-  Match *
-  region us-east-1
-  delivery_stream my-stream
-  workers 2
+  Name            kinesis_firehose
+  Match           *
+  Region          us-east-1
+  Delivery_Stream my-stream
+  Workers         2
 ```
 
 {% endtab %}
