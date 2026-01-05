@@ -136,73 +136,106 @@ The example can be executed locally with `make start` in the `examples/kafka_fil
 
 ## AWS MSK IAM authentication
 
-Fluent Bit v4.0.4 and later supports authentication to Amazon MSK (Managed Streaming for Apache Kafka) clusters using AWS IAM. This lets you securely connect to MSK brokers with AWS credentials, leveraging IAM roles and policies for access control.
+In Fluent Bit version 4.0.4 and later, you can use AWS IAM authentication for Amazon MSK clusters. This lets you use your AWS credentials and IAM policies to control access to Kafka topics.
 
-### Build requirements
+### Prerequisites
 
-If you are compiling Fluent Bit from source, ensure the following requirements are met to enable AWS MSK IAM support:
+To use AWS MSK IAM authentication, you must meet these requirements:
 
-- The packages `libsasl2` and `libsasl2-dev` must be installed on your build environment.
-
-### Runtime requirements
-
-- **Network Access:** Fluent Bit must be able to reach your MSK broker endpoints (AWS VPC setup).
-- **AWS Credentials:** Provide these AWS credentials using any supported AWS method. These credentials are discovered by default when `aws_msk_iam` flag is enabled.
-  - IAM roles (recommended for EC2, ECS, or EKS)
-  - Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
-  - AWS credentials file (`~/.aws/credentials`)
-  - Instance metadata service (IMDS)
-- **IAM Permissions:** The credentials must allow access to the target MSK cluster, as shown in the following example policy.
+- You must have access to an AWS MSK cluster with IAM authentication enabled.
+- You must have valid AWS credentials (IAM role, access keys, or instance profile).
+- You must have network connectivity to your MSK brokers.
 
 ### Configuration parameters [#config-aws]
 
-| Property | Description | Required |
-| -------- | ----------- | -------- |
-| `aws_msk_iam` | If `true`, enables AWS MSK IAM authentication. Possible values: `true`, `false`. | `false` |
-| `aws_msk_iam_cluster_arn` | Full ARN of the MSK cluster for region extraction. This value is required if `aws_msk_iam` is `true`. | _none_ |
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| `rdkafka.sasl.mechanism` | Set to `aws_msk_iam` to enable MSK IAM authentication. | _none_ |
+| `aws_region` | The name of your AWS region. This value is optional. If you don't set a value, but MSK IAM authentication is enabled, Fluent Bit detects your AWS region from the broker hostname for standard MSK endpoints. | _none_ |
 
-### Configuration example
+### Basic configuration
+
+For most use cases, the only necessary configuration step is to set `rdkafka.sasl.mechanism` to `aws_msk_iam`:
 
 ```yaml
 pipeline:
   inputs:
     - name: kafka
-      brokers: my-cluster.abcdef.c1.kafka.us-east-1.amazonaws.com:9098
+      brokers: boot-abc123.c1.kafka-serverless.us-east-1.amazonaws.com:9098
       topics: my-topic
-      aws_msk_iam: true
-      aws_msk_iam_cluster_arn: arn:aws:kafka:us-east-1:123456789012:cluster/my-cluster/abcdef-1234-5678-9012-abcdefghijkl-s3
-
-  outputs:
-    - name: stdout
-      match: '*'
+      rdkafka.sasl.mechanism: aws_msk_iam
 ```
 
-### Example AWS IAM policy
+The AWS region is automatically detected from the broker hostname for standard MSK endpoints.
 
 {% hint style="info" %}
 
-IAM policies and permissions can be complex and might vary depending on your organization's security requirements. If you are unsure about the correct permissions or best practices, consult your AWS administrator or an AWS expert who is familiar with MSK and IAM security.
+When using `aws_msk_iam`, Fluent Bit automatically sets `rdkafka.security.protocol` to `SASL_SSL`. You don't need to configure it manually.
 
 {% endhint %}
 
-The AWS credentials used by Fluent Bit must have permission to connect to your MSK cluster. Here is a minimal example policy:
+### Using custom DNS or PrivateLink
+
+If you're using custom DNS names or PrivateLink aliases, specify the `aws_region` parameter:
+
+```yaml
+pipeline:
+  inputs:
+    - name: kafka
+      brokers: my-kafka-endpoint.example.com:9098
+      topics: my-topic
+      rdkafka.sasl.mechanism: aws_msk_iam
+      aws_region: us-east-1
+```
+
+### AWS credentials
+
+Fluent Bit uses the standard AWS credentials chain to authenticate:
+
+1. Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
+1. AWS credentials file (`~/.aws/credentials`)
+1. IAM instance profile (recommended for EC2)
+1. IAM task role (recommended for ECS)
+1. IAM service account (recommended for EKS)
+
+### Required IAM permissions
+
+{% hint style="info" %}
+
+For detailed IAM policy configuration, consult your AWS administrator or refer to the [AWS MSK documentation](https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html).
+
+{% endhint %}
+
+Your AWS credentials need the following permissions to consume from MSK topics:
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "VisualEditor0",
       "Effect": "Allow",
       "Action": [
-        "kafka-cluster:*",
-        "kafka-cluster:DescribeCluster",
-        "kafka-cluster:ReadData",
+        "kafka-cluster:Connect",
         "kafka-cluster:DescribeTopic",
-        "kafka-cluster:Connect"
+        "kafka-cluster:ReadData",
+        "kafka-cluster:DescribeGroup",
+        "kafka-cluster:AlterGroup"
       ],
-      "Resource": "*"
+      "Resource": [
+        "arn:aws:kafka:REGION:ACCOUNT:cluster/CLUSTER_NAME/CLUSTER_UUID",
+        "arn:aws:kafka:REGION:ACCOUNT:topic/CLUSTER_NAME/CLUSTER_UUID/my-topic",
+        "arn:aws:kafka:REGION:ACCOUNT:group/CLUSTER_NAME/CLUSTER_UUID/fluent-bit"
+      ]
     }
   ]
 }
 ```
+
+Replace `REGION`, `ACCOUNT`, `CLUSTER_NAME`, `CLUSTER_UUID`, and topic and group names with your actual values.
+
+{% hint style="info" %}
+	
+The `CLUSTER_UUID` segment is required in all topic and group ARNs. You can find your cluster's UUID in the MSK console or by describing the cluster with the AWS CLI.
+	
+{% endhint %}
+
