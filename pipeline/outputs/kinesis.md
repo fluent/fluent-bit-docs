@@ -16,18 +16,19 @@ For information about how AWS credentials are fetched, see [AWS credentials](../
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `region` | The AWS region. | _none_ |
-| `stream` | The name of the Kinesis Streams Delivery stream that you want log records sent to. | _none_ |
-| `time_key` | Add the timestamp to the record under this key. | `false` |
-| `time_key_format` | The strftime compliant format string for the timestamp. Supports millisecond precision with `%3N` and supports nanosecond precision with `%9N` and `%L`. For example, adding `%3N` to support millisecond `%Y-%m-%dT%H:%M:%S.%3N`. This option is used with `time_key`. | `%Y-%m-%dT%H:%M:%S` |
-| `log_key` | By default, the whole log record will be sent to Kinesis. If you specify a key name with this option, then only the value of that key will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Kinesis. | _none_ |
-| `role_arn` | ARN of an IAM role to assume (for cross account access). | _none_ |
-| `endpoint` | Specify a custom endpoint for the Kinesis API. | _none_ |
-| `port` | TCP port of the Kinesis Streams service. | `443` |
-| `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
 | `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which might help improve throughput when there are transient/random networking issues. | `true` |
-| `external_id` | Specify an external ID for the STS API, can be used with the `role_arn` parameter if your role requires an external ID. | _none_ |
+| `endpoint` | Specify a custom endpoint for the Kinesis API. | _none_ |
+| `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
+| `log_key` | By default, the whole log record will be sent to Kinesis. If you specify a key name with this option, then only the value of that key will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Kinesis. | _none_ |
+| `port` | TCP port of the Kinesis Streams service. | `443` |
 | `profile` | AWS profile name to use. | `default` |
+| `region` | The AWS region. | _none_ |
+| `role_arn` | ARN of an IAM role to assume (for cross-account access). | _none_ |
+| `simple_aggregation` | Enable record aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. | `false` |
+| `stream` | The name of the Kinesis stream that you want log records sent to. | _none_ |
+| `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
+| `time_key` | Add the timestamp to the record under this key. | _none_ |
+| `time_key_format` | The strftime compliant format string for the timestamp. Supports millisecond precision with `%3N` and supports nanosecond precision with `%9N` and `%L`. For example, adding `%3N` to support millisecond `%Y-%m-%dT%H:%M:%S.%3N`. This option is used with `time_key`. | `%Y-%m-%dT%H:%M:%S` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Get started
@@ -64,10 +65,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name  kinesis_streams
-  Match *
-  region us-east-1
-  stream my-stream
+  Name   kinesis_streams
+  Match  *
+  Region us-east-1
+  Stream my-stream
 ```
 
 {% endtab %}
