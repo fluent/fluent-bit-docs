@@ -1,6 +1,6 @@
 # Pipeline
 
-The `pipeline` section of YAML configuration files defines the flow of how data is collected, processed, and send to its final destination. This section contains the following subsections:
+The `pipeline` section of YAML configuration files defines the flow of how data is collected, processed, and sent to its final destination. This section contains the following subsections:
 
 - [`inputs`](#inputs): Configures input plugins.
 - [`filters`](#filters): Configures filters.
