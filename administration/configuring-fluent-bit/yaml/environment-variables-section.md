@@ -1,8 +1,6 @@
 # Environment variables
 
-The `env` section lets you define environment variables directly within the configuration file. These variables can then be used to dynamically replace values throughout your configuration using the `${VARIABLE_NAME}` syntax.
-
-Variables set in this section can't be overridden by system environment variables.
+The `env` section of YAML configuration files lets you define environment variables. These variables can then be used to dynamically replace values throughout your configuration using the `${VARIABLE_NAME}` syntax.
 
 Values set in the `env` section are case-sensitive. However, as a best practice, Fluent Bit recommends using uppercase names for environment variables. The following example defines two variables, `FLUSH_INTERVAL` and `STDOUT_FMT`, which can be accessed in the configuration using `${FLUSH_INTERVAL}` and `${STDOUT_FMT}`:
 
@@ -27,7 +25,7 @@ pipeline:
 
 ## Predefined variables
 
-Fluent Bit provides a set of predefined environment variables that can be used in your configuration:
+Fluent Bit supports the following predefined environment variables. You can reference these variables in configuration files without defining them in the `env` section.
 
 | Name | Description |
 | ---- | ----------- |
@@ -37,7 +35,9 @@ Fluent Bit provides a set of predefined environment variables that can be used i
 
 In addition to variables defined in the configuration file or the predefined ones, Fluent Bit can access system environment variables set in the user space. These external variables can be referenced in the configuration using the same `${VARIABLE_NAME}` pattern.
 
+{% hint style="info" %}
 Variables set in the `env` section can't be overridden by system environment variables.
+{% endhint %}
 
 For example, to set the `FLUSH_INTERVAL` system environment variable to `2` and use it in your configuration:
 
