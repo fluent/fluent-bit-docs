@@ -7,7 +7,7 @@ Fluent Bit uses configuration files to store information about your specified [i
 
 ## Unit sizes
 
-Some configuration settings in Fluent Bit use standardized unit sizes to define data and storage limits. For example, the `buffer_chunk_size` and `buffer_max_size` parameters for the [Tail](../data-pipeline/inputs/tail.md) input plugin use unit sizes.
+Some configuration settings in Fluent Bit use standardized unit sizes to define data and storage limits. For example, the `buffer_chunk_size` and `buffer_max_size` parameters for the [Tail](../pipeline/inputs/tail.md) input plugin use unit sizes.
 
 The following table describes the unit sizes you can use and what they mean.
 

@@ -15,7 +15,7 @@ Along with multiline filters, you can enable one of the following built-in Fluen
 
 When using this filter:
 
-- The usage of this filter depends on a previous configuration of a [multiline parser](../pipeline/parsers/multiline-parsing.md) definition.
+- The usage of this filter depends on a previous configuration of a [multiline parser](../../pipeline/parsers/multiline-parsing.md) definition.
 - To concatenate messages read from a log file, it's highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages that were originally one line, but split by Docker or CRI container engines because of their size, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) in combination with the `docker` or `cri` parser. To concatenate application logs like stacktraces on top of that, you can use this multiline filter.
 
 {% hint style="warning" %}

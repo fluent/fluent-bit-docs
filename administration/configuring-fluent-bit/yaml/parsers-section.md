@@ -1,6 +1,6 @@
 # Parsers
 
-You can define customer [parsers](../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
+You can define customer [parsers](../../../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
 
 {% hint style="info" %}
 
@@ -35,7 +35,7 @@ parsers:
 {% endtab %}
 {% endtabs %}
 
-For information about supported configuration options for custom parsers, see [configuring parsers](../../pipeline/parsers/configuring-parser.md).
+For information about supported configuration options for custom parsers, see [configuring custom parsers](../../../pipeline/parsers/configuring-parser.md).
 
 ## Standalone parsers files
 
