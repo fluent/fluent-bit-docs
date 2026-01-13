@@ -1,6 +1,6 @@
 # Parsers
 
-You can define customer [parsers](../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
+You can define customer [parsers](../../../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
 
 {% hint style="info" %}
 
@@ -35,7 +35,7 @@ parsers:
 {% endtab %}
 {% endtabs %}
 
-For information about supported configuration options for custom parsers, see [configuring parsers](../../pipeline/parsers/configuring-parser.md).
+For information about supported configuration options for custom parsers, see [configuring custom parsers](../../../pipeline/parsers/configuring-parser.md).
 
 ## Standalone parsers files
 
@@ -47,10 +47,10 @@ To add a standalone parsers file to Fluent Bit, use the `parsers_file` parameter
 
 To add a standalone parsers file to Fluent Bit, follow these steps.
 
-1. Define custom parsers in a standalone YAML file. For example, `my-parsers.yaml` defines two custom parsers:
+1. Define custom parsers in a standalone YAML file. For example, `custom-parsers.yaml` defines two custom parsers:
 
 {% tabs %}
-{% tab title="my-parsers.yaml" %}
+{% tab title="custom-parsers.yaml" %}
 
 ```yaml
 parsers:

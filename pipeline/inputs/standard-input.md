@@ -47,7 +47,7 @@ The Fluent Bit event timestamp will be set from the input record if the two-elem
 
 ### JSON input
 
-To demonstrate how the plugin works, you can use a `bash` script that generates messages and writes them to [Fluent Bit](http://fluentbit.io).
+To demonstrate how the plugin works, you can use a `bash` script that generates messages and writes them to [Fluent Bit](https://fluentbit.io).
 
 1. Write the following content in a file named `test.sh`:
 
@@ -60,7 +60,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
    done
    ```
 
-2. Start the script and [Fluent Bit](http://fluentbit.io):
+2. Start the script and [Fluent Bit](https://fluentbit.io):
 
    ```shell
    bash test.sh | fluent-bit -q -i stdin -o stdout

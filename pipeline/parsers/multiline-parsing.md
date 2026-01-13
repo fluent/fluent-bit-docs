@@ -32,7 +32,7 @@ Custom multiline parsers support the following configuration parameters.
 
 {% hint style="info" %}
 
-To define a custom multiline parser, add an entry to the [`multiline_parsers` section](../configuring-fluent-bit/yaml/multiline-parsers-section.md) of your YAML configuration file.
+To define a custom multiline parser, add an entry to the [`multiline_parsers` section](../../administration/configuring-fluent-bit/yaml/multiline-parsers-section.md) of your YAML configuration file.
 
 {% endhint %}
 

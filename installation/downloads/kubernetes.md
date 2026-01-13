@@ -4,7 +4,7 @@ description: Kubernetes Production Grade Log Processor
 
 # Kubernetes
 
-[Fluent Bit](http://fluentbit.io) is a lightweight and extensible log processor with full support for Kubernetes:
+[Fluent Bit](https://fluentbit.io) is a lightweight and extensible log processor with full support for Kubernetes:
 
 - Process Kubernetes containers logs from the file system or Systemd/Journald.
 - Enrich logs with Kubernetes Metadata.
@@ -14,7 +14,7 @@ description: Kubernetes Production Grade Log Processor
 
 Before getting started it's important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of nodes. The Fluent Bit log agent tool needs to run on every node to collect logs from every pod. Fluent Bit is deployed as a DaemonSet, which is a pod that runs on every node of the cluster.
 
-When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) filter plugin.
+When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](../../pipeline/filters/kubernetes) filter plugin.
 
 The Kubernetes filter plugin talks to the Kubernetes API Server to retrieve relevant information such as the `pod_id`, `labels`, and `annotations`. Other fields, such as `pod_name`, `container_id`, and `container_name`, are retrieved locally from the log file names. All of this is handled automatically, and no intervention is required from a configuration aspect.
 
@@ -46,7 +46,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
 
 ### Default values
 
-The default chart values include configuration to read container logs. With Docker parsing, Systemd logs apply Kubernetes metadata enrichment, and output to an Elasticsearch cluster. You can modify the [included values file](https://github.com/fluent/helm-charts/blob/master/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
+The default chart values include configuration to read container logs. With Docker parsing, Systemd logs apply Kubernetes metadata enrichment, and output to an Elasticsearch cluster. You can modify the [included values file](https://github.com/fluent/helm-charts/blob/main/charts/fluent-bit/values.yaml) to specify additional outputs, health checks, monitoring endpoints, or other configuration options.
 
 ## Details
 

@@ -18,7 +18,7 @@ This plugin uses the official [librdkafka C library](https://github.com/edenhill
 | `group_id`           | Group id passed to librdkafka.                                                                                                           | `fluent-bit` |
 | `poll_ms`            | Kafka brokers polling interval in milliseconds.                                                                                          | `500`        |
 | `poll_timeout_ms`    | Timeout in milliseconds for Kafka consumer poll operations. Only effective when `threaded` is enabled.                                   | `1`          |
-| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).                    | _none_       |
+| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md).                    | _none_       |
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`      |
 | `topics`             | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to.                                                  | _none_       |
 

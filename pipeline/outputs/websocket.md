@@ -1,6 +1,6 @@
 # WebSocket
 
-The _WebSocket_ output plugin lets you flush your records into a WebSocket endpoint. It issues an HTTP `GET` request to do the handshake, and then uses TCP connections to send the data records in either JSON or [MessagePack](http://msgpack.org) format.
+The _WebSocket_ output plugin lets you flush your records into a WebSocket endpoint. It issues an HTTP `GET` request to do the handshake, and then uses TCP connections to send the data records in either JSON or [MessagePack](https://msgpack.org) format.
 
 ## Configuration parameters
 
@@ -137,7 +137,7 @@ When Fluent Bit is running, you can send some messages using `netcat`:
 echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170; sleep 35; echo '{"key 1": 123456789, "key 2": "abcdefg"}' | nc 127.0.0.1 5170
 ```
 
-In [Fluent Bit](http://fluentbit.io) you should see the following output:
+In [Fluent Bit](https://fluentbit.io) you should see the following output:
 
 ```shell
 fluent-bit   -c ../conf/out_ws.conf

@@ -1,13 +1,13 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluent Bit](http://fluentbit.io) and [Fluentd](http://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
+_Forward_ is the protocol used by [Fluent Bit](https://fluentbit.io) and [Fluentd](https://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key                 | Description                                                                                                                                                                                                                                                                                                                                | Default   |
-|:--------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------|
+| Key                 | Description  | Default   |
+|:--------------------|:-------------|:----------|
 | `buffer_chunk_size` | By default the buffer to store the incoming Forward messages, don't allocate the maximum memory allowed, instead it allocate memory when it's required. The rounds of allocations are set by `buffer_chunk_size`. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit.md#unit-sizes)specification. | `1024000` |
 | `buffer_max_size`   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification.                                                                                                                                         | `6144000` |
 | `empty_shared_key`  | Enable secure forward protocol with a zero-length shared key. Use this to enable user authentication without requiring a shared key, or to connect to Fluentd with a zero-length shared key.                                                                                                                                              | `false`   |
@@ -188,7 +188,7 @@ pipeline:
 
 ## Testing
 
-After Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](http://www.fluentd.org):
+After Fluent Bit is running, you can send some messages using the `fluent-cat` tool, provided by [Fluentd](https://www.fluentd.org):
 
 ```shell
 echo '{"key 1": 123456789, "key 2": "abcdefg"}' | fluent-cat my_tag
@@ -200,7 +200,7 @@ When you run the plugin with the following command:
 fluent-bit -i forward -o stdout
 ```
 
-In [Fluent Bit](http://fluentbit.io) you should see the following output:
+In [Fluent Bit](https://fluentbit.io) you should see the following output:
 
 ```text
 ...

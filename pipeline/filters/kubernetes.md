@@ -54,7 +54,7 @@ The plugin supports the following configuration parameters:
 | `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
 | `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
 | `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
-| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`.| `600` |
+| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`. | `600` |
 | `kube_url` | API Server endpoint | `https://kubernetes.default.svc:443` |
 | `kubelet_host` | Kubelet host to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `127.0.0.1` |
 | `kubelet_port` | Kubelet port to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `10250` |
@@ -63,9 +63,9 @@ The plugin supports the following configuration parameters:
 | `merge_log_key` | When `merge_log` is enabled, the filter assumes the `log` field from the incoming message is a JSON string message and attempts to create a structured representation of it at the same level of the `log` field in the map. If `merge_log_key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. | _none_ |
 | `merge_log_trim` | When `merge_log` is enabled, trim (remove possible `\n` or `\r\`) field values. | `On` |
 | `merge_parser` | Optional parser name to specify how to parse the data contained in the `log` key. Recommended for developers or testing only. | _none_ |
-| `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `namespace_metadata_only` | Include Kubernetes namespace metadata and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
+| `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
+| `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
+| `namespace_metadata_only` | Include Kubernetes namespace metadata and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
 | `owner_references` | Include Kubernetes owner references in the extra metadata. | `Off` |
 | `regex_parser` | Set an alternative Parser to process record tags and extract `pod_name`, `namespace_name`, `container_name`, and `docker_id`. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) (refer to parser `filter-kube-test` as an example). | _none_ |
 | `set_platform` | Manually set the Kubernetes platform type. Possible values are `k8s` (native Kubernetes) and `eks` (Amazon EKS). When set, this completely overrides automatic detection based on the service account token issuer; automatic detection is skipped entirely. Intended for testing or environments where token-based detection isn't available. | Auto-detected |
@@ -74,7 +74,7 @@ The plugin supports the following configuration parameters:
 | `tls.verify_hostname` | When enabled, turns on hostname validation for certificates. | `Off` |
 | `tls.vhost` | Set an optional TLS virtual host for the Kubernetes API server connection. | _none_ |
 | `use_journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
-| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings.| `Off` |
+| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings. | `Off` |
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
 | `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail and Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
@@ -592,6 +592,7 @@ When platform detection is active, an `aws_entity_platform` field is added to th
 ```
 
 Possible values:
+
 - `eks`: Running on Amazon EKS
 - `k8s`: Running on native Kubernetes
 

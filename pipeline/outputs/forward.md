@@ -1,8 +1,8 @@
 # Forward
 
-_Forward_ is the protocol used by [Fluentd](http://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](http://fluentbit.io) and [Fluentd](http://fluentd.org).
+_Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://fluentd.org).
 
-There are no configuration steps required besides specifying where [Fluentd](http://fluentd.org) is located, which can be a local or a remote destination.
+There are no configuration steps required besides specifying where [Fluentd](https://fluentd.org) is located, which can be a local or a remote destination.
 
 This plugin offers the following transports and modes:
 
@@ -49,7 +49,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 
 ## Forward setup
 
-Before proceeding, ensure that [Fluentd](http://fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](http://docs.fluentd.org/installation) document.
+Before proceeding, ensure that [Fluentd](https://fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation) document.
 
 After installing Fluentd, create the following configuration file example which lets you to stream data into it:
 

@@ -4,7 +4,7 @@ description: Generate data file for GNU Plot
 
 # Plot
 
-The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](http://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin lets you export your telemetry data for visualization and analysis using `gnuplot`.
+The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](https://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin lets you export your telemetry data for visualization and analysis using `gnuplot`.
 
 ## Configuration parameters
 

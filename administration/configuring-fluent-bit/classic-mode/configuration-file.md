@@ -52,7 +52,7 @@ For scheduler and retry details, see [scheduling and retries](../../scheduling-a
 
 ## Config input
 
-The `INPUT` section defines a source (related to an input plugin). Each [input plugin](https://docs.fluentbit.io/manual/pipeline/inputs) can add its own configuration keys:
+The `INPUT` section defines a source (related to an input plugin). Each [input plugin](../../../pipeline/inputs.md) can add its own configuration keys:
 
 | Key         | Description |
 | ----------- | ------------|
@@ -160,4 +160,4 @@ Wildcard character (`*`) supports including multiple files. For example:
 
 Files matching the wildcard character are included unsorted. If plugin ordering between files needs to be preserved, the files should be included explicitly.
 
-Environment variables aren't supported in includes section. The file path must be specified as a literal string.
+Environment variables aren't supported in the `includes` section. The path to the file must be specified as a literal string.

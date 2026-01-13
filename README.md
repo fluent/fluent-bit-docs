@@ -6,7 +6,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 <figure><img src=".gitbook/assets/fluent_bit_logo.png" alt=""><figcaption></figcaption></figure>
 
-[Fluent Bit](http://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
+[Fluent Bit](https://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
 ## Features
 
@@ -39,7 +39,7 @@ For more details about changes in each release, refer to the [official release n
 
 ## Fluent Bit, Fluentd, and CNCF
 
-Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org).
+Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
 
 Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
 
