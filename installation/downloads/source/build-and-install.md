@@ -1,6 +1,6 @@
 # Build and install
 
-[Fluent Bit](http://fluentbit.io) uses [CMake](http://cmake.org) as its build system.
+[Fluent Bit](https://fluentbit.io) uses [CMake](https://cmake.org) as its build system.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ The following steps explain how to build and install the project with the defaul
    cd build/
    ```
 
-1. Let [CMake](http://cmake.org) configure the project specifying where the root path is located:
+1. Let [CMake](https://cmake.org) configure the project specifying where the root path is located:
 
    ```shell
    cmake ../
@@ -144,7 +144,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 | Option                    | Description                  | Default |
 |:--------------------------|:-----------------------------|:--------|
-| `FLB_BACKTRACE`           | Enable stack trace support    | `Yes`   |
+| `FLB_BACKTRACE`           | Enable stack trace support   | `Yes`   |
 | `FLB_DEBUG`               | Build with debug mode (`-g`) | `No`    |
 | `FLB_SMALL`               | Optimize for small size      | `No`    |
 | `FLB_TESTS_INTERNAL`      | Enable internal tests        | `No`    |
@@ -156,10 +156,10 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 ### Optimization options
 
-| Option                                    | Description                                                                                              | Default |
-|:------------------------------------------|:---------------------------------------------------------------------------------------------------------|:--------|
-| `FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE`    | Determine initial buffer size for `msgpack` to `json` conversion in terms of memory used by payload.     | `2.0`   |
-| `FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE` | Determine percentage of reallocation size when `msgpack` to `json` conversion buffer runs out of memory. | `0.1`   |
+| Option | Description | Default |
+| ------ | ----------- | ------- |
+| `FLB_MSGPACK_TO_JSON_INIT_BUFFER_SIZE` | Determine initial buffer size for `msgpack` to `json` conversion in terms of memory used by payload. | `2.0` |
+| `FLB_MSGPACK_TO_JSON_REALLOC_BUFFER_SIZE` | Determine percentage of reallocation size when `msgpack` to `json` conversion buffer runs out of memory. | `0.1` |
 
 ### Input plugins
 
@@ -240,30 +240,30 @@ Filter plugins let you modify, enrich or drop records.
 
 The following table describes the filters available on this version:
 
-| Option                                                                       | Description                        | Default |
-|:-----------------------------------------------------------------------------|:-----------------------------------|:--------|
-| [`FLB_FILTER_AWS`](../../../pipeline/filters/aws-metadata.md)                | Enable AWS metadata filter         | `On`    |
-| [`FLB_FILTER_CHECKLIST`](../../../pipeline/filters/checklist.md)             | Enable Checklist filter            | `On`    |
-| [`FLB_FILTER_ECS`](../../../pipeline/filters/ecs-metadata.md)                | Enable AWS ECS metadata filter     | `On`    |
-| [`FLB_FILTER_EXPECT`](../../../pipeline/filters/expect.md)                   | Enable Expect data test filter     | `On`    |
-| [`FLB_FILTER_GIOIP2`](../../../pipeline/filters/geoip2-filter.md)            | Enable Geoip2 filter               | `On`    |
-| [`FLB_FILTER_GREP`](../../../pipeline/filters/grep.md)                       | Enable Grep filter                 | `On`    |
-| [`FLB_FILTER_KUBERNETES`](../../../pipeline/filters/kubernetes.md)           | Enable Kubernetes metadata filter  | `On`    |
-| [`FLB_FILTER_LOG_TO_METRICS`](../../../pipeline/filters/log_to_metrics.md)   | Enable Log derived metrics filter  | `On`    |
-| [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md)                         | Enable Lua scripting filter        | `On`    |
-| [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md)                   | Enable Modify filter               | `On`    |
+| Option                                                                       | Description                         | Default |
+| ---------------------------------------------------------------------------- | ----------------------------------  | ------- |
+| [`FLB_FILTER_AWS`](../../../pipeline/filters/aws-metadata.md)                | Enable AWS metadata filter          | `On`    |
+| [`FLB_FILTER_CHECKLIST`](../../../pipeline/filters/checklist.md)             | Enable Checklist filter             | `On`    |
+| [`FLB_FILTER_ECS`](../../../pipeline/filters/ecs-metadata.md)                | Enable AWS ECS metadata filter      | `On`    |
+| [`FLB_FILTER_EXPECT`](../../../pipeline/filters/expect.md)                   | Enable Expect data test filter      | `On`    |
+| [`FLB_FILTER_GIOIP2`](../../../pipeline/filters/geoip2-filter.md)            | Enable Geoip2 filter                | `On`    |
+| [`FLB_FILTER_GREP`](../../../pipeline/filters/grep.md)                       | Enable Grep filter                  | `On`    |
+| [`FLB_FILTER_KUBERNETES`](../../../pipeline/filters/kubernetes.md)           | Enable Kubernetes metadata filter   | `On`    |
+| [`FLB_FILTER_LOG_TO_METRICS`](../../../pipeline/filters/log_to_metrics.md)   | Enable Log derived metrics filter   | `On`    |
+| [`FLB_FILTER_LUA`](../../../pipeline/filters/lua.md)                         | Enable Lua scripting filter         | `On`    |
+| [`FLB_FILTER_MODIFY`](../../../pipeline/filters/modify.md)                   | Enable Modify filter                | `On`    |
 | [`FLB_FILTER_MULTILINE`](../../../pipeline/filters/multiline-stacktrace.md)  | Enable Multiline stack trace filter | `On`    |
-| [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md)                       | Enable Nest filter                 | `On`    |
-| [`FLB_FILTER_NIGHTFALL`](../../../pipeline/filters/nightfall.md)             | Enable Nightfall filter            | `On`    |
-| [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md)                   | Enable Parser filter               | `On`    |
-| [`FLB_FILTER_RECORD_MODIFIER`](../../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter      | `On`    |
-| [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md)         | Enable Rewrite Tag filter          | `On`    |
-| [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md)          | Enable Stdout filter               | `On`    |
-| [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md)                 | Enable Sysinfo filter              | `On`    |
-| [`FLB_FILTER_TENSORFLOW`](../../../pipeline/filters/tensorflow.md)           | Enable Tensorflow filter           | `Off`   |
-| [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md)               | Enable Throttle filter             | `On`    |
-| [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md)   | Enable Type Converter filter       | `On`    |
-| [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md)                       | Enable Wasm filter                 | `On`    |
+| [`FLB_FILTER_NEST`](../../../pipeline/filters/nest.md)                       | Enable Nest filter                  | `On`    |
+| [`FLB_FILTER_NIGHTFALL`](../../../pipeline/filters/nightfall.md)             | Enable Nightfall filter             | `On`    |
+| [`FLB_FILTER_PARSER`](../../../pipeline/filters/parser.md)                   | Enable Parser filter                | `On`    |
+| [`FLB_FILTER_RECORD_MODIFIER`](../../../pipeline/filters/record-modifier.md) | Enable Record Modifier filter       | `On`    |
+| [`FLB_FILTER_REWRITE_TAG`](../../../pipeline/filters/rewrite-tag.md)         | Enable Rewrite Tag filter           | `On`    |
+| [`FLB_FILTER_STDOUT`](../../../pipeline/filters/standard-output.md)          | Enable Stdout filter                | `On`    |
+| [`FLB_FILTER_SYSINFO`](../../../pipeline/filters/sysinfo.md)                 | Enable Sysinfo filter               | `On`    |
+| [`FLB_FILTER_TENSORFLOW`](../../../pipeline/filters/tensorflow.md)           | Enable Tensorflow filter            | `Off`   |
+| [`FLB_FILTER_THROTTLE`](../../../pipeline/filters/throttle.md)               | Enable Throttle filter              | `On`    |
+| [`FLB_FILTER_TYPE_CONVERTER`](../../../pipeline/filters/type-converter.md)   | Enable Type Converter filter        | `On`    |
+| [`FLB_FILTER_WASM`](../../../pipeline/filters/wasm.md)                       | Enable Wasm filter                  | `On`    |
 
 ### Output plugins
 
@@ -286,7 +286,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_EXIT`](../../../pipeline/outputs/exit.md)                                      | Enable Exit output plugin                                | `On`    |
 | [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                                      | Enable File output plugin                                | `On`    |
 | [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md)                        | Enable Flow counter output plugin                        | `On`    |
-| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](http://www.fluentd.org) output plugin   | `On`    |
+| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](https://www.fluentd.org) output plugin   | `On`    |
 | [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md)                                      | Enable GELF output plugin                                | `On`    |
 | [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md)                                      | Enable HTTP output plugin                                | `On`    |
 | [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md)                              | Enable InfluxDB output plugin                            | `On`    |
@@ -305,7 +305,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_ORACLE_LOG_ANALYTICS`](../../../pipeline/outputs/oci-logging-analytics.md)     | Enable Oracle Cloud Infrastructure Logging output plugin | `On`    |
 | [`FLB_OUT_PGSQL`](../../../pipeline/outputs/postgresql.md)                               | Enable PostgreSQL output plugin                          | `Off`   |
 | [`FLB_OUT_PLOT`](../../../pipeline/outputs/plot.md)                                      | Enable Plot output plugin                                | `On`    |
-| [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/outputs/prometheus-exporter.md)         | Enable Prometheus exporter output plugin                 | `On`    |
+| [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/outputs/prometheus-exporter.md)        | Enable Prometheus exporter output plugin                 | `On`    |
 | [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md) | Enable Prometheus remote write output plugin             | `On`    |
 | [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                                          | Enable Amazon S3 output plugin                           | `On`    |
 | [`FLB_OUT_SKYWALKING`](../../../pipeline/outputs/skywalking.md)                          | Enable Apache Skywalking output plugin                   | `On`    |

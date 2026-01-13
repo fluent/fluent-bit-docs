@@ -1,6 +1,6 @@
 # Kafka REST proxy
 
-The _Kafka rest_ (`kafka-rest`) output plugin lets you flush your records into a [Kafka REST Proxy](http://docs.confluent.io/current/kafka-rest/docs/index.html) server. The following instructions assume you have an operational Kafka REST Proxy and Kafka services running in your environment.
+The _Kafka rest_ (`kafka-rest`) output plugin lets you flush your records into a [Kafka REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html) server. The following instructions assume you have an operational Kafka REST Proxy and Kafka services running in your environment.
 
 ## Configuration parameters
 

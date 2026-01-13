@@ -1,6 +1,6 @@
 # HTTP
 
-The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It issues `POST` or `PUT` requests with the data records in [MessagePack](http://msgpack.org) (or JSON) format.
+The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It issues `POST` or `PUT` requests with the data records in [MessagePack](https://msgpack.org) (or JSON) format.
 
 ## Configuration parameters
 

@@ -4,14 +4,14 @@ description: Send logs to Azure Data Explorer (Kusto)
 
 # Azure Data Explorer
 
-The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/services/data-explorer/) cluster, using the [Queued Ingestion](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/api/netfx/about-kusto-ingest#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
+The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/products/data-explorer/) cluster, using the [Queued Ingestion](https://learn.microsoft.com/en-us/kusto/api/netfx/about-kusto-ingest?view=azure-data-explorer&preserve-view=true&tabs=csharp#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
 
 ## Ingest into Azure Data Explorer: create a Kusto cluster and database
 
 Create an Azure Data Explorer cluster in one of the following ways:
 
 - [Create a free-tier cluster](https://dataexplorer.azure.com/freecluster)
-- [Create a fully featured cluster](https://docs.microsoft.com/en-us/azure/data-explorer/create-cluster-database-portal)
+- [Create a fully featured cluster](https://learn.microsoft.com/en-us/azure/data-explorer/create-cluster-and-database?tabs=free)
 
 ## Ingest into Microsoft Fabric real time analytics: create an Eventhouse cluster and KQL database
 

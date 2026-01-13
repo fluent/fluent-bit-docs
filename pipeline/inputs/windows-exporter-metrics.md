@@ -101,7 +101,7 @@ In the following configuration file, the input plugin `windows_exporter_metrics`
 #
 # After starting the service try it with:
 #
-# $ curl http://127.0.0.1:2021/metrics
+# $ curl https://127.0.0.1:2021/metrics
 #
 service:
   flush: 1
@@ -130,7 +130,7 @@ pipeline:
 #
 # After starting the service try it with:
 #
-# $ curl http://127.0.0.1:2021/metrics
+# $ curl https://127.0.0.1:2021/metrics
 #
 [SERVICE]
   flush           1
@@ -154,7 +154,7 @@ pipeline:
 You can test the expose of the metrics by using `curl`:
 
 ```shell
-curl http://127.0.0.1:2021/metrics
+curl https://127.0.0.1:2021/metrics
 ```
 
 ### Filtering disk and network metrics

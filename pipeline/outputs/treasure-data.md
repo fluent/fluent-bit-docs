@@ -1,6 +1,6 @@
 # Treasure Data
 
-The _Treasure Data_ (TD) output plugin lets you flush your records into the [Treasure Data](http://treasuredata.com) cloud service.
+The _Treasure Data_ (TD) output plugin lets you flush your records into the [Treasure Data](https://treasuredata.com) cloud service.
 
 ## Configuration parameters
 

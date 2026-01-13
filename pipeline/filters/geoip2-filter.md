@@ -6,7 +6,7 @@ description: Look up Geo data from IP.
 
 The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
-The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/).
 
 ## Configuration parameters
 

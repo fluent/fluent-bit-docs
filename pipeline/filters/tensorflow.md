@@ -1,8 +1,8 @@
 # Tensorflow
 
-The _Tensorflow_ filter plugin allows running machine learning inference tasks on the records of data coming from input plugins or stream processors. This filter uses [Tensorflow Lite](https://www.tensorflow.org/lite/) as the inference engine, and requires Tensorflow Lite shared library to be present during build and at runtime.
+The _Tensorflow_ filter plugin allows running machine learning inference tasks on the records of data coming from input plugins or stream processors. This filter uses [Tensorflow Lite](https://ai.google.dev/edge/litert) as the inference engine, and requires Tensorflow Lite shared library to be present during build and at runtime.
 
-Tensorflow Lite is a lightweight open source deep learning framework used for mobile and IoT applications. Tensorflow Lite only handles inference, not training. It loads pre-trained models (`.tflite` files) that are converted into Tensorflow Lite format (`FlatBuffer`). You can read more on converting [Tensorflow models](https://www.tensorflow.org/lite/convert).
+Tensorflow Lite is a lightweight open source deep learning framework used for mobile and IoT applications. Tensorflow Lite only handles inference, not training. It loads pre-trained models (`.tflite` files) that are converted into Tensorflow Lite format (`FlatBuffer`). You can read more on converting [Tensorflow models](https://ai.google.dev/edge/litert/conversion/tensorflow/overview).
 
 The Tensorflow plugin for Fluent Bit has the following limitations:
 
@@ -33,7 +33,7 @@ To create a Tensorflow Lite shared library:
    ```
 
    The script creates the shared library `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
-  
+
 1. Copy the library to a location such as `/usr/lib` that can be used by Fluent Bit.
 
 ## Building Fluent Bit with Tensorflow filter plugin

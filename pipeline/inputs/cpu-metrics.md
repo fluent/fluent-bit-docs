@@ -54,7 +54,7 @@ The command returns results similar to the following:
 ...
 ```
 
-As described previously, the CPU input plugin gathers the overall usage every one second and flushed the information to the output on the fifth second. This example uses the `stdout` plugin to demonstrate the output records. In a real use-case you might want to flush this information to some central aggregator such as [Fluentd](http://fluentd.org) or [Elasticsearch](http://elastic.co).
+As described previously, the CPU input plugin gathers the overall usage every one second and flushed the information to the output on the fifth second. This example uses the `stdout` plugin to demonstrate the output records. In a real use-case you might want to flush this information to some central aggregator such as [Fluentd](https://fluentd.org) or [Elasticsearch](https://elastic.co).
 
 ### Configuration file
 
