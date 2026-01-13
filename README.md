@@ -39,7 +39,7 @@ For more details about changes in each release, refer to the [official release n
 
 ## Fluent Bit, Fluentd, and CNCF
 
-Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](https://fluentd.org).
+Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
 
 Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
 
