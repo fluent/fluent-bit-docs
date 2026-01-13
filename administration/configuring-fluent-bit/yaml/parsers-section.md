@@ -47,10 +47,10 @@ To add a standalone parsers file to Fluent Bit, use the `parsers_file` parameter
 
 To add a standalone parsers file to Fluent Bit, follow these steps.
 
-1. Define custom parsers in a standalone YAML file. For example, `my-parsers.yaml` defines two custom parsers:
+1. Define custom parsers in a standalone YAML file. For example, `custom-parsers.yaml` defines two custom parsers:
 
 {% tabs %}
-{% tab title="my-parsers.yaml" %}
+{% tab title="custom-parsers.yaml" %}
 
 ```yaml
 parsers:

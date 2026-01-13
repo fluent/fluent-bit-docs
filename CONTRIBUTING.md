@@ -5,7 +5,7 @@
 
 First of all, thanks for taking the time to read this guide. The fact that you're here means you're interested in contributing to Fluent Bit, and we greatly appreciate your time.
 
-This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
+This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/manual/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
 
 Fluent Bit has a group of dedicated maintainers who oversee this repository, including several technical writers. These writers will review any pull requests you open, so don't be afraid to contribute, even if you're not a writer by trade. Your suggestions are valuable, and we'll help you wrangle any stray commas.
 
@@ -66,7 +66,7 @@ The active [linters](#linters) in this repository flag certain style errors and,
 
 ## Formatting guidelines
 
-The Fluent Bit docs library is built and hosted through [GitBook](https://docs.gitbook.com/). Unfortunately, GitBook doesn't support local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook account can verify that things are formatted correctly after you open a new pull request.
+The Fluent Bit docs library is built and hosted through [GitBook](https://gitbook.com/docs/). Unfortunately, GitBook doesn't support local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook account can verify that things are formatted correctly after you open a new pull request.
 
 ### Line wraps
 
