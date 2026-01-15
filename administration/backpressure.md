@@ -10,10 +10,10 @@ Strategies for managing backpressure vary depending on the [buffering mode](../p
 
 ## Manage backpressure for memory-only buffering
 
-If one or more active input plugins use [memory-only buffering](../pipeline/buffering.md#buffering-modes#memory-only-buffering), use the following settings to manage backpressure.
+If one or more active input plugins use [memory-only buffering](../pipeline/buffering.md#memory-only-buffering), use the following settings to manage backpressure.
 
 {% hint style="warning" %}
-Some input plugins are prone to data loss after `mem_buf_limit` capacity is reached during memory-only buffering. If you need to avoid data loss, consider using [filesystem buffering](../pipeline/buffering.md#buffering-modes#filesystem-buffering) instead.
+Some input plugins are prone to data loss after `mem_buf_limit` capacity is reached during memory-only buffering. If you need to avoid data loss, consider using [filesystem buffering](../pipeline/buffering.md#filesystem-buffering-hybrid) instead.
 {% endhint %}
 
 ### Set `mem_buf_limit` for input plugins
@@ -56,11 +56,11 @@ In a few seconds, if the scheduler was able to flush the initial 700&nbsp;KB of 
 
 ## Manage backpressure for filesystem buffering
 
-If one or more active input plugins use [filesystem buffering](../pipeline/buffering.md#buffering-modes#memory-only-buffering), use the following settings to manage backpressure.
+If one or more active input plugins use [filesystem buffering](../pipeline/buffering.md#filesystem-buffering-hybrid), use the following settings to manage backpressure.
 
 ### Set `storage.max_chunks_up` and `storage.backlog.mem_limit` in global settings
 
-In the [`serivce` section](../administration/configuring-fluent-bit/yaml/service-section.md) of your Fluent Bit configuration file, you can configure the `storage.max_chunks_up` and `storage.backlog.mem_limit` settings. Both settings dictate how much data can be buffered to memory by input plugins that use filesystem buffering, and are combined limits shared by all applicable input plugins.
+In the [`service` section](../administration/configuring-fluent-bit/yaml/service-section.md) of your Fluent Bit configuration file, you can configure the `storage.max_chunks_up` and `storage.backlog.mem_limit` settings. Both settings dictate how much data can be buffered to memory by input plugins that use filesystem buffering, and are combined limits shared by all applicable input plugins.
 
 {% hint style="info" %}
 These settings don't affect how much data can be buffered to memory by plugins that use memory-only buffering.

@@ -2,7 +2,7 @@
 
 The dead letter queue preserves [chunks](../pipeline/buffering.md#chunks) that Fluent Bit fails to deliver to output destinations. Instead of losing this data, Fluent Bit copies the rejected chunks to a dedicated storage location for future analysis and troubleshooting.
 
-To enable the dead letter queue, filesystem storage must be enabled by setting a value for [`storage.path`](.//configuring-fluent-bit/yaml/service-section.md#storage-configuration), and [`storage.keep.rejected`](.//configuring-fluent-bit/yaml/service-section.md#storage-configuration) must be set to `on`.
+To enable the dead letter queue, filesystem storage must be enabled by setting a value for [`storage.path`](./configuring-fluent-bit/yaml/service-section.md#storage-configuration), and [`storage.keep.rejected`](./configuring-fluent-bit/yaml/service-section.md#storage-configuration) must be set to `on`.
 
 Chunks are copied to the dead letter queue in the following failure scenarios:
 

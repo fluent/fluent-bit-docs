@@ -37,7 +37,7 @@ The following storage-related keys can be set as children to the `storage` key:
 | `storage.max_chunks_up` | Sets the number of chunks that can be `up` in memory for input plugins that use filesystem storage. | `128` |
 | `storage.backlog.mem_limit` | Sets the memory allocated for storing buffered data for input plugins that use filesystem storage. | `5M` |
 | `storage.backlog.flush_on_shutdown` | If enabled, Fluent Bit attempts to flush all backlog filesystem chunks to their destination during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but can also increase shutdown time. Accepted values: `off` or `on`. | `off` |
-| `storage.metrics` | If `http_server` option is enabled in the main `service` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details, see [Monitoring](monitoring.md). Accepted values: `off` or `on`. | `off` |
+| `storage.metrics` | If `http_server` option is enabled in the main `service` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details, see [Monitoring](../../monitoring.md). Accepted values: `off` or `on`. | `off` |
 | `storage.delete_irrecoverable_chunks` | If enabled, deletes irrecoverable chunks during runtime and at startup. Accepted values: `off` or `on`. | `off` |
 | `storage.keep.rejected` | If enabled, the [dead letter queue](../../dead-letter-queue.md) stores failed chunks that can't be delivered. Accepted values: `off` or `on`. | `off` |
 | `storage.rejected.path` | Sets the subdirectory name under `storage.path` for storing rejected chunks in the dead letter queue. | `rejected` |

@@ -79,8 +79,8 @@ You can configure buffering settings for any input plugin by using these configu
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `storage.type` | Specifies the buffering mechanism to use for this input plugin. To enable filesystem buffering, a global [`storage.path`](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration) value must be set in the `services` section of your configuration file. Accepted values: `memory`, `filesystem`. | `memory` |
-| `mem_buf_limit` | If memory-only buffering is enabled, sets a limit for how much buffered data the plugin can write to memory. After this limit is reached, the plugin will pause until more memory becomes available. This value must follow [unit size](../../administration/configuring-fluent-bit.md#unit-sizes) specifications. If unspecified, no limit is enforced. | `0` |
+| `storage.type` | Specifies the buffering mechanism to use for this input plugin. To enable filesystem buffering, a global [`storage.path`](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration) value must be set in the `service` section of your configuration file. Accepted values: `memory`, `filesystem`. | `memory` |
+| `mem_buf_limit` | If memory-only buffering is enabled, sets a limit for how much buffered data the plugin can write to memory. After this limit is reached, the plugin will pause until more memory becomes available. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. If unspecified, no limit is enforced. | `0` |
 | `storage.pause_on_chunks_overlimit` | If filesystem buffering is enabled, specifies how the input plugin should behave after the global `storage.max_chunks_up` limit is reached. When set to `off`, the plugin will stop buffering data to memory but continue buffering data to the filesystem. When set to `on`, the plugin will stop both memory buffering and filesystem buffering until more memory becomes available. Possible values: `on`, `off`. | `off` |
 
 The following configuration example sets global settings in `service` to support filesystem buffering, then configures one input plugin with filesystem buffering and one input plugin with memory-only buffering:
@@ -138,7 +138,7 @@ If any active input plugins use filesystem buffering, you can limit how many chu
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `storage.total_limit_size` | Sets the size of the queue for this output plugin. This queue is the number of chunks buffered to the filesystem with this output as the intended destination. If the output plugin reaches its `storage.total_limit_size` capacity, the oldest chunk from its queue will be discarded to make room for new data. This value must follow [unit size](../../administration/configuring-fluent-bit.md#unit-sizes) specifications. | _none_ |
+| `storage.total_limit_size` | Sets the size of the queue for this output plugin. This queue is the number of chunks buffered to the filesystem with this output as the intended destination. If the output plugin reaches its `storage.total_limit_size` capacity, the oldest chunk from its queue will be discarded to make room for new data. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. | _none_ |
 
 The following configuration example creates records with CPU usage samples in the filesystem which are delivered to Google Stackdriver service while limiting the logical queue to `5M`:
 
