@@ -103,3 +103,4 @@ redirects:
     administration/configuring-fluent-bit/yaml/configuration-file: ./administration/configuring-fluent-bit/yaml.md
     administration/configuring-fluent-bit/unit-sizes: ./administration/configuring-fluent-bit.md
     administration/configuring-fluent-bit/multiline-parsing: ./pipeline/parsers/multiline-parsing.md
+    administration/buffering-and-storage: ./pipeline/buffering.md

@@ -56,7 +56,7 @@
     * [Variables](administration/configuring-fluent-bit/classic-mode/variables.md)
 * [AWS credentials](administration/aws-credentials.md)
 * [Backpressure](administration/backpressure.md)
-* [Buffering and storage](administration/buffering-and-storage.md)
+* [Dead letter queue](administration/dead-letter-queue.md)
 * [Hot reload](administration/hot-reload.md)
 * [HTTP proxy](administration/http-proxy.md)
 * [Memory management](administration/memory-management.md)
