@@ -4,16 +4,16 @@ The _Memory_ (`mem`) input plugin gathers memory and swap usage on Linux at a fi
 
 ## Metrics reported
 
-| Key          | Description                                                            | Units       |
-|:-------------|:-----------------------------------------------------------------------|:------------|
-| `Mem.free`   | Free or available memory reported by the kernel.                       | Kilobytes   |
-| `Mem.total`  | Total system memory.                                                   | Kilobytes   |
-| `Mem.used`   | Memory in use (`Mem.total` - `Mem.free`).                              | Kilobytes   |
-| `Swap.free`  | Free swap space.                                                       | Kilobytes   |
-| `Swap.total` | Total system swap.                                                     | Kilobytes   |
-| `Swap.used`  | Swap space in use (`Swap.total` - `Swap.free`).                        | Kilobytes   |
-| `proc_bytes` | Optional. Resident set size for the configured process (`pid`).        | Bytes       |
+| Key          | Description                                                             | Units       |
+|:-------------|:------------------------------------------------------------------------|:------------|
+| `Mem.free`   | Free or available memory reported by the kernel.                        | Kilobytes   |
+| `Mem.total`  | Total system memory.                                                    | Kilobytes   |
+| `Mem.used`   | Memory in use (`Mem.total` - `Mem.free`).                               | Kilobytes   |
+| `proc_bytes` | Optional. Resident set size for the configured process (`pid`).         | Bytes       |
 | `proc_hr`    | Optional. Human-readable value of `proc_bytes` (for example, `12.00M`). | Formatted   |
+| `Swap.free`  | Free swap space.                                                        | Kilobytes   |
+| `Swap.total` | Total system swap.                                                      | Kilobytes   |
+| `Swap.used`  | Swap space in use (`Swap.total` - `Swap.free`).                         | Kilobytes   |
 
 ## Configuration parameters
 
