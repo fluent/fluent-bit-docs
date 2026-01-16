@@ -16,7 +16,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 - Metrics support: Prometheus and OpenTelemetry compatible
 - Reliability and data integrity
   - [Backpressure](administration/backpressure.md) handling
-  - [Data buffering](administration/buffering-and-storage.md) in memory and file system
+  - [Data buffering](./pipeline/buffering.md) in memory and file system
 - Networking
   - Security: Built-in TLS/SSL support
   - Asynchronous I/O

@@ -58,7 +58,7 @@ For example, a file named `kube_var_log_containers_test_400_http_0x7f8b4c.flb` i
 DLQ files remain on disk until manually removed. Monitor disk usage and implement a cleanup policy.
 {% endhint %}
 
-For more details on DLQ configuration, see [Buffering and Storage](buffering-and-storage.md#dead-letter-queue-dlq).
+For more details on DLQ configuration, see [Dead letter queue](./dead-letter-queue.md).
 
 ## Tap
 

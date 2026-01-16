@@ -96,7 +96,7 @@ The scheduler provides a configuration option called `Retry_Limit`, which can be
 | `Retry_Limit` | `no_retries` | When set, retries are disabled and scheduler doesn't try to send data to the destination if it failed the first time. |
 
 {% hint style="info" %}
-When a chunk exhausts all retry attempts or retries are disabled, the data is discarded by default. To preserve rejected data for later analysis, enable the [Dead Letter Queue (DLQ)](buffering-and-storage.md#dead-letter-queue-dlq) feature by setting `storage.keep.rejected` to `on` in the Service section.
+When a chunk exhausts all retry attempts or retries are disabled, the data is discarded by default. To preserve rejected data for later analysis, enable the [Dead Letter Queue (DLQ)](./dead-letter-queue.md) feature by setting `storage.keep.rejected` to `on` in the Service section.
 {% endhint %}
 
 ### Retry example
