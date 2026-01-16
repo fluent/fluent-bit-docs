@@ -76,7 +76,7 @@ Although Fluent Bit has a soft limit of 2&nbsp;MB for chunks, input plugins like
 
 If Fluent Bit isn't configured to use filesystem buffering, it needs mechanisms to protect against high memory consumption during backpressure scenarios (for example, when destination endpoints are down or network issues occur). The `mem_buf_limit` option restricts how much memory in chunks an input plugin can use.
 
-When filesystem buffering is enabled, memory management works differently. For more details, see [Buffering and Storage](../../administration/buffering-and-storage.md).
+When filesystem buffering is enabled, memory management works differently. For more details, see [Buffering](../../pipeline/buffering.md) and [Backpressure](../../administration/backpressure.md).
 
 ## Database file
 

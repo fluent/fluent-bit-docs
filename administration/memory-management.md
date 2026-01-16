@@ -4,8 +4,6 @@
 
 You might need to estimate how much memory Fluent Bit could be using in scenarios like containerized environments where memory limits are essential.
 
-To make an estimate, in-use input plugins must set the `Mem_Buf_Limit`option. Learn more about it in [Backpressure](backpressure.md).
-
 ## Estimating
 
 Input plugins append data independently. To make an estimation, impose a limit with the `Mem_Buf_Limit` option. If the limit was set to `10MB`, you can estimate that in the worst case, the output plugin likely could use `20MB`.
@@ -13,6 +11,10 @@ Input plugins append data independently. To make an estimation, impose a limit w
 Fluent Bit has an internal binary representation for the data being processed. When this data reaches an output plugin, it can create its own representation in a new memory buffer for processing. The best examples are the [InfluxDB](../pipeline/outputs/influxdb.md) and [Elasticsearch](../pipeline/outputs/elasticsearch.md) output plugins, which need to convert the binary representation to their respective custom JSON formats before sending data to the backend servers.
 
 When imposing a limit of `10MB` for the input plugins, and a worst case scenario of the output plugin consuming `20MB`, you need to allocate a minimum (`30MB` x 1.2) = `36MB`.
+
+{% hint style="info" %}
+For more information about `Mem_Buf_Limit`, see [Backpressure](backpressure.md).
+{% endhint %}
 
 ## Glibc and memory fragmentation
 

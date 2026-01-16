@@ -31,20 +31,20 @@ The following storage-related keys can be set as children to the `storage` key:
 
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
-| `storage.path` | Set a location in the file system to store streams and chunks of data. Required for filesystem buffering. | _none_ |
-| `storage.sync` | Configure the synchronization mode used to store data in the file system. Accepted values: `normal` or `full`. | `normal` |
-| `storage.checksum` | Enable data integrity check when writing and reading data from the filesystem. Accepted values: `off` or `on`. | `off` |
-| `storage.max_chunks_up` | Set the maximum number of chunks that can be `up` in memory when using filesystem storage. | `128` |
-| `storage.backlog.mem_limit` | Set the memory limit for backlog data chunks. | `5M` |
-| `storage.backlog.flush_on_shutdown` | Attempt to flush all backlog chunks during shutdown. Accepted values: `off` or `on`. | `off` |
-| `storage.metrics` | Enable storage layer metrics on the HTTP endpoint. Accepted values: `off` or `on`. | `off` |
-| `storage.delete_irrecoverable_chunks` | Delete irrecoverable chunks during runtime and at startup. Accepted values: `off` or `on`. | `off` |
-| `storage.keep.rejected` | Enable the Dead Letter Queue (DLQ) to preserve chunks that fail to be delivered. Accepted values: `off` or `on`. | `off` |
-| `storage.rejected.path` | Subdirectory name under `storage.path` for storing rejected chunks. | `rejected` |
+| `storage.path` | Sets a location to store streams and chunks of data. If this parameter isn't set, input plugins can't use filesystem buffering. | _none_ |
+| `storage.sync` | Configures the synchronization mode used to store data in the file system. Using `full` increases the reliability of the filesystem buffer and ensures that data is guaranteed to be synced to the filesystem even if Fluent Bit crashes. On Linux, `full` corresponds with the `MAP_SYNC` option for [memory mapped files](https://man7.org/linux/man-pages/man2/mmap.2.html). Accepted values: `normal`, `full`. | `normal` |
+| `storage.checksum` | Enables data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. Accepted values: `off` or `on`. | `off` |
+| `storage.max_chunks_up` | Sets the number of chunks that can be `up` in memory for input plugins that use filesystem storage. | `128` |
+| `storage.backlog.mem_limit` | Sets the memory allocated for storing buffered data for input plugins that use filesystem storage. | `5M` |
+| `storage.backlog.flush_on_shutdown` | If enabled, Fluent Bit attempts to flush all backlog filesystem chunks to their destination during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but can also increase shutdown time. Accepted values: `off` or `on`. | `off` |
+| `storage.metrics` | If `http_server` option is enabled in the main `service` section, this option registers a new endpoint where internal metrics of the storage layer can be consumed. For more details, see [Monitoring](../../monitoring.md). Accepted values: `off` or `on`. | `off` |
+| `storage.delete_irrecoverable_chunks` | If enabled, deletes irrecoverable chunks during runtime and at startup. Accepted values: `off` or `on`. | `off` |
+| `storage.keep.rejected` | If enabled, the [dead letter queue](../../dead-letter-queue.md) stores failed chunks that can't be delivered. Accepted values: `off` or `on`. | `off` |
+| `storage.rejected.path` | Sets the subdirectory name under `storage.path` for storing rejected chunks in the dead letter queue. | `rejected` |
 
-For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
+For storage and buffering details, see [Buffering](../../../pipeline/buffering.md) and [Backpressure](../../backpressure.md).
 
-For storage and buffering details, see [buffering and storage](../../buffering-and-storage.md).
+For scheduler and retry details, see [Scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
 
 ## Configuration example
 
