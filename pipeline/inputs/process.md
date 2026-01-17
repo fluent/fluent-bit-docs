@@ -10,13 +10,13 @@ The plugin supports the following configuration parameters:
 
 | Key             | Description                                                                                                   | Default |
 |-----------------|---------------------------------------------------------------------------------------------------------------|---------|
-| `Proc_Name`     | The name of the target process to check.                                                                      | _none_  |
-| `Interval_Sec`  | Specifies the interval between service checks, in seconds.                                                    | `1`     |
-| `Interval_Nsec` | Specifies the interval between service checks, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0`     |
-| `Alert`         | If enabled, the plugin will only generate messages if the target process is down.                             | `false` |
-| `Fd`            | If enabled, a number of `fd` is appended to each record.                                                      | `true`  |
-| `Mem`           | If enabled, memory usage of the process is appended to each record.                                           | `true`  |
-| `Threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).       | `false` |
+| `alert`         | If enabled, the plugin will only generate messages if the target process is down.                             | `false` |
+| `fd`            | If enabled, a number of `fd` is appended to each record.                                                      | `true`  |
+| `interval_nsec` | Specifies the interval between service checks, in nanoseconds. This works in conjunction with `interval_sec`. | `0`     |
+| `interval_sec`  | Specifies the interval between service checks, in seconds.                                                    | `1`     |
+| `mem`           | If enabled, memory usage of the process is appended to each record.                                           | `true`  |
+| `proc_name`     | The name of the target process to check.                                                                      | _none_  |
+| `threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).       | `false` |
 
 ## Get started
 
