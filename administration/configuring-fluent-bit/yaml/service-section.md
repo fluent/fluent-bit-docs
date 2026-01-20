@@ -6,6 +6,7 @@ The `service` section of YAML configuration files defines global properties of t
 | --- | ----------- | ------------- |
 | `flush` | Sets the flush time in `seconds.nanoseconds`. The engine loop uses a flush timeout to define when to flush the records ingested by input plugins through the defined output plugins. | `1` |
 | `grace` | Sets the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define the wait time on exit. | `5` |
+| `thread.flush_on_shutdown` | If enabled, the engine waits for threaded input ring buffers to flush during graceful shutdown, preventing data loss from threaded inputs. Possible values: `on` or `off`. | `off` |
 | `daemon` | Specifies whether Fluent Bit should run as a daemon (background process). Possible values: `yes`, `no`, `on`, and `off`. Don't enable when using a Systemd-based unit, such as the one provided in Fluent Bit packages. | `off` |
 | `dns.mode` | Sets the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per-plugin basis. | `UDP` |
 | `log_file` | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (`stderr`). | _none_ |
