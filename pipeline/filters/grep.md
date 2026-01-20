@@ -10,11 +10,21 @@ The _Grep_ filter plugin lets you match or exclude specific records based on reg
 
 The plugin supports the following configuration parameters:
 
-| Key          | Value Format | Description |
-| ------------ | ------------ | ----------- |
-| `Regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. |
-| `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
-| `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
+| Key | Value Format | Record Type | Description |
+| :--- | :--- | :--- | :--- |
+| `Regex` | `KEY REGEX` | String | Keep records in which the content of `KEY` matches the regular expression. |
+| `Exclude` | `KEY REGEX` | String | Exclude records in which the content of `KEY` matches the regular expression. |
+| `number_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is equal to `NUMBER`. |
+| `number_not_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is not equal to `NUMBER`. |
+| `number_less_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than the `NUMBER`. |
+| `number_less_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than or equal to `NUMBER`. |
+| `number_greater_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than the `NUMBER`. |
+| `number_greater_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than or equal to `NUMBER`. |
+
+
+If you use the number compare parameters with a `KEY` that doesn't have a `NUMBER` as a value, it will be excluded.
+
+If you use `REGEX` or `EXCLUDE` with a number, it will never match it.
 
 ### Record accessor enabled
 
