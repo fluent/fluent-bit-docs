@@ -69,6 +69,7 @@ This plugin supports the following parameters:
 | `min_pool_size` | Minimum number of connection in asynchronous mode. | `1` |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB. | `false` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `Daemon` | Set to `true` if you want run this plugin instance in daemon mode. | `false` |
 
 ### Libpq
 
