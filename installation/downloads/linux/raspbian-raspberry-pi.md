@@ -4,7 +4,6 @@ Fluent Bit is distributed as the `fluent-bit` package and is available for [Rasp
 
 - Raspbian Bookworm (12)
 - Raspbian Bullseye (11)
-- Raspbian Buster (10)
 
 ## Server GPG key
 
@@ -30,12 +29,6 @@ echo "deb https://packages.fluentbit.io/raspbian/bookworm bookworm main" | sudo 
 
 ```shell
 echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
-```
-
-### Raspbian 10 (Buster)
-
-```shell
-echo "deb https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database
