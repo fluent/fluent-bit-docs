@@ -21,6 +21,7 @@ Fluent Bit offers the following processors:
 - [Sampling](./processors/sampling.md): Apply head or tail sampling to incoming traces.
 - [SQL](./processors/sql.md): Use SQL queries to extract log content.
 - [Filters as processors](./processors/filters.md): Use filters as processors.
+- [TDA](./processors/tda.md): Do Topological Data Analysis (TDA) calculations.
 
 ## Features
 
