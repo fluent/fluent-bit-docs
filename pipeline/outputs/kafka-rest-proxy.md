@@ -13,6 +13,7 @@ This plugin supports the following parameters:
 | `Topic` | Set the Kafka topic. | `fluent-bit` |
 | `Partition` | Optional. Set the partition number. | _none_ |
 | `Message_Key` | Optional. Set a message key. | _none_ |
+| `Message_Key_Field` | If set, the value of `Message_Key_Field` in the record indicates the message key. If not set nor found in the record, `Message_Key` will be used (if set).  | _none_ |
 | `Time_Key` | The `Time_Key` property defines the name of the field that holds the record timestamp. | `@timestamp` |
 | `Time_Key_Format` | Defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `Include_Tag_Key` | Append the Tag name to the final record. | `Off` |
