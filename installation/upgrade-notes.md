@@ -8,6 +8,15 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v4.0+
+
+The default configuration file has been switched to use YAML format and a different name (`.yaml` file suffix instead of `.conf`).
+
+This may require updating any custom deployments to either provide a YAML configuration or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
+
+For Linux the Systemd unit will need overriding to specify `-c <legacy config file>`.
+Similarly for containers, Windows and macOS the default launch command is changed to point at the YAML config file by default.
+
 ## Fluent Bit v1.9.9
 
 The `td-agent-bit` package is no longer provided after this release. Users should switch to the `fluent-bit` package.
