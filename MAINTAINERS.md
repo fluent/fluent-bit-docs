@@ -9,3 +9,4 @@ Fluent Bit is developed and supported by many individuals and companies. The fol
 | [Jose Lecaros](https://github.com/lecaros)             | All                      | [Chronosphere](https://chronosphere.io)           |
 | [Paige Cruz](https://github.com/paigerduty)            | All                      | [Chronosphere](https://chronosphere.io/)          |
 | [Eric D. Schabell](https://github.com/eschabell)       | All                      | [Chronosphere](https://chronosphere.io/)          |
+| [Patrick Stephens](https://github.com/patrick-stephens)| All                      | [Telemetry Forge](https://telemetryforge.io)      |
