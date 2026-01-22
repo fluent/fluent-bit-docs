@@ -6,12 +6,12 @@ The _Random_ input plugin generates random value samples using the device interf
 
 The plugin supports the following configuration parameters:
 
-| Key             | Description                                                                                                      | Default |
-|-----------------|------------------------------------------------------------------------------------------------------------------|---------|
-| `Samples`       | Specifies the number of samples to generate. The default value of `-1` generates unlimited samples.              | `-1`    |
-| `Interval_Sec`  | Specifies the interval between generated samples, in seconds.                                                    | `1`     |
-| `Interval_Nsec` | Specifies the interval between generated samples, in nanoseconds. This works in conjunction with `Interval_Sec`. | `0`     |
-| `Threaded`      | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).          | `false` |
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `interval_nsec` | Set the interval between generated samples, in nanoseconds. This works in conjunction with `interval_sec`. | `0` |
+| `interval_sec` | Set the interval between generated samples, in seconds. | `1` |
+| `samples` | Set the number of samples to generate. `-1` generates unlimited samples. | `-1` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Get started
 
@@ -53,7 +53,7 @@ pipeline:
   Name          random
   Samples      -1
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout
