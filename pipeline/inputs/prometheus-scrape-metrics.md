@@ -4,13 +4,21 @@ Fluent Bit 1.9 and later includes additional metrics features to let you collect
 
 ## Configuration
 
-| Key               | Description                                                                                                             | Default    |
-|-------------------|-------------------------------------------------------------------------------------------------------------------------|------------|
-| `host`            | The host of the Prometheus metric endpoint to scrape.                                                                   | _none_     |
-| `port`            | The port of the Prometheus metric endpoint to scrape.                                                                   | _none_     |
-| `scrape_interval` | The interval to scrape metrics.                                                                                         | `10s`      |
-| `metrics_path`    | The metrics URI endpoint, which must start with a forward slash (`/`). Parameters can be added to the path by using `?` | `/metrics` |
-| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                 | `false`    |
+| Key               | Description                                                                                                             | Default     |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------|-------------|
+| `bearer_token`    | Set the bearer token for authentication with the Prometheus endpoint.                                                   | _none_      |
+| `buffer_max_size` | Set the maximum buffer size for the HTTP response.                                                                      | `10M`       |
+| `host`            | The host of the Prometheus metric endpoint to scrape.                                                                   | `localhost` |
+| `http_passwd`     | Set the password for HTTP basic authentication.                                                                         | `""`        |
+| `http_user`       | Set the username for HTTP basic authentication.                                                                         | _none_      |
+| `metrics_path`    | The metrics URI endpoint, which must start with a forward slash (`/`). Parameters can be added to the path by using `?` | `/metrics`  |
+| `port`            | The port of the Prometheus metric endpoint to scrape.                                                                   | `9100`      |
+| `scrape_interval` | The interval to scrape metrics.                                                                                         | `10s`       |
+| `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                 | `false`     |
+
+### TLS configuration
+
+This plugin supports TLS/SSL for secure connections to HTTPS endpoints. For detailed TLS configuration options, refer to the [TLS/SSL](../../administration/transport-security.md) documentation section.
 
 ## Example
 
