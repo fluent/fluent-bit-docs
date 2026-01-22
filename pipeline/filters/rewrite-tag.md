@@ -29,6 +29,8 @@ The `rewrite_tag` filter supports the following configuration parameters:
 | `Emitter_Name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
 | `Emitter_Storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
 | `Emitter_Mem_Buf_Limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| `Recursion_Action` | Defines an action when recursion occurs. Supported values: `none`, `drop`, `drop_and_log`, `exit`. Default is `exit`.|
+
 
 ## Rules
 
@@ -112,6 +114,17 @@ If a rule matches, the filter will emit a copy of the record with the new define
 
 You can use `true` or `false` to decide the expected behavior. This field is mandatory and has no default value.
 
+### Recursion action
+
+In some cases, `Rule` causes infinite loop. This option is to define an action when infinite loop occurs.
+
+| Value | Description |
+| :---  | :--- |
+| `None` | Do nothing. It is fastest since Fluent Bit will not check record. Fluent Bit will crash when recursion occurs. |
+| `Drop` | Drop records. |
+| `Drop_And_Log` | Drop records and log. It is useful if a loop condition is rare. |
+| `Exit` | Default. Fluent Bit logs and exits. It is useful for testing a condition. |
+
 ## Configuration example
 
 The following configuration example will emit a dummy record. The filter will rewrite the tag, discard the old record, and print the new record to the standard output interface:
@@ -177,6 +190,7 @@ $ fluent-bit -c example.conf
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
 ## Configuration example with multiple rules 
+
 In cases using multiple rules, the rules are passed through in order until one matches. With `AND_COMBINE` using the value `true` as optional fifth  component, the rule is combined with the following rule like an 'and' combination. If the first and following rule match, the message is retagged with the tag in the last matched rule.
 
 An `AND_COMBINE` in the last rule is ignored. 
