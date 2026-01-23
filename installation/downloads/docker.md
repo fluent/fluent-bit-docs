@@ -42,168 +42,168 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
-| 4.2.2-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.2.2 | x86_64, arm64v8, arm32v7 | Release [v4.2.2](https://fluentbit.io/announcements/v4.2.2/) |
-| 4.2.1-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.2.1 | x86_64, arm64v8, arm32v7 | Release [v4.2.1](https://fluentbit.io/announcements/v4.2.1/) |
-| 4.2.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.2.0 | x86_64, arm64v8, arm32v7 | Release [v4.2.0](https://fluentbit.io/announcements/v4.2.0/) |
-| 4.1.2-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.1.2 | x86_64, arm64v8, arm32v7 | Release v4.1.2 |
-| 4.1.1-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.1.1 | x86_64, arm64v8, arm32v7 | Release [v4.1.1](https://fluentbit.io/announcements/v4.1.1/) |
-| 4.1.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.1.0 | x86_64, arm64v8, arm32v7 | Release [v4.1.0](https://fluentbit.io/announcements/v4.1.0/) |
-| 4.0.12-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.12 | x86_64, arm64v8, arm32v7 | Release [v4.0.12](https://fluentbit.io/announcements/v4.0.12/) |
-| 4.0.11-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.11 | x86_64, arm64v8, arm32v7 | Release [v4.0.11](https://fluentbit.io/announcements/v4.0.11/) |
-| 4.0.10-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.10 | x86_64, arm64v8, arm32v7 | Release [v4.0.10](https://fluentbit.io/announcements/v4.0.10/) |
-| 4.0.9-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.9 | x86_64, arm64v8, arm32v7 | Release [v4.0.9](https://fluentbit.io/announcements/v4.0.9/) |
-| 4.0.8-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.8 | x86_64, arm64v8, arm32v7 | Release [v4.0.8](https://fluentbit.io/announcements/v4.0.8/) |
-| 4.0.7-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.7 | x86_64, arm64v8, arm32v7 | Release [v4.0.7](https://fluentbit.io/announcements/v4.0.7/) |
-| 4.0.6-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.6 | x86_64, arm64v8, arm32v7 | Release [v4.0.6](https://fluentbit.io/announcements/v4.0.6/) |
-| 4.0.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.5 | x86_64, arm64v8, arm32v7 | Release [v4.0.5](https://fluentbit.io/announcements/v4.0.5/) |
-| 4.0.4-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.4 | x86_64, arm64v8, arm32v7 | Release [v4.0.4](https://fluentbit.io/announcements/v4.0.4/) |
-| 4.0.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.3 | x86_64, arm64v8, arm32v7 | Release [v4.0.3](https://fluentbit.io/announcements/v4.0.3/) |
-| 4.0.1-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.1 | x86_64, arm64v8, arm32v7 | Release [v4.0.1](https://fluentbit.io/announcements/v4.0.1/) |
-| 4.0.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 4.0.0 | x86_64, arm64v8, arm32v7 | Release [v4.0.0](https://fluentbit.io/announcements/v4.0.0/) |
-| 3.2.10-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.10 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.10](https://fluentbit.io/announcements/v3.2.10/) |
-| 3.2.9-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.9 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.9](https://fluentbit.io/announcements/v3.2.9/) |
-| 3.2.8-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.8 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.8](https://fluentbit.io/announcements/v3.2.8/) |
-| 3.2.7-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.7 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.7](https://fluentbit.io/announcements/v3.2.7/) |
-| 3.2.6-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.6 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.6](https://fluentbit.io/announcements/v3.2.6/) |
-| 3.2.5-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.5 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.5](https://fluentbit.io/announcements/v3.2.5/) |
-| 3.2.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.4 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.4](https://fluentbit.io/announcements/v3.2.4/) |
-| 3.2.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.3 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.3](https://fluentbit.io/announcements/v3.2.3/) |
-| 3.2.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.2 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.2](https://fluentbit.io/announcements/v3.2.2/) |
-| 3.2.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.2.1 | x86_64, arm64v8, arm32v7, s390x | Release [v3.2.1](https://fluentbit.io/announcements/v3.2.1/) |
-| 3.1.10-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.10 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.10](https://fluentbit.io/announcements/v3.1.10/) |
-| 3.1.9-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.9 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.9](https://fluentbit.io/announcements/v3.1.9/) |
-| 3.1.8-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.8 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.8](https://fluentbit.io/announcements/v3.1.8/) |
-| 3.1.7-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.7 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.7](https://fluentbit.io/announcements/v3.1.7/) |
-| 3.1.6-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.6 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.6](https://fluentbit.io/announcements/v3.1.6/) |
-| 3.1.5-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.5 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.5](https://fluentbit.io/announcements/v3.1.5/) |
-| 3.1.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.4 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.4](https://fluentbit.io/announcements/v3.1.4/) |
-| 3.1.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.3 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.3](https://fluentbit.io/announcements/v3.1.3/) |
-| 3.1.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.2 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.2](https://fluentbit.io/announcements/v3.1.2/) |
-| 3.1.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.1 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.1](https://fluentbit.io/announcements/v3.1.1/) |
-| 3.1.0-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.1.0 | x86_64, arm64v8, arm32v7, s390x | Release [v3.1.0](https://fluentbit.io/announcements/v3.1.0/) |
-| 3.0.7-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.7 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.7](https://fluentbit.io/announcements/v3.0.7/) |
-| 3.0.6-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.6 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.6](https://fluentbit.io/announcements/v3.0.6/) |
-| 3.0.5-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.5 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.5](https://fluentbit.io/announcements/v3.0.5/) |
-| 3.0.4-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.4 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.4](https://fluentbit.io/announcements/v3.0.4/) |
-| 3.0.3-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.3 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.3](https://fluentbit.io/announcements/v3.0.3/) |
-| 3.0.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.2 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.2](https://fluentbit.io/announcements/v3.0.2/) |
-| 3.0.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.1 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.1](https://fluentbit.io/announcements/v3.0.1/) |
-| 3.0.0-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 3.0.0 | x86_64, arm64v8, arm32v7, s390x | Release [v3.0.0](https://fluentbit.io/announcements/v3.0.0/) |
-| 2.2.2-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 2.2.2 | x86_64, arm64v8, arm32v7, s390x | Release [v2.2.2](https://fluentbit.io/announcements/v2.2.2/) |
-| 2.2.1-debug | x86_64, arm64v8, arm32v7, s390x | Debug images |
-| 2.2.1 | x86_64, arm64v8, arm32v7, s390x | Release [v2.2.1](https://fluentbit.io/announcements/v2.2.1/) |
-| 2.2.0-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.2.0 | x86_64, arm64v8, arm32v7 | Release [v2.2.0](https://fluentbit.io/announcements/v2.2.0/) |
-| 2.1.10-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.10 | x86_64, arm64v8, arm32v7 | Release [v2.1.10](https://fluentbit.io/announcements/v2.1.10/) |
-| 2.1.9-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.9 | x86_64, arm64v8, arm32v7 | Release [v2.1.9](https://fluentbit.io/announcements/v2.1.9/) |
-| 2.1.8-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.8 | x86_64, arm64v8, arm32v7 | Release [v2.1.8](https://fluentbit.io/announcements/v2.1.8/) |
-| 2.1.7-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.7 | x86_64, arm64v8, arm32v7 | Release [v2.1.7](https://fluentbit.io/announcements/v2.1.7/) |
-| 2.1.6-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.6 | x86_64, arm64v8, arm32v7 | Release [v2.1.6](https://fluentbit.io/announcements/v2.1.6/) |
-| 2.1.5 | x86_64, arm64v8, arm32v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
-| 2.1.5-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.3 | x86_64, arm64v8, arm32v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
-| 2.1.3-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.2 | x86_64, arm64v8, arm32v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
-| 2.1.2-debug | x86_64, arm64v8, arm32v7 | Debug images |
-| 2.1.1        | x86_64, arm64v8, arm32v7 | Release [v2.1.1](https://fluentbit.io/announcements/v2.1.1/)   |
-| 2.1.1-debug  | x86_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
-| 2.1.0        | x86_64, arm64v8, arm32v7 | Release [v2.1.0](https://fluentbit.io/announcements/v2.1.0/)   |
-| 2.1.0-debug  | x86_64, arm64v8, arm32v7 | v2.1.x releases (production + debug)                           |
-| 2.0.11       | x86_64, arm64v8, arm32v7 | Release [v2.0.11](https://fluentbit.io/announcements/v2.0.11/) |
-| 2.0.11-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                           |
-| 2.0.10       | x86_64, arm64v8, arm32v7 | Release [v2.0.10](https://fluentbit.io/announcements/v2.0.10/) |
-| 2.0.10-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                           |
-| 2.0.9       | x86_64, arm64v8, arm32v7 | Release [v2.0.9](https://fluentbit.io/announcements/v2.0.9/) |
-| 2.0.9-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.8       | x86_64, arm64v8, arm32v7 | Release [v2.0.8](https://fluentbit.io/announcements/v2.0.8/) |
-| 2.0.8-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.6       | x86_64, arm64v8, arm32v7 | Release [v2.0.6](https://fluentbit.io/announcements/v2.0.6/) |
-| 2.0.6-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.5       | x86_64, arm64v8, arm32v7 | Release [v2.0.5](https://fluentbit.io/announcements/v2.0.5/) |
-| 2.0.5-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.4       | x86_64, arm64v8, arm32v7 | Release [v2.0.4](https://fluentbit.io/announcements/v2.0.4/) |
-| 2.0.4-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.3       | x86_64, arm64v8, arm32v7 | Release [v2.0.3](https://fluentbit.io/announcements/v2.0.3/) |
-| 2.0.3-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.2       | x86_64, arm64v8, arm32v7 | Release [v2.0.2](https://fluentbit.io/announcements/v2.0.2/) |
-| 2.0.2-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.1       | x86_64, arm64v8, arm32v7 | Release [v2.0.1](https://fluentbit.io/announcements/v2.0.1/) |
-| 2.0.1-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 2.0.0       | x86_64, arm64v8, arm32v7 | Release [v2.0.0](https://fluentbit.io/announcements/v2.0.0/) |
-| 2.0.0-debug | x86_64, arm64v8, arm32v7 | v2.0.x releases (production + debug)                         |
-| 1.9.9       | x86_64, arm64v8, arm32v7 | Release [v1.9.9](https://fluentbit.io/announcements/v1.9.9/) |
-| 1.9.9-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.8       | x86_64, arm64v8, arm32v7 | Release [v1.9.8](https://fluentbit.io/announcements/v1.9.8/) |
-| 1.9.8-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.7       | x86_64, arm64v8, arm32v7 | Release [v1.9.7](https://fluentbit.io/announcements/v1.9.7/) |
-| 1.9.7-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.6       | x86_64, arm64v8, arm32v7 | Release [v1.9.6](https://fluentbit.io/announcements/v1.9.6/) |
-| 1.9.6-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.5       | x86_64, arm64v8, arm32v7 | Release [v1.9.5](https://fluentbit.io/announcements/v1.9.5/) |
-| 1.9.5-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.4       | x86_64, arm64v8, arm32v7 | Release [v1.9.4](https://fluentbit.io/announcements/v1.9.4/) |
-| 1.9.4-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.3       | x86_64, arm64v8, arm32v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.3/) |
-| 1.9.3-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.2       | x86_64, arm64v8, arm32v7 | Release [v1.9.2](https://fluentbit.io/announcements/v1.9.2/) |
-| 1.9.2-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.1       | x86_64, arm64v8, arm32v7 | Release [v1.9.1](https://fluentbit.io/announcements/v1.9.1/) |
-| 1.9.1-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
-| 1.9.0       | x86_64, arm64v8, arm32v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.0/) |
-| 1.9.0-debug | x86_64, arm64v8, arm32v7 | v1.9.x releases (production + debug)                         |
+| 4.2.2-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.2.2 | amd64, arm64, arm/v7 | Release [v4.2.2](https://fluentbit.io/announcements/v4.2.2/) |
+| 4.2.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.2.1 | amd64, arm64, arm/v7 | Release [v4.2.1](https://fluentbit.io/announcements/v4.2.1/) |
+| 4.2.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.2.0 | amd64, arm64, arm/v7 | Release [v4.2.0](https://fluentbit.io/announcements/v4.2.0/) |
+| 4.1.2-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.1.2 | amd64, arm64, arm/v7 | Release v4.1.2 |
+| 4.1.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.1.1 | amd64, arm64, arm/v7 | Release [v4.1.1](https://fluentbit.io/announcements/v4.1.1/) |
+| 4.1.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.1.0 | amd64, arm64, arm/v7 | Release [v4.1.0](https://fluentbit.io/announcements/v4.1.0/) |
+| 4.0.12-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.12 | amd64, arm64, arm/v7 | Release [v4.0.12](https://fluentbit.io/announcements/v4.0.12/) |
+| 4.0.11-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.11 | amd64, arm64, arm/v7 | Release [v4.0.11](https://fluentbit.io/announcements/v4.0.11/) |
+| 4.0.10-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.10 | amd64, arm64, arm/v7 | Release [v4.0.10](https://fluentbit.io/announcements/v4.0.10/) |
+| 4.0.9-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.9 | amd64, arm64, arm/v7 | Release [v4.0.9](https://fluentbit.io/announcements/v4.0.9/) |
+| 4.0.8-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.8 | amd64, arm64, arm/v7 | Release [v4.0.8](https://fluentbit.io/announcements/v4.0.8/) |
+| 4.0.7-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.7 | amd64, arm64, arm/v7 | Release [v4.0.7](https://fluentbit.io/announcements/v4.0.7/) |
+| 4.0.6-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.6 | amd64, arm64, arm/v7 | Release [v4.0.6](https://fluentbit.io/announcements/v4.0.6/) |
+| 4.0.5-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.5 | amd64, arm64, arm/v7 | Release [v4.0.5](https://fluentbit.io/announcements/v4.0.5/) |
+| 4.0.4-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.4 | amd64, arm64, arm/v7 | Release [v4.0.4](https://fluentbit.io/announcements/v4.0.4/) |
+| 4.0.3-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.3 | amd64, arm64, arm/v7 | Release [v4.0.3](https://fluentbit.io/announcements/v4.0.3/) |
+| 4.0.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.1 | amd64, arm64, arm/v7 | Release [v4.0.1](https://fluentbit.io/announcements/v4.0.1/) |
+| 4.0.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 4.0.0 | amd64, arm64, arm/v7 | Release [v4.0.0](https://fluentbit.io/announcements/v4.0.0/) |
+| 3.2.10-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.10 | amd64, arm64, arm/v7, s390x | Release [v3.2.10](https://fluentbit.io/announcements/v3.2.10/) |
+| 3.2.9-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.9 | amd64, arm64, arm/v7, s390x | Release [v3.2.9](https://fluentbit.io/announcements/v3.2.9/) |
+| 3.2.8-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.8 | amd64, arm64, arm/v7, s390x | Release [v3.2.8](https://fluentbit.io/announcements/v3.2.8/) |
+| 3.2.7-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.7 | amd64, arm64, arm/v7, s390x | Release [v3.2.7](https://fluentbit.io/announcements/v3.2.7/) |
+| 3.2.6-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.6 | amd64, arm64, arm/v7, s390x | Release [v3.2.6](https://fluentbit.io/announcements/v3.2.6/) |
+| 3.2.5-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.5 | amd64, arm64, arm/v7, s390x | Release [v3.2.5](https://fluentbit.io/announcements/v3.2.5/) |
+| 3.2.4-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.4 | amd64, arm64, arm/v7, s390x | Release [v3.2.4](https://fluentbit.io/announcements/v3.2.4/) |
+| 3.2.3-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.3 | amd64, arm64, arm/v7, s390x | Release [v3.2.3](https://fluentbit.io/announcements/v3.2.3/) |
+| 3.2.2-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.2 | amd64, arm64, arm/v7, s390x | Release [v3.2.2](https://fluentbit.io/announcements/v3.2.2/) |
+| 3.2.1-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.2.1 | amd64, arm64, arm/v7, s390x | Release [v3.2.1](https://fluentbit.io/announcements/v3.2.1/) |
+| 3.1.10-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.10 | amd64, arm64, arm/v7, s390x | Release [v3.1.10](https://fluentbit.io/announcements/v3.1.10/) |
+| 3.1.9-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.9 | amd64, arm64, arm/v7, s390x | Release [v3.1.9](https://fluentbit.io/announcements/v3.1.9/) |
+| 3.1.8-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.8 | amd64, arm64, arm/v7, s390x | Release [v3.1.8](https://fluentbit.io/announcements/v3.1.8/) |
+| 3.1.7-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.7 | amd64, arm64, arm/v7, s390x | Release [v3.1.7](https://fluentbit.io/announcements/v3.1.7/) |
+| 3.1.6-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.6 | amd64, arm64, arm/v7, s390x | Release [v3.1.6](https://fluentbit.io/announcements/v3.1.6/) |
+| 3.1.5-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.5 | amd64, arm64, arm/v7, s390x | Release [v3.1.5](https://fluentbit.io/announcements/v3.1.5/) |
+| 3.1.4-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.4 | amd64, arm64, arm/v7, s390x | Release [v3.1.4](https://fluentbit.io/announcements/v3.1.4/) |
+| 3.1.3-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.3 | amd64, arm64, arm/v7, s390x | Release [v3.1.3](https://fluentbit.io/announcements/v3.1.3/) |
+| 3.1.2-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.2 | amd64, arm64, arm/v7, s390x | Release [v3.1.2](https://fluentbit.io/announcements/v3.1.2/) |
+| 3.1.1-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.1 | amd64, arm64, arm/v7, s390x | Release [v3.1.1](https://fluentbit.io/announcements/v3.1.1/) |
+| 3.1.0-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.1.0 | amd64, arm64, arm/v7, s390x | Release [v3.1.0](https://fluentbit.io/announcements/v3.1.0/) |
+| 3.0.7-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.7 | amd64, arm64, arm/v7, s390x | Release [v3.0.7](https://fluentbit.io/announcements/v3.0.7/) |
+| 3.0.6-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.6 | amd64, arm64, arm/v7, s390x | Release [v3.0.6](https://fluentbit.io/announcements/v3.0.6/) |
+| 3.0.5-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.5 | amd64, arm64, arm/v7, s390x | Release [v3.0.5](https://fluentbit.io/announcements/v3.0.5/) |
+| 3.0.4-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.4 | amd64, arm64, arm/v7, s390x | Release [v3.0.4](https://fluentbit.io/announcements/v3.0.4/) |
+| 3.0.3-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.3 | amd64, arm64, arm/v7, s390x | Release [v3.0.3](https://fluentbit.io/announcements/v3.0.3/) |
+| 3.0.2-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.2 | amd64, arm64, arm/v7, s390x | Release [v3.0.2](https://fluentbit.io/announcements/v3.0.2/) |
+| 3.0.1-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.1 | amd64, arm64, arm/v7, s390x | Release [v3.0.1](https://fluentbit.io/announcements/v3.0.1/) |
+| 3.0.0-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 3.0.0 | amd64, arm64, arm/v7, s390x | Release [v3.0.0](https://fluentbit.io/announcements/v3.0.0/) |
+| 2.2.2-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 2.2.2 | amd64, arm64, arm/v7, s390x | Release [v2.2.2](https://fluentbit.io/announcements/v2.2.2/) |
+| 2.2.1-debug | amd64, arm64, arm/v7, s390x | Debug images |
+| 2.2.1 | amd64, arm64, arm/v7, s390x | Release [v2.2.1](https://fluentbit.io/announcements/v2.2.1/) |
+| 2.2.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.2.0 | amd64, arm64, arm/v7 | Release [v2.2.0](https://fluentbit.io/announcements/v2.2.0/) |
+| 2.1.10-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.10 | amd64, arm64, arm/v7 | Release [v2.1.10](https://fluentbit.io/announcements/v2.1.10/) |
+| 2.1.9-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.9 | amd64, arm64, arm/v7 | Release [v2.1.9](https://fluentbit.io/announcements/v2.1.9/) |
+| 2.1.8-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.8 | amd64, arm64, arm/v7 | Release [v2.1.8](https://fluentbit.io/announcements/v2.1.8/) |
+| 2.1.7-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.7 | amd64, arm64, arm/v7 | Release [v2.1.7](https://fluentbit.io/announcements/v2.1.7/) |
+| 2.1.6-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.6 | amd64, arm64, arm/v7 | Release [v2.1.6](https://fluentbit.io/announcements/v2.1.6/) |
+| 2.1.5 | amd64, arm64, arm/v7 | Release [v2.1.5](https://fluentbit.io/announcements/v2.1.5/) |
+| 2.1.5-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.3 | amd64, arm64, arm/v7 | Release [v2.1.3](https://fluentbit.io/announcements/v2.1.3/) |
+| 2.1.3-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.2 | amd64, arm64, arm/v7 | Release [v2.1.2](https://fluentbit.io/announcements/v2.1.2/) |
+| 2.1.2-debug | amd64, arm64, arm/v7 | Debug images |
+| 2.1.1        | amd64, arm64, arm/v7 | Release [v2.1.1](https://fluentbit.io/announcements/v2.1.1/)   |
+| 2.1.1-debug  | amd64, arm64, arm/v7 | v2.1.x releases (production + debug)                           |
+| 2.1.0        | amd64, arm64, arm/v7 | Release [v2.1.0](https://fluentbit.io/announcements/v2.1.0/)   |
+| 2.1.0-debug  | amd64, arm64, arm/v7 | v2.1.x releases (production + debug)                           |
+| 2.0.11       | amd64, arm64, arm/v7 | Release [v2.0.11](https://fluentbit.io/announcements/v2.0.11/) |
+| 2.0.11-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                           |
+| 2.0.10       | amd64, arm64, arm/v7 | Release [v2.0.10](https://fluentbit.io/announcements/v2.0.10/) |
+| 2.0.10-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                           |
+| 2.0.9       | amd64, arm64, arm/v7 | Release [v2.0.9](https://fluentbit.io/announcements/v2.0.9/) |
+| 2.0.9-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.8       | amd64, arm64, arm/v7 | Release [v2.0.8](https://fluentbit.io/announcements/v2.0.8/) |
+| 2.0.8-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.6       | amd64, arm64, arm/v7 | Release [v2.0.6](https://fluentbit.io/announcements/v2.0.6/) |
+| 2.0.6-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.5       | amd64, arm64, arm/v7 | Release [v2.0.5](https://fluentbit.io/announcements/v2.0.5/) |
+| 2.0.5-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.4       | amd64, arm64, arm/v7 | Release [v2.0.4](https://fluentbit.io/announcements/v2.0.4/) |
+| 2.0.4-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.3       | amd64, arm64, arm/v7 | Release [v2.0.3](https://fluentbit.io/announcements/v2.0.3/) |
+| 2.0.3-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.2       | amd64, arm64, arm/v7 | Release [v2.0.2](https://fluentbit.io/announcements/v2.0.2/) |
+| 2.0.2-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.1       | amd64, arm64, arm/v7 | Release [v2.0.1](https://fluentbit.io/announcements/v2.0.1/) |
+| 2.0.1-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 2.0.0       | amd64, arm64, arm/v7 | Release [v2.0.0](https://fluentbit.io/announcements/v2.0.0/) |
+| 2.0.0-debug | amd64, arm64, arm/v7 | v2.0.x releases (production + debug)                         |
+| 1.9.9       | amd64, arm64, arm/v7 | Release [v1.9.9](https://fluentbit.io/announcements/v1.9.9/) |
+| 1.9.9-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.8       | amd64, arm64, arm/v7 | Release [v1.9.8](https://fluentbit.io/announcements/v1.9.8/) |
+| 1.9.8-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.7       | amd64, arm64, arm/v7 | Release [v1.9.7](https://fluentbit.io/announcements/v1.9.7/) |
+| 1.9.7-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.6       | amd64, arm64, arm/v7 | Release [v1.9.6](https://fluentbit.io/announcements/v1.9.6/) |
+| 1.9.6-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.5       | amd64, arm64, arm/v7 | Release [v1.9.5](https://fluentbit.io/announcements/v1.9.5/) |
+| 1.9.5-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.4       | amd64, arm64, arm/v7 | Release [v1.9.4](https://fluentbit.io/announcements/v1.9.4/) |
+| 1.9.4-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.3       | amd64, arm64, arm/v7 | Release [v1.9.3](https://fluentbit.io/announcements/v1.9.3/) |
+| 1.9.3-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.2       | amd64, arm64, arm/v7 | Release [v1.9.2](https://fluentbit.io/announcements/v1.9.2/) |
+| 1.9.2-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.1       | amd64, arm64, arm/v7 | Release [v1.9.1](https://fluentbit.io/announcements/v1.9.1/) |
+| 1.9.1-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
+| 1.9.0       | amd64, arm64, arm/v7 | Release [v1.9.0](https://fluentbit.io/announcements/v1.9.0/) |
+| 1.9.0-debug | amd64, arm64, arm/v7 | v1.9.x releases (production + debug)                         |
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
