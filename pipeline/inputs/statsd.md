@@ -8,10 +8,10 @@ The plugin supports the following configuration parameters:
 
 | Key        | Description                                                                                             | Default   |
 |:-----------|:--------------------------------------------------------------------------------------------------------|:----------|
-| `Listen`   | Listener network interface.                                                                             | `0.0.0.0` |
-| `Port`     | UDP port that listens for connections.                                                                  | `8125`    |
-| `Threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`   |
-| `Metrics`  | Ingested record will be marked as a metric record rather than a log record.                             | `off`     |
+| `listen`   | Specify the network interface to bind.                                                                  | `0.0.0.0` |
+| `metrics`  | Ingest as metric events rather than log events.                                                         | `off`     |
+| `port`     | Specify the UDP port to listen for incoming connections.                                                | `8125`    |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`   |
 
 When enabling `Metrics On`, Fluent Bit will also handle metrics from the DogStatsD protocol. The internal record in Fluent Bit will be handled as a metric type for downstream processing.
 
@@ -88,7 +88,7 @@ pipeline:
     - name: statsd
       listen: 0.0.0.0
       port: 8125
-      metrics: On
+      metrics: on
       
   outputs:
     - name: stdout
@@ -103,7 +103,7 @@ pipeline:
   Name   statsd
   Listen 0.0.0.0
   Port   8125
-  Metrics On
+  Metrics on
 
 [OUTPUT]
   Name   stdout
