@@ -17,7 +17,7 @@ This plugin uses the following configuration parameters:
 | Key | Description | Default |
 | :--- | :--- | --------- |
 | `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which can help improve throughput when there are transient/random networking issues. | `true` |
-| `compression` | Compression type for Firehose records. Each log record is individually compressed and sent to Firehose. Supported values: `gzip`, `arrow`. `arrow` is only available if Apache Arrow was enabled at compile time. | _none_ |
+| `compression` | Compression type for records sent to Firehose. Supported values: `gzip`, `zstd`, `snappy`. `arrow` is also available if Apache Arrow was enabled at compile time. See the [Compression](#compression). | _none_ |
 | `delivery_stream` | The name of the Kinesis Firehose Delivery stream that you want log records sent to. | _none_ |
 | `endpoint` | Specify a custom endpoint for the Firehose API. | _none_ |
 | `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
@@ -90,6 +90,16 @@ The following AWS IAM permissions are required to use this plugin:
   }]
 }
 ```
+
+## Compression
+
+When you enable compression using the `compression` parameter, records are compressed before upload to Kinesis Firehose.
+
+{% hint style="info" %}
+
+Fluent Bit compresses each log record individually before sending to Firehose. Firehose then buffers multiple records and delivers them as complete files to the destination. Consumers receive these files (not individual records). If destination-level compression is enabled in Firehose (for example, S3 `CompressionFormat`), consumers must first decompress the file and then decompress each record. If destination-level compression is disabled, only per-record decompression is required.
+
+{% endhint %}
 
 ### Worker support
 
