@@ -15,9 +15,9 @@ The plugin supports the following configuration parameters:
 
 | Key           | Description                                                                                                                                                                                         | Default |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `16k`   |
-| `Parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
-| `Threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
+| `buffer_size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `16k`   |
+| `parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
+| `threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
 
 ## Input formats
 
@@ -51,7 +51,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 1. Write the following content in a file named `test.sh`:
 
-   ```bash
+   ```shell
    #!/bin/sh
 
    for ((i=0; i<=5; i++)); do
@@ -81,7 +81,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 1. An input event timestamp can also be supplied. Replace `test.sh` with:
 
-    ```bash
+    ```shell
     #!/bin/sh
 
     for ((i=0; i<=5; i++)); do
@@ -118,7 +118,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 1. Additional metadata is supported in Fluent Bit v2.1.0 and later by replacing the timestamp with a two-element object. For example:
 
-    ```bash
+    ```shell
     #!/bin/sh
     for ((i=0; i<=5; i++)); do
       echo -n "
@@ -181,10 +181,10 @@ parsers:
 
 ```text
 [PARSER]
-  name        stringify_message
-  format      regex
+  Name        stringify_message
+  Format      regex
   Key_Name    message
-  regex       ^(?<message>.*)
+  Regex       ^(?<message>.*)
 ```
 
 {% endtab %}
@@ -215,7 +215,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  parsers_file parsers.conf
+  Parsers_File parsers.conf
 
 [INPUT]
   Name    stdin
