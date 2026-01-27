@@ -17,6 +17,7 @@ For information about how AWS credentials are fetched, see [AWS credentials](../
 | Key | Description | Default |
 | --- | ----------- | ------- |
 | `auto_retry_requests` | Immediately retry failed requests to AWS services once. This option doesn't affect the normal Fluent Bit retry mechanism with backoff. Instead, it enables an immediate retry with no delay for networking errors, which might help improve throughput when there are transient/random networking issues. | `true` |
+| `compression` | Compression type for records sent to Kinesis Data Streams. Supported values: `gzip`, `zstd`, `snappy`. See [Compression](#compression). | _none_ |
 | `endpoint` | Specify a custom endpoint for the Kinesis API. | _none_ |
 | `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
 | `log_key` | By default, the whole log record will be sent to Kinesis. If you specify a key name with this option, then only the value of that key will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Kinesis. | _none_ |
@@ -90,6 +91,17 @@ The following AWS IAM permissions are required to use this plugin:
   }]
 }
 ```
+
+## Compression
+
+When you enable compression using the `compression` parameter, records are compressed before upload to Kinesis Data Streams.
+
+
+{% hint style="info" %}
+
+Each log record is individually compressed by Fluent Bit before sending. Consumers must decompress each record using the same compression format.
+
+{% endhint %}
 
 ## Container images
 
