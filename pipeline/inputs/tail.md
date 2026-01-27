@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 | `event_batch_size` | Set the maximum number of bytes to process per iteration for files monitored in event mode (files promoted from static to event-based monitoring). This prevents a single input plugin from consuming too many resources when large amounts of data is available. | `50M` |
 | `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_path *.gz,*.zip`. | _none_ |
 | `exit_on_eof` | When reading a file, exit as soon as it reaches the end of the file. Used for bulk load and tests. | `false` |
-| `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `on` |
+| `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `true` |
 | `generic.encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
 | `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
 | `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
@@ -40,8 +40,8 @@ The plugin supports the following configuration parameters:
 | `read_newly_discovered_files_from_head` | For newly discovered files after startup (without a database offset/position), read the content from the head of the file, not tail. This differs from `read_from_head` which only applies to files discovered at startup. | `true` |
 | `refresh_interval` | The interval of refreshing the list of watched files in seconds. | `60` |
 | `rotate_wait` | Specify the number of extra time in seconds to monitor a file once it's rotated in case some pending data is flushed. | `5` |
-| `skip_empty_lines` | Skips empty lines in the log file from any further processing or output. | `off` |
-| `skip_long_lines` | When a monitored file reaches its buffer capacity due to a very long line (`buffer_max_size`), the default behavior is to stop monitoring that file. `skip_long_lines` alters that behavior and instructs Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `off` |
+| `skip_empty_lines` | Skips empty lines in the log file from any further processing or output. | `false` |
+| `skip_long_lines` | When a monitored file reaches its buffer capacity due to a very long line (`buffer_max_size`), the default behavior is to stop monitoring that file. `skip_long_lines` alters that behavior and instructs Fluent Bit to skip long lines and continue processing other lines that fit into the buffer size. | `false` |
 | `static_batch_size` | Set the maximum number of bytes to process per iteration for the monitored static files (files that already exist upon Fluent Bit start). | `50M` |
 | `tag` | Set a tag with `regexextract` fields that will be placed on lines read. For example, `kube.<namespace_name>.<pod_name>.<container_name>.<container_id>`. Tag expansion is supported: if the tag includes an asterisk (`*`), that asterisk will be replaced with the absolute path of the monitored file, with slashes replaced by dots. See [Workflow of Tail + Kubernetes Filter](../filters/kubernetes.md#workflow-of-tail--kubernetes-filter). | _none_ |
 | `tag_regex` | Set a regular expression to extract fields from the filename. For example: `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<container_id>[a-z0-9]{64})\.log$`. | _none_ |
@@ -230,13 +230,7 @@ For the old multiline configuration, the following options exist to configure th
 
 ### Old Docker mode configuration parameters
 
-Docker mode exists to recombine JSON log lines split by the Docker daemon due to its line length limit. To use this feature, configure the tail plugin with the corresponding parser and then enable Docker mode:
-
-| Key   | Description | Default |
-|:------|:------------|:--------|
-| `docker_mode`        | If enabled, the plugin will recombine split Docker log lines before passing them to any parser. This mode can't be used at the same time as Multiline.     | `Off`   |
-| `docker_mode_flush`  | Wait period time in seconds to flush queued unfinished split lines.               | `4`     |
-| `docker_mode_parser` | Specify an optional parser for the first line of the Docker multiline mode. The parser name to be specified must be registered in the `parsers.conf` file. | _none_  |
+Docker mode exists to recombine JSON log lines split by the Docker daemon due to its line length limit. To use this feature, configure the tail plugin with the corresponding parser and then enable Docker mode using the `docker_mode`, `docker_mode_flush`, and `docker_mode_parser` parameters documented in the main [configuration parameters](#configuration-parameters) table.
 
 ## Get started
 
