@@ -8,11 +8,13 @@ This plugin uses the following configuration parameters:
 
 | Key                       | Description                                                                                                                                                        | Default         |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| `add_remote_addr`         | Inject the client remote address into the record. The value is extracted from the X-Forwarded-For header if present, otherwise from the connection address.        | `false`         |
 | `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`.                               | `512K`          |
 | `buffer_max_size`         | Set the maximum buffer size to receive a JSON message.                                                                                                             | `4M`            |
 | `http2`                   | Enable HTTP/2 support.                                                                                                                                             | `true`          |
 | `listen`                  | The address to listen on.                                                                                                                                          | `0.0.0.0`       |
 | `port`                    | The port for Fluent Bit to listen on.                                                                                                                              | `8088`          |
+| `remote_addr_key`         | Set the record key used to store the remote address when `add_remote_addr` is enabled.                                                                             | `remote_addr`   |
 | `splunk_token`            | Specify a Splunk token for HTTP HEC authentication. If multiple tokens are specified (with commas and no spaces), usage will be divided across each of the tokens. | _none_          |
 | `splunk_token_key`        | Set a record key for storing the Splunk token for HTTP HEC. Use only when `store_token_in_metadata` is `false`.                                                    | `@splunk_token` |
 | `store_token_in_metadata` | Store Splunk HEC tokens in the Fluent Bit metadata. If set to `false`, they will be stored as key-value pairs in the record data.                                  | `true`          |
