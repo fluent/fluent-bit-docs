@@ -23,6 +23,7 @@ This plugin supports the following parameters:
 | `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md) |  |
 | `raw_log_key` | When using the raw format and set, the value of `raw_log_key` in the record will be send to Kafka as the payload. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `Header` | Add an HTTP header key/value pair. Multiple headers can be used. If the header is static, use `Header` as the key value. If the value is part of the message, use `Header key <value>` | _none_ |
 
 Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to `1` are examples of recommended settings of `librdfkafka` properties.
 
@@ -69,6 +70,7 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+  Header      test test
 ```
 
 {% endtab %}
