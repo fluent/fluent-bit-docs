@@ -117,7 +117,7 @@ Each callback must return three values:
 | ---- | --------- | ----------- |
 | `code` | integer | The code return value represents the result and further actions that might follow. If `code` equals `-1`, this means that the record will be dropped. If `code` equals `0`, the record won't be modified. Otherwise, if `code` equals `1`, this means the original timestamp and record have been modified, so it must be replaced by the returned values from `timestamp` (second return value) and `record` (third return value). If `code` equals `2`, this means the original timestamp won't be modified and the record has been modified, so it must be replaced by the returned values from `record` (third return value). |
 | `timestamp` | double | If `code` equals `1`, the original record timestamp will be replaced with this new value. |
-| `record` | table | If `code` equals `1`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
+| `record` | table | If `code` equals `1` or `2`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
 
 ## Lua extended callback with groups and metadata support
 
