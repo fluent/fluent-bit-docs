@@ -212,3 +212,9 @@ You can load a main configuration file using `-c` option. You don't need to spec
 ```shell
 fluent-bit -c fluent-bit.conf
 ```
+
+## Event Types Supported
+
+Currently, the supported event types for the output plugin are `logs` and `metrics`.
+These types are declared in the [flb_plugin_proxy.c](https://github.com/fluent/fluent-bit/blob/master/src/flb_plugin_proxy.c) file in the `flb_proxy_register_output` function.
+The `fluent-bit-go` decoder will decode both types.
