@@ -54,11 +54,12 @@ The following configuration parameters are available:
 
 | Key         | Description |
 | ----------- | ----------- |
+| `action` | Specifies the type of [action](#actions) to perform on the content. |
 | `context` | Specifies the [context](#contexts) where the modifications will happen. |
+| `converted_type` | Defines the data type to perform the conversion. Possible values: `string`, `boolean`, `int`, and `double`. |
 | `key` | Specifies the name of the key that will be used to apply the modification. |
-| `value` | The role of this parameter changes based on the [action](#actions) type. |
 | `pattern` | Defines a regular expression pattern. This property is only used by the `extract` [action](#actions). |
-| `converted_type` | Defines the data type to perform the conversion. Possible values: `string`, `boolean`, `int` and `double`. |
+| `value` | The role of this parameter changes based on the [action](#actions) type. |
 
 ### Actions
 
