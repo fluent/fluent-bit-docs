@@ -15,9 +15,9 @@ The plugin supports the following configuration parameters:
 
 | Key           | Description                                                                                                                                                                                         | Default |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `Buffer_Size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `16k`   |
-| `Parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
-| `Threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
+| `buffer_size` | Set the buffer size to read data. This value is used to increase buffer size and must be set according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `16k`   |
+| `parser`      | The name of the parser to invoke instead of the default JSON input parser.                                                                                                                          | _none_  |
+| `threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false` |
 
 ## Input formats
 
@@ -47,11 +47,11 @@ The Fluent Bit event timestamp will be set from the input record if the two-elem
 
 ### JSON input
 
-To demonstrate how the plugin works, you can use a `bash` script that generates messages and writes them to [Fluent Bit](http://fluentbit.io).
+To demonstrate how the plugin works, you can use a `bash` script that generates messages and writes them to [Fluent Bit](https://fluentbit.io).
 
 1. Write the following content in a file named `test.sh`:
 
-   ```bash
+   ```shell
    #!/bin/sh
 
    for ((i=0; i<=5; i++)); do
@@ -60,7 +60,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
    done
    ```
 
-2. Start the script and [Fluent Bit](http://fluentbit.io):
+2. Start the script and [Fluent Bit](https://fluentbit.io):
 
    ```shell
    bash test.sh | fluent-bit -q -i stdin -o stdout
@@ -81,9 +81,9 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 1. An input event timestamp can also be supplied. Replace `test.sh` with:
 
-    ```bash
+    ```shell
     #!/bin/sh
-    
+
     for ((i=0; i<=5; i++)); do
       echo -n "
         [
@@ -118,7 +118,7 @@ To demonstrate how the plugin works, you can use a `bash` script that generates 
 
 1. Additional metadata is supported in Fluent Bit v2.1.0 and later by replacing the timestamp with a two-element object. For example:
 
-    ```bash
+    ```shell
     #!/bin/sh
     for ((i=0; i<=5; i++)); do
       echo -n "
@@ -181,10 +181,10 @@ parsers:
 
 ```text
 [PARSER]
-  name        stringify_message
-  format      regex
+  Name        stringify_message
+  Format      regex
   Key_Name    message
-  regex       ^(?<message>.*)
+  Regex       ^(?<message>.*)
 ```
 
 {% endtab %}
@@ -198,13 +198,13 @@ You can then use the parsers file in a `stdin` plugin in the main Fluent Bit con
 ```yaml
 service:
   parsers_file: parsers.yaml
-    
+
 pipeline:
   inputs:
     - name: stdin
       tag: stdin
       parser: stringify_message
-       
+
   outputs:
     - name: stdout
       match: '*'
@@ -215,8 +215,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  parsers_file parsers.conf
-    
+  Parsers_File parsers.conf
+
 [INPUT]
   Name    stdin
   Tag     stdin

@@ -5,16 +5,18 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 ## Configuration parameters
 
-| Key                        | Description                                                                                                                                | Default   |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| `listen`                   | The address to listen on.                                                                                                                  | `0.0.0.0` |
-| `port`                     | The port for Fluent Bit to listen on.                                                                                                      | `9880`    |
-| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                        | _none_    |
-| `buffer_max_size`          | Specify the maximum buffer size in KB to receive a JSON message.                                                                           | `4M`      |
-| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. | `512K`    |
-| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`                                                         | `201`     |
-| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`                           | _none_    |
-| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                    | `false`   |
+| Key                        | Description                                                                                                                                         | Default   |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `add_remote_addr`          | Adds a `REMOTE_ADDR` field to the record. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header. | `false`   |
+| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`.          | `512K`    |
+| `buffer_max_size`          | Specify the maximum buffer size to receive a JSON message.                                                                                          | `4M`      |
+| `http2`                    | Enable HTTP/2 support.                                                                                                                              | `true`    |
+| `listen`                   | The address to listen on.                                                                                                                           | `0.0.0.0` |
+| `port`                     | The port for Fluent Bit to listen on.                                                                                                               | `9880`    |
+| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`.                                   | _none_    |
+| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`.                                                                 | `201`     |
+| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                 | _none_    |
+| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                             | `false`   |
 
 ### TLS / SSL
 
@@ -34,11 +36,37 @@ This plugin supports dynamic tags which let you send data with different tags th
 
 The tag for the HTTP input plugin is set by adding the tag to the end of the request URL. This tag is then used to route the event through the system.
 
-For example, in the following curl message the tag set is `app.log**. **` because the end path is `/app_log`:
+For example, in the following curl message the tag set is `app.log` because the end path is `/app.log`:
 
 ```shell
 curl -d '{"key1":"value1","key2":"value2"}' -XPOST -H "content-type: application/json" http://localhost:8888/app.log
 ```
+
+### Add a remote address field
+
+The `add_remote_addr` configuration parameter, when activated, adds a `REMOTE_ADDR` field to the records. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header.
+
+In most cases, only a single `X-Forwarded-For` header is in the request, so the following curl would add a `REMOTE_ADDR` field which would be set to `host1`:
+
+```shell
+curl -d '{"key1":"value1"}' -XPOST -H 'Content-Type: application/json' -H 'X-Forwarded-For: host1, host2' http://localhost:8888
+```
+
+However, if your system sets multiple `X-Forwarded-For` headers in the request, the one used (first, or last) depends on the value of the `http2` parameter. For example:
+
+Assuming the following X-Forwarded-For headers are in the request:
+
+```text
+X-Forwarded-For: host1, host2
+X-Forwarded-For: host3, host4
+```
+
+The value of `REMOTE_ADDR` will be:
+
+| `http2` value    | `REMOTE_ADDR` value |
+|------------------|---------------------|
+| `true` (default) | `host3`             |
+| `false`          | `host1`             |
 
 ### Configuration file
 
@@ -62,13 +90,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name stdout
-  match app.log
+  Name  stdout
+  Match app.log
 ```
 
 {% endtab %}
@@ -102,13 +130,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name  stdout
-  match  http.0
+  Name  stdout
+  Match http.0
 ```
 
 {% endtab %}
@@ -147,18 +175,59 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
-  tag_key key1
+  Name    http
+  Listen  0.0.0.0
+  Port    8888
+  Tag_Key key1
 
 [OUTPUT]
-  name stdout
-  match value1
+  Name  stdout
+  Match value1
 ```
 
 {% endtab %}
 {% endtabs %}
+
+#### Set `add_remote_addr`
+
+The `add_remote_addr` configuration option lets you activate a feature that systematically adds the `REMOTE_ADDR` field to events, and set its value to the client's address. The address will be extracted from the `X-Forwarded-For` header of the request. The format is:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+      add_remote_addr: true
+  outputs:
+    - name: stdout
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name http
+  Listen 0.0.0.0
+  Port 8888
+  Add_remote_addr true
+
+[OUTPUT]
+  Name stdout
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### Example curl to test this feature
+
+```shell
+curl -d '{"key1":"value1"}' -XPOST -H 'Content-Type: application/json' -H 'X-Forwarded-For: host1, host2' http://localhost:8888
+```
 
 #### Set multiple custom HTTP headers on success
 
@@ -181,9 +250,9 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  success_header X-Custom custom-answer
-  success_header X-Another another-answer
+  Name           http
+  Success_Header X-Custom custom-answer
+  Success_Header X-Another another-answer
 ```
 
 {% endtab %}
@@ -217,13 +286,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  listen 0.0.0.0
-  port 8888
+  Name   http
+  Listen 0.0.0.0
+  Port   8888
 
 [OUTPUT]
-  name stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -232,5 +301,5 @@ pipeline:
 ### Command line
 
 ```shell
- fluent-bit -i http -p port=8888 -o stdout
+fluent-bit -i http -p port=8888 -o stdout
 ```

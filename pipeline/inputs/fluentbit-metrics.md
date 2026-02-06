@@ -8,23 +8,58 @@ Fluent Bit exposes [metrics](../../administration/monitoring.md) to let you moni
 
 {% hint style="info" %}
 
-Metrics collected with Node Exporter Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
+Metrics collected with Fluent Bit Metrics flow through a separate pipeline from logs and current filters don't operate on top of metrics.
 
 {% endhint %}
 
-## Configuration
+## Configuration parameters
 
 | Key               | Description                                                                                             | Default     |
 |-------------------|---------------------------------------------------------------------------------------------------------|-------------|
-| `scrape_interval` | The rate at which metrics are collected from the host operating system.                                 | `2` seconds |
+| `scrape_interval` | The rate at which Fluent Bit internal metrics are collected.                                            | `2` seconds |
 | `scrape_on_start` | Scrape metrics upon start, use to avoid waiting for `scrape_interval` for the first round of metrics.   | `false`     |
 | `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`     |
 
 ## Get started
 
+You can run the plugin from the command line or through the configuration file:
+
+### Command line
+
+Run the plugin from the command line using the following command:
+
+```shell
+fluent-bit -i fluentbit_metrics -o stdout
+```
+
+which returns results like the following:
+
+```text
+...
+[2025/12/02 08:33:54.689265000] [ info] [input:fluentbit_metrics:fluentbit_metrics.0] initializing
+[2025/12/02 08:33:54.689272000] [ info] [input:fluentbit_metrics:fluentbit_metrics.0] storage_strategy='memory' (memory only)
+[2025/12/02 08:33:54.689917000] [ info] [output:stdout:stdout.0] worker #0 started
+[2025/12/02 08:33:54.690115000] [ info] [sp] stream processor started
+[2025/12/02 08:33:54.690204000] [ info] [engine] Shutdown Grace Period=5, Shutdown Input Grace Period=2
+2025-12-02T07:33:56.692855536Z fluentbit_uptime{hostname="XXXXX.local"} = 2
+2025-12-02T07:33:54.687838528Z fluentbit_logger_logs_total{message_type="error"} = 0
+2025-12-02T07:33:54.687838528Z fluentbit_logger_logs_total{message_type="warn"} = 0
+2025-12-02T07:33:54.690212675Z fluentbit_logger_logs_total{message_type="info"} = 10
+2025-12-02T07:33:54.687838528Z fluentbit_logger_logs_total{message_type="debug"} = 0
+2025-12-02T07:33:54.687838528Z fluentbit_logger_logs_total{message_type="trace"} = 0
+2025-12-02T07:33:54.689222850Z fluentbit_input_bytes_total{name="fluentbit_metrics.0"} = 0
+2025-12-02T07:33:54.689222850Z fluentbit_input_records_total{name="fluentbit_metrics.0"} = 0
+2025-12-02T07:33:54.689222850Z fluentbit_input_ring_buffer_writes_total{name="fluentbit_metrics.0"} = 0
+2025-12-02T07:33:54.689222850Z fluentbit_input_ring_buffer_retries_total{name="fluentbit_metrics.0"} = 0
+2025-12-02T07:33:54.689222850Z fluentbit_input_ring_buffer_retry_failures_total{name="fluentbit_metrics.0"} = 0
+2025-12-02T07:33:56.692846827Z fluentbit_input_metrics_scrapes_total{name="fluentbit_metrics.0"} = 1
+2025-12-02T07:33:54.689563930Z fluentbit_output_proc_records_total{name="stdout.0"} = 0
+...
+```
+
 ### Configuration file
 
-In the following configuration file, the input plugin `node_exporter_metrics` collects metrics every `2` seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
+In the following configuration file, the input plugin `fluentbit_metrics` collects metrics every `2` seconds and exposes them through the [Prometheus Exporter](../outputs/prometheus-exporter.md) output plugin on HTTP/TCP port `2021`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

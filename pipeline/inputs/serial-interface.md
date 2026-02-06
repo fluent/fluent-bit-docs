@@ -6,14 +6,14 @@ The _Serial_ input plugin lets you retrieve messages and data from a serial inte
 
 This plugin has the following configuration parameters:
 
-| Key         | Description                                                                                              | Default                             |
-|:------------|:---------------------------------------------------------------------------------------------------------|-------------------------------------|
-| `File`      | Absolute path to the device entry. For example, `/dev/ttyS0`.                                            | _none_                              |
-| `Bitrate`   | The bit rate for the communication. For example: `9600`, `38400`, `115200`.                              | _none_                              |
-| `Min_Bytes` | The serial interface expects at least `Min_Bytes` to be available before processing the message.         | `1`                                 |
-| `Separator` | Specify a separator string that's used to determinate when a message ends.                               | _none_                              |
-| `Format`    | Specify the format of the incoming data stream. `Format` and `Separator` can't be used at the same time. | `json` (no other options available) |
-| `Threaded`  | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).  | `false`                             |
+| Key         | Description                                                                                                                              | Default |
+|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| `bitrate`   | The bit rate for the communication. For example: `9600`, `38400`, `115200`.                                                              | _none_  |
+| `file`      | Absolute path to the device entry. For example, `/dev/ttyS0`.                                                                            | _none_  |
+| `format`    | Specify the format of the incoming data stream. The options are `json` and `none`. `format` and `separator` can't be used at the same time. | `none`  |
+| `min_bytes` | The serial interface expects at least `min_bytes` to be available before processing the message.                                         | `1`     |
+| `separator` | Specify a separator string that's used to determine when a message ends.                                                                 | _none_  |
+| `threaded`  | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false` |
 
 ## Get started
 
@@ -21,10 +21,10 @@ To retrieve messages by using the Serial interface, you can run the plugin from 
 
 ### Command line
 
-The following example loads the input serial plugin where it set a `Bitrate` of `9600`, listens from the `/dev/tnt0` interface, and uses the custom tag `data` to route the message.
+The following example loads the input serial plugin where it set a `bitrate` of `9600`, listens from the `/dev/tnt0` interface, and uses the custom tag `data` to route the message.
 
 ```shell
-fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+fluent-bit -i serial -t data -p file=/dev/tnt0 -p bitrate=9600 -o stdout -m '*'
 ```
 
 The interface (`/dev/tnt0`) is an emulation of the serial interface. Further examples will write some message to the other end of the interface. For example, `/dev/tnt1`.
@@ -36,7 +36,7 @@ echo 'this is some message' > /dev/tnt1
 In Fluent Bit you can run the command:
 
 ```shell
-fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -o stdout -m '*'
+fluent-bit -i serial -t data -p file=/dev/tnt0 -p bitrate=9600 -o stdout -m '*'
 ```
 
 Which should produce output like:
@@ -47,7 +47,7 @@ Which should produce output like:
 ...
 ```
 
-Using the `Separator` configuration, you can send multiple messages at once.
+Using the `separator` configuration, you can send multiple messages at once.
 
 Run this command after starting Fluent Bit:
 
@@ -58,7 +58,7 @@ echo 'aaXbbXccXddXee' > /dev/tnt1
 Then, run Fluent Bit:
 
 ```shell
-fluent-bit -i serial -t data -p File=/dev/tnt0 -p BitRate=9600 -p Separator=X -o stdout -m '*'
+fluent-bit -i serial -t data -p file=/dev/tnt0 -p bitrate=9600 -p separator=X -o stdout -m '*'
 ```
 
 This should produce results similar to the following:

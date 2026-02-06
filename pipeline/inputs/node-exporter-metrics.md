@@ -15,7 +15,7 @@ This plugin is generally supported on Linux-based operating systems, with macOS 
 
 {% endhint %}
 
-## Configuration
+## Configuration parameters
 
 `scrape_interval` sets the default for all scrapes. To set granular scrape intervals, set the specific interval. For example, `collector.cpu.scrape_interval`. When using a granular scrape interval, if a value greater than `0` is used, it overrides the global default. Otherwise, the global default is used.
 
@@ -30,33 +30,45 @@ For example, if the global interval is set to `5` and an override interval of `6
 This helps with down-sampling when collecting metrics.
 
 | Key | Description | Default |
-|---|---|---|
-| `scrape_interval` | The rate in seconds at which metrics are collected from the host operating system. | `5` |
-| `path.procfs` | The mount point used to collect process information and metrics. | `/proc/` |
-| `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys/` |
+| --- | --- | --- |
 | `collector.cpu.scrape_interval` | The rate in seconds at which `cpu` metrics are collected from the host operating system. | `0` |
 | `collector.cpufreq.scrape_interval` | The rate in seconds at which `cpufreq` metrics are collected from the host operating system. | `0` |
-| `collector.meminfo.scrape_interval` | The rate in seconds at which `meminfo` metrics are collected from the host operating system. | `0` |
 | `collector.diskstats.scrape_interval` | The rate in seconds at which `diskstats` metrics are collected from the host operating system. | `0` |
-| `collector.filesystem.scrape_interval` | The rate in seconds at which `filesystem` metrics are collected from the host operating system. | `0` |
-| `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
-| `collector.stat.scrape_interval` | The rate in seconds at which `stat` metrics are collected from the host operating system. | `0` |
-| `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
-| `collector.loadavg.scrape_interval` | The rate in seconds at which `loadavg` metrics are collected from the host operating system. | `0` |
-| `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
-| `collector.thermal_zone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
 | `collector.filefd.scrape_interval` | The rate in seconds at which `filefd` metrics are collected from the host operating system. | `0` |
+| `collector.filesystem.scrape_interval` | The rate in seconds at which `filesystem` metrics are collected from the host operating system. | `0` |
+| `collector.hwmon.chip-exclude` | Regex of chips to exclude for the `hwmon` collector. | Not set by default. |
+| `collector.hwmon.chip-include` | Regex of chips to include for the `hwmon` collector. | Not set by default. |
+| `collector.hwmon.scrape_interval` | The rate in seconds at which `hwmon` metrics are collected from the host operating system. | `0` |
+| `collector.hwmon.sensor-exclude` | Regex of sensors to exclude for the `hwmon` collector. | Not set by default. |
+| `collector.hwmon.sensor-include` | Regex of sensors to include for the `hwmon` collector. | Not set by default. |
+| `collector.loadavg.scrape_interval` | The rate in seconds at which `loadavg` metrics are collected from the host operating system. | `0` |
+| `collector.meminfo.scrape_interval` | The rate in seconds at which `meminfo` metrics are collected from the host operating system. | `0` |
+| `collector.netdev.scrape_interval` | The rate in seconds at which `netdev` metrics are collected from the host operating system. | `0` |
+| `collector.netstat.scrape_interval` | The rate in seconds at which `netstat` metrics are collected from the host operating system. | `0` |
 | `collector.nvme.scrape_interval` | The rate in seconds at which `nvme` metrics are collected from the host operating system. | `0` |
-| `collector.processes.scrape_interval` | The rate in seconds at which system level `process` metrics are collected from the host operating system. | `0` |
-| `metrics` | Specify which metrics are collected from the host operating system. These metrics depend on `/procfs` or `/sysfs`. The actual values of metrics will be read from `/proc` or `/sys` when needed. `cpu`, `cpufreq`, `meminfo`, `diskstats`, `filesystem`, `stat`, `loadavg`, `vmstat`, `netdev`, and `filefd` depend on `procfs`. `cpufreq` metrics depend on `sysfs`. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,filefd"` |
-| `filesystem.ignore_mount_point_regex` | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)` |
-| `filesystem.ignore_filesystem_type_regex` | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$` |
+| `collector.processes.scrape_interval` | The rate in seconds at which system-level `process` metrics are collected from the host operating system. | `0` |
+| `collector.sockstat.scrape_interval` | The rate in seconds at which `sockstat` metrics are collected from the host operating system. | `0` |
+| `collector.stat.scrape_interval` | The rate in seconds at which `stat` metrics are collected from the host operating system. | `0` |
+| `collector.systemd.scrape_interval` | The rate in seconds at which `systemd` metrics are collected from the host operating system. | `0` |
+| `collector.textfile.path` | Specify path or directory to collect textfile metrics from the host operating system. | Not set by default. |
+| `collector.textfile.scrape_interval` | The rate in seconds at which `textfile` metrics are collected from the host operating system. | `0` |
+| `collector.thermalzone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
+| `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
+| `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
+| `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
 | `diskstats.ignore_device_regex` | Specify the regular expression for the` diskstats` to prevent collection of/ignore. | `^(ram\|loop\|fd\|(h\|s\|v\|xv)d[a-z]\|nvme\\d+n\\d+p)\\d+$` |
+| `filesystem.ignore_filesystem_type_regex` | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$` |
+| `filesystem.ignore_mount_point_regex` | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)` |
+| `metrics` | Specify which metrics are collected from the host operating system. These metrics depend on `/procfs`, `/sysfs`, systemd, or custom files. The actual values of metrics will be read from `/proc`, `/sys`, or systemd as needed. `cpu`, `cpufreq`, `meminfo`, `diskstats`, `filesystem`, `stat`, `loadavg`, `vmstat`, `netdev`, `netstat`, `sockstat`, `filefd`, `nvme`, and `processes` depend on `procfs`. `cpufreq`, `hwmon`, and `thermal_zone` depend on `sysfs`. `systemd` depends on systemd services. `textfile` requires explicit path configuration using `collector.textfile.path`. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,netstat,sockstat,filefd,systemd,nvme,thermal_zone,hwmon"` |
+| `path.procfs` | The mount point used to collect process information and metrics. | `/proc` |
+| `path.rootfs` | The root filesystem mount point. | `/` |
+| `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys` |
+| `scrape_interval` | The rate in seconds at which metrics are collected from the host operating system. | `5` |
+| `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)` |
+| `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
+| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
 | `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | `false` |
 | `systemd_unit_start_time_metrics` | Determines if the collector will include unit start time metrics. | `false` |
-| `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
-| `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
-| `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)"` |
 
 ## Collectors available
 
@@ -71,17 +83,21 @@ The Version column specifies the Fluent Bit version where the collector is avail
 | `diskstats`         | Exposes disk I/O statistics.                                                                     | Linux, macOS     | 1.8     |
 | `filefd`            | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux            | 1.8.2   |
 | `filesystem`        | Exposes filesystem statistics from `/proc/*/mounts`.                                             | Linux            | 2.0.9   |
+| `hwmon`             | Exposes hardware monitoring metrics from `/sys/class/hwmon`.                                     | Linux            | 2.2.0   |
 | `loadavg`           | Exposes load average.                                                                            | Linux, macOS     | 1.8     |
 | `meminfo`           | Exposes memory statistics.                                                                       | Linux, macOS     | 1.8     |
 | `netdev`            | Exposes network interface statistics such as bytes transferred.                                  | Linux, macOS     | 1.8.2   |
-| `stat`              | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux            | 1.8     |
-| `time`              | Exposes the current system time.                                                                 | Linux            | v1.8    |
-| `uname`             | Exposes system information as provided by the `uname` system call.                               | Linux, macOS     | 1.8     |
-| `vmstat`            | Exposes statistics from `/proc/vmstat`.                                                          | Linux            | 1.8.2   |
-| `systemd collector` | Exposes statistics from `systemd`.                                                               | Linux            | 2.1.3   |
-| `thermal_zone`      | Expose thermal statistics from `/sys/class/thermal/thermal_zone/*`                               | Linux            | 2.2.1   |
+| `netstat`           | Exposes network statistics from `/proc/net/netstat`.                                             | Linux            | 2.2.0   |
 | `nvme`              | Exposes `nvme` statistics from `/proc`.                                                          | Linux            | 2.2.0   |
 | `processes`         | Exposes processes statistics from `/proc`.                                                       | Linux            | 2.2.0   |
+| `sockstat`          | Exposes socket statistics from `/proc/net/sockstat`.                                             | Linux            | 2.2.0   |
+| `stat`              | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux            | 1.8     |
+| `systemd`           | Exposes statistics from `systemd`.                                                               | Linux            | 2.1.3   |
+| `textfile`          | Exposes custom metrics from text files. Requires `collector.textfile.path` to be set.            | Linux            | 2.2.0   |
+| `thermal_zone`      | Exposes thermal statistics from `/sys/class/thermal/thermal_zone/*`.                             | Linux            | 2.2.1   |
+| `time`              | Exposes the current system time.                                                                 | Linux            | 1.8     |
+| `uname`             | Exposes system information as provided by the `uname` system call.                               | Linux, macOS     | 1.8     |
+| `vmstat`            | Exposes statistics from `/proc/vmstat`.                                                          | Linux            | 1.8.2   |
 
 ## Threading
 
@@ -209,7 +225,7 @@ If you use dashboards for monitoring, Grafana is one option. The Fluent Bit sour
 
 By default, Grafana dashboard plots the data from the last 24 hours. Change it to **Last 5 minutes** to see the recent data being collected.
 
-#### Stop the Service
+#### Stop the service
 
 ```shell
 docker-compose down

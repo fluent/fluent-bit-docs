@@ -21,7 +21,7 @@ Plugins read the shared `config` file at `$AWS_CONFIG_FILE` (or `$HOME/.aws/conf
 The shared settings evaluate in the following order:
 
 | Setting | File | Description |
-|---|---|---|
+| --- | --- | --- |
 | `credential_process` | `config` | Linux only. See [Sourcing credentials with an external process in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html). |
 | `aws_access_key_id`, `aws_secret_access_key`, `aws_session_token` | `credentials` | Access key ID and secret key to use to authenticate. The session token must be set for temporary credentials. |
 
@@ -33,7 +33,7 @@ Credentials are fetched using a signed web identity token for a Kubernetes servi
 
 ## ECS HTTP credentials endpoint
 
-Credentials are fetched for the ECS task's role. See [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html).
+Credentials are fetched for the ECS task's role. See [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
 
 ## EKS Pod Identity credentials
 

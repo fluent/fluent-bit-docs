@@ -15,7 +15,7 @@ Along with multiline filters, you can enable one of the following built-in Fluen
 
 When using this filter:
 
-- The usage of this filter depends on a previous configuration of a [multiline parser](../../administration/configuring-fluent-bit/multiline-parsing.md) definition.
+- The usage of this filter depends on a previous configuration of a [multiline parser](../../pipeline/parsers/multiline-parsing.md) definition.
 - To concatenate messages read from a log file, it's highly recommended to use the multiline support in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) itself. This is because performing concatenation while reading the log file is more performant. Concatenating messages that were originally one line, but split by Docker or CRI container engines because of their size, is supported in the [Tail plugin](https://docs.fluentbit.io/manual/pipeline/inputs/tail#multiline-support) in combination with the `docker` or `cri` parser. To concatenate application logs like stacktraces on top of that, you can use this multiline filter.
 
 {% hint style="warning" %}
@@ -40,7 +40,7 @@ The plugin supports the following configuration parameters:
 
 | Property | Description |
 | -------- | ----------- |
-| `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../../administration/configuring-fluent-bit/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma. |
+| `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../pipeline/parsers/multiline-parsing.md) to apply to the content. You can specify multiple multiline parsers to detect different formats by separating them with a comma. |
 | `multiline.key_content` | Key name that holds the content to process. A multiline parser definition can specify the `key_content` This option allows for overwriting that value for the purpose of the filter. |
 | `mode` | Mode can be `parser` for regular expression concatenation, or `partial_message` to concatenate split Docker logs. |
 | `buffer` | Enable buffered mode. In buffered mode, the filter can concatenate multiple lines from inputs that ingest records one by one (like Forward), rather than in chunks, re-emitting them into the beginning of the pipeline (with the same tag) using the `in_emitter` instance. With buffer off, this filter won't work with most inputs, except Tail. |
@@ -68,7 +68,7 @@ service:
   flush: 1
   log_level: info
   parsers_file: parsers_multiline.yaml
-    
+
 pipeline:
   inputs:
     - name: tail
@@ -157,10 +157,10 @@ This file defines a multiline parser for the example. A second multiline parser 
   # Regex rules for multiline parsing
   # ---------------------------------
   #
-  # configuration hints:  
+  # configuration hints:
   #
   #  - first state always has the name: start_state
-  #  - every field in the rule must be inside double quotes 
+  #  - every field in the rule must be inside double quotes
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
@@ -314,8 +314,8 @@ Lines that don't match a pattern aren't considered as part of the multiline mess
 
 ## Docker partial message use case
 
-When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16&nbspKB. 
-If your application emits a 100K log line, it will be split into seven partial messages. The docker parser will merge these back to one line. If instead you are using the [Fluentd Docker Log Driver](https://docs.docker.com/config/containers/logging/fluentd/) to send the logs to Fluent Bit, they might look like this:
+When Fluent Bit is consuming logs from a container runtime, such as Docker, these logs will be split when larger than a certain limit, usually 16&nbspKB.
+If your application emits a 100K log line, it will be split into seven partial messages. The docker parser will merge these back to one line. If instead you are using the [Fluentd Docker Log Driver](https://docs.docker.com/engine/logging/drivers/fluentd/) to send the logs to Fluent Bit, they might look like this:
 
 ```text
 {"source": "stdout", "log": "... omitted for brevity...", "partial_message": "true", "partial_id": "dc37eb08b4242c41757d4cd995d983d1cdda4589193755a22fcf47a638317da0", "partial_ordinal": "1", "partial_last": "false", "container_id": "a96998303938eab6087a7f8487ca40350f2c252559bc6047569a0b11b936f0f2", "container_name": "/hopeful_taussig"}]

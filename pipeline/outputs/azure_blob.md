@@ -4,7 +4,7 @@ description: Microsoft certified Azure Storage Blob connector
 
 # Azure Blob
 
-The Azure Blob output plugin allows ingesting your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) service. This connector is designed to use the Append Blob and Block Blob API.
+The Azure Blob output plugin allows ingesting your records into [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/) service. This connector is designed to use the Append Blob and Block Blob API.
 
 The Fluent Bit plugin works with the official Azure Service and can be configured to be used with a service emulator such as [Azurite](https://github.com/Azure/Azurite).
 

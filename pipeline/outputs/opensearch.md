@@ -15,8 +15,8 @@ This plugin supports the following parameters:
 | `Host` | IP address or hostname of the target OpenSearch instance. | `127.0.0.1` |
 | `Port` | TCP port of the target OpenSearch instance. | `9200` |
 | `Path` | OpenSearch accepts new data on HTTP query path `/_bulk`. It's possible to serve OpenSearch behind a reverse proxy on a sub-path. This option defines such path on the Fluent Bit side. It adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| `Buffer_Size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md) specification. | `4KB` |
-| `Pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons is strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
+| `Buffer_Size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512KB` |
+| `Pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
 | `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
 | `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
 | `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ |
@@ -24,7 +24,7 @@ This plugin supports the following parameters:
 | `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ |
 | `AWS_Service_Name` | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | `es` |
 | `AWS_Profile` | AWS profile name. | `default` |
-| `HTTP_User` | Optional. Username credential for access. | _none_ |
+| `HTTP_User` | Optional username credential for HTTP basic authentication. | _none_ |
 | `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ |
 | `Index` | Index name, supports [Record Accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) from 2.0.5 or later. | `fluent-bit` |
 | `Type` | Type name. This option is ignored if `Suppress_Type_Name` is enabled. | `_doc` |
@@ -32,7 +32,7 @@ This plugin supports the following parameters:
 | `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date. For example, if `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
 | `Logstash_Prefix_Key` | When included, the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
 | `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and `Date`. | `-` |
-| `Logstash_DateFormat` | Time format, based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html), to generate the second part of the `Index` name. | `%Y.%m.%d` |
+| `Logstash_DateFormat` | Time format, based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html), to generate the second part of the `Index` name. | `%Y.%m.%d` |
 | `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` |
 | `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
@@ -45,9 +45,9 @@ This plugin supports the following parameters:
 | `Trace_Output` | When enabled, print the OpenSearch API calls to stdout (for diagnostics only). | `Off` |
 | `Trace_Error` | When enabled, print the OpenSearch API calls to stdout when OpenSearch returns an error (for diagnostics only). | `Off` |
 | `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` |
-| `Suppress_Type_Name` | When enabled, mapping types is removed and the `Type` option is ignored. | `Off` |
+| `Suppress_Type_Name` | When enabled, mapping types is removed and the `Type` option is ignored. OpenSearch 2.0 and later no longer support mapping types, so this should be set to `On` for these versions. | `Off` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
-| `Compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ (no compression) |
+| `Compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ (no compression) |
 
 The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq).
 
@@ -66,7 +66,11 @@ The `write_operation` can be any of:
 | `update`           | Updates existing data (based on its id). If no data is found, the op is skipped.                   |
 | `upsert`           | Known as `merge` or `insert` if the data doesn't exist. Updates if the data exists (based on its id). |
 
+{% hint style="info" %}
+
 `Id_Key` or `Generate_ID` is required for `update` and `upsert`.
+
+{% endhint %}
 
 ## Get started
 
@@ -187,7 +191,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-For records that do nor have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
+For records that don't have the field `kubernetes.namespace_name`, the default prefix, `logstash` will be used.
 
 ### Fluent Bit and Amazon OpenSearch Service
 
@@ -235,6 +239,12 @@ pipeline:
 {% endtabs %}
 
 Notice that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is set.
+
+{% hint style="info" %}
+
+For Amazon OpenSearch Service running OpenSearch 2.0 or later, ensure `Suppress_Type_Name` is set to `On`.
+
+{% endhint %}
 
 ### Action/metadata contains an unknown parameter type
 
@@ -321,7 +331,7 @@ For example, in this scenario the logs show that a connection was successfully e
 
 This behavior could be indicative of a hard-to-detect issue with index shard usage in the OpenSearch domain. Although OpenSearch index shards and disk space are related, they're not directly tied to one another. OpenSearch domains are limited to 1,000 index shards per data node, regardless of the size of the nodes. Shard usage isn't proportional to disk usage. An individual index shard can hold anywhere from a few kilobytes to dozens of gigabytes of data.
 
-Depending index creation and shard allocation configuration in the OpenSearch domain, all the available index shards could be used before the data nodes run out of disk space. This can result in exhibition disk-related performance issues (nodes crashing, data corruption, or the dashboard going offline). The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (although logs can still be added to existing indexes).
+Depending on index creation and shard allocation configuration in the OpenSearch domain, all the available index shards could be used before the data nodes run out of disk space. This can result in additional disk-related performance issues (nodes crashing, data corruption, or the dashboard going offline). The primary issue that arises when a domain is out of available index shards is that new indexes can no longer be created (although logs can still be added to existing indexes).
 
 When that happens, the Fluent Bit OpenSearch output can show confusing behavior. For example:
 

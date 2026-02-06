@@ -17,10 +17,10 @@ The plugin supports the following configuration parameters:
 | `account_id` | The account ID for the current EC2 instance. | `false` |
 | `hostname` | The hostname for the current EC2 instance. | `false` |
 | `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
-| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
+| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
 | `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
 | `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
-| `retry_interval_s` |Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
+| `retry_interval_s` | Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
 
 If you run Fluent Bit in a container, you might need to use instance metadata v1. The plugin behaves the same regardless of which version is used.
 

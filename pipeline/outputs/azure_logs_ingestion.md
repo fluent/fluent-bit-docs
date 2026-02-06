@@ -18,22 +18,22 @@ To visualize the basic logs ingestion operation, see the following image:
 
 To get more details about how to set up these components, refer to the following documentation:
 
-- [Azure Logs Ingestion API](https://docs.microsoft.com/en-us/azure/log-analytics/)
+- [Azure Logs Ingestion API](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)
 - [Send data to Azure Monitor Logs with Logs ingestion API (setup DCE, DCR and Log Analytics)](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal)
 
 ## Configuration parameters
 
-| Key           | Description                | Default |
+| Key | Description | Default |
 | :------------ | :------------------------- | :------ |
-| `tenant_id`    | The tenant ID of the Azure Active Directory (AAD) application. | _none_ |
-| `client_id`    | The client ID of the AAD application. | _none_ |
-| `client_secret`| The client secret of the AAD application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). | _none_ |
-| `dce_url`      | Data Collection Endpoint(DCE) URL. | _none_ |
-| `dcr_id`       | Data Collection Rule (DCR) [immutable ID](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr). | _none_ |
-| `table_name`   | The name of the custom log table (include the `_CL` suffix as well if applicable) | _none_ |
-| `time_key`     | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
+| `tenant_id` | The tenant ID of the Azure Active Directory (AAD) application. | _none_ |
+| `client_id` | The client ID of the AAD application. | _none_ |
+| `client_secret` | The client secret of the AAD application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). | _none_ |
+| `dce_url` | Data Collection Endpoint(DCE) URL. | _none_ |
+| `dcr_id` | Data Collection Rule (DCR) [immutable ID](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr). | _none_ |
+| `table_name` | The name of the custom log table (include the `_CL` suffix as well if applicable) | _none_ |
+| `time_key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
 | `time_generated` | Optional. If enabled, will generate a timestamp and append it to JSON. The key name is set by the `time_key` parameter. | `true` |
-| `compress`      | Optional. Enable HTTP payload gzip compression. | `true` |
+| `compress` | Optional. Enable HTTP payload gzip compression. | `true` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started

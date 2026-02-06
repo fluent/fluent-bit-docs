@@ -26,7 +26,7 @@ The following table describes a comparison of different areas of the projects:
 | Performance  | Medium Performance    | High Performance                      |
 | Dependencies | Built as a Ruby Gem, depends on other gems. | Zero dependencies, unless required by a plugin. |
 | Plugins      | Over 1,000 external plugins available. | Over 100 built-in plugins available. |
-| License      | [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) | [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| License      | [Apache License v2.0](https://apache.org/licenses/LICENSE-2.0) | [Apache License v2.0](https://apache.org/licenses/LICENSE-2.0) |
 
 Both [Fluentd](https://www.fluentd.org) and [Fluent Bit](https://fluentbit.io) can work as Aggregators or Forwarders, and can complement each other or be used as standalone solutions.
 

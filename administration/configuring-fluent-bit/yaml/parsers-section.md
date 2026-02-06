@@ -1,23 +1,86 @@
 # Parsers
 
-Parsers enable Fluent Bit components to transform unstructured data into a structured internal representation. You can define YAML parsers either directly in the main configuration file or in separate external files for better organization.
+You can define customer [parsers](../../../pipeline/parsers.md) in the `parsers` section of YAML configuration files.
 
-This page provides a general overview of how to declare parsers.
+{% hint style="info" %}
 
-The main section name is `parsers`, and it lets you define a list of parser configurations. The following example demonstrates how to set up two basic parsers:
+To define custom multiline parsers, use [the `multiline_parsers` section](./multiline-parsers-section.md) of YAML configuration files.
+
+{% endhint %}
+
+## Syntax
+
+To define custom parsers in the `parsers` section of a YAML configuration file, use the following syntax.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 parsers:
-  - name: json
-    format: json
-
-  - name: docker
+  - name: custom_parser1
     format: json
     time_key: time
-    time_format: "%Y-%m-%dT%H:%M:%S.%L"
-    time_keep: true
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+
+  - name: custom_parser2
+    format: regex
+    regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+    types: pid:integer
 ```
 
-You can define multiple parsers sections, either within the main configuration file or distributed across included files.
+{% endtab %}
+{% endtabs %}
 
-For more detailed information on parser options and advanced configurations, refer to the [Configuring Parsers](../../../pipeline/parsers/configuring-parser.md) documentation.
+For information about supported configuration options for custom parsers, see [configuring custom parsers](../../../pipeline/parsers/configuring-parser.md).
+
+## Standalone parsers files
+
+In addition to defining parsers in the `parsers` section of YAML configuration files, you can store parser definitions in standalone files. These standalone files require the same syntax as parsers defined in a standard YAML configuration file.
+
+To add a standalone parsers file to Fluent Bit, use the `parsers_file` parameter in the `service` section of your YAML configuration file.
+
+### Add a standalone parsers file to Fluent Bit
+
+To add a standalone parsers file to Fluent Bit, follow these steps.
+
+1. Define custom parsers in a standalone YAML file. For example, `custom-parsers.yaml` defines two custom parsers:
+
+{% tabs %}
+{% tab title="custom-parsers.yaml" %}
+
+```yaml
+parsers:
+  - name: custom_parser1
+    format: json
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+
+  - name: custom_parser2
+    format: regex
+    regex: '^\<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<pid>[-0-9]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$'
+    time_key: time
+    time_format: '%Y-%m-%dT%H:%M:%S.%L'
+    time_keep: on
+    types: pid:integer
+```
+
+{% endtab %}
+{% endtabs %}
+
+1. Update the `parsers_file` parameter in the `service` section of your YAML configuration file:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  parsers_file: my-parsers.yaml
+```
+
+{% endtab %}
+{% endtabs %}

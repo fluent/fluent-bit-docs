@@ -4,7 +4,7 @@ description: Send logs to Elasticsearch (including Amazon OpenSearch Service)
 
 # Elasticsearch
 
-The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [Elasticsearch](http://www.elastic.co) database. To use this plugin, you must have an operational Elasticsearch service running in your environment.
+The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [Elasticsearch](https://www.elastic.co) database. To use this plugin, you must have an operational Elasticsearch service running in your environment.
 
 ## Configuration parameters
 
@@ -16,7 +16,7 @@ This plugin has the following configuration parameters:
 | `Port` | TCP port of the target Elasticsearch instance | `9200` |
 | `Path` | Elasticsearch accepts new data on HTTP query path `/_bulk`. You can also serve Elasticsearch behind a reverse proxy on a sub-path. Define the path by adding a path prefix in the indexing HTTP POST URI. | Empty string |
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
-| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit/unit-sizes.md). | `512KB` |
+| `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` |
 | `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ |
 | `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
 | `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
@@ -36,7 +36,7 @@ This plugin has the following configuration parameters:
 | `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, e.g: If `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
 | `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
 | `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and date.| `-` |
-| `Logstash_DateFormat` | Time format based on [strftime](http://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` |
+| `Logstash_DateFormat` | Time format based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` |
 | `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` |
 | `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |

@@ -4,9 +4,9 @@ description: Send logs, metrics to Azure Log Analytics
 
 # Azure Log Analytics
 
-The Azure output plugin lets you ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
+The Azure output plugin lets you ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/products/monitor/) service.
 
-For details about how to setup Azure Log Analytics, see the [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/) documentation.
+For details about how to setup Azure Log Analytics, see the [Azure Log Analytics](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview) documentation.
 
 ## Configuration parameters
 

@@ -18,17 +18,17 @@ The debug images use the same binaries so even though they have a shell, there i
 
 The plugin supports the following configuration parameters:
 
-| Key                   | Description                                                                                                                                                                                                                                                                          |
-|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Command`             | The command to execute, passed to [popen](https://man7.org/linux/man-pages/man3/popen.3.html) without any additional escaping or processing. Can include pipelines, redirection, command-substitution, or other information.                                                         |
-| `Parser`              | Specify the name of a parser to interpret the entry as a structured message.                                                                                                                                                                                                         |
-| `Interval_Sec`        | Polling interval (seconds).                                                                                                                                                                                                                                                          |
-| `Interval_NSec`       | Polling interval (nanosecond).                                                                                                                                                                                                                                                       |
-| `Buf_Size`            | Size of the buffer. See [unit sizes](../../administration/configuring-fluent-bit/unit-sizes.md) for allowed values.                                                                                                                                                                  |
-| `Oneshot`             | Only run once at startup. This allows collection of data precedent to Fluent Bit startup (Boolean, default: `false`).                                                                                                                                                                |
-| `Exit_After_Oneshot`  | Exit as soon as the one-shot command exits. This allows the `exec` plugin to be used as a wrapper for another command, sending the target command's output to any Fluent Bit sink, then exits. (Boolean, default: `false`).                                                          |
-| `Propagate_Exit_Code` | When exiting due to `Exit_After_Oneshot`, cause Fluent Bit to exit with the exit code of the command exited by this plugin. Follows [shell conventions for exit code propagation](https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html). (Boolean, default: `false`). |
-| `Threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). Default: `false`.                                                                                                                                                            |
+| Key                   | Description                                                                                                                                                                                                                                                                          | Default |
+|:----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| `buf_size`            | Size of the buffer. See [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values.                                                                                                                                                                  | `4096`  |
+| `command`             | The command to execute, passed to [popen](https://man7.org/linux/man-pages/man3/popen.3.html) without any additional escaping or processing. Can include pipelines, redirection, command-substitution, or other information.                                                         | _none_  |
+| `exit_after_oneshot`  | Exit as soon as the one-shot command exits. This allows the `exec` plugin to be used as a wrapper for another command, sending the target command's output to any Fluent Bit sink, then exits. When enabled, `oneshot` is automatically set to `true`.                               | `false` |
+| `interval_nsec`       | Polling interval (nanoseconds).                                                                                                                                                                                                                                                      | `0`     |
+| `interval_sec`        | Polling interval (seconds).                                                                                                                                                                                                                                                          | `1`     |
+| `oneshot`             | Only run once at startup. This allows collection of data before to Fluent Bit startup.                                                                                                                                                                                            | `false` |
+| `parser`              | Specify the name of a parser to interpret the entry as a structured message.                                                                                                                                                                                                         | _none_  |
+| `propagate_exit_code` | Cause Fluent Bit to exit with the exit code of the command exited by this plugin. Follows [shell conventions for exit code propagation](https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html). Requires `exit_after_oneshot=true`.                                    | `false` |
+| `threaded`            | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                              | `false` |
 
 ## Get started
 
@@ -102,7 +102,7 @@ pipeline:
 
 ## Use as a command wrapper
 
-To use Fluent Bit with the `exec` plugin to wrap another command, use the `Exit_After_Oneshot` and `Propagate_Exit_Code` options:
+To use Fluent Bit with the `exec` plugin to wrap another command, use the `exit_after_oneshot` and `propagate_exit_code` options:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -165,7 +165,7 @@ Translation of command exit codes to Fluent Bit exit code follows [the usual she
 
 ### Parsing command output
 
-By default, the `exec` plugin emits one message per command output line, with a single field `exec` containing the full message. Use the `Parser` directive to specify the name of a parser configuration to use to process the command input.
+By default, the `exec` plugin emits one message per command output line, with a single field `exec` containing the full message. Use the `parser` option to specify the name of a parser configuration to use to process the command input.
 
 ### Security concerns
 
