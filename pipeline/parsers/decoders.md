@@ -20,12 +20,43 @@ The original message is handled as an escaped string. Fluent Bit will use the or
 
 Decoders are a built-in feature of parsers in Fluent Bit. Each parser definition can optionally set one or more decoders. Select from one of these decoder types:
 
-- `Decode_Field`: If the content can be decoded in a structured message, append
+- `decode_field`: If the content can be decoded in a structured message, append
   the structured message (keys and values) to the original log message.
-- `Decode_Field_As`: Any decoded content (unstructured or structured) will be
+- `decode_field_as`: Any decoded content (unstructured or structured) will be
   replaced in the same key/value, and no extra keys are added.
 
-For example, the predefined Docker parser has the following definition:
+Each line in the parser with a key `decode_field` instructs the parser to apply a specific decoder on a given field. Optionally, it offers the option to take an extra action if the decoder doesn't succeed.
+
+## Configuration parameters
+
+### Decoder options
+
+| Name | Description |
+| ---- | ----------- |
+| `escaped`      | Decode an escaped string. |
+| `escaped_utf8` | Decode a UTF-8 escaped string. |
+| `json`         | Handle the field content as a JSON map. If the decoder finds a JSON map, it replaces the content with a structured map. |
+| `mysql_quoted` | Decode a MySQL-quoted string. |
+
+### Optional actions
+
+If a decoder fails to decode the field, or if you want to try another decoder, you can define an optional action. Available actions are:
+
+| Name | Description |
+| -----| ----------- |
+| `do_next` | If the decoder succeeded or failed, apply the next decoder in the list for the same field. |
+| `try_next` | If the decoder failed, apply the next decoder in the list for the same field. |
+
+Actions are affected by some restrictions:
+
+- `decode_field_as`: If successful, another decoder of the same type and the same field can be applied only if the data continues being an unstructured message (raw text).
+- `decode_field`: If successful, can be applied only once for the same field. `decode_field` is intended to decode a structured message.
+
+## Examples
+
+### Docker parser
+
+The predefined Docker parser has the following definition:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -60,33 +91,7 @@ parsers:
 {% endtab %}
 {% endtabs %}
 
-Each line in the parser with a key `Decode_Field` instructs the parser to apply a specific decoder on a given field. Optionally, it offers the option to take an extra action if the decoder doesn't succeed.
-
-### Decoder options
-
-| Name           | Description |
-| -------------- | ----------- |
-| `json`         | Handle the field content as a JSON map. If the decoder finds a JSON map, it replaces the content with a structured map. |
-| `escaped`      | Decode an escaped string. |
-| `escaped_utf8` | Decode a UTF8 escaped string. |
-
-### Optional actions
-
-If a decoder fails to decode the field, or if you want to try another decoder, you can define an optional action. Available actions are:
-
-| Name | Description |
-| -----| ----------- |
-| `try_next` | If the decoder failed, apply the next decoder in the list for the same field. |
-| `do_next` | If the decoder succeeded or failed, apply the next decoder in the list for the same field. |
-
-Actions are affected by some restrictions:
-
-- `Decode_Field_As`: If successful, another decoder of the same type and the same field can be applied only if the data continues being an unstructured message (raw text).
-- `Decode_Field`: If successful, can be applied only once for the same field. `Decode_Field` is intended to decode a structured message.
-
-### Examples
-
-#### `escaped_utf8`
+### `escaped_utf8`
 
 Example input from `/path/to/log.log`:
 
@@ -172,7 +177,7 @@ parsers:
   Format      json
   Time_Key    time
   Time_Format %Y-%m-%dT%H:%M:%S %z
-  Decode_Field_as escaped_utf8 log
+  Decode_Field_As escaped_utf8 log
 ```
 
 {% endtab %}
