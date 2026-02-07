@@ -8,17 +8,19 @@ Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regul
 
 This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
-{% end hint %}
+{% endhint %}
 
 Setting the format to regular expressions requires a `regex` configuration key.
 
+For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
+
 ## Configuration parameters
 
-The `regex` parser supports the following configuration parameters:
+The `regex` parser supports the following format-specific configuration parameter:
 
-| Key | Description | Default Value |
-| --- | ----------- | ------------- |
-| `Skip_Empty_Values` | If enabled, the parser ignores empty value of the record. | `True` |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `skip_empty_values` | If enabled, the parser ignores empty values of the record. | `true` |
 
 Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression library in Ruby mode.
 
