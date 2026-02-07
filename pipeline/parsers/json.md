@@ -2,6 +2,8 @@
 
 Use the _JSON_ parser format to create custom parsers compatible with JSON data. This format transforms JSON logs by converting them to internal binary representations.
 
+For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
+
 For example, the default parsers configuration file includes a parser for parsing Docker logs (when the Tail input plugin is used):
 
 {% tabs %}

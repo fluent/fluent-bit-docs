@@ -12,21 +12,22 @@ To define a custom parser, add an entry to the [`parsers` section](../../adminis
 
 Custom parsers support the following configuration parameters:
 
-| Key | Description |
-| --- | ----------- |
-| `Name` | Sets the name of your parser. |
-| `Format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), or [`logfmt`](logfmt.md). |
-| `Regex` | Required for parsers with the `regex` format. Specifies the Ruby regular expression for parsing and composing the structured message. |
-| `Time_Key` | If the log entry provides a field with a timestamp, this option specifies the name of that field. |
-| `Time_Format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [`strptime` documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. |
-| `Time_Offset` | Specifies a fixed UTC time offset (such as `-0600` or `+0200`) for local dates. |
-| `Time_Keep` | If enabled, when a time key is recognized and parsed, the parser will keep the original time key. If disabled, the parser will drop the original time field. |
-| `Time_System_timezone` | If there is no time zone (`%z`) specified in the given `Time_Format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). |
-| `Types` | Specifies the data type of parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string` (default), `integer`, `bool`, `float`, `hex`. The option is supported by `ltsv`, `logfmt` and `regex`. |
-| `Decode_Field` | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. |
-| `Decode_Field_As` | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`. The syntax is: `Decode_Field_As <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. |
-| `Skip_Empty_Values` | Specifies a boolean which determines if the parser should skip empty values. The default is `true`. |
-| `Time_Strict` | The default value (`true`) tells the parser to be strict with the expected time format. With this option set to false, the parser will be permissive with the format of the time. You can use this when the format expects time fraction but the time to be parsed doesn't include it.  |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `decode_field` | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`, `mysql_quoted`. The syntax is: `decode_field <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. | _none_ |
+| `decode_field_as` | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`, `mysql_quoted`. The syntax is: `decode_field_as <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. | _none_ |
+| `format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), or [`logfmt`](logfmt.md). | _none_ |
+| `logfmt_no_bare_keys` | If enabled, the `logfmt` parser rejects log entries where keys don't have associated values (bare keys). Only applies to the `logfmt` format. | `false` |
+| `name` | Sets the name of your parser. | _none_ |
+| `regex` | Required for parsers with the `regex` format. Specifies the Ruby regular expression for parsing and composing the structured message. | _none_ |
+| `skip_empty_values` | Specifies a boolean which determines if the parser should skip empty values. | `true` |
+| `time_format` | Specifies the format of the time field so it can be recognized and analyzed properly. Fluent Bit uses `strptime(3)` to parse time. See the [`strptime` documentation](https://linux.die.net/man/3/strptime) for available modifiers. The `%L` field descriptor is supported for fractional seconds. | _none_ |
+| `time_keep` | If enabled, when a time key is recognized and parsed, the parser will keep the original time key. If disabled, the parser will drop the original time field. | `false` |
+| `time_key` | If the log entry provides a field with a timestamp, this option specifies the name of that field. | _none_ |
+| `time_offset` | Specifies a fixed UTC time offset (such as `-0600` or `+0200`) for local dates. | _none_ |
+| `time_strict` | If `true`, the parser is strict with the expected time format. If `false`, the parser is permissive with the format of the time. Set to `false` when the format expects a time fraction but the time to be parsed doesn't include it. | `true` |
+| `time_system_timezone` | If there is no time zone (`%z`) specified in the given `time_format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). | `false` |
+| `types` | Specifies the data type of a parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string` (default), `integer`, `bool`, `float`, `hex`. | _none_ |
 
 ### Time resolution and fractional seconds
 

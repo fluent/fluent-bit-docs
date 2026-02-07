@@ -40,6 +40,8 @@ To define a custom multiline parser, add an entry to the [`multiline_parsers` se
 | -------- | ----------- | ------- |
 | `flush_timeout` | Timeout in milliseconds to flush a non-terminated multiline buffer. | `4s` |
 | `key_content`   | For an incoming structured message, specify the key that contains the data that should be processed by the regular expression and possibly concatenated. | _none_ |
+| `key_group`     | For an incoming structured message, specify the key used as a grouping identifier. Lines with different values for this key are treated as separate streams. For example, Docker and CRI logs use the `stream` field to distinguish `stdout` from `stderr`. | _none_ |
+| `key_pattern`   | For an incoming structured message, specify an alternative key to apply matching rules against, separate from `key_content`. Use to match against one field while concatenating content from another. | _none_ |
 | `match_string`  | String to match against for `endswith` or `equal` types. Not used for `regex` type. | _none_ |
 | `name` | Specify a unique name for the multiline parser definition. A good practice is to prefix the name with the word `multiline_` to avoid confusion with normal parser definitions. | _none_ |
 | `negate`        | Negate the pattern matching result. When set to `true`, a non-matching line is treated as matching. | `false` |
