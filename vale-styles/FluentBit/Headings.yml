@@ -142,7 +142,9 @@ exceptions:
   - SignalFx
   - SIMD
   - Slack
+  - SMB
   - SQL
+  - Tailing files from SMB/Samba
   - SSL
   - SSM
   - StatsD
