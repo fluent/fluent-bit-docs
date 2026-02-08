@@ -149,6 +149,7 @@
   * [Grep](pipeline/filters/grep.md)
   * [Kubernetes](pipeline/filters/kubernetes.md)
   * [Logs to metrics](pipeline/filters/log_to_metrics.md)
+  * [Lookup](pipeline/filters/lookup.md)
   * [Lua](pipeline/filters/lua.md)
   * [Modify](pipeline/filters/modify.md)
   * [Multiline](pipeline/filters/multiline-stacktrace.md)
