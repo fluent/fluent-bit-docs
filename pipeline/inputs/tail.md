@@ -24,10 +24,12 @@ The plugin supports the following configuration parameters:
 | `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_path *.gz,*.zip`. | _none_ |
 | `exit_on_eof` | When reading a file, exit as soon as it reaches the end of the file. Used for bulk load and tests. | `false` |
 | `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `true` |
+| `fstat_interval_nsec` | Set the interval for checking file status (`fstat`). This controls how often file metadata is checked, which is important for cloud storage backends that are sensitive to IOPS (Input/Output Operations Per Second). The value accepts time units (for example, `1s`, `500ms`, `1000000000ns`) and will be converted to nanoseconds internally. | `250ms`   |
 | `generic.encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
 | `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
 | `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
 | `inotify_watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
+| `keep_file_handle`    | Keep file handles open while tailing files. If `false`, file handles are closed after reading, which is recommended for SMB/Samba storage backends that prevent file deletion when handles are open. However, if `false`, log rotation doesn't work because that requires an active handle to determine where the original file was rotated to. Rotation will be detected as a truncation, so some logs might be lost. | `true`    |
 | `key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
 | `mem_buf_limit` | Set a memory limit that the Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed, it resumes. | _none_ |
 | `offset_key` | If enabled, Fluent Bit appends the offset of the current monitored file as part of the record. The value assigned becomes the key in the map. | _none_ |
@@ -483,6 +485,38 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Tailing files from SMB/Samba
+
+When tailing files from SMB/Samba shares on POSIX systems or Kubernetes CSI volume mounts, file handles can prevent file deletion. Although the `FILE_SHARE_DELETE` flag is supported on Windows, it's not available on POSIX systems or when using intermediate abstractions such as Kubernetes CSI volume mounts. Set `keep_file_handle` to `false` to allow file deletion while files are being tailed. However, keep in mind that this disables log rotation detection.
+
+Example configuration:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /mnt/samba/logs/*.log
+      keep_file_handle: false
+      fstat_interval_nsec: 1s
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                tail
+  Path                /mnt/samba/logs/*.log
+  Keep_File_Handle    false
+  Fstat_Interval_Nsec 1s
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Character encoding conversion
 

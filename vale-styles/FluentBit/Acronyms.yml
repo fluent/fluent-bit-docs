@@ -30,6 +30,7 @@ exceptions:
   - CPU
   - CRI
   - CRD
+  - CSI
   - CSS
   - CSV
   - DCO
@@ -122,6 +123,7 @@ exceptions:
   - SIMD
   - SLA
   - SLES
+  - SMB
   - SNI
   - SQL
   - SSH
