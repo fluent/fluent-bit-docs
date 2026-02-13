@@ -188,50 +188,61 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 
   The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can either successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
 
-| Metric Name                                | Labels                                                                  | Description | Type    | Unit    |
-|--------------------------------------------|-------------------------------------------------------------------------|-------------|---------|---------|
-| `fluentbit_input_bytes_total`            | name: the name or alias for the input instance  | The number of bytes of log records that this input instance has ingested successfully. | counter | bytes   |
-| `fluentbit_input_ingestion_paused`       | name: the name or alias for the input instance  | Indicates whether the input instance ingestion is currently paused (1) or not (0). | gauge   | boolean |
-| `fluentbit_input_records_total`          | name: the name or alias for the input instance  | The number of log records this input ingested successfully. | counter | records |
-| `fluentbit_filter_bytes_total`           | name: the name or alias for the filter instance | The number of bytes of log records that this filter instance has ingested successfully. | counter | bytes   |
-| `fluentbit_filter_records_total`         | name: the name or alias for the filter instance | The number of log records this filter has ingested successfully. | counter | records |
-| `fluentbit_filter_added_records_total`   | name: the name or alias for the filter instance | The number of log records added by the filter into the data pipeline. | counter | records |
-| `fluentbit_filter_drop_records_total`    | name: the name or alias for the filter instance | The number of log records dropped by the filter and removed from the data pipeline. | counter | records |
+| Metric Name | Labels | Description | Type | Unit |
+| ----------- | ------ | ----------- | ---- | ---- |
+| `fluentbit_build_info` | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The value is the Unix epoch timestamp of the configuration context initialization. | gauge | seconds |
+| `fluentbit_filter_added_records_total` | name: the name or alias for the filter instance | The number of log records added by the filter into the data pipeline. | counter | records |
+| `fluentbit_filter_bytes_total` | name: the name or alias for the filter instance | The number of bytes of log records that this filter instance has ingested successfully. | counter | bytes |
+| `fluentbit_filter_drop_records_total` | name: the name or alias for the filter instance | The number of log records dropped by the filter and removed from the data pipeline. | counter | records |
+| `fluentbit_filter_records_total` | name: the name or alias for the filter instance | The number of log records this filter has ingested successfully. | counter | records |
+| `fluentbit_hot_reloaded_times` | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | gauge | times |
+| `fluentbit_input_bytes_total` | name: the name or alias for the input instance | The number of bytes of log records that this input instance has ingested successfully. | counter | bytes |
+| `fluentbit_input_files_closed_total` | name: the name or alias for the input instance | The total number of closed files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
+| `fluentbit_input_files_opened_total` | name: the name or alias for the input instance | The total number of opened files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
+| `fluentbit_input_files_rotated_total` | name: the name or alias for the input instance | The total number of rotated files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
+| `fluentbit_input_ingestion_paused` | name: the name or alias for the input instance | Indicates whether the input instance ingestion is currently paused (1) or not (0). | gauge | boolean |
+| `fluentbit_input_long_line_skipped_total` | name: the name or alias for the input instance | The total number of skipped occurrences for long lines. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin when `skip_long_lines` is enabled. | counter | occurrences |
+| `fluentbit_input_long_line_truncated_total` | name: the name or alias for the input instance | The total number of truncated occurrences for long lines. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin when `truncate_long_lines` is enabled. | counter | occurrences |
+| `fluentbit_input_memrb_dropped_bytes` | name: the name or alias for the input instance | The number of bytes dropped by the memory ring buffer (`memrb`) storage type when the buffer is full. Only available for input plugins with `storage.type` set to `memrb`. | counter | bytes |
+| `fluentbit_input_memrb_dropped_chunks` | name: the name or alias for the input instance | The number of chunks dropped by the memory ring buffer (`memrb`) storage type when the buffer is full. Only available for input plugins with `storage.type` set to `memrb`. | counter | chunks |
+| `fluentbit_input_multiline_truncated_total` | name: the name or alias for the input instance | The total number of truncated occurrences for multiline messages. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin when `multiline.parser` is configured. | counter | occurrences |
+| `fluentbit_input_records_total` | name: the name or alias for the input instance | The number of log records this input ingested successfully. | counter | records |
+| `fluentbit_input_ring_buffer_retries_total` | name: the name or alias for the input instance | The number of ring buffer write retries. | counter | retries |
+| `fluentbit_input_ring_buffer_retry_failures_total` | name: the name or alias for the input instance | The number of ring buffer write retry failures. | counter | failures |
+| `fluentbit_input_ring_buffer_writes_total` | name: the name or alias for the input instance | The number of ring buffer write operations. | counter | writes |
+| `fluentbit_output_chunk_available_capacity_percent` | name: the name or alias for the output instance | The available chunk capacity for this output as a percentage. | gauge | percent |
 | `fluentbit_output_dropped_records_total` | name: the name or alias for the output instance | The number of log records dropped by the output. These records hit an unrecoverable error or retries expired for their chunk. | counter | records |
-| `fluentbit_output_errors_total`          | name: the name or alias for the output instance | The number of chunks with an error that's either unrecoverable or unable to retry. This metric represents the number of times a chunk failed, and doesn't correspond with the number of error messages visible in the Fluent Bit log output. | counter | chunks  |
-| `fluentbit_output_proc_bytes_total`      | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record isn't sent due to some error, it doesn't count towards this metric. | counter | bytes   |
-| `fluentbit_output_proc_records_total`    | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record isn't sent successfully, it doesn't count towards this metric. | counter | records |
+| `fluentbit_output_errors_total` | name: the name or alias for the output instance | The number of chunks with an error that's either unrecoverable or unable to retry. This metric represents the number of times a chunk failed, and doesn't correspond with the number of error messages visible in the Fluent Bit log output. | counter | chunks |
+| `fluentbit_output_latency_seconds` | input: the name of the input plugin instance, output: the name of the output plugin instance | End-to-end latency from chunk creation to successful delivery. Provides observability into chunk-level pipeline performance. | histogram | seconds |
+| `fluentbit_output_proc_bytes_total` | name: the name or alias for the output instance | The number of bytes of log records that this output instance sent successfully. This metric represents the total byte size of all unique chunks sent by this output. If a record isn't sent due to some error, it doesn't count towards this metric. | counter | bytes |
+| `fluentbit_output_proc_records_total` | name: the name or alias for the output instance | The number of log records that this output instance sent successfully. This metric represents the total record count of all unique chunks sent by this output. If a record isn't sent successfully, it doesn't count towards this metric. | counter | records |
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
-| `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
-| `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
-| `fluentbit_output_latency_seconds`      | input: the name of the input plugin instance, output: the name of the output plugin instance | End-to-end latency from chunk creation to successful delivery. Provides observability into chunk-level pipeline performance. | histogram | seconds |
-| `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
-| `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
-| `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
-| `fluentbit_hot_reloaded_times`          | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | gauge   | seconds |
+| `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks |
+| `fluentbit_output_retries_total` | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks |
+| `fluentbit_process_start_time_seconds` | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge | seconds |
+| `fluentbit_uptime` | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 
 #### Storage layer
 
 The following are detailed descriptions for the metrics collected by the storage layer.
 
-| Metric Name                                 | Labels                       | Description   | Type    | Unit    |
-|---------------------------------------------|------------------------------|---------------|---------|---------|
-| `fluentbit_input_chunks.storage_chunks`     | None                         | The total number of chunks of records that Fluent Bit is currently buffering. | gauge | chunks |
-| `fluentbit_storage_mem_chunk`               | None                         | The total number of chunks that are currently buffered in memory. Chunks can be both in memory and on the file system at the same time. | gauge | chunks |
-| `fluentbit_storage_fs_chunks`               | None                         | The total number of chunks saved to the file system. | gauge | chunks |
-| `fluentbit_storage_fs_chunks_up`            | None                         | The count of chunks that are both in file system and in memory. | gauge | chunks |
-| `fluentbit_storage_fs_chunks_down`          | None                         | The count of chunks that are only in the file system. | gauge | chunks |
-| `fluentbit_storage_fs_chunks_busy`          | None                         | The total number of chunks are in a busy state. | gauge | chunks |
-| `fluentbit_storage_fs_chunks_busy_bytes`    | None                         | The total bytes of chunks are in a busy state. | gauge | bytes |
-| `fluentbit_input_storage_overlimit`         | name: the name or alias for the input instance  | Indicates whether the input instance exceeded its configured `Mem_Buf_Limit.` | gauge | boolean |
-| `fluentbit_input_storage_memory_bytes`      | name: the name or alias for the input instance  | The size of memory that this input is consuming to buffer logs in chunks. | gauge | bytes |
-| `fluentbit_input_storage_chunks`            | name: the name or alias for the input instance  | The current total number of chunks owned by this input instance. | gauge | chunks |
-| `fluentbit_input_storage_chunks_up`         | name: the name or alias for the input instance  | The current number of chunks that are in memory for this input. If file system storage is enabled, chunks that are "up" are also stored in the filesystem layer. | gauge | chunks |
-| `fluentbit_input_storage_chunks_down`       | name: the name or alias for the input instance  | The current number of chunks that are "down" in the filesystem for this input. | gauge | chunks |
-| `fluentbit_input_storage_chunks_busy`       | name: the name or alias for the input instance  | Chunks are that are being processed or sent by outputs and aren't eligible to have new data appended. | gauge | chunks |
-| `fluentbit_input_storage_chunks_busy_bytes` | name: the name or alias for the input instance  | The sum of the byte size of each chunk which is currently marked as busy. | gauge | bytes |
-| `fluentbit_output_upstream_total_connections` | name: the name or alias for the output instance | The sum of the connection count of each output plugins. | gauge | bytes |
-| `fluentbit_output_upstream_busy_connections` | name: the name or alias for the output instance | The sum of the connection count in a busy state of each output plugins.                                                                                                  | gauge   | bytes   |
+| Metric Name | Labels | Description | Type | Unit |
+| ----------- | ------ | ----------- | ---- | ---- |
+| `fluentbit_input_storage_chunks` | name: the name or alias for the input instance | The current total number of chunks owned by this input instance. | gauge | chunks |
+| `fluentbit_input_storage_chunks_busy` | name: the name or alias for the input instance | Chunks that are being processed or sent by outputs and aren't eligible to have new data appended. | gauge | chunks |
+| `fluentbit_input_storage_chunks_busy_bytes` | name: the name or alias for the input instance | The sum of the byte size of each chunk which is currently marked as busy. | gauge | bytes |
+| `fluentbit_input_storage_chunks_down` | name: the name or alias for the input instance | The current number of chunks that are "down" in the filesystem for this input. | gauge | chunks |
+| `fluentbit_input_storage_chunks_up` | name: the name or alias for the input instance | The current number of chunks that are in memory for this input. If file system storage is enabled, chunks that are "up" are also stored in the filesystem layer. | gauge | chunks |
+| `fluentbit_input_storage_memory_bytes` | name: the name or alias for the input instance | The size of memory that this input is consuming to buffer logs in chunks. | gauge | bytes |
+| `fluentbit_input_storage_overlimit` | name: the name or alias for the input instance | Indicates whether the input instance exceeded its configured `Mem_Buf_Limit`. | gauge | boolean |
+| `fluentbit_output_upstream_busy_connections` | name: the name or alias for the output instance | The sum of the connection count in a busy state of each output plugin. | gauge | connections |
+| `fluentbit_output_upstream_total_connections` | name: the name or alias for the output instance | The sum of the connection count of each output plugin. | gauge | connections |
+| `fluentbit_storage_fs_chunks` | None | The total number of chunks saved to the file system. | gauge | chunks |
+| `fluentbit_storage_fs_chunks_busy` | None | The total number of chunks that are in a busy state. | gauge | chunks |
+| `fluentbit_storage_fs_chunks_busy_bytes` | None | The total bytes of chunks that are in a busy state. | gauge | bytes |
+| `fluentbit_storage_fs_chunks_down` | None | The count of chunks that are only in the file system. | gauge | chunks |
+| `fluentbit_storage_fs_chunks_up` | None | The count of chunks that are both in file system and in memory. | gauge | chunks |
+| `fluentbit_storage_mem_chunks` | None | The total number of chunks that are currently buffered in memory. Chunks can be both in memory and on the file system at the same time. | gauge | chunks |
 
 ### Output latency metric
 
@@ -250,7 +261,7 @@ These boundaries provide:
 - High resolution around 1&nbsp;s latency: Captures normal operation near the default flush interval.
 - Small backpressure detection: Identifies minor delays in the 1-2.5&nbsp;s range.
 - Bottleneck identification: Detects retry cycles, network stalls, or plugin bottlenecks in higher ranges.
-- Complete coverage**: The `+Inf` bucket ensures all latencies are captured.
+- **Complete coverage**: The `+Inf` bucket ensures all latencies are captured.
 
 #### Example output
 
