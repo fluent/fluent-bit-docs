@@ -10,7 +10,7 @@ The Fluentd and Fluent Bit projects are both:
 
 - Licensed under the terms of Apache License v2.0.
 - Graduated hosted projects by the [Cloud Native Computing Foundation (CNCF)](https://cncf.io).
-- Production-grade solutions, that are deployed millions of times every single day.
+- Production-grade solutions, with Fluent Bit deployed over 15 billion times globally.
 - Vendor neutral and community driven.
 - Widely adopted by the industry, being trusted by major companies like Amazon, Microsoft, Google, and hundreds of others.
 
@@ -22,7 +22,7 @@ The following table describes a comparison of different areas of the projects:
 | ------------ | --------------------- | --------------------- |
 | Scope        | Containers / Servers  | Embedded Linux / Containers / Servers |
 | Language     | C and Ruby            | C                                     |
-| Memory       | Greater than 60&nbsp;MB | Approximately 1&nbsp;MB |
+| Memory       | Greater than 60&nbsp;MB | Approximately 450&nbsp;KB |
 | Performance  | Medium Performance    | High Performance                      |
 | Dependencies | Built as a Ruby Gem, depends on other gems. | Zero dependencies, unless required by a plugin. |
 | Plugins      | Over 1,000 external plugins available. | Over 100 built-in plugins available. |
