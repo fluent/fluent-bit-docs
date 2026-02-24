@@ -1,5 +1,5 @@
 ---
-description: Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
+description: Fluent Bit is a CNCF graduated project under the umbrella of Fluentd
 ---
 
 # What is Fluent Bit?
