@@ -114,7 +114,7 @@ After you run the configuration file, you will be able to query the data using t
 
 ![Azure Blob](../../.gitbook/assets/azure_blob.png)
 
-### Configuration for Managed Identity
+### Configuration for managed identity
 
 Azure Managed Identity lets your application authenticate to Azure Blob Storage without managing credentials. This works on Azure VMs, Azure Container Instances, Azure App Service, and other Azure compute services with managed identity support.
 
@@ -232,7 +232,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Configuration for Workload Identity
+### Configuration for workload identity
 
 Azure Workload Identity lets pods in Azure Kubernetes Service (AKS) authenticate to Azure Blob Storage using a Kubernetes service account federated with Azure AD.
 
@@ -292,7 +292,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The `workload_identity_token_file` option can be set to override the default token file path if your AKS cluster mounts the projected service account token at a non-standard location.
+The `workload_identity_token_file` option can be set to override the default token path if your AKS cluster mounts the projected service account token at a non-standard location.
 
 ### Configuring and using Azure Emulator: Azurite
 
