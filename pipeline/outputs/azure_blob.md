@@ -72,7 +72,7 @@ pipeline:
       tag: var.log.containers.app-default-96cbdef2340.log
 
   outputs:
-    - name: azure_blog
+    - name: azure_blob
       match: "*"
       account_name: YOUR_ACCOUNT_NAME
       shared_key: YOUR_SHARED_KEY
@@ -339,7 +339,7 @@ pipeline:
       tag: var.log.containers.app-default-96cbdef2340.log
 
   outputs:
-    - name: azure_blog
+    - name: azure_blob
       match: "*"
       account_name: INSERT_ACCOUNT_NAME
       shared_key: INSERT_SHARED_KEY
