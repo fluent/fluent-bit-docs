@@ -7,12 +7,12 @@ The _Treasure Data_ (TD) output plugin lets you flush your records into the [Tre
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
-|:--- |:----------- |:--------|
-| `API` | The Treasure Data API key. To obtain it, log into the [Console](https://console.treasuredata.com) and in the API keys box, copy the API key hash. | _none_ |
+| --- | ----------- | ------- |
+| `API` | The Treasure Data API key. To obtain it, log into the [Console](https://console.us01.treasuredata.com/users/sign_in) and in the API keys box, copy the API key hash. | _none_ |
 | `Database` | Specify the name of your target database. | _none_ |
 | `Table` | Specify the name of your target table where the records will be stored. | _none_ |
 | `Region` | Set the service region. Allowed values: `US`, `JP`. | `US` |
-| `Workers`  | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 
