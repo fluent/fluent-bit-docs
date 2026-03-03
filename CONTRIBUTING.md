@@ -117,11 +117,11 @@ This repository runs linters as GitHub Actions for each pull request. If a linte
 <details>
 <summary>:mag: Examples: linter results</summary>
 
-![An example of a warning-level Vale result.](/.gitbook/assets/vale-example-warning.png)
+![An example of a warning-level Vale result.](./.gitbook/assets/vale-example-warning.png)
 
-![An example of an error-level Vale result.](/.gitbook/assets/vale-example-error.png)
+![An example of an error-level Vale result.](./.gitbook/assets/vale-example-error.png)
 
-![An example of a Markdownlint result.](/.gitbook/assets/markdownlint-example.png)
+![An example of a Markdownlint result.](./.gitbook/assets/markdownlint-example.png)
 
 </details>
 

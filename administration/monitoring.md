@@ -471,7 +471,7 @@ You can create Grafana dashboards and alerts using Fluent Bit exposed Prometheus
 
 The provided [example dashboard](https://github.com/fluent/fluent-bit-docs/blob/master/monitoring/dashboard.json) is heavily inspired by [Banzai Cloud](https://github.com/banzaicloud)'s [logging operator dashboard](https://grafana.com/grafana/dashboards/7752-logging-dashboard) with a few key differences, such as the use of the `instance` label, stacked graphs, and a focus on Fluent Bit metrics. See [this blog post](https://www.robustperception.io/controlling-the-instance-label/) for more information.
 
-![dashboard](/.gitbook/assets/dashboard.png)
+![dashboard](../.gitbook/assets/dashboard.png)
 
 ### Alerts
 

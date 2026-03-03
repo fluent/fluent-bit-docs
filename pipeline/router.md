@@ -259,7 +259,7 @@ Each rule in the `condition.rules` array must include:
 
 | Parameter | Description |
 | --- | --- |
-| `field` | The field within your logs to evaluate. Uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
+| `field` | The field within your logs to evaluate. Uses [record accessor syntax](../administration/configuring-fluent-bit/classic-mode/record-accessor.md). |
 | `op` | The comparison operator. |
 | `value` | This is the value to compare against. It can be a single value or an array for `in` and `not_in` operators. |
 | `context` | Optional. Specifies where to look for the field. See the Context types section. Defaults to `body`. |
@@ -703,7 +703,7 @@ To get the most benefit from label-based matching:
 Fluent Bit provides comprehensive routing metrics to help you monitor routing performance and identify issues such as dropped records or unmatched logs. These metrics are available through the built-in HTTP server's `/metrics` endpoint.
 
 {% hint style="info" %}
-Routing metrics are available in Fluent Bit version 4.2 and greater. To access these metrics, enable the [HTTP server](/administration/monitoring.md) in your configuration.
+Routing metrics are available in Fluent Bit version 4.2 and greater. To access these metrics, enable the [HTTP server](../administration/monitoring.md) in your configuration.
 {% endhint %}
 
 ### Available metrics
