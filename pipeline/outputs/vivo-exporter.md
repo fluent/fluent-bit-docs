@@ -1,6 +1,6 @@
 # Vivo Exporter
 
-Vivo Exporter is an output plugin that exposes logs, metrics, and traces through an HTTP endpoint. This plugin aims to be used in conjunction with [Vivo project](https://github.com/chronosphereio/calyptia-vivo) .
+Vivo Exporter is an output plugin that exposes logs, metrics, and traces through an HTTP endpoint. This plugin aims to be used in conjunction with [Vivo project](https://github.com/chronosphereio/calyptia-vivo).
 
 ## Configuration parameters
 
