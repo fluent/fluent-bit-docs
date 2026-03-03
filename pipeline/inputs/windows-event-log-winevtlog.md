@@ -76,7 +76,7 @@ The default value of `Read_Limit_Per_Cycle` is `512KiB`.
 #### Query languages for `Event_Query` parameter
 
 The `Event_Query` parameter can be used to specify the XML query for filtering Windows EventLog during collection.
-The supported query types are [`XPath`](https://developer.mozilla.org/en-US/docs/Web/XPath) and XML Query.
+The supported query types are [`XPath`](https://developer.mozilla.org/en-US/docs/Web/XML/XPath) and XML Query.
 For further details, refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events).
 
 ### Command line

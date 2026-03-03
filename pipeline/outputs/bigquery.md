@@ -1,26 +1,26 @@
 # Google Cloud BigQuery
 
-The _Google Cloud BigQuery_ output plugin is an experimental plugin that lets you stream records into the [Google Cloud BigQuery](https://cloud.google.com/bigquery/) service.
+The _Google Cloud BigQuery_ output plugin is an experimental plugin that lets you stream records into the [Google Cloud BigQuery](https://cloud.google.com/bigquery) service.
 
 The implementation doesn't support the following, which would be expected in a full production version:
 
-- [Application Default Credentials](https://cloud.google.com/docs/authentication/production).
-- [Data deduplication](https://cloud.google.com/bigquery/streaming-data-into-bigquery) using `insertId`.
-- [Template tables](https://cloud.google.com/bigquery/streaming-data-into-bigquery) using `templateSuffix`.
+- [Application Default Credentials](https://docs.cloud.google.com/docs/authentication).
+- [Data deduplication](https://docs.cloud.google.com/bigquery/docs/streaming-data-into-bigquery) using `insertId`.
+- [Template tables](https://docs.cloud.google.com/bigquery/docs/streaming-data-into-bigquery) using `templateSuffix`.
 
 ## Google Cloud configuration
 
 Fluent Bit streams data into an existing BigQuery table using a service account that you specify. Before using the BigQuery output plugin, you must:
 
-1. To stream data into BigQuery, you must create a [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) for Fluent Bit.
+1. To stream data into BigQuery, you must create a [Google Cloud service account](https://docs.cloud.google.com/iam/docs/service-accounts-create) for Fluent Bit.
 1. Create a BigQuery dataset.
-   Fluent Bit doesn't create datasets for your data, so you must [create the dataset](https://cloud.google.com/bigquery/docs/datasets) ahead of time. You must also grant the service account `WRITER` permission on the dataset.
+   Fluent Bit doesn't create datasets for your data, so you must [create the dataset](https://docs.cloud.google.com/bigquery/docs/datasets) ahead of time. You must also grant the service account `WRITER` permission on the dataset.
 
    Within the dataset you must create a table for the data to reside in. Use the following instructions for creating your table. Pay close attention to the schema, as it must match the schema of your output JSON. Unfortunately, because BigQuery doesn't allow dots in field names, you must use a filter to change the fields for many of the standard inputs (for example, `mem` or `cpu`).
-1. [Create a BigQuery table](https://cloud.google.com/bigquery/docs/tables).
-1. Fluent Bit BigQuery output plugin uses a JSON credentials file for authentication credentials. [Authorize the service account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) to write to the table.
+1. [Create a BigQuery table](https://docs.cloud.google.com/bigquery/docs/tables).
+1. Fluent Bit BigQuery output plugin uses a JSON credentials file for authentication credentials. [Authorize the service account](https://docs.cloud.google.com/iam/docs/keys-create-delete) to write to the table.
 1. Provide the service account credentials to Fluent Bit.
-   With [workload identity federation](https://cloud.google.com/iam/docs/workload-identity-federation), you can grant on-premises or multi-cloud workloads access to Google Cloud resources, without using a service account key. It can be used as a more secure alternative to service account credentials. Google Cloud's workload identity federation supports several identity providers (see documentation) but Fluent Bit BigQuery plugin currently supports Amazon Web Services (AWS) only.
+   With [workload identity federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation), you can grant on-premises or multi-cloud workloads access to Google Cloud resources, without using a service account key. It can be used as a more secure alternative to service account credentials. Google Cloud's workload identity federation supports several identity providers (see documentation) but Fluent Bit BigQuery plugin currently supports Amazon Web Services (AWS) only.
 
    You must configure workload identity federation in GCP before using it with Fluent Bit.
 
@@ -45,7 +45,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
 | `google_service_account` | The email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources ( `write` access to tables) | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-See Google's [official documentation](https://cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
+See Google's [official documentation](https://docs.cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
 ## Configuration file
 

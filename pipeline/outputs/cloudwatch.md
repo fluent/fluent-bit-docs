@@ -407,7 +407,7 @@ If you see errors for image pull limits, try log into public ECR with your AWS c
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
-You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/get-set-up-for-amazon-ecr.html) for more details
+You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/what-is-ecr.html) for more details
 
 #### Docker Hub
 

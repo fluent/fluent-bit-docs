@@ -13,7 +13,7 @@ The Prometheus exporter works only with metric plugins, such as Node Exporter Me
 This plugin supports the following parameters:
 
 | Key | Description | Default |
-|-----|-------------|---------|
+| --- | ----------- | ------- |
 | `host` | IP address or hostname of the target HTTP server. | `127.0.0.1` |
 | `http_user` | Basic Auth username. | _none_ |
 | `http_passwd` | Basic Auth Password. Requires `HTTP_user` to be set. | _none_ |
@@ -159,7 +159,7 @@ pipeline:
 
 ### Logz.io infrastructure monitoring
 
-With Logz.io [hosted Prometheus](https://logz.io/solutions/infrastructure-monitoring/) you will need to make use of the header option and add the Authorization Bearer with the proper key. The host and port can also differ within your specific hosted instance.
+With Logz.io [hosted Prometheus](https://logz.io/platform/infrastructure-monitoring/) you will need to make use of the header option and add the Authorization Bearer with the proper key. The host and port can also differ within your specific hosted instance.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -236,7 +236,7 @@ pipeline:
 
 ### Levitate
 
-With [Levitate](https://last9.io/levitate-tsdb), you must use the Levitate cluster-specific write URL and specify the HTTP username and password for the token created for your Levitate cluster.
+With [Levitate](https://last9.io/), you must use the Levitate cluster-specific write URL and specify the HTTP username and password for the token created for your Levitate cluster.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

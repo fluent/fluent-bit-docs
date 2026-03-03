@@ -110,7 +110,7 @@ To achieve this, AWS Filter can be configured with `tags_enabled true` to enable
 
 ### Requirements
 
-To use the `tags_enabled true` feature in Fluent Bit, the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option must be enabled on the EC2 instance where Fluent Bit is running. Without this option enabled, Fluent Bit won't be able to retrieve the tags associated with the EC2 instance. However, this doesn't mean that Fluent Bit will fail or stop working altogether. Instead, if [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option isn't enabled, Fluent Bit will continue to operate normally and capture other values, such as the EC2 instance ID or availability zone, based on its configuration.
+To use the `tags_enabled true` feature in Fluent Bit, the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option must be enabled on the EC2 instance where Fluent Bit is running. Without this option enabled, Fluent Bit won't be able to retrieve the tags associated with the EC2 instance. However, this doesn't mean that Fluent Bit will fail or stop working altogether. Instead, if the `instance-metadata-tags` option isn't enabled, Fluent Bit will continue to operate normally and capture other values, such as the EC2 instance ID or availability zone, based on its configuration.
 
 ### Example
 

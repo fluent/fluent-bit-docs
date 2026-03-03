@@ -50,4 +50,4 @@ Fluent Bit can run on Berkeley Software Distribution (BSD) systems and IBM Z Lin
 
 ## Enterprise providers
 
-Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise) for older end-of-life versions, Unix systems, or for additional support and features including aspects (such as CVE backporting).
+Fluent Bit packages are also provided by [enterprise providers](https://fluentbit.io/enterprise/) for older end-of-life versions, Unix systems, or for additional support and features including aspects (such as CVE backporting).

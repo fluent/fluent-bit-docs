@@ -153,4 +153,4 @@ Parseable supports HTTP basic authentication. Configure the `http_user` and `htt
 ## References
 
 - [Parseable documentation](https://www.parseable.com/docs)
-- [Parseable Fluent-bit integration](https://www.parseable.com/docs/datasource/log-agents/fluent-bit)
+- [Parseable Fluent-bit integration](https://www.parseable.com/docs/ingest-data/logging-agents/fluent-bit)

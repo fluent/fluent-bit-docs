@@ -4,7 +4,7 @@ description: Send logs to Amazon Kinesis Firehose
 
 # Amazon Kinesis Data Firehose
 
-The _Amazon Kinesis Data Firehose_ output plugin lets you ingest your records into the [Firehose](https://aws.amazon.com/kinesis/data-firehose/) service.
+The _Amazon Kinesis Data Firehose_ output plugin lets you ingest your records into the [Firehose](https://aws.amazon.com/firehose/) service.
 
 This is the documentation for the core Fluent Bit Firehose plugin written in C. It can replace the [aws/amazon-kinesis-firehose-for-fluent-bit](https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit) Golang Fluent Bit plugin. The Golang plugin was named `firehose`. This new Firehose plugin is called `kinesis_firehose` to prevent conflicts/confusion.
 
@@ -162,7 +162,7 @@ If you see errors for image pull limits, try log into public ECR with your AWS c
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 ```
 
-You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/get-set-up-for-amazon-ecr.html) for more details.
+You can check the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/) for more details.
 
 #### Docker Hub
 

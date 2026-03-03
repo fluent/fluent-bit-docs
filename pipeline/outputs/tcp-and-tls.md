@@ -7,11 +7,11 @@ The _TCP and TLS_ output plugin lets you send records to a remote TCP server. Th
 This plugin supports the following parameters:
 
 | Key | Description | Default |
-|:--- |:----------- |:------- |
+| --- | ----------- | ------- |
 | `Host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
 | `Port` | TCP Port of the target service. | `5170` |
 | `Format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `msgpack` |
-| `json_date_key`| Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
+| `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
@@ -20,20 +20,20 @@ This plugin supports the following parameters:
 The following parameters are available to configure a secure channel connection through TLS:
 
 | Key | Description | Default |
-|:--- |:----------- |:------- |
+| --- | ----------- | ------- |
 | `tls` | Enable or disable TLS support. | `Off` |
 | `tls.verify` | Force certificate validation. | `On` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), `4` (Verbose) | `1` |
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
-| `tls.crt_file`   | Absolute path to Certificate file. | _none_ |
-| `tls.key_file`   | Absolute path to private Key file. | _none_ |
+| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
+| `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
 
 ### Command line
 
 #### JSON format
 
-This example specifies gathering [CPU](https://docs.fluentbit.io/manual/pipeline/inputs/cpu-metrics) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
+This example specifies gathering [CPU](../inputs/cpu-metrics) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
 
 ```shell
 fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v

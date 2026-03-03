@@ -4,7 +4,7 @@ description: Send logs to Dynatrace
 
 # Dynatrace
 
-Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the `http` plugin to send data to the [Dynatrace generic log ingest API](https://docs.dynatrace.com/docs/shortlink/lma-generic-log-ingestion).
+Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the `http` plugin to send data to the [Dynatrace generic log ingest API](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-api).
 
 ## Configuration parameters
 
@@ -26,7 +26,7 @@ Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the `http` pl
 
 To get started with sending logs to Dynatrace:
 
-1. Get a [Dynatrace API](https://docs.dynatrace.com/docs/shortlink/api-authentication) token with the `logs.ingest` (Ingest Logs) scope.
+1. Get a [Dynatrace API](https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication) token with the `logs.ingest` (Ingest Logs) scope.
 1. Determine your Dynatrace [environment ID](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id).
 1. In your main Fluent Bit configuration file, append the following `Output` section:
 
@@ -83,7 +83,6 @@ To get started with sending logs to Dynatrace:
 - [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/shortlink/lma-stream-logs-with-fluent-bit)
 - [Fluent Bit integration in Dynatrace Hub](https://www.dynatrace.com/hub/detail/fluent-bit/?filter=log-management-and-analytics)
 - [Video: Stream a Log File to Dynatrace using Fluent Bit](https://www.youtube.com/watch?v=JJJNxhtJ6R0)
-- [Blog: Easily stream logs from Fluent Bit to
-  Dynatrace](https://www.dynatrace.com/news/blog/easily-stream-logs-with-fluent-bit-to-dynatrace/)
+- [Blog: Easily stream logs from Fluent Bit to Dynatrace](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-stream-logs-with-fluent-bit)
 
 <!-- vale FluentBit.Simplicity = YES -->

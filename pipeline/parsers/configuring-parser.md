@@ -26,7 +26,7 @@ Custom parsers support the following configuration parameters:
 | `time_key` | If the log entry provides a field with a timestamp, this option specifies the name of that field. | _none_ |
 | `time_offset` | Specifies a fixed UTC time offset (such as `-0600` or `+0200`) for local dates. | _none_ |
 | `time_strict` | If `true`, the parser is strict with the expected time format. If `false`, the parser is permissive with the format of the time. Set to `false` when the format expects a time fraction but the time to be parsed doesn't include it. | `true` |
-| `time_system_timezone` | If there is no time zone (`%z`) specified in the given `time_format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). | `false` |
+| `time_system_timezone` | If there is no time zone (`%z`) specified in the given `time_format`, enabling this option will make the parser detect and use the system's configured time zone. The configured time zone is detected from the [`TZ` environment variable](https://sourceware.org/glibc/manual/latest/html_node/TZ-Variable.html). | `false` |
 | `types` | Specifies the data type of a parsed field. The syntax is `types <field_name_1>:<type_name_1> <field_name_2>:<type_name_2> ...`. The supported types are `string` (default), `integer`, `bool`, `float`, `hex`. | _none_ |
 
 ### Time resolution and fractional seconds
