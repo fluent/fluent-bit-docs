@@ -9,7 +9,7 @@ Telemetry data processing can be complex, especially at scale. That's why [Fluen
 The Fluentd and Fluent Bit projects are both:
 
 - Licensed under the terms of Apache License v2.0.
-- Graduated hosted projects by the [Cloud Native Computing Foundation (CNCF)](https://cncf.io).
+- Graduated hosted projects by the [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/).
 - Production-grade solutions, with Fluent Bit deployed over 15 billion times globally.
 - Vendor neutral and community driven.
 - Widely adopted by the industry, being trusted by major companies like Amazon, Microsoft, Google, and hundreds of others.

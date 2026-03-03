@@ -4,7 +4,7 @@
 
 The Fluent Bit _Loki_ built-in output plugin lets you send your log or events to a Loki service. It supports data enrichment with Kubernetes labels, custom label keys, and Tenant ID, along with other information.
 
-There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
+There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/send-data/fluentbit/) with different configuration options.
 
 ## Configuration parameters
 

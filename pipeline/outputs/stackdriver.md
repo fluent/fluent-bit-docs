@@ -1,12 +1,12 @@
 # Stackdriver
 
-The _Stackdriver_ output plugin lets you ingest your records into the [Google Cloud Stackdriver Logging](https://cloud.google.com/logging/) service.
+The _Stackdriver_ output plugin lets you ingest your records into the [Google Cloud Stackdriver Logging](https://cloud.google.com/logging) service.
 
-Before getting started with the plugin configuration, be sure to obtain the [proper credentials](https://cloud.google.com/logging/docs/agent/logging/authorization#create-service-account) to get access to the service. For best results, use a common JSON credentials file that can be referenced by the Stackdriver plugin.
+Before getting started with the plugin configuration, be sure to obtain the [proper credentials](https://docs.cloud.google.com/logging/docs/agent/logging/authorization#create-service-account) to get access to the service. For best results, use a common JSON credentials file that can be referenced by the Stackdriver plugin.
 
 ## Configuration parameters
 
-This plugin uses the following configuration parameters. For more details about Stackdriver-specific parameters, see the [Google Cloud `LogEntry` API documentation](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry).
+This plugin uses the following configuration parameters. For more details about Stackdriver-specific parameters, see the [Google Cloud `LogEntry` API documentation](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry).
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
@@ -216,7 +216,7 @@ This will produce the following log:
 
 This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime.
 
-For instance, for a Kubernetes resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](https://docs.fluentbit.io/manual/pipeline/filters/kubernetes) to pack all six resource labels. The following example shows what this could look like for a `k8s_container` resource:
+For instance, for a Kubernetes resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](../filters/kubernetes) to pack all six resource labels. The following example shows what this could look like for a `k8s_container` resource:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -255,7 +255,7 @@ By default, the plugin will write to the following log name:
 /projects/<project ID>/logs/<log tag>
 ```
 
-You might be in a scenario where being more specific about the log name is important (for example, [integration with Log Router rules](https://cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics](https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series)). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md#log-entry-fields). You can configure a `log_name_key` if you'd like to use something different from `logging.googleapis.com/logName`. For example, if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
+You might be in a scenario where being more specific about the log name is important (for example, [integration with Log Router rules](https://docs.cloud.google.com/logging/docs/routing/overview) or [controlling cardinality of log based metrics](https://cloud.google.com/logging/docs/logs-based-metrics/troubleshooting#too-many-time-series)). You can control the log name directly on a per-log basis by using the [`logging.googleapis.com/logName` special field](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md#log-entry-fields). You can configure a `log_name_key` if you'd like to use something different from `logging.googleapis.com/logName`. For example, if the `log_name_key` is set to `mylognamefield` will extract the log name from `mylognamefield` in the log.
 
 ## Troubleshooting
 
@@ -269,8 +269,8 @@ An upstream connection error means Fluent Bit wasn't able to reach Google servic
 
 This is due to a network issue in the environment where Fluent Bit is running. Make sure that the Host, Container or Pod can reach the following Google endpoints:
 
-- [https://www.googleapis.com](https://www.googleapis.com)
-- [https://logging.googleapis.com](https://logging.googleapis.com)
+- [https://www.googleapis.com](https://cloud.google.com/apis)
+- [https://logging.googleapis.com](https://docs.cloud.google.com/logging/docs/apis)
 
 {% hint style="warning" %}
 
@@ -293,6 +293,6 @@ Check the following:
 
 ## Other Implementations
 
-Stackdriver officially supports a [logging agent based on Fluentd](https://cloud.google.com/logging/docs/agent).
+Stackdriver officially supports a [logging agent based on Fluentd](https://docs.cloud.google.com/logging/docs/agent).
 
-Fluent Bit plans to support some [special fields in structured payloads](https://cloud.google.com/logging/docs/agent/configuration#special-fields). For more information, see the documentation about [Stackdriver Special Fields](stackdriver_special_fields.md#logentry-fields).
+Fluent Bit plans to support some [special fields in structured payloads](https://docs.cloud.google.com/logging/docs/agent/configuration#special-fields). For more information, see the documentation about [Stackdriver Special Fields](stackdriver_special_fields.md#logentry-fields).

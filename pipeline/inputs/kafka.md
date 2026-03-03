@@ -4,7 +4,7 @@ The _Kafka_ input plugin enables Fluent Bit to consume messages directly from on
 
 Starting with version 4.0.4, the Kafka input plugin supports authentication with AWS MSK IAM, enabling integration with Amazon MSK (Managed Streaming for Apache Kafka) clusters that require IAM-based access.
 
-This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) as a built-in dependency.
+This plugin uses the official [librdkafka C library](https://github.com/confluentinc/librdkafka) as a built-in dependency.
 
 ## Configuration parameters
 

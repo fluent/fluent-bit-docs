@@ -127,7 +127,7 @@ This repository runs linters as GitHub Actions for each pull request. If a linte
 
 ### Vale
 
-[Vale](https://vale.sh/docs/) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
+[Vale](https://vale.sh/docs) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
 
 Vale tests for the Fluent Bit docs are stored in the [`/vale-styles`](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles) folder. Most Vale tests are at the `suggestion` or `warning` level and won't block pull requests from merging. However, tests at the `error` level will block merging until the associated issue is fixed.
 

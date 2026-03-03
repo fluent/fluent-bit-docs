@@ -49,7 +49,7 @@ This plugin has the following configuration parameters:
 | `Trace_Output` | Print all ElasticSearch API request payloads to `stdout` for diagnostics. | `Off` |
 | `Trace_Error` | If ElasticSearch returns an error, print the ElasticSearch API request and response for diagnostics. | `Off` |
 | `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` |
-| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html), and is set to `On`. | `Off` |
+| `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/docs/manage-data/data-store/mapping/removal-of-mapping-types), and is set to `On`. | `Off` |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
@@ -171,7 +171,7 @@ Connect to Amazon OpenSearch or Elastic Cloud with the ElasticSearch plugin.
 
 The Amazon OpenSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon OpenSearch Service with IAM Authentication.
 
-See [details](https://github.com/fluent/fluent-bit-docs/tree/43c4fe134611da471e706b0edb2f9acd7cdfdbc3/administration/aws-credentials.md) on how AWS credentials are fetched.
+See [details](../../administration/aws-credentials.md) on how AWS credentials are fetched.
 
 Example configuration:
 
@@ -216,7 +216,8 @@ Be aware that the `Port` is set to `443`, `tls` is enabled, and `AWS_Region` is 
 
 ### Use Fluent Bit with Elastic Cloud
 
-Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) by providing the `cloud_id` and the `cloud_auth` settings. `cloud_auth` uses the `elastic` user and password provided when the cluster was created. For details refer to the [Cloud ID usage page](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html).
+Fluent Bit supports connecting to [Elastic Cloud](https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/cloud-hosted) by providing the `cloud_id` and the `cloud_auth` settings. `cloud_auth` uses the `elastic` user and password provided when the cluster was created. For details refer to the [Cloud ID usage page](https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/find-cloud-id).
+
 Example configuration:
 
 {% tabs %}

@@ -680,4 +680,4 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
 ## Credit
 
-The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [`Jimmi Dyson`](https://github.com/jimmidyson).
+The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fluent-plugins-nursery/fluent-plugin-kubernetes_metadata_filter) written by [`Jimmi Dyson`](https://github.com/jimmidyson).
