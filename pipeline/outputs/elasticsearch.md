@@ -37,14 +37,14 @@ configuration.
 | `Index` | Index name. | `fluent-bit` | Yes |
 | `Type` | Type name. | `_doc` | Yes |
 | `Logstash_Format` | Enable Logstash format compatibility. This option takes a Boolean value: `True/False`, `On/Off`. | `Off` | Yes |
-| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date, For example, if `Logstash_Prefix` is equal to `mydata`, your index becomes `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` | Yes |
+| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date. For example, if `Logstash_Prefix` is equal to `mydata`, your index becomes `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` | Yes |
 | `Logstash_Prefix_Key` | When included: the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record, the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ | Yes |
 | `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and date. | `-` | Yes |
 | `Logstash_DateFormat` | Time format based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) to generate the second part of the Index name. | `%Y.%m.%d` | Yes |
 | `Time_Key` | When `Logstash_Format` is enabled, each record gets a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` | Yes |
 | `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` | Yes |
 | `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` | Yes |
-| `Include_Tag_Key` | When enabled, it append the Tag name to the record. | `Off` | Yes |
+| `Include_Tag_Key` | When enabled, it appends the Tag name to the record. | `Off` | Yes |
 | `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` | Yes |
 | `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` | Yes |
 | `Id_Key` | If set, `_id` is the value of the key from incoming record, and `Generate_ID` option is ignored. | _none_ | Yes |
