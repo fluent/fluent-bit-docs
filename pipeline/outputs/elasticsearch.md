@@ -55,7 +55,7 @@ configuration.
 | `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` | Yes |
 | `Suppress_Type_Name` | When enabled, mapping types is removed and `Type` option is ignored. Elasticsearch 8.0.0 or later [no longer supports mapping types](https://www.elastic.co/docs/manage-data/data-store/mapping/removal-of-mapping-types), which requires this value to be `On`. | `Off` | Yes |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` | No |
-| `Upstream` | If plugin will connect to an _Upstream_ instead of a simple host, this property defines the absolute path for the Upstream configuration file, for more details about this refer to the [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) documentation section. | _none_ | No |
+| `Upstream` | If plugin will connect to an `Upstream` instead of a basic host, this property defines the path for the Upstream configuration file, for more details about this, see [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md). | _none_ | No |
 
 If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
 
