@@ -22,12 +22,12 @@ configuration.
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ | Yes |
 | `Buffer_Size` | Specify the buffer size used to read the response from the Elasticsearch HTTP service. Use for debugging purposes where required to read full responses. Response size grows depending of the number of records inserted. To use an unlimited amount of memory, set this value to `False`. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes). | `512KB` | Yes |
 | `Pipeline` | Define which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, and avoid pipelines. | _none_ | Yes |
-| `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` | Yes |
+| `AWS_Auth` | Enable AWS SigV4 Authentication for Amazon OpenSearch Service. | `Off` | Yes |
 | `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ | Yes |
 | `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ | Yes |
 | `AWS_Role_ARN` | AWS IAM Role to assume to put records to your Amazon cluster. | _none_ | Yes |
 | `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ | Yes |
-| `AWS_Service_Name` | Service name to use in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` | Yes |
+| `AWS_Service_Name` | Service name to use in AWS SigV4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Amazon OpenSearch Serverless](opensearch.md) for more information. | `es` | Yes |
 | `AWS_Profile` | AWS profile name. | `default` | Yes |
 | `Cloud_ID` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. After decoding, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ | No |
 | `Cloud_Auth` | Specify the credentials to use to connect to Elastic's Elasticsearch Service running on Elastic Cloud. | _none_ | Yes |
@@ -63,9 +63,9 @@ If you have used a common relational database, the parameters `index` and `type`
 
 The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
-### AWS Sigv4 authentication and Upstream servers
+### AWS SigV4 authentication and upstream servers
 
-The `http_proxy`, `no_proxy`, and `TLS` parameters used for AWS Sigv4 Authentication (for connection of plugin to AWS to generate authentication signature) are never picked from the `NODE` section of the [Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) configuration. However, `TLS` parameters for connection of the plugin to Elasticsearch can be overridden in the `NODE` section of Upstream, even if AWS authentication is used.
+The `http_proxy`, `no_proxy`, and `TLS` parameters used for AWS SigV4 Authentication (for connection of plugin to AWS to generate authentication signature) are never picked from the `NODE` section of the [Upstream](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md) configuration. However, `TLS` parameters for connection of the plugin to Elasticsearch can be overridden in the `NODE` section of Upstream, even if AWS authentication is used.
 
 ### `write_operation`
 
@@ -158,9 +158,9 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Configuration file with Upstream
+### Configuration file with upstream
 
-#### Classic mode configuration file with Upstream
+#### Classic mode configuration file with upstream
 
 In your main classic mode configuration file append the following `Input` and `Output` sections:
 
@@ -200,7 +200,7 @@ configuration file can be similar to the following:
     port     9203
 ```
 
-#### YAML configuration file with Upstream
+#### YAML configuration file with upstream
 
 In your main YAML configuration file (fluent-bit.yaml) put the following `Input` and `Output` sections:
 
@@ -268,7 +268,7 @@ Connect to Amazon OpenSearch or Elastic Cloud with the ElasticSearch plugin.
 
 ### Amazon OpenSearch Service
 
-The Amazon OpenSearch Service adds an extra security layer where HTTP requests must be signed with AWS Sigv4. Fluent Bit v1.5 introduced full support for Amazon OpenSearch Service with IAM Authentication.
+The Amazon OpenSearch Service adds an extra security layer where HTTP requests must be signed with AWS SigV4. Fluent Bit v1.5 introduced full support for Amazon OpenSearch Service with IAM Authentication.
 
 See [details](../../administration/aws-credentials.md) on how AWS credentials are fetched.
 
