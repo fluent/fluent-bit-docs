@@ -13,7 +13,7 @@ Use the following SQL statements in Fluent Bit.
 ```sql
 SELECT results_statement
   FROM STREAM:stream_name | TAG:match_rule
-  [WINDOW TUMBLING (integer SECOND)]
+  [WINDOW TUMBLING (integer SECOND) | WINDOW HOPPING (integer SECOND, ADVANCE BY integer SECOND)]
   [WHERE condition]
   [GROUP BY groupby]
 ```
@@ -68,7 +68,10 @@ CREATE STREAM hello AS SELECT * FROM TAG:'apache.*';
 
 You can use aggregation functions in the `results_statement` on keys, which lets you perform data calculation on groups of records. These groups are determined by the `WINDOW` key. If `WINDOW` is unspecified, aggregation functions are applied to the current buffer of records received, which might have a non-deterministic number of elements. You can also apply aggregation functions to records in a window of a specific time interval.
 
-Fluent Bit uses a tumbling window, which is non-overlapping. For example, a window size of `5` performs aggregation computations on records during a five-second interval, then starts new calculations for the next interval.
+Fluent Bit supports two window types:
+
+- **Tumbling window** (`WINDOW TUMBLING`): Non-overlapping windows. A window size of `5` performs aggregation on records during a five-second interval, then starts a fresh window for the next interval.
+- **Hopping window** (`WINDOW HOPPING`): A sliding window with a configurable advance step. For example, `WINDOW HOPPING (10 SECOND, ADVANCE BY 2 SECOND)` maintains a 10-second window that advances every 2 seconds, so consecutive windows share overlapping records.
 
 Additionally, you can use the `GROUP BY` statement to group results by one or more keys with matching values.
 
@@ -83,10 +86,10 @@ Calculates the average size of `POST` requests.
 ### `COUNT`
 
 ```sql
-SELECT host, COUNT(*) FROM STREAM:apache WINDOW TUMBLING (X SECOND) GROUP BY host;
+SELECT host, COUNT(*) FROM STREAM:apache WINDOW TUMBLING (5 SECOND) GROUP BY host;
 ```
 
-Counts the number of records in a five-second window, grouped by host IP addresses.
+Counts the number of records in a five-second tumbling window, grouped by host IP addresses.
 
 ### `MIN`
 
@@ -111,6 +114,22 @@ SELECT SUM(key) FROM STREAM:apache;
 ```
 
 Calculates the sum of all values of a key in a set of records.
+
+### `TIMESERIES_FORECAST`
+
+```sql
+SELECT TIMESERIES_FORECAST(num, 30) FROM STREAM:apache WINDOW TUMBLING (5 SECOND);
+```
+
+Uses linear regression to predict the future value of a key. The first argument is the key to forecast and the second argument is the number of seconds into the future to project. Requires a `WINDOW` to accumulate the data points used for the regression.
+
+### `WINDOW HOPPING` example
+
+```sql
+SELECT host, COUNT(*) FROM STREAM:apache WINDOW HOPPING (10 SECOND, ADVANCE BY 2 SECOND) GROUP BY host;
+```
+
+Counts records per host using a 10-second hopping window that advances every 2 seconds. Each output overlaps with the previous window, unlike a tumbling window.
 
 ## Time functions
 
@@ -149,6 +168,8 @@ Append tag string associated to the record as a new key.
 ```sql
 SELECT RECORD_TIME() FROM STREAM:apache;
 ```
+
+Appends the record's timestamp as a new key in double format (`seconds.nanoseconds`). Output example: `1552196165.705683`.
 
 ## `WHERE` condition
 

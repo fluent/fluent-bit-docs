@@ -19,9 +19,9 @@ These steps use the official Fluent Bit Docker image.
 Run the following command to confirm that Fluent Bit is installed and up-to-date:
 
 ```shell
-$ docker run -ti fluent/fluent-bit:1.4 /fluent-bit/bin/fluent-bit --version
+$ docker run -ti fluent/fluent-bit:4.2.3 /fluent-bit/bin/fluent-bit --version
 
-Fluent Bit v4.0.4
+Fluent Bit v4.2.3
 ```
 
 ### 2. Parse sample files
@@ -30,7 +30,7 @@ The sample file contains JSON records. Run the following command to append the `
 
 ```shell
 docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log  \
-  fluent/fluent-bit:1.8.2                                     \
+  fluent/fluent-bit:4.2.3                                     \
   /fluent-bit/bin/fluent-bit -R /fluent-bit/etc/parsers.conf  \
   -i tail -p path=/sp-samples-1k.log  \
   -p parser=json                      \
@@ -55,7 +55,7 @@ Run the following command to create a stream processor query using the `-T` flag
 
 ```shell
 docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log  \
-  fluent/fluent-bit:1.2                                       \
+  fluent/fluent-bit:4.2.3                                     \
   /fluent-bit/bin/fluent-bit                                  \
   -R /fluent-bit/etc/parsers.conf                             \
   -i tail                                                     \
@@ -82,7 +82,7 @@ Run the following command to use the `AVG` aggregation function to get the avera
 
 ```shell
 docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log  \
-  fluent/fluent-bit:1.8.2                                     \
+  fluent/fluent-bit:4.2.3                                     \
   /fluent-bit/bin/fluent-bit                                  \
   -R /fluent-bit/etc/parsers.conf                             \
   -i tail                                                     \
@@ -115,7 +115,7 @@ Grouping results within a time window simplifies data processing. Run the follow
 
 ```shell
 docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log \
-  fluent/fluent-bit:1.8.2                                    \
+  fluent/fluent-bit:4.2.3                                    \
   /fluent-bit/bin/fluent-bit                                 \
   -R /fluent-bit/etc/parsers.conf                            \
   -i tail                                                    \
@@ -143,7 +143,7 @@ Run the following command, which uses a `CREATE STREAM` statement to tag results
 
 ```shell
 docker run -ti -v `pwd`/sp-samples-1k.log:/sp-samples-1k.log   \
-  fluent/fluent-bit:1.8.2                                      \
+  fluent/fluent-bit:4.2.3                                      \
   /fluent-bit/bin/fluent-bit                                   \
   -R /fluent-bit/etc/parsers.conf                              \
   -i tail                                                      \
