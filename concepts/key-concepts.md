@@ -8,6 +8,7 @@ Before diving into [Fluent Bit](https://fluentbit.io) you might want to get acqu
 
 - Event or Record
 - Filtering
+- Processor
 - Tag
 - Timestamp
 - Match
@@ -15,7 +16,7 @@ Before diving into [Fluent Bit](https://fluentbit.io) you might want to get acqu
 
 ## Events or records
 
-Every incoming piece of data that belongs to a log or a metric that's retrieved by Fluent Bit is considered an _Event_ or a _Record_.
+Every incoming piece of data that belongs to a log, metric, trace, or profile that's retrieved by Fluent Bit is considered an _Event_ or a _Record_.
 
 As an example, consider the following content of a Syslog file:
 
@@ -66,6 +67,14 @@ Use filtering to:
 - Select a specific piece of the Event content.
 - Drop Events that match a certain pattern.
 
+## Processor
+
+[Processors](../pipeline/processors.md) modify, transform, or enhance data as it moves through the pipeline. Unlike filters, processors are attached directly to individual input or output plugins and don't use tag matching. Each processor operates only on data from its associated plugin.
+
+Processors run in the same thread as their associated plugin, which improves throughput compared to filters—especially when [multithreading](../administration/multithreading.md) is enabled.
+
+Processors are supported in [YAML configuration files](../administration/configuring-fluent-bit/yaml.md) only, and can act on logs, metrics, traces, and profiles.
+
 ## Tag
 
 Every Event ingested by Fluent Bit is assigned a Tag. This tag is an internal string used in a later stage by the Router to decide which Filter or [Output](../pipeline/outputs.md) phase it must go through.
@@ -80,7 +89,7 @@ A tagged record must always have a Matching rule. To learn more about Tags and M
 
 ## Timestamp
 
-The timestamp represents the time an Event was created. Every Event contains an associated timestamps. All events have timestamps, and they're set by the input plugin or discovered through a data parsing process.
+The timestamp represents the time an Event was created. Every Event contains an associated timestamp. All events have timestamps, and they're set by the input plugin or discovered through a data parsing process.
 
 The timestamp is a numeric fractional integer in the format:
 
