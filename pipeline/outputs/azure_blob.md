@@ -19,9 +19,12 @@ Fluent Bit exposes the following configuration properties.
 | Key                          | Description                                                                                                                                                                                                                  | Default                       |
 | :--------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------- |
 | `account_name`               | Azure Storage account name.                                                                                                                                                                                                  | _none_                        |
-| `auth_type`                  | Specify the type to authenticate against the service. Supported values: `key`, `sas`.                                                                                                                                        | `key`                         |
+| `auth_type`                  | Specify the type to authenticate against the service. Supported values: `key`, `sas`, `managed_identity`, `workload_identity`.                                                                                               | `key`                         |
 | `shared_key`                 | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`.                                                                                | _none_                        |
 | `sas_token`                  | Specify the Azure Storage shared access signatures to authenticate against the service. This configuration property is mandatory when `auth_type` is `sas`.                                                                  | _none_                        |
+| `client_id`                  | Azure client ID for managed identity or workload identity authentication. For system-assigned managed identity, set to `system`. Required when `auth_type` is `managed_identity` or `workload_identity`.                     | _none_                        |
+| `tenant_id`                  | Azure tenant ID. Required when `auth_type` is `workload_identity`.                                                                                                                                                           | _none_                        |
+| `workload_identity_token_file` | Path to the projected service account token file for workload identity authentication. Only used when `auth_type` is `workload_identity`.                                                                                  | `/var/run/secrets/azure/tokens/azure-identity-token` |
 | `container_name`             | Name of the container that will contain the blobs.                                                                                                                                                                           | _none_                        |
 | `blob_type`                  | Specify the desired blob type. Supported values: `appendblob`, `blockblob`.                                                                                                                                                  | `appendblob`                  |
 | `auto_create_container`      | If `container_name` doesn't exist in the remote service, enabling this option handles the exception and auto-creates the container.                                                                                          | `on`                          |
@@ -69,7 +72,7 @@ pipeline:
       tag: var.log.containers.app-default-96cbdef2340.log
 
   outputs:
-    - name: azure_blog
+    - name: azure_blob
       match: "*"
       account_name: YOUR_ACCOUNT_NAME
       shared_key: YOUR_SHARED_KEY
@@ -110,6 +113,186 @@ pipeline:
 After you run the configuration file, you will be able to query the data using the Azure Storage Explorer. The example generates the following content in the explorer:
 
 ![Azure Blob](../../.gitbook/assets/azure_blob.png)
+
+### Configuration for managed identity
+
+Azure Managed Identity lets your application authenticate to Azure Blob Storage without managing credentials. This works on Azure VMs, Azure Container Instances, Azure App Service, and other Azure compute services with managed identity support.
+
+#### System-assigned managed identity
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"name": "Fluent Bit", "year": 2024}'
+      samples: 1
+      tag: var.log.containers.app-default-96cbdef2340.log
+
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: managed_identity
+      client_id: system
+      container_name: logs
+      auto_create_container: on
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  flush     1
+  log_level info
+
+[INPUT]
+  name      dummy
+  dummy     {"name": "Fluent Bit", "year": 2024}
+  samples   1
+  tag       var.log.containers.app-default-96cbdef2340.log
+
+[OUTPUT]
+  name                  azure_blob
+  match                 *
+  account_name          YOUR_ACCOUNT_NAME
+  auth_type             managed_identity
+  client_id             system
+  container_name        logs
+  auto_create_container on
+  tls                   on
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### User-assigned managed identity
+
+For user-assigned managed identities, set `client_id` to the client ID (UUID) of the managed identity:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"name": "Fluent Bit", "year": 2024}'
+      samples: 1
+      tag: var.log.containers.app-default-96cbdef2340.log
+
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: managed_identity
+      client_id: YOUR_MANAGED_IDENTITY_CLIENT_ID
+      container_name: logs
+      auto_create_container: on
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  flush     1
+  log_level info
+
+[INPUT]
+  name      dummy
+  dummy     {"name": "Fluent Bit", "year": 2024}
+  samples   1
+  tag       var.log.containers.app-default-96cbdef2340.log
+
+[OUTPUT]
+  name                  azure_blob
+  match                 *
+  account_name          YOUR_ACCOUNT_NAME
+  auth_type             managed_identity
+  client_id             YOUR_MANAGED_IDENTITY_CLIENT_ID
+  container_name        logs
+  auto_create_container on
+  tls                   on
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Configuration for workload identity
+
+Azure Workload Identity lets pods in Azure Kubernetes Service (AKS) authenticate to Azure Blob Storage using a Kubernetes service account federated with Microsoft Entra ID.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"name": "Fluent Bit", "year": 2024}'
+      samples: 1
+      tag: var.log.containers.app-default-96cbdef2340.log
+
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: workload_identity
+      client_id: YOUR_CLIENT_ID
+      tenant_id: YOUR_TENANT_ID
+      container_name: logs
+      auto_create_container: on
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  flush     1
+  log_level info
+
+[INPUT]
+  name      dummy
+  dummy     {"name": "Fluent Bit", "year": 2024}
+  samples   1
+  tag       var.log.containers.app-default-96cbdef2340.log
+
+[OUTPUT]
+  name                  azure_blob
+  match                 *
+  account_name          YOUR_ACCOUNT_NAME
+  auth_type             workload_identity
+  client_id             YOUR_CLIENT_ID
+  tenant_id             YOUR_TENANT_ID
+  container_name        logs
+  auto_create_container on
+  tls                   on
+```
+
+{% endtab %}
+{% endtabs %}
+
+The `workload_identity_token_file` option can be set to override the default token path if your AKS cluster mounts the projected service account token at a non-standard location.
 
 ### Configuring and using Azure Emulator: Azurite
 
@@ -156,7 +339,7 @@ pipeline:
       tag: var.log.containers.app-default-96cbdef2340.log
 
   outputs:
-    - name: azure_blog
+    - name: azure_blob
       match: "*"
       account_name: INSERT_ACCOUNT_NAME
       shared_key: INSERT_SHARED_KEY
