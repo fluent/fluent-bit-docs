@@ -8,6 +8,58 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v4.2
+
+### Vivo exporter output plugin
+
+The HTTP endpoint paths exposed by the Vivo exporter output plugin have changed. All endpoints now follow an `/api/v1/` prefix:
+
+| Signal | Endpoint |
+|---|---|
+| Logs | `/api/v1/logs` |
+| Metrics | `/api/v1/metrics` |
+| Traces | `/api/v1/traces` |
+| Internal metrics | `/api/v1/internal/metrics` |
+
+If you have tooling or dashboards that query the Vivo exporter HTTP endpoints directly, update the endpoint paths accordingly.
+
+## Fluent Bit v4.0
+
+### Package support for older Linux distributions
+
+Official binary packages are no longer produced for the following Linux distributions:
+
+- Ubuntu 16.04 (`Xenial`)
+- Ubuntu 18.04 (`Bionic`)
+- Ubuntu 20.04 (`Focal`)
+
+Users on these platforms should upgrade their OS or build Fluent Bit from source.
+
+### Kafka plugin support on older platforms
+
+The Kafka input and output plugins are disabled in official packages for CentOS 7 and Amazon Linux 2 (ARM64). This is due to a Kafka library (`librdkafka`) update that requires a newer glibc version than these platforms provide.
+
+Users who need Kafka support on these platforms must build Fluent Bit from source against a compatible version of `librdkafka`.
+
+## Fluent Bit v3.0
+
+### HTTP/2 enabled by default for HTTP-based input plugins
+
+The following input plugins now have HTTP/2 support enabled by default (`http2 true`):
+
+- `opentelemetry`
+- `splunk`
+- `elasticsearch`
+- `http`
+
+These plugins transparently support both HTTP/1.1 and HTTP/2 connections. If your clients don't support HTTP/2, or if you have a reverse proxy or load balancer that doesn't handle HTTP/2 correctly, add `http2 off` to the affected input plugin configuration section.
+
+## Fluent Bit v2.0
+
+### TLS library
+
+mbedTLS is no longer supported as a TLS backend. All TLS connections now use OpenSSL. If you compile Fluent Bit from source and previously linked against mbedTLS, you must now link against OpenSSL. Official binary packages already use OpenSSL.
+
 ## Fluent Bit v1.9.9
 
 The `td-agent-bit` package is no longer provided after this release. Users should switch to the `fluent-bit` package.
