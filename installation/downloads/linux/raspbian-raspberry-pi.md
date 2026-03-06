@@ -8,7 +8,7 @@ Fluent Bit is distributed as the `fluent-bit` package and is available for [Rasp
 
 ## Server GPG key
 
-The first step is to add the Fluent Bit server GPG key to your keyring so you can get FLuent Bit signed packages:
+The first step is to add the Fluent Bit server GPG key to your keyring so you can get Fluent Bit signed packages:
 
 ```shell
 sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add - '

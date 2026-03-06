@@ -221,5 +221,5 @@ By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's n
     DNS_Wait_Time 30
 ```
 
-% endtab %}
+{% endtab %}
 {% endtabs %}

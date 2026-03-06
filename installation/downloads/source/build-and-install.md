@@ -195,16 +195,15 @@ The following input plugins are available:
 | [`FLB_IN_NGINX_EXPORTER_METRICS`](../../../pipeline/inputs/nginx.md)                        | Enable NGINX metrics input plugin                                         | `On`    |
 | [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
 | [`FLB_IN_OPENTELEMETRY`](../../../pipeline/inputs/opentelemetry.md)                         | Enable OpenTelemetry input plugin                                         | `On`    |
-| [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
 | [`FLB_IN_PODMAN_METRICS`](../../../pipeline/inputs/podman-metrics.md)                       | Enable Podman metrics input plugin                                        | `On`    |
 | [`FLB_IN_PROC`](../../../pipeline/inputs/process.md)                                        | Enable Process input plugin                                               | `On`    |
 | [`FLB_IN_PROCESS_EXPORTER_METRICS`](../../../pipeline/inputs/process-exporter-metrics.md)   | Enable Process exporter metrics input plugin                              | `On`    |
 | [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md)     | Enable Prometheus remote write input plugin                               | `On`    |
 | [`FLB_IN_PROMETHEUS_SCRAPE_METRICS`](../../../pipeline/inputs/prometheus-scrape-metrics.md) | Enable Prometheus scrape metrics input plugin                             | `On`    |
-| [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-textfile.md)         | Enable Prometheus textfile input plugin                                   | `On`    |
+| [`FLB_IN_PROMETHEUS_TEXTFILE`](../../../pipeline/inputs/prometheus-textfile.md)             | Enable Prometheus textfile input plugin                                   | `On`    |
 | [`FLB_IN_RANDOM`](../../../pipeline/inputs/random.md)                                       | Enable Random input plugin                                                | `On`    |
 | [`FLB_IN_SERIAL`](../../../pipeline/inputs/serial-interface.md)                             | Enable Serial input plugin                                                | `On`    |
-| [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Serial input plugin                                                | `On`    |
+| [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Splunk input plugin                                                | `On`    |
 | [`FLB_IN_STATSD`](../../../pipeline/inputs/statsd.md)                                       | Enable StatsD input plugin                                                | `On`    |
 | [`FLB_IN_STDIN`](../../../pipeline/inputs/standard-input.md)                                | Enable Standard input plugin                                              | `On`    |
 | [`FLB_IN_SYSLOG`](../../../pipeline/inputs/syslog.md)                                       | Enable Syslog input plugin                                                | `On`    |
@@ -232,7 +231,7 @@ The following table describes the processors available:
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
 | [`FLB_PROCESSOR_SAMPLING`](../../../pipeline/processors/sampling.md)                             | Enable sampling processor                   | `On`    |
-| [`FLB_PROCESSOR_SQl`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
+| [`FLB_PROCESSOR_SQL`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
 
 ### Filter plugins
 
@@ -286,7 +285,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_EXIT`](../../../pipeline/outputs/exit.md)                                      | Enable Exit output plugin                                | `On`    |
 | [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                                      | Enable File output plugin                                | `On`    |
 | [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md)                        | Enable Flow counter output plugin                        | `On`    |
-| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](https://www.fluentd.org) output plugin   | `On`    |
+| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](https://www.fluentd.org) output plugin  | `On`    |
 | [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md)                                      | Enable GELF output plugin                                | `On`    |
 | [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md)                                      | Enable HTTP output plugin                                | `On`    |
 | [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md)                              | Enable InfluxDB output plugin                            | `On`    |
@@ -306,7 +305,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_PGSQL`](../../../pipeline/outputs/postgresql.md)                               | Enable PostgreSQL output plugin                          | `Off`   |
 | [`FLB_OUT_PLOT`](../../../pipeline/outputs/plot.md)                                      | Enable Plot output plugin                                | `On`    |
 | [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/outputs/prometheus-exporter.md)        | Enable Prometheus exporter output plugin                 | `On`    |
-| [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md) | Enable Prometheus remote write output plugin             | `On`    |
+| [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/outputs/prometheus-remote-write.md)| Enable Prometheus remote write output plugin             | `On`    |
 | [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                                          | Enable Amazon S3 output plugin                           | `On`    |
 | [`FLB_OUT_SKYWALKING`](../../../pipeline/outputs/skywalking.md)                          | Enable Apache Skywalking output plugin                   | `On`    |
 | [`FLB_OUT_SLACK`](../../../pipeline/outputs/slack.md)                                    | Enable Slack output plugin                               | `On`    |
@@ -318,4 +317,4 @@ The following table describes the output plugins available:
 | [`FLB_OUT_TCP`](../../../pipeline/outputs/tcp-and-tls.md)                                | Enable TCP/TLS output plugin                             | `On`    |
 | [`FLB_OUT_UDP`](../../../pipeline/outputs/udp.md)                                        | Enable UDP output plugin                                 | `On`    |
 | [`FLB_OUT_VIVO_EXPORTER`](../../../pipeline/outputs/vivo-exporter.md)                    | Enable Vivo exporter output plugin                       | `On`    |
-| [`FLB_OUT_WEBSOCKET`](../../../pipeline/outputs/udp.md)                                  | Enable UDP output plugin                                 | `On`    |
+| [`FLB_OUT_WEBSOCKET`](../../../pipeline/outputs/websocket.md)                            | Enable WebSocket output plugin                           | `On`    |
