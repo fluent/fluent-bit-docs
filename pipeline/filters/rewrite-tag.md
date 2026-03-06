@@ -25,10 +25,10 @@ The `rewrite_tag` filter supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| `Rule` | Defines the matching criteria and the format of the tag for the matching record. The Rule format has four components: `KEY REGEX NEW_TAG KEEP`. |
-| `Emitter_Name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
-| `Emitter_Storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
-| `Emitter_Mem_Buf_Limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| `emitter_mem_buf_limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
+| `emitter_name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
+| `emitter_storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
+| `rule` | Defines the matching criteria and the format of the tag for the matching record. The rule format has four components: `KEY REGEX NEW_TAG KEEP`. |
 
 ## Rules
 
@@ -176,10 +176,43 @@ $ fluent-bit -c example.conf
 ...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
-## Configuration example with multiple rules 
-In cases using multiple rules, the rules are passed through in order until one matches. With `AND_COMBINE` using the value `true` as optional fifth  component, the rule is combined with the following rule like an 'and' combination. If the first and following rule match, the message is retagged with the tag in the last matched rule.
 
-An `AND_COMBINE` in the last rule is ignored. 
+## Configuration example with multiple rules
+
+When multiple rules are defined, they're evaluated in order until one matches.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 5
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: tail
+      path: /var/tmp/loginput.txt
+
+  filters:
+    - name: rewrite_tag
+      match: tail
+      rule:
+        - "$log ^(1)$      newtag_or    false"
+        - "$log ^(.*and)$  newtag_and_1 false"
+        - "$log ^(1.*)$    newtag_and_2 false"
+        - "$log ^(42)$     newtag_or    false"
+        - "$log ^(9)$      newtag_and_3 false"
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
 ```text
 [SERVICE]
     Flush     5
@@ -194,16 +227,21 @@ An `AND_COMBINE` in the last rule is ignored.
     Name          rewrite_tag
     Match         tail
     Rule          $log ^(1)$      newtag_or    false
-    Rule          $log ^(.*and)$  newtag_and_1 false true
+    Rule          $log ^(.*and)$  newtag_and_1 false
     Rule          $log ^(1.*)$    newtag_and_2 false
     Rule          $log ^(42)$     newtag_or    false
-    Rule          $log ^(9)$      newtag_and_3 false true
+    Rule          $log ^(9)$      newtag_and_3 false
 
 [OUTPUT]
     Name  stdout
     Match *
 ```
+
+{% endtab %}
+{% endtabs %}
+
 Use the input file `/var/tmp/loginput.txt`:
+
 ```text
 1
 2
@@ -215,14 +253,15 @@ Use the input file `/var/tmp/loginput.txt`:
 ```
 
 The log messages will be rewritten:
-```
+
+```text
 fluent-bit_1  | [0] tail: [1596050753.241336500, {"log"=>"2"}]
 fluent-bit_1  | [1] tail: [1596050753.241356700, {"log"=>"3"}]
-fluent-bit_1  | [2] tail: [1596050753.241410100, {"log"=>"10"}]
 fluent-bit_1  | [0] newtag_or: [1596050753.237370100, {"log"=>"1"}]
 fluent-bit_1  | [1] newtag_or: [1596050753.241427200, {"log"=>"42"}]
 fluent-bit_1  | [0] newtag_and_3: [1596050753.241374500, {"log"=>"9"}]
-fluent-bit_1  | [0] newtag_and_2: [1596050753.241392800, {"log"=>"10and"}]
+fluent-bit_1  | [0] newtag_and_1: [1596050753.241392800, {"log"=>"10and"}]
+fluent-bit_1  | [0] newtag_and_2: [1596050753.241410100, {"log"=>"10"}]
 ```
 
 ## Monitoring
@@ -280,4 +319,4 @@ The records generated are handled by the internal emitter, so the new records ar
 
 The _Emitter_ is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an emitter instance to use it exclusively to emit records, allowing for granular control of who is emitting what.
 
-Change the Emitter name in the metrics by adding the `Emitter_Name` configuration property described previously.
+Change the Emitter name in the metrics by adding the `emitter_name` configuration property described previously.
