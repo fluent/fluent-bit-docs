@@ -13,9 +13,10 @@ The plugin supports the following configuration parameters:
 | `nightfall_api_key` | The Nightfall API key to scan your logs with, obtainable from the [Nightfall Dashboard](https://app.nightfall.ai) | _none_ |
 | `policy_id` | The Nightfall developer platform policy to scan your logs with, configurable in the [Nightfall Dashboard](https://app.nightfall.ai/developer-platform/policies). | _none_ |
 | `sampling_rate` | The rate controlling how much of your logs you wish to be scanned. Must be a float between `(0,1]`. `1` means all logs will be scanned. Use this setting to avoid rate limits in conjunction with Fluent Bit match rules.| `1` |
+| `tls.ca_path` | Absolute path to root certificates, required if `tls.verify` is true. | _none_ |
 | `tls.debug` | Debug level between `0` (nothing) and `4` (every detail). | `0` |
 | `tls.verify` | When enabled, turns on certificate validation when connecting to the Nightfall API. | `true` |
-| `tls.ca_path` | Absolute path to root certificates, required if `tls.verify` is true. | _none_ |
+| `tls.vhost` | Set an optional TLS virtual host for the Nightfall API connection. | _none_ |
 
 ### Configuration file
 
