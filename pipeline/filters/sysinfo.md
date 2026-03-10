@@ -11,7 +11,7 @@ The plugin supports the following configuration parameters:
 | `fluentbit_version_key` | Specify the key name for the Fluent Bit version.| All |
 | `hostname_key`| Specify the key name for hostname. | All |
 | `kernel_version_key` | Specify the key name for kernel version. Not supported on some platforms.| Linux |
-| `os_name_key` | Specify the key name for operating system name. For example, `Linux`, `win64` or `macos`.| All |
+| `os_name_key` | Specify the key name for operating system name. For example, `Linux`, `win64` or `macOS`.| All |
 | `os_version_key` | Specify the key name for the operating system version. Not supported on some platforms. | Linux |
 
 Some properties are supported by specific platforms.
