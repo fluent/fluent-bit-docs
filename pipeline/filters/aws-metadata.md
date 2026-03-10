@@ -17,7 +17,7 @@ The plugin supports the following configuration parameters:
 | `hostname` | The hostname for the current EC2 instance. | `false` |
 | `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
 | `private_ip` | The EC2 instance private IP. | `false` |
-| `retry_interval_s` | Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
+| `retry_interval_s` | Defines minimum duration in seconds between retries for fetching EC2 instance tags. | `300` |
 | `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
 | `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
 | `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
