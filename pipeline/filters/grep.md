@@ -10,11 +10,11 @@ The _Grep_ filter plugin lets you match or exclude specific records based on reg
 
 The plugin supports the following configuration parameters:
 
-| Key          | Value Format | Description |
-| ------------ | ------------ | ----------- |
-| `Regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. |
-| `Exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. |
-| `Logical_Op` | `Operation` | Specify a logical operator:  `AND`, `OR` or `legacy` (default). In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses OR). Available from 2.1 or higher. |
+| Key          | Value Format | Description | Default |
+| ------------ | ------------ | ----------- | ------- |
+| `exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. | _none_ |
+| `logical_op` | `Operation` | Specify a logical operator: `AND`, `OR` or `legacy`. In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses `OR`). Available from 2.1 or higher. | `legacy` |
+| `regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. | _none_ |
 
 ### Record accessor enabled
 
@@ -95,7 +95,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The filter lets you use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions)).
+The filter lets you use multiple rules which are applied in order, you can have many `regex` and `exclude` entries as required ([more information](#multiple-conditions)).
 
 ### Nested fields example
 
@@ -194,15 +194,15 @@ or is missing or empty, then it will be excluded.
 
 ### Multiple conditions
 
-If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
-If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
-After, if there is no `Regex`, the line is sent to the output.
+If you want to set multiple `regex` or `exclude`, you must use the `legacy` mode. In this case, the `exclude` must be first and you can have only one `regex`.
+If `exclude` match, the string is blocked. You can have multiple `exclude` entry.
+After, if there is no `regex`, the line is sent to the output.
 
-If there is a `Regex` and it matches, the line is sent to the output, else, it's blocked.
+If there is a `regex` and it matches, the line is sent to the output, else, it's blocked.
 
-If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjunction or disjunction.
+If you want to set multiple `regex` or `exclude`, you can use `logical_op` property to use logical conjunction or disjunction.
 
-If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
+If `logical_op` is set, setting both `regex` and `exclude` results in an error.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
