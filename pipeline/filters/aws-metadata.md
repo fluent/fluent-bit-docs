@@ -8,19 +8,20 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
+| `account_id` | The account ID for the current EC2 instance. | `false` |
+| `ami_id` | The EC2 instance image ID. | `false` |
 | `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), such as `us-east-1a`. | `true` |
 | `ec2_instance_id` | The EC2 instance ID. | `true` |
 | `ec2_instance_type` | The EC2 instance type. | `false` |
-| `private_ip` | The EC2 instance private IP. | `false` |
-| `ami_id` | The EC2 instance image ID. | `false` |
-| `account_id` | The account ID for the current EC2 instance. | `false` |
+| `enable_entity` | Enables entity prefix for fields used for constructing entity. | `false` |
 | `hostname` | The hostname for the current EC2 instance. | `false` |
-| `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
-| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
-| `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
-| `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
+| `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
+| `private_ip` | The EC2 instance private IP. | `false` |
 | `retry_interval_s` | Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
+| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
+| `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
+| `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
+| `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
 
 If you run Fluent Bit in a container, you might need to use instance metadata v1. The plugin behaves the same regardless of which version is used.
 
@@ -49,27 +50,27 @@ The following is an example of a configuration file:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          tag: dummy
+  inputs:
+    - name: dummy
+      tag: dummy
 
-    filters:
-        - name: aws
-          match: '*'
-          imds_version: v1
-          az: true
-          ec2_instance_id: true
-          ec2_instance_type: true
-          private_ip: true
-          ami_id: true
-          account_id: true
-          hostname: true
-          vpc_id: true
-          tags_enabled: true
+  filters:
+    - name: aws
+      match: '*'
+      imds_version: v1
+      az: true
+      ec2_instance_id: true
+      ec2_instance_type: true
+      private_ip: true
+      ami_id: true
+      account_id: true
+      hostname: true
+      vpc_id: true
+      tags_enabled: true
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -77,26 +78,26 @@ pipeline:
 
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
+  Name dummy
+  Tag  dummy
 
 [FILTER]
-    Name aws
-    Match *
-    imds_version v1
-    az true
-    ec2_instance_id true
-    ec2_instance_type true
-    private_ip true
-    ami_id true
-    account_id true
-    hostname true
-    vpc_id true
-    tags_enabled true
+  Name             aws
+  Match            *
+  imds_version     v1
+  az               true
+  ec2_instance_id  true
+  ec2_instance_type true
+  private_ip       true
+  ami_id           true
+  account_id       true
+  hostname         true
+  vpc_id           true
+  tags_enabled     true
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
