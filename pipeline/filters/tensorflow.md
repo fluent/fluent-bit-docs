@@ -15,7 +15,7 @@ The plugin supports the following configuration parameters:
 
 | Key                    | Description                                                         | Default |
 |:-----------------------|:--------------------------------------------------------------------|:--------|
-| `include_input_fields` | Include all input filed in filter's output.                         | `True`  |
+| `include_input_fields` | Include all input fields in filter's output.                        | `true`  |
 | `input_field`          | Specify the name of the field in the record to apply inference on.  | _none_  |
 | `model_file`           | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_  |
 | `normalization_value`  | Divide input values to `normalization_value`.                       | _none_  |
@@ -51,13 +51,12 @@ If the Tensorflow plugin initializes correctly, it reports successful creation o
 The command:
 
 ```shell
-fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
+fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p 'include_input_fields=false' -p 'normalization_value=255' -o stdout
 ```
 
 produces an output like:
 
 ```text
-'include_input_fields=false' -p 'normalization_value=255' -o stdout
 [2020/08/04 20:00:00] [ info] Tensorflow Lite interpreter created!
 [2020/08/04 20:00:00] [ info] [tensorflow] ===== input #1 =====
 [2020/08/04 20:00:00] [ info] [tensorflow] type: FLOAT32  dimensions: {1, 224, 224, 3}
