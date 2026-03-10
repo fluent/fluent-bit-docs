@@ -78,18 +78,18 @@ pipeline:
   parsers_file /path/to/parsers.conf
 
 [INPUT]
-  name   tail
-  path   lines.txt
-  parser json
+  Name   tail
+  Path   lines.txt
+  Parser json
 
 [FILTER]
-  name   grep
-  match  *
-  regex  log aa
+  Name   grep
+  Match  *
+  Regex  log aa
 
 [OUTPUT]
-  name   stdout
-  match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
@@ -195,7 +195,7 @@ or is missing or empty, then it will be excluded.
 ### Multiple conditions
 
 If you want to set multiple `regex` or `exclude`, you must use the `legacy` mode. In this case, the `exclude` must be first and you can have only one `regex`.
-If `exclude` match, the string is blocked. You can have multiple `exclude` entry.
+If `exclude` matches, the string is blocked. You can have multiple `exclude` entries.
 After, if there is no `regex`, the line is sent to the output.
 
 If there is a `regex` and it matches, the line is sent to the output, else, it's blocked.
@@ -232,16 +232,16 @@ pipeline:
 
 ```text
 [INPUT]
-  Name dummy
+  Name  dummy
   Dummy {"endpoint":"localhost", "value":"something"}
-  Tag dummy
+  Tag   dummy
 
 [FILTER]
-  Name grep
-  Match *
+  Name       grep
+  Match      *
   Logical_Op or
-  Regex value something
-  Regex value error
+  Regex      value something
+  Regex      value error
 
 [OUTPUT]
   Name stdout
