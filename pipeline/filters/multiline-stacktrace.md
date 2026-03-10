@@ -94,24 +94,24 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-  flush                 1
-  log_level             info
-  parsers_file          parsers_multiline.conf
+  Flush                 1
+  Log_Level             info
+  Parsers_File          parsers_multiline.conf
 
 [INPUT]
-  name                  tail
-  path                  test.log
-  read_from_head        true
+  Name                  tail
+  Path                  test.log
+  Read_From_Head        true
 
 [FILTER]
-  name                  multiline
-  match                 *
+  Name                  multiline
+  Match                 *
   multiline.key_content log
   multiline.parser      go, multiline-regex-test
 
 [OUTPUT]
-  name                  stdout
-  match                 *
+  Name                  stdout
+  Match                 *
 ```
 
 {% endtab %}
@@ -151,9 +151,9 @@ This file defines a multiline parser for the example. A second multiline parser 
 
 ```text
 [MULTILINE_PARSER]
-  name          multiline-regex-test
-  type          regex
-  flush_timeout 1000
+  Name          multiline-regex-test
+  Type          regex
+  Flush_Timeout 1000
   #
   # Regex rules for multiline parsing
   # ---------------------------------
@@ -165,8 +165,8 @@ This file defines a multiline parser for the example. A second multiline parser 
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
-  rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-  rule      "cont"          "/^\s+at.*/"                     "cont"
+  Rule      "start_state"   "/([A-Za-z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  Rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 
 {% endtab %}
@@ -342,10 +342,10 @@ pipeline:
 
 ```text
 [FILTER]
-  name                  multiline
-  match                 *
+  Name                  multiline
+  Match                 *
   multiline.key_content log
-  mode                  partial_message
+  Mode                  partial_message
 ```
 
 {% endtab %}
