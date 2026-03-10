@@ -1,6 +1,6 @@
 # Throttle
 
-The _Throttle_ filter sets the average `Rate` of messages per `Interval`, based on the leaky bucket and sliding window algorithm. In case of flooding, it will leak at a certain rate.
+The _Throttle_ filter sets the average `rate` of messages per `interval`, based on the leaky bucket and sliding window algorithm. In case of flooding, it will leak at a certain rate.
 
 ## Configuration parameters
 
@@ -8,10 +8,10 @@ The plugin supports the following configuration parameters:
 
 | Key | Value Format | Description |
 | :--- | :--- | :--- |
-| `Rate` | `Integer` | Amount of messages for the time. |
-| `Window` | `Integer` | Amount of intervals to calculate average over. Default: `5`. |
-| `Interval` | `String` | Time interval, expressed in `sleep` format. For example, `3s`, `1.5m`, `0.5h`. |
-| `Print_Status` | `Bool` | Whether to print status messages with current rate and the limits to information logs. |
+| `interval` | `String` | Time interval, expressed in `sleep` format. For example, `3s`, `1.5m`, `0.5h`. |
+| `print_status` | `Bool` | Whether to print status messages with current rate and the limits to information logs. |
+| `rate` | `Integer` | Amount of messages for the time. |
+| `window` | `Integer` | Amount of intervals to calculate average over. Default: `5`. |
 
 ## Functional description
 
@@ -65,9 +65,9 @@ will become:
 
 The last pane of the window was overwritten and 1 message was dropped.
 
-### `Interval` versus `Window` size
+### `interval` versus `window` size
 
-You might notice it's possible to configure the `Interval` of the `Window` shift. It's counterintuitive, but there is a difference between the two previous examples:
+You might notice it's possible to configure the `interval` of the `window` shift. It's counterintuitive, but there is a difference between the two previous examples:
 
 ```text
 Rate 60
@@ -83,7 +83,7 @@ Window 300
 Interval 1s
 ```
 
-Even though both examples will allow maximum `Rate` of 60 messages per minute, the first example might get all 60 messages within first second, and will drop all the rest for the entire minute:
+Even though both examples will allow maximum `rate` of 60 messages per minute, the first example might get all 60 messages within first second, and will drop all the rest for the entire minute:
 
 ```text
 XX        XX        XX
@@ -103,13 +103,13 @@ XXXX XXXX  XXXX XXXX XXXX XXXX
 +-+-+-+-+-+--+-+-+-+-+-+-+-+-+-+
 ```
 
-Fluent Bit might drop some data if the rate is ragged. Use bigger intervals and rates for streams of rare but important events, while keeping `Window` bigger and `Interval` smaller for constantly intensive inputs.
+Fluent Bit might drop some data if the rate is ragged. Use bigger intervals and rates for streams of rare but important events, while keeping `window` bigger and `interval` smaller for constantly intensive inputs.
 
 ### Command line
 
 It's suggested to use a configuration file.
 
-The following command will load the Tail plugin and read the content of the `lines.txt` file. Then, the Throttle filter will apply a rate limit and only pass the records which are read below the `rate`:
+The following command will load the Tail plugin and read the content of the `lines.txt` file. Then, the Throttle filter will apply a rate limit and only pass the records which are within the `rate`:
 
 ```shell
 fluent-bit -i tail -p 'path=lines.txt' -F throttle -p 'rate=1' -m '*' -o stdout
