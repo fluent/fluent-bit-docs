@@ -82,18 +82,18 @@ pipeline:
   Tag  dummy
 
 [FILTER]
-  Name             aws
-  Match            *
-  imds_version     v1
-  az               true
-  ec2_instance_id  true
-  ec2_instance_type true
-  private_ip       true
-  ami_id           true
-  account_id       true
-  hostname         true
-  vpc_id           true
-  tags_enabled     true
+  Name              aws
+  Match             *
+  Imds_Version      v1
+  Az                true
+  Ec2_Instance_Id   true
+  Ec2_Instance_Type true
+  Private_Ip        true
+  Ami_Id            true
+  Account_Id        true
+  Hostname          true
+  Vpc_Id            true
+  Tags_Enabled      true
 
 [OUTPUT]
   Name  stdout
@@ -137,10 +137,10 @@ pipeline:
 
 ```text
 [FILTER]
-    Name aws
-    Match *
-    tags_enabled true
-    tags_include department,project
+    Name         aws
+    Match        *
+    Tags_Enabled true
+    Tags_Include department,project
 ```
 
 {% endtab %}
@@ -176,10 +176,10 @@ pipeline:
 
 ```text
 [FILTER]
-  Name aws
-  Match *
-  tags_enabled true
-  tags_exclude department
+  Name         aws
+  Match        *
+  Tags_Enabled true
+  Tags_Exclude department
 ```
 
 {% endtab %}
