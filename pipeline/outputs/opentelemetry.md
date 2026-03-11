@@ -37,7 +37,8 @@ Only HTTP endpoints are supported.
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
 | `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
 | `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
-| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
+| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`
+| `logs_resource_attributes_message_key`    | Specify a `Resource` key.                                                      | _none_                                                                      |
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
 | `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
@@ -135,6 +136,7 @@ pipeline:
       logs_trace_id_message_key: trace_id
       logs_severity_text_message_key: loglevel
       logs_severity_number_message_key: lognum
+
       # add user-defined labels
       add_label:
         - app fluent-bit
@@ -184,6 +186,8 @@ pipeline:
   logs_trace_id_message_key trace_id
   logs_severity_text_message_key loglevel
   logs_severity_number_message_key lognum
+  logs_resource_attributes_message_key application_id
+  logs_resource_attributes_message_key service_name
   # add user-defined labels
   add_label            app fluent-bit
   add_label            color blue
