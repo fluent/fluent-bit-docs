@@ -13,6 +13,7 @@ The metrics can be exposed later as, for example, Prometheus counters and gauges
 | `path.config`     | Custom path to the Podman containers configuration file.                                                | `/var/lib/containers/storage/overlay-containers/containers.json` |
 | `path.sysfs`      | Custom path to the `sysfs` subsystem directory.                                                         | `/sys/fs/cgroup`                                                 |
 | `path.procfs`     | Custom path to the `proc` subsystem directory.                                                          | `/proc`                                                          |
+| `remove_stale_counters` | Should this plugin remove counters for removed containers.                                        | `false`                                                          |
 | `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                                                          |
 
 ## Get started
