@@ -26,6 +26,7 @@ redirects:
     input/splunk:          ./pipeline/inputs/splunk.md
     input/serial:          ./pipeline/inputs/serial-interface.md
     #inputs/statsd:          ./pipeline/inputs/
+    input/snmp:            ./pipeline/inputs/snmp.md
     input/stdin:           ./pipeline/inputs/standard-input.md
     input/syslog:          ./pipeline/inputs/syslog.md
     input/systemd:         ./pipeline/inputs/systemd.md
