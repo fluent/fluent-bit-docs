@@ -13,6 +13,8 @@ The plugin supports the following configuration parameters:
 | `Format` | The [format](#format) of the file content. | `out_file` |
 | `Mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | _none_ |
 | `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| `line_append` | Append new data to the end of log in same line. | `false` |                                                                                       | false   |
+
 
 ## Format
 
