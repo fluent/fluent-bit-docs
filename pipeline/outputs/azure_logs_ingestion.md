@@ -32,7 +32,7 @@ To get more details about how to set up these components, refer to the following
 | `dcr_id` | Data Collection Rule (DCR) [immutable ID](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr). | _none_ |
 | `table_name` | The name of the custom log table (include the `_CL` suffix as well if applicable). | _none_ |
 | `tenant_id` | The tenant ID of the Azure Active Directory (AAD) application. | _none_ |
-| `time_generated` | Optional. If enabled, will generate a timestamp and append it to JSON. The key name is set by the `time_key` parameter. | `false` |
+| `time_generated` | Optional. If enabled, the timestamp appended under `time_key` is formatted as an ISO 8601 string. If disabled, it's a floating-point number representing seconds since Unix epoch. | `false` |
 | `time_key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
