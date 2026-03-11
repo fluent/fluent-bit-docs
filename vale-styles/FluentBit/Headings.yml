@@ -142,12 +142,14 @@ exceptions:
   - SignalFx
   - SIMD
   - Slack
+  - SMB
   - SQL
   - SSL
   - SSM
   - StatsD
   - Studio
   - Sumo Logic
+  - Tailing files from SMB/Samba
   - Tanzu
   - TCP
   - Telemetry Pipeline
