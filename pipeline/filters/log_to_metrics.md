@@ -111,6 +111,15 @@ pipeline:
   metric_name        count_all_dummy_messages
   metric_description This metric counts dummy messages
 
+[FILTER]
+    name               log_to_metrics
+    match              dummy.log*
+    tag                test_metric
+    metric_mode        counter
+    metric_name        total_duration 
+    metric_description This metric counts the total time spent across all messages
+    value_field        duration
+
 [OUTPUT]
   name               prometheus_exporter
   match              *
@@ -146,7 +155,10 @@ $ curl -s http://127.0.0.1:9999/metrics
 
 # HELP log_metric_counter_count_all_dummy_messages This metric counts dummy messages
 # TYPE log_metric_counter_count_all_dummy_messages counter
-log_metric_counter_count_all_dummy_messages 49
+log_metric_counter_count_all_dummy_messages 24
+# HELP log_metric_counter_total_duration This metric counts the total time spend
+# TYPE log_metric_counter_total_duration counter
+log_metric_counter_total_duration 960
 ```
 
 ### Gauge
