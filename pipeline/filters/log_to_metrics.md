@@ -17,20 +17,15 @@ The plugin supports the following configuration parameters:
 | Key | Description | Default | Format |
 |-----|-------------|---------|--------|
 | `add_label`  | Adds a custom label `NAME` and set the value to the value of `KEY`. | _none_  | `NAME KEY` |
-| `alias` | Sets an alias, use to set multiple instances of the same filter plugin. | _none_  |  |
 | `bucket` | Optional for `metric_mode` `histogram`. If not set, default Prometheus-style buckets are used. | _none_ | For example, `0.75`. |
 | `discard_logs` | Flag that defines if logs should be discarded after processing. This applies for all logs, whether they have emitted metrics or not. | `false` |  |
-| `emitter_name` | Name of the emitter (advanced users). | _none_ |  |
 | `emitter_mem_buf_limit` | Set a buffer limit to restrict memory usage of metrics emitter.  | `10M` |  |
+| `emitter_name` | Name of the emitter (advanced users). | _none_ |  |
 | `exclude` | Excludes records in which the content of `KEY` matches the regular expression `REGEX`. | _none_       | `KEY REGEX` |
-| `flush_interval_sec`    | The interval for metrics emission, in seconds. If `flush_interval_sec` and `flush_interval_nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. | `0` |  |
 | `flush_interval_nsec`   | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with `flush_interval_sec`.| `0` |  |
+| `flush_interval_sec`    | The interval for metrics emission, in seconds. If `flush_interval_sec` and `flush_interval_nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. | `0` |  |
 | `kubernetes_mode`       | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes.md) filter plugin, which fills those fields. | `false`      |  |
 | `label_field`           | Includes a record field as label dimension in the metric. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| `log_level`             | Specifies the log level for filter plugin. If not set here, plugin uses global log level in `service` section.| `info`       |  |
-| `log_supress_interval`  | Suppresses log messages from filter plugin that appear similar within a specified time interval. Setting to `0` indicates no suppression. | `0`          |  |
-| `match` | Set a tag pattern to match records that filter should process. Exact matches or wildcards. | _none_       |  |
-| `match_regex`           | Set a regular expression to match tags for filter routing. This allows more flexible matching compared to wildcards. | _none_       |  |
 | `metric_description`    | Sets a description for the metric.                                                  | _none_       |  |
 | `metric_mode`           | Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`.| `counter`    |  |
 | `metric_name`           | Sets the name of the metric.                                                        | `a`          |  |
@@ -448,7 +443,7 @@ pipeline:
         - 5
         - 10
         - 50
-        - 1000
+        - 100
         - 250
         - 500
         - 1000

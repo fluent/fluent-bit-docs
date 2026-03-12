@@ -15,7 +15,7 @@ This plugin supports the following configuration parameters:
 | Key | Description |
 | :--- | :--- |
 | `database` | Path to the GeoIP2 database. |
-| `lookup_key` | Field name to process. |
+| `lookup_key` | Field name to process. Multiple `lookup_key` entries are supported. |
 | `record` | Defines the `KEY LOOKUP_KEY VALUE` triplet. |
 
 ## Get started

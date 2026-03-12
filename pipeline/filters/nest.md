@@ -130,7 +130,7 @@ pipeline:
   Nest_under Memstats
   Remove_prefix Mem.
 
- [OUTPUT]
+[OUTPUT]
   Name  stdout
   Match *
 ```
@@ -165,18 +165,18 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard:
+      operation: nest
+      wildcard:
         - Mem.*
         - Swap.*
-      Nest_under: Stats
-      Add_prefix: NESTED
+      nest_under: Stats
+      add_prefix: NESTED
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Stats
-      Remove_prefix: NESTED
+      operation: lift
+      nested_under: Stats
+      remove_prefix: NESTED
 
   outputs:
     - name: stdout
@@ -240,21 +240,21 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: Mem.*
-      Nest_under: LAYER1
+      operation: nest
+      wildcard: Mem.*
+      nest_under: LAYER1
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER1*
-      Nest_under: LAYER2
+      operation: nest
+      wildcard: LAYER1*
+      nest_under: LAYER2
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER2*
-      Nest_under: LAYER3
+      operation: nest
+      wildcard: LAYER2*
+      nest_under: LAYER3
 
   outputs:
     - name: stdout
@@ -338,39 +338,39 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: Mem.*
-      Nest_under: LAYER1
+      operation: nest
+      wildcard: Mem.*
+      nest_under: LAYER1
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER1*
-      Nest_under: LAYER2
+      operation: nest
+      wildcard: LAYER1*
+      nest_under: LAYER2
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER2*
-      Nest_under: LAYER3
+      operation: nest
+      wildcard: LAYER2*
+      nest_under: LAYER3
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: LAYER3
-      Add_prefix: Lifted3_
+      operation: lift
+      nested_under: LAYER3
+      add_prefix: Lifted3_
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Lifted3_LAYER2
-      Add_prefix: Lifted3_Lifted2_
+      operation: lift
+      nested_under: Lifted3_LAYER2
+      add_prefix: Lifted3_Lifted2_
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Lifted3_Lifted2_LAYER1
-      Add_prefix: Lifted3_Lifted2_Lifted1_
+      operation: lift
+      nested_under: Lifted3_Lifted2_LAYER1
+      add_prefix: Lifted3_Lifted2_Lifted1_
 
   outputs:
     - name: stdout

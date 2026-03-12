@@ -18,12 +18,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| `Wasm_Path` | Path to the built Wasm program that will be used. This can be a path relative to the main configuration file. |
-| `Event_Format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
-| `Function_Name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
-| `Accessible_Paths` | Specify the allowlist of paths to be able to access paths from Wasm programs. |
-| `Wasm_Heap_Size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
-| `Wasm_Stack_Size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
+| `accessible_paths` | Specify the allowlist of paths to be able to access paths from Wasm programs. Default: `.` (current directory). |
+| `event_format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
+| `function_name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
+| `wasm_heap_size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
+| `wasm_path` | Path to the built Wasm program that will be used. This can be a path relative to the main configuration file. |
+| `wasm_stack_size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
 
 ## Configuration example
 
@@ -64,7 +64,7 @@ pipeline:
   Name             wasm
   Match            dummy.*
   Event_Format     json # or msgpack
-  WASM_Path        /path/to/wasm_program.wasm
+  Wasm_Path        /path/to/wasm_program.wasm
   Function_Name    filter_function_name
   Accessible_Paths .,/path/to/accessible
 

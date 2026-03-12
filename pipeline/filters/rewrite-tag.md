@@ -150,7 +150,7 @@ pipeline:
   Log_Level info
 
 [INPUT]
-  NAME   dummy
+  Name   dummy
   Dummy  {"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}
   Tag    test_tag
 

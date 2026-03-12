@@ -18,10 +18,10 @@ The plugin supports the following configuration parameters. It needs four parame
 
 | Key | Description |
 | :--- | :--- |
-| `int_key` | This parameter is for an integer source.|
-| `uint_key` | This parameter is for an unsigned integer source.|
-| `float_key` | This parameter is for a float source.|
-| `str_key` | This parameter is for a string source.|
+| `float_key` | This parameter is for a float source. |
+| `int_key` | This parameter is for an integer source. |
+| `str_key` | This parameter is for a string source. |
+| `uint_key` | This parameter is for an unsigned integer source. |
 
 ## Get started
 

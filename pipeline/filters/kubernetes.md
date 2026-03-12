@@ -291,7 +291,7 @@ Kubernetes filter doesn't care from where the logs comes from, but it cares abou
 
 If you have large pod specifications, which can be caused by large numbers of environment variables, increase the `Buffer_Size` parameter of the Kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
-If the configuration property `Kube_Tag_Prefix` was configured (available on Fluent Bit &gt;= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous `Input` section. The configuration property defaults to `kube.var.logs.containers.` , so the previous tag content will be transformed from:
+If the configuration property `Kube_Tag_Prefix` was configured (available on Fluent Bit &gt;= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous `Input` section. The configuration property defaults to `kube.var.log.containers.` , so the previous tag content will be transformed from:
 
 ```text
 kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
@@ -458,14 +458,14 @@ pipeline:
       kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       merge_log: on
       buffer_size: 0
-      use_kubelet: ture
+      use_kubelet: true
       kubelet_port: 10250
 ```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```yaml
+```text
 [INPUT]
   Name              tail
   Tag               kube.*
