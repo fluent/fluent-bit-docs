@@ -245,7 +245,7 @@ pipeline:
 
 ### Configuration for workload identity
 
-Azure Workload Identity lets pods in Azure Kubernetes Service (AKS) authenticate to Azure Blob Storage using a Kubernetes service account federated with Microsoft Entra ID.
+Azure Workload Identity lets pods in Azure Kubernetes Service (AKS) authenticate to Azure Blob Storage using a Kubernetes service account federated with `Microsoft Entra ID`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
