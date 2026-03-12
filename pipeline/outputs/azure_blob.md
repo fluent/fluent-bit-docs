@@ -162,24 +162,24 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush     1
-  log_level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-  name      dummy
-  dummy     {"name": "Fluent Bit", "year": 2024}
-  samples   1
-  tag       var.log.containers.app-default-96cbdef2340.log
+  Name      dummy
+  Dummy     {"name": "Fluent Bit", "year": 2024}
+  Samples   1
+  Tag       var.log.containers.app-default-96cbdef2340.log
 
 [OUTPUT]
-  name                  azure_blob
-  match                 *
-  account_name          YOUR_ACCOUNT_NAME
-  auth_type             managed_identity
-  client_id             system
-  container_name        logs
-  auto_create_container on
-  tls                   on
+  Name                  azure_blob
+  Match                 *
+  Account_Name          YOUR_ACCOUNT_NAME
+  Auth_Type             managed_identity
+  Client_Id             system
+  Container_Name        logs
+  Auto_Create_Container on
+  Tls                   on
 ```
 
 {% endtab %}
@@ -220,24 +220,24 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush     1
-  log_level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-  name      dummy
-  dummy     {"name": "Fluent Bit", "year": 2024}
-  samples   1
-  tag       var.log.containers.app-default-96cbdef2340.log
+  Name      dummy
+  Dummy     {"name": "Fluent Bit", "year": 2024}
+  Samples   1
+  Tag       var.log.containers.app-default-96cbdef2340.log
 
 [OUTPUT]
-  name                  azure_blob
-  match                 *
-  account_name          YOUR_ACCOUNT_NAME
-  auth_type             managed_identity
-  client_id             YOUR_MANAGED_IDENTITY_CLIENT_ID
-  container_name        logs
-  auto_create_container on
-  tls                   on
+  Name                  azure_blob
+  Match                 *
+  Account_Name          YOUR_ACCOUNT_NAME
+  Auth_Type             managed_identity
+  Client_Id             YOUR_MANAGED_IDENTITY_CLIENT_ID
+  Container_Name        logs
+  Auto_Create_Container on
+  Tls                   on
 ```
 
 {% endtab %}
@@ -279,25 +279,25 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush     1
-  log_level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-  name      dummy
-  dummy     {"name": "Fluent Bit", "year": 2024}
-  samples   1
-  tag       var.log.containers.app-default-96cbdef2340.log
+  Name      dummy
+  Dummy     {"name": "Fluent Bit", "year": 2024}
+  Samples   1
+  Tag       var.log.containers.app-default-96cbdef2340.log
 
 [OUTPUT]
-  name                  azure_blob
-  match                 *
-  account_name          YOUR_ACCOUNT_NAME
-  auth_type             workload_identity
-  client_id             YOUR_CLIENT_ID
-  tenant_id             YOUR_TENANT_ID
-  container_name        logs
-  auto_create_container on
-  tls                   on
+  Name                  azure_blob
+  Match                 *
+  Account_Name          YOUR_ACCOUNT_NAME
+  Auth_Type             workload_identity
+  Client_Id             YOUR_CLIENT_ID
+  Tenant_Id             YOUR_TENANT_ID
+  Container_Name        logs
+  Auto_Create_Container on
+  Tls                   on
 ```
 
 {% endtab %}
