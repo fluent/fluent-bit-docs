@@ -45,6 +45,7 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `sts_endpoint`                     | Specify a custom STS endpoint for the AWS STS API.                                           | _none_     |
 | `tls.windows.certstore_name`       | Sets the certificate store name on an output (Windows).                                      | _none_     |
 | `tls.windows.use_enterprise_store` | Sets whether using enterprise certificate store or not on an output (Windows).               | _none_     |
+| `workers`                          | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Get started
 
@@ -82,12 +83,12 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fluent-bit-cloudwatch
-  log_stream_prefix from-fluent-bit-
-  auto_create_group On
+  Name              cloudwatch_logs
+  Match             *
+  Region            us-east-1
+  Log_group_name    fluent-bit-cloudwatch
+  Log_stream_prefix from-fluent-bit-
+  Auto_create_group On
 ```
 
 {% endtab %}
@@ -119,14 +120,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fluent-bit-cloudwatch
-  log_stream_prefix from-fluent-bit-
-  auto_create_group On
-  endpoint localhost
-  port 4566
+  Name              cloudwatch_logs
+  Match             *
+  Region            us-east-1
+  Log_group_name    fluent-bit-cloudwatch
+  Log_stream_prefix from-fluent-bit-
+  Auto_create_group On
+  Endpoint          localhost
+  Port              4566
 ```
 
 {% endtab %}
@@ -207,14 +208,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fallback-group
-  log_stream_prefix fallback-stream
-  auto_create_group On
-  log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
-  log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
+  Name                cloudwatch_logs
+  Match               *
+  Region              us-east-1
+  Log_group_name      fallback-group
+  Log_stream_prefix   fallback-stream
+  Auto_create_group   On
+  Log_group_template  application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+  Log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
 {% endtab %}
@@ -296,22 +297,22 @@ pipeline:
 
 [INPUT]
   Name mem
-  Tag mem
+  Tag  mem
 
 [FILTER]
-  Name aws
+  Name  aws
   Match *
 
 [OUTPUT]
-  Name cloudwatch_logs
-  Match *
-  region us-west-2
-  log_stream_name fluent-bit-cloudwatch
-  log_group_name fluent-bit-cloudwatch
-  log_format json/emf
-  metric_namespace fluent-bit-metrics
-  metric_dimensions ec2_instance_id
-  auto_create_group true
+  Name               cloudwatch_logs
+  Match              *
+  Region             us-west-2
+  Log_stream_name    fluent-bit-cloudwatch
+  Log_group_name     fluent-bit-cloudwatch
+  Log_format         json/emf
+  Metric_namespace   fluent-bit-metrics
+  Metric_dimensions  ec2_instance_id
+  Auto_create_group  On
 ```
 
 {% endtab %}
@@ -356,22 +357,22 @@ pipeline:
 
 [INPUT]
   Name mem
-  Tag mem
+  Tag  mem
 
 [FILTER]
-  Name aws
+  Name  aws
   Match *
 
 [OUTPUT]
-  Name cloudwatch_logs
-  Match *
-  region us-west-2
-  log_stream_name fluent-bit-cloudwatch
-  log_group_name fluent-bit-cloudwatch
-  log_format json/emf
-  metric_namespace fluent-bit-metrics
-  metric_dimensions ec2_instance_id,az
-  auto_create_group true
+  Name               cloudwatch_logs
+  Match              *
+  Region             us-west-2
+  Log_stream_name    fluent-bit-cloudwatch
+  Log_group_name     fluent-bit-cloudwatch
+  Log_format         json/emf
+  Metric_namespace   fluent-bit-metrics
+  Metric_dimensions  ec2_instance_id,az
+  Auto_create_group  On
 ```
 
 {% endtab %}
