@@ -22,7 +22,7 @@ This plugin uses the following configuration parameters:
 | `endpoint` | Specify a custom endpoint for the Firehose API. | _none_ |
 | `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
 | `log_key` | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. | _none_ |
-| `profile` | AWS profile name to use. | `default` |
+| `profile` | AWS profile name to use. | _none_ |
 | `region` | The AWS region. | _none_ |
 | `role_arn` | ARN of an IAM role to assume (for cross-account access). | _none_ |
 | `simple_aggregation` | Enable record aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. | `false` |
