@@ -22,6 +22,7 @@ This plugin supports the following parameters:
 | `queue_full_retries` | Fluent Bit queues data into `rdkafka` library. If the underlying library can't flush the records the queue might fill up, blocking new addition of records. `queue_full_retries` sets the number of local retries to enqueue the data. The interval between retries is 1 second. Setting the `queue_full_retries` value to `0` sets an unlimited number of retries. | `10` |
 | `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md) | _none_ |
 | `raw_log_key` | When using the raw format and set, the value of `raw_log_key` in the record will be send to Kafka as the payload. | _none_ |
+| `header` | Add a Kafka message header as a key/value pair. Multiple `header` entries can be set. Use `header key value` for a static value, or `header key $field_name` to use the value of a log record field as the header value. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 Setting `rdkafka.log.connection.close` to `false` and `rdkafka.request.required.acks` to `1` are examples of recommended settings of `librdfkafka` properties.
@@ -53,7 +54,7 @@ pipeline:
   outputs:
     - name: kafka
       match: '*'
-      host: 192.1681.3:9092
+      brokers: 192.168.1.3:9092
       topics: test
 ```
 
@@ -69,6 +70,63 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Message headers
+
+The `header` option attaches custom headers to every Kafka message produced by the plugin. You can set any number of headers by repeating the `header` key.
+
+**Static headers** use a literal value:
+
+```text
+header X-Environment production
+header X-Source      fluent-bit
+```
+
+**Dynamic headers** use a log record field as the value. Prefix the field name with `$`:
+
+```text
+header X-TraceId $trace_id
+header X-UserId  $user_id
+```
+
+If a referenced field isn't found in the record, or its value isn't a string, the header is skipped and a warning is emitted. Static and dynamic headers can be mixed freely.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: kafka
+      match: '*'
+      brokers: 192.168.1.3:9092
+      topics: test
+      header:
+        - 'X-Environment production'
+        - 'X-TraceId $trace_id'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name  cpu
+
+[OUTPUT]
+  Name        kafka
+  Match       *
+  Brokers     192.168.1.3:9092
+  Topics      test
+  Header      X-Environment production
+  Header      X-TraceId     $trace_id
 ```
 
 {% endtab %}
@@ -205,7 +263,7 @@ pipeline:
   outputs:
     - name: kafka
       match: '*'
-      host: 192.1681.3:9092
+      brokers: 192.168.1.3:9092
       topics: test
       format: raw
       raw_log_key: payloadkey
