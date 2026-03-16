@@ -27,22 +27,24 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
    - [Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#aws)
    - [Obtaining short-lived credentials with identity federation](https://cloud.google.com/iam/docs/using-workload-identity-federation)
 
-## Configurations parameters
+## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS`. |
-| `project_id` | The project id containing the BigQuery dataset to stream into. | Value of the `project_id` in the credentials file. |
-| `dataset_id` | The dataset id of the BigQuery dataset to write into. This dataset must exist in your project. | _none_ |
-| `table_id` | The table id of the BigQuery table to write into. This table must exist in the specified dataset and the schema must match the output. | _none_ |
-| `skip_invalid_rows` | Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. | `Off` |
-| `ignore_unknown_values` | Accept rows that contain values that don't match the schema. The unknown values are ignored. Default is `Off`, which treats unknown values as errors. | `Off` |
-| `enable_workload_identity_federation` | Enables workload identity federation as an alternative authentication method. Can't be used with service account credentials file or environment variable. AWS is the only identity provider currently supported. | `Off` |
 | `aws_region` | Used to construct a regional endpoint for AWS STS to verify AWS credentials obtained by Fluent Bit. Regional endpoints are recommended by AWS. | _none_ |
-| `project_number` | GCP project number where the identity provider was created. Used to construct the full resource name of the identity provider. | _none_ |
+| `dataset_id` | The dataset ID of the BigQuery dataset to write into. This dataset must exist in your project. | _none_ |
+| `enable_identity_federation` | Enables workload identity federation as an alternative authentication method. Can't be used with a service account credentials file or environment variable. AWS is the only identity provider currently supported. | `Off` |
+| `google_service_account` | The email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources (`write` access to tables). | _none_ |
+| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS`. |
+| `ignore_unknown_values` | Accept rows that contain values that don't match the schema. The unknown values are ignored. Default is `Off`, which treats unknown values as errors. | `Off` |
 | `pool_id` | GCP workload identity pool where the identity provider was created. Used to construct the full resource name of the identity provider. | _none_ |
+| `project_id` | The project ID containing the BigQuery dataset to stream into. | Value of the `project_id` in the credentials file. |
+| `project_number` | GCP project number where the identity provider was created. Used to construct the full resource name of the identity provider. | _none_ |
 | `provider_id` | GCP workload identity provider. Used to construct the full resource name of the identity provider. Currently only AWS accounts are supported. | _none_ |
-| `google_service_account` | The email address of the Google service account to impersonate. The workload identity provider must have permissions to impersonate this service account, and the service account must have permissions to access Google BigQuery resources ( `write` access to tables) | _none_ |
+| `service_account_email` | The service account email address. Used as an alternative to a credentials file. | _none_ |
+| `service_account_secret` | The service account private key. Used as an alternative to a credentials file. | _none_ |
+| `skip_invalid_rows` | Insert all valid rows of a request, even if invalid rows exist. When `Off`, the entire request fails if any invalid rows exist. | `Off` |
+| `table_id` | The table ID of the BigQuery table to write into. This table must exist in the specified dataset and the schema must match the output. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 See Google's [official documentation](https://docs.cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
@@ -72,14 +74,14 @@ pipeline:
 
 ```text
 [INPUT]
-  Name dummy
-  Tag  dummy
+  Name  dummy
+  Tag   dummy
 
 [OUTPUT]
   Name         bigquery
   Match        *
-  dataset_id   my_dataset
-  table_id     dummy_table
+  Dataset_id   my_dataset
+  Table_id     dummy_table
 ```
 
 {% endtab %}
