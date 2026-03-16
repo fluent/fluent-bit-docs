@@ -21,14 +21,14 @@ For information about how AWS credentials are fetched, see [AWS credentials](../
 | `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
 | `log_key` | By default, the whole log record will be sent to Kinesis. If you specify a key name with this option, then only the value of that key will be sent to Kinesis. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Kinesis. | _none_ |
 | `port` | TCP port of the Kinesis Streams service. | `443` |
-| `profile` | AWS profile name to use. | `default` |
+| `profile` | AWS profile name to use. | _none_ |
 | `region` | The AWS region. | _none_ |
 | `role_arn` | ARN of an IAM role to assume (for cross-account access). | _none_ |
 | `simple_aggregation` | Enable record aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. | `false` |
 | `stream` | The name of the Kinesis stream that you want log records sent to. | _none_ |
 | `sts_endpoint` | Custom endpoint for the STS API. | _none_ |
 | `time_key` | Add the timestamp to the record under this key. | _none_ |
-| `time_key_format` | The strftime compliant format string for the timestamp. Supports millisecond precision with `%3N` and supports nanosecond precision with `%9N` and `%L`. For example, adding `%3N` to support millisecond `%Y-%m-%dT%H:%M:%S.%3N`. This option is used with `time_key`. | `%Y-%m-%dT%H:%M:%S` |
+| `time_key_format` | The strftime compliant format string for the timestamp. Supports millisecond precision with `%3N` and supports nanosecond precision with `%9N` and `%L`. For example, adding `%3N` to support millisecond `%Y-%m-%dT%H:%M:%S.%3N`. This option is used with `time_key`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Get started
