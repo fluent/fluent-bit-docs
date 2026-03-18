@@ -15,10 +15,11 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:----|:------------|:--------|
-| `host` | This is address Fluent Bit will bind to when hosting Prometheus metrics. The `listen` parameter is deprecated in 1.9.0 and later. | `0.0.0.0` |
-| `port` | This is the port Fluent Bit will bind to when hosting Prometheus metrics. | `2021` |
 | `add_label` | This lets you add custom labels to all metrics exposed through the Prometheus exporter. You can have multiple of these fields. | _none_ |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| `add_timestamp` | Add timestamp to every metric honoring collection time. | `false` |
+| `host` | IP address or hostname Fluent Bit will bind to when hosting Prometheus metrics. The `listen` parameter is deprecated in 1.9.0 and later. | `0.0.0.0` |
+| `port` | TCP port Fluent Bit will bind to when hosting Prometheus metrics. | `2021` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 
@@ -72,22 +73,22 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-  flush           1
-  log_level       info
+  Flush           1
+  Log_Level       info
 
 [INPUT]
-  name            node_exporter_metrics
-  tag             node_metrics
-  scrape_interval 2
+  Name            node_exporter_metrics
+  Tag             node_metrics
+  Scrape_Interval 2
 
 [OUTPUT]
-  name            prometheus_exporter
-  match           node_metrics
-  host            0.0.0.0
-  port            2021
+  Name            prometheus_exporter
+  Match           node_metrics
+  Host            0.0.0.0
+  Port            2021
   # add user-defined labels
-  add_label       app fluent-bit
-  add_label       color blue
+  Add_Label       app fluent-bit
+  Add_Label       color blue
 ```
 
 {% endtab %}
