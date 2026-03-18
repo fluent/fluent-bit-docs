@@ -16,9 +16,9 @@ Only HTTP endpoints are supported.
 | `aws_role_arn`                            | ARN of an IAM role to assume (ex. for cross account access).                   | _none_ |
 | `aws_service`                             | AWS destination service code, used by SigV4 authentication.                    | `logs` |
 | `aws_sts_endpoint`                        | Custom endpoint for the AWS STS API, used with the `aws_role_arn` option.      | _none_ |
-| `grpc`                                    | Enable, disable or force gRPC usage. Accepted values : `on`, `off`, `auto`.    | `off`  |
 | `batch_size`                              | Set the maximum number of log records to be flushed at a time.                 | `1000` |
 | `compress`                                | Set payload compression mechanism. Options available are `gzip` and `zstd`.    | _none_ |
+| `grpc`                                    | Enable, disable or auto-detect gRPC usage. Accepted values: `on`, `off`, `auto`. | `off`  |
 | `grpc_logs_uri`                           | Specify an optional gRPC URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
 | `grpc_metrics_uri`                        | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
 | `grpc_profiles_uri`                       | Specify an optional gRPC URI for profiles OTel endpoint.                       | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
@@ -29,21 +29,21 @@ Only HTTP endpoints are supported.
 | `http_passwd`                             | Set HTTP auth password.                                                        | _none_ |
 | `http_user`                               | Set HTTP auth user.                                                            | _none_ |
 | `log_level`                               | Specifies the log level for output plugin. If not set here, plugin uses global log level in `service` section.                                          | `info` |
+| `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
+| `log_suppress_interval`                   | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression.                                    | `0`    |
 | `logs_attributes_metadata_key`            | Specify an `Attributes` key.                                                   | `$Attributes`                                                                   |
 | `logs_body_key`                           | Specify an optional HTTP URI for the target OTel endpoint.                     | _none_ |
 | `logs_body_key_attributes`                | If set and it matched a pattern, it includes the remaining fields in the record as attributes.                                                          | `false`|
 | `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key.                                         | `InstrumentationScope`                                                          |
-| `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
 | `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
 | `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
+| `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
 | `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
-| `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
 | `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
 | `logs_severity_text_message_key`          | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `log_severity_text_metadata_key`          | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `log_supress_interval`                    | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` no suppression.                                    | `0`    |
+| `logs_severity_text_metadata_key`         | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
 | `logs_span_id_message_key`                | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
 | `logs_span_id_metadata_key`               | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
 | `logs_timestamp_metadata_key`             | Specify a `Timestamp` key.                                                     | `$Timestamp`                                                                    |
@@ -56,18 +56,18 @@ Only HTTP endpoints are supported.
 | `metrics_uri`                             | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/metrics`                                                                   |
 | `net.connect_timeout`                     | Set maximum time allowed to establish a connection, this time includes the TLS handshake.                                                               | `10s`  |
 | `net.connect_timeout_log_error`           | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.                                      | `true` |
-| `net.keepalive_max_recycle`               | Set maximum number of times a keepalive connection can be used before it retries.  | `2000` |
 | `net.dns.mode`                            | Select the primary DNS connection type (TCP or UDP).                           | _none_ |
 | `net.dns.prefer_ipv4`                     | Select the primary DNS resolver type (LEGACY or ASYNC).                        | _none_ |
 | `net.dns.prefer_ipv6`                     | Prioritize IPv6 DNS results when trying to establish a connection.             | _none_ |
 | `net.io_timeout`                          | Set maximum time a connection can stay idle while assigned.                    | `0s`   |
+| `net.keepalive_max_recycle`               | Set maximum number of times a keepalive connection can be used before it retries.  | `2000` |
 | `net.max_worker_connections`              | Set the maximum number of active TCP connections that can be used per worker thread.                                                                    | `0`    |
 | `net.proxy_env_ignore`                    | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                                                                   | `false`|
 | `net.source_address`                      | Specify network address to bind for data traffic.                              | _none_ |
 | `net.tcp_keepalive`                       | Enable or disable Keepalive support.                                           | `off`  |
-| `net.tcp_keepalive_time`                  | Interval between the last data packet sent and the first TCP keepalive probe.  | `-1`   |
 | `net.tcp_keepalive_interval`              | Interval between TCP keepalive probes when no response is received on a `keepidle` probe. | `-1`   |
 | `net.tcp_keepalive_probes`                | Number of unacknowledged probes to consider a connection dead.                 | `-1`   |
+| `net.tcp_keepalive_time`                  | Interval between the last data packet sent and the first TCP keepalive probe.  | `-1`   |
 | `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
 | `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
 | `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
@@ -75,16 +75,16 @@ Only HTTP endpoints are supported.
 | `tls`                                     | Enable or disable TLS/SSL support.                                             | `off`  |
 | `tls.ca_file`                             | Absolute path to CA certificate file.                                          | _none_ |
 | `tls.ca_path`                             | Absolute path to scan for certificate files.                                   | _none_ |
-| `tls.crt_file`                           | Absolute path to Certificate file.                                             | _none_ |
 | `tls.ciphers`                             | Specify TLS ciphers up to TLSv1.2.                                             | _none_ |
+| `tls.crt_file`                            | Absolute path to Certificate file.                                             | _none_ |
 | `tls.debug`                               | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                     | `1`    |
 | `tls.key_file`                            | Absolute path to private Key file.                                             | _none_ |
 | `tls.key_passwd`                          | Optional password for tls.key_file.                                             | _none_ |
 | `tls.max_version`                         | Specify the maximum version of TLS.                                            | _none_ |
 | `tls.min_version`                         | Specify the minimum version of TLS.                                            | _none_ |
+| `tls.verify`                              | Force certificate validation.                                                  | `on`   |
 | `tls.verify_hostname`                     | Enable or disable to verify hostname.                                          | `off`  |
 | `tls.vhost`                               | Hostname to be used for TLS SNI extension.                                     | _none_ |
-| `tls.verify`                              | Force certificate validation.                                                  | `on`   |
 | `tls.windows.certstore_name`              | Sets the `certstore` name on an output (Windows).                                | _none_ |
 | `tls.windows.use_enterprise_store`        | Sets whether using enterprise `certstore` or not on an output (Windows).         | _none_ |
 | `traces_uri`                              | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/traces`                                                                    |
@@ -152,12 +152,12 @@ pipeline:
 #
 [SERVICE]
   Flush                1
-  Log_level            info
+  Log_Level            info
 
 [INPUT]
   Name                 node_exporter_metrics
   Tag                  node_metrics
-  Scrape_interval      2
+  Scrape_Interval      2
 
 [INPUT]
   Name                 dummy
@@ -179,14 +179,14 @@ pipeline:
   Log_response_payload True
   Tls                  On
   Tls.verify           Off
-  logs_body_key $message
-  logs_span_id_message_key span_id
-  logs_trace_id_message_key trace_id
-  logs_severity_text_message_key loglevel
-  logs_severity_number_message_key lognum
+  Logs_Body_Key $message
+  Logs_Span_Id_Message_Key span_id
+  Logs_Trace_Id_Message_Key trace_id
+  Logs_Severity_Text_Message_Key loglevel
+  Logs_Severity_Number_Message_Key lognum
   # add user-defined labels
-  add_label            app fluent-bit
-  add_label            color blue
+  Add_Label            app fluent-bit
+  Add_Label            color blue
 ```
 
 {% endtab %}
