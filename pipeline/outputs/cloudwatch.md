@@ -86,9 +86,9 @@ pipeline:
   Name              cloudwatch_logs
   Match             *
   Region            us-east-1
-  Log_group_name    fluent-bit-cloudwatch
-  Log_stream_prefix from-fluent-bit-
-  Auto_create_group On
+  Log_Group_Name    fluent-bit-cloudwatch
+  Log_Stream_Prefix from-fluent-bit-
+  Auto_Create_Group On
 ```
 
 {% endtab %}
@@ -123,9 +123,9 @@ pipeline:
   Name              cloudwatch_logs
   Match             *
   Region            us-east-1
-  Log_group_name    fluent-bit-cloudwatch
-  Log_stream_prefix from-fluent-bit-
-  Auto_create_group On
+  Log_Group_Name    fluent-bit-cloudwatch
+  Log_Stream_Prefix from-fluent-bit-
+  Auto_Create_Group On
   Endpoint          localhost
   Port              4566
 ```
@@ -211,11 +211,11 @@ pipeline:
   Name                cloudwatch_logs
   Match               *
   Region              us-east-1
-  Log_group_name      fallback-group
-  Log_stream_prefix   fallback-stream
-  Auto_create_group   On
-  Log_group_template  application-logs-$kubernetes['host'].$kubernetes['namespace_name']
-  Log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
+  Log_Group_Name      fallback-group
+  Log_Stream_Prefix   fallback-stream
+  Auto_Create_Group   On
+  Log_Group_Template  application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+  Log_Stream_Template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
 {% endtab %}
@@ -307,12 +307,12 @@ pipeline:
   Name               cloudwatch_logs
   Match              *
   Region             us-west-2
-  Log_stream_name    fluent-bit-cloudwatch
-  Log_group_name     fluent-bit-cloudwatch
-  Log_format         json/emf
-  Metric_namespace   fluent-bit-metrics
-  Metric_dimensions  ec2_instance_id
-  Auto_create_group  On
+  Log_Stream_Name    fluent-bit-cloudwatch
+  Log_Group_Name     fluent-bit-cloudwatch
+  Log_Format         json/emf
+  Metric_Namespace   fluent-bit-metrics
+  Metric_Dimensions  ec2_instance_id
+  Auto_Create_Group  On
 ```
 
 {% endtab %}
@@ -367,12 +367,12 @@ pipeline:
   Name               cloudwatch_logs
   Match              *
   Region             us-west-2
-  Log_stream_name    fluent-bit-cloudwatch
-  Log_group_name     fluent-bit-cloudwatch
-  Log_format         json/emf
-  Metric_namespace   fluent-bit-metrics
-  Metric_dimensions  ec2_instance_id,az
-  Auto_create_group  On
+  Log_Stream_Name    fluent-bit-cloudwatch
+  Log_Group_Name     fluent-bit-cloudwatch
+  Log_Format         json/emf
+  Metric_Namespace   fluent-bit-metrics
+  Metric_Dimensions  ec2_instance_id,az
+  Auto_Create_Group  On
 ```
 
 {% endtab %}
