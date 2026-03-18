@@ -62,13 +62,13 @@ To get started with sending logs to Dynatrace:
      Match                    *
      Header                   Content-Type application/json; charset=utf-8
      Header                   Authorization Api-Token {your-API-token-here}
-     Allow_duplicated_headers false
+     Allow_Duplicated_Headers false
      Host                     {your-environment-id}.live.dynatrace.com
      Port                     443
      Uri                      /api/v2/logs/ingest
      Format                   json
-     Json_date_format         iso8601
-     Json_date_key            timestamp
+     Json_Date_Format         iso8601
+     Json_Date_Key            timestamp
      Tls                      On
      Tls.verify               On
    ```
