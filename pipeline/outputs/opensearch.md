@@ -12,42 +12,42 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `Host` | IP address or hostname of the target OpenSearch instance. | `127.0.0.1` |
-| `Port` | TCP port of the target OpenSearch instance. | `9200` |
-| `Path` | OpenSearch accepts new data on HTTP query path `/_bulk`. It's possible to serve OpenSearch behind a reverse proxy on a sub-path. This option defines such path on the Fluent Bit side. It adds a path prefix in the indexing HTTP POST URI. | Empty string |
-| `Buffer_Size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512KB` |
-| `Pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
-| `AWS_Auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
-| `AWS_Region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
-| `AWS_STS_Endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ |
-| `AWS_Role_ARN` | AWS IAM Role to assume to put records to your Amazon cluster. | _none_ |
-| `AWS_External_ID` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ |
-| `AWS_Service_Name` | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | `es` |
-| `AWS_Profile` | AWS profile name. | `default` |
-| `HTTP_User` | Optional username credential for HTTP basic authentication. | _none_ |
-| `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ |
-| `Index` | Index name, supports [Record Accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) from 2.0.5 or later. | `fluent-bit` |
-| `Type` | Type name. This option is ignored if `Suppress_Type_Name` is enabled. | `_doc` |
-| `Logstash_Format` | Enable Logstash format compatibility. This option takes a boolean value: `True`/`False`, `On`/`Off` | `Off` |
-| `Logstash_Prefix` | When `Logstash_Format` is enabled, the Index name is composed using a prefix and the date. For example, if `Logstash_Prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
-| `Logstash_Prefix_Key` | When included, the value of the key in the record will be evaluated as key reference and overrides `Logstash_Prefix` for index generation. If the key/value isn't found in the record then the `Logstash_Prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
-| `Logstash_Prefix_Separator` | Set a separator between `Logstash_Prefix` and `Date`. | `-` |
-| `Logstash_DateFormat` | Time format, based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html), to generate the second part of the `Index` name. | `%Y.%m.%d` |
-| `Time_Key` | When `Logstash_Format` is enabled, each record will get a new timestamp field. The `Time_Key` property defines the name of that field. | `@timestamp` |
-| `Time_Key_Format` | When `Logstash_Format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
-| `Time_Key_Nanos` | When `Logstash_Format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
-| `Include_Tag_Key` | When enabled, append the `Tag` name to the record. | `Off` |
-| `Tag_Key` | When `Include_Tag_Key` is enabled, this property defines the key name for the tag. | `_flb-key` |
-| `Generate_ID` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. | `Off` |
-| `Id_Key` | If set, `_id` will be the value of the key from incoming record and `Generate_ID` option is ignored. | _none_ |
-| `Write_Operation` | Operation to use to write in bulk requests. | `create` |
-| `Replace_Dots` | When enabled, replace field name dots (`.`) with underscores (`_`). | `Off` |
-| `Trace_Output` | When enabled, print the OpenSearch API calls to stdout (for diagnostics only). | `Off` |
-| `Trace_Error` | When enabled, print the OpenSearch API calls to stdout when OpenSearch returns an error (for diagnostics only). | `Off` |
-| `Current_Time_Index` | Use current time for index generation instead of message record. | `Off` |
-| `Suppress_Type_Name` | When enabled, mapping types is removed and the `Type` option is ignored. OpenSearch 2.0 and later no longer support mapping types, so this should be set to `On` for these versions. | `Off` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
-| `Compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ (no compression) |
+| `aws_auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
+| `aws_external_id` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ |
+| `aws_profile` | AWS profile name. | `default` |
+| `aws_region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
+| `aws_role_arn` | AWS IAM Role to assume to put records to your Amazon cluster. | _none_ |
+| `aws_service_name` | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](opensearch.md#faq) section on Amazon OpenSearch Serverless for more information. | `es` |
+| `aws_sts_endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ |
+| `buffer_size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512k` |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ |
+| `current_time_index` | Use current time for index generation instead of message record. | `Off` |
+| `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. | `Off` |
+| `host` | IP address or hostname of the target OpenSearch instance. | `127.0.0.1` |
+| `http_passwd` | Password for user defined in `http_user`. | _none_ |
+| `http_user` | Optional username credential for HTTP basic authentication. | _none_ |
+| `id_key` | If set, `_id` will be the value of the key from incoming record and `generate_id` option is ignored. | _none_ |
+| `include_tag_key` | When enabled, append the `Tag` name to the record. | `Off` |
+| `index` | Index name, supports [Record Accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) from 2.0.5 or later. | `fluent-bit` |
+| `logstash_dateformat` | Time format, based on [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html), to generate the second part of the `index` name. | `%Y.%m.%d` |
+| `logstash_format` | Enable Logstash format compatibility. This option takes a boolean value: `True`/`False`, `On`/`Off`. | `Off` |
+| `logstash_prefix` | When `logstash_format` is enabled, the index name is composed using a prefix and the date. For example, if `logstash_prefix` is equal to `mydata` your index will become `mydata-YYYY.MM.DD`. The last string appended belongs to the date when the data is being generated. | `logstash` |
+| `logstash_prefix_key` | When included, the value of the key in the record will be evaluated as key reference and overrides `logstash_prefix` for index generation. If the key/value isn't found in the record then the `logstash_prefix` option will act as a fallback. The parameter is expected to be a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
+| `logstash_prefix_separator` | Set a separator between `logstash_prefix` and the date. | `-` |
+| `path` | OpenSearch accepts new data on HTTP query path `/_bulk`. It's possible to serve OpenSearch behind a reverse proxy on a sub-path. This option defines such path on the Fluent Bit side. It adds a path prefix in the indexing HTTP POST URI. | _none_ |
+| `pipeline` | OpenSearch lets you set up filters called pipelines. This option defines which pipeline the database should use. For performance reasons, it's strongly suggested to do parsing and filtering on Fluent Bit side, avoid pipelines. | _none_ |
+| `port` | TCP port of the target OpenSearch instance. | `9200` |
+| `replace_dots` | When enabled, replace field name dots (`.`) with underscores (`_`). | `Off` |
+| `suppress_type_name` | When enabled, mapping types is removed and the `type` option is ignored. OpenSearch 2.0 and later no longer support mapping types, so this should be set to `On` for these versions. | `Off` |
+| `tag_key` | When `include_tag_key` is enabled, this property defines the key name for the tag. | `flb-key` |
+| `time_key` | When `logstash_format` is enabled, each record will get a new timestamp field. The `time_key` property defines the name of that field. | `@timestamp` |
+| `time_key_format` | When `logstash_format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
+| `time_key_nanos` | When `logstash_format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
+| `trace_error` | When enabled, print the OpenSearch API calls to stdout when OpenSearch returns an error (for diagnostics only). | `Off` |
+| `trace_output` | When enabled, print the OpenSearch API calls to stdout (for diagnostics only). | `Off` |
+| `type` | Type name. This option is ignored if `suppress_type_name` is enabled. | `_doc` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `write_operation` | Operation to use to write in bulk requests. | `create` |
 
 The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq).
 
@@ -232,7 +232,7 @@ pipeline:
   Type  my_type
   AWS_Auth On
   AWS_Region us-west-2
-  tls     On
+  Tls     On
 ```
 
 {% endtab %}
