@@ -8,15 +8,15 @@ The following HTTP configuration parameters are relevant to Observe:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
+| `compress` | Sets the payload compression mechanism. Possible values: `gzip`, `false`. | `gzip` |
+| `format` | The data format to be used in the HTTP request body. | `msgpack` |
+| `header` | The specific header that provides the Observe token needed to authorize sending data [into a data stream](https://docs.observeinc.com/en/latest/content/data-ingestion/datastreams.html?highlight=ingest%20token#create-a-datastream). | `Authorization Bearer ${OBSERVE_TOKEN}` |
+| `header` | The specific header that instructs Observe how to decode incoming payloads. | `X-Observe-Decoder fluent` |
 | `host` | IP address or hostname of the Observe data collection endpoint. Replace `$(OBSERVE_CUSTOMER)` with your [Customer ID](https://docs.observeinc.com/docs/where-do-i-find-my-customer-id). | `OBSERVE_CUSTOMER.collect.observeinc.com` |
 | `port` | TCP port to use when sending data to Observe. | `443` |
 | `tls` | Specifies whether to use TLS. | `on` |
-| `uri` | Specifies the HTTP URI for Observe. | `/v1/http/fluentbit` |
-| `format` | The data format to be used in the HTTP request body. | `msgpack` |
-| `header` | The specific header that provides the Observe token needed to authorize sending data [into a data stream](https://docs.observeinc.com/en/latest/content/data-ingestion/datastreams.html?highlight=ingest%20token#create-a-datastream). | 'Authorization     Bearer ${OBSERVE_TOKEN}' |
-| `header` | The specific header that instructs Observe how to decode incoming payloads. | `X-Observe-Decoder fluent` |
-| `compress` | Sets the payload compression mechanism. Possible values: `gzip`, `false`. | `gzip` |
 | `tls.ca_file` | For Windows only: the path to the root cert. | _none_ |
+| `uri` | Specifies the HTTP URI for Observe. | `/v1/http/fluentbit` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Configuration file
@@ -50,18 +50,18 @@ pipeline:
 
 ```text
 [OUTPUT]
-    name         http
-    match        *
-    host         my-observe-customer-id.collect.observeinc.com
-    port         443
-    tls          on
+    Name         http
+    Match        *
+    Host         my-observe-customer-id.collect.observeinc.com
+    Port         443
+    Tls          on
 
-    uri          /v1/http/fluentbit
+    Uri          /v1/http/fluentbit
 
-    format       msgpack
-    header       Authorization     Bearer ${OBSERVE_TOKEN}
-    header       X-Observe-Decoder fluent
-    compress     gzip
+    Format       msgpack
+    Header       Authorization     Bearer ${OBSERVE_TOKEN}
+    Header       X-Observe-Decoder fluent
+    Compress     gzip
 
     # For Windows: provide path to root cert
     #tls.ca_file  C:\fluent-bit\isrgrootx1.pem
