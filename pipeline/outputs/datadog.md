@@ -63,10 +63,10 @@ pipeline:
   Tls         on
   Compress    gzip
   Apikey      <my-datadog-api-key>
-  Dd_service  <my-app-service>
-  Dd_source   <my-app-source>
-  Dd_tags     team:logs,foo:bar
-  Dd_hostname myhost
+  Dd_Service  <my-app-service>
+  Dd_Source   <my-app-source>
+  Dd_Tags     team:logs,foo:bar
+  Dd_Hostname myhost
 ```
 
 {% endtab %}
