@@ -80,8 +80,8 @@ pipeline:
 [OUTPUT]
   Name         bigquery
   Match        *
-  Dataset_id   my_dataset
-  Table_id     dummy_table
+  Dataset_Id   my_dataset
+  Table_Id     dummy_table
 ```
 
 {% endtab %}
