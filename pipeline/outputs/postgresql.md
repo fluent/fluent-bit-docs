@@ -56,18 +56,18 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:----|:------------|:-------|
-| `Host` | Hostname/IP address of the PostgreSQL instance. | `- (127.0.0.1)`|
-| `Port` | PostgreSQL port. | `- (5432)` |
-| `User` | PostgreSQL username. | `- (current user)` |
-| `Password` | Password of PostgreSQL username. | `-` |
-| `Database` | Database name to connect to. | `- (current user)` |
-| `Table` | Table name where to store data. | `-` |
-| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `-` |
-| `Timestamp_Key` | Key in the JSON object containing the record timestamp. | `date` |
-| `Async` | Define if the plugin will use asynchronous or synchronous connections. | `false` |
-| `max_pool_size` | Maximum amount of connections in asynchronous mode. | `4`|
-| `min_pool_size` | Minimum number of connection in asynchronous mode. | `1` |
+| `async` | Define if the plugin will use asynchronous or synchronous connections. | `false` |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB. | `false` |
+| `connection_options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `_none_` |
+| `database` | Database name to connect to. | `fluentbit` |
+| `host` | Hostname/IP address of the PostgreSQL instance. | `127.0.0.1` |
+| `max_pool_size` | Maximum amount of connections in asynchronous mode. | `4` |
+| `min_pool_size` | Minimum number of connections in asynchronous mode. | `1` |
+| `password` | Password of PostgreSQL username. | `_none_` |
+| `port` | PostgreSQL port. | `5432` |
+| `table` | Table name where to store data. | `fluentbit` |
+| `timestamp_key` | Key in the JSON object containing the record timestamp. | `date` |
+| `user` | PostgreSQL username. | `_none_` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Libpq
