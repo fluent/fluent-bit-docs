@@ -19,16 +19,16 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `Host` | The OpenObserve server where you are sending logs. | `localhost` |
-| `TLS`  | Enable end-to-end security using TLS. Set to `on` to enable TLS communication with OpenObserve. | `on` |
 | `compress` | Recommended. Compresses the payload in GZIP format. OpenObserve recommends setting this to `gzip` for optimized log ingestion. | _none_ |
-| `HTTP_User` | Username for HTTP authentication. | _none_ |
-| `HTTP_Passwd` | Password for HTTP authentication. | _none_ |
-| `URI` | The API path used to send logs. | `/api/default/default/_json` |
-| `Format` | The format of the log payload. OpenObserve expects JSON. | `json` |
-| `json_date_key` | Optional. The JSON key used for timestamps in the logs. | `timestamp` |
-| `json_date_format` | Optional. The format of the date in logs. OpenObserve supports ISO 8601. | `iso8601` |
+| `format` | The format of the log payload. OpenObserve expects JSON. | `json` |
+| `host` | The OpenObserve server where you are sending logs. | `localhost` |
+| `http_passwd` | Password for HTTP authentication. | _none_ |
+| `http_user` | Username for HTTP authentication. | _none_ |
 | `include_tag_key` | If `true`, a tag is appended to the output. The key name is used in the `tag_key` property. | `false` |
+| `json_date_format` | Optional. The format of the date in logs. OpenObserve supports ISO 8601. | `iso8601` |
+| `json_date_key` | Optional. The JSON key used for timestamps in the logs. | `timestamp` |
+| `tls` | Enable end-to-end security using TLS. Set to `on` to enable TLS communication with OpenObserve. | `on` |
+| `uri` | The API path used to send logs. | `/api/default/default/_json` |
 
 ### Configuration file
 
@@ -66,13 +66,13 @@ pipeline:
   URI /api/default/default/_json
   Host localhost
   Port 5080
-  tls on
+  Tls on
   Format json
-  Json_date_key    timestamp
-  Json_date_format iso8601
+  Json_Date_Key    timestamp
+  Json_Date_Format iso8601
   HTTP_User <YOUR_HTTP_USER>
   HTTP_Passwd <YOUR_HTTP_PASSWORD>
-  compress gzip
+  Compress gzip
 ```
 
 {% endtab %}
