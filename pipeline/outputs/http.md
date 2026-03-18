@@ -110,7 +110,7 @@ pipeline:
   Match *
   Host  192.168.2.3
   Port  80
-  URI   /something
+  Uri   /something
 ```
 
 {% endtab %}
@@ -149,7 +149,7 @@ pipeline:
   Port  80
   Uri        /something
   Format     json
-  Header_tag FLUENT-TAG
+  Header_Tag FLUENT-TAG
 ```
 
 {% endtab %}
@@ -246,8 +246,8 @@ pipeline:
   Port             443
   Uri              /receiver/v1/http/[PrivateKey]
   Format           json_lines
-  Json_date_key    timestamp
-  Json_date_format iso8601
+  Json_Date_Key    timestamp
+  Json_Date_Format iso8601
 ```
 
 {% endtab %}
