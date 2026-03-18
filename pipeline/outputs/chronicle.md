@@ -65,8 +65,8 @@ pipeline:
 [OUTPUT]
   Name         chronicle
   Match        *
-  Customer_id  my_customer_id
-  Log_type     my_super_awesome_type
+  Customer_Id  my_customer_id
+  Log_Type     my_super_awesome_type
 ```
 
 {% endtab %}
