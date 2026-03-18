@@ -195,8 +195,8 @@ pipeline:
   Port          24284
   Shared_Key    secret
   Self_Hostname flb.local
-  tls           on
-  tls.verify    off
+  Tls           on
+  Tls.verify    off
 ```
 
 {% endtab %}
