@@ -9,20 +9,20 @@ The following instructions assume that you have a fully operational Graylog serv
 According to the [GELF Payload Specification](https://go2docs.graylog.org/5-0/getting_in_log_data/gelf.html?Highlight=Payload#GELFPayloadSpecification), there are mandatory and optional fields used by Graylog in GELF format. These fields are determined by the `Gelf\_*_Key` key in this plugin.
 
 | Key | Description | Default |
-| --- | ----------- | ------- |
-| `Match` | Pattern to match which tags of logs to be outputted by this plugin. | _none_ |
-| `Host` | IP address or hostname of the target Graylog server. | `127.0.0.1` |
-| `Port` | The port that your Graylog GELF input is listening on. | `12201` |
-| `Mode` | The protocol to use. Allowed values:`tls`, `tcp`, `udp`.| `udp` |
-| `Gelf_Tag_Key` | Key to be used for tag. (Optional in GELF.) | _none_ |
-| `Gelf_Short_Message_Key` | A short descriptive message. Must be set in GELF. | `short_message` |
-| `Gelf_Timestamp_Key` | Your log timestamp. Should be set in GELF. | `timestamp` |
-| `Gelf_Host_Key` | Key which its value is used as the name of the host, source or application that sent this message. Must be set in GELF. | `host` |
-| `Gelf_Full_Message_Key` | Key to use as the long message that can, for example, contain a backtrace. Optional in GELF. | `full_message`  |
-| `Gelf_Level_Key` | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between `0` and `7`). Optional in GELF. | `level` |
-| `Packet_Size` | If transport protocol is `udp`, you can set the size of packets to be sent. | `1420` |
-| `Compress` | If transport protocol is `udp`, you can set this if you want your UDP packets to be compressed. | `true` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| :--- | :--- | :--- |
+| `compress` | If transport protocol is `udp`, set this to compress UDP packets. | `true` |
+| `gelf_full_message_key` | Key to use as the long message that can, for example, contain a backtrace. Optional in GELF. | _none_ |
+| `gelf_host_key` | Key whose value is used as the name of the host, source, or application that sent this message. Must be set in GELF. | _none_ |
+| `gelf_level_key` | Key to be used as the log level. Its value must be in [standard syslog levels](https://en.wikipedia.org/wiki/Syslog#Severity_level) (between `0` and `7`). Optional in GELF. | _none_ |
+| `gelf_short_message_key` | A short descriptive message. Must be set in GELF. | _none_ |
+| `gelf_tag_key` | Key to be used for tag. Optional in GELF. | _none_ |
+| `gelf_timestamp_key` | Your log timestamp. This should be set in GELF. | _none_ |
+| `host` | IP address or hostname of the target Graylog server. | `127.0.0.1` |
+| `match` | Pattern to match which tags of logs to be sent by this plugin. | _none_ |
+| `mode` | The protocol to use. Allowed values: `tls`, `tcp`, `udp`. | `udp` |
+| `packet_size` | If transport protocol is `udp`, you can set the size of packets to be sent. | `1420` |
+| `port` | The port that your Graylog GELF input is listening on. | `12201` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
