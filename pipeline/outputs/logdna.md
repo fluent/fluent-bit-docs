@@ -66,13 +66,13 @@ pipeline:
 
 ```text
 [SERVICE]
-    flush     1
-    log_level info
+    Flush     1
+    Log_Level info
 
 [INPUT]
-    name      dummy
-    dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
-    samples   1
+    Name      dummy
+    Dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
+    Samples   1
 
 [OUTPUT]
     Name      logdna
