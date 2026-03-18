@@ -110,6 +110,53 @@ When you create a new `.md` file for a new page, you must add an entry to this r
 
 Similarly, if you update the `# h1` title header of an existing page, be sure to update that page's `SUMMARY.md` entry to match. `SUMMARY.md` entries takes precedence over in-page headers, which means that if you update a page's `# h1` title without updating `SUMMARY.md`, the unchanged `SUMMARY.md` title will persist in both the rendered page and the table of contents.
 
+## Plugin documentation
+
+When documenting a Fluent Bit plugin, follow these standards to keep plugin pages consistent.
+
+### Configuration parameters table
+
+- **Sort parameters alphabetically** by key name.
+- **List all parameters** defined in the plugin's `config_map`, plus the common `workers` parameter.
+- **Use `_none_` in the Default cell** when the parameter's default is `NULL` in the source `config_map`. Leave the cell empty only when the parameter has no entry in `config_map` at all (for example, `host` and `port`, which come from the network defaults).
+- Use this table header format:
+
+  ```markdown
+  | Key | Description | Default |
+  | --- | ----------- | ------- |
+  ```
+
+### Configuration examples
+
+Every plugin page should include both a YAML and a classic configuration example, presented as tabs:
+
+```markdown
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+...
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+...
+{% endtab %}
+{% endtabs %}
+```
+
+### Key casing in examples
+
+Key casing differs between the two configuration formats:
+
+- **YAML** (`fluent-bit.yaml`): All keys are lowercase. For example: `api_key`, `log_level`, `match`.
+- **Classic** (`fluent-bit.conf`): Keys use Title_Case — capitalize the first letter of every underscore-separated word. For example: `Api_Key`, `Log_Level`, `Match`.
+
+| YAML key | Classic key |
+| --- | --- |
+| `api_key` | `Api_Key` |
+| `log_group_name` | `Log_Group_Name` |
+| `match` | `Match` |
+| `name` | `Name` |
+
+This applies to all keys in every section (`[SERVICE]`, `[INPUT]`, `[OUTPUT]`, and so on).
+
 ## Linters
 
 This repository runs linters as GitHub Actions for each pull request. If a linter finds errors or makes suggested changes, you can view these results in the **Files changed** tab.
