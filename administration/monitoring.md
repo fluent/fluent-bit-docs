@@ -122,7 +122,8 @@ Fluent Bit exposes the following endpoints for monitoring.
 | `/api/v1/health`             | Display the Fluent Bit health check result. | String |
 | `/api/v2/metrics`            | Display internal metrics per loaded plugin. | [cmetrics text format](https://github.com/fluent/cmetrics) |
 | `/api/v2/metrics/prometheus` | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
-| `/api/v2/reload`             | Execute hot reloading or get the status of hot reloading. See the [hot-reloading documentation](hot-reload.md). | JSON |
+| `/api/v2/health`             | Returns Fluent Bit health status as JSON. HTTP 200 when healthy, HTTP 500 when unhealthy. Response fields: `status` (`ok` or `error`), `errors`, `retries_failed`, `error_limit`, `retry_failure_limit`, `period_limit`. | JSON |
+| `/api/v2/reload`             | Execute hot reloading (`POST`, `PUT`) or get the status of hot reloading (`GET`). Unsupported methods return `405 Method Not Allowed` with an `Allow: GET, POST, PUT` header. See the [hot-reloading documentation](hot-reload.md). | JSON |
 
 ### v1 metrics
 
@@ -195,7 +196,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_filter_bytes_total` | name: the name or alias for the filter instance | The number of bytes of log records that this filter instance has ingested successfully. | counter | bytes |
 | `fluentbit_filter_drop_records_total` | name: the name or alias for the filter instance | The number of log records dropped by the filter and removed from the data pipeline. | counter | records |
 | `fluentbit_filter_records_total` | name: the name or alias for the filter instance | The number of log records this filter has ingested successfully. | counter | records |
-| `fluentbit_hot_reloaded_times` | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | gauge | times |
+| `fluentbit_hot_reloaded_times` | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | counter | times |
 | `fluentbit_input_bytes_total` | name: the name or alias for the input instance | The number of bytes of log records that this input instance has ingested successfully. | counter | bytes |
 | `fluentbit_input_files_closed_total` | name: the name or alias for the input instance | The total number of closed files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
 | `fluentbit_input_files_opened_total` | name: the name or alias for the input instance | The total number of opened files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
@@ -223,7 +224,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 | `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
 | `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
-| `fluentbit_hot_reloaded_times`          | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | counter | seconds |
+| `fluentbit_hot_reloaded_times`          | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | counter | times |
 
 #### Storage layer
 
