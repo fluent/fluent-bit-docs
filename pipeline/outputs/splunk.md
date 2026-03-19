@@ -14,30 +14,30 @@ Connectivity, transport, and authentication configuration properties:
 
 | Key | Description | Default |
 |:----|:------------|:--------|
-| `host` | IP address or hostname of the target Splunk service. | `127.0.0.1` |
-| `port` | TCP port of the target Splunk service. | `8088` |
-| `splunk_token` | Specify the authentication token for the HTTP Event Collector interface.| _none_ |
-| `http_user` | Optional username for basic authentication on HEC. | _none_ |
-| `http_passwd` | Password for user defined in `http_user`. | _none_ |
-| `http_buffer_size` | Buffer size used to receive Splunk HTTP responses. | `2M` |
-| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
 | `channel` | Specify `X-Splunk-Request-Channel` header for the HTTP Event Collector interface. | _none_ |
-| `http_debug_bad_request` | If the HTTP server response code is `400` (bad request) and this flag is enabled, it will print the full HTTP request and response to the stdout interface. This feature is available for debugging purposes. | _none_ |
+| `compress` | Set payload compression mechanism. Allowed value: `gzip`. | _none_ |
+| `host` | IP address or hostname of the target Splunk service. | `127.0.0.1` |
+| `http_buffer_size` | Buffer size used to receive Splunk HTTP responses. | _none_ |
+| `http_debug_bad_request` | If the HTTP server response code is `400` (bad request) and this flag is enabled, it will print the full HTTP request and response to the stdout interface. This feature is available for debugging purposes. | `false` |
+| `http_passwd` | Password for user defined in `http_user`. | _none_ |
+| `http_user` | Optional username for basic authentication on HEC. | _none_ |
+| `port` | TCP port of the target Splunk service. | `8088` |
+| `splunk_token` | Specify the authentication token for the HTTP Event Collector interface. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 Content and Splunk metadata (fields) handling configuration properties:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](#sending-raw-events) to configure this option. | `off` |
-| `event_key` | Specify the key name that will be used to send a single value as part of the record. | _none_ |
+| `event_field` | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`. | _none_ |
 | `event_host` | Specify the key name that contains the host value. This option allows a record accessors pattern. | _none_ |
+| `event_index` | The name of the index by which the event data is to be indexed. | _none_ |
+| `event_index_key` | Set a record key that will populate the `index` field. If the key is found, it will have precedence over the value set in `event_index`. | _none_ |
+| `event_key` | Specify the key name that will be used to send a single value as part of the record. | _none_ |
 | `event_source` | Set the source value to assign to the event data. | _none_ |
 | `event_sourcetype` | Set the `sourcetype` value to assign to the event data. | _none_ |
 | `event_sourcetype_key` | Set a record key that will populate `sourcetype`. If the key is found, it will have precedence over the value set in `event_sourcetype`. | _none_ |
-| `event_index` | The name of the index by which the event data is to be indexed. | _none_ |
-| `event_index_key` | Set a record key that will populate the `index` field. If the key is found, it will have precedence over the value set in `event_index`. | _none_ |
-| `event_field` | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`. | _none_ |
+| `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](#sending-raw-events) to configure this option. | `off` |
 
 ### TLS / SSL
 
@@ -91,8 +91,8 @@ pipeline:
   Match       *
   Host        127.0.0.1
   Port        8088
-  TLS         On
-  TLS.Verify  Off
+  Tls         On
+  Tls.verify  Off
 ```
 
 {% endtab %}
@@ -151,7 +151,7 @@ pipeline:
     Match *
     Operation nest
     Wildcard *
-    Nest_under event
+    Nest_Under event
 
 # add event metadata
 [FILTER]
@@ -263,38 +263,38 @@ pipeline:
 
 ```text
 [INPUT]
-  name cpu
-  tag cpu
+  Name cpu
+  Tag  cpu
 
 # Move CPU metrics to be nested under "fields" and
 # add the prefix "metric_name:" to all metrics
 # NOTE: you can change Wildcard field to only select metric fields
 [FILTER]
-  Name nest
-  Match cpu
-  Wildcard *
-  Operation nest
-  Nest_under fields
+  Name       nest
+  Match      cpu
+  Wildcard   *
+  Operation  nest
+  Nest_Under fields
   Add_Prefix metric_name:
 
 # Add index, source, sourcetype
 [FILTER]
   Name    modify
   Match   cpu
-  Set index cpu-metrics
-  Set source fluent-bit
-  Set sourcetype custom
+  Set     index cpu-metrics
+  Set     source fluent-bit
+  Set     sourcetype custom
 
 # ensure splunk_send_raw is on
 [OUTPUT]
-  name splunk
-  match *
-  host <HOST>
-  port 8088
-  splunk_send_raw on
-  splunk_token xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
-  tls on
-  tls.verify off
+  Name            splunk
+  Match           *
+  Host            <HOST>
+  Port            8088
+  Splunk_Send_Raw on
+  Splunk_Token    xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+  Tls             on
+  Tls.verify      off
 ```
 
 {% endtab %}
@@ -335,17 +335,17 @@ pipeline:
 
 ```text
 [INPUT]
-    name node_exporter_metrics
-    tag node_exporter_metrics
+    Name node_exporter_metrics
+    Tag  node_exporter_metrics
 
 [OUTPUT]
-    name splunk
-    match *
-    host <HOST>
-    port 8088
-    splunk_token xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
-    tls on
-    tls.verify off
+    Name         splunk
+    Match        *
+    Host         <HOST>
+    Port         8088
+    Splunk_Token xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+    Tls          on
+    Tls.verify   off
 ```
 
 {% endtab %}
