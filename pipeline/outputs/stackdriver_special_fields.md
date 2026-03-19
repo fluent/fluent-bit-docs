@@ -4,7 +4,7 @@ When the [google-logging-agent](https://docs.cloud.google.com/logging/docs/agent
 
 ## LogEntry fields
 
-Fluent Bit support some special fields for setting fields on the LogEntry object:
+Fluent Bit supports some special fields for setting fields on the LogEntry object:
 
 | JSON log field | [LogEntry](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Type | Description |
 | :--- | :--- | :--- | :--- |
@@ -90,7 +90,7 @@ Special fields with basic types (except for the [`logging.googleapis.com/insertI
    }
    ```
 
-1. If the field is non-empty but an invalid, it will be left in the `jsonPayload`. For example:
+1. If the field is non-empty but invalid, it will be left in the `jsonPayload`. For example:
 
    ```text
    {
@@ -119,7 +119,7 @@ If the `logging.googleapis.com/insertId` field has an invalid type, the log will
 
 #### Trace sampled
 
-If the`autoformat_stackdriver_trace` is set to `true`, the value provided in the `trace` field will be formatted into the format that Cloud Logging expects along with the detected Project ID (from the Google Metadata server, configured in the plugin, or provided using a special field).
+If `autoformat_stackdriver_trace` is set to `true`, the value in the `trace` field is reformatted to match the Cloud Logging format. The Project ID is detected from the Google Metadata server, configured in the plugin, or provided using a special field.
 
 For example, if `autoformat_stackdriver_trace` is enabled, this:
 
@@ -222,7 +222,7 @@ If there are extra sub-fields, the plugin will add the recognized fields to the 
 }
 ```
 
-the `logEntry will be:
+the `logEntry` will be:
 
 ```text
 {
@@ -254,7 +254,7 @@ The `type` field from the `MonitoredResource` proto isn't parsed out of the spec
 
 The `labels` field is expected to be an `object<string, string>`. If any fields have a value that's not a string, the value is ignored and not preserved. The plugin logs an error and drops the field.
 
-If no valid `labels` field is found, or if all entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
+If no valid `labels` field is found, or if all entries in the `labels` object are invalid, the `logging.googleapis.com/monitored_resource` field is dropped. Fluent Bit then automatically sets resource labels using other available information based on the configured `resource` type.
 
 ## Timestamp
 
