@@ -10,32 +10,36 @@ This plugin uses the following configuration parameters. For more details about 
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
+| `autoformat_stackdriver_trace` | Rewrite the _trace_ field to include the `projectID` and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the `traceID` (usually 32 characters). | `false` |
+| `cloud_logging_base_url` | Set the base Cloud Logging API URL to use for the `/v2/entries:write` API request. | `https://logging.googleapis.com` |
+| `compress` | Set payload compression mechanism. The only available option is `gzip`. If no value is specified, no compression is applied. | _none_ |
+| `custom_k8s_regex` | Set a custom regular expression to extract fields like `pod_name`, `namespace_name`, `container_name`, and `docker_id` from the `local_resource_id` in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
+| `export_to_project_id` | The GCP project that should receive these logs. | The `project_id` in the `google_service_credentials` file, or the `project_id` from Google's `metadata.google.internal` server. |
 | `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of environment variable `$GOOGLE_APPLICATION_CREDENTIALS` |
-| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
-| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
-| `metadata_server` | Prefix for a metadata server. | Value of environment variable `$METADATA_SERVER`, or `http://metadata.google.internal` if unset. |
+| `http_request_key` | The name of the key from the original record that contains the LogEntry's `httpRequest`. The default matches records that use `logging.googleapis.com/http_request` (underscore form). Set this to `logging.googleapis.com/httpRequest` when the record uses the `httpRequest` key form expected by the Logging API. | `logging.googleapis.com/http_request` |
+| `job` | An identifier for a grouping of related tasks, such as the name of a microservice or distributed batch. If the resource type is `generic_task`, this field is required. | _none_ |
+| `k8s_cluster_location` | The physical location of the cluster that contains (node or pod based on the resource type) the container. If the resource type is `k8s_container`, `k8s_node`, or `k8s_pod`, this field is required. | _none_ |
+| `k8s_cluster_name` | The name of the cluster that the container (node or pod based on the resource type) is running in. If the resource type is `k8s_container`, `k8s_node`, or `k8s_pod`, this field is required. | _none_ |
+| `labels` | Optional list of comma-separated strings specifying `key=value` pairs. The resulting labels will be combined with the elements obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`. | _none_ |
+| `labels_key` | The name of the key from the original record that contains the LogEntry's `labels`. | `logging.googleapis.com/labels` |
 | `location` | The GCP or AWS region in which to store data about the resource. If the resource type is either `generic_node` or `generic_task`, this field is required. | _none_ |
+| `log_name_key` | The name of the key from the original record that contains the `logName` value. | `logging.googleapis.com/logName` |
+| `metadata_server` | Prefix for a metadata server. | Value of environment variable `$METADATA_SERVER`, or `http://metadata.google.internal` if unset. |
 | `namespace` | A namespace identifier, such as a cluster name or environment. If the resource type is either `generic_node` or `generic_task`, this field is required. | _none_ |
 | `node_id` | A unique identifier for the node within the namespace, such as a hostname or IP address. If the resource type is `generic_node`, this field is required. | _none_ |
-| `job` | An identifier for a grouping of related task, such as the name of a microservice or distributed batch. If the resource type is `generic_task`, this field is required. | _none_ |
-| `task_id` | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is `generic_task`, this field is required. | _none_ |
-| `export_to_project_id` | The GCP project that should receive these logs. | The `project_id` in the `google_service_credentials` file, or the `project_id` from Google's `metadata.google.internal` server. |
-| `resource` | Set resource type of data. Supported resource types: `k8s_container`, `k8s_node`, `k8s_pod`, `global`, `generic_node`, `generic_task`, and `gce_instance`. | `global`, `gce_instance` |
-| `k8s_cluster_name` | The name of the cluster that the container (node or pod based on the resource type) is running in. If the resource type is `k8s_container`, `k8s_node`, or `k8s_pod`, this field is required. | _none_ |
-| `k8s_cluster_location` | The physical location of the cluster that contains (node or pod based on the resource type) the container. If the resource type is `k8s_container`, `k8s_node`, or `k8s_pod`, this field is required. | _none_ |
-| `labels_key` | The name of the key from the original record that contains the LogEntry's `labels`. | `logging.googleapis.com/labels` |
-| `labels` | Optional list of comma-separated of strings specifying `key=value` pairs. The resulting labels will be combined with the elements obtained from `labels_key` to set the LogEntry Labels. Elements from `labels` will override duplicate values from `labels_key`. | _none_ |
-| `log_name_key` | The name of the key from the original record that contains the `logName` value. | `logging.googleapis.com/logName` |
-| `tag_prefix` | Set the `tag_prefix` used to validate the tag of logs with Kubernetes resource type. Without this option, the tag of the log must be in format of `k8s_container(pod/node).*` to use the `k8s_container` resource type. Now the tag prefix is configurable by this option (note the ending dot). | `k8s_container.`, `k8s_pod.`, `k8s_node.` |
-| `severity_key` | The name of the key from the original record that contains the severity. | `logging.googleapis.com/severity` |
 | `project_id_key` | The value of this field is used by the Stackdriver output plugin to find the GCP `projectID` from `jsonPayload` and then extract the value of it to set the `PROJECT_ID` within LogEntry `logName`, which controls the GCP project that should receive these logs. | `logging.googleapis.com/projectId`. See [Stackdriver Special Fields](https://github.com/fluent/fluent-bit-docs/blob/master/pipeline/outputs/stackdriver_special_fields.md#log-entry-fields) for more info. |
-| `autoformat_stackdriver_trace` | Rewrite the _trace_ field to include the `projectID` and format it for use with Cloud Trace. When this flag is enabled, the user can get the correct result by printing only the `traceID` (usually 32 characters). | `false` |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
-| `custom_k8s_regex` | Set a custom regular expression to extract field like `pod_name`, `namespace_name`, `container_name`, and `docker_id` from the `local_resource_id` in logs. This is helpful if the value of pod or node name contains dots. | `(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)-(?<docker_id>[a-z0-9]{64})\.log$` |
+| `resource` | Set resource type of data. Supported resource types: `k8s_container`, `k8s_node`, `k8s_pod`, `global`, `generic_node`, `generic_task`, and `gce_instance`. | `global` |
 | `resource_labels` | An optional list of comma-separated strings specifying resource label plain text assignments (`new=value`) and mappings from an original field in the log entry to a destination field (`destination=$original`). Nested fields and environment variables are also supported using the [record accessor syntax](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/record-accessor). If configured, all resource labels will be assigned using this API only, with the exception of `project_id`. See [Resource Labels](#resource-labels) for more details. | _none_ |
-| `http_request_key` | The name of the key from the original record that contains the LogEntry's `httpRequest`. Be aware that the default value erroneously uses an underscore; users will likely need to set this to `logging.googleapis.com/httpRequest`. | `logging.googleapis.com/http_request` |
-| `compress` | Set payload compression mechanism. The only available option is `gzip`. If no value is specified, no compression is applied. | _none_ |
-| `cloud_logging_base_url` | Set the base Cloud Logging API URL to use for the `/v2/entries:write` API request. | `https://logging.googleapis.com` |
+| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
+| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
+| `severity_key` | The name of the key from the original record that contains the severity. | `logging.googleapis.com/severity` |
+| `span_id_key` | The name of the key from the original record that contains the span ID. | `logging.googleapis.com/spanId` |
+| `tag_prefix` | Set the `tag_prefix` used to validate the tag of logs with Kubernetes resource type. Without this option, the tag of the log must be in format of `k8s_container(pod/node).*` to use the `k8s_container` resource type. Now the tag prefix is configurable by this option (note the ending dot). | `k8s_container.`, `k8s_pod.`, `k8s_node.` |
+| `task_id` | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is `generic_task`, this field is required. | _none_ |
+| `text_payload_key` | Set the key from the record to use as the `textPayload` field in the log entry. | _none_ |
+| `trace_key` | The name of the key from the original record that contains the trace value. | `logging.googleapis.com/trace` |
+| `trace_sampled_key` | The name of the key from the original record that contains the trace sampled flag. | `logging.googleapis.com/traceSampled` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Configuration file
 
@@ -121,9 +125,9 @@ pipeline:
   Name                  stackdriver
   Match                 custom_tag.*
   Resource              k8s_container
-  k8s_cluster_name      test_cluster_name
-  k8s_cluster_location  test_cluster_location
-  tag_prefix            custom_tag.
+  K8s_Cluster_Name      test_cluster_name
+  K8s_Cluster_Location  test_cluster_location
+  Tag_Prefix            custom_tag.
 ```
 
 {% endtab %}
