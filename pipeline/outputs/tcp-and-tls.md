@@ -8,11 +8,12 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `Host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
-| `Port` | TCP Port of the target service. | `5170` |
-| `Format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `msgpack` |
-| `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
+| `format` | Specify the data format to be printed. Supported formats: `msgpack`, `json`, `json_lines`, `json_stream`. | `msgpack` |
+| `host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
+| `port` | TCP port of the target service. | `5170` |
+| `raw_message_key` | If set, the value of this key is sent as the raw message payload without additional formatting. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## TLS configuration parameters
@@ -21,8 +22,8 @@ The following parameters are available to configure a secure channel connection 
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `tls` | Enable or disable TLS support. | `Off` |
-| `tls.verify` | Force certificate validation. | `On` |
+| `tls` | Enable or disable TLS support. | `off` |
+| `tls.verify` | Force certificate validation. | `on` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), `4` (Verbose) | `1` |
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
