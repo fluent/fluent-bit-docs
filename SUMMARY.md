@@ -214,8 +214,8 @@
   * [Standard output](pipeline/outputs/standard-output.md)
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP and TLS](pipeline/outputs/tcp-and-tls.md)
-  * [UDP](pipeline/outputs/udp.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
+  * [UDP](pipeline/outputs/udp.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
 
