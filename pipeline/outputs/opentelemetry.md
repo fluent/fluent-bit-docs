@@ -68,6 +68,22 @@ Only HTTP endpoints are supported.
 | `net.tcp_keepalive_interval`              | Interval between TCP keepalive probes when no response is received on a `keepidle` probe. | `-1`   |
 | `net.tcp_keepalive_probes`                | Number of unacknowledged probes to consider a connection dead.                 | `-1`   |
 | `net.tcp_keepalive_time`                  | Interval between the last data packet sent and the first TCP keepalive probe.  | `-1`   |
+| `oauth2.audience`                         | Optional `OAuth 2.0` audience parameter.                                       | _none_ |
+| `oauth2.auth_method`                      | `OAuth 2.0` client authentication method. Supported values: `basic`, `post`, `private_key_jwt`. | `basic` |
+| `oauth2.client_id`                        | `OAuth 2.0` client ID.                                                         | _none_ |
+| `oauth2.client_secret`                    | `OAuth 2.0` client secret.                                                     | _none_ |
+| `oauth2.connect_timeout`                  | Connect timeout for `OAuth 2.0` token requests.                                | `0s`   |
+| `oauth2.enable`                           | Enable `OAuth 2.0` client credentials for outgoing requests.                   | `false`|
+| `oauth2.jwt_aud`                          | Audience for `private_key_jwt` JSON Web Token (JWT) assertion. Defaults to the value of `oauth2.token_url` when not set. | _none_ |
+| `oauth2.jwt_cert_file`                    | Path to certificate file used by `private_key_jwt`.                            | _none_ |
+| `oauth2.jwt_header`                       | JWT header claim name for `private_key_jwt` thumbprint. Accepted values: `kid`, `x5t`. | `kid` |
+| `oauth2.jwt_key_file`                     | Path to PEM private key file used by `private_key_jwt`.                        | _none_ |
+| `oauth2.jwt_ttl_seconds`                  | Lifetime in seconds for `private_key_jwt` JWT client assertions.               | `300`  |
+| `oauth2.refresh_skew_seconds`             | Seconds before expiry at which to refresh the access token.                    | `60`   |
+| `oauth2.resource`                         | Optional `OAuth 2.0` resource parameter.                                       | _none_ |
+| `oauth2.scope`                            | Optional `OAuth 2.0` scope.                                                    | _none_ |
+| `oauth2.timeout`                          | Timeout for `OAuth 2.0` token requests.                                        | `0s`   |
+| `oauth2.token_url`                        | `OAuth 2.0` token endpoint URL.                                                | _none_ |
 | `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
 | `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
 | `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
@@ -88,6 +104,7 @@ Only HTTP endpoints are supported.
 | `tls.windows.certstore_name`              | Sets the `certstore` name on an output (Windows).                                | _none_ |
 | `tls.windows.use_enterprise_store`        | Sets whether using enterprise `certstore` or not on an output (Windows).         | _none_ |
 | `traces_uri`                              | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/traces`                                                                    |
+| `workers`                                 | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 
