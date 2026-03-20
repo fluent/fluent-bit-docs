@@ -30,16 +30,17 @@ The following contexts are available:
 
 ### OpenTelemetry contexts
 
-Additionally, Fluent Bit provides specific contexts for modifying data that follows the OpenTelemetry log schema. All of these contexts operate on shared data across a group of records.
+Additionally, Fluent Bit provides specific contexts for modifying data that follows the OpenTelemetry log schema.
 
 The following contexts are available:
 
 | Name | Telemetry type | Description |
 | ---- | -------------- | ----------- |
-| `otel_resource_attributes` | Logs | Modifies the attributes of the log resource. |
-| `otel_scope_name` | Logs | Modifies the name of a log scope. |
-| `otel_scope_version` | Logs | Modifies version of a log scope. |
-| `otel_scope_attributes` | Logs | Modifies the attributes of a log scope. |
+| `otel_resource_attributes` | Logs | Modifies the attributes of the log resource. Operates on shared data across a group of records. |
+| `otel_scope_name` | Logs | Modifies the name of a log scope. Operates on shared data across a group of records. |
+| `otel_scope_version` | Logs | Modifies the version of a log scope. Operates on shared data across a group of records. |
+| `otel_scope_attributes` | Logs | Modifies the attributes of a log scope. Operates on shared data across a group of records. |
+| `otel_log_attributes` | Logs | Modifies the attributes of an individual OpenTelemetry log record. Operates per record. |
 
 
 {% hint style="info" %}
