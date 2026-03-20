@@ -8,12 +8,14 @@ This plugin uses the following configuration parameters:
 
 | Key                       | Description                                                                                                                                                        | Default         |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| `add_remote_addr`         | Inject a remote address field into the record, using the `X-Forwarded-For` header or the connection address as the value.                                          | `false`         |
 | `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`          |
 | `buffer_max_size`         | Set the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                                      | `4M`            |
 | `http2`                   | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                                | `true`          |
 | `http_server.workers`     | Number of HTTP listener worker threads.                                                                                                                            | `1`             |
 | `listen`                  | The address to listen on.                                                                                                                                          | `0.0.0.0`       |
 | `port`                    | The port for Fluent Bit to listen on.                                                                                                                              | `8088`          |
+| `remote_addr_key`         | Record key name used to store the remote address when `add_remote_addr` is enabled.                                                                                | `remote_addr`   |
 | `splunk_token`            | Specify a Splunk token for HTTP HEC authentication. If multiple tokens are specified (with commas and no spaces), usage will be divided across each of the tokens. | _none_          |
 | `splunk_token_key`        | Set a record key for storing the Splunk token for HTTP HEC. Use only when `store_token_in_metadata` is `false`.                                                    | `@splunk_token` |
 | `store_token_in_metadata` | Store Splunk HEC tokens in the Fluent Bit metadata. If set to `false`, they will be stored as key-value pairs in the record data.                                  | `true`          |
@@ -108,6 +110,44 @@ pipeline:
     Name         splunk
     Port         8088
     Splunk_Token my-secret-token,another-token
+
+[OUTPUT]
+    Name  stdout
+    Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Add a remote address field
+
+When `add_remote_addr` is set to `true`, a remote address field is injected into every record. The value is extracted from the `X-Forwarded-For` header, or falls back to the connection address if the header isn't present. Use `remote_addr_key` to customize the field name.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: splunk
+      port: 8088
+      add_remote_addr: true
+      remote_addr_key: remote_addr
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name            splunk
+    Port            8088
+    Add_remote_addr true
+    Remote_addr_key remote_addr
 
 [OUTPUT]
     Name  stdout
