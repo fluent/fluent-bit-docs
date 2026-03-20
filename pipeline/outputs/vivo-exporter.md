@@ -8,7 +8,7 @@ This plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ---------|
-| `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `Off` |
+| `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `off` |
 | `host` | The network address for the HTTP server to listen on. | `0.0.0.0` |
 | `http_cors_allow_origin` | Specify the value for the HTTP `Access-Control-Allow-Origin` header (CORS). | _none_ |
 | `port` | The TCP port for the HTTP server to listen on. | `2025` |
@@ -44,18 +44,18 @@ pipeline:
 
 ```text
 [INPUT]
-  name  dummy
-  tag   events
-  rate  2
+  Name  dummy
+  Tag   events
+  Rate  2
 
 [OUTPUT]
-  name                   vivo_exporter
-  match                  *
-  host                   0.0.0.0
-  port                   2025
-  empty_stream_on_read   off
-  stream_queue_size      20M
-  http_cors_allow_origin *
+  Name                   vivo_exporter
+  Match                  *
+  Host                   0.0.0.0
+  Port                   2025
+  Empty_Stream_On_Read   off
+  Stream_Queue_Size      20M
+  Http_Cors_Allow_Origin *
 ```
 
 {% endtab %}
@@ -102,13 +102,13 @@ The following example generates dummy log events for consumption by using `curl`
 
    ```text
    [INPUT]
-     name  dummy
-     tag   events
-     rate  2
+     Name  dummy
+     Tag   events
+     Rate  2
 
    [OUTPUT]
-     name   vivo_exporter
-     match  *
+     Name   vivo_exporter
+     Match  *
    ```
 
    {% endtab %}
@@ -215,13 +215,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name opentelemetry
-  tag  otel.logs
-  port 4318
+  Name opentelemetry
+  Tag  otel.logs
+  Port 4318
 
 [OUTPUT]
-  name  vivo_exporter
-  match *
+  Name  vivo_exporter
+  Match *
 ```
 
 {% endtab %}
