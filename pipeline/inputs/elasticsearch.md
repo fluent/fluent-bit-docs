@@ -8,11 +8,12 @@ The plugin supports the following configuration parameters:
 
 | Key                 | Description                                                                                                                              | Default value |
 |:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
-| `buffer_chunk_size` | Set the buffer chunk size.                                                                                                               | `512K`        |
-| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
-| `hostname`          | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | `localhost`   |
-| `http2`             | Enable HTTP/2 support.                                                                                                                   | `true`        |
-| `listen`            | The address to listen on.                                                                                                                | `0.0.0.0`     |
+| `buffer_chunk_size`   | Set the buffer chunk size. Compatibility alias for `http_server.buffer_chunk_size`.                                                                      | `512K`        |
+| `buffer_max_size`     | Set the maximum size of buffer. Compatibility alias for `http_server.buffer_max_size`.                                                                   | `4M`          |
+| `hostname`            | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information.                 | `localhost`   |
+| `http2`               | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                      | `true`        |
+| `http_server.workers` | Number of HTTP listener worker threads.                                                                                                                  | `1`           |
+| `listen`              | The address to listen on.                                                                                                                                | `0.0.0.0`     |
 | `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
 | `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
 | `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |

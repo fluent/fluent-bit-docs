@@ -8,9 +8,10 @@ This plugin uses the following configuration parameters:
 
 | Key                       | Description                                                                                                                                                        | Default         |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`.                               | `512K`          |
-| `buffer_max_size`         | Set the maximum buffer size to receive a JSON message.                                                                                                             | `4M`            |
-| `http2`                   | Enable HTTP/2 support.                                                                                                                                             | `true`          |
+| `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`          |
+| `buffer_max_size`         | Set the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                                      | `4M`            |
+| `http2`                   | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                                | `true`          |
+| `http_server.workers`     | Number of HTTP listener worker threads.                                                                                                                            | `1`             |
 | `listen`                  | The address to listen on.                                                                                                                                          | `0.0.0.0`       |
 | `port`                    | The port for Fluent Bit to listen on.                                                                                                                              | `8088`          |
 | `splunk_token`            | Specify a Splunk token for HTTP HEC authentication. If multiple tokens are specified (with commas and no spaces), usage will be divided across each of the tokens. | _none_          |
