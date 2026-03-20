@@ -87,6 +87,7 @@
   * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Exec WASI](pipeline/inputs/exec-wasi.md)
+  * [Fluent Bit logs](pipeline/inputs/fluentbit-logs.md)
   * [Fluent Bit metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
   * [GPU metrics](pipeline/inputs/gpu-metrics.md)
