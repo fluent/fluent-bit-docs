@@ -26,11 +26,11 @@ All other metric types (gauges, summaries) pass through unchanged.
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `initial_value` | Controls what happens with the first sample seen for a new series. Accepted values: `auto`, `keep`, `drop`. When unset, the `drop_first` compatibility option is used instead. | `unset` |
 | `drop_first` | Compatibility option. Used only when `initial_value` is `unset`. When `true`, the first sample for each new series is dropped. When `false`, the first sample is emitted as-is. | `true` |
 | `drop_on_reset` | When `true`, drops the sample when a counter or histogram reset is detected (that's when the new value is lower than the last recorded value). | `true` |
-| `max_staleness` | How long to retain per-series state after a series stops reporting. Accepts time values such as `30s`, `5m`, `1h`. Set to `0` to disable staleness eviction. | `1h` |
+| `initial_value` | Controls what happens with the first sample seen for a new series. Accepted values: `auto`, `keep`, `drop`. When unset, the `drop_first` compatibility option is used instead. | `unset` |
 | `max_series` | Maximum number of unique series whose state is tracked in memory. When the limit is reached, the oldest series is evicted. Set to `0` to disable size-based eviction. | `65536` |
+| `max_staleness` | How long to retain per-series state after a series stops reporting. Accepts time values such as `30s`, `5m`, `1h`. Set to `0` to disable staleness eviction. | `1h` |
 
 ### `initial_value` behavior
 
