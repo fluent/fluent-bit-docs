@@ -8,10 +8,10 @@ The plugin supports the following configuration parameters:
 
 | Key            | Description                                                                                             | Default |
 |----------------|---------------------------------------------------------------------------------------------------------|---------|
-| `Channels`     | A comma-separated list of channels to read from.                                                        | _none_  |
-| `Interval_Sec` | Set the polling interval for each channel. (optional)                                                   | `1`     |
-| `DB`           | Set the path to save the read offsets. (optional)                                                       | _none_  |
-| `Threaded`     | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `channels`     | A comma-separated list of channels to read from.                                                        | _none_  |
+| `db`           | Set the path to save the read offsets. (optional)                                                       | _none_  |
+| `interval_sec` | Set the polling interval for each channel. (optional)                                                   | `1`     |
+| `threaded`     | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 If `db` isn't set, the plugin will read channels from the beginning on each startup.
 
