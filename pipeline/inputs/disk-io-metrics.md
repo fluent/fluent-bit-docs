@@ -66,7 +66,7 @@ pipeline:
   Name          disk
   Tag           disk
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout
