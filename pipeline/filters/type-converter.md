@@ -68,9 +68,9 @@ pipeline:
 [FILTER]
   Name               type_converter
   Match              *
-  uint_key Mem.total Mem.total_str string
-  uint_key Mem.used  Mem.used_str  string
-  uint_key Mem.free  Mem.free_str  string
+  Uint_Key Mem.total Mem.total_str string
+  Uint_Key Mem.used  Mem.used_str  string
+  Uint_Key Mem.free  Mem.free_str  string
 
 [OUTPUT]
   Name  stdout
