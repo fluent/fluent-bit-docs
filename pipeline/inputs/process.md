@@ -58,7 +58,7 @@ pipeline:
   Name          proc
   Proc_Name     crond
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
   Fd            true
   Mem           true
 
