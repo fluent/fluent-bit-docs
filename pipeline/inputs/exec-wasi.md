@@ -99,7 +99,7 @@ pipeline:
 [INPUT]
   Name exec_wasi
   Tag  exec.wasi.local
-  WASI_Path /path/to/wasi/program.wasm
+  Wasi_Path /path/to/wasi/program.wasm
   Accessible_Paths .,/path/to/accessible
   Parser wasi
 
