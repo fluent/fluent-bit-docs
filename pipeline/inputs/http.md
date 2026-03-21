@@ -228,7 +228,7 @@ pipeline:
   Name http
   Listen 0.0.0.0
   Port 8888
-  Add_remote_addr true
+  Add_Remote_Addr true
 
 [OUTPUT]
   Name stdout
