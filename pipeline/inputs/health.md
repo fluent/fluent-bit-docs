@@ -59,7 +59,7 @@ pipeline:
   Host          127.0.0.1
   Port          80
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout
