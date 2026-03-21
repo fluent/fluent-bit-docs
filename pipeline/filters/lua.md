@@ -70,8 +70,8 @@ pipeline:
 [FILTER]
     Name    lua
     Match   *
-    script  test.lua
-    call    cb_print
+    Script  test.lua
+    Call    cb_print
 
 [OUTPUT]
     Name    null
@@ -316,9 +316,9 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush 1
-  daemon off
-  log_level debug
+  Flush 1
+  Daemon off
+  Log_Level debug
 
 [INPUT]
   Name random
@@ -329,7 +329,7 @@ pipeline:
   Name lua
   Match *
   Call append_tag
-  code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+  Code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
 
 [OUTPUT]
   Name stdout
@@ -556,7 +556,7 @@ pipeline:
 [INPUT]
   Name                tail
   Path                /var/log/containers/*_istio-proxy-*.log
-  multiline.parser    docker, cri
+  Multiline.Parser    docker, cri
   Tag                 istio.*
   Mem_Buf_Limit       64MB
   Skip_Long_Lines     Off
