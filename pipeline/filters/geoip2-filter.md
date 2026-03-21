@@ -57,7 +57,7 @@ pipeline:
   Name geoip2
   Match *
   Database GeoLite2-City.mmdb
-  Lookup_key remote_addr
+  Lookup_Key remote_addr
   Record country remote_addr %{country.names.en}
   Record isocode remote_addr %{country.iso_code}
 
@@ -69,7 +69,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Each `Record` parameter specifies the following triplet:
+Each `record` parameter specifies the following triplet:
 
 - `country`: The field name to be added to records.
 - `remote_addr`: The lookup key to process.
