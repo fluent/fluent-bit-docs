@@ -8,14 +8,14 @@ The plugin supports the following configuration parameters:
 
 | Key                  | Description                                                                                                                                                                                          | Default                     |
 |----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| `Listen`             | Listener network interface.                                                                                                                                                                          | `0.0.0.0`                   |
-| `Port`               | UDP port used to listen for connections.                                                                                                                                                             | `5170`                      |
-| `Buffer_Size `       | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of `Chunk_Size`.                                                                     | `Chunk_Size` (value)        |
-| `Chunk_Size`         | The default buffer to store incoming JSON messages. Doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `Chunk_Size` in KB. | `32`                        |
-| `Format`             | Specify the expected payload format. Supported values: `json` and `none`. `json` expects JSON maps. `none` splits every record using the defined `Separator`.                                        | `json`                      |
-| `Separator`          | When `Format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                            | `LF` or `0x10` (break line) |
-| `Source_Address_Key` | Specify the key where the source address will be injected.                                                                                                                                           | _none_                      |
-| `Threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                              | `false`                     |
+| `buffer_size`        | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default size will be the value of `chunk_size`.                                                                     | `chunk_size`                |
+| `chunk_size`         | The default buffer to store incoming JSON messages. Doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `chunk_size` in KB. | `32`                        |
+| `format`             | Specify the expected payload format. Supported values: `json` and `none`. `json` expects JSON maps. `none` splits every record using the defined `separator`.                                        | `json`                      |
+| `listen`             | Listener network interface.                                                                                                                                                                          | `0.0.0.0`                   |
+| `port`               | UDP port used to listen for connections.                                                                                                                                                             | `5170`                      |
+| `separator`          | When `format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                            | `LF` or `0x10` (break line) |
+| `source_address_key` | Specify the key where the source address will be injected.                                                                                                                                           | _none_                      |
+| `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                              | `false`                     |
 
 ## Get started
 
@@ -105,4 +105,4 @@ You should see the following output:
 
 When receiving payloads in JSON format, there are high performance penalties. Parsing JSON is a very expensive task so you could expect your CPU usage increase under high load environments.
 
-To get faster data ingestion, consider using the option `Format none` to avoid JSON parsing if not needed.
+To get faster data ingestion, consider using the option `format none` to avoid JSON parsing if not needed.
