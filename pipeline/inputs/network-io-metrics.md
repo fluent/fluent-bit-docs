@@ -85,7 +85,7 @@ pipeline:
   Tag           netif
   Interface     eth0
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
   Verbose       false
   Test_At_Init  false
 
