@@ -33,7 +33,7 @@ Custom parsers support the following configuration parameters:
 
 Time resolution and its format supported are handled by using the [strftime\(3\)](https://man7.org/linux/man-pages/man3/strftime.3.html) `libc` system function.
 
-In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `Time_Format` is provided as a way to indicate that content must be interpreted as fractional seconds.
+In addition, Fluent Bit extends its time resolution to support fractional seconds like `017-05-17T15:44:31**.187512963**Z`. The `%L` format option for `time_format` is provided as a way to indicate that content must be interpreted as fractional seconds.
 
 {% hint style="info" %}
 
