@@ -88,7 +88,7 @@ pipeline:
   Tag           exec_ls
   Command       ls /var/log
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
   Buf_Size      8mb
   Oneshot       false
 

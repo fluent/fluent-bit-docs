@@ -77,8 +77,8 @@ pipeline:
   Name          mem
   Tag           memory
   Interval_Sec  5
-  Interval_NSec 0
-  PID           1234
+  Interval_Nsec 0
+  Pid           1234
 
 [OUTPUT]
   Name   stdout

@@ -1,4 +1,4 @@
-# Windows system statistics (winstat)
+# Windows system statistics (`winstat`)
 
 The _Windows System Statistics_ (`winstat`) input plugin collects system-level statistics from Windows environments, including CPU usage, memory consumption, disk I/O, and network activity. This plugin uses Windows Performance Counters to gather real-time system metrics.
 
@@ -14,9 +14,9 @@ The plugin supports the following configuration parameters:
 
 | Key             | Description                                                                                             | Default |
 |:----------------|:--------------------------------------------------------------------------------------------------------|:--------|
-| `Interval_Sec`  | Polling interval in seconds.                                                                            | `1`     |
-| `Interval_NSec` | Polling interval in nanoseconds.                                                                        | `0`     |
-| `Threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `interval_sec`  | Polling interval in seconds.                                                                            | `1`     |
+| `interval_nsec` | Polling interval in nanoseconds.                                                                        | `0`     |
+| `threaded`      | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Metrics collected
 
@@ -78,7 +78,7 @@ pipeline:
   Name          winstat
   Tag           winstat
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout
@@ -88,7 +88,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Total interval (sec) = `Interval_Sec` + (`Interval_NSec` / 1000000000)
+Total interval (sec) = `interval_sec` + (`interval_nsec` / 1000000000)
 
 For example: `1.5s` = `1s` + `500000000ns`
 

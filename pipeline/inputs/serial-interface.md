@@ -101,7 +101,7 @@ pipeline:
   Name      serial
   Tag       data
   File      /dev/tnt0
-  BitRate   9600
+  Bitrate   9600
   Separator X
 
 [OUTPUT]

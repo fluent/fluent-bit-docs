@@ -146,8 +146,8 @@ pipeline:
 [INPUT]
     Name            splunk
     Port            8088
-    Add_remote_addr true
-    Remote_addr_key remote_addr
+    Add_Remote_Addr true
+    Remote_Addr_Key remote_addr
 
 [OUTPUT]
     Name  stdout
