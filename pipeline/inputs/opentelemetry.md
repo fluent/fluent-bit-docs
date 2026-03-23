@@ -98,7 +98,7 @@ The OpenTelemetry input plugin supports the following telemetry data types:
 | Type    | HTTP1/JSON    | HTTP1/Protobuf | HTTP2/gRPC |
 |---------|---------------|----------------|------------|
 | Logs    | Stable        | Stable         | Stable     |
-| Metrics | Unimplemented | Stable         | Stable     |
+| Metrics | Stable        | Stable         | Stable     |
 | Traces  | Stable        | Stable         | Stable     |
 
 A sample configuration file to get started will look something like the following:
@@ -123,13 +123,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name opentelemetry
-  listen 127.0.0.1
-  port 4318
+  Name   opentelemetry
+  Listen 127.0.0.1
+  Port   4318
 
 [OUTPUT]
-  name stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
