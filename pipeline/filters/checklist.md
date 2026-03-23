@@ -48,23 +48,23 @@ pipeline:
 
 ```text
 [INPUT]
-  name           tail
-  tag            test1
-  path           test1.log
-  read_from_head true
-  parser         json
+  Name           tail
+  Tag            test1
+  Path           test1.log
+  Read_From_Head true
+  Parser         json
 
 [FILTER]
-  name       checklist
-  match      test1
-  file       ip_list.txt
-  lookup_key $remote_addr
-  record     ioc    abc
-  record     badurl null
+  Name       checklist
+  Match      test1
+  File       ip_list.txt
+  Lookup_Key $remote_addr
+  Record     ioc    abc
+  Record     badurl null
 
 [OUTPUT]
-  name       stdout
-  match      test1
+  Name       stdout
+  Match      test1
 ```
 
 {% endtab %}

@@ -85,8 +85,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -99,18 +99,18 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        counter
-  metric_name        count_all_dummy_messages
-  metric_description This metric counts dummy messages
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        counter
+  Metric_Name        count_all_dummy_messages
+  Metric_Description This metric counts dummy messages
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -193,8 +193,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -207,24 +207,24 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        gauge
-  metric_name        current_duration
-  metric_description This metric shows the current duration
-  value_field        duration
-  kubernetes_mode    on
-  regex              message .*el.*
-  add_label          app $kubernetes['labels']['app']
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        gauge
+  Metric_Name        current_duration
+  Metric_Description This metric shows the current duration
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Regex              message .*el.*
+  Add_Label          app $kubernetes['labels']['app']
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -317,8 +317,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -331,24 +331,24 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        histogram
-  metric_name        current_duration
-  metric_description This metric shows the request duration
-  value_field        duration
-  kubernetes_mode    on
-  regex              message .*el.*
-  add_label          app $kubernetes['labels']['app']
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        histogram
+  Metric_Name        current_duration
+  Metric_Description This metric shows the request duration
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Regex              message .*el.*
+  Add_Label          app $kubernetes['labels']['app']
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -464,8 +464,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -478,31 +478,31 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        histogram
-  metric_name        current_duration
-  metric_description This metric shows the HTTP request duration as histogram in milliseconds
-  value_field        duration
-  kubernetes_mode    on
-  bucket             1
-  bucket             5
-  bucket             10
-  bucket             50
-  bucket             100
-  bucket             250
-  bucket             500
-  bucket             1000
-  regex              message .*el.*
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        histogram
+  Metric_Name        current_duration
+  Metric_Description This metric shows the HTTP request duration as histogram in milliseconds
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Bucket             1
+  Bucket             5
+  Bucket             10
+  Bucket             50
+  Bucket             100
+  Bucket             250
+  Bucket             500
+  Bucket             1000
+  Regex              message .*el.*
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}

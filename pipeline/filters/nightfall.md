@@ -50,17 +50,17 @@ pipeline:
 
 ```text
 [INPUT]
-  name http
-  host 0.0.0.0
-  port 8000
+  Name http
+  Host 0.0.0.0
+  Port 8000
 
 [FILTER]
   Name nightfall
   Match *
-  nightfall_api_key <API key>
-  policy_id 5991946b-1cc8-4c38-9240-72677029a3f7
-  sampling_rate 1
-  tls.ca_path /etc/ssl/certs
+  Nightfall_Api_Key <API key>
+  Policy_Id 5991946b-1cc8-4c38-9240-72677029a3f7
+  Sampling_Rate 1
+  Tls.Ca_Path /etc/ssl/certs
 
 [OUTPUT]
   Name stdout

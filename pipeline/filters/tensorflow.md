@@ -109,10 +109,10 @@ pipeline:
 [FILTER]
   Name                 tensorflow
   Match                mqtt.data
-  input_field          image
-  model_file           /home/m/model.tflite
-  include_input_fields false
-  normalization_value  255
+  Input_Field          image
+  Model_File           /home/m/model.tflite
+  Include_Input_Fields false
+  Normalization_Value  255
 
 [OUTPUT]
   Name  stdout
