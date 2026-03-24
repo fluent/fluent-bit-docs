@@ -29,3 +29,19 @@ podman run -rm -ti fluent/fluent-bit --help
 # Docker container tooling.
 docker run --rm -it fluent/fluent-bit --help
 ```
+
+### Validate configuration with `--dry-run`
+
+Use the `--dry-run` flag to validate a configuration file without starting Fluent Bit:
+
+```shell
+fluent-bit --dry-run -c /path/to/fluent-bit.yaml
+```
+
+A successful validation prints `configuration test is successful` and exits with code `0`. If validation fails, Fluent Bit exits with a non-zero code and prints the errors to stderr.
+
+As of Fluent Bit 4.2, `--dry-run` performs full property validation in addition to syntax checking. Prior to 4.2, unknown or misspelled plugin property names would only surface as errors at runtime; `--dry-run` now catches them during validation. For example, a configuration with an unknown property on a `dummy` input produces:
+
+```
+[error] [config] dummy: unknown configuration property 'invalid_property_that_does_not_exist'.
+```
