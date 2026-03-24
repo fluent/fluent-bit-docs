@@ -125,7 +125,7 @@ Fluent Bit exposes the following endpoints for monitoring.
 | `/api/v2/health`             | Returns Fluent Bit health status as JSON. HTTP 200 when healthy, HTTP 500 when unhealthy. Response fields: `status` (`ok` or `error`), `errors`, `retries_failed`, `error_limit`, `retry_failure_limit`, `period_limit`. | JSON |
 | `/api/v2/reload`             | Execute hot reloading (`POST`, `PUT`) or get the status of hot reloading (`GET`). Unsupported methods return `405 Method Not Allowed` with an `Allow: GET, POST, PUT` header. See the [hot-reloading documentation](hot-reload.md). | JSON |
 
-### v1 metrics
+### V1 metrics
 
 The following descriptions apply to v1 metric endpoints.
 
@@ -138,7 +138,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 - **Record**: a single message collected from a source, such as a single long line in a file.
 - **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
 
-  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
+  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful. If an unrecoverable error is encountered, the chunk fails entirely. Otherwise, the output can request a retry.
 
 | Metric name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
@@ -174,7 +174,7 @@ The following descriptions apply to metrics outputted in JSON format by the `/ap
 | `input_chunks.{plugin name}.chunks.busy`      | Chunks are that are being processed or sent by outputs and aren't eligible to have new data appended. | chunks  |
 | `input_chunks.{plugin name}.chunks.busy_size` | The sum of the byte size of each chunk which is currently marked as busy. | bytes   |
 
-### v2 metrics
+### V2 metrics
 
 The following descriptions apply to v2 metric endpoints.
 
@@ -187,7 +187,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 - **Record**: a single message collected from a source, such as a single long line in a file.
 - **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
 
-  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can either successfully send the full chunk to the destination and mark it as successful, or it can fail the chunk entirely if an unrecoverable error is encountered, or it can ask for the chunk to be retried.
+  The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful. If an unrecoverable error is encountered, the chunk fails entirely. Otherwise, the output can request a retry.
 
 | Metric Name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
@@ -211,6 +211,7 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_input_ring_buffer_retries_total` | name: the name or alias for the input instance | The number of ring buffer write retries. | counter | retries |
 | `fluentbit_input_ring_buffer_retry_failures_total` | name: the name or alias for the input instance | The number of ring buffer write retry failures. | counter | failures |
 | `fluentbit_input_ring_buffer_writes_total` | name: the name or alias for the input instance | The number of ring buffer write operations. | counter | writes |
+| `fluentbit_output_backpressure_wait_seconds` | output: the name or alias for the output instance | Time spent waiting due to output backpressure. | histogram | seconds |
 | `fluentbit_output_chunk_available_capacity_percent` | name: the name or alias for the output instance | The available chunk capacity for this output as a percentage. | gauge | percent |
 | `fluentbit_output_dropped_records_total` | name: the name or alias for the output instance | The number of log records dropped by the output. These records hit an unrecoverable error or retries expired for their chunk. | counter | records |
 | `fluentbit_output_errors_total` | name: the name or alias for the output instance | The number of chunks with an error that's either unrecoverable or unable to retry. This metric represents the number of times a chunk failed, and doesn't correspond with the number of error messages visible in the Fluent Bit log output. | counter | chunks |
@@ -220,7 +221,6 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
-| `fluentbit_output_latency_seconds`      | input: the name of the input plugin instance, output: the name of the output plugin instance | End-to-end latency from chunk creation to successful delivery. Provides observability into chunk-level pipeline performance. | histogram | seconds |
 | `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 | `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
 | `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
