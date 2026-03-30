@@ -1,5 +1,9 @@
 # TCP
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _TCP_ input plugin lets you retrieve structured JSON or raw messages over a TCP network interface (TCP port).
 
 ## Configuration parameters

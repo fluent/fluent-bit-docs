@@ -1,5 +1,9 @@
 # Disk I/O metrics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Disk_ input plugin gathers the information about the disk throughput of the running system every certain interval of time and reports them.
 
 The _Disk I/O metrics_ plugin creates metrics that are log-based, such as JSON payload. For Prometheus-based metrics, see the Node Exporter Metrics input plugin.

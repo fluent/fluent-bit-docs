@@ -1,6 +1,10 @@
 
 # HTTP
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then route data to in a dynamic way.
 
 ## Configuration parameters

@@ -1,5 +1,9 @@
 # Health
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Health_ input plugin lets you check how healthy a TCP server is. It checks by issuing a TCP connection at regular intervals.
 
 ## Configuration parameters

@@ -1,5 +1,9 @@
 # Exec WASI
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Exec WASI_ input plugin lets you execute Wasm programs that are WASI targets like external programs and collect event logs from there.
 
 ## Configuration parameters

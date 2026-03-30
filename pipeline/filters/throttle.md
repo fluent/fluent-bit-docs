@@ -1,5 +1,9 @@
 # Throttle
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Throttle_ filter sets the average `rate` of messages per `interval`, based on the leaky bucket and sliding window algorithm. In case of flooding, it will leak at a certain rate.
 
 ## Configuration parameters

@@ -1,5 +1,9 @@
 # Collectd
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Collectd_ input plugin lets you receive datagrams from the `collectd` service over `UDP`. The plugin listens for collectd network protocol packets and converts them into Fluent Bit records.
 
 ## Configuration parameters

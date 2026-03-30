@@ -1,5 +1,9 @@
 # CheckList
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _CheckList_ plugin (introduced in version 1.8.4) looks up a value in a specified list to see if it exists. The plugin then allows the addition of a record to indicate if the value was found.
 
 ## Configuration parameters

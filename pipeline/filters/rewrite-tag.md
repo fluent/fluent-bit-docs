@@ -4,6 +4,10 @@ description: Powerful and flexible routing
 
 # Rewrite tag
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios when you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 
 The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.

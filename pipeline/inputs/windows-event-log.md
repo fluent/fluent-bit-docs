@@ -1,5 +1,9 @@
 # Windows Event logs (winlog)
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Windows Event logs_ (`winlog`) input plugin lets you read Windows Event logs.
 
 ## Configuration parameters

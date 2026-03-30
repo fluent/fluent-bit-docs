@@ -4,6 +4,10 @@ description: An input plugin to ingest payloads of Prometheus remote write
 
 # Prometheus remote write
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _Prometheus remote write_ input plugin lets you ingest a payload in the Prometheus remote-write format. A remote-write sender can transmit data to Fluent Bit.
 
 ## Configuration parameters

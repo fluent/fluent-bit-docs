@@ -1,5 +1,9 @@
 # Fluent Bit logs
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Fluent Bit logs_ input plugin routes Fluent Bit internal log output into the pipeline as structured log records. Each record contains a `level` field and a `message` field, which lets you ship, filter, or store Fluent Bit internal diagnostic output using the same pipeline you use for all other data.
 
 This plugin is event-driven: records are delivered immediately as the internal logger emits them, not on a polling interval. Fluent Bit enables internal log mirroring automatically when this input is configured.

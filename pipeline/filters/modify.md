@@ -1,5 +1,9 @@
 # Modify
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Modify Filter_ plugin lets you change records using rules and conditions.
 
 ## Example usage

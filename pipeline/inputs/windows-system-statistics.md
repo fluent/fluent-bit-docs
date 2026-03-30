@@ -1,5 +1,9 @@
 # Windows system statistics (`winstat`)
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Windows System Statistics_ (`winstat`) input plugin collects system-level statistics from Windows environments, including CPU usage, memory consumption, disk I/O, and network activity. This plugin uses Windows Performance Counters to gather real-time system metrics.
 
 {% hint style="info" %}

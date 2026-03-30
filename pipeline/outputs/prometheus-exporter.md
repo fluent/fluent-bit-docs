@@ -4,6 +4,10 @@ description: An output plugin to expose Prometheus Metrics
 
 # Prometheus exporter
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _Prometheus exporter_ lets you take metrics from Fluent Bit and expose them so a Prometheus instance can scrape them.
 
 The Prometheus exporter works only with metric plugins such as Node Exporter Metrics.
