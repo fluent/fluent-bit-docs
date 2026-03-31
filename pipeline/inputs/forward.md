@@ -1,5 +1,9 @@
 # Forward
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces`
+{% endhint %}
+
 _Forward_ is the protocol used by [Fluent Bit](https://fluentbit.io) and [Fluentd](https://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
 ## Configuration parameters

@@ -4,6 +4,10 @@ description: An output plugin to submit Prometheus Metrics using the remote writ
 
 # Prometheus remote write
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _Prometheus remote write_ plugin lets you take metrics from Fluent Bit and submit them to a Prometheus server through the remote write mechanism.
 
 The Prometheus exporter works only with metric plugins, such as Node Exporter Metrics.

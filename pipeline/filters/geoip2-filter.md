@@ -4,6 +4,10 @@ description: Look up Geo data from IP.
 
 # GeoIP2 filter
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
 The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/).

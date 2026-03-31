@@ -1,5 +1,9 @@
 # Parser
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Parser_ filter allows for parsing fields in event records.
 
 ## Configuration parameters

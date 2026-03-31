@@ -1,5 +1,9 @@
 # Podman metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The Podman metrics input plugin lets Fluent Bit gather Podman container metrics. The procedure for collecting container list and gathering data associated with them is based on filesystem data.
 
 The metrics can be exposed later as, for example, Prometheus counters and gauges.

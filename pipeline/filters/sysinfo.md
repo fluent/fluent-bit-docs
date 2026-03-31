@@ -1,5 +1,9 @@
 # Sysinfo
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Sysinfo_ filter lets you append system information like the Fluent Bit version or hostname.
 
 ## Configuration parameters

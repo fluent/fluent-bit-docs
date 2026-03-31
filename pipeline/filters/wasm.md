@@ -4,6 +4,10 @@ description: Use Wasm programs as a filter.
 
 # Wasm
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Wasm_ filter lets you modify the incoming records using [Wasm](https://webassembly.org/) technology.
 
 You can extend Fluent Bit capabilities by writing custom filters using built Wasm programs and its runtime. A Wasm-based filter takes the following steps:

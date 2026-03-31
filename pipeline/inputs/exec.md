@@ -1,5 +1,9 @@
 # Exec
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Exec_ input plugin lets you execute external programs and collects event logs.
 
 {% hint style="warning" %}

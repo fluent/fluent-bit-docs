@@ -1,5 +1,9 @@
 # Network I/O metrics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Network I/O metrics_ (`netif`) input plugin gathers network traffic information of the running system at regular intervals, and reports them. This plugin is available only for Linux.
 
 The Network I/O metrics plugin creates metrics that are log-based, such as JSON payload. For Prometheus-based metrics, see the [Node Exporter metrics](node-exporter-metrics.md) input plugin.

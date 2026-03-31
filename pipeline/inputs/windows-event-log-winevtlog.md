@@ -1,5 +1,9 @@
 # Windows Event logs (winevtlog)
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Windows Event logs_ (`winevtlog`) input plugin lets you read Windows Event logs with the API from `winevt.h`.
 
 ## Configuration parameters

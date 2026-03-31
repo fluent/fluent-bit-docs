@@ -1,5 +1,9 @@
 # Forward
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces`
+{% endhint %}
+
 _Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://fluentd.org).
 
 There are no configuration steps required besides specifying where [Fluentd](https://fluentd.org) is located, which can be a local or a remote destination.

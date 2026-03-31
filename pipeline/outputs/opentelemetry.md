@@ -1,6 +1,10 @@
 # OpenTelemetry
 
-The OpenTelemetry plugin lets you take logs, metrics, and traces from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces` `profiles`
+{% endhint %}
+
+The OpenTelemetry plugin lets you take logs, metrics, traces, and profiles from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
 
 Only HTTP endpoints are supported.
 

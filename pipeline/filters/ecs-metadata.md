@@ -1,5 +1,9 @@
 # ECS metadata
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _ECS Filter_ enriches logs with AWS Elastic Container Service metadata. The plugin can enrich logs with task, cluster, and container metadata. The plugin uses the [ECS Agent introspection API](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-introspection.html) to obtain metadata. This filter only works with the ECS EC2 launch type. The filter only works when Fluent Bit is running on an ECS EC2 Container Instance and has access to the ECS Agent introspection API.
 
 The filter isn't supported on ECS Fargate. To obtain metadata on ECS Fargate, use the [built-in FireLens metadata](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_firelens.html) or the [AWS for Fluent Bit init](https://github.com/aws/aws-for-fluent-bit/blob/mainline/use_cases/init-process-for-fluent-bit/README.md) project.

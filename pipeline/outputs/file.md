@@ -1,5 +1,9 @@
 # File
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _File_ output plugin lets you write the data received through the input plugin to file.
 
 ## Configuration parameters

@@ -1,5 +1,9 @@
 # Splunk
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Splunk_ input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) requests.
 
 ## Configuration parameters

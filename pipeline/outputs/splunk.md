@@ -4,6 +4,10 @@ description: Send logs to Splunk HTTP Event Collector
 
 # Splunk
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _Splunk_ output plugin lets you ingest your records into a [Splunk Enterprise](https://www.splunk.com/en_us/products/splunk-enterprise.html) service through the HTTP Event Collector (HEC) interface.
 
 To learn how to set up the HEC in Splunk, refer to [Splunk / Use the HTTP Event Collector](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector).

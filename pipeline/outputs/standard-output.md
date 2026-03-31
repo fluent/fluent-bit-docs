@@ -1,5 +1,9 @@
 # Standard output
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces` `profiles`
+{% endhint %}
+
 The _standard output_ plugin prints ingested data to standard output.
 
 ## Configuration parameters

@@ -4,6 +4,10 @@ description: Send logs to Oracle Cloud Infrastructure Log Analytics Service
 
 # Oracle Cloud Infrastructure Logging Analytics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Oracle Cloud Infrastructure Logging Analytics_ output plugin lets you ingest your log records into the [Oracle Cloud Infrastructure (OCI) Log Analytics](https://docs.oracle.com/en-us/iaas/log-analytics/home.htm) service.
 
 ## Configuration parameters

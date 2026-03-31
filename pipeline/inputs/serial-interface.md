@@ -1,5 +1,9 @@
 # Serial interface
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Serial_ input plugin lets you retrieve messages and data from a serial interface.
 
 ## Configuration parameters

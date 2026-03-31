@@ -1,5 +1,9 @@
 # UDP
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _UDP_ input plugin lets you retrieve structured JSON or raw messages over a UDP network interface (UDP port).
 
 ## Configuration parameters

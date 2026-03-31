@@ -4,6 +4,10 @@ description: Select or exclude records using regular expressions.
 
 # Grep
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Grep_ filter plugin lets you match or exclude specific records based on regular expression patterns for values or nested values.
 
 ## Configuration parameters

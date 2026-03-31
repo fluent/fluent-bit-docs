@@ -1,5 +1,9 @@
 # Dummy
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Dummy_ input plugin generates dummy events. Use this plugin for testing, debugging, benchmarking and getting started with Fluent Bit.
 
 ## Configuration parameters

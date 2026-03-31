@@ -1,5 +1,9 @@
 # Nest
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Nest_ filter plugin lets you operate on or with nested data. Its modes of operation are:
 
 - `nest`: Take a set of records and place them in a map.

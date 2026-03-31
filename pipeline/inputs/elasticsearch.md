@@ -1,5 +1,9 @@
 # Elasticsearch
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Elasticsearch_ input plugin handles both Elasticsearch and OpenSearch Bulk API requests.
 
 ## Configuration parameters

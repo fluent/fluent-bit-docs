@@ -4,6 +4,10 @@ description: Concatenate multiline or stack trace log messages.
 
 # Multiline
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The Multiline filter helps concatenate messages that originally belonged to one context but were split across multiple records or log lines. Common examples are stack traces or applications that print logs in multiple lines.
 
 Along with multiline filters, you can enable one of the following built-in Fluent Bit parsers with auto-detection and multi-format support:

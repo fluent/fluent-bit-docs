@@ -4,6 +4,10 @@ description: Send logs to Amazon OpenSearch Service
 
 # OpenSearch
 
+{% hint style="info" %}
+**Supported event types:** `logs` `traces`
+{% endhint %}
+
 The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch](https://opensearch.org/) database. The following instructions assume you have an operational OpenSearch service running in your environment.
 
 ## Configuration parameters

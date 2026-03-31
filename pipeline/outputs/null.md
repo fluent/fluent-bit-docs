@@ -1,5 +1,9 @@
 # Null
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _Null_ output plugin discards events.
 
 ## Configuration parameters

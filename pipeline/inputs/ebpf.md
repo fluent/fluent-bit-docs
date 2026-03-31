@@ -1,6 +1,10 @@
 # eBPF
 
 {% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
+{% hint style="info" %}
 This plugin is experimental and might be unstable. Use it in development or testing environments only. Its features and behavior are subject to change.
 {% endhint %}
 

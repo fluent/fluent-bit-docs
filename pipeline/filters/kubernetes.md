@@ -1,5 +1,9 @@
 # Kubernetes
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Fluent Bit _Kubernetes_ filter enriches your log files with Kubernetes metadata.
 
 When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers (using `tail` or `systemd` input plugins), this filter can perform the following operations:
