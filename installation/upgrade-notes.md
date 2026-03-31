@@ -8,6 +8,22 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.0
+
+### `hot_reloaded_times` metric type change
+
+The internal metric `fluentbit_hot_reloaded_times` has changed from a gauge to a counter. The previous gauge registration caused incorrect results when using PromQL functions like `rate()` and `increase()`, which expect counters.
+
+If you have Prometheus dashboards or alerting rules that reference `fluentbit_hot_reloaded_times`, update them to use counter-appropriate PromQL functions (for example, `rate()` or `increase()` instead of gauge-specific functions like `delta()`).
+
+### Emitter backpressure with filesystem storage
+
+The internal emitter plugin, used by filters such as `rewrite_tag`, now automatically enables `storage.pause_on_chunks_overlimit` when filesystem storage is in use and that option hasn't been explicitly configured.
+
+Previously, the emitter could accumulate chunks beyond the `storage.max_chunks_up` limit. Pipelines that use `rewrite_tag` or other emitter-backed filters with filesystem storage will now pause when the configured storage limit is reached.
+
+If you rely on the previous unlimited accumulation behavior, explicitly set `storage.pause_on_chunks_overlimit off` on the relevant input. Otherwise, review your `storage.max_chunks_up` value to ensure it's tuned for your expected throughput.
+
 ## Fluent Bit v4.2
 
 ### Vivo exporter output plugin
@@ -113,7 +129,7 @@ For example, when parsing Docker logs, it's no longer necessary to use decoders.
 
 ### Kubernetes filter
 
-Fluent Bit made improvements to Kubernetes Filter handling of stringified `log` messages. If the `Merge_Log` option is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
+Fluent Bit made improvements to Kubernetes Filter handling of string-encoded `log` messages. If the `Merge_Log` option is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
 
 In addition, fixes and improvements were made to the `Merge_Log_Key` option. If a merge log succeed, all new keys will be packaged under the key specified by this option. A suggested configuration is as follows:
 
