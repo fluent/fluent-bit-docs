@@ -15,7 +15,7 @@ This plugin supports the following parameters:
 | `brokers` | Single or multiple list of Kafka brokers. For example, `192.168.1.3:9092`, `192.168.1.4:9092`. | _none_ |
 | `client_id` | Client ID to use when connecting to Kafka. | _none_ |
 | `dynamic_topic` | Adds unknown topics (found in `topic_key`) to `topics`. Only a default topic needs to be configured in `topics`. | `false` |
-| `format` | Specify data format. Available formats: `avro` (requires Avro encoder build option), `gelf`, `json`, `msgpack`, `raw`. | `json` |
+| `format` | Specify data format. Available formats: `avro` (requires Avro encoder build option), `gelf`, `json`, `msgpack`, `otlp_json` (supports logs, metrics, and traces events), `otlp_proto` (supports logs, metrics, and traces events), `raw`. | `json` |
 | `gelf_full_message_key` | Key to use as the long message for GELF format output. | _none_ |
 | `gelf_host_key` | Key to use as the host for GELF format output. | _none_ |
 | `gelf_level_key` | Key to use as the log level for GELF format output. | _none_ |
