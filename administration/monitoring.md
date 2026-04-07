@@ -382,7 +382,7 @@ The command prints a similar output like this:
 Query internal metrics in Prometheus Text 0.0.4 format:
 
 ```shell
-curl -s http://127.0.0.1:2020/api/v1/metrics/prometheus
+curl -s http://127.0.0.1:2020/api/v2/metrics/prometheus
 ```
 
 This command returns the same metrics in Prometheus format instead of JSON:
@@ -557,7 +557,7 @@ pipeline:
 Use the following command to call the health endpoint:
 
 ```shell
-curl -s http://127.0.0.1:2020/api/v1/health
+curl -s http://127.0.0.1:2020/api/v2/health
 ```
 
 With the example configuration, the health status is determined by the following equation:
