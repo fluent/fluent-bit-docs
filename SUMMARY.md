@@ -4,7 +4,7 @@
 
 ## About
 
-* [What is Fluent Bit?](about/what-is-fluent-bit.md)
+* [What's Fluent Bit?](about/what-is-fluent-bit.md)
 * [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [Lab resources](about/resources.md)
 
