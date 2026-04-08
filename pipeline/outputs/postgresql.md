@@ -69,6 +69,7 @@ This plugin supports the following parameters:
 | `timestamp_key` | Key in the JSON object containing the record timestamp. | `date` |
 | `user` | PostgreSQL username. | `_none_` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `Daemon` | Set to `true` if you want run this plugin instance in daemon mode. | `false` |
 
 ### Libpq
 
