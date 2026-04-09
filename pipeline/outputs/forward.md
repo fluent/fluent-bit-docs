@@ -19,16 +19,19 @@ The following parameters are mandatory for both Forward and Secure Forward modes
 
 | Key | Description | Default   |
 | --- | ------------ | --------- |
-| `Host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
-| `Port` | TCP Port of the target service. | `24224` |
-| `Time_as_Integer` | Set timestamps in integer format, it enables compatibility mode for Fluentd v0.12 series. | `False` |
-| `Upstream` | If Forward will connect to an `Upstream` instead of a basic host, this property defines the absolute path for the Upstream configuration file, for more details about this, see [Upstream Servers ](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md). | _none_ |
-| `Unix_Path` | Specify the path to a Unix socket to send a Forward message. If set, `Upstream` is ignored.   | _none_ |
-| `Tag` | Overwrite the tag as Fluent Bit transmits. This allows the receiving pipeline start fresh, or to attribute a source.  |  _none_ |
-| `Send_options` | Always send options (with `"size"=count of messages`) | `False` |
-| `Require_ack_response` | Send `chunk` option and wait for an `ack` response from the server. Enables at-least-once and receiving server can control rate of traffic. Requires Fluentd v0.14.0+ or later | `False` |
-| `Compress` | Set to `gzip` to enable gzip compression. Incompatible with `Time_as_Integer=True` and tags set dynamically using the [Rewrite Tag](../filters/rewrite-tag.md) filter. Requires Fluentd server v0.14.7 or later. |  _none_  |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
+| `host` | Target host where Fluent Bit or Fluentd are listening for Forward messages. | `127.0.0.1` |
+| `port` | TCP port of the target service. | `24224` |
+| `time_as_integer` | Set timestamps in integer format. This enables compatibility mode for Fluentd `v0.12`. | `false` |
+| `upstream` | If Forward connects to an `upstream` definition instead of a basic host, this property defines the absolute path for the upstream configuration file. See [Upstream Servers](../../administration/configuring-fluent-bit/classic-mode/upstream-servers.md). | _none_ |
+| `unix_path` | Specify the path to a Unix socket to send a Forward message. If set, `upstream` is ignored. | _none_ |
+| `tag` | Overwrite the tag as Fluent Bit transmits. This lets the receiving pipeline start fresh or attribute a source. | _none_ |
+| `send_options` | Always send Forward protocol options, including `"size"`. | `false` |
+| `require_ack_response` | Send the `chunk` option and wait for an `ack` response from the server. This enables at-least-once delivery and lets the receiving server control traffic rate. Requires Fluentd `v0.14.0` or later. | `false` |
+| `compress` | Set to `gzip` to enable gzip compression. Incompatible with `time_as_integer true` and tags set dynamically using the [Rewrite Tag](../filters/rewrite-tag.md) filter. Requires Fluentd server `v0.14.7` or later. | _none_ |
+| `fluentd_compat` | Send metrics and traces using a Fluentd-compatible format. | `false` |
+| `retain_metadata_in_forward_mode` | Retain metadata when operating in forward mode. | `false` |
+| `add_option` | Add an extra Forward protocol option. This is an advanced setting and can be specified multiple times. Enabling it also enables `send_options`. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
 ## Secure Forward mode configuration parameters
 
@@ -36,11 +39,11 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `Shared_Key` | A key string known by the remote Fluentd used for authorization. |  _none_ |
-| `Empty_Shared_Key` | Use this option to connect to Fluentd with a zero-length secret. | `False` |
-| `Username` | Specify the username to present to a Fluentd server that enables `user_auth`. | _none_ |
-| `Password` | Specify the password corresponding to the username. | _none_ |
-| `Self_Hostname` | Default value of the auto-generated certificate common name (CN). | `localhost` |
+| `shared_key` | A key string known by the remote Fluentd used for authorization. | _none_ |
+| `empty_shared_key` | Connect to Fluentd with a zero-length shared secret. | `false` |
+| `username` | Specify the username to present to a Fluentd server that enables `user_auth`. | _none_ |
+| `password` | Specify the password corresponding to the username. | _none_ |
+| `self_hostname` | Default value of the auto-generated certificate common name (CN). | `localhost` |
 | `tls` | Enable or disable TLS support. | `Off` |
 | `tls.verify` | Force certificate validation. | `On` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), and `4` (Verbose). | `1` |
