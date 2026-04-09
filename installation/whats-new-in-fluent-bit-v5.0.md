@@ -1,8 +1,37 @@
 # What's new in Fluent Bit v5.0
 
-Fluent Bit `v5.0` adds new inputs and processors, expands authentication and TLS options, and standardizes configuration for HTTP-based plugins. This page gives a quick user-focused overview of the main changes since Fluent Bit `v4.2`.
+Fluent Bit `v5.0` adds new inputs and processors, expands authentication and TLS options, and standardizes configuration for HTTP-based plugins. It also delivers an important round of performance and scalability work, especially for pipelines that ingest logs, metrics, and traces through HTTP-based protocols. This page gives a quick user-focused overview of the main changes since Fluent Bit `v4.2`.
 
 For migration-impacting changes, see [Upgrade notes](upgrade-notes.md).
+
+## Performance and scalability
+
+### Unified processing and delivery model
+
+Fluent Bit `v5.0` continues the move toward a more unified runtime for logs, metrics, and traces. In practice, this means the same core engine improvements benefit more of the pipeline, instead of individual signal paths evolving separately.
+
+For end users, the result is a more consistent behavior across telemetry types and a better base for high-throughput pipelines that mix logs, metrics, and traces in the same deployment.
+
+### Refactored HTTP stack
+
+One of the most important `v5.0` changes is the refactoring of the HTTP listener stack used by several input plugins. Fluent Bit now uses a shared HTTP server implementation across the major HTTP-based receivers instead of maintaining separate code paths.
+
+This work improves:
+
+- concurrency through shared listener worker support
+- consistency of request handling across HTTP-based inputs
+- buffer enforcement and connection handling
+- maintainability, which reduces drift between plugin implementations
+
+The biggest user-facing beneficiaries are:
+
+- [HTTP input](../pipeline/inputs/http.md)
+- [Splunk input](../pipeline/inputs/splunk.md)
+- [Elasticsearch input](../pipeline/inputs/elasticsearch.md)
+- [OpenTelemetry input](../pipeline/inputs/opentelemetry.md)
+- [Prometheus remote write input](../pipeline/inputs/prometheus-remote-write.md)
+
+If you run large HTTP or OTLP ingestion workloads, `v5.0` is not only a feature release. It is also a meaningful runtime improvement.
 
 ## Configuration and operations
 
