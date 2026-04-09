@@ -11,6 +11,7 @@ The plugin supports the following configuration parameters:
 | `api` | The Treasure Data API key. To obtain it, log into the [Console](https://console.treasuredata.com/users/sign_in) and in the API keys box, copy the API key hash. | _none_ |
 | `database` | Specify the name of your target database. | _none_ |
 | `region` | Set the service region. Allowed values: `US`, `JP`. | `US` |
+| `Region` | Classic-mode spelling of `region`. Allowed values: `us`, `jp`. | `US` |
 | `table` | Specify the name of your target table where the records will be stored. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
