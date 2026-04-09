@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | `parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
 | `preserve_key` | Keep the original `key_name` field in the parsed result. If false, the field will be removed. | `false` |
 | `reserve_data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `false` |
+| `Unescape_key` | Deprecated. This option is retained only for backward compatibility and should not be used in new configurations. | _deprecated_ |
 
 ## Get started
 
