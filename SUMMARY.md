@@ -33,6 +33,7 @@
   * [Kubernetes](installation/downloads/kubernetes.md)
   * [macOS](installation/downloads/macos.md)
   * [Windows](installation/downloads/windows.md)
+* [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md)
 * [Upgrade notes](installation/upgrade-notes.md)
 
 ## Administration
