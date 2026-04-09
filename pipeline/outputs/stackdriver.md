@@ -34,8 +34,10 @@ This plugin uses the following configuration parameters. For more details about 
 | `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
 | `severity_key` | The name of the key from the original record that contains the severity. | `logging.googleapis.com/severity` |
 | `span_id_key` | The name of the key from the original record that contains the span ID. | `logging.googleapis.com/spanId` |
+| `stackdriver_agent` | Set a custom `User-Agent` header value for requests sent to Cloud Logging. | _none_ |
 | `tag_prefix` | Set the `tag_prefix` used to validate the tag of logs with Kubernetes resource type. Without this option, the tag of the log must be in format of `k8s_container(pod/node).*` to use the `k8s_container` resource type. Now the tag prefix is configurable by this option (note the ending dot). | `k8s_container.`, `k8s_pod.`, `k8s_node.` |
 | `task_id` | A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. If the resource type is `generic_task`, this field is required. | _none_ |
+| `test_log_entry_format` | Test-only option that prints the generated Cloud Logging payload without sending it. Intended for validation and debugging. | `false` |
 | `text_payload_key` | Set the key from the record to use as the `textPayload` field in the log entry. | _none_ |
 | `trace_key` | The name of the key from the original record that contains the trace value. | `logging.googleapis.com/trace` |
 | `trace_sampled_key` | The name of the key from the original record that contains the trace sampled flag. | `logging.googleapis.com/traceSampled` |
