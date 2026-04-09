@@ -16,6 +16,7 @@ The plugin supports the following configuration parameters:
 | `buffer_max_size`     | Set the maximum size of buffer. Compatibility alias for `http_server.buffer_max_size`.                                                                   | `4M`          |
 | `hostname`            | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information.                 | `localhost`   |
 | `http2`               | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                      | `true`        |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                         | `0`           |
 | `http_server.workers` | Number of HTTP listener worker threads.                                                                                                                  | `1`           |
 | `listen`              | The address to listen on.                                                                                                                                | `0.0.0.0`     |
 | `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
