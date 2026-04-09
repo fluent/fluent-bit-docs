@@ -76,6 +76,7 @@ Tail sampling uses the following `sampling_settings` configuration parameters:
 | Key | Description | Default |
 | --- | :---------- | ------- |
 | `decision_wait` | Specifies how long to buffer spans before making a sampling decision, allowing full trace evaluation. | `30s` |
+| `legacy_reconcile` | Uses the legacy tail-sampling reconciliation path instead of the optimized reconciler. Keep this disabled unless you need behavior parity while comparing results with older deployments. | `false` |
 | `max_traces` | Specifies the maximum number of traces that can be held in memory. When the limit is reached, the oldest trace is deleted. | _none_ |
 
 ### Conditions
