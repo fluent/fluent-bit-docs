@@ -15,6 +15,7 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 | `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`    |
 | `buffer_max_size`          | Specify the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                   | `4M`      |
 | `http2`                    | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                 | `true`    |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                      | `0`       |
 | `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                             | `1`       |
 | `listen`                   | The address to listen on.                                                                                                                           | `0.0.0.0` |
 | `oauth2.allowed_audience`  | Audience claim to enforce when validating incoming `OAuth 2.0` `JWT` tokens.                                                                        | _none_    |
