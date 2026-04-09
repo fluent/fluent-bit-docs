@@ -23,6 +23,7 @@ The plugin supports the following configuration parameters:
 | `samples` | Limit the number of events generated. For example, if `samples=3`, the plugin generates only three events and stops. `0` means no limit. | `0` |
 | `start_time_nsec` | Set a dummy base timestamp, in nanoseconds. If set to `-1`, the current time is used. | `-1` |
 | `start_time_sec` | Set a dummy base timestamp, in seconds. If set to `-1`, the current time is used. | `-1` |
+| `test_hang_on_exit` | Test-only option that simulates a hang during shutdown for hot reload watchdog testing. Don't use this in production configurations. | `false` |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
 ## Get started
