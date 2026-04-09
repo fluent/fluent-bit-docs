@@ -1,22 +1,22 @@
 ---
-description: Send logs to Databricks via ZeroBus
+description: Send logs to Databricks via Zerobus
 ---
 
-# ZeroBus
+# Zerobus
 
 {% hint style="info" %}
 **Supported event types:** `logs`
 {% endhint %}
 
-The _ZeroBus_ output plugin lets you ingest log records into a [Databricks](https://www.databricks.com/) table through the ZeroBus streaming ingestion interface. Records are converted to JSON and sent via the ZeroBus SDK using gRPC.
+The _Zerobus_ output plugin lets you ingest log records into a [Databricks](https://www.databricks.com/) table through the Zerobus streaming ingestion interface. Records are converted to JSON and sent via the Zerobus SDK using gRPC.
 
-Before you begin, you need a Databricks workspace with a Unity Catalog table configured for ZeroBus ingestion, and an OAuth2 service principal (client ID and client secret) with appropriate permissions.
+Before you begin, you need a Databricks workspace with a Unity Catalog table configured for Zerobus ingestion, and an OAuth2 service principal (client ID and client secret) with appropriate permissions.
 
 ## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `endpoint` | ZeroBus gRPC endpoint URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
+| `endpoint` | Zerobus gRPC endpoint URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
 | `workspace_url` | Databricks workspace URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
 | `table_name` | Fully qualified Unity Catalog table name in `catalog.schema.table` format. | _none_ |
 | `client_id` | OAuth2 client ID for authentication. | _none_ |
@@ -28,7 +28,7 @@ Before you begin, you need a Databricks workspace with a Unity Catalog table con
 
 ## Get started
 
-To send log records to Databricks via ZeroBus, configure the plugin with your ZeroBus endpoint, workspace URL, table name, and OAuth2 credentials.
+To send log records to Databricks via Zerobus, configure the plugin with your Zerobus endpoint, workspace URL, table name, and OAuth2 credentials.
 
 ### Configuration file
 
