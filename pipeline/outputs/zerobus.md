@@ -1,5 +1,5 @@
 ---
-description: Send logs to Databricks via Zerobus
+description: Send logs to Databricks through Zerobus
 ---
 
 # Zerobus
@@ -8,9 +8,9 @@ description: Send logs to Databricks via Zerobus
 **Supported event types:** `logs`
 {% endhint %}
 
-The _Zerobus_ output plugin lets you ingest log records into a [Databricks](https://www.databricks.com/) table through the Zerobus streaming ingestion interface. Records are converted to JSON and sent via the Zerobus SDK using gRPC.
+The _Zerobus_ output plugin lets you ingest log records into a [Databricks](https://www.databricks.com/) table through the Zerobus streaming ingestion interface. Records are converted to JSON and sent by using the Zerobus SDK using gRPC.
 
-Before you begin, you need a Databricks workspace with a Unity Catalog table configured for Zerobus ingestion, and an OAuth2 service principal (client ID and client secret) with appropriate permissions.
+Before you begin, you need a Databricks workspace with a Unity Catalog table configured for Zerobus ingestion, and an OAuth 2.0 service principal (client ID and client secret) with appropriate permissions.
 
 ## Configuration parameters
 
@@ -19,8 +19,8 @@ Before you begin, you need a Databricks workspace with a Unity Catalog table con
 | `endpoint` | Zerobus gRPC endpoint URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
 | `workspace_url` | Databricks workspace URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
 | `table_name` | Fully qualified Unity Catalog table name in `catalog.schema.table` format. | _none_ |
-| `client_id` | OAuth2 client ID for authentication. | _none_ |
-| `client_secret` | OAuth2 client secret for authentication. | _none_ |
+| `client_id` | OAuth 2.0 client ID for authentication. | _none_ |
+| `client_secret` | OAuth 2.0 client secret for authentication. | _none_ |
 | `add_tag` | If enabled, the Fluent Bit tag is added as a `_tag` field in each record. | `true` |
 | `time_key` | Key name for the injected timestamp. The timestamp is formatted as RFC 3339 with nanosecond precision. Set to an empty string to disable timestamp injection. | `_time` |
 | `log_key` | Comma-separated list of record keys to include in the output. When unset, all keys are included. | _none_ |
@@ -28,7 +28,7 @@ Before you begin, you need a Databricks workspace with a Unity Catalog table con
 
 ## Get started
 
-To send log records to Databricks via Zerobus, configure the plugin with your Zerobus endpoint, workspace URL, table name, and OAuth2 credentials.
+To send log records to Databricks through Zerobus, configure the plugin with your Zerobus endpoint, workspace URL, table name, and OAuth 2.0 credentials.
 
 ### Configuration file
 
