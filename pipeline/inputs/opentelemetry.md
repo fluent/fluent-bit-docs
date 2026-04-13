@@ -14,6 +14,14 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 
 ## Configuration
 
+The table below includes both:
+
+- settings specific to the OpenTelemetry input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                                 | Description                                                                                                                                                                                   | Default     |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | `alias`                             | Sets an alias for multiple instances of the same input plugin. If no alias is specified, a default name will be assigned using the plugin name followed by a dot and a sequence number.       | _none_      |
@@ -24,6 +32,8 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `http2`                             | Enable HTTP/2 protocol support for the OpenTelemetry receiver.                                                                                                                                | `true`      |
 | `http_server.max_connections`       | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                                                                    | `0`         |
 | `http_server.workers`               | Number of HTTP listener worker threads.                                                                                                                                                       | `1`         |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                             | `8192`      |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                   | `256M`      |
 | `listen`                            | The network address to listen on.                                                                                                                                                             | `0.0.0.0`   |
 | `log_level`                         | Specifies the log level for this plugin. If not set here, the plugin uses the global log level specified in the `service` section of your configuration file.                                 | `info`      |
 | `log_suppress_interval`             | Suppresses log messages from this plugin that appear similar within a specified time interval. `0` no suppression.                                                                            | `0`         |
@@ -68,6 +78,10 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `tls.verify`                        | Force certificate validation.                                                                                                                                                                 | `on`        |
 | `tls.verify_hostname`               | Enable or disable to verify hostname.                                                                                                                                                         | `off`       |
 | `tls.vhost`                         | Hostname to be used for TLS SNI extension.                                                                                                                                                    | _none_      |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 When `raw_traces` is set to `false` (default), the traces endpoint (`/v1/traces`) processes incoming trace data using the unified JSON parser with strict validation. The endpoint accepts both `protobuf` and `JSON` encoded payloads. When `raw_traces` is set to `true`, any data forwarded to the traces endpoint will be packed and forwarded as a log message without processing, validation, or conversion to the Fluent Bit internal trace format.
 
