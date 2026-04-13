@@ -189,6 +189,10 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 
   The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful. If an unrecoverable error is encountered, the chunk fails entirely. Otherwise, the output can request a retry.
 
+Some metrics are available only for specific plugins or runtime modes. For
+example, the `fluentbit_input_http_server_ingress_queue_*` metrics are exposed
+only for HTTP-based inputs that use `http_server.workers` greater than `1`.
+
 | Metric Name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
 | `fluentbit_build_info` | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The value is the Unix epoch timestamp of the configuration context initialization. | gauge | seconds |
@@ -202,6 +206,9 @@ The following terms are key to understanding how Fluent Bit processes metrics:
 | `fluentbit_input_files_opened_total` | name: the name or alias for the input instance | The total number of opened files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
 | `fluentbit_input_files_rotated_total` | name: the name or alias for the input instance | The total number of rotated files. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin. | counter | files |
 | `fluentbit_input_ingestion_paused` | name: the name or alias for the input instance | Indicates whether the input instance ingestion is currently paused (1) or not (0). | gauge | boolean |
+| `fluentbit_input_http_server_ingress_queue_busy_total` | name: the name or alias for the input instance | The total number of times an HTTP worker input hit a full deferred ingress queue and applied backpressure. Only available for HTTP-based inputs using `http_server.workers` greater than `1`. | counter | events |
+| `fluentbit_input_http_server_ingress_queue_pending_bytes` | name: the name or alias for the input instance | The current size of the deferred ingress queue in bytes. Only available for HTTP-based inputs using `http_server.workers` greater than `1`. | gauge | bytes |
+| `fluentbit_input_http_server_ingress_queue_pending_events` | name: the name or alias for the input instance | The current number of deferred ingress queue entries. Only available for HTTP-based inputs using `http_server.workers` greater than `1`. | gauge | events |
 | `fluentbit_input_long_line_skipped_total` | name: the name or alias for the input instance | The total number of skipped occurrences for long lines. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin when `skip_long_lines` is enabled. | counter | occurrences |
 | `fluentbit_input_long_line_truncated_total` | name: the name or alias for the input instance | The total number of truncated occurrences for long lines. Only available for the [Tail](../pipeline/inputs/tail.md) input plugin when `truncate_long_lines` is enabled. | counter | occurrences |
 | `fluentbit_input_memrb_dropped_bytes` | name: the name or alias for the input instance | The number of bytes dropped by the memory ring buffer (`memrb`) storage type when the buffer is full. Only available for input plugins with `storage.type` set to `memrb`. | counter | bytes |
