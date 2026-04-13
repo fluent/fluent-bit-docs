@@ -25,6 +25,8 @@ The HTTP-based input plugins now use a shared HTTP listener configuration model.
 - `http_server.buffer_max_size`
 - `http_server.max_connections`
 - `http_server.workers`
+- `http_server.ingress_queue_event_limit`
+- `http_server.ingress_queue_byte_limit`
 
 Legacy per-plugin names such as `http2`, `buffer_chunk_size`, and `buffer_max_size` are still accepted as compatibility aliases, but new configurations should use the `http_server.*` names.
 

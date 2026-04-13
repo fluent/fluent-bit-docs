@@ -81,6 +81,14 @@ The `name` parameter is required and defines for Fluent Bit which input plugin s
 
 Some HTTP-based input plugins share the same listener implementation and support the following common settings in addition to their plugin-specific parameters:
 
+These settings are shared by HTTP-based inputs such as `http`, `splunk`,
+`elasticsearch`, `opentelemetry`, and `prometheus_remote_write`.
+Use these keys the same way across those plugins.
+
+If a plugin page shows one of the `http_server.*` keys in its configuration
+table, it is documenting one of these shared listener settings, not a
+plugin-specific behavior.
+
 | Key | Description | Default |
 | --- | ----------- | ------- |
 | `http_server.http2` | Enable HTTP/2 support for the input listener. | `true` |
@@ -88,6 +96,12 @@ Some HTTP-based input plugins share the same listener implementation and support
 | `http_server.buffer_chunk_size` | Set the allocation chunk size used for the HTTP request buffer. | `512K` |
 | `http_server.max_connections` | Set the maximum number of concurrent active HTTP connections. `0` means unlimited. | `0` |
 | `http_server.workers` | Set the number of HTTP listener worker threads. | `1` |
+| `http_server.ingress_queue_event_limit` | Set the maximum number of deferred ingress queue entries. This setting applies only when `http_server.workers` is greater than `1`. | `8192` |
+| `http_server.ingress_queue_byte_limit` | Set the maximum size of the deferred ingress queue. This setting applies only when `http_server.workers` is greater than `1`. | `256M` |
+
+When `http_server.workers` is `1`, Fluent Bit does not use the deferred
+ingress queue, so the two `http_server.ingress_queue_*` settings have no
+effect.
 
 For backward compatibility, some plugins also accept the legacy aliases `http2`, `buffer_max_size`, `buffer_chunk_size`, `max_connections`, and `workers`.
 
