@@ -9,6 +9,14 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 ## Configuration parameters
 
+The table below includes both:
+
+- settings specific to the HTTP input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                        | Description                                                                                                                                         | Default   |
 |----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
 | `add_remote_addr`          | Adds a `REMOTE_ADDR` field to the record. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header. | `false`   |
@@ -17,6 +25,8 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 | `http2`                    | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                 | `true`    |
 | `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                      | `0`       |
 | `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                             | `1`       |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                          | `8192`    |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                | `256M`    |
 | `listen`                   | The address to listen on.                                                                                                                           | `0.0.0.0` |
 | `oauth2.allowed_audience`  | Audience claim to enforce when validating incoming `OAuth 2.0` `JWT` tokens.                                                                        | _none_    |
 | `oauth2.allowed_clients`   | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                      | _none_    |
@@ -30,6 +40,10 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 | `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`.                                                                 | `201`     |
 | `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                 | _none_    |
 | `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                             | `false`   |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 ### TLS / SSL
 
