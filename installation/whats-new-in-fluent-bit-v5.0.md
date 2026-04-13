@@ -44,6 +44,8 @@ HTTP-based inputs now use a shared listener configuration model. The preferred s
 - `http_server.buffer_max_size`
 - `http_server.max_connections`
 - `http_server.workers`
+- `http_server.ingress_queue_event_limit`
+- `http_server.ingress_queue_byte_limit`
 
 Legacy aliases such as `http2`, `buffer_chunk_size`, and `buffer_max_size` still work, but new configurations should use the `http_server.*` names.
 
