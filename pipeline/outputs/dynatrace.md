@@ -8,19 +8,19 @@ Stream logs to [Dynatrace](https://www.dynatrace.com) by utilizing the `http` pl
 
 ## Configuration parameters
 
-| Key                        | Description | Default |
-| -------------------------- | ----------- | ------- |
-| `header`                   | The specific header for content-type. | `Content-Type application/json; charset=utf-8` |
-| `header`                   | The specific header for authorization token, where {your-API-token-here} is the Dynatrace API token with log ingest scope. | Authorization Api-Token {your-API-token-here} |
+| Key | Description | Default |
+| :--- | :--- | :--- |
 | `allow_duplicated_headers` | Specifies duplicated header use. | `false` |
-| `host`                     | Your Dynatrace environment hostname where {your-environment-id} is your environment ID. | `{your-environment-id}.live.dynatrace.com` |
-| `port`                     | TCP port of your Dynatrace host. | `443` |
-| `uri`                      | Specify the HTTP URI for Dynatrace log ingest API. | `/api/v2/logs/ingest` |
-| `format`                   | The data format to be used in the HTTP request body. | `json` |
-| `json_date_format`         | Date format standard for JSON. | `iso8601` |
-| `json_date_key`            | Field name specifying message timestamp. | `timestamp` |
-| `tls`                      | Specify to use TLS. | `on` |
-| `tls.verify`               | TLS verification. | `on` |
+| `format` | The data format to be used in the HTTP request body. | `json` |
+| `header` | The specific header for content-type. | `Content-Type application/json; charset=utf-8` |
+| `header` | The specific header for authorization token, where `{your-API-token-here}` is the Dynatrace API token with log ingest scope. | `Authorization Api-Token {your-API-token-here}` |
+| `host` | Your Dynatrace environment hostname where `{your-environment-id}` is your environment ID. | `{your-environment-id}.live.dynatrace.com` |
+| `json_date_format` | Date format standard for JSON. | `iso8601` |
+| `json_date_key` | Field name specifying message timestamp. | `timestamp` |
+| `port` | TCP port of your Dynatrace host. | `443` |
+| `tls` | Specify to use TLS. | `on` |
+| `tls.verify` | TLS verification. | `on` |
+| `uri` | Specify the HTTP URI for Dynatrace log ingest API. | `/api/v2/logs/ingest` |
 
 ## Get started
 
@@ -58,19 +58,19 @@ To get started with sending logs to Dynatrace:
 
    ```text
    [OUTPUT]
-     name         http
-     match        *
-     header       Content-Type application/json; charset=utf-8
-     header       Authorization Api-Token {your-API-token-here}
-     allow_duplicated_headers false
-     host         {your-environment-id}.live.dynatrace.com
-     Port         443
-     URI          /api/v2/logs/ingest
-     Format       json
-     json_date_format iso8601
-     json_date_key timestamp
-     tls          On
-     tls.verify   On
+     Name                     http
+     Match                    *
+     Header                   Content-Type application/json; charset=utf-8
+     Header                   Authorization Api-Token {your-API-token-here}
+     Allow_Duplicated_Headers false
+     Host                     {your-environment-id}.live.dynatrace.com
+     Port                     443
+     Uri                      /api/v2/logs/ingest
+     Format                   json
+     Json_Date_Format         iso8601
+     Json_Date_Key            timestamp
+     Tls                      On
+     Tls.verify               On
    ```
 
 {% endtab %}

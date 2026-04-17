@@ -1,5 +1,9 @@
 # Sysinfo
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Sysinfo_ filter lets you append system information like the Fluent Bit version or hostname.
 
 ## Configuration parameters
@@ -53,8 +57,8 @@ pipeline:
 [FILTER]
   Name sysinfo
   Match *
-  fluentbit_version_key flb_ver
-  os_name_key os_name
+  Fluentbit_Version_Key flb_ver
+  Os_Name_Key os_name
 
 [OUTPUT]
   Name stdout

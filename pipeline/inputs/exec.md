@@ -1,5 +1,9 @@
 # Exec
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Exec_ input plugin lets you execute external programs and collects event logs.
 
 {% hint style="warning" %}
@@ -88,7 +92,7 @@ pipeline:
   Tag           exec_ls
   Command       ls /var/log
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
   Buf_Size      8mb
   Oneshot       false
 

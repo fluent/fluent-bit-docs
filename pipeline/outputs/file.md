@@ -1,18 +1,20 @@
 # File
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _File_ output plugin lets you write the data received through the input plugin to file.
 
 ## Configuration parameters
 
-The plugin supports the following configuration parameters:
-
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Path` | Directory path to store files. If not set, Fluent Bit will write the files on it's own positioned directory. Available in Fluent Bit 1.4.6 and later. | _none_ |
-| `File` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. | _none_ |
-| `Format` | The [format](#format) of the file content. | `out_file` |
-| `Mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | _none_ |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. | _none_ |
+| `format` | The [format](#format) of the file content. | _none_ |
+| `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
+| `path` | Directory path to store files. If not set, Fluent Bit will write the files in its own working directory. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Format
 
@@ -36,11 +38,12 @@ Output the records as JSON (without additional `tag` and `timestamp` attributes)
 
 ### CSV
 
-Output the records in CSV format. CSV mode supports an additional configuration parameter.
+Output the records in CSV format. CSV mode supports additional configuration parameters.
 
-| Key | Description |
-| :--- | :--- |
-| `Delimiter` | The character to separate each data. Accepted values: `\t` (or `tab`), ` ` (`space`), or `,` (`comma`). Other values are ignored and will use default silently. Default: `,` |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `csv_column_names` | Add column names (keys) as the first line of the output file. | `false` |
+| `delimiter` | The character to separate each field. Accepted values: `\t` (or `tab`), ` ` (`space`), or `,` (`comma`). Other values are ignored and fall back to the default. | `,` |
 
 ```text
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
@@ -48,12 +51,12 @@ time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 
 ### LTSV
 
-Output the records in LTSV format. LTSV mode supports an additional configuration parameter.
+Output the records in LTSV format. LTSV mode supports additional configuration parameters.
 
-| Key | Description |
-| :--- | :--- |
-| `Delimiter` | The character to separate each pair. Default: `t` (`TAB`) |
-| `Label_Delimiter` | The character to separate label and the value. Default: `:` |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `delimiter` | The character to separate each pair. | `\t` |
+| `label_delimiter` | The character to separate label and the value. | `:` |
 
 ```text
 field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
@@ -63,9 +66,9 @@ field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
 
 Output the records using a custom format template.
 
-| Key | Description |
-| :--- | :--- |
-| Template | The format string. Default: `{time} {message}` |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `template` | The format string. | `{time} {message}` |
 
 This accepts a formatting template and fills placeholders using corresponding values in a record.
 

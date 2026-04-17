@@ -1,28 +1,30 @@
 # InfluxDB
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https://www.influxdata.com/products/influxdb-overview) time series database. The following instructions assume that you have an operational InfluxDB service running in your system.
 
 ## Configuration parameters
 
-This plugin supports the following parameters:
-
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Host` | IP address or hostname of the target InfluxDB service. | `127.0.0.1` |
-| `Port` | TCP port of the target InfluxDB service. | `8086` |
-| `Database` | InfluxDB database name where records will be inserted. | `fluentbit` |
-| `Bucket` | InfluxDB bucket name where records will be inserted. If specified, `database` is ignored and v2 of API is used. | _none_ |
-| `Org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
-| `Sequence_Tag` | The name of the tag whose value is incremented for the consecutive simultaneous events. | `_seq` |
-| `HTTP_User` | Optional username for HTTP Basic Authentication. | _none_ |
-| `HTTP_Passwd` | Password for user defined in `HTTP_User`. | _none_ |
-| `HTTP_Token` | Authentication token used with InfluxDB v2. If specified, both `HTTP_User` and `HTTP_Passwd` are ignored. | _none_ |
-| `HTTP_Header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `Tag_Keys` | Space separated list of keys that needs to be tagged. | _none_ |
-| `Auto_Tags` | Automatically tag keys where value is `string`.  This option takes a Boolean value: `True`/`False`, `On`/`Off`. | `Off` |
-| `Uri` | Custom URI endpoint. | _none_ |
-| `Add_Integer_Suffix` | Use integer type of [InfluxDB's line protocol](https://docs.influxdata.com/influxdb/v1/write_protocols/line_protocol_reference/). This option takes a Boolean value: `True`/`False`, `On`/`Off`. | `Off` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `add_integer_suffix` | Use integer type of [InfluxDB's line protocol](https://docs.influxdata.com/influxdb/v1/write_protocols/line_protocol_reference/). | `false` |
+| `auto_tags` | Automatically tag keys where value is `string`. | `false` |
+| `bucket` | InfluxDB bucket name where records will be inserted. If specified, `database` is ignored and v2 of the API is used. | _none_ |
+| `database` | InfluxDB database name where records will be inserted. | `fluentbit` |
+| `host` | IP address or hostname of the target InfluxDB service. | `127.0.0.1` |
+| `http_header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `http_passwd` | Password for user defined in `http_user`. | _none_ |
+| `http_token` | Authentication token used with InfluxDB v2. If specified, both `http_user` and `http_passwd` are ignored. | _none_ |
+| `http_user` | Optional username for HTTP Basic Authentication. | _none_ |
+| `org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
+| `port` | TCP port of the target InfluxDB service. | `8086` |
+| `sequence_tag` | The name of the tag whose value is incremented for consecutive simultaneous events. | _none_ |
+| `tag_keys` | Space-separated list of keys to tag. | _none_ |
+| `uri` | Custom URI endpoint. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
 
@@ -121,8 +123,8 @@ pipeline:
 [INPUT]
   Name            tail
   Tag             apache.access
-  parser          apache2
-  path            /var/log/apache2/access.log
+  Parser          apache2
+  Path            /var/log/apache2/access.log
 
 [OUTPUT]
   Name          influxdb
@@ -140,56 +142,6 @@ pipeline:
 
 `Auto_Tags=On` in this example causes an error, because every parsed field value type is `string`. The best usage of this option in metrics like record where one or more field value isn't `string` typed.
 
-A basic example of `Tags_List_Key` usage:
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-pipeline:
-  inputs:
-    - name: dummy
-      # tagged fields: level, ID, businessObjectID, status
-      dummy: '{"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}'
-
-  outputs:
-    - name: influxdb
-      match: '*'
-      host: 127.0.0.1
-      port: 8086
-      database: fluentbit
-      sequence_tag: _seq
-      # make tags from method and path fields
-      tag_keys: method path
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
-[INPUT]
-  Name              dummy
-  # tagged fields: level, ID, businessObjectID, status
-  Dummy             {"msg": "Transfer completed", "level": "info", "ID": "1234", "businessObjectID": "qwerty", "status": "OK", "tags": ["ID", "businessObjectID"]}
-
-[OUTPUT]
-  Name          influxdb
-  Match         *
-  Host          127.0.0.1
-  Port          8086
-  Bucket        My_Bucket
-  Org           My_Org
-  Sequence_Tag  _seq
-  HTTP_Token    My_Token
-  # tag all fields inside tags string array
-  Tags_List_Enabled True
-  Tags_List_Key tags
-  # tag level, status fields
-  Tag_Keys level status
-```
-
-{% endtab %}
-{% endtabs %}
 
 ### Testing
 

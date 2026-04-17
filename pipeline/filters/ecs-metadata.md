@@ -1,5 +1,9 @@
 # ECS metadata
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _ECS Filter_ enriches logs with AWS Elastic Container Service metadata. The plugin can enrich logs with task, cluster, and container metadata. The plugin uses the [ECS Agent introspection API](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-introspection.html) to obtain metadata. This filter only works with the ECS EC2 launch type. The filter only works when Fluent Bit is running on an ECS EC2 Container Instance and has access to the ECS Agent introspection API.
 
 The filter isn't supported on ECS Fargate. To obtain metadata on ECS Fargate, use the [built-in FireLens metadata](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_firelens.html) or the [AWS for Fluent Bit init](https://github.com/aws/aws-for-fluent-bit/blob/mainline/use_cases/init-process-for-fluent-bit/README.md) project.
@@ -25,16 +29,16 @@ The following template variables can be used for values with the `add` option. S
 | Variable | Description | Supported with `cluster_metadata_only` on |
 | :--- | :--- | :--- |
 | `$ClusterName` | The ECS cluster name. Fluent Bit is running on EC2 instances that are part of this cluster. | `Yes` |
+| `$ContainerID` | The ID of the container from which the log originated. This is the full 64-character-long container ID. | `No` |
 | `$ContainerInstanceArn` | The full ARN of the ECS EC2 Container Instance. This is the instance that Fluent Bit is running on. | `Yes` |
 | `$ContainerInstanceID` | The ID of the ECS EC2 Container Instance. | `Yes` |
+| `$DockerContainerName` | The name of the container from which the log originated. This is the name obtained from Docker and is the name shown if you run `docker ps` on the instance. | `No` |
 | `$ECSAgentVersion` | The version string of the ECS Agent running on the container instance. | `Yes` |
 | `$ECSContainerName` | The name of the container from which the log originated. This is the name in your ECS Task Definition. | `No` |
-| `$DockerContainerName` | The name of the container from which the log originated. This is the name obtained from Docker and is the name shown if you run `docker ps` on the instance. | `No` |
-| `$ContainerID` | The ID of the container from which the log originated. This is the full 64-character-long container ID. | `No` |
+| `$TaskARN` | The full ARN of the ECS Task from which the log originated. | `No` |
 | `$TaskDefinitionFamily` | The family name of the task definition for the task from which the log originated. | `No` |
 | `$TaskDefinitionVersion` | The version or revision of the task definition for the task from which the log originated. | `No` |
 | `$TaskID` | The ID of the ECS Task from which the log originated. | `No` |
-| `$TaskARN` | The full ARN of the ECS Task from which the log originated. | `No` |
 
 ### Configuration file
 
@@ -94,15 +98,15 @@ pipeline:
   Skip_Long_Lines     On
   Refresh_Interval    10
   Rotate_Wait         30
-  storage.type        filesystem
+  Storage.Type        filesystem
   Read_From_Head      Off
 
 [FILTER]
   Name ecs
   Match *
-  ecs_tag_prefix ecs.var.lib.docker.containers.
-  add ecs_task_id $TaskID
-  add cluster $ClusterName
+  Ecs_Tag_Prefix ecs.var.lib.docker.containers.
+  Add ecs_task_id $TaskID
+  Add cluster $ClusterName
 
 [OUTPUT]
   Name stdout
@@ -176,14 +180,14 @@ pipeline:
   Skip_Long_Lines     On
   Refresh_Interval    10
   Rotate_Wait         30
-  storage.type        filesystem
+  Storage.Type        filesystem
   Read_From_Head      Off
 
 [FILTER]
   Name ecs
   Match *
-  ecs_tag_prefix ecs.var.lib.docker.containers.
-  add resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
+  Ecs_Tag_Prefix ecs.var.lib.docker.containers.
+  Add resource $ClusterName.$TaskDefinitionFamily.$TaskID.$ECSContainerName
 
 [OUTPUT]
   Name stdout
@@ -253,15 +257,15 @@ pipeline:
   Skip_Long_Lines     On
   Refresh_Interval    10
   Rotate_Wait         30
-  storage.type        filesystem
+  Storage.Type        filesystem
   # Collect all logs on instance
   Read_From_Head      On
 
 [FILTER]
   Name ecs
   Match *
-  cluster_metadata_only on
-  add cluster $ClusterName
+  Cluster_Metadata_Only on
+  Add cluster $ClusterName
 
 [OUTPUT]
   Name stdout

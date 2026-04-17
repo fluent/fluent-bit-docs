@@ -2,7 +2,7 @@
 
 [PostgreSQL](https://www.postgresql.org) is an open source database management system that supports the SQL language and is capable of storing both structured and unstructured data, such as JSON objects.
 
-Fluent Bit is designed to work with JSON objects, and the `pgsql` output plugin allows users to send their data to a PostgreSQL database and store it using the `JSONB` type.
+The `pgsql` output plugin accepts log records and stores each record body in a PostgreSQL database using the `JSONB` type.
 
 PostgreSQL 9.4 or higher is required.
 
@@ -56,19 +56,17 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:----|:------------|:-------|
-| `Host` | Hostname/IP address of the PostgreSQL instance. | `- (127.0.0.1)`|
-| `Port` | PostgreSQL port. | `- (5432)` |
-| `User` | PostgreSQL username. | `- (current user)` |
-| `Password` | Password of PostgreSQL username. | `-` |
-| `Database` | Database name to connect to. | `- (current user)` |
-| `Table` | Table name where to store data. | `-` |
-| `Connection_Options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `-` |
-| `Timestamp_Key` | Key in the JSON object containing the record timestamp. | `date` |
-| `Async` | Define if the plugin will use asynchronous or synchronous connections. | `false` |
-| `max_pool_size` | Maximum amount of connections in asynchronous mode. | `4`|
-| `min_pool_size` | Minimum number of connection in asynchronous mode. | `1` |
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB. | `false` |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `connection_options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `_none_` |
+| `database` | Database name to connect to. | `fluentbit` |
+| `host` | Hostname/IP address of the PostgreSQL instance. | `127.0.0.1` |
+| `password` | Password of PostgreSQL username. | `_none_` |
+| `port` | PostgreSQL port. | `5432` |
+| `table` | Table name where to store data. | `fluentbit` |
+| `user` | PostgreSQL username. | `_none_` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+
+The plugin uses one PostgreSQL connection per worker. The previous `async`, `max_pool_size`, and `min_pool_size` settings are no longer supported.
 
 ### Libpq
 
@@ -96,7 +94,6 @@ pipeline:
       database: fluentbit
       table: fluentbit
       connection_options: '-c statement_timeout=0'
-      timestamp_key: ts
 ```
 
 {% endtab %}
@@ -113,7 +110,6 @@ pipeline:
   Database            fluentbit
   Table               fluentbit
   Connection_Options  -c statement_timeout=0
-  Timestamp_Key       ts
 ```
 
 {% endtab %}
@@ -126,6 +122,8 @@ The output plugin automatically creates a table with the name specified by the `
 - `tag TEXT`
 - `time TIMESTAMP WITHOUT TIMEZONE`
 - `data JSONB`
+
+Each flushed log record becomes one row in the destination table. The `time` column is populated from the Fluent Bit event timestamp, and the `data` column stores only the record body as `JSONB`, so a separate `timestamp_key` setting is no longer needed.
 
 The timestamp doesn't contain any information about the time zone, and it's therefore referred to the time zone used by the connection to PostgreSQL (`timezone` setting).
 

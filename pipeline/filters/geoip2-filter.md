@@ -4,6 +4,10 @@ description: Look up Geo data from IP.
 
 # GeoIP2 filter
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
 The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/).
@@ -57,7 +61,7 @@ pipeline:
   Name geoip2
   Match *
   Database GeoLite2-City.mmdb
-  Lookup_key remote_addr
+  Lookup_Key remote_addr
   Record country remote_addr %{country.names.en}
   Record isocode remote_addr %{country.iso_code}
 
@@ -69,7 +73,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Each `Record` parameter specifies the following triplet:
+Each `record` parameter specifies the following triplet:
 
 - `country`: The field name to be added to records.
 - `remote_addr`: The lookup key to process.

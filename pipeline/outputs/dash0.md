@@ -8,14 +8,14 @@ Stream logs to [Dash0](https://www.dash0.com) by utilizing the [OpenTelemetry pl
 
 ## Configuration parameters
 
-| Key                        | Description | Default |
-| -------------------------- | ----------- | ------- |
-| `header`                   | The specific header for bearer authorization, where {your-Auth-token-here} is your Dash0 Auth Token. | Authorization Bearer {your-Auth-token-here} |
-| `host`                     | Your Dash0 ingress endpoint. | `ingress.eu-west-1.aws.dash0.com` |
-| `port`                     | TCP port of your Dash0 ingress endpoint. | `443` |
-| `metrics_uri`              | Specify an optional HTTP URI for the target web server listening for metrics | `/v1/metrics` |
-| `logs_uri`                 | Specify an optional HTTP URI for the target web server listening for logs | `/v1/logs` |
-| `traces_uri`               | Specify an optional HTTP URI for the target web server listening for traces | `/v1/traces`  |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `header` | The specific header for bearer authorization, where `{your-Auth-token-here}` is your Dash0 Auth Token. | `Authorization Bearer {your-Auth-token-here}` |
+| `host` | Your Dash0 ingress endpoint. | `ingress.eu-west-1.aws.dash0.com` |
+| `logs_uri` | Specify an optional HTTP URI for the target web server listening for logs. | `/v1/logs` |
+| `metrics_uri` | Specify an optional HTTP URI for the target web server listening for metrics. | `/v1/metrics` |
+| `port` | TCP port of your Dash0 ingress endpoint. | `443` |
+| `traces_uri` | Specify an optional HTTP URI for the target web server listening for traces. | `/v1/traces` |
 
 ### TLS / SSL
 
@@ -55,9 +55,9 @@ pipeline:
   Host         ingress.eu-west-1.aws.dash0.com
   Port         443
   Header       Authorization Bearer {your-Auth-token-here}
-  Metrics_uri  /v1/metrics
-  Logs_uri     /v1/logs
-  Traces_uri   /v1/traces
+  Metrics_Uri  /v1/metrics
+  Logs_Uri     /v1/logs
+  Traces_Uri   /v1/traces
 ```
 
 {% endtab %}

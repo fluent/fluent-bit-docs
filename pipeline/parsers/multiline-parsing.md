@@ -140,19 +140,19 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
-  parsers_file parsers_multiline.conf
+  Flush        1
+  Log_Level    info
+  Parsers_File parsers_multiline.conf
 
 [INPUT]
-  name             tail
-  path             test.log
-  read_from_head   true
-  multiline.parser multiline-regex-test
+  Name             tail
+  Path             test.log
+  Read_From_Head   true
+  Multiline.Parser multiline-regex-test
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -192,9 +192,9 @@ This second file defines a multiline parser for the classic configuration exampl
 
 ```text
 [MULTILINE_PARSER]
-  name          multiline-regex-test
-  type          regex
-  flush_timeout 1000
+  Name          multiline-regex-test
+  Type          regex
+  Flush_Timeout 1000
   #
   # Regex rules for multiline parsing
   # ---------------------------------
@@ -206,8 +206,8 @@ This second file defines a multiline parser for the classic configuration exampl
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
-  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-  rule      "cont"          "/^\s+at.*/"                     "cont"
+  Rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  Rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 
 {% endtab %}
@@ -323,25 +323,25 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
-  parsers_file parsers_multiline.conf
+  Flush        1
+  Log_Level    info
+  Parsers_File parsers_multiline.conf
 
 [INPUT]
-  name             tail
-  path             test.log
-  read_from_head   true
-  multiline.parser multiline-regex-test
+  Name             tail
+  Path             test.log
+  Read_From_Head   true
+  Multiline.Parser multiline-regex-test
 
 [FILTER]
-  name             parser
-  match            *
-  key_name         log
-  parser           named-capture-test
+  Name             parser
+  Match            *
+  Key_Name         log
+  Parser           named-capture-test
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -387,9 +387,9 @@ This file defines a multiline parser for the classic example.
 
 ```text
 [MULTILINE_PARSER]
-  name          multiline-regex-test
-  type          regex
-  flush_timeout 1000
+  Name          multiline-regex-test
+  Type          regex
+  Flush_Timeout 1000
   #
   # Regex rules for multiline parsing
   # ---------------------------------
@@ -401,8 +401,8 @@ This file defines a multiline parser for the classic example.
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
-  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-  rule      "cont"          "/^\s+at.*/"                     "cont"
+  Rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  Rule      "cont"          "/^\s+at.*/"                     "cont"
 
 [PARSER]
   Name named-capture-test

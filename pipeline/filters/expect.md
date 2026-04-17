@@ -4,6 +4,10 @@ description: Testing records to ensure they contain an expected key and values
 
 # Expect
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _expect_ filter plugin lets you validate that records match certain criteria in their structure, like validating that a key exists or it has a specific value.
 
 For a detailed explanation of its usage and use cases, see [Validating and your Data and Structure](../../local-testing/validating-your-data-and-structure.md).

@@ -1,5 +1,9 @@
 # Podman metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The Podman metrics input plugin lets Fluent Bit gather Podman container metrics. The procedure for collecting container list and gathering data associated with them is based on filesystem data.
 
 The metrics can be exposed later as, for example, Prometheus counters and gauges.
@@ -8,11 +12,11 @@ The metrics can be exposed later as, for example, Prometheus counters and gauges
 
 | Key               | Description                                                                                             | Default                                                          |
 |-------------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `path.config`     | Custom path to the Podman containers configuration file.                                                | `/var/lib/containers/storage/overlay-containers/containers.json` |
+| `path.procfs`     | Custom path to the `proc` subsystem directory.                                                          | `/proc`                                                          |
+| `path.sysfs`      | Custom path to the `sysfs` subsystem directory.                                                         | `/sys/fs/cgroup`                                                 |
 | `scrape_interval` | Interval between each scrape of Podman data (in seconds).                                               | `30`                                                             |
 | `scrape_on_start` | Sets whether this plugin scrapes Podman data on startup.                                                | `false`                                                          |
-| `path.config`     | Custom path to the Podman containers configuration file.                                                | `/var/lib/containers/storage/overlay-containers/containers.json` |
-| `path.sysfs`      | Custom path to the `sysfs` subsystem directory.                                                         | `/sys/fs/cgroup`                                                 |
-| `path.procfs`     | Custom path to the `proc` subsystem directory.                                                          | `/proc`                                                          |
 | `threaded`        | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`                                                          |
 
 ## Get started
@@ -103,12 +107,12 @@ pipeline:
 
 ```text
 [INPUT]
-  name podman_metrics
-  scrape_interval 10
-  scrape_on_start true
-    
+  Name           podman_metrics
+  Scrape_Interval 10
+  Scrape_On_Start true
+
 [OUTPUT]
-  name prometheus_exporter
+  Name prometheus_exporter
 ```
 
 {% endtab %}

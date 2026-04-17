@@ -1,5 +1,9 @@
 # Tensorflow
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Tensorflow_ filter plugin allows running machine learning inference tasks on the records of data coming from input plugins or stream processors. This filter uses [Tensorflow Lite](https://ai.google.dev/edge/litert) as the inference engine, and requires Tensorflow Lite shared library to be present during build and at runtime.
 
 Tensorflow Lite is a lightweight open source deep learning framework used for mobile and IoT applications. Tensorflow Lite only handles inference, not training. It loads pre-trained models (`.tflite` files) that are converted into Tensorflow Lite format (`FlatBuffer`). You can read more on converting [Tensorflow models](https://ai.google.dev/edge/litert/conversion/tensorflow/overview).
@@ -109,10 +113,10 @@ pipeline:
 [FILTER]
   Name                 tensorflow
   Match                mqtt.data
-  input_field          image
-  model_file           /home/m/model.tflite
-  include_input_fields false
-  normalization_value  255
+  Input_Field          image
+  Model_File           /home/m/model.tflite
+  Include_Input_Fields false
+  Normalization_Value  255
 
 [OUTPUT]
   Name  stdout

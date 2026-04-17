@@ -1,5 +1,9 @@
 # Memory metrics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Memory_ (`mem`) input plugin gathers memory and swap usage on Linux at a fixed interval and reports totals and free space. The plugin emits log-based metrics (for Prometheus-format metrics see the Node Exporter metrics input plugin).
 
 ## Metrics reported
@@ -77,8 +81,8 @@ pipeline:
   Name          mem
   Tag           memory
   Interval_Sec  5
-  Interval_NSec 0
-  PID           1234
+  Interval_Nsec 0
+  Pid           1234
 
 [OUTPUT]
   Name   stdout

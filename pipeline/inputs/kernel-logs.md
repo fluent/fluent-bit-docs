@@ -1,5 +1,9 @@
 # Kernel logs
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Kernel logs_ (`kmsg`) input plugin reads the Linux Kernel log buffer from the beginning. It gets every record and parses fields as `priority`, `sequence`, `seconds`, `useconds`, and `message`.
 
 ## Configuration parameters

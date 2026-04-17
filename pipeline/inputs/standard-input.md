@@ -1,5 +1,9 @@
 # Standard input
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Standard input_ plugin supports retrieving a message stream from the standard input interface (`stdin`) of the Fluent Bit process.
 To use it, specify the plugin name as the input. For example:
 

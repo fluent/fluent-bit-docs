@@ -1,5 +1,9 @@
 # Modify
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Modify Filter_ plugin lets you change records using rules and conditions.
 
 ## Example usage
@@ -45,10 +49,13 @@ The plugin supports the following rules:
 | `Remove_regex` | `REGEXP:KEY` | _none_ | Remove all key/value pairs with key matching regexp `KEY`. |
 | `Rename` | `STRING:KEY` | `STRING:RENAMED_KEY` | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists and `RENAMED_KEY` doesn't exist. |
 | `Hard_rename` | `STRING:KEY` | `STRING:RENAMED_KEY` | Rename a key/value pair with key `KEY` to `RENAMED_KEY` if `KEY` exists. If `RENAMED_KEY` already exists, this field is overwritten. |
+| `Hard_Rename` | `STRING:KEY` | `STRING:RENAMED_KEY` | Equivalent to `Hard_rename`. This spelling is also accepted by the plugin. |
 | `Copy` | `STRING:KEY` | `STRING:COPIED_KEY` | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists and `COPIED_KEY` doesn't exist. |
 | `Hard_copy` | `STRING:KEY` | `STRING:COPIED_KEY` | Copy a key/value pair with key `KEY` to `COPIED_KEY` if `KEY` exists. If `COPIED_KEY` already exists, this field is overwritten. |
 | `Move_to_start` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the start of the message. |
+| `Move_To_Start` | `WILDCARD:KEY` | _none_ | Equivalent to `Move_to_start`. This spelling is also accepted by the plugin. |
 | `Move_to_end` | `WILDCARD:KEY` | _none_ | Move key/value pairs with keys matching `KEY` to the end of the message. |
+| `Move_To_End` | `WILDCARD:KEY` | _none_ | Equivalent to `Move_to_end`. This spelling is also accepted by the plugin. |
 
 - Rules are case-insensitive, but parameters aren't.
 - Any number of rules can be set in a filter instance.

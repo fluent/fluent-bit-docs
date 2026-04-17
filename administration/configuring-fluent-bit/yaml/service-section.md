@@ -36,6 +36,8 @@ The `service` section of YAML configuration files defines global properties of t
 | `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
+The `service` section only controls the built-in monitoring and control HTTP server. Plugin-specific HTTP listener settings such as `http_server.http2`, `http_server.buffer_max_size`, `http_server.buffer_chunk_size`, `http_server.max_connections`, `http_server.workers`, `http_server.ingress_queue_event_limit`, and `http_server.ingress_queue_byte_limit` are configured on the relevant input plugin in the [`pipeline.inputs`](../yaml/pipeline-section.md#shared-http-listener-settings-for-inputs) section.
+
 ## Storage configuration
 
 The following storage-related keys can be set as children to the `storage` key:

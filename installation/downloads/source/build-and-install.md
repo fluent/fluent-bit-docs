@@ -181,6 +181,7 @@ The following input plugins are available:
 | [`FLB_IN_EXEC`](../../../pipeline/inputs/exec.md)                                           | Enable Exec input plugin                                                  | `On`    |
 | [`FLB_IN_EXEC_WASI`](../../../pipeline/inputs/exec-wasi.md)                                 | Enable Exec WASI input plugin                                             | `On`    |
 | [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md)                 | Enable Fluent Bit metrics input plugin                                    | `On`    |
+| [`FLB_IN_FLUENTBIT_LOGS`](../../../pipeline/inputs/fluentbit-logs.md)                       | Enable Fluent Bit internal logs input plugin                              | `On`    |
 | [`FLB_IN_FORWARD`](../../../pipeline/inputs/forward.md)                                     | Enable Forward input plugin                                               | `On`    |
 | [`FLB_IN_GPU_METRICS`](../../../pipeline/inputs/gpu-metrics.md)                             | Enable GPU metrics input plugin                                           | `On`    |
 | [`FLB_IN_HEAD`](../../../pipeline/inputs/head.md)                                           | Enable Head input plugin                                                  | `On`    |
@@ -232,6 +233,7 @@ The following table describes the processors available:
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
 | [`FLB_PROCESSOR_SAMPLING`](../../../pipeline/processors/sampling.md)                             | Enable sampling processor                   | `On`    |
 | [`FLB_PROCESSOR_SQL`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
+| [`FLB_PROCESSOR_TDA`](../../../pipeline/processors/tda.md)                                       | Enable Topological Data Analysis (`TDA`) processor | `On`    |
 
 ### Filter plugins
 

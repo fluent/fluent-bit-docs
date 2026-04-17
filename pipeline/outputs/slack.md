@@ -40,9 +40,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-    name                 slack
-    match                *
-    webhook              https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+    Name                 slack
+    Match                *
+    Webhook              https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 {% endtab %}

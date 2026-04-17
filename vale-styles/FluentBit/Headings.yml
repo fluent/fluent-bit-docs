@@ -54,6 +54,7 @@ exceptions:
   - Docker Hub
   - DogStatsD
   - DOS
+  - East Asian
   - eBPF
   - EC2
   - ECS

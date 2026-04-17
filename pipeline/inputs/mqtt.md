@@ -1,5 +1,9 @@
 # MQTT
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _MQTT_ input plugin retrieves messages and data from MQTT control packets over a TCP connection. The incoming data to receive must be a JSON map.
 
 ## Configuration parameters
@@ -14,10 +18,11 @@ The plugin supports the following configuration parameters:
 | `port`        | TCP port where listening for connections.                                                               | `1883`       |
 | `threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`      |
 
-Notes:
+{% hint style="info" %}
 - `buffer_size` defaults to `2048` bytes; messages larger than this limit are dropped.
 - Defaults for `listen` and `port` are `0.0.0.0` and `1883`, so you can omit them if you want the standard MQTT listener.
 - Payloads are expected to be JSON maps; non-JSON payloads will fail to parse.
+{% endhint %}
 
 ### TLS / SSL
 

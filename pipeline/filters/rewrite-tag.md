@@ -4,6 +4,10 @@ description: Powerful and flexible routing
 
 # Rewrite tag
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios when you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 
 The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.
@@ -175,93 +179,6 @@ $ fluent-bit -c example.conf
 
 ...
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
-```
-
-## Configuration example with multiple rules
-
-When multiple rules are defined, they're evaluated in order until one matches.
-
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
-```yaml
-service:
-  flush: 5
-  log_level: info
-
-pipeline:
-  inputs:
-    - name: tail
-      tag: tail
-      path: /var/tmp/loginput.txt
-
-  filters:
-    - name: rewrite_tag
-      match: tail
-      rule:
-        - "$log ^(1)$      newtag_or    false"
-        - "$log ^(.*and)$  newtag_and_1 false"
-        - "$log ^(1.*)$    newtag_and_2 false"
-        - "$log ^(42)$     newtag_or    false"
-        - "$log ^(9)$      newtag_and_3 false"
-
-  outputs:
-    - name: stdout
-      match: '*'
-```
-
-{% endtab %}
-{% tab title="fluent-bit.conf" %}
-
-```text
-[SERVICE]
-    Flush     5
-    Log_Level info
-
-[INPUT]
-    Name tail
-    Tag  tail
-    Path /var/tmp/loginput.txt
-
-[FILTER]
-    Name          rewrite_tag
-    Match         tail
-    Rule          $log ^(1)$      newtag_or    false
-    Rule          $log ^(.*and)$  newtag_and_1 false
-    Rule          $log ^(1.*)$    newtag_and_2 false
-    Rule          $log ^(42)$     newtag_or    false
-    Rule          $log ^(9)$      newtag_and_3 false
-
-[OUTPUT]
-    Name  stdout
-    Match *
-```
-
-{% endtab %}
-{% endtabs %}
-
-Use the input file `/var/tmp/loginput.txt`:
-
-```text
-1
-2
-3
-9
-10and
-10
-42
-```
-
-The log messages will be rewritten:
-
-```text
-fluent-bit_1  | [0] tail: [1596050753.241336500, {"log"=>"2"}]
-fluent-bit_1  | [1] tail: [1596050753.241356700, {"log"=>"3"}]
-fluent-bit_1  | [0] newtag_or: [1596050753.237370100, {"log"=>"1"}]
-fluent-bit_1  | [1] newtag_or: [1596050753.241427200, {"log"=>"42"}]
-fluent-bit_1  | [0] newtag_and_3: [1596050753.241374500, {"log"=>"9"}]
-fluent-bit_1  | [0] newtag_and_1: [1596050753.241392800, {"log"=>"10and"}]
-fluent-bit_1  | [0] newtag_and_2: [1596050753.241410100, {"log"=>"10"}]
 ```
 
 ## Monitoring

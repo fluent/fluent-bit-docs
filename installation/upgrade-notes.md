@@ -8,6 +8,61 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.0
+
+### `hot_reloaded_times` metric type change
+
+The internal metric `fluentbit_hot_reloaded_times` has changed from a gauge to a counter. The previous gauge registration caused incorrect results when using PromQL functions like `rate()` and `increase()`, which expect counters.
+
+If you have Prometheus dashboards or alerting rules that reference `fluentbit_hot_reloaded_times`, update them to use counter-appropriate PromQL functions (for example, `rate()` or `increase()` instead of gauge-specific functions like `delta()`).
+
+### Shared HTTP listener settings for HTTP-based inputs
+
+The HTTP-based input plugins now use a shared HTTP listener configuration model. In Fluent Bit `v5.0`, the canonical setting names are:
+
+- `http_server.http2`
+- `http_server.buffer_chunk_size`
+- `http_server.buffer_max_size`
+- `http_server.max_connections`
+- `http_server.workers`
+- `http_server.ingress_queue_event_limit`
+- `http_server.ingress_queue_byte_limit`
+
+Legacy per-plugin names such as `http2`, `buffer_chunk_size`, and `buffer_max_size` are still accepted as compatibility aliases, but new configurations should use the `http_server.*` names.
+
+If you tune `http`, `splunk`, `elasticsearch`, `opentelemetry`, or `prometheus_remote_write` inputs, review those sections and migrate to the shared naming so future upgrades are clearer.
+
+### Mutual TLS for input plugins
+
+Input plugins that support TLS now also support `tls.verify_client_cert`. Enable this option to require and validate the client certificate presented by the sender.
+
+If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
+
+### New internal logs input
+
+Fluent Bit `v5.0` adds the `fluentbit_logs` input plugin, which mirrors Fluent Bit's own internal log stream back into the data pipeline as structured log records.
+
+Use this input if you want to forward Fluent Bit diagnostics to another destination, filter them, or store them alongside the rest of your telemetry.
+
+### Emitter backpressure with filesystem storage
+
+The internal emitter plugin, used by filters such as `rewrite_tag`, now automatically enables `storage.pause_on_chunks_overlimit` when filesystem storage is in use and that option hasn't been explicitly configured.
+
+Previously, the emitter could accumulate chunks beyond the `storage.max_chunks_up` limit. Pipelines that use `rewrite_tag` or other emitter-backed filters with filesystem storage will now pause when the configured storage limit is reached.
+
+If you rely on the previous unlimited accumulation behavior, explicitly set `storage.pause_on_chunks_overlimit off` on the relevant input. Otherwise, review your `storage.max_chunks_up` value to ensure it's tuned for your expected throughput.
+
+### More `OAuth 2.0` coverage
+
+Fluent Bit `v5.0` expands `OAuth 2.0` support in both directions:
+
+- HTTP-based inputs can validate incoming bearer tokens using `oauth2.validate`, `oauth2.issuer`, and `oauth2.jwks_url`.
+- The HTTP output can acquire access tokens with `oauth2.enable` and supports `basic`, `post`, and `private_key_jwt` client authentication.
+
+If you previously handled authentication outside Fluent Bit for these cases, review the plugin pages for the new built-in options.
+
+For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5.0](whats-new-in-fluent-bit-v5.0.md).
+
 ## Fluent Bit v4.2
 
 ### Vivo exporter output plugin
@@ -113,7 +168,7 @@ For example, when parsing Docker logs, it's no longer necessary to use decoders.
 
 ### Kubernetes filter
 
-Fluent Bit made improvements to Kubernetes Filter handling of stringified `log` messages. If the `Merge_Log` option is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
+Fluent Bit made improvements to Kubernetes Filter handling of string-encoded `log` messages. If the `Merge_Log` option is enabled, it will try to handle the log content as a JSON map, if so, it will add the keys to the root map.
 
 In addition, fixes and improvements were made to the `Merge_Log_Key` option. If a merge log succeed, all new keys will be packaged under the key specified by this option. A suggested configuration is as follows:
 

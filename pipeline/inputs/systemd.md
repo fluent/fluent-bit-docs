@@ -1,5 +1,9 @@
 # Systemd
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Systemd_ input plugin lets you collect log messages from the `journald` daemon in Linux environments.
 
 ## Configuration parameters

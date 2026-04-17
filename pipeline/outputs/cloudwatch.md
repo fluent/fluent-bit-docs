@@ -4,6 +4,10 @@ description: Send logs and metrics to Amazon CloudWatch
 
 # Amazon CloudWatch
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 ![Amazon CloudWatch](<../../.gitbook/assets/image (3) (2) (2) (4) (4) (3) (1).png>)
 
 The _Amazon CloudWatch_ output plugin lets you ingest your records into the [CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) service. Support for CloudWatch Metrics is also provided using [Embedded Metric Format (EMF)](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html).
@@ -39,12 +43,13 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `metric_dimensions`                | Metric dimensions is a list of lists. If you have only one list of dimensions, put the values as a comma separated string. If you want to put list of lists, use the list as semicolon separated strings. If your value is `d1,d2;d3`, it will consider it as `[[d1, d2],[d3]]`.                                     | _none_     |
 | `metric_namespace`                 | An optional string representing the CloudWatch namespace for the metrics. See the [Metrics tutorial](#metrics-tutorial) section for a full configuration.                                                | _none_     |
 | `profile`                          | Option to specify an AWS Profile for credentials.                                            | _none_     |
-| `region`                           | The AWS region to send logs to.                                                              | _none_     |
+| `region`                           | The AWS region to send logs to. China regions (`cn-north-1`, `cn-northwest-1`) and the AWS European Sovereign Cloud region (`eusc-de-east-1`) are supported; Fluent Bit automatically uses the correct endpoint suffix (`.amazonaws.com.cn` or `.amazonaws.eu`) and no custom `endpoint` is required. | _none_     |
 | `retry_limit`                      | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely.                                                  | `1`        |
 | `role_arn`                         | ARN of an IAM role to assume for  cross account access.                                      | _none_     |
 | `sts_endpoint`                     | Specify a custom STS endpoint for the AWS STS API.                                           | _none_     |
 | `tls.windows.certstore_name`       | Sets the certificate store name on an output (Windows).                                      | _none_     |
 | `tls.windows.use_enterprise_store` | Sets whether using enterprise certificate store or not on an output (Windows).               | _none_     |
+| `workers`                          | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Get started
 
@@ -82,12 +87,12 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fluent-bit-cloudwatch
-  log_stream_prefix from-fluent-bit-
-  auto_create_group On
+  Name              cloudwatch_logs
+  Match             *
+  Region            us-east-1
+  Log_Group_Name    fluent-bit-cloudwatch
+  Log_Stream_Prefix from-fluent-bit-
+  Auto_Create_Group On
 ```
 
 {% endtab %}
@@ -119,14 +124,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fluent-bit-cloudwatch
-  log_stream_prefix from-fluent-bit-
-  auto_create_group On
-  endpoint localhost
-  port 4566
+  Name              cloudwatch_logs
+  Match             *
+  Region            us-east-1
+  Log_Group_Name    fluent-bit-cloudwatch
+  Log_Stream_Prefix from-fluent-bit-
+  Auto_Create_Group On
+  Endpoint          localhost
+  Port              4566
 ```
 
 {% endtab %}
@@ -207,14 +212,14 @@ pipeline:
 
 ```text
 [OUTPUT]
-  Name cloudwatch_logs
-  Match   *
-  region us-east-1
-  log_group_name fallback-group
-  log_stream_prefix fallback-stream
-  auto_create_group On
-  log_group_template application-logs-$kubernetes['host'].$kubernetes['namespace_name']
-  log_stream_template $kubernetes['pod_name'].$kubernetes['container_name']
+  Name                cloudwatch_logs
+  Match               *
+  Region              us-east-1
+  Log_Group_Name      fallback-group
+  Log_Stream_Prefix   fallback-stream
+  Auto_Create_Group   On
+  Log_Group_Template  application-logs-$kubernetes['host'].$kubernetes['namespace_name']
+  Log_Stream_Template $kubernetes['pod_name'].$kubernetes['container_name']
 ```
 
 {% endtab %}
@@ -296,22 +301,22 @@ pipeline:
 
 [INPUT]
   Name mem
-  Tag mem
+  Tag  mem
 
 [FILTER]
-  Name aws
+  Name  aws
   Match *
 
 [OUTPUT]
-  Name cloudwatch_logs
-  Match *
-  region us-west-2
-  log_stream_name fluent-bit-cloudwatch
-  log_group_name fluent-bit-cloudwatch
-  log_format json/emf
-  metric_namespace fluent-bit-metrics
-  metric_dimensions ec2_instance_id
-  auto_create_group true
+  Name               cloudwatch_logs
+  Match              *
+  Region             us-west-2
+  Log_Stream_Name    fluent-bit-cloudwatch
+  Log_Group_Name     fluent-bit-cloudwatch
+  Log_Format         json/emf
+  Metric_Namespace   fluent-bit-metrics
+  Metric_Dimensions  ec2_instance_id
+  Auto_Create_Group  On
 ```
 
 {% endtab %}
@@ -356,22 +361,22 @@ pipeline:
 
 [INPUT]
   Name mem
-  Tag mem
+  Tag  mem
 
 [FILTER]
-  Name aws
+  Name  aws
   Match *
 
 [OUTPUT]
-  Name cloudwatch_logs
-  Match *
-  region us-west-2
-  log_stream_name fluent-bit-cloudwatch
-  log_group_name fluent-bit-cloudwatch
-  log_format json/emf
-  metric_namespace fluent-bit-metrics
-  metric_dimensions ec2_instance_id,az
-  auto_create_group true
+  Name               cloudwatch_logs
+  Match              *
+  Region             us-west-2
+  Log_Stream_Name    fluent-bit-cloudwatch
+  Log_Group_Name     fluent-bit-cloudwatch
+  Log_Format         json/emf
+  Metric_Namespace   fluent-bit-metrics
+  Metric_Dimensions  ec2_instance_id,az
+  Auto_Create_Group  On
 ```
 
 {% endtab %}

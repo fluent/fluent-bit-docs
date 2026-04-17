@@ -18,18 +18,18 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 
    The Fluent Bit Chronicle output plugin uses a JSON credentials file for authentication credentials. Download the credentials file by following the instructions for [Creating and Managing Service Account Keys](https://docs.cloud.google.com/iam/docs/keys-create-delete).
 
-## Configurations parameters
+## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
+| `customer_id` | The customer ID identifying the Google Chronicle tenant to stream into. | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS` |
-| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_EMAIL` |
-| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of environment variable `$SERVICE_ACCOUNT_SECRET` |
-| `project_id` | The project id containing the tenant of Google Chronicle to stream into. | The value of the `project_id` in the credentials file |
-| `customer_id` | The customer id to identify the tenant of Google Chronicle to stream into. The value of the `customer_id` should be specified in the configuration file. | _none_ |
+| `log_key` | By default, the whole log record is sent to Google Chronicle. If you specify a key name with this option, only the value of that key is sent. | _none_ |
 | `log_type` | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://docs.cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). | _none_ |
-| `region` | The GCP region in which to store security logs. Supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is handled as `US`. | _none_ |
-| `log_key` | By default, the whole log record will be sent to Google Chronicle. If you specify a key name with this option, then only the value of that key will be sent to Google Chronicle. | _none_ |
+| `project_id` | The project ID containing the Google Chronicle tenant to stream into. | Value of the `project_id` in the credentials file |
+| `region` | The GCP region in which to store security logs. Supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is treated as `US`. | _none_ |
+| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_EMAIL` |
+| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_SECRET` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 See Google's [official documentation](https://cloud.google.com/chronicle/docs/reference/ingestion-api) for further details.
@@ -65,8 +65,8 @@ pipeline:
 [OUTPUT]
   Name         chronicle
   Match        *
-  customer_id  my_customer_id
-  log_type     my_super_awesome_type
+  Customer_Id  my_customer_id
+  Log_Type     my_super_awesome_type
 ```
 
 {% endtab %}

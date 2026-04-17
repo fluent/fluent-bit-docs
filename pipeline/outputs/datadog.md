@@ -10,26 +10,24 @@ Before you begin, you need a [Datadog account](https://app.datadoghq.com/signup)
 
 ## Configuration parameters
 
-This plugin uses the following configuration parameters:
-
 | Key | Description | Default |
-| --- | ----------- | ------- |
-| `Host` | The Datadog server where you are sending your logs. | `http-intake.logs.datadoghq.com` |
-| `TLS` | End-to-end security communications security protocol. Datadog recommends setting this to `on`. | `off` |
-| `compress` | Optional. Compresses the payload in GZIP format. Datadog supports and recommends setting this to `gzip`. | _none_ |
+| :--- | :--- | :--- |
 | `apikey` | Your [Datadog API key](https://app.datadoghq.com/account/settings#api). | _none_ |
-| `Proxy` | Optional. Specifies an HTTP proxy. The expected format of this value is `http://host:port`. HTTPS isn't supported. | _none_ |
-| `provider` | To activate remapping, specify the configuration flag provider with the value `ecs`. | _none_ |
-| `json_date_key` | Date key name for output. | `timestamp` |
-| `include_tag_key` | If enabled, a tag is appended to the output. The key name is used `tag_key` property. | `false` |
-| `tag_key` | The key name of tag. If `include_tag_key` is `false`, this property is ignored. | `tagkey` |
+| `compress` | Compresses the payload in GZIP format. Datadog supports and recommends setting this to `gzip`. | `false` |
+| `dd_hostname` | The host the emitted logs should be associated with. If unset, Datadog expects the host to be set with `host`, `hostname`, or `syslog.hostname` attributes. See [Datadog Logs preprocessor documentation](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=host#preprocessing) for recognized attributes. | _none_ |
+| `dd_message_key` | By default, the plugin searches for the key `log` and remaps the value to the key `message`. If the property is set, the plugin searches for the property name key. | `log` |
 | `dd_service` | Recommended. The human readable name for your service generating the logs. For example, the name of your application or database. If not set, Datadog looks for the service using [service remapper](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=service#service-attribute). | _none_ |
 | `dd_source` | Recommended. A human-readable name for the underlying technology of your service like `postgres` or `nginx`. If unset, Datadog looks for the source in the [`ddsource` attribute](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source#source-attribute). | _none_ |
-| `dd_tags` | Optional. The [tags](https://docs.datadoghq.com/getting_started/tagging/) you want to assign to your logs in Datadog. If unset, Datadog will look for the tags in the [`ddtags` attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs). | _none_ |
-| `dd_message_key` | By default, the plugin searches for the key `log` and remaps the value to the key `message`. If the property is set, the plugin will search the property name key. | _none_ |
-| `dd_hostname` | The host the emitted logs should be associated with. If unset, Datadog expects the host to be set with `host`, `hostname`, or `syslog.hostname` attributes. See [Datadog Logs preprocessor documentation](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=host#preprocessing) for recognized attributes. | _none_ |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
-| header | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `dd_tags` | The [tags](https://docs.datadoghq.com/getting_started/tagging/) you want to assign to your logs in Datadog. If unset, Datadog looks for the tags in the [`ddtags` attribute](https://docs.datadoghq.com/api/latest/logs/#send-logs). | _none_ |
+| `header` | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `host` | The Datadog server where you are sending your logs. | `http-intake.logs.datadoghq.com` |
+| `include_tag_key` | If enabled, a tag is appended to the output. The key name is used with the `tag_key` property. | `false` |
+| `json_date_key` | Date key name for output. | `timestamp` |
+| `provider` | To activate remapping, specify the configuration flag provider with the value `ecs`. | _none_ |
+| `proxy` | Specifies an HTTP proxy. The expected format of this value is `http://host:port`. HTTPS isn't supported. | _none_ |
+| `tag_key` | The key name of tag. If `include_tag_key` is `false`, this property is ignored. | `tagkey` |
+| `tls` | End-to-end security communications protocol. Datadog recommends setting this to `on`. | `off` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### Configuration file
 
@@ -62,13 +60,13 @@ pipeline:
   Name        datadog
   Match       *
   Host        http-intake.logs.datadoghq.com
-  TLS         on
-  compress    gzip
-  apikey      <my-datadog-api-key>
-  dd_service  <my-app-service>
-  dd_source   <my-app-source>
-  dd_tags     team:logs,foo:bar
-  dd_hostname myhost
+  Tls         on
+  Compress    gzip
+  Apikey      <my-datadog-api-key>
+  Dd_Service  <my-app-service>
+  Dd_Source   <my-app-source>
+  Dd_Tags     team:logs,foo:bar
+  Dd_Hostname myhost
 ```
 
 {% endtab %}

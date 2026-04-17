@@ -1,21 +1,25 @@
 # TCP
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _TCP_ input plugin lets you retrieve structured JSON or raw messages over a TCP network interface (TCP port).
 
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key                  | Description                                                                                                                                                                                                                                           | Default                     |
-|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| `Listen`             | Listener network interface.                                                                                                                                                                                                                           | `0.0.0.0`                   |
-| `Port`               | TCP port to listen for connections.                                                                                                                                                                                                                   | `5170`                      |
-| `Buffer_Size`        | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default is the value of `Chunk_Size`.                                                                                                                                | `Chunk_Size`                |
-| `Chunk_Size`         | The default buffer to store the incoming JSON messages. It doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `Chunk_Size`. If not set, `Chunk_Size` is equal to 32 (32&nbsp;KB). | `32`                        |
-| `Format`             | Specify the expected payload format. Supported values: `json` and `none`. When set to `json` it expects JSON maps. When set to `none`, every record splits using the defined `Separator`.                                                             | `json`                      |
-| `Separator`          | When `Format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                                                                             | `LF` or `0x10` (break line) |
-| `Source_Address_Key` | Specify the key to inject the source address.                                                                                                                                                                                                         | _none_                      |
-| `Threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                               | `false`                     |
+| Key                  | Description                                                                                                                                                                                                                                               | Default                     |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| `buffer_size`        | Specify the maximum buffer size in KB to receive a JSON message. If not set, the default is the value of `chunk_size`.                                                                                                                                    | `chunk_size`                |
+| `chunk_size`         | The default buffer to store the incoming JSON messages. It doesn't allocate the maximum memory allowed; instead it allocates memory when required. The rounds of allocations are set by `chunk_size`. If not set, `chunk_size` is equal to 32 (32&nbsp;KB). | `32`                        |
+| `format`             | Specify the expected payload format. Supported values: `json` and `none`. When set to `json` it expects JSON maps. When set to `none`, every record splits using the defined `separator`.                                                                 | `json`                      |
+| `listen`             | Listener network interface.                                                                                                                                                                                                                               | `0.0.0.0`                   |
+| `port`               | TCP port to listen for connections.                                                                                                                                                                                                                       | `5170`                      |
+| `separator`          | When `format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                                                                                 | `LF` or `0x10` (break line) |
+| `source_address_key` | Specify the key to inject the source address.                                                                                                                                                                                                             | _none_                      |
+| `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                   | `false`                     |
 
 ## Get started
 
@@ -105,4 +109,4 @@ You should see the following output:
 
 When receiving payloads in JSON format, there are high performance penalties. Parsing JSON is a very expensive task so you could expect your CPU usage increase under high load environments.
 
-To get faster data ingestion, consider to use the option `Format none` to avoid JSON parsing if not needed.
+To get faster data ingestion, consider to use the option `format none` to avoid JSON parsing if not needed.

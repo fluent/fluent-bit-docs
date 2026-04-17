@@ -1,5 +1,9 @@
 # Windows Event logs (winlog)
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Windows Event logs_ (`winlog`) input plugin lets you read Windows Event logs.
 
 ## Configuration parameters
@@ -8,10 +12,13 @@ The plugin supports the following configuration parameters:
 
 | Key            | Description                                                                                             | Default |
 |----------------|---------------------------------------------------------------------------------------------------------|---------|
-| `Channels`     | A comma-separated list of channels to read from.                                                        | _none_  |
-| `Interval_Sec` | Set the polling interval for each channel. (optional)                                                   | `1`     |
-| `DB`           | Set the path to save the read offsets. (optional)                                                       | _none_  |
-| `Threaded`     | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `channels`       | A comma-separated list of channels to read from. | _none_  |
+| `db`             | Set the path to save the read offsets. (optional) | _none_  |
+| `interval_sec`   | Set the polling interval for each channel. (optional) | `1`     |
+| `interval_nsec`  | Set the polling interval for each channel in nanoseconds. (optional) | `0`     |
+| `string_inserts` | Whether to include string inserts in output records. | `true`  |
+| `threaded`       | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+| `use_ansi`       | Use ANSI encoding for Event Log messages. This can help on older Windows versions that return blank strings with wide-character decoding. | `false` |
 
 If `db` isn't set, the plugin will read channels from the beginning on each startup.
 

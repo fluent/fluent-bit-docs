@@ -1,23 +1,43 @@
 # Elasticsearch
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Elasticsearch_ input plugin handles both Elasticsearch and OpenSearch Bulk API requests.
 
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
+The table below includes both:
+
+- settings specific to the Elasticsearch input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                 | Description                                                                                                                              | Default value |
 |:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
-| `buffer_chunk_size` | Set the buffer chunk size.                                                                                                               | `512K`        |
-| `buffer_max_size`   | Set the maximum size of buffer.                                                                                                          | `4M`          |
-| `hostname`          | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | `localhost`   |
-| `http2`             | Enable HTTP/2 support.                                                                                                                   | `true`        |
-| `listen`            | The address to listen on.                                                                                                                | `0.0.0.0`     |
+| `buffer_chunk_size`   | Set the buffer chunk size. Compatibility alias for `http_server.buffer_chunk_size`.                                                                      | `512K`        |
+| `buffer_max_size`     | Set the maximum size of buffer. Compatibility alias for `http_server.buffer_max_size`.                                                                   | `4M`          |
+| `hostname`            | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information.                 | `localhost`   |
+| `http2`               | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                      | `true`        |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                         | `0`           |
+| `http_server.workers` | Number of HTTP listener worker threads.                                                                                                                  | `1`           |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                             | `8192`        |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                   | `256M`        |
+| `listen`              | The address to listen on.                                                                                                                                | `0.0.0.0`     |
 | `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
 | `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
 | `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
 | `version`           | Specify the Elasticsearch version that Fluent Bit reports to clients during sniffing and API requests.                                   | `8.0.0`       |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 ### TLS / SSL
 

@@ -1,5 +1,9 @@
 # Nest
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Nest_ filter plugin lets you operate on or with nested data. Its modes of operation are:
 
 - `nest`: Take a set of records and place them in a map.
@@ -7,7 +11,7 @@ The _Nest_ filter plugin lets you operate on or with nested data. Its modes of o
 
 ## Example usage for `nest`
 
-As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
+As an example using JSON notation, to nest keys matching the `wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
 
 Input:
 
@@ -33,7 +37,7 @@ Output:
 
 ## Example usage for `lift`
 
-As an example using JSON notation, to lift keys nested under the `Nested_under` value `NestKey*` the transformation becomes:
+As an example using JSON notation, to lift keys nested under the `nested_under` value `NestKey*` the transformation becomes:
 
 Input:
 
@@ -63,12 +67,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Value format | Operation | Description |
 | :--- | :--- | :--- | :--- |
-| `Operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
-| `Wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
-| `Nest_under` | Field string | `nest` | Nest records matching the `Wildcard` under this key |
-| `Nested_under` | Field string | `lift` | Lift records nested under the `Nested_under` key |
-| `Add_prefix` | Field string | Any | Prefix affected keys with this string |
-| `Remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
+| `add_prefix` | Field string | Any | Prefix affected keys with this string |
+| `nest_under` | Field string | `nest` | Nest records matching the `wildcard` under this key |
+| `nested_under` | Field string | `lift` | Lift records nested under the `nested_under` key |
+| `operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
+| `remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
+| `wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
 
 ## Get started
 
