@@ -25,13 +25,14 @@ To get more details about how to set up these components, refer to the following
 
 | Key | Description | Default |
 | :------------ | :------------------------- | :------ |
+| `auth_url` | Override the `OAuth 2.0` token endpoint URL. Must use HTTPS, or HTTP only with a `loopback` address (`localhost` or `127.0.0.1`). When set, `tenant_id` is optional. | _none_ |
 | `client_id` | The client ID of the AAD application. | _none_ |
 | `client_secret` | The client secret of the AAD application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). | _none_ |
 | `compress` | Optional. Enable HTTP payload gzip compression. | `false` |
 | `dce_url` | Data Collection Endpoint (DCE) URL. | _none_ |
 | `dcr_id` | Data Collection Rule (DCR) [immutable ID](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr). | _none_ |
 | `table_name` | The name of the custom log table (include the `_CL` suffix as well if applicable). | _none_ |
-| `tenant_id` | The tenant ID of the Azure Active Directory (AAD) application. | _none_ |
+| `tenant_id` | The tenant ID of the Azure Active Directory (AAD) application. Not required when `auth_url` is set. | _none_ |
 | `time_generated` | Optional. If enabled, the timestamp appended under `time_key` is formatted as an ISO 8601 string. If disabled, it's a floating-point number representing seconds since Unix epoch. | `false` |
 | `time_key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
