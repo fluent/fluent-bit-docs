@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -130,7 +130,7 @@ All traces include the following fields:
 
 | Field | Description |
 |:------|:------------|
-| `event_type` | Type of event (`signal`, `malloc`, `bind`, or `vfs`). |
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, `tcp`, or `vfs`). |
 | `pid` | Process ID that generated the event. |
 | `tid` | Thread ID that generated the event. |
 | `comm` | Command name (process name) that generated the event. |
@@ -165,6 +165,22 @@ The `trace_bind` trace includes these additional fields:
 | `port` | Port number the socket is binding to. |
 | `bound_dev_if` | Network device interface the socket is bound to. |
 | `error_raw` | Error code for the bind operation (`0` indicates success). |
+
+### TCP trace fields
+
+The `trace_tcp` trace captures TCP connection lifecycle events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `event_type` | TCP event subtype (`listen`, `accept`, or `connect`). |
+| `fd` | File descriptor for the socket. |
+| `backlog` | Listen backlog size (for `listen` events). |
+| `new_fd` | New file descriptor returned by the kernel (for `accept` events). |
+| `peer_port` | Remote peer port number (for `accept` events). |
+| `peer_addr` | Remote peer IP address (for `accept` events). |
+| `remote_port` | Remote port number (for `connect` events). |
+| `remote_addr` | Remote IP address (for `connect` events). |
+| `error_raw` | Error code for the operation (`0` indicates success). |
 
 ### `VFS` trace fields
 
