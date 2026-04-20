@@ -1,21 +1,21 @@
 # Stackdriver special fields
 
-When the [google-logging-agent](https://cloud.google.com/logging/docs/agent) receives a structured log record, it treats [some fields](https://cloud.google.com/logging/docs/agent/configuration#special-fields) specially, allowing users to set specific fields in the LogEntry object that get written to the Logging API.
+When the [google-logging-agent](https://docs.cloud.google.com/logging/docs/agent) receives a structured log record, it treats [some fields](https://docs.cloud.google.com/logging/docs/agent/logging/configuration#special-fields) specially, allowing users to set specific fields in the LogEntry object that get written to the Logging API.
 
 ## LogEntry fields
 
-Fluent Bit support some special fields for setting fields on the LogEntry object:
+Fluent Bit supports some special fields for setting fields on the LogEntry object:
 
-| JSON log field | [LogEntry](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Type | Description |
+| JSON log field | [LogEntry](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry) field | Type | Description |
 | :--- | :--- | :--- | :--- |
 | `logging.googleapis.com/logName` | `logName` | `string` | The log name to write this log to. |
 | `logging.googleapis.com/labels` | `labels` | `object<string, string>` | The labels for this log. |
-| `logging.googleapis.com/severity` | `severity` | [`LogSeverity` Enum](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogSeverity) | The severity of this log. |
-| `logging.googleapis.com/monitored_resource` | `resource` | [`MonitoredResource`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) (without `type`) | Resource labels for this log. |
-| `logging.googleapis.com/operation` | `operation` | [`LogEntryOperation`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntryOperation) | Additional information about a potentially long-running operation. |
+| `logging.googleapis.com/severity` | `severity` | [`LogSeverity` Enum](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogSeverity) | The severity of this log. |
+| `logging.googleapis.com/monitored_resource` | `resource` | [`MonitoredResource`](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource) (without `type`) | Resource labels for this log. |
+| `logging.googleapis.com/operation` | `operation` | [`LogEntryOperation`](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntryOperation) | Additional information about a potentially long-running operation. |
 | `logging.googleapis.com/insertId` | `insertId` | `string` | A unique identifier for the log entry. It's used to order `logEntries`. |
-| `logging.googleapis.com/sourceLocation` | `sourceLocation` | [`LogEntrySourceLocation`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation) | Additional information about the source code location that produced the log entry. |
-| `logging.googleapis.com/http_request` | `httpRequest` | [`HttpRequest`](https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#HttpRequest) | A common proto for logging HTTP requests. |
+| `logging.googleapis.com/sourceLocation` | `sourceLocation` | [`LogEntrySourceLocation`](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation) | Additional information about the source code location that produced the log entry. |
+| `logging.googleapis.com/http_request` | `httpRequest` | [`HttpRequest`](https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#HttpRequest) | A common proto for logging HTTP requests. |
 | `logging.googleapis.com/trace` | `trace` | `string` | Resource name of the trace associated with the log entry. |
 | `logging.googleapis.com/traceSampled` | `traceSampled` | boolean | The sampling decision associated with this log entry. |
 | `logging.googleapis.com/spanId` | `spanId` | `string` | The ID of the trace span associated with this log entry. |
@@ -25,9 +25,9 @@ Fluent Bit support some special fields for setting fields on the LogEntry object
 ## Other special fields
 
 | JSON log field | Description |
-|:---------------|:------------|
+| -------------- | ----------- |
 | `logging.googleapis.com/projectId` | Changes the project ID that this log will be written to. Ensure that you are authenticated to write logs to this project. |
-| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](./stackdriver.md#resource-labels).   |
+| `logging.googleapis.com/local_resource_id` | Overrides the [configured `local_resource_id`](./stackdriver.md#resource-labels). |
 
 ## Use special fields
 
@@ -62,7 +62,7 @@ For the special fields that map to `LogEntry` prototypes, add them as objects wi
 }
 ```
 
-Adding special fields to logs is best done through the [`modify` filter](https://docs.fluentbit.io/manual/pipeline/filters/modify) for basic fields, or [a Lua script using the `lua` filter](https://docs.fluentbit.io/manual/pipeline/filters/lua) for more complex fields.
+Adding special fields to logs is best done through the [`modify` filter](../filters/modify) for basic fields, or [a Lua script using the `lua` filter](../filters/lua) for more complex fields.
 
 ## Basic type special fields
 
@@ -90,7 +90,7 @@ Special fields with basic types (except for the [`logging.googleapis.com/insertI
    }
    ```
 
-1. If the field is non-empty but an invalid, it will be left in the `jsonPayload`. For example:
+1. If the field is non-empty but invalid, it will be left in the `jsonPayload`. For example:
 
    ```text
    {
@@ -119,7 +119,7 @@ If the `logging.googleapis.com/insertId` field has an invalid type, the log will
 
 #### Trace sampled
 
-If the`autoformat_stackdriver_trace` is set to `true`, the value provided in the `trace` field will be formatted into the format that Cloud Logging expects along with the detected Project ID (from the Google Metadata server, configured in the plugin, or provided using a special field).
+If `autoformat_stackdriver_trace` is set to `true`, the value in the `trace` field is reformatted to match the Cloud Logging format. The Project ID is detected from the Google Metadata server, configured in the plugin, or provided using a special field.
 
 For example, if `autoformat_stackdriver_trace` is enabled, this:
 
@@ -222,7 +222,7 @@ If there are extra sub-fields, the plugin will add the recognized fields to the 
 }
 ```
 
-the `logEntry will be:
+the `logEntry` will be:
 
 ```text
 {
@@ -254,7 +254,7 @@ The `type` field from the `MonitoredResource` proto isn't parsed out of the spec
 
 The `labels` field is expected to be an `object<string, string>`. If any fields have a value that's not a string, the value is ignored and not preserved. The plugin logs an error and drops the field.
 
-If no valid `labels` field is found, or if all entries in the `labels` object provided are invalid, the `logging.googleapis.com/monitored_resource` field is dropped in favour of automatically setting resource labels using other available information based on the configured `resource` type.
+If no valid `labels` field is found, or if all entries in the `labels` object are invalid, the `logging.googleapis.com/monitored_resource` field is dropped. Fluent Bit then automatically sets resource labels using other available information based on the configured `resource` type.
 
 ## Timestamp
 

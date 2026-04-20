@@ -1,12 +1,26 @@
 # eBPF
 
 {% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
+{% hint style="info" %}
 This plugin is experimental and might be unstable. Use it in development or testing environments only. Its features and behavior are subject to change.
 {% endhint %}
 
 The `in_ebpf` input plugin uses eBPF (extended Berkeley Packet Filter) to capture low-level system events. This plugin lets Fluent Bit monitor kernel-level activities such as process executions, file accesses, memory allocations, network connections, and signal handling. It provides valuable insights into system behavior for debugging, monitoring, and security analysis.
 
 The `in_ebpf` plugin leverages eBPF to trace kernel events in real-time. By specifying trace points, users can collect targeted system-level metrics and events, giving visibility into operating system interactions and performance characteristics.
+
+## Configuration parameters
+
+The plugin supports the following configuration parameters:
+
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
+| `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -75,6 +89,7 @@ Here's a basic example of how to configure the plugin:
 pipeline:
   inputs:
     - name: ebpf
+      poll_ms: 500
       trace:
         - trace_signal
         - trace_malloc
@@ -87,6 +102,7 @@ pipeline:
 ```text
 [INPUT]
   Name          ebpf
+  Poll_Ms       500
   Trace         trace_signal
   Trace         trace_malloc
   Trace         trace_bind
@@ -103,3 +119,62 @@ The configuration enables tracing for:
 
 You can enable multiple traces by adding multiple `Trace` directives in your configuration.
 Full list of existing traces can be seen here: [Fluent Bit eBPF Traces](https://github.com/fluent/fluent-bit/tree/master/plugins/in_ebpf/traces)
+
+## Output fields
+
+Each trace produces records with common fields and trace-specific fields.
+
+### Common fields
+
+All traces include the following fields:
+
+| Field | Description |
+|:------|:------------|
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, or `vfs`). |
+| `pid` | Process ID that generated the event. |
+| `tid` | Thread ID that generated the event. |
+| `comm` | Command name (process name) that generated the event. |
+
+### Signal trace fields
+
+The `trace_signal` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `signal` | Signal number that was sent. |
+| `tpid` | Target process ID that received the signal. |
+
+### Memory trace fields
+
+The `trace_malloc` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `operation` | Memory operation type (for example, `0` = `malloc`, `1` = `free`, `2` = `calloc`, `3` = `realloc`). |
+| `address` | Memory address of the operation. |
+| `size` | Size of the memory operation in bytes. |
+
+### Bind trace fields
+
+The `trace_bind` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `uid` | User ID of the process. |
+| `gid` | Group ID of the process. |
+| `port` | Port number the socket is binding to. |
+| `bound_dev_if` | Network device interface the socket is bound to. |
+| `error_raw` | Error code for the bind operation (`0` indicates success). |
+
+### `VFS` trace fields
+
+The `trace_vfs` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `operation` | `VFS` operation type (integer). |
+| `path` | File path involved in the operation. |
+| `flags` | Flags passed to the `VFS` operation. |
+| `mode` | File mode bits for the operation. |
+| `fd` | File descriptor returned by the operation. |
+| `error_raw` | Error code for the operation (`0` indicates success). |

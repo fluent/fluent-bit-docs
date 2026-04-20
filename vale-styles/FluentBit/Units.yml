@@ -9,3 +9,5 @@ tokens:
 
 exceptions:
   - k3s
+  - k8s
+  - K8s

@@ -1,141 +1,47 @@
 # Configure Fluent Bit
 
-Fluent Bit supports two configuration formats:
+Fluent Bit uses configuration files to store information about your specified [inputs](../pipeline/inputs.md), [outputs](../pipeline/outputs.md), [filters](../pipeline/filters.md), and more. You can write these configuration files in one of these formats:
 
-- [YAML](./configuring-fluent-bit/yaml.md): Standard configuration format as of v3.2.
-- [Classic mode](./configuring-fluent-bit/classic-mode.md): To be deprecated at the end of 2026.
+- [YAML configuration files](./configuring-fluent-bit/yaml.md) are the standard configuration format as of Fluent Bit v3.2. They use the `.yaml` file extension.
+- [Classic configuration files](./configuring-fluent-bit/classic-mode.md) will be deprecated at the end of 2026. They use the `.conf` file extension.
+
+## Unit sizes
+
+Some configuration settings in Fluent Bit use standardized unit sizes to define data and storage limits. For example, the `buffer_chunk_size` and `buffer_max_size` parameters for the [Tail](../pipeline/inputs/tail.md) input plugin use unit sizes.
+
+The following table describes the unit sizes you can use and what they mean.
+
+| Suffix | Description | Example |
+| :--- | :--- | :--- |
+| _none_ | **Bytes**: If you specify an integer without a unit size, Fluent Bit interprets that value as a bytes representation. | `32000` means 32,000 bytes. |
+| `k`, `kb`, `K`, `KB` | **Kilobytes**: A unit of memory equal to 1,000 bytes. | `32k` means 32,000 bytes. |
+| `m`, `mb`, `M`, `MB` | **Megabytes**: A unit of memory equal to 1,000,000 bytes. | `32m` means 32,000,000 bytes. |
+| `g`, `gb`, `G`, `GB` | **Gigabytes**: A unit of memory equal to 1,000,000,000 bytes. | `32g` means 32,000,000,000 bytes. |
 
 ## Command line interface
 
-Fluent Bit exposes most of it features through the command line interface. Running the `-h` option you can get a list of the options available:
+Fluent Bit exposes most of its configuration features through the command line interface. Use the `-h` or `--help` flag to see a list of available options.
 
 ```shell
+# Podman container tooling.
+podman run -rm -ti fluent/fluent-bit --help
+
+# Docker container tooling.
 docker run --rm -it fluent/fluent-bit --help
 ```
 
-Which returns the following help text:
+### Validate configuration with `--dry-run`
 
-```text
-Usage: /fluent-bit/bin/fluent-bit [OPTION]
+Use the `--dry-run` flag to validate a configuration file without starting Fluent Bit:
 
-Available Options
-  -b  --storage_path=PATH specify a storage buffering path
-  -c  --config=FILE       specify an optional configuration file
-  -d, --daemon            run Fluent Bit in background mode
-  -D, --dry-run           dry run
-  -f, --flush=SECONDS     flush timeout in seconds (default: 1)
-  -C, --custom=CUSTOM     enable a custom plugin
-  -i, --input=INPUT       set an input
-  -F  --filter=FILTER     set a filter
-  -m, --match=MATCH       set plugin match, same as '-p match=abc'
-  -o, --output=OUTPUT     set an output
-  -p, --prop="A=B"        set plugin configuration property
-  -R, --parser=FILE       specify a parser configuration file
-  -e, --plugin=FILE       load an external plugin (shared lib)
-  -l, --log_file=FILE     write log info to a file
-  -t, --tag=TAG           set plugin tag, same as '-p tag=abc'
-  -T, --sp-task=SQL       define a stream processor task
-  -v, --verbose           increase logging verbosity (default: info)
-  -w, --workdir           set the working directory
-  -H, --http              enable monitoring HTTP server
-  -P, --port              set HTTP server TCP port (default: 2020)
-  -s, --coro_stack_size   set coroutines stack size in bytes (default: 24576)
-  -q, --quiet             quiet mode
-  -S, --sosreport         support report for Enterprise customers
-  -V, --version           show version number
-  -h, --help              print this help
+```shell
+fluent-bit --dry-run -c /path/to/fluent-bit.yaml
+```
 
-Inputs
-  cpu                     CPU Usage
-  mem                     Memory Usage
-  thermal                 Thermal
-  kmsg                    Kernel Log Buffer
-  proc                    Check Process health
-  disk                    Diskstats
-  systemd                 Systemd (Journal) reader
-  netif                   Network Interface Usage
-  docker                  Docker containers metrics
-  docker_events           Docker events
-  node_exporter_metrics   Node Exporter Metrics (Prometheus Compatible)
-  fluentbit_metrics       Fluent Bit internal metrics
-  prometheus_scrape       Scrape metrics from Prometheus Endpoint
-  tail                    Tail files
-  dummy                   Generate dummy data
-  dummy_thread            Generate dummy data in a separate thread
-  head                    Head Input
-  health                  Check TCP server health
-  http                    HTTP
-  collectd                collectd input plugin
-  statsd                  StatsD input plugin
-  opentelemetry           OpenTelemetry
-  nginx_metrics           Nginx status metrics
-  serial                  Serial input
-  stdin                   Standard Input
-  syslog                  Syslog
-  tcp                     TCP
-  mqtt                    MQTT, listen for Publish messages
-  forward                 Fluentd in-forward
-  random                  Random
+A successful validation prints `configuration test is successful` and exits with code `0`. If validation fails, Fluent Bit exits with a non-zero code and prints the errors to stderr.
 
-Filters
-  alter_size              Alter incoming chunk size
-  aws                     Add AWS Metadata
-  checklist               Check records and flag them
-  record_modifier         modify record
-  throttle                Throttle messages using sliding window algorithm
-  type_converter          Data type converter
-  kubernetes              Filter to append Kubernetes metadata
-  modify                  modify records by applying rules
-  multiline               Concatenate multiline messages
-  nest                    nest events by specified field values
-  parser                  Parse events
-  expect                  Validate expected keys and values
-  grep                    grep events by specified field values
-  rewrite_tag             Rewrite records tags
-  lua                     Lua Scripting Filter
-  stdout                  Filter events to STDOUT
-  geoip2                  add geoip information to records
-  nightfall               scans records for sensitive content
+As of Fluent Bit 4.2, `--dry-run` performs full property validation in addition to syntax checking. Prior to 4.2, unknown or misspelled plugin property names would only surface as errors at runtime; `--dry-run` now catches them during validation. For example, a configuration with an unknown property on a `dummy` input produces:
 
-Outputs
-  azure                   Send events to Azure HTTP Event Collector
-  azure_blob              Azure Blob Storage
-  azure_kusto             Send events to Kusto (Azure Data Explorer)
-  bigquery                Send events to BigQuery via streaming insert
-  counter                 Records counter
-  datadog                 Send events to DataDog HTTP Event Collector
-  es                      Elasticsearch
-  exit                    Exit after a number of flushes (test purposes)
-  file                    Generate log file
-  forward                 Forward (Fluentd protocol)
-  http                    HTTP Output
-  influxdb                InfluxDB Time Series
-  logdna                  LogDNA
-  loki                    Loki
-  kafka                   Kafka
-  kafka-rest              Kafka REST Proxy
-  nats                    NATS Server
-  nrlogs                  New Relic
-  null                    Throws away events
-  opensearch              OpenSearch
-  plot                    Generate data file for GNU Plot
-  pgsql                   PostgreSQL
-  skywalking              Send logs into log collector on SkyWalking OAP
-  slack                   Send events to a Slack channel
-  splunk                  Send events to Splunk HTTP Event Collector
-  stackdriver             Send events to Google Stackdriver Logging
-  stdout                  Prints events to STDOUT
-  syslog                  Syslog
-  tcp                     TCP Output
-  td                      Treasure Data
-  flowcounter             FlowCounter
-  gelf                    GELF Output
-  websocket               Websocket
-  cloudwatch_logs         Send logs to Amazon CloudWatch
-  kinesis_firehose        Send logs to Amazon Kinesis Firehose
-  kinesis_streams         Send logs to Amazon Kinesis Streams
-  opentelemetry           OpenTelemetry
-  prometheus_exporter     Prometheus Exporter
-  prometheus_remote_write Prometheus remote write
-  s3                      Send to S3
+```
+[error] [config] dummy: unknown configuration property 'invalid_property_that_does_not_exist'.
 ```

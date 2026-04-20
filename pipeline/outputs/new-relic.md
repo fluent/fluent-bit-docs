@@ -6,10 +6,10 @@ The _New Relic_ output plugin lets you send logs to New Relic.
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `base_uri` | The New Relic API endpoint. | `https://log-api.newrelic.com/log/v1`|
-| `api_key` | Your [New Relic API key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required.| _none_ |
-| `license_key` | Your [New Relic license key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required. | _none_ |
+| `api_key` | Your [New Relic API key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required. | _none_ |
+| `base_uri` | The New Relic API endpoint. | `https://log-api.newrelic.com/log/v1` |
 | `compress` | Sets the compression mechanism for the payload. Possible values: `gzip` or `false`. | `gzip` |
+| `license_key` | Your [New Relic license key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Either an `api_key` or `license_key` is required. | _none_ |
 | `workers` | Sets the number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Example configuration
@@ -41,18 +41,18 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush     1
-  log_level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-  name      dummy
-  dummy     {"message":"a simple message", "temp": "0.74", "extra": "false"}
-  samples   1
+  Name      dummy
+  Dummy     {"message":"a simple message", "temp": "0.74", "extra": "false"}
+  Samples   1
 
 [OUTPUT]
-  name      nrlogs
-  match     *
-  api_key   YOUR_API_KEY_HERE
+  Name      nrlogs
+  Match     *
+  Api_Key   YOUR_API_KEY_HERE
 ```
 
 {% endtab %}

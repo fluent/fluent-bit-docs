@@ -4,3 +4,5 @@ node_modules/*
 old/*
 .DS_Store
 .idea/
+.cursor
+CLAUDE.md

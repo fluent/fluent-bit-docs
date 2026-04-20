@@ -4,8 +4,6 @@
 
 You might need to estimate how much memory Fluent Bit could be using in scenarios like containerized environments where memory limits are essential.
 
-To make an estimate, in-use input plugins must set the `Mem_Buf_Limit`option. Learn more about it in [Backpressure](backpressure.md).
-
 ## Estimating
 
 Input plugins append data independently. To make an estimation, impose a limit with the `Mem_Buf_Limit` option. If the limit was set to `10MB`, you can estimate that in the worst case, the output plugin likely could use `20MB`.
@@ -14,11 +12,15 @@ Fluent Bit has an internal binary representation for the data being processed. W
 
 When imposing a limit of `10MB` for the input plugins, and a worst case scenario of the output plugin consuming `20MB`, you need to allocate a minimum (`30MB` x 1.2) = `36MB`.
 
+{% hint style="info" %}
+For more information about `Mem_Buf_Limit`, see [Backpressure](backpressure.md).
+{% endhint %}
+
 ## Glibc and memory fragmentation
 
 In intensive environments where memory allocations happen in the orders of magnitude, the default memory allocator provided by Glibc could lead to high fragmentation, reporting a high memory usage by the service.
 
-It's strongly suggested that in any production environment, Fluent Bit should be built with [jemalloc](http://jemalloc.net/) enabled (`-DFLB_JEMALLOC=On`). The jemalloc implementation of `malloc` is an alternative memory allocator that can reduce fragmentation, resulting in better performance.
+It's strongly suggested that in any production environment, Fluent Bit should be built with [jemalloc](https://jemalloc.net/) enabled (`-DFLB_JEMALLOC=On`). The jemalloc implementation of `malloc` is an alternative memory allocator that can reduce fragmentation, resulting in better performance.
 
 Use the following command to determine if Fluent Bit has been built with jemalloc:
 

@@ -4,21 +4,21 @@ description: Send logs, metrics to Azure Log Analytics
 
 # Azure Log Analytics
 
-The Azure output plugin lets you ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/services/log-analytics/) service.
+The Azure output plugin lets you ingest your records into [Azure Log Analytics](https://azure.microsoft.com/en-us/products/monitor/) service.
 
-For details about how to setup Azure Log Analytics, see the [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/log-analytics/) documentation.
+For details about how to setup Azure Log Analytics, see the [Azure Log Analytics](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview) documentation.
 
 ## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Customer_ID` | Customer ID or WorkspaceID string. | _none_ |
-| `Shared_Key` | The primary or the secondary Connected Sources client authentication key. | _none_ |
-| `Log_Type` | The name of the event type. | `fluentbit` |
-| `Log_Type_Key` | If included, the value for this key checked in the record and if present, will overwrite the `log_type`. If not found then the `log_type` value will be used. | _none_ |
-| `Time_Key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
-| `Time_Generated` | If enabled, the HTTP request header `time-generated-field` will be included so Azure can override the timestamp with the key specified by `time_key` option. | `off` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `customer_id` | Customer ID or WorkspaceID string. | _none_ |
+| `log_type` | The name of the event type. | `fluentbit` |
+| `log_type_key` | If included, the value for this key checked in the record and if present, will overwrite the `log_type`. If not found then the `log_type` value will be used. | _none_ |
+| `shared_key` | The primary or the secondary Connected Sources client authentication key. | _none_ |
+| `time_generated` | If enabled, the HTTP request header `time-generated-field` will be included so Azure can override the timestamp with the key specified by `time_key` option. | `false` |
+| `time_key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 

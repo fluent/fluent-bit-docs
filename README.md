@@ -6,7 +6,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 <figure><img src=".gitbook/assets/fluent_bit_logo.png" alt=""><figcaption></figcaption></figure>
 
-[Fluent Bit](http://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
+[Fluent Bit](https://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
 ## Features
 
@@ -16,7 +16,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 - Metrics support: Prometheus and OpenTelemetry compatible
 - Reliability and data integrity
   - [Backpressure](administration/backpressure.md) handling
-  - [Data buffering](administration/buffering-and-storage.md) in memory and file system
+  - [Data buffering](./pipeline/buffering.md) in memory and file system
 - Networking
   - Security: Built-in TLS/SSL support
   - Asynchronous I/O
@@ -27,7 +27,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
     - Wasm: [Wasm Filter Plugins](development/wasm-filter-plugins.md) or [Wasm Input Plugins](development/wasm-input-plugins.md)
     - Write [Filters in Lua](pipeline/filters/lua.md) or [Output plugins in Golang](development/golang-output-plugins.md)
 - [Monitoring](administration/monitoring.md): Expose internal metrics over HTTP in JSON and [Prometheus](https://prometheus.io/) format
-- [Stream Processing](stream-processing/introduction.md): Perform data selection and transformation using basic SQL queries
+- [Stream Processing](stream-processing/overview.md): Perform data selection and transformation using basic SQL queries
   - Create new streams of data using query results
   - Aggregation windows
   - Data analysis and prediction: Time series forecasting
@@ -37,8 +37,14 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
+If you are upgrading from the Fluent Bit `4.2` series, start with [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md) and [Upgrade notes](installation/upgrade-notes.md).
+
 ## Fluent Bit, Fluentd, and CNCF
 
-[Fluent Bit](http://fluentbit.io) is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](http://fluentd.org). Fluent Bit is licensed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+Fluent Bit is a [CNCF](https://www.cncf.io/) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
 
 Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
+
+## License
+
+Fluent Bit, including its core, plugins, and tools, is distributed under the terms of the [Apache License v2.0](https://github.com/fluent/fluent-bit?tab=Apache-2.0-1-ov-file#readme).

@@ -29,7 +29,7 @@ The `HTTP_PROXY` environment variable is a [standard way](https://docs.docker.co
 
 {% hint style="info" %}
 
-The [HTTP output plugin](https://docs.fluentbit.io/manual/pipeline/outputs/http) also supports configuring an HTTP proxy. This configuration works, but shouldn't be used with the `HTTP_PROXY` or `http_proxy` environment variable. The environment variable-based proxy configuration is implemented by creating a TCP connection tunnel using [HTTP CONNECT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT). Unlike the plugin's implementation, this supports both HTTP and HTTPS egress traffic.
+The [HTTP output plugin](../pipeline/outputs/http.md) also supports configuring an HTTP proxy. This configuration works, but shouldn't be used with the `HTTP_PROXY` or `http_proxy` environment variable. The environment variable-based proxy configuration is implemented by creating a TCP connection tunnel using [HTTP CONNECT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/CONNECT). Unlike the plugin's implementation, this supports both HTTP and HTTPS egress traffic.
 
 {% endhint %}
 

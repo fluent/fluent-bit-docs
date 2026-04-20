@@ -1,8 +1,19 @@
 # Output formats
 
-Some of the output plugin's has a configuration field called `formats`, with a limited amount of options are available (`json`, `json_stream`, `json_lines`, `msgpack`, `gelf`).
+Some output plugins have a `format` configuration parameter. Supported values vary by plugin:
 
-The specifications, or reference to external documentation of the formats, is available in this page.
+| Plugin | Supported formats |
+| --- | --- |
+| HTTP | `gelf`, `json`, `json_lines`, `json_stream`, `msgpack` |
+| Kafka | `avro` (build-dependent), `gelf`, `json`, `msgpack`, `raw` |
+| Standard Output | `json`, `json_lines`, `json_stream`, `msgpack` |
+| TCP/TLS | `json`, `json_lines`, `json_stream`, `msgpack` |
+| UDP | `json`, `json_lines`, `json_stream`, `msgpack` |
+| WebSocket | `gelf`, `json`, `json_lines`, `json_stream`, `msgpack` |
+
+Some plugins, such as Kafka, support additional formats not listed here (for example, `avro` and `raw`). Always check the individual plugin documentation for the full list of supported values.
+
+The format specifications and references to external documentation are available in this page.
 
 ## JSON formats
 

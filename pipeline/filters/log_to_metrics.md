@@ -4,37 +4,40 @@ description: Generate metrics from logs
 
 # Logs to metrics
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5" />
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=768830f6-8d2d-4231-9e5e-259ce6797ba5"  alt="tracking"/>
 
 The _log to metrics_ filter lets you generate log-derived metrics. It supports modes to count records, provide a gauge for field values, or create a histogram. You can also match or exclude specific records based on regular expression patterns for values or nested values.
 
 This filter doesn't actually act as a record filter and therefore doesn't change or drop records. All records will pass through this filter untouched, and any generated metrics will be emitted into a separate metric pipeline.
 
-{% hint style="warning" %}
-
-This filter is an experimental feature and isn't recommended for production use. Configuration parameters and other capabilities are subject to change without notice.
-
-{% endhint %}
-
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Parameter | Description | Value format |
-|---|---|---|
-| `tag` | Required. Defines the tag for the generated metrics record. |  |
-| `metric_mode` | Required. Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`. |  |
-| `metric_name` | Required. Sets the name of the metric. |  |
-| `metric_description` | Required. Sets a description for the metric. |  |
-| `bucket` | Required for mode `histogram`. Defines a bucket for histograms. | For example, `0.75` |
-| `add_label` | Adds a custom label `NAME` and set the value to the value of `KEY`. |  |
-| `label_field` | Includes a record field as label dimension in the metric. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| `value_field` | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
-| `kubernetes_mode` | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes.md) filter plugin, which fills those fields. |  |
-| `Regex` | Includes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
-| `Exclude` | Excludes records in which the content of `KEY` matches the regular expression. | `KEY REGEX` |
-| `Flush_Interval_Sec` | The interval for metrics emission, in seconds. If `Flush_Interval_Sec` and `Flush_Interval_Nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. Default value: `0`. |  |
-| `Flush_Interval_Nsec` | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with `Flush_Interval_Sec`. Default value: `0`. |  |
+| Key | Description | Default | Format |
+|-----|-------------|---------|--------|
+| `add_label`  | Adds a custom label `NAME` and set the value to the value of `KEY`. | _none_  | `NAME KEY` |
+| `bucket` | Optional for `metric_mode` `histogram`. If not set, default Prometheus-style buckets are used. | _none_ | For example, `0.75`. |
+| `discard_logs` | Flag that defines if logs should be discarded after processing. This applies for all logs, whether they have emitted metrics or not. | `false` |  |
+| `emitter_mem_buf_limit` | Set a buffer limit to restrict memory usage of metrics emitter.  | `10M` |  |
+| `emitter_name` | Name of the emitter (advanced users). | _none_ |  |
+| `exclude` | Excludes records in which the content of `KEY` matches the regular expression `REGEX`. | _none_       | `KEY REGEX` |
+| `flush_interval_nsec`   | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with `flush_interval_sec`.| `0` |  |
+| `flush_interval_sec`    | The interval for metrics emission, in seconds. If `flush_interval_sec` and `flush_interval_nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. | `0` |  |
+| `kubernetes_mode`       | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes.md) filter plugin, which fills those fields. | `false`      |  |
+| `label_field`           | Includes a record field as label dimension in the metric. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `metric_description`    | Sets a description for the metric.                                                  | _none_       |  |
+| `metric_mode`           | Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`.| `counter`    |  |
+| `metric_name`           | Sets the name of the metric.                                                        | `a`          |  |
+| `metric_namespace`      | Sets the namespace of the metric.                                                   | `log_metric` |  |
+| `metric_subsystem`      | Subsystem of the metric.                                                            | _none_       |  |
+| `regex`                 | Includes records in which the content of `KEY` matches the regular expression `REGEX`. | _none_       | `KEY REGEX` |
+| `tag`                   | Defines the tag for the generated metrics record.                                   | _none_       |  |
+| `value_field`           | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
 
 ## Examples
 
@@ -86,8 +89,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -100,18 +103,18 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        counter
-  metric_name        count_all_dummy_messages
-  metric_description This metric counts dummy messages
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        counter
+  Metric_Name        count_all_dummy_messages
+  Metric_Description This metric counts dummy messages
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -194,8 +197,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -208,24 +211,24 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        gauge
-  metric_name        current_duration
-  metric_description This metric shows the current duration
-  value_field        duration
-  kubernetes_mode    on
-  regex              message .*el.*
-  add_label          app $kubernetes['labels']['app']
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        gauge
+  Metric_Name        current_duration
+  Metric_Description This metric shows the current duration
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Regex              message .*el.*
+  Add_Label          app $kubernetes['labels']['app']
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -318,8 +321,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -332,24 +335,24 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        histogram
-  metric_name        current_duration
-  metric_description This metric shows the request duration
-  value_field        duration
-  kubernetes_mode    on
-  regex              message .*el.*
-  add_label          app $kubernetes['labels']['app']
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        histogram
+  Metric_Name        current_duration
+  Metric_Description This metric shows the request duration
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Regex              message .*el.*
+  Add_Label          app $kubernetes['labels']['app']
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
@@ -444,7 +447,7 @@ pipeline:
         - 5
         - 10
         - 50
-        - 1000
+        - 100
         - 250
         - 500
         - 1000
@@ -465,8 +468,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -479,31 +482,31 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        histogram
-  metric_name        current_duration
-  metric_description This metric shows the HTTP request duration as histogram in milliseconds
-  value_field        duration
-  kubernetes_mode    on
-  bucket             1
-  bucket             5
-  bucket             10
-  bucket             50
-  bucket             100
-  bucket             250
-  bucket             500
-  bucket             1000
-  regex              message .*el.*
-  label_field        color
-  label_field        shape
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        histogram
+  Metric_Name        current_duration
+  Metric_Description This metric shows the HTTP request duration as histogram in milliseconds
+  Value_Field        duration
+  Kubernetes_Mode    on
+  Bucket             1
+  Bucket             5
+  Bucket             10
+  Bucket             50
+  Bucket             100
+  Bucket             250
+  Bucket             500
+  Bucket             1000
+  Regex              message .*el.*
+  Label_Field        color
+  Label_Field        shape
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}

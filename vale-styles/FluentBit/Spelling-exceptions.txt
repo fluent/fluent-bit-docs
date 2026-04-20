@@ -2,9 +2,11 @@ accessor
 accessors
 allowlist
 Ansible
+Apache Skywalking
 API
 APIs
 Appname
+ARNs
 autoscale
 autoscaler
 autoscaling
@@ -22,6 +24,7 @@ Buildkite
 Buildroot
 cAdvisor
 Calyptia
+cgroup
 Chronosphere
 chronotf
 clickstreams
@@ -67,6 +70,7 @@ dri
 Dynatrace
 Elasticsearch
 endcode
+endembed
 endhint
 endtab
 endtabs
@@ -80,10 +84,12 @@ FluentBit
 Fluentd
 formatter
 formatters
+GBK
 github
 glibc
 Golang
 golib
+GPUs
 Grafana
 Graphite
 Graylog
@@ -97,7 +103,9 @@ HEC
 Homebrew
 hostname
 Hostname
+hostnames
 Ingester
+Ingestor
 inotify
 Keepalive
 Istio
@@ -145,9 +153,11 @@ OpenTelemetry
 Opsgenie
 OTel
 PagerDuty
+Parquet
 Parseable
 performant
 persistable
+pluggable
 Podman
 popen
 Postgres
@@ -192,6 +202,7 @@ sharding
 SignalFx
 Signup
 Sigstore
+Skywalking
 sparkline
 sparklines
 Sparklines
@@ -212,6 +223,7 @@ sysinfo
 syslog
 systemctl
 systemd
+Sysfs
 Tanzu
 Telegraf
 templated
@@ -236,6 +248,7 @@ upsert
 upserts
 untrusted
 UUIDs
+Valgrind
 Vectra
 Vercel
 VictoriaMetrics

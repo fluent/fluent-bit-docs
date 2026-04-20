@@ -21,8 +21,8 @@ By increasing the buffer size, Fluent Bit will make fewer system calls (read(2))
 
 ## Fluent Bit and SIMD for JSON encoding
 
-Starting in Fluent Bit v3.2, performance improvements have been introduced for JSON encoding. Plugins that convert logs from the Fluent Bit internal binary representation
-to JSON can now do so up to 30% faster using Single Instruction, Multiple Data (SIMD) optimizations.
+The release of Fluent Bit v4.1.0 introduced new performance improvements for JSON encoding using Single Instruction, Multiple Data (SIMD). Plugins that convert logs from the Fluent Bit internal binary representation
+to JSON can now do so 2.5 times (read) faster. Powered by the [`yyjson` project](https://github.com/ibireme/yyjson).
 
 ### Enabling SIMD support
 
@@ -41,11 +41,11 @@ You can check if SIMD is enabled by looking for the following log entry when Flu
 
 Look for the `simd` entry, which will indicate the SIMD support type, such as `SSE2`, `NEON`, or `none`.
 
-If your Fluent Bit binary wasn't built with SIMD enabled and you are using a supported platform, you can build Fluent Bit from source using the CMake option `-DFLB_SIMD=On`.
+If your Fluent Bit binary wasn't built with SIMD enabled, and you are using a supported platform, you can build Fluent Bit from source using the CMake option `-DFLB_SIMD=On`.
 
 ## Run input plugins in threaded mode
 
-By default, most of input plugins runs in the same system thread than the main event loop, however by configuration you can instruct them to run in a separate thread which will allow you to take advantage of other CPU cores in your system.
+By default, most input plugins run in the same system thread than the main event loop, however by configuration you can instruct them to run in a separate thread which will allow you to take advantage of other CPU cores in your system.
 
 To run an input plugin in threaded mode, add `threaded: true` as in the following example:
 

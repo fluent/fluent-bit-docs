@@ -1,4 +1,4 @@
-# Configure Fluent Bit using classic mode
+# Classic configuration files
 
 {% hint style="info" %}
 Fluent Bit classic mode configuration will be deprecated at the end of 2026.

@@ -147,11 +147,11 @@ The following is an example of a main configuration file.
 
 ```yaml
 service:
-  - /path/to/plugins.yaml
-  
+  plugins_file: /path/to/plugins.yaml
+
 pipeline:
   inputs:
-    - name dummy
+    - name: dummy
 
   outputs:
     - name: gstdout

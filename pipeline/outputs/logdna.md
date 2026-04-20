@@ -7,24 +7,24 @@ The _LogDNA_ output plugin sends logs and events to a LogDNA-compliant service.
 This plugin uses the following configuration parameters:
 
 | Key | Description | Default |
-| --- | ----------- | ------- |
-| `logdna_host` | The LogDNA API host address. | `logs.logdna.com` |
-| `logdna_port` | The LogDNA TCP Port. | `443` |
-| `logdna_endpoint` | The LogDNA ingestion endpoint. | `/logs/ingest` |
+| :--- | :--- | :--- |
 | `api_key` | Required. The API key to get access to the service. | _none_ |
-| `hostname` | Name of the local machine or device where Fluent Bit is running. If no value is specifies, Fluent Bit will look up the hostname and auto populate its value. If Fluent Bit is unable to find a value, it will set the value `unknown` instead. | _none_ |
-| `mac` | The MAC address. This value is optional. |  |
-| `ip` | The IP address of the local hostname. This value is optional. |  |
-| `tags` | A list of comma-separated strings to group records in LogDNA and simplify the query with filters. | _none_ |
-| `file` | Optional name of a file being monitored. This value is only set if the record doesn't contain a reference to it. | _none_ |
 | `app` | Name of the application. This value is automatically discovered on each record. If no value is found, the default value is used. | `Fluent Bit` |
+| `file` | Optional name of a file being monitored. This value is only set if the record doesn't contain a reference to it. | _none_ |
+| `hostname` | Name of the local machine or device where Fluent Bit is running. If no value is specified, Fluent Bit will look up the hostname and auto-populate its value. If Fluent Bit is unable to find a value, it will set the value `unknown` instead. | _none_ |
+| `ip` | The IP address of the local hostname. This value is optional. | _none_ |
+| `logdna_endpoint` | The LogDNA ingestion endpoint. | `/logs/ingest` |
+| `logdna_host` | The LogDNA API host address. | `logs.logdna.com` |
+| `logdna_port` | The LogDNA TCP port. | `443` |
+| `mac` | The MAC address. This value is optional. | _none_ |
+| `tags` | A list of comma-separated strings to group records in LogDNA and simplify the query with filters. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Data discovery and enrichment
 
 The LogDNA output plugin can automatically discover and enrich records with additional content.
 
-When the login processes a record or log, it searches for specific key names that might contain context for the record in question. The following table describe these keys and the discovery logic:
+When the plugin processes a record or log, it searches for specific key names that might contain context for the record in question. The following table describe these keys and the discovery logic:
 
 | Key | Description |
 | :--- | :--- |
@@ -66,22 +66,22 @@ pipeline:
 
 ```text
 [SERVICE]
-    flush     1
-    log_level info
+    Flush     1
+    Log_Level info
 
 [INPUT]
-    name      dummy
-    dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
-    samples   1
+    Name      dummy
+    Dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
+    Samples   1
 
 [OUTPUT]
-    name      logdna
-    match     *
-    api_key   YOUR_API_KEY_HERE
-    hostname  my-hostname
-    ip        192.168.1.2
-    mac       aa:bb:cc:dd:ee:ff
-    tags      aa, bb
+    Name      logdna
+    Match     *
+    Api_Key   YOUR_API_KEY_HERE
+    Hostname  my-hostname
+    Ip        192.168.1.2
+    Mac       aa:bb:cc:dd:ee:ff
+    Tags      aa, bb
 ```
 
 {% endtab %}

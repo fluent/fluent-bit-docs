@@ -4,23 +4,23 @@ description: Send logs, metrics, and traces to Parseable
 
 # Parseable
 
-Stream logs, metrics, and traces to [Parseable](https://www.parseable.com) by utilizing the [OpenTelemetry plugin](opentelemetry.md) to send telemetry data to Parseable's OpenTelemetry-compatible Ingestor endpoints.
+Stream logs, metrics, and traces to [Parseable](https://www.parseable.com) by utilizing the [OpenTelemetry plugin](opentelemetry.md) to send telemetry data to the Parseable OpenTelemetry-compatible Ingestor endpoints.
 
 ## Configuration parameters
 
 | Key                        | Description | Default |
 | -------------------------- | ----------- | ------- |
-| `host`                     | Your Parseable Ingestor hostname or IP address. | `parseable` |
-| `port`                     | TCP port of your Parseable Ingestor. | `8000` |
-| `http_user`                | Username for HTTP basic authentication. | `admin` |
-| `http_passwd`              | Password for HTTP basic authentication. | `admin` |
-| `header`                   | Required headers for Parseable integration. Must include `X-P-Stream` (stream name) and `X-P-Log-Source` (telemetry type: `otel-logs`, `otel-metrics`, or `otel-traces`). | _none_ |
 | `add_label`                | Add custom labels to the telemetry data. | _none_ |
-| `log_response_payload`     | Log the response payload from the server for debugging. | `False` |
-| `metrics_uri`              | Specify the HTTP URI for the target web server listening for metrics. | `/v1/metrics` |
+| `header`                   | Required headers for Parseable integration. Must include `X-P-Stream` (stream name) and `X-P-Log-Source` (telemetry type: `otel-logs`, `otel-metrics`, or `otel-traces`). | _none_ |
+| `host`                     | Your Parseable Ingestor hostname or IP address. | `parseable` |
+| `http_passwd`              | Password for HTTP basic authentication. | `admin` |
+| `http_user`                | Username for HTTP basic authentication. | `admin` |
+| `log_response_payload`     | Log the response payload from the server for debugging. | `false` |
 | `logs_uri`                 | Specify the HTTP URI for the target web server listening for logs. | `/v1/logs` |
+| `metrics_uri`              | Specify the HTTP URI for the target web server listening for metrics. | `/v1/metrics` |
+| `port`                     | TCP port of your Parseable Ingestor. | `8000` |
+| `tls`                      | Enable or disable TLS/SSL encryption. | `off` |
 | `traces_uri`               | Specify the HTTP URI for the target web server listening for traces. | `/v1/traces` |
-| `tls`                      | Enable or disable TLS/SSL encryption. | `Off` |
 
 ### TLS / SSL
 
@@ -93,14 +93,14 @@ pipeline:
     Match         v1_logs
     Host          parseable
     Port          8000
-    Logs_uri      /v1/logs
-    Log_response_payload True
+    Logs_Uri      /v1/logs
+    Log_Response_Payload True
     Tls           Off
     Http_User     admin
     Http_Passwd   admin
     Header        X-P-Stream otellogs
     Header        X-P-Log-Source otel-logs
-    Add_label     app fluent-bit
+    Add_Label     app fluent-bit
 
 # Send metrics to Parseable
 [OUTPUT]
@@ -108,14 +108,14 @@ pipeline:
     Match         v1_metrics
     Host          parseable
     Port          8000
-    Metrics_uri   /v1/metrics
-    Log_response_payload True
+    Metrics_Uri   /v1/metrics
+    Log_Response_Payload True
     Tls           Off
     Http_User     admin
     Http_Passwd   admin
     Header        X-P-Stream otelmetrics
     Header        X-P-Log-Source otel-metrics
-    Add_label     app fluent-bit
+    Add_Label     app fluent-bit
 
 # Send traces to Parseable
 [OUTPUT]
@@ -123,25 +123,25 @@ pipeline:
     Match         v1_traces
     Host          parseable
     Port          8000
-    Traces_uri    /v1/traces
-    Log_response_payload True
+    Traces_Uri    /v1/traces
+    Log_Response_Payload True
     Tls           Off
     Http_User     admin
     Http_Passwd   admin
     Header        X-P-Stream oteltraces
     Header        X-P-Log-Source otel-traces
-    Add_label     app fluent-bit
+    Add_Label     app fluent-bit
 ```
 
 {% endtab %}
 {% endtabs %}
 
-## Stream Configuration
+## Stream configuration
 
 Parseable uses streams to organize your telemetry data. The `X-P-Stream` header specifies which stream the data should be sent to:
 
 - `otellogs`: Stream for log data
-- `otelmetrics`: Stream for metrics data  
+- `otelmetrics`: Stream for metrics data
 - `oteltraces`: Stream for trace data
 
 The `X-P-Log-Source` header helps identify the source of the telemetry data for better organization and filtering. The header must be set to `otel-logs`, `otel-metrics`, or `otel-traces` based on the telemetry type.
@@ -153,4 +153,4 @@ Parseable supports HTTP basic authentication. Configure the `http_user` and `htt
 ## References
 
 - [Parseable documentation](https://www.parseable.com/docs)
-- [Parseable Fluent-bit integration](https://www.parseable.com/docs/datasource/log-agents/fluent-bit)
+- [Parseable Fluent-bit integration](https://www.parseable.com/docs/ingest-data/logging-agents/fluent-bit)

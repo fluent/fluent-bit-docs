@@ -1,6 +1,6 @@
-# Regular expression
+# Regular expression format
 
-The _Regular expression_ parser lets you define a custom Ruby regular expression that uses named capture to define which content belongs to which key name.
+Use the _regular expression_ parser format to create custom parsers with Ruby regular expressions. These regular expressions use named capture to define which content belongs to which key name.
 
 Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
 
@@ -8,21 +8,23 @@ Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regul
 
 This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
-{% end hint %}
+{% endhint %}
 
 Setting the format to regular expressions requires a `regex` configuration key.
 
+For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
+
 ## Configuration parameters
 
-The `regex` parser supports the following configuration parameters:
+The `regex` parser supports the following format-specific configuration parameter:
 
-| Key | Description | Default Value |
-| --- | ----------- | ------------- |
-| `Skip_Empty_Values` | If enabled, the parser ignores empty value of the record. | `True` |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `skip_empty_values` | If enabled, the parser ignores empty values of the record. | `true` |
 
 Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression library in Ruby mode.
 
-You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
+You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](https://rubular.com/) web editor to test your expressions.
 
 The following parser configuration example provides rules that can be applied to an Apache HTTP Server log entry:
 

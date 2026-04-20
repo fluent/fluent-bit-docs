@@ -27,7 +27,7 @@ The `Service` section defines global properties of the service. The following ke
 | `log_level`       | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. If `debug` is set, it will include `error`, `warning`, `info`, and `debug`. Trace mode is only available if Fluent Bit was built with the _`WITH_TRACE`_ option enabled. | `info` |
 | `parsers_file`    | Path for a `parsers` configuration file. Multiple `Parsers_File` entries can be defined within the section. | _none_ |
 | `plugins_file`    | Path for a `plugins` configuration file. A `plugins` configuration file defines paths for external plugins. [See an example](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
-| `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/introduction.md). | _none_|
+| `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/overview.md). | _none_|
 | `http_server`     | Enable the built-in HTTP Server. | `Off` |
 | `http_listen`     | Set listening interface for HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port`       | Set TCP Port for the HTTP Server. | `2020` |
@@ -35,6 +35,7 @@ The `Service` section defines global properties of the service. The following ke
 | `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
+| `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
 | `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
@@ -51,7 +52,7 @@ For scheduler and retry details, see [scheduling and retries](../../scheduling-a
 
 ## Config input
 
-The `INPUT` section defines a source (related to an input plugin). Each [input plugin](https://docs.fluentbit.io/manual/pipeline/inputs) can add its own configuration keys:
+The `INPUT` section defines a source (related to an input plugin). Each [input plugin](../../../pipeline/inputs.md) can add its own configuration keys:
 
 | Key         | Description |
 | ----------- | ------------|
@@ -158,3 +159,5 @@ Wildcard character (`*`) supports including multiple files. For example:
 ```
 
 Files matching the wildcard character are included unsorted. If plugin ordering between files needs to be preserved, the files should be included explicitly.
+
+Environment variables aren't supported in the `includes` section. The path to the file must be specified as a literal string.

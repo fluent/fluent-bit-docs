@@ -1,5 +1,9 @@
 # Type converter
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=8984f540-d95a-462b-8a08-09f72f5fab63" />
 
 The _Type converter_ filter plugin converts data types and appends new key-value pairs.
@@ -18,10 +22,10 @@ The plugin supports the following configuration parameters. It needs four parame
 
 | Key | Description |
 | :--- | :--- |
-| `int_key` | This parameter is for an integer source.|
-| `uint_key` | This parameter is for an unsigned integer source.|
-| `float_key` | This parameter is for a float source.|
-| `str_key` | This parameter is for a string source.|
+| `float_key` | This parameter is for a float source. |
+| `int_key` | This parameter is for an integer source. |
+| `str_key` | This parameter is for a string source. |
+| `uint_key` | This parameter is for an unsigned integer source. |
 
 ## Get started
 
@@ -68,9 +72,9 @@ pipeline:
 [FILTER]
   Name               type_converter
   Match              *
-  uint_key Mem.total Mem.total_str string
-  uint_key Mem.used  Mem.used_str  string
-  uint_key Mem.free  Mem.free_str  string
+  Uint_Key Mem.total Mem.total_str string
+  Uint_Key Mem.used  Mem.used_str  string
+  Uint_Key Mem.free  Mem.free_str  string
 
 [OUTPUT]
   Name  stdout
