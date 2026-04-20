@@ -8,7 +8,7 @@ The _Syslog_ output plugin lets you deliver messages to Syslog servers. It suppo
 | --- | ----------- | ------- |
 | `allow_longer_sd_id` | If `true`, Fluent Bit allows SD-ID values longer than 32 characters. SD-ID values that exceed 32 characters violate RFC5424 standards. | `false` |
 | `host` | Domain or IP address of the remote Syslog server. | `127.0.0.1` |
-| `mode` | Desired transport type. Available options are `tcp` and `udp`. | `udp` |
+| `mode` | Desired transport type. Available options are `tcp` and `udp`. To use a TLS secure channel, set this to `tcp` and enable the `tls` option separately. Datagram Transport Layer Security (DTLS) over UDP isn't supported. | `udp` |
 | `port` | TCP or UDP port of the remote Syslog server. | `514` |
 | `syslog_appname_key` | Optional. The key name from the original record that contains the application name that generated the message. | _none_ |
 | `syslog_appname_preset` | Optional. The preset application name. It will be overwritten if `syslog_appname_key` is set and a key of a record is matched. | _none_ |
