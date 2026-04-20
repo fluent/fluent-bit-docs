@@ -201,12 +201,16 @@ pipeline:
 
 [OUTPUT]
     Name          influxdb
+    Host          127.0.0.1
+    Port          8086
     Match         cpu*
     Bucket        cpubucket
     Strip_prefix  cpu.
 
 [OUTPUT]
     Name          influxdb
+    Host          127.0.0.1
+    Port          8086
     Match         gpu*
     Bucket        gpubucket
     Strip_prefix  gpu.
