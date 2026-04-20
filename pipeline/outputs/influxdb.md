@@ -22,7 +22,7 @@ The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https
 | `org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
 | `port` | TCP port of the target InfluxDB service. | `8086` |
 | `sequence_tag` | The name of the tag whose value is incremented for consecutive simultaneous events. | _none_ |
-| `strip_prefix` | String prefix to be removed from the front of `tag` when writing InfluxDB measurement names. `strip_prefix` is removed only if it matches exactly at the beginning of and is strictly shorter than `tag` (`tag` length will not be reduced to zero if `strip_prefix` and `tag` are identical strings). `strip_prefix` defaults to empty string, which does nothing. | _none_ |
+| `strip_prefix` | String prefix to be removed from the front of `tag` when writing InfluxDB measurement names. `strip_prefix` is removed only if it matches exactly at the beginning of and is strictly shorter than `tag` (`tag` length will not be reduced to zero if `strip_prefix` and `tag` are identical strings). | _none_ |
 | `tag_keys` | Space-separated list of keys to tag. | _none_ |
 | `uri` | Custom URI endpoint. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
