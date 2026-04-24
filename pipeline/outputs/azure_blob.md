@@ -23,7 +23,7 @@ Fluent Bit exposes the following configuration properties.
 | Key                                    | Description                                                                                                                                                                                                                                                                            | Default                       |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------- |
 | `account_name`                         | Azure Storage account name.                                                                                                                                                                                                                                                            | _none_                        |
-| `auth_type`                            | Specify the type to authenticate against the service. Supported values: `key`, `sas`.                                                                                                                                                                                                  | `key`                         |
+| `auth_type`                            | Specify the type to authenticate against the service. Supported values: `key`, `sas`, `managed_identity`, `service_principal`, `workload_identity`.                                                                                                                                    | `key`                         |
 | `auto_create_container`                | If `container_name` doesn't exist in the remote service, enabling this option handles the exception and auto-creates the container.                                                                                                                                                    | `true`                        |
 | `azure_blob_buffer_key`                | Set the Azure Blob buffer key which needs to be specified when using multiple instances of Azure Blob output plugin and buffering is enabled.                                                                                                                                          | `key`                         |
 | `blob_type`                            | Specify the desired blob type. Supported values: `appendblob`, `blockblob`.                                                                                                                                                                                                            | `appendblob`                  |
@@ -31,6 +31,8 @@ Fluent Bit exposes the following configuration properties.
 | `buffer_dir`                           | Specifies the location of directory where the buffered data will be stored.                                                                                                                                                                                                            | `/tmp/fluent-bit/azure-blob/` |
 | `buffer_file_delete_early`             | Whether to delete the buffered file early after successful blob creation.                                                                                                                                                                                                              | `false`                       |
 | `buffering_enabled`                    | Enable buffering into disk before ingesting into Azure Blob.                                                                                                                                                                                                                           | `false`                       |
+| `client_id`                            | `Azure AD` application (client) ID. Required for `service_principal` and `workload_identity` auth. For `managed_identity`, set to `system` for system-assigned or provide the client ID for user-assigned.                                                                            | _none_                        |
+| `client_secret`                        | `Azure AD` client secret. Required for `service_principal` auth.                                                                                                                                                                                                                      | _none_                        |
 | `compress`                             | Sets payload compression in network transfer. Supported values: `gzip`, `zstd`.                                                                                                                                                                                                        | _none_                        |
 | `compress_blob`                        | Enables compression in the final `blockblob` file. When enabled without `compress`, it uses GZIP; if `compress` is also set, it inherits that codec. This option isn't compatible when `blob_type` = `appendblob`. Fluent Bit returns a configuration error and fails to start.        | `false`                       |
 | `configuration_endpoint_bearer_token`  | Bearer token for the configuration endpoint.                                                                                                                                                                                                                                           | _none_                        |
@@ -52,12 +54,14 @@ Fluent Bit exposes the following configuration properties.
 | `scheduler_max_retries`                | Maximum number of retries for the scheduler send blob.                                                                                                                                                                                                                                 | `3`                           |
 | `shared_key`                           | Specify the Azure Storage Shared Key to authenticate against the service. This configuration property is mandatory when `auth_type` is `key`.                                                                                                                                          | _none_                        |
 | `store_dir_limit_size`                 | Set the max size of the buffer directory.                                                                                                                                                                                                                                              | `8G`                          |
+| `tenant_id`                            | `Azure AD` tenant ID. Required for `service_principal` and `workload_identity` auth.                                                                                                                                                                                                  | _none_                        |
 | `tls`                                  | Enable or disable TLS encryption. Azure service requires this to be set to `on`.                                                                                                                                                                                                       | `off`                         |
 | `unify_tag`                            | Whether to create a single buffer file when buffering mode is enabled.                                                                                                                                                                                                                 | `false`                       |
 | `upload_file_size`                     | Specifies the size of files to be uploaded in MB.                                                                                                                                                                                                                                      | `200M`                        |
 | `upload_part_freshness_limit`          | Maximum lifespan of an uncommitted file part.                                                                                                                                                                                                                                          | `6D`                          |
 | `upload_parts_timeout`                 | Timeout for uploading parts of a blob file.                                                                                                                                                                                                                                            | `10M`                         |
 | `upload_timeout`                       | Optional. Specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than `x` minutes and haven't reached `upload_file_size` limit yet.                                                                                                  | `30m`                         |
+| `workload_identity_token_file`         | Path to the federated token file for `workload_identity` auth.                                                                                                                                                                                                                        | `/var/run/secrets/azure/tokens/azure-identity-token` |
 | `workers`                              | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                                                                   | `0`                           |
 
 ### Path templating
@@ -88,6 +92,131 @@ pipeline:
 ```
 
 If a chunk arrives with the tag `kube.var.log.containers.app-default`, this configuration creates blobs under `kube/app-default/2025/12/16/05/042/abcd1234/...`.
+
+## `OAuth` authentication
+
+In addition to shared key and `SAS` token authentication, the `Azure Blob` plugin supports `Azure AD`-based authentication using the following methods.
+
+### Managed identity
+
+Use a system-assigned or user-assigned [managed identity](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/overview) attached to the compute resource running Fluent Bit. No credentials need to be stored in the configuration.
+
+| `auth_type`        | `client_id`                              |
+| :----------------- | :--------------------------------------- |
+| `managed_identity` | `system` for system-assigned             |
+| `managed_identity` | Application client ID for user-assigned  |
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: managed_identity
+      client_id: system
+      container_name: logs
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name            azure_blob
+  Match           *
+  Account_Name    YOUR_ACCOUNT_NAME
+  Auth_Type       managed_identity
+  Client_Id       system
+  Container_Name  logs
+  Tls             on
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Service principal
+
+Authenticate using an Azure AD application registration with a client secret.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: service_principal
+      tenant_id: YOUR_TENANT_ID
+      client_id: YOUR_CLIENT_ID
+      client_secret: YOUR_CLIENT_SECRET
+      container_name: logs
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name             azure_blob
+  Match            *
+  Account_Name     YOUR_ACCOUNT_NAME
+  Auth_Type        service_principal
+  Tenant_Id        YOUR_TENANT_ID
+  Client_Id        YOUR_CLIENT_ID
+  Client_Secret    YOUR_CLIENT_SECRET
+  Container_Name   logs
+  Tls              on
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Workload identity
+
+Use [Azure Workload Identity](https://azure.github.io/azure-workload-identity/docs/) to exchange a Kubernetes-projected service account token for an Azure AD access token. This is the recommended approach for workloads running in AKS.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      auth_type: workload_identity
+      tenant_id: YOUR_TENANT_ID
+      client_id: YOUR_CLIENT_ID
+      container_name: logs
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name            azure_blob
+  Match           *
+  Account_Name    YOUR_ACCOUNT_NAME
+  Auth_Type       workload_identity
+  Tenant_Id       YOUR_TENANT_ID
+  Client_Id       YOUR_CLIENT_ID
+  Container_Name  logs
+  Tls             on
+```
+
+{% endtab %}
+{% endtabs %}
+
+The `workload_identity_token_file` parameter defaults to `/var/run/secrets/azure/tokens/azure-identity-token`, which is the standard path used by the Azure Workload Identity webhook. Override it only if your environment uses a different path.
 
 ## Get started
 
