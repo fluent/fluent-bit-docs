@@ -77,6 +77,8 @@ The `inputs` section defines one or more [input plugins](../../../pipeline/input
 
 The `name` parameter is required and defines for Fluent Bit which input plugin should be loaded. The `tag` parameter is required for all plugins except for the `forward` plugin, which provides dynamic tags.
 
+There is no hard-coded limit on the number of input plugins. The practical maximum depends on available system resources such as memory and file descriptors.
+
 ### Shared HTTP listener settings for inputs
 
 Some HTTP-based input plugins share the same listener implementation and support the following common settings in addition to their plugin-specific parameters:
@@ -144,6 +146,8 @@ The `filters` section defines one or more [filters](../../../pipeline/filters.md
 
 The `name` parameter is required and lets Fluent Bit know which filter should be loaded. One of either the `match` or `match_regex` parameters is required. If both are specified, `match_regex` takes precedence.
 
+There is no hard-coded limit on the number of filter plugins. The practical maximum depends on available system resources such as memory.
+
 ### Example filter configuration
 
 The following is an example of a `filters` section that contains a `grep` plugin:
@@ -168,7 +172,7 @@ The `outputs` section defines one or more [output plugins](../../../pipeline/out
 | `match_regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
 | `log_level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. The output log level defaults to the `service` section's `log_level`. |
 
-Fluent Bit can route up to 256 output plugins.
+Fluent Bit has no hard-coded limit on the number of output plugins. The routing bitmask is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
 
 ### Outgoing `OAuth 2.0` client credentials settings
 
