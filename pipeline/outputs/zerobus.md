@@ -12,6 +12,20 @@ The _Zerobus_ output plugin lets you ingest log records into a [Databricks](http
 
 Before you begin, you need a Databricks workspace with a Unity Catalog table configured for Zerobus ingestion, and an OAuth 2.0 service principal (client ID and client secret) with appropriate permissions.
 
+## Build requirements
+
+If you are compiling Fluent Bit from source, the `zerobus-ffi` shared library and header must be installed on your build environment before building. Pre-built binaries are available from the [zerobus-sdk releases](https://github.com/databricks/zerobus-sdk/releases).
+
+Download `zerobus-ffi-1.1.0.tar.gz` and place the files for your platform (`linux-x86_64` or `linux-aarch64`) into the following directories:
+
+| File | Destination |
+| :--- | :--- |
+| `libzerobus_ffi.so` | `/usr/local/lib/` |
+| `libzerobus_ffi.a` | `/usr/local/lib/` |
+| `zerobus.h` | `/usr/local/include/` |
+
+After placing the files, run `sudo ldconfig` to update the shared library cache.
+
 ## Configuration parameters
 
 | Key | Description | Default |
