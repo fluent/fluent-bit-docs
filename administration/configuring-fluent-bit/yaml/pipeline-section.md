@@ -172,7 +172,7 @@ The `outputs` section defines one or more [output plugins](../../../pipeline/out
 | `match_regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
 | `log_level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. The output log level defaults to the `service` section's `log_level`. |
 
-Fluent Bit has no hard-coded limit on the number of output plugins. The routing bitmask is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
+Fluent Bit has no hard-coded limit on the number of output plugins. The routing `bitmask` is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
 
 ### Outgoing `OAuth 2.0` client credentials settings
 

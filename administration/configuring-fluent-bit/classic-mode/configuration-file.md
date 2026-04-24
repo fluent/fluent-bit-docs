@@ -111,7 +111,7 @@ The `OUTPUT` section specifies a destination that certain records should go to a
 | `Match_Regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
 | `Log_Level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
 
-There is no hard-coded limit on the number of `OUTPUT` sections. The routing bitmask is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
+There is no hard-coded limit on the number of `OUTPUT` sections. The routing `bitmask` is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
 
 ### Output example
 
