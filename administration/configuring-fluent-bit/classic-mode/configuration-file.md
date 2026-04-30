@@ -62,6 +62,8 @@ The `INPUT` section defines a source (related to an input plugin). Each [input p
 
 `Name` is mandatory and tells Fluent Bit which input plugin to load. `Tag` is mandatory for all plugins except for the `input forward` plugin, which provides dynamic tags.
 
+There is no hard-coded limit on the number of `INPUT` sections. The practical maximum depends on available system resources such as memory and file descriptors.
+
 ### Example
 
 The following is an example of an `INPUT` section:
@@ -85,6 +87,8 @@ The `FILTER` section defines a filter (related to an filter plugin). Each filter
 
 `Name` is mandatory and lets Fluent Bit know which filter plugin should be loaded. `Match` or `Match_Regex` is mandatory for all plugins. If both are specified, `Match_Regex` takes precedence.
 
+There is no hard-coded limit on the number of `FILTER` sections. The practical maximum depends on available system resources such as memory.
+
 ### Filter example
 
 The following is an example of a `FILTER` section:
@@ -98,7 +102,7 @@ The following is an example of a `FILTER` section:
 
 ## Config output
 
-The `OUTPUT` section specifies a destination that certain records should go to after a `Tag` match. Fluent Bit can route up to 256 `OUTPUT` plugins. The configuration supports the following keys:
+The `OUTPUT` section specifies a destination that certain records should go to after a `Tag` match. The configuration supports the following keys:
 
 | Key         | Description    |
 | ----------- | -------------- |
@@ -106,6 +110,8 @@ The `OUTPUT` section specifies a destination that certain records should go to a
 | `Match`     | A pattern to match against the tags of incoming records. Case sensitive and supports the asterisk (`*`) character as a wildcard. |
 | `Match_Regex` | A regular expression to match against the tags of incoming records. Use this option if you want to use the full regular expression syntax. |
 | `Log_Level` | Set the plugin's logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Defaults to the `SERVICE` section's `Log_Level`. |
+
+There is no hard-coded limit on the number of `OUTPUT` sections. The routing `bitmask` is dynamically sized at startup based on the number of configured output plugins. The practical maximum depends on available system resources such as memory and file descriptors.
 
 ### Output example
 
