@@ -1,3 +1,7 @@
+---
+description: Send logs to LogDNA
+---
+
 # LogDNA
 
 The _LogDNA_ output plugin sends logs and events to a LogDNA-compliant service.
@@ -10,6 +14,7 @@ This plugin uses the following configuration parameters:
 | :--- | :--- | :--- |
 | `api_key` | Required. The API key to get access to the service. | _none_ |
 | `app` | Name of the application. This value is automatically discovered on each record. If no value is found, the default value is used. | `Fluent Bit` |
+| `exclude_promoted_keys` | When enabled, keys promoted to the top-level line object (`meta`, `level`, `severity`, `app`, `file`) are excluded from the `line` body to avoid duplication. | `false` |
 | `file` | Optional name of a file being monitored. This value is only set if the record doesn't contain a reference to it. | _none_ |
 | `hostname` | Name of the local machine or device where Fluent Bit is running. If no value is specified, Fluent Bit will look up the hostname and auto-populate its value. If Fluent Bit is unable to find a value, it will set the value `unknown` instead. | _none_ |
 | `ip` | The IP address of the local hostname. This value is optional. | _none_ |
@@ -24,7 +29,7 @@ This plugin uses the following configuration parameters:
 
 The LogDNA output plugin can automatically discover and enrich records with additional content.
 
-When the plugin processes a record or log, it searches for specific key names that might contain context for the record in question. The following table describe these keys and the discovery logic:
+When the plugin processes a record or log, it searches for specific key names that might contain context for the record in question. The following table describes these keys and the discovery logic:
 
 | Key | Description |
 | :--- | :--- |
@@ -32,6 +37,8 @@ When the plugin processes a record or log, it searches for specific key names th
 | `file` | If the record contains a key called `file`, it will populate the context `file` with the value found. Otherwise, if the plugin configuration provided a `file` property, that value will be used instead. |
 | `app` | If the record contains a key called `app`, it will populate the context `app` with the value found, otherwise it will use the value set for `app` in the configuration property. |
 | `meta` | If the record contains a key called `meta`, it will populate the context `meta` with the value found. |
+
+These keys are referred to as _promoted keys_ because their values are lifted to the top-level line object sent to LogDNA. By default, promoted keys also remain present in the `line` JSON body. To remove them from the `line` body and avoid duplication, set `exclude_promoted_keys` to `true`.
 
 ## Example configuration
 
@@ -116,3 +123,61 @@ Your record will be available and visible in your LogDNA dashboard after a few s
 In your LogDNA dashboard, go to the top filters and mark the Tags `aa` and `bb`, then you will be able to see your records as shown:
 
 ![LogDNA dashboard](../../.gitbook/assets/logdna.png)
+
+## Exclude promoted keys
+
+When a record contains promoted keys (`level`, `severity`, `app`, `file`, or `meta`), those values are lifted to the top-level line object. By default, they also appear inside the `line` JSON body, which can result in duplicate fields.
+
+Setting `exclude_promoted_keys` to `true` removes the promoted keys from the `line` body, keeping each field in only one place.
+
+### Example
+
+Given this input record:
+
+```json
+{"log": "starting service", "severity": "INFO", "app": "my-service", "host": "web-01"}
+```
+
+With the default behavior (`exclude_promoted_keys: false`), the `line` body sent to LogDNA contains all fields:
+
+```json
+{"log": "starting service", "severity": "INFO", "app": "my-service", "host": "web-01"}
+```
+
+With `exclude_promoted_keys: true`, the `line` body contains only the non-promoted fields:
+
+```json
+{"log": "starting service", "host": "web-01"}
+```
+
+The `severity` and `app` values are still sent, but only as top-level fields in the LogDNA line object, not duplicated inside `line`.
+
+### Configuration
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: logdna
+      match: '*'
+      api_key: YOUR_API_KEY_HERE
+      hostname: my-hostname
+      exclude_promoted_keys: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+    Name                  logdna
+    Match                 *
+    Api_Key               YOUR_API_KEY_HERE
+    Hostname              my-hostname
+    Exclude_Promoted_Keys true
+```
+
+{% endtab %}
+{% endtabs %}
