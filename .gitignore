@@ -6,3 +6,4 @@ old/*
 .idea/
 .cursor
 CLAUDE.md
+.claude/
