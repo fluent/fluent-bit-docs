@@ -45,7 +45,7 @@ The following storage-related keys can be set as children to the `storage` key:
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
 | `storage.backlog.flush_on_shutdown` | If enabled, Fluent Bit attempts to flush all backlog filesystem chunks to their destination during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but can also increase shutdown time. Possible values: `off` or `on`. | `off` |
-| `storage.backlog.mem_limit` | Sets the memory allocated for storing buffered data for input plugins that use filesystem storage. | `5M` |
+| `storage.backlog.mem_limit` | Sets the memory limit used by the `storage_backlog` input plugin when promoting backlog chunks (filesystem chunks left over from a previous Fluent Bit run) back into memory so they can be flushed by output plugins. While the up chunks owned by `storage_backlog` consume less memory than this limit, Fluent Bit continues to promote additional backlog chunks. This setting doesn't cap memory use for other input plugins that use filesystem storage. | `5M` |
 | `storage.checksum` | Enables data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. Possible values: `off` or `on`. | `off` |
 | `storage.delete_irrecoverable_chunks` | If enabled, deletes irrecoverable chunks during runtime and at startup. Possible values: `off` or `on`. | `off` |
 | `storage.inherit` | If enabled, input plugins that don't explicitly set `storage.type` will inherit the global `storage.type` value. Possible values: `off` or `on`. | `off` |
