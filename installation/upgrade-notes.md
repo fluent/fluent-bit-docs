@@ -115,6 +115,15 @@ These plugins transparently support both HTTP/1.1 and HTTP/2 connections. If you
 
 mbedTLS is no longer supported as a TLS backend. All TLS connections now use OpenSSL. If you compile Fluent Bit from source and previously linked against mbedTLS, you must now link against OpenSSL. Official binary packages already use OpenSSL.
 
+## Fluent Bit v4.0+
+
+The default configuration file has been switched to use YAML format and a different name (`.yaml` file suffix instead of `.conf`).
+
+This may require updating any custom deployments to either provide a YAML configuration or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
+
+For Linux the Systemd unit will need overriding to specify `-c <legacy config file>`.
+Similarly for containers, Windows and macOS the default launch command is changed to point at the YAML config file by default.
+
 ## Fluent Bit v1.9.9
 
 The `td-agent-bit` package is no longer provided after this release. Users should switch to the `fluent-bit` package.
