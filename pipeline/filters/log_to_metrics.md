@@ -23,13 +23,13 @@ The plugin supports the following configuration parameters:
 | `add_label`  | Adds a custom label `NAME` and set the value to the value of `KEY`. | _none_  | `NAME KEY` |
 | `bucket` | Optional for `metric_mode` `histogram`. If not set, default Prometheus-style buckets are used. | _none_ | For example, `0.75`. |
 | `discard_logs` | Flag that defines if logs should be discarded after processing. This applies for all logs, whether they have emitted metrics or not. | `false` |  |
-| `emitter_mem_buf_limit` | Set a buffer limit to restrict memory usage of metrics emitter.  | `10M` |  |
+| `emitter_mem_buf_limit` | Buffer limit for the internal metrics emitter. When the buffer is full, the emitter pauses and incoming metric records can be dropped. Monitor per-emitter activity through the `/api/v1/metrics` endpoint using the configured `emitter_name`. | `10M` |  |
 | `emitter_name` | Name of the emitter (advanced users). | _none_ |  |
 | `exclude` | Excludes records in which the content of `KEY` matches the regular expression `REGEX`. | _none_       | `KEY REGEX` |
 | `flush_interval_nsec`   | The interval for metrics emission, in nanoseconds. This parameter works in conjunction with `flush_interval_sec`.| `0` |  |
 | `flush_interval_sec`    | The interval for metrics emission, in seconds. If `flush_interval_sec` and `flush_interval_nsec` are either both unset or both set to `0`, the filter emits metrics immediately after each filter match. Otherwise, if either parameter is set to a non-zero value, the filter emits metrics at the specified interval. Longer intervals help lower resource consumption in high-load situations. | `0` |  |
 | `kubernetes_mode`       | If enabled, adds `pod_id`, `pod_name`, `namespace_name`, `docker_id` and `container_name` to the metric as labels. This option is intended to be used in combination with the [Kubernetes](./kubernetes.md) filter plugin, which fills those fields. | `false`      |  |
-| `label_field`           | Includes a record field as label dimension in the metric. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `label_field`           | Includes a record field as label dimension in the metric. Each unique combination of label values creates a separate time series, so high-cardinality fields (such as request paths, hostnames, or user IDs) can grow memory use without bound in long-running pipelines. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
 | `metric_description`    | Sets a description for the metric.                                                  | _none_       |  |
 | `metric_mode`           | Defines the mode for the metric. Valid values are `counter`, `gauge` or `histogram`.| `counter`    |  |
 | `metric_name`           | Sets the name of the metric.                                                        | `a`          |  |
@@ -37,7 +37,13 @@ The plugin supports the following configuration parameters:
 | `metric_subsystem`      | Subsystem of the metric.                                                            | _none_       |  |
 | `regex`                 | Includes records in which the content of `KEY` matches the regular expression `REGEX`. | _none_       | `KEY REGEX` |
 | `tag`                   | Defines the tag for the generated metrics record.                                   | _none_       |  |
-| `value_field`           | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+| `value_field`           | Required for modes `gauge` and `histogram`. Specifies the record field that holds a numerical value. Ignored for `counter` mode, which increments by 1 per matching record. | _none_       | Name of record key. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) notation for nested fields. |
+
+{% hint style="warning" %}
+
+Be careful with label cardinality. The `counter` and `gauge` modes accumulate one series per unique combination of label values for the lifetime of the process. Labelling on unbounded fields such as request paths, hostnames, or user IDs can fill the emitter buffer and stop metrics from being produced. Prefer pre-aggregating high-cardinality fields upstream, or use `histogram` mode where bucketing limits growth.
+
+{% endhint %}
 
 ## Examples
 
