@@ -73,22 +73,22 @@ pipeline:
 
 ```text
 [SERVICE]
-    Flush     1
-    Log_Level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-    Name      dummy
-    Dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
-    Samples   1
+  Name      dummy
+  Dummy     {"log":"a simple log message", "severity": "INFO", "meta": {"s1": 12345, "s2": true}, "app": "Fluent Bit"}
+  Samples   1
 
 [OUTPUT]
-    Name      logdna
-    Match     *
-    Api_Key   YOUR_API_KEY_HERE
-    Hostname  my-hostname
-    Ip        192.168.1.2
-    Mac       aa:bb:cc:dd:ee:ff
-    Tags      aa, bb
+  Name      logdna
+  Match     *
+  Api_Key   YOUR_API_KEY_HERE
+  Hostname  my-hostname
+  Ip        192.168.1.2
+  Mac       aa:bb:cc:dd:ee:ff
+  Tags      aa, bb
 ```
 
 {% endtab %}
@@ -172,11 +172,11 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name                  logdna
-    Match                 *
-    Api_Key               YOUR_API_KEY_HERE
-    Hostname              my-hostname
-    Exclude_Promoted_Keys true
+  Name                  logdna
+  Match                 *
+  Api_Key               YOUR_API_KEY_HERE
+  Hostname              my-hostname
+  Exclude_Promoted_Keys true
 ```
 
 {% endtab %}
