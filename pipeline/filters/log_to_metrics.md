@@ -542,3 +542,43 @@ The `+Inf` bucket will always be included regardless of the buckets you specify.
 {% endhint %}
 
 This filter also attaches Kubernetes labels to each metric, identical to the behavior of `label_field`. This results in two sets for the histogram.
+
+## Operational considerations
+
+This filter holds metric state in memory for the lifetime of the Fluent Bit process. Long-running pipelines can run into issues that don't appear in short-lived tests.
+
+### Cardinality and process-lifetime state
+
+The `counter` and `gauge` modes maintain one time series per unique combination of label values. State is held for the lifetime of the process, with no eviction or expiry.
+
+Histogram mode keeps the same per-combination state, but bucket counts within a series are fixed by the `bucket` configuration. Memory growth per new label combination is bounded.
+
+Plan label budgets before deploying. Avoid using high-cardinality fields such as request paths, full URLs, user IDs, or source IP addresses as direct labels. Pre-aggregate or normalize these fields upstream with a [Lua](./lua.md) or [modify](./modify.md) filter before they reach `log_to_metrics`.
+
+### Monitoring emitter health
+
+Each `log_to_metrics` filter instance creates an internal emitter input. The instance name comes from `emitter_name`, or is auto-generated as `emitter_for_<filter>` when omitted.
+
+Enable the [HTTP monitoring server](../../administration/monitoring.md) in your service configuration and inspect emitter activity:
+
+```shell
+curl -s http://127.0.0.1:2020/api/v1/metrics
+```
+
+Look for the `input` section that matches your emitter name. The records and bytes counters increasing over time confirms the filter is producing metrics. Counters that flatten to zero while the source input keeps growing indicate the emitter has stalled, most often due to buffer pressure.
+
+### Buffer pressure and back pressure
+
+When `emitter_mem_buf_limit` is reached, the emitter pauses ingestion using standard `mem_buf_limit` semantics. The source filter continues to run, but new metric updates can't flow downstream until the buffer drains.
+
+To mitigate buffer pressure:
+
+- Increase `emitter_mem_buf_limit` if memory budget allows.
+- Reduce label cardinality by pre-aggregating upstream.
+- Set a non-zero `flush_interval_sec` to batch emissions and reduce per-record overhead.
+
+### Counter resets on restart
+
+Counters reset to zero whenever Fluent Bit restarts. State isn't persisted between runs.
+
+This is normal Prometheus counter behavior. Consumers should query counters with rate functions such as `rate()` or `increase()` rather than reading absolute values, so restarts appear as expected discontinuities rather than data loss.
