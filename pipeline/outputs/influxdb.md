@@ -22,7 +22,7 @@ The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https
 | `org` | InfluxDB organization name where the bucket is (v2 only). | `fluent` |
 | `port` | TCP port of the target InfluxDB service. | `8086` |
 | `sequence_tag` | The name of the tag whose value is incremented for consecutive simultaneous events. | _none_ |
-| `strip_prefix` | String prefix to be removed from the front of `tag` when writing InfluxDB measurement names. `strip_prefix` is removed only if it matches exactly at the beginning of and is strictly shorter than `tag` (`tag` length will not be reduced to zero if `strip_prefix` and `tag` are identical strings). | _none_ |
+| `strip_prefix` | String prefix to be removed from the front of `tag` when writing InfluxDB measurement names. `strip_prefix` is removed only if it matches exactly at the beginning of and is strictly shorter than `tag` (`tag` length will not be reduced to zero if `strip_prefix` and `tag` are identical strings). | `""` |
 | `tag_keys` | Space-separated list of keys to tag. | _none_ |
 | `uri` | Custom URI endpoint. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
@@ -144,7 +144,7 @@ pipeline:
 `Auto_Tags=On` in this example causes an error, because every parsed field value type is `string`. The best usage of this option in metrics like record where one or more field value isn't `string` typed.
 
 
-### Prefix stripping
+#### Prefix stripping
 
 When collecting data from many inputs into many buckets, it can be helpful to remove a common prefix using `Strip_prefix`.
 
@@ -184,36 +184,36 @@ pipeline:
 
 ```text
 [INPUT]
-    Name  cpu
-    Tag   cpu.one
+  Name  cpu
+  Tag   cpu.one
 
 [INPUT]
-    Name  cpu
-    Tag   cpu.two
+  Name  cpu
+  Tag   cpu.two
 
 [INPUT]
-    Name  cpu
-    Tag   gpu.one
+  Name  cpu
+  Tag   gpu.one
 
 [INPUT]
-    Name  cpu
-    Tag   gpu.two
+  Name  cpu
+  Tag   gpu.two
 
 [OUTPUT]
-    Name          influxdb
-    Host          127.0.0.1
-    Port          8086
-    Match         cpu*
-    Bucket        cpubucket
-    Strip_prefix  cpu.
+  Name          influxdb
+  Host          127.0.0.1
+  Port          8086
+  Match         cpu*
+  Bucket        cpubucket
+  Strip_prefix  cpu.
 
 [OUTPUT]
-    Name          influxdb
-    Host          127.0.0.1
-    Port          8086
-    Match         gpu*
-    Bucket        gpubucket
-    Strip_prefix  gpu.
+  Name          influxdb
+  Host          127.0.0.1
+  Port          8086
+  Match         gpu*
+  Bucket        gpubucket
+  Strip_prefix  gpu.
 ```
 
 {% endtab %}
