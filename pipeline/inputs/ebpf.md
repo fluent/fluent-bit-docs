@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_exec`, `trace_malloc`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -130,7 +130,7 @@ All traces include the following fields:
 
 | Field | Description |
 |:------|:------------|
-| `event_type` | Type of event (`signal`, `malloc`, `bind`, `tcp`, or `vfs`). |
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, `exec`, `tcp`, or `vfs`). |
 | `pid` | Process ID that generated the event. |
 | `tid` | Thread ID that generated the event. |
 | `comm` | Command name (process name) that generated the event. |
@@ -193,4 +193,20 @@ The `trace_vfs` trace includes these additional fields:
 | `flags` | Flags passed to the `VFS` operation. |
 | `mode` | File mode bits for the operation. |
 | `fd` | File descriptor returned by the operation. |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
+### Exec trace fields
+
+The `trace_exec` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `stage` | Execution stage. One of `enter`, `exit`, or `unknown`. |
+| `ppid` | Parent process ID. |
+| `filename` | Path of the executable being run. |
+| `argv` | First argument of the command (`argv[0]`). |
+| `argv1` | Second argument of the command (`argv[1]`). |
+| `argv2` | Third argument of the command (`argv[2]`). |
+| `argv_last` | Final captured argument when more than three are present. |
+| `argc` | Total number of arguments. |
 | `error_raw` | Error code for the operation (`0` indicates success). |
