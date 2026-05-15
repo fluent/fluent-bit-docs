@@ -1,5 +1,9 @@
 # Head
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Head_ input plugin reads events from the head of a file. Its behavior is similar to the `head` command.
 
 ## Configuration parameters

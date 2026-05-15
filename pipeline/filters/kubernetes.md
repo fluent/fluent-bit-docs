@@ -1,5 +1,9 @@
 # Kubernetes
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Fluent Bit _Kubernetes_ filter enriches your log files with Kubernetes metadata.
 
 When Fluent Bit is deployed in Kubernetes as a DaemonSet and configured to read the log files from the containers (using `tail` or `systemd` input plugins), this filter can perform the following operations:
@@ -54,7 +58,7 @@ The plugin supports the following configuration parameters:
 | `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
 | `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
 | `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
-| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`.| `600` |
+| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`. | `600` |
 | `kube_url` | API Server endpoint | `https://kubernetes.default.svc:443` |
 | `kubelet_host` | Kubelet host to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `127.0.0.1` |
 | `kubelet_port` | Kubelet port to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `10250` |
@@ -63,9 +67,9 @@ The plugin supports the following configuration parameters:
 | `merge_log_key` | When `merge_log` is enabled, the filter assumes the `log` field from the incoming message is a JSON string message and attempts to create a structured representation of it at the same level of the `log` field in the map. If `merge_log_key` is set (a string name), all the new structured fields taken from the original `log` content are inserted under the new key. | _none_ |
 | `merge_log_trim` | When `merge_log` is enabled, trim (remove possible `\n` or `\r\`) field values. | `On` |
 | `merge_parser` | Optional parser name to specify how to parse the data contained in the `log` key. Recommended for developers or testing only. | _none_ |
-| `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
-| `namespace_metadata_only` | Include Kubernetes namespace metadata and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta)| `Off` |
+| `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
+| `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
+| `namespace_metadata_only` | Include Kubernetes namespace metadata and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
 | `owner_references` | Include Kubernetes owner references in the extra metadata. | `Off` |
 | `regex_parser` | Set an alternative Parser to process record tags and extract `pod_name`, `namespace_name`, `container_name`, and `docker_id`. The parser must be registered in a [parsers file](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf) (refer to parser `filter-kube-test` as an example). | _none_ |
 | `set_platform` | Manually set the Kubernetes platform type. Possible values are `k8s` (native Kubernetes) and `eks` (Amazon EKS). When set, this completely overrides automatic detection based on the service account token issuer; automatic detection is skipped entirely. Intended for testing or environments where token-based detection isn't available. | Auto-detected |
@@ -74,9 +78,9 @@ The plugin supports the following configuration parameters:
 | `tls.verify_hostname` | When enabled, turns on hostname validation for certificates. | `Off` |
 | `tls.vhost` | Set an optional TLS virtual host for the Kubernetes API server connection. | _none_ |
 | `use_journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
-| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings.| `Off` |
+| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings. | `Off` |
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
-| `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail + Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
+| `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail and Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
 ### AWS pod association
 
@@ -164,8 +168,8 @@ The following annotations are available:
 
 | Annotation | Description | Default |
 | :--- | :--- | :--- |
-| `fluentbit.io/parser[_stream][-container]` | Suggest a pre-defined parser. The parser must be registered already by Fluent Bit. This option will only be processed if Fluent Bit configuration (Kubernetes Filter) has enabled the option `K8S-Logging.Parser`. If present, the stream (stdout or stderr) will restrict that specific stream. If present, the container can override a specific container in a Pod. | _none_ |
 | `fluentbit.io/exclude[_stream][-container]` | Define whether to request that Fluent Bit excludes the logs generated by the pod. This option will be processed only if the Fluent Bit configuration (Kubernetes Filter) has enabled the option `K8S-Logging.Exclude`. | `False` |
+| `fluentbit.io/parser[_stream][-container]` | Suggest a pre-defined parser. The parser must be registered already by Fluent Bit. This option will only be processed if Fluent Bit configuration (Kubernetes Filter) has enabled the option `K8S-Logging.Parser`. If present, the stream (stdout or stderr) will restrict that specific stream. If present, the container can override a specific container in a Pod. | _none_ |
 
 ### Annotation examples in pod definition
 
@@ -291,7 +295,7 @@ Kubernetes filter doesn't care from where the logs comes from, but it cares abou
 
 If you have large pod specifications, which can be caused by large numbers of environment variables, increase the `Buffer_Size` parameter of the Kubernetes filter. If object sizes exceed this buffer, some metadata will fail to be injected to the logs.
 
-If the configuration property `Kube_Tag_Prefix` was configured (available on Fluent Bit &gt;= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous `Input` section. The configuration property defaults to `kube.var.logs.containers.` , so the previous tag content will be transformed from:
+If the configuration property `Kube_Tag_Prefix` was configured (available on Fluent Bit &gt;= 1.1.x), it will use that value to remove the prefix that was appended to the Tag in the previous `Input` section. The configuration property defaults to `kube.var.log.containers.` , so the previous tag content will be transformed from:
 
 ```text
 kube.var.log.containers.apache-logs-annotated_default_apache-aeeccc7a9f00f6e4e066aeff0434cf80621215071f1b20a51e8340aa7c35eac6.log
@@ -458,14 +462,14 @@ pipeline:
       kube_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       merge_log: on
       buffer_size: 0
-      use_kubelet: ture
+      use_kubelet: true
       kubelet_port: 10250
 ```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```yaml
+```text
 [INPUT]
   Name              tail
   Tag               kube.*
@@ -572,10 +576,13 @@ When `aws_use_pod_association` is enabled, the Kubernetes filter automatically d
 
 ### How detection works
 
-1. Fluent Bit reads the service account token from `/var/run/secrets/kubernetes.io/serviceaccount/token`
-2. The JSON Web Token (JWT) payload is decoded to extract the `iss` (issuer) field
-3. If the issuer contains `oidc.eks.` (matching the EKS OpenID Connect (OIDC) URL pattern `https://oidc.eks.{region}.amazonaws.com/id/{cluster-id}`), the platform is set to `eks`
-4. Otherwise, the platform is set to `k8s` for native Kubernetes
+1. Fluent Bit reads the service account token from `/var/run/secrets/kubernetes.io/serviceaccount/token`.
+
+1. The JSON Web Token (JWT) payload is decoded to extract the `iss` (issuer) field.
+
+1. If the issuer contains `oidc.eks.` (matching the EKS OpenID Connect (OIDC) URL pattern `https://oidc.eks.{region}.amazonaws.com/id/{cluster-id}`), the platform is set to `eks`.
+
+1. Otherwise, the platform is set to `k8s` for native Kubernetes.
 
 ### Platform metadata field
 
@@ -589,6 +596,7 @@ When platform detection is active, an `aws_entity_platform` field is added to th
 ```
 
 Possible values:
+
 - `eks`: Running on Amazon EKS
 - `k8s`: Running on native Kubernetes
 
@@ -676,4 +684,4 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
 ## Credit
 
-The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) written by [`Jimmi Dyson`](https://github.com/jimmidyson).
+The Kubernetes Filter plugin is fully inspired by the [Fluentd Kubernetes Metadata Filter](https://github.com/fluent-plugins-nursery/fluent-plugin-kubernetes_metadata_filter) written by [`Jimmi Dyson`](https://github.com/jimmidyson).

@@ -4,23 +4,39 @@ description: An input plugin to ingest OpenTelemetry logs, metrics, and traces
 
 # OpenTelemetry
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces`
+{% endhint %}
+
 The OpenTelemetry input plugin lets you receive data based on the OpenTelemetry specification from various OpenTelemetry exporters, the OpenTelemetry Collector, or the Fluent Bit OpenTelemetry output plugin.
 
 Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `OTLP/GRPC`. The single `port` configured defaults to `4318` and supports both transport methods.
 
 ## Configuration
 
+The table below includes both:
+
+- settings specific to the OpenTelemetry input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                                 | Description                                                                                                                                                                                   | Default     |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | `alias`                             | Sets an alias for multiple instances of the same input plugin. If no alias is specified, a default name will be assigned using the plugin name followed by a dot and a sequence number.       | _none_      |
-| `buffer_max_size`                   | Maximum size of the HTTP request buffer in `KB`, `MB`, or `GB`.                                                                                                                               | `4M`        |
 | `buffer_chunk_size`                 | Size of each buffer chunk allocated for HTTP requests (advanced users only).                                                                                                                  | `512K`      |
+| `buffer_max_size`                   | Maximum size of the HTTP request buffer in `KB`, `MB`, or `GB`.                                                                                                                               | `4M`        |
 | `encode_profiles_as_log`            | Encode profiles received as text and ingest them in the logging pipeline.                                                                                                                     | `true`      |
 | `host`                              | The hostname.                                                                                                                                                                                 | `localhost` |
 | `http2`                             | Enable HTTP/2 protocol support for the OpenTelemetry receiver.                                                                                                                                | `true`      |
+| `http_server.max_connections`       | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                                                                    | `0`         |
+| `http_server.workers`               | Number of HTTP listener worker threads.                                                                                                                                                       | `1`         |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                             | `8192`      |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                   | `256M`      |
 | `listen`                            | The network address to listen on.                                                                                                                                                             | `0.0.0.0`   |
 | `log_level`                         | Specifies the log level for this plugin. If not set here, the plugin uses the global log level specified in the `service` section of your configuration file.                                 | `info`      |
-| `log_supress_interval`              | Suppresses log messages from this plugin that appear similar within a specified time interval. `0` no suppression.                                                                            | `0`         |
+| `log_suppress_interval`             | Suppresses log messages from this plugin that appear similar within a specified time interval. `0` no suppression.                                                                            | `0`         |
 | `logs_body_key`                     | Specify a body key.                                                                                                                                                                           | _none_      |
 | `logs_metadata_key`                 | Key name to store OpenTelemetry logs metadata in the record.                                                                                                                                  | `otlp`      |
 | `mem_buf_limit`                     | Set a memory buffer limit for the input plugin. If the limit is reached, the plugin will pause until the buffer is drained. The value is in bytes. If set to 0, the buffer limit is disabled. | `0`         |
@@ -30,6 +46,12 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `net.io_timeout`                    | Set maximum time a connection can stay idle.                                                                                                                                                  | `0s`        |
 | `net.keepalive`                     | Enable or disable keepalive support.                                                                                                                                                          | `true`      |
 | `net.share_port`                    | Allow multiple plugins to bind to the same port.                                                                                                                                              | `false`     |
+| `oauth2.allowed_audience`           | Audience claim to enforce when validating incoming `OAuth 2.0` JSON Web Token (`JWT`) tokens.                                                                                                 | _none_      |
+| `oauth2.allowed_clients`            | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                                                                | _none_      |
+| `oauth2.issuer`                     | Expected issuer (`iss`) claim for `OAuth 2.0` `JWT` validation.                                                                                                                               | _none_      |
+| `oauth2.jwks_refresh_interval`      | How often in seconds to refresh the cached JSON Web Key Set (`JWKS`) keys from `oauth2.jwks_url`.                                                                                             | `300`       |
+| `oauth2.jwks_url`                   | `JWKS` endpoint URL used to fetch public keys for `OAuth 2.0` `JWT` validation.                                                                                                               | _none_      |
+| `oauth2.validate`                   | Enable `OAuth 2.0` `JWT` validation for incoming requests.                                                                                                                                    | `false`     |
 | `port`                              | The port for Fluent Bit to listen for incoming connections.                                                                                                                                   | `4318`      |
 | `profiles_support`                  | This is an experimental feature, feel free to test it but don't enable this in production environments.                                                                                       | `false`     |
 | `raw_traces`                        | Forward traces without processing. When set to `false` (default), traces are processed using the unified JSON parser with strict validation. When set to `true`, trace data is forwarded as raw log messages without validation or processing.                                                                                                                              | `false`     |
@@ -38,16 +60,16 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `storage.type`                      | Sets the storage type for this input, one of: `filesystem`, `memory` or `memrb`.                                                                                                              | `memory`    |
 | `successful_response_code`          | Allows for setting a successful response code. Supported values: `200`, `201`, or `204`.                                                                                                      | `201`       |
 | `tag`                               | Set a tag for the events generated by this input plugin.                                                                                                                                      | _none_      |
-| `tag_from_uri`                      | By default, the tag will be created from the URI. For example, `v1_metrics` from `/v1/metrics`. This must be set to false if using `tag`.                                                     | `true`      |
+| `tag_from_uri`                      | If no explicit `tag` is set, the tag is created from the URI. For example, `v1_metrics` from `/v1/metrics`. When an explicit `tag` is configured, it takes precedence over the URI-derived tag regardless of this setting. | `true`      |
 | `tag_key`                           | Record accessor key to use for generating tags from incoming records.                                                                                                                         | _none_      |
-| `threaded`                          | Enable threading on an input.                                                                                                                                                                 | `false`     |
-| `thread.ring_buffer.capacity`       | Set custom ring buffer capacity when the input runs in threaded mode.                                                                                                                         | `1024`      |
-| `thread.ring_buffer.window`         | Set custom ring buffer window percentage for threaded inputs.                                                                                                                                 | `5`         |
+| `thread.ring_buffer.capacity`       | Number of slots in the ring buffer for data entries when running in [threaded](../../administration/multithreading.md) mode. Each slot can hold one data entry.                              | `1024`      |
+| `thread.ring_buffer.window`         | Percentage threshold (1-100) of the ring buffer capacity at which a flush is triggered when running in [threaded](../../administration/multithreading.md) mode.                              | `5`         |
+| `threaded`                          | Enable [multithreading](../../administration/multithreading.md) for this input to run in a separate dedicated thread.                                                                         | `false`     |
 | `tls`                               | Enable or disable TLS/SSL support.                                                                                                                                                            | `off`       |
 | `tls.ca_file`                       | Absolute path to CA certificate file.                                                                                                                                                         | _none_      |
 | `tls.ca_path`                       | Absolute path to scan for certificate files.                                                                                                                                                  | _none_      |
-| `tls.crt_file`                      | Absolute path to Certificate file.                                                                                                                                                            | _none_      |
 | `tls.ciphers`                       | Specify TLS ciphers up to TLSv1.2.                                                                                                                                                            | _none_      |
+| `tls.crt_file`                      | Absolute path to Certificate file.                                                                                                                                                            | _none_      |
 | `tls.debug`                         | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                                                           | `1`         |
 | `tls.key_file`                      | Absolute path to private Key file.                                                                                                                                                            | _none_      |
 | `tls.key_passwd`                    | Optional password for tls.key_file file.                                                                                                                                                      | _none_      |
@@ -56,6 +78,10 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 | `tls.verify`                        | Force certificate validation.                                                                                                                                                                 | `on`        |
 | `tls.verify_hostname`               | Enable or disable to verify hostname.                                                                                                                                                         | `off`       |
 | `tls.vhost`                         | Hostname to be used for TLS SNI extension.                                                                                                                                                    | _none_      |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 When `raw_traces` is set to `false` (default), the traces endpoint (`/v1/traces`) processes incoming trace data using the unified JSON parser with strict validation. The endpoint accepts both `protobuf` and `JSON` encoded payloads. When `raw_traces` is set to `true`, any data forwarded to the traces endpoint will be packed and forwarded as a log message without processing, validation, or conversion to the Fluent Bit internal trace format.
 
@@ -91,7 +117,7 @@ The OpenTelemetry input plugin supports the following telemetry data types:
 | Type    | HTTP1/JSON    | HTTP1/Protobuf | HTTP2/gRPC |
 |---------|---------------|----------------|------------|
 | Logs    | Stable        | Stable         | Stable     |
-| Metrics | Unimplemented | Stable         | Stable     |
+| Metrics | Stable        | Stable         | Stable     |
 | Traces  | Stable        | Stable         | Stable     |
 
 A sample configuration file to get started will look something like the following:
@@ -116,13 +142,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name opentelemetry
-  listen 127.0.0.1
-  port 4318
+  Name   opentelemetry
+  Listen 127.0.0.1
+  Port   4318
 
 [OUTPUT]
-  name stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
