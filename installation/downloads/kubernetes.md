@@ -14,7 +14,7 @@ description: Kubernetes Production Grade Log Processor
 
 Before getting started it's important to understand how Fluent Bit will be deployed. Kubernetes manages a cluster of nodes. The Fluent Bit log agent tool needs to run on every node to collect logs from every pod. Fluent Bit is deployed as a DaemonSet, which is a pod that runs on every node of the cluster.
 
-When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](../../pipeline/filters/kubernetes) filter plugin.
+When Fluent Bit runs, it reads, parses, and filters the logs of every pod. In addition, Fluent Bit adds metadata to each entry using the [Kubernetes](../../pipeline/filters/kubernetes.md) filter plugin.
 
 The Kubernetes filter plugin talks to the Kubernetes API Server to retrieve relevant information such as the `pod_id`, `labels`, and `annotations`. Other fields, such as `pod_name`, `container_id`, and `container_name`, are retrieved locally from the log file names. All of this is handled automatically, and no intervention is required from a configuration aspect.
 
@@ -221,5 +221,5 @@ By default, Fluent Bit waits for three minutes (30 seconds x 6 times). If it's n
     DNS_Wait_Time 30
 ```
 
-% endtab %}
+{% endtab %}
 {% endtabs %}

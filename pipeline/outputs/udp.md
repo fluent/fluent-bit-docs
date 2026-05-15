@@ -124,8 +124,8 @@ pipeline:
   Host            127.0.0.1
   Port            5170
   Format          json_lines
-  Json_date_key   timestamp
-  Json_date_format iso8601
+  Json_Date_Key   timestamp
+  Json_Date_Format iso8601
 ```
 
 {% endtab %}
@@ -180,7 +180,7 @@ pipeline:
   Match          *
   Host           127.0.0.1
   Port           5170
-  Raw_message_key message
+  Raw_Message_Key message
 ```
 
 {% endtab %}

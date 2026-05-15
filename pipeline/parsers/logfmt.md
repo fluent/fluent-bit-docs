@@ -2,6 +2,16 @@
 
 Use the _logfmt_ parser format to create custom parsers compatible with [logfmt](https://pkg.go.dev/github.com/kr/logfmt?utm_source=godoc) data.
 
+For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
+
+## Configuration parameters
+
+The `logfmt` parser supports the following format-specific configuration parameter:
+
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `logfmt_no_bare_keys` | If enabled, the parser rejects log entries where keys don't have associated values (bare keys). | `false` |
+
 The following example shows a custom parser that uses the `logfmt` format:
 
 {% tabs %}
