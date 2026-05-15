@@ -1,10 +1,14 @@
 # Kafka
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Kafka_ input plugin enables Fluent Bit to consume messages directly from one or more [Apache Kafka](https://kafka.apache.org/) topics. By subscribing to specified topics, this plugin efficiently collects and forwards Kafka messages for further processing within your Fluent Bit pipeline.
 
 Starting with version 4.0.4, the Kafka input plugin supports authentication with AWS MSK IAM, enabling integration with Amazon MSK (Managed Streaming for Apache Kafka) clusters that require IAM-based access.
 
-This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) as a built-in dependency.
+This plugin uses the official [librdkafka C library](https://github.com/confluentinc/librdkafka) as a built-in dependency.
 
 ## Configuration parameters
 

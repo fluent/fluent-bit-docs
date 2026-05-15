@@ -4,6 +4,10 @@ description: A plugin based on Prometheus Windows Exporter to collect system and
 
 # Windows exporter metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 [Prometheus Windows exporter](https://github.com/prometheus-community/windows_exporter) is a popular way to collect system level metrics from Microsoft Windows, such as CPU, Disk, Network, and Process statistics. Fluent Bit 1.9.0 and later includes the Windows Exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
 The initial release of Windows Exporter metrics contains a single collector available from Prometheus Windows Exporter.
@@ -24,13 +28,14 @@ Each `collector.xxx.scrape_interval` option only overrides the interval for that
 
 Overridden intervals only change the collection interval, not the interval for publishing the metrics which is taken from the global setting.
 
-For example, if the global interval is set to `5` and an override interval of `60` is used, the published metrics will be reported every five seconds. However, the specific collector will stay the same for 60 seconds until it's collected again.
+For example, if the global interval is set to `1` and an override interval of `60` is used, the published metrics will be reported every second. However, the specific collector will stay the same for 60 seconds until it's collected again.
 
 This helps with down-sampling when collecting metrics.
 
 | Key                                      | Description                                                                                                                                                    | Default                                                                  |
 |------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| `scrape_interval`                        | The rate in seconds at which metrics are collected from the Windows host.                                                                                     | `5`                                                                      |
+| `scrape_interval`                        | The rate in seconds at which metrics are collected from the Windows host.                                                                                     | `1`                                                                      |
+| `enable_collector`                       | Enable one collector by name. This key can be specified multiple times to build an allow-list of collectors to run.                                            | _none_                                                                   |
 | `we.logical_disk.allow_disk_regex`       | Specify the regular expression for logical disk metrics to allow collection of.                                                                                | `"/.+/"` (all)                                                           |
 | `we.logical_disk.deny_disk_regex`        | Specify the regular expression for logical disk metrics to prevent collection of or ignore.                                                                    | `NULL` (all)                                                             |
 | `we.net.allow_nic_regex`                 | Specify the regular expression for network metrics captured by the name of the NIC.                                                                            | `"/.+/"` (all)                                                           |
@@ -54,7 +59,7 @@ This helps with down-sampling when collecting metrics.
 | `collector.process.scrape_interval`      | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0`                                                                      |
 | `collector.tcp.scrape_interval`          | The rate in seconds at which `tcp` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0`                                                                      |
 | `collector.cache.scrape_interval`        | The rate in seconds at which `cache` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.        | `0`                                                                      |
-| `metrics`                                | Specify which metrics are collected. Comma-separated list of collector names.                                                                                  | `"cpu,cpu_info,os,net,logical_disk,cs,cache,thermalzone,logon,system,service,memory,paging_file,process,tcp"` |
+| `metrics`                                | Specify which metrics are collected. Comma-separated list of collector names.                                                                                  | `"cpu,cpu_info,os,net,logical_disk,cs,cache,thermalzone,logon,system,service,tcp"` |
 
 ## Collectors available
 

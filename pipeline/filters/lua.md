@@ -1,5 +1,9 @@
 # Lua
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=f519378e-536c-4b25-8949-ee6ed8d8d6c1" />
 
 The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
@@ -15,14 +19,14 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | --- | ----------- |
-| `script` | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
 | `call` | The Lua function name that will be triggered to do filtering. It's assumed that the function is declared inside the `script` parameter. |
-| `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |
-| `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
-| `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
-| `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it's converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | `code` | Inline Lua code instead of loading from a path defined in `script`. |
 | `enable_flb_null` | If enabled, `null` will be converted to `flb_null` in Lua. This helps prevent removing key/value since `nil` is a special value to remove key/value from map in Lua. Default value: `false`. |
+| `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
+| `script` | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
+| `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it's converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
+| `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
+| `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |
 
 ## Get started
 
@@ -70,8 +74,8 @@ pipeline:
 [FILTER]
     Name    lua
     Match   *
-    script  test.lua
-    call    cb_print
+    Script  test.lua
+    Call    cb_print
 
 [OUTPUT]
     Name    null
@@ -117,7 +121,7 @@ Each callback must return three values:
 | ---- | --------- | ----------- |
 | `code` | integer | The code return value represents the result and further actions that might follow. If `code` equals `-1`, this means that the record will be dropped. If `code` equals `0`, the record won't be modified. Otherwise, if `code` equals `1`, this means the original timestamp and record have been modified, so it must be replaced by the returned values from `timestamp` (second return value) and `record` (third return value). If `code` equals `2`, this means the original timestamp won't be modified and the record has been modified, so it must be replaced by the returned values from `record` (third return value). |
 | `timestamp` | double | If `code` equals `1`, the original record timestamp will be replaced with this new value. |
-| `record` | table | If `code` equals `1`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
+| `record` | table | If `code` equals `1` or `2`, the original record information will be replaced with this new value. The `record` value must be a valid Lua table. This value can be an array of tables (for example, an array of objects in JSON format), and in that case the input record is effectively split into multiple records. |
 
 ## Lua extended callback with groups and metadata support
 
@@ -270,7 +274,7 @@ pipeline:
 
 {% hint style="info" %}
 
-Group metadata is read-only and should not be modified. If you don't need group or metadata support, you can continue using the three-argument prototype.
+Group metadata is read-only and shouldn't be modified. If you don't need group or metadata support, you can continue using the three-argument prototype.
 
 {% endhint %}
 
@@ -316,9 +320,9 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush 1
-  daemon off
-  log_level debug
+  Flush 1
+  Daemon off
+  Log_Level debug
 
 [INPUT]
   Name random
@@ -326,10 +330,10 @@ pipeline:
   Samples 10
 
 [FILTER]
-  Name Lua
+  Name lua
   Match *
-  call append_tag
-  code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
+  Call append_tag
+  Code function append_tag(tag, timestamp, record) new_record = record new_record["tag"] = tag return 1, timestamp, new_record end
 
 [OUTPUT]
   Name stdout
@@ -461,16 +465,16 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-[Input]
+[INPUT]
   Name    stdin
 
-[Filter]
+[FILTER]
   Name    lua
   Match   *
-  script  test.lua
-  call    cb_split
+  Script  test.lua
+  Call    cb_split
 
-[Output]
+[OUTPUT]
   Name    stdout
   Match   *
 ```
@@ -556,7 +560,7 @@ pipeline:
 [INPUT]
   Name                tail
   Path                /var/log/containers/*_istio-proxy-*.log
-  multiline.parser    docker, cri
+  Multiline.Parser    docker, cri
   Tag                 istio.*
   Mem_Buf_Limit       64MB
   Skip_Long_Lines     Off
@@ -565,9 +569,9 @@ pipeline:
   Name                lua
   Match               istio.*
   Script              response_code_filter.lua
-  call                cb_response_code_filter
+  Call                cb_response_code_filter
 
-[Output]
+[OUTPUT]
   Name                stdout
   Match               *
 ```
@@ -709,9 +713,9 @@ pipeline:
   Name                lua
   Match               *
   Script              custom_datetime_format.lua
-  call                convert_to_utc
+  Call                convert_to_utc
 
-[Output]
+[OUTPUT]
   Name                stdout
   Match               *
 ```
