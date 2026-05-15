@@ -19,7 +19,7 @@ The `tda` processor supports the following configuration parameters:
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `window_size` | Number of samples to keep in the TDA sliding window. This controls how far back in time the topology is estimated.                                                                                   | `60`    |
 | `min_points`  | Minimum number of samples required in the window before running TDA. Until this limit is reached, no Betti metrics are emitted.                                                                      | `10`    |
-| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by Takens theorem.           | `3`     |
+| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by `Takens`x theorem.           | `3`     |
 | `embed_delay` | Delay `τ` in samples between successive lags used in delay embedding.                                                                                                                                | `1`     |
 | `threshold`   | Distance scale selector. `0` enables an automatic **multi-quantile scan** across several candidate thresholds; a value in `(0, 1)` is interpreted as a single quantile used to pick the Rips radius. | `0`     |
 
@@ -34,7 +34,7 @@ All parameters are optional; defaults are suitable as a starting point for many 
 On each metrics flush, `tda`:
 
 1. **Groups metrics by `(namespace, subsystem)`**
-   All counters, gauges, and untyped metrics are traversed. For each `cmt_map`, the pair `(ns, subsystem)` is hashed and assigned a **feature index**. This produces a fixed-dimensional feature vector of length `feature_dim` (number of `(ns, subsystem)` groups).
+   All `counters`, `gauges`, and `untyped` metrics are traversed. For each `cmt_map`, the pair `(ns, subsystem)` is hashed and assigned a **feature index**. This produces a fixed-dimensional feature vector of length `feature_dim` (number of `(ns, subsystem)` groups).
 
 2. **Aggregates values per group**
    For each group, all static and labeled metrics are summed into the corresponding feature dimension.
@@ -48,8 +48,8 @@ On each metrics flush, `tda`:
      A safeguard ensures `dt_sec > 0`.
 
 4. **Applies signed `log1p` normalization**
-   To stabilize very different magnitudes and bursty traffic, each rate is mapped to
-   `norm = log1p(|rate|)`, and the sign of `rate` is reattached. This yields a vector that is roughly scale-invariant but still sensitive to relative changes in rates across groups.
+   To stabilize very different magnitudes and burst traffic, each rate is mapped to
+   `norm = log1p(|rate|)`, and the sign of `rate` is reattached. This yields a vector that's roughly scale-invariant but still sensitive to relative changes in rates across groups.
 
 The resulting normalized vector is written into a **ring buffer window** (`tda_window`), implemented through a lightweight circular buffer (`lwrb`) that stores timestamped samples.
 The window maintains at most `window_size` samples; older samples are dropped when the buffer is full.
@@ -77,7 +77,7 @@ $$
 
 If `n_raw < (m − 1)τ + 1`, TDA is skipped until enough data has accumulated.
 
-This embedding follows the idea of **Takens theorem**, which states that, under mild conditions, the dynamics of a system can be reconstructed from delay-embedded observations of a single time series or a low-dimensional observable [2]. In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
+This embedding follows the idea of **`Takens` theorem**, which states that, under mild conditions, the dynamics of a system can be reconstructed from delay-embedded observations of a single time series or a low-dimensional observable [2]. In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
 
 Intuitively:
 
@@ -373,9 +373,4 @@ Because the plugin operates on an arbitrary selection of metrics (chosen upstrea
 ## References
 
 1. I. Donato, M. Gori, A. Sarti, "Persistent homology analysis of phase transitions," _Physical Review E_, 93, 052138, 2016.
-2. F. Takens, "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366-381.
-=======
-      window_size: 60
-      min_points: 10
-      threshold: 0.3
-```
+2. F. `Takens`, "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366-381.
