@@ -65,6 +65,22 @@ pipeline:
 
 In this example, `${DB_PASSWORD}` is read from the file `/run/secrets/db_password` and refreshed every 60 seconds. `${REGION}` is set to the static value `us-east-1`.
 
+## Default values
+
+{% hint style="info" %}
+Minimum Fluent Bit version 5.0.6
+{% endhint %}
+
+Fluent Bit supports setting a default value for an environment variable if the variable isn't defined or is set to an empty string ('').
+
+The syntax for a default value is `${VARIABLE_NAME:-DEFAULT_VALUE}`.
+
+```yaml
+service:
+  flush: ${FLUSH_INTERVAL:-5}
+  log_level: info
+```
+
 ## Predefined variables
 
 Fluent Bit supports the following predefined environment variables. You can reference these variables in configuration files without defining them in the `env` section.

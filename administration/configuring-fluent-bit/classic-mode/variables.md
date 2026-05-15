@@ -6,9 +6,8 @@ Fluent Bit supports the usage of environment variables in any value associated t
 
 The variables are case sensitive and can be used in the following format:
 
-```text
-${MY_VARIABLE}
-```
+* **Standard:** `${MY_VARIABLE}`
+* **With Default Value:** `${MY_VARIABLE:-default_value}` (**v5.0.6+**) 
 
 When Fluent Bit starts, the configuration reader will detect any request for `${MY_VARIABLE}` and will try to resolve its value.
 
@@ -18,6 +17,18 @@ When Fluent Bit is running under [`systemd`](https://systemd.io/) (using the off
 - `/etc/sysconfig/fluent-bit` (Others)
 
 These files are ignored if they don't exist.
+
+### Fallback behavior
+
+{% hint style="info" %}
+Minimum Fluent Bit version 5.0.6
+{% endhint %}
+
+If the `${VARIABLE:-DEFAULT}` syntax is used, Fluent Bit will use the `DEFAULT` value if the variable meets either of the following conditions:
+1. The variable **isn't defined** (unset).
+2. The variable is defined but set to an **empty string** (`''`).
+
+Nesting **isn't supported**. You cannot use the `${}` syntax within another `${}` definition. `${MY_VAR:-${OTHER_VAR}}` would be invalid.
 
 ## Example
 
