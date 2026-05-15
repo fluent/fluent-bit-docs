@@ -4,21 +4,41 @@ description: An input plugin to ingest payloads of Prometheus remote write
 
 # Prometheus remote write
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _Prometheus remote write_ input plugin lets you ingest a payload in the Prometheus remote-write format. A remote-write sender can transmit data to Fluent Bit.
 
 ## Configuration parameters
 
+The table below includes both:
+
+- settings specific to the Prometheus remote write input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                        | Description                                                                                                                                                                                                                                      | Default   |
 |----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| `buffer_chunk_size`        | Sets the chunk size for incoming data. These chunks are then stored and managed in the space specified by `buffer_max_size`.                                                                                                                     | `512K`    |
-| `buffer_max_size`          | Specifies the maximum buffer size to receive a request.                                                                                                                                                                                          | `4M`      |
-| `http2`                    | Enable HTTP/2 support.                                                                                                                                                                                                                           | `true`    |
+| `buffer_chunk_size`        | Sets the chunk size for incoming data. These chunks are then stored and managed in the space specified by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`.                                                            | `512K`    |
+| `buffer_max_size`          | Specifies the maximum buffer size to receive a request. Compatibility alias for `http_server.buffer_max_size`.                                                                                                                                   | `4M`      |
+| `http2`                    | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                                                                                                              | `true`    |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                                                                                                                  | `0`       |
+| `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                                                                                                                          | `1`       |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                                                                    | `8192`    |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                                                              | `256M`    |
 | `listen`                   | The address to listen on.                                                                                                                                                                                                                        | `0.0.0.0` |
 | `port`                     | The port to listen on.                                                                                                                                                                                                                           | `8080`    |
 | `successful_response_code` | Specifies the success response code. Supported values are `200`, `201`, and `204`.                                                                                                                                                               | `201`     |
 | `tag_from_uri`             | If true, a tag will be created from the `uri` parameter (for example, `api_prom_push` from `/api/prom/push`), and any tag specified in the configuration will be ignored. If false, you must provide a tag in the configuration for this plugin. | `true`    |
 | `threaded`                 | Specifies whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                          | `false`   |
 | `uri`                      | Specifies an optional HTTP URI for the target web server listening for Prometheus remote write payloads (for example, `/api/prom/push`).                                                                                                         | _none_    |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 ## Configuration file
 

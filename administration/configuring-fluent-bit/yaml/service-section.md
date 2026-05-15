@@ -36,6 +36,8 @@ The `service` section of YAML configuration files defines global properties of t
 | `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
+The `service` section only controls the built-in monitoring and control HTTP server. Plugin-specific HTTP listener settings such as `http_server.http2`, `http_server.buffer_max_size`, `http_server.buffer_chunk_size`, `http_server.max_connections`, `http_server.workers`, `http_server.ingress_queue_event_limit`, and `http_server.ingress_queue_byte_limit` are configured on the relevant input plugin in the [`pipeline.inputs`](../yaml/pipeline-section.md#shared-http-listener-settings-for-inputs) section.
+
 ## Storage configuration
 
 The following storage-related keys can be set as children to the `storage` key:
@@ -43,7 +45,7 @@ The following storage-related keys can be set as children to the `storage` key:
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
 | `storage.backlog.flush_on_shutdown` | If enabled, Fluent Bit attempts to flush all backlog filesystem chunks to their destination during the shutdown process. This can help ensure data delivery before Fluent Bit stops, but can also increase shutdown time. Possible values: `off` or `on`. | `off` |
-| `storage.backlog.mem_limit` | Sets the memory allocated for storing buffered data for input plugins that use filesystem storage. | `5M` |
+| `storage.backlog.mem_limit` | Sets the memory limit used by the `storage_backlog` input plugin when promoting backlog chunks (filesystem chunks left over from a previous Fluent Bit run) back into memory so they can be flushed by output plugins. While the up chunks owned by `storage_backlog` consume less memory than this limit, Fluent Bit continues to promote additional backlog chunks. This setting doesn't cap memory use for other input plugins that use filesystem storage. | `5M` |
 | `storage.checksum` | Enables data integrity check when writing and reading data from the filesystem. The storage layer uses the CRC32 algorithm. Possible values: `off` or `on`. | `off` |
 | `storage.delete_irrecoverable_chunks` | If enabled, deletes irrecoverable chunks during runtime and at startup. Possible values: `off` or `on`. | `off` |
 | `storage.inherit` | If enabled, input plugins that don't explicitly set `storage.type` will inherit the global `storage.type` value. Possible values: `off` or `on`. | `off` |

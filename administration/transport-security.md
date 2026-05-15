@@ -24,9 +24,10 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.key_passwd`      | Optional password for `tls.key_file` file.                                                                                              | _none_  |
 | `tls.max_version`     | Specify the maximum version of TLS.                                                                                                     | _none_  |
 | `tls.min_version`     | Specify the minimum version of TLS.                                                                                                     | _none_  |
-| `tls.verify`          | Force certificate validation.                                                                                                           | `on`    |
-| `tls.vhost`           | Hostname to be used for TLS SNI extension.                                                                                              | _none_  |
-| `tls.verify_hostname` | Force TLS verification of host names.                                                                                                   | `off`   |
+| `tls.verify`              | Force certificate validation.                                                                                                           | `on`    |
+| `tls.vhost`               | Hostname to be used for TLS SNI extension.                                                                                              | _none_  |
+| `tls.verify_hostname`     | Force TLS verification of host names.                                                                                                   | `off`   |
+| `tls.verify_client_cert`  | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off`   |
 
 To use TLS on input plugins, you must provide both a certificate and a private key.
 

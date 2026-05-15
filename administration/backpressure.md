@@ -58,19 +58,23 @@ In a few seconds, if the scheduler was able to flush the initial 700&nbsp;KB of 
 
 If one or more active input plugins use [filesystem buffering](../pipeline/buffering.md#filesystem-buffering-hybrid), use the following settings to manage backpressure.
 
-### Set `storage.max_chunks_up` and `storage.backlog.mem_limit` in global settings
+### Set `storage.max_chunks_up` in global settings
 
-In the [`service` section](../administration/configuring-fluent-bit/yaml/service-section.md) of your Fluent Bit configuration file, you can configure the `storage.max_chunks_up` and `storage.backlog.mem_limit` settings. Both settings dictate how much data can be buffered to memory by input plugins that use filesystem buffering, and are combined limits shared by all applicable input plugins.
+In the [`service` section](../administration/configuring-fluent-bit/yaml/service-section.md) of your Fluent Bit configuration file, you can configure the `storage.max_chunks_up` setting. This setting is a global cap on how many filesystem-backed chunks can be `up` (mapped into memory) at any time, and is shared across all input plugins that use filesystem buffering.
 
 {% hint style="info" %}
-These settings don't affect how much data can be buffered to memory by plugins that use memory-only buffering.
+This setting doesn't affect how much data can be buffered to memory by plugins that use memory-only buffering.
 {% endhint %}
 
-When either the specified `storage.max_chunks_up` or `storage.backlog.mem_limit` capacity is reached, all input plugins that use filesystem buffering will stop buffering data to memory until more memory becomes available. Whether these input plugins continue buffering data to the filesystem depends on each plugin's specified `storage.pause_on_chunks_overlimit` value.
+When the `storage.max_chunks_up` capacity is reached, input plugins that use filesystem buffering stop bringing new chunks up into memory. Whether these input plugins continue buffering data to the filesystem depends on each plugin's specified `storage.pause_on_chunks_overlimit` value.
+
+### Tune `storage.backlog.mem_limit` for the backlog plugin
+
+`storage.backlog.mem_limit` only governs the built-in `storage_backlog` input plugin, which promotes filesystem chunks left over from a previous Fluent Bit run back into memory so output plugins can flush them. While the up chunks owned by `storage_backlog` consume less memory than this limit, Fluent Bit continues to promote additional backlog chunks. Reaching this limit doesn't pause regular input plugins, and the limit doesn't cap memory used by inputs other than `storage_backlog`.
 
 ### Set `storage.pause_on_chunks_overlimit` for input plugins
 
-For input plugins that use filesystem buffering, you can configure the `storage.pause_on_chunks_overlimit` setting to specify how each plugin should behave after the global `storage.max_chunks_up` or `storage.backlog.mem_limit` capacity is reached.
+For input plugins that use filesystem buffering, you can configure the `storage.pause_on_chunks_overlimit` setting to specify how each plugin should behave after the global `storage.max_chunks_up` capacity is reached.
 
 If `storage.pause_on_chunks_overlimit` is set to `off` for an input plugin, the input plugin will stop buffering data to memory but continue buffering data to the filesystem.
 

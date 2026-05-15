@@ -1,5 +1,9 @@
 # Tail
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Tail_ input plugin lets you monitor text files. Its behavior is similar to the `tail -f` shell command.
 
 The plugin reads every matched file in the `Path` pattern. For every new line found (separated by a newline character `\n`), it generates a new record. Optionally, you can use a database file so the plugin can have a history of tracked files and a state of offsets. This helps resume a state if the service is restarted.

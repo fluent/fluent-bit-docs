@@ -1,5 +1,9 @@
 # Serial interface
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Serial_ input plugin lets you retrieve messages and data from a serial interface.
 
 ## Configuration parameters
@@ -101,7 +105,7 @@ pipeline:
   Name      serial
   Tag       data
   File      /dev/tnt0
-  BitRate   9600
+  Bitrate   9600
   Separator X
 
 [OUTPUT]

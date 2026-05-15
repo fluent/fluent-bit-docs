@@ -14,6 +14,12 @@ Most of the phases in the pipeline are implemented through plugins: input, filte
 
 Filters can perform specific record modifications like appending or removing a key, enriching with metadata (for example, Kubernetes filter), or discarding records based on specific conditions. After data is stored, no further modifications are made, but records can optionally be redirected to the stream processor.
 
+## Stream processor versus SQL processor
+
+Fluent Bit provides two SQL-based query interfaces. The stream processor (described on this page) runs as an independent subsystem after records pass through filters. It uses tag and match rules to attach to specific input streams and can re-ingest results back into the pipeline.
+
+The newer [SQL processor](../pipeline/processors/sql.md) runs inline within the pipeline as a standard processor, before records reach the output stage. It's configured in YAML only and doesn't support aggregation or stream creation. Use the SQL processor for per-record field selection; use the stream processor for aggregation, time windows, or routing results as new streams.
+
 ## Stream processor
 
 The stream processor is an independent subsystem that checks for new records hitting the storage interface. Based on your configuration settings, the stream processor will attach to records that come from a specific input plugin or by applying tag and matching rules.
