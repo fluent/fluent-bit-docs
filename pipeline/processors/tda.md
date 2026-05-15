@@ -246,8 +246,9 @@ These Betti metrics can be scraped by Prometheus, forwarded to an observability 
 
 ### Emphasizing short-term cycles with delay embedding
 
-To focus on shorter-term cyclic behavior—for example, oscillations in retry logic and error counters—you can lower `window_size` and adjust the embedding parameters:
+To focus on shorter-term cyclic behavior—for example, oscillations in retry logic and error counters—you can lower `window_size` and adjust the embedding parameters
 =======
+
 # Topological data analysis (`TDA`)
 
 This processor applies [Topological Data Analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (`TDA`) to incoming metrics using a sliding window and `Ripser` persistent homology. It computes Betti numbers that characterize the topological shape of the metric signal over time, which can surface structural patterns (such as recurring cycles or anomalies) that traditional statistical methods miss.
