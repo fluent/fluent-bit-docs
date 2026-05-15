@@ -6,7 +6,41 @@ description: Send logs to Azure Data Explorer (Kusto)
 
 The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/products/data-explorer/) cluster, using the [Queued Ingestion](https://learn.microsoft.com/en-us/kusto/api/netfx/about-kusto-ingest?view=azure-data-explorer&preserve-view=true&tabs=csharp#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
 
-## Ingest into Azure Data Explorer: create a Kusto cluster and database
+## Authentication Methods
+
+Fluent-Bit can use various authentication methods to connect to your Azure Data Explorer cluster:
+
+### Service Principal Authentication (Default)
+
+For service principal authentication, you'll need to create an Azure AD application:
+
+- [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+
+Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
+
+### Managed Identity Authentication
+
+When running on Azure services that support Managed Identities (such as Azure VMs, AKS, or App Service):
+
+1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster)
+2. Configure Fluent Bit with `auth_type` set to `managed_identity`
+3. For system-assigned identity, set `client_id` to `system`
+4. For user-assigned identity, set `client_id` to the managed identity's client ID (GUID)
+
+### Workload Identity Authentication
+
+For Kubernetes environments using Azure Workload Identity:
+
+1. [Set up Azure Workload Identity in your Kubernetes cluster](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster)
+2. Configure your pod to use a service account with Workload Identity Federation
+3. Configure Fluent Bit with:
+   - `auth_type` set to `workload_identity`
+   - `tenant_id` and `client_id` of your Azure AD application
+   - `workload_identity_token_file` pointing to your token file path (typically `/var/run/secrets/azure/tokens/azure-identity-token`)
+
+## For ingesting into Azure Data Explorer:  Creating a Kusto Cluster and Database
 
 Create an Azure Data Explorer cluster in one of the following ways:
 
@@ -195,6 +229,36 @@ pipeline:
   Scheduler_Max_Retries                 3
   Delete_On_Max_Upload_Error            Off
   Io_Timeout                            60s
+```
+
+#### Managed Identity Authentication
+
+```
+[OUTPUT]
+  Match *
+  Name azure_kusto
+  Auth_Type managed_identity
+  Client_Id <managed_identity_client_id>  # Use 'system' for system-assigned managed identity
+  Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+  Database_Name <database_name>
+  Table_Name <table_name>
+  # Additional parameters as needed
+```
+
+#### Workload Identity Authentication
+
+```
+[OUTPUT]
+  Match *
+  Name azure_kust
+  Auth_Type workload_identity
+  Tenant_Id <tenant_id>
+  Client_Id <client_id>
+  Workload_Identity_Token_File /var/run/secrets/azure/tokens/azure-identity-token
+  Ingestion_Endpoint https://ingest-<cluster>.<region>.kusto.windows.net
+  Database_Name <database_name>
+  Table_Name <table_name>
+  # Additional parameters as needed
 ```
 
 {% endtab %}
