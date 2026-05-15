@@ -1,78 +1,134 @@
 # Vivo Exporter
 
-Vivo Exporter is an output plugin that exposes logs, metrics, and traces through an HTTP endpoint. This plugin aims to be used in conjunction with [Vivo project](https://github.com/calyptia/vivo) .
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces`
+{% endhint %}
 
-### Configuration Parameters
+Vivo Exporter is an output plugin that exposes logs, metrics, and traces through an HTTP endpoint. This plugin aims to be used in conjunction with [Vivo project](https://github.com/chronosphereio/calyptia-vivo).
 
-| Key                      | Description                                                                                                                            | Default |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `empty_stream_on_read`   | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed.                                   | Off     |
-| `stream_queue_size`      | Specify the maximum queue size per stream. Each specific stream for logs, metrics and traces can hold up to `stream_queue_size` bytes. | 20M     |
-| `http_cors_allow_origin` | Specify the value for the HTTP Access-Control-Allow-Origin header (CORS).                                                              |         |
+## Configuration parameters
+
+This plugin supports the following configuration parameters:
+
+| Key | Description | Default |
+| --- | ----------- | ---------|
+| `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `off` |
+| `host` | The network address for the HTTP server to listen on. | `0.0.0.0` |
+| `http_cors_allow_origin` | Specify the value for the HTTP `Access-Control-Allow-Origin` header (CORS). | _none_ |
+| `port` | The TCP port for the HTTP server to listen on. | `2025` |
+| `stream_queue_size`| Specify the maximum queue size per stream. Each specific stream for logs, metrics, and traces can hold up to `stream_queue_size` bytes. | `20M` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
+### Get started
 
-### Getting Started
+The following is an example configuration of Vivo Exporter. This example isn't based on defaults.
 
-Here is a simple configuration of Vivo Exporter, note that this example is not based on defaults.
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
-```python
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: events
+      rate: 2
+
+  outputs:
+    - name: vivo_exporter
+      match: '*'
+      host: 0.0.0.0
+      port: 2025
+      empty_stream_on_read: off
+      stream_queue_size: 20M
+      http_cors_allow_origin: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    name  dummy
-    tag   events
-    rate  2
+  Name  dummy
+  Tag   events
+  Rate  2
 
 [OUTPUT]
-    name                   vivo_exporter
-    match                  *
-    empty_stream_on_read   off
-    stream_queue_size      20M
-    http_cors_allow_origin *
+  Name                   vivo_exporter
+  Match                  *
+  Host                   0.0.0.0
+  Port                   2025
+  Empty_Stream_On_Read   off
+  Stream_Queue_Size      20M
+  Http_Cors_Allow_Origin *
 ```
+
+{% endtab %}
+{% endtabs %}
 
 ### How it works
 
-Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (20M by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
+Vivo Exporter provides buffers that serve as streams for each telemetry data type, in this case, `logs`, `metrics`, and `traces`. Each buffer contains a fixed capacity in terms of size (`20M` by default). When the data arrives at a stream, it's appended to the end. If the buffer is full, it removes the older entries to make room for new data.
 
-The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
+The `data` that arrives is a `chunk`. A chunk is a group of events that belongs to the same type (logs, metrics, or traces) and contains the same `tag`. Every chunk placed in a stream is assigned with an auto-incremented `id`.
 
 #### Requesting data from the streams
 
-By using a simple HTTP request, you can retrieve the data from the streams. The following are the endpoints available:
+By using an HTTP request, you can retrieve the data from the streams. The following are the endpoints available:
 
-| endpoint   | Description                                                                                                                   |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `/logs`    | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
-| `/metrics` | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
-| `/traces`  | Exposes traces events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, etc. |
+| Endpoint                     | Description                                                                                                                   |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `/api/v1/logs`               | Exposes log events in JSON format. Each event contains a timestamp, metadata and the event content.                           |
+| `/api/v1/metrics`            | Exposes metrics events in JSON format. Each metric contains name, metadata, metric type and labels (dimensions).              |
+| `/api/v1/traces`             | Exposes trace events in JSON format. Each trace contains a name, resource spans, spans, attributes, events information, and so on. |
+| `/api/v1/internal/metrics`   | Exposes internal Fluent Bit metrics in JSON format.                                                                          |
 
-The example below will generate dummy log events which will be consuming by using `curl` HTTP command line client:
+The following example generates dummy log events for consumption by using `curl` HTTP command line client:
 
-**Configure and start Fluent Bit**
+1. Configure and start Fluent Bit.
 
-```python
-[INPUT]
-    name  dummy
-    tag   events
-    rate  2
+   {% tabs %}
+   {% tab title="fluent-bit.yaml" %}
 
-[OUTPUT]
-    name   vivo_exporter
-    match  *
+   ```yaml
+   pipeline:
+     inputs:
+       - name: dummy
+         tag: events
+         rate: 2
 
-```
+     outputs:
+       - name: vivo_exporter
+         match: '*'
+   ```
 
-**Retrieve the data**
+   {% endtab %}
+   {% tab title="fluent-bit.conf" %}
 
-```bash
-curl -i http://127.0.0.1:2025/logs
-```
+   ```text
+   [INPUT]
+     Name  dummy
+     Tag   events
+     Rate  2
 
-> We are using the `-i` curl option to print also the HTTP response headers.
+   [OUTPUT]
+     Name   vivo_exporter
+     Match  *
+   ```
+
+   {% endtab %}
+   {% endtabs %}
+
+1. Retrieve the data.
+
+   ```shell
+   curl -i http://127.0.0.1:2025/api/v1/logs
+   ```
+
+   The `-i` curl option prints the HTTP response headers.
 
 Curl output would look like this:
 
-```bash
+```shell
 HTTP/1.1 200 OK
 Server: Monkey/1.7.0
 Date: Tue, 21 Mar 2023 16:42:28 GMT
@@ -88,35 +144,38 @@ Vivo-Stream-End-ID: 3
 [[1679416947459806000,{"_tag":"events"}],{"message":"dummy"}]
 [[1679416947958777000,{"_tag":"events"}],{"message":"dummy"}]
 [[1679416948459391000,{"_tag":"events"}],{"message":"dummy"}]
+...
 ```
 
 ### Streams and IDs
 
-As mentioned above, on each stream we buffer a `chunk` that contains N events, each chunk contains it own ID which is unique inside the stream.
+As mentioned previously, each stream buffers a `chunk` that contains `N` events, with each chunk containing its own ID that's unique inside the stream.
 
-When we receive the HTTP response, Vivo Exporter also reports the range of chunk IDs that were served in the response via the HTTP headers `Vivo-Stream-Start-ID` and `Vivo-Stream-End-ID`.
+After receiving the HTTP response, Vivo Exporter also reports the range of chunk IDs that were served in the response using the HTTP headers `Vivo-Stream-Start-ID` and `Vivo-Stream-End-ID`.
 
 The values of these headers can be used by the client application to specify a range between IDs or set limits for the number of chunks to retrieve from the stream.
 
 ### Retrieve ranges and use limits
 
-A client might be interested into always retrieve the latest chunks available and skip previous one that already processed. In a first request without any given range, Vivo Exporter will provide all the content that exists in the buffer for the specific stream, on that response the client might want to keep the last ID (Vivo-Stream-End-ID) that was received.
+A client might be interested in always retrieving the latest chunks available and skip previous ones already processed. In a first request without any given range, Vivo Exporter will provide all the content that exists in the buffer for the specific stream. On that response, the client might want to keep the last ID (`Vivo-Stream-End-ID`) that was received.
 
-To query ranges or starting from specific chunks IDs, remember that they are incremental, you can use a mix of the following options:
+To query ranges or starting from specific chunks IDs, remember that they're incremental. You can use a mix of the following options:
 
-| Query string option | Description                                                                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `from`              | Specify the first chunk ID that is desired to be retrieved. Note that if the `chunk` ID does not exists the next one in the queue will be provided. |
-| `to`                | The last chunk ID is desired. If not found, the whole stream will be provided (starting from `from` if was set).                                    |
-| `limit`             | Limit the output to a specific number of chunks. The default value is `0`, which means: send everything.                                            |
+| Query string option | Description |
+|---------------------|-------------|
+| `from` | Specify the first chunk ID to be retrieved. If the `chunk` ID doesn't exist, the next one in the queue will be provided. |
+| `to` | The last chunk ID to be retrieved. If not found, the whole stream will be provided (starting from `from` if was set). |
+| `limit` | Limit the output to a specific number of chunks. The default value is `0`, which sends everything. |
 
-The following example specifies the range from chunk ID 1 to chunk ID 3 and only 1 chunk:
+The following example specifies the range from chunk ID `1` to chunk ID `3` and only one chunk:
 
-`curl -i "http://127.0.0.1:2025/logs?from=1&to=3&limit=1"`&#x20;
+```shell
+curl -i "http://127.0.0.1:2025/api/v1/logs?from=1&to=3&limit=1"
+```
 
 Output:
 
-```bash
+```shell
 HTTP/1.1 200 OK
 Server: Monkey/1.7.0
 Date: Tue, 21 Mar 2023 16:45:05 GMT
@@ -127,4 +186,85 @@ Vivo-Stream-End-ID: 1
 
 [[1679416945959398000,{"_tag":"events"}],{"message":"dummy"}]
 [[1679416946459271000,{"_tag":"events"}],{"message":"dummy"}]
+...
+```
+
+### Log output format with groups
+
+Fluent Bit log events can include group metadata and attributes that provide additional context about the log source. Groups are automatically included in Vivo Exporter output when the input plugin provides them. No additional configuration is required on the Vivo Exporter.
+
+Groups appear in the output when using input plugins that support log event grouping, such as the [OpenTelemetry input](../inputs/opentelemetry.md). The output format depends on whether the data is OpenTelemetry (`OTLP`) formatted or standard Fluent Bit data.
+
+#### OTLP grouped output format
+
+When receiving logs from the OpenTelemetry input (where `schema` is set to `otlp` in the group metadata), the output includes an `otlp` field containing `resource` and `scope` attributes:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: opentelemetry
+      tag: otel.logs
+      port: 4318
+
+  outputs:
+    - name: vivo_exporter
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name opentelemetry
+  Tag  otel.logs
+  Port 4318
+
+[OUTPUT]
+  Name  vivo_exporter
+  Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+Retrieve the grouped logs:
+
+```shell
+curl -i http://127.0.0.1:2025/api/v1/logs
+```
+
+Example output with OTLP groups:
+
+```json
+{
+  "source_type": "opentelemetry",
+  "source_name": "opentelemetry.0",
+  "tag": "otel.logs",
+  "records": [[1679416945459254000, {"severity_text": "INFO"}, {"message": "example log"}]],
+  "otlp": {
+    "resource": {"service.name": "my-service", "host.name": "server-1"},
+    "scope": {"name": "my-library", "version": "1.0.0"}
+  }
+}
+```
+
+#### Non-OTLP grouped output format
+
+For non-OTLP data with group information (from other inputs that support grouping), the output includes a `flb_group` field containing `metadata` and `body` attributes:
+
+```json
+{
+  "source_type": "forward",
+  "source_name": "forward.0",
+  "tag": "my.logs",
+  "records": [[1679416945459254000, {}, {"message": "example log"}]],
+  "flb_group": {
+    "metadata": {"custom_field": "value"},
+    "body": {"additional_context": "data"}
+  }
+}
 ```

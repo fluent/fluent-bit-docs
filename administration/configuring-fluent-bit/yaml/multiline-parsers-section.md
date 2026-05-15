@@ -1,10 +1,19 @@
-# Multiline Parsers
+# Multiline parsers
 
-Multiline parsers are used to combine logs that span multiple events into a single, cohesive message. This is particularly useful for handling stack traces, error logs, or any log entry that contains multiple lines of information.
+You can define custom [multiline parsers](../../../pipeline/parsers/multiline-parsing.md) in the `multiline_parsers` section of YAML configuration files.
 
-In YAML configuration, the syntax for defining multiline parsers differs slightly from the classic configuration format introducing minor breaking changes, specifically on how the rules are defined.
+{% hint style="info" %}
 
-Below is an example demonstrating how to define a multiline parser directly in the main configuration file, as well as how to include additional definitions from external files:
+To define standard custom parsers, use [the `parsers` section](./parsers-section.md) of YAML configuration files.
+
+{% endhint %}
+
+## Syntax
+
+To define custom parsers in the `multiline_parsers` section of a YAML configuration file, use the following syntax:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
 
 ```yaml
 multiline_parsers:
@@ -20,7 +29,9 @@ multiline_parsers:
         next_state: cont
 ```
 
-The example above defines a multiline parser named `multiline-regex-test` that uses regular expressions to handle multi-event logs. The parser contains two rules: the first rule transitions from start_state to cont when a matching log entry is detected, and the second rule continues to match subsequent lines.
+{% endtab %}
+{% endtabs %}
 
-For more detailed information on configuring multiline parsers, including advanced options and use cases, please refer to the Configuring Multiline Parsers section.
+This example defines a multiline parser named `multiline-regex-test` that uses regular expressions to handle multi-event logs. The parser contains two rules: the first rule transitions from `start_state` to cont when a matching log entry is detected, and the second rule continues to match subsequent lines.
 
+For information about supported configuration options for custom multiline parsers, see [configuring multiline parsers](../../../pipeline/parsers/multiline-parsing.md#configuring-multiline-parsers).

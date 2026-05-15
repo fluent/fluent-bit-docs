@@ -1,10 +1,14 @@
-# Plugins Section
+# Plugins
 
-While Fluent Bit comes with a variety of built-in plugins, it also supports loading external plugins at runtime. This feature is especially useful for loading Go or Wasm plugins that are built as shared object files (.so). Fluent Bit's YAML configuration provides two ways to load these external plugins:
+In addition to the plugins that come bundled with Fluent Bit, you can load external plugins. Use this feature for loading Go or WebAssembly (Wasm) plugins that are built as shared object files (`.so`).
 
-## 1. Inline YAML Section
+{% hint style="info" %}
+To configure the settings for individual plugins, use the `inputs` and `outputs` sections nested under the [`pipeline` section](./pipeline-section.md) of YAML configuration files.
+{% endhint %}
 
-You can specify external plugins directly within your main YAML configuration file using the `plugins` section. Here's an example:
+## Inline YAML
+
+You can specify external plugins in the `plugins` section of YAML configuration files. For example:
 
 ```yaml
 plugins:
@@ -22,9 +26,9 @@ pipeline:
       match: '*'
 ```
 
-## 2. YAML Plugins File Included using the `plugins_file` Option
+## YAML plugins file included using the `plugins_file` option
 
-Alternatively, you can load external plugins from a separate YAML file by specifying the `plugins_file` option in the service section. Here's how to configure this:
+Additionally, you can define external plugins in a separate YAML file, then reference that file in the `plugins_file` key nested under the [`service` section](./service-section.md) of your YAML configuration file. For example:
 
 ```yaml
 service:
@@ -46,8 +50,3 @@ In this setup, the `extra_plugins.yaml` file might contain the following plugins
 plugins:
   - /other/path/to/out_gstdout.so
 ```
-
-### Key Points
-
-- Built-in versus External: Fluent Bit comes with many built-in plugins, but you can load external plugins at runtime to extend the tool's functionality.
-- Loading Mechanism: External plugins must be shared object files (.so). You can define them inline in the main YAML configuration or include them from a separate YAML file for better modularity.
