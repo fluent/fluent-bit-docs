@@ -269,7 +269,7 @@ For more info, see the MessagePack examples in the [msgpack-c GitHub repository]
 
 ## Plugin API
 
-Each plugin is a shared object which is [loaded into Fluent Bit](https://github.com/fluent/fluent-bit/blob/1.3/src/flb_plugin.c#L70) using `dlopen`and `dlsym`.
+Each plugin is a shared object which is [loaded into Fluent Bit](https://github.com/fluent/fluent-bit/blob/master/src/flb_plugin.c) using `dlopen` and `dlsym`.
 
 ### Input
 
