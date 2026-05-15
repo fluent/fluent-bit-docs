@@ -108,6 +108,7 @@ exceptions:
   - RBAC
   - REPL
   - REST
+  - RFC
   - RHEL
   - RPC
   - RSA

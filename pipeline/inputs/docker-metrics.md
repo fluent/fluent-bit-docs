@@ -1,5 +1,9 @@
 # Docker metrics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Docker_ input plugin lets you collect Docker container metrics, including memory usage and CPU consumption.
 
 ## Configuration parameters

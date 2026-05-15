@@ -1,5 +1,9 @@
 # NGINX exporter metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _NGINX exporter metrics_ input plugin scrapes metrics from the NGINX stub status handler.
 
 {% hint style="info" %}
@@ -188,4 +192,4 @@ This returns output similar to the following:
 
 ## Exported metrics
 
-For a list of available metrics, see the [NGINX Prometheus Exporter metrics documentation](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md) on GitHub.
+For a list of available metrics, see the [NGINX Prometheus Exporter metrics documentation](https://github.com/nginx/nginx-prometheus-exporter/blob/main/README.md) on GitHub.

@@ -1,5 +1,9 @@
 # GPU metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _gpu_metrics_ input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
 
 The plugin reads metrics directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Only AMD GPUs are supported through the `amdgpu` kernel driver. NVIDIA and Intel GPUs aren't supported.

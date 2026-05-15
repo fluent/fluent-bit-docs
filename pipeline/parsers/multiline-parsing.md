@@ -32,7 +32,7 @@ Custom multiline parsers support the following configuration parameters.
 
 {% hint style="info" %}
 
-To define a custom multiline parser, add an entry to the [`multiline_parsers` section](../configuring-fluent-bit/yaml/multiline-parsers-section.md) of your YAML configuration file.
+To define a custom multiline parser, add an entry to the [`multiline_parsers` section](../../administration/configuring-fluent-bit/yaml/multiline-parsers-section.md) of your YAML configuration file.
 
 {% endhint %}
 
@@ -40,6 +40,8 @@ To define a custom multiline parser, add an entry to the [`multiline_parsers` se
 | -------- | ----------- | ------- |
 | `flush_timeout` | Timeout in milliseconds to flush a non-terminated multiline buffer. | `4s` |
 | `key_content`   | For an incoming structured message, specify the key that contains the data that should be processed by the regular expression and possibly concatenated. | _none_ |
+| `key_group`     | For an incoming structured message, specify the key used as a grouping identifier. Lines with different values for this key are treated as separate streams. For example, Docker and CRI logs use the `stream` field to distinguish `stdout` from `stderr`. | _none_ |
+| `key_pattern`   | For an incoming structured message, specify an alternative key to apply matching rules against, separate from `key_content`. Use to match against one field while concatenating content from another. | _none_ |
 | `match_string`  | String to match against for `endswith` or `equal` types. Not used for `regex` type. | _none_ |
 | `name` | Specify a unique name for the multiline parser definition. A good practice is to prefix the name with the word `multiline_` to avoid confusion with normal parser definitions. | _none_ |
 | `negate`        | Negate the pattern matching result. When set to `true`, a non-matching line is treated as matching. | `false` |
@@ -138,19 +140,19 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
-  parsers_file parsers_multiline.conf
+  Flush        1
+  Log_Level    info
+  Parsers_File parsers_multiline.conf
 
 [INPUT]
-  name             tail
-  path             test.log
-  read_from_head   true
-  multiline.parser multiline-regex-test
+  Name             tail
+  Path             test.log
+  Read_From_Head   true
+  Multiline.Parser multiline-regex-test
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -190,9 +192,9 @@ This second file defines a multiline parser for the classic configuration exampl
 
 ```text
 [MULTILINE_PARSER]
-  name          multiline-regex-test
-  type          regex
-  flush_timeout 1000
+  Name          multiline-regex-test
+  Type          regex
+  Flush_Timeout 1000
   #
   # Regex rules for multiline parsing
   # ---------------------------------
@@ -204,8 +206,8 @@ This second file defines a multiline parser for the classic configuration exampl
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
-  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-  rule      "cont"          "/^\s+at.*/"                     "cont"
+  Rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  Rule      "cont"          "/^\s+at.*/"                     "cont"
 ```
 
 {% endtab %}
@@ -321,25 +323,25 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 
 ```text
 [SERVICE]
-  flush        1
-  log_level    info
-  parsers_file parsers_multiline.conf
+  Flush        1
+  Log_Level    info
+  Parsers_File parsers_multiline.conf
 
 [INPUT]
-  name             tail
-  path             test.log
-  read_from_head   true
-  multiline.parser multiline-regex-test
+  Name             tail
+  Path             test.log
+  Read_From_Head   true
+  Multiline.Parser multiline-regex-test
 
 [FILTER]
-  name             parser
-  match            *
-  key_name         log
-  parser           named-capture-test
+  Name             parser
+  Match            *
+  Key_Name         log
+  Parser           named-capture-test
 
 [OUTPUT]
-  name             stdout
-  match            *
+  Name             stdout
+  Match            *
 ```
 
 {% endtab %}
@@ -385,9 +387,9 @@ This file defines a multiline parser for the classic example.
 
 ```text
 [MULTILINE_PARSER]
-  name          multiline-regex-test
-  type          regex
-  flush_timeout 1000
+  Name          multiline-regex-test
+  Type          regex
+  Flush_Timeout 1000
   #
   # Regex rules for multiline parsing
   # ---------------------------------
@@ -399,8 +401,8 @@ This file defines a multiline parser for the classic example.
   #
   # rules |   state name  | regex pattern                  | next state
   # ------|---------------|--------------------------------------------
-  rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
-  rule      "cont"          "/^\s+at.*/"                     "cont"
+  Rule      "start_state"   "/([a-zA-Z]+ \d+ \d+\:\d+\:\d+)(.*)/"  "cont"
+  Rule      "cont"          "/^\s+at.*/"                     "cont"
 
 [PARSER]
   Name named-capture-test

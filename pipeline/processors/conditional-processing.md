@@ -76,7 +76,7 @@ This rule evaluates to `true` for a log that contains the string `'status':200`,
 
 #### Field access
 
-The `conditions.rules.field` parameter uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md) to reference fields inside logs.
+The `conditions.rules.field` parameter uses [record accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) to reference fields inside logs.
 
 You can use `$field` syntax to access a top-level field, and `$field['child']['subchild']` to access nested fields.
 

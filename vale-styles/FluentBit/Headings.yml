@@ -54,6 +54,7 @@ exceptions:
   - Docker Hub
   - DogStatsD
   - DOS
+  - East Asian
   - eBPF
   - EC2
   - ECS
@@ -87,6 +88,7 @@ exceptions:
   - Homebrew
   - HTTP
   - I
+  - IAM
   - InfluxDB
   - I/O
   - JSON
@@ -109,6 +111,7 @@ exceptions:
   - Microsoft Fabric
   - MongoDB
   - MQTT
+  - MSK
   - NATS
   - New Relic
   - Observability Platform
@@ -122,6 +125,7 @@ exceptions:
   - OpenTelemetry
   - Opsgenie
   - Oracle Cloud Infrastructure Logging Analytics
+  - OTLP
   - PagerDuty
   - Parquet
   - Pod Identity
@@ -132,6 +136,7 @@ exceptions:
   - Red Hat
   - REPL
   - REST
+  - RFC
   - RHEL
   - RockyLinux
   - ServiceMonitor

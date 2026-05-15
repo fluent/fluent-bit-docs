@@ -1,19 +1,23 @@
 # Memory metrics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Memory_ (`mem`) input plugin gathers memory and swap usage on Linux at a fixed interval and reports totals and free space. The plugin emits log-based metrics (for Prometheus-format metrics see the Node Exporter metrics input plugin).
 
 ## Metrics reported
 
-| Key          | Description                                                            | Units       |
-|:-------------|:-----------------------------------------------------------------------|:------------|
-| `Mem.free`   | Free or available memory reported by the kernel.                       | Kilobytes   |
-| `Mem.total`  | Total system memory.                                                   | Kilobytes   |
-| `Mem.used`   | Memory in use (`Mem.total` - `Mem.free`).                              | Kilobytes   |
-| `Swap.free`  | Free swap space.                                                       | Kilobytes   |
-| `Swap.total` | Total system swap.                                                     | Kilobytes   |
-| `Swap.used`  | Swap space in use (`Swap.total` - `Swap.free`).                        | Kilobytes   |
-| `proc_bytes` | Optional. Resident set size for the configured process (`pid`).        | Bytes       |
+| Key          | Description                                                             | Units       |
+|:-------------|:------------------------------------------------------------------------|:------------|
+| `Mem.free`   | Free or available memory reported by the kernel.                        | Kilobytes   |
+| `Mem.total`  | Total system memory.                                                    | Kilobytes   |
+| `Mem.used`   | Memory in use (`Mem.total` - `Mem.free`).                               | Kilobytes   |
+| `proc_bytes` | Optional. Resident set size for the configured process (`pid`).         | Bytes       |
 | `proc_hr`    | Optional. Human-readable value of `proc_bytes` (for example, `12.00M`). | Formatted   |
+| `Swap.free`  | Free swap space.                                                        | Kilobytes   |
+| `Swap.total` | Total system swap.                                                      | Kilobytes   |
+| `Swap.used`  | Swap space in use (`Swap.total` - `Swap.free`).                         | Kilobytes   |
 
 ## Configuration parameters
 
@@ -77,8 +81,8 @@ pipeline:
   Name          mem
   Tag           memory
   Interval_Sec  5
-  Interval_NSec 0
-  PID           1234
+  Interval_Nsec 0
+  Pid           1234
 
 [OUTPUT]
   Name   stdout

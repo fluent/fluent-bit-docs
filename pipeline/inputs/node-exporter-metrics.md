@@ -4,6 +4,10 @@ description: A plugin based on Prometheus Node Exporter to collect system and ho
 
 # Node exporter metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 [Prometheus Node exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU, disk, network, and process statistics. Fluent Bit includes a node exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
 The _Node exporter metrics_ plugin contains a subset of collectors and metrics available from Prometheus Node exporter.
@@ -52,7 +56,7 @@ This helps with down-sampling when collecting metrics.
 | `collector.systemd.scrape_interval` | The rate in seconds at which `systemd` metrics are collected from the host operating system. | `0` |
 | `collector.textfile.path` | Specify path or directory to collect textfile metrics from the host operating system. | Not set by default. |
 | `collector.textfile.scrape_interval` | The rate in seconds at which `textfile` metrics are collected from the host operating system. | `0` |
-| `collector.thermal_zone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
+| `collector.thermalzone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
 | `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
 | `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
 | `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
@@ -64,7 +68,7 @@ This helps with down-sampling when collecting metrics.
 | `path.rootfs` | The root filesystem mount point. | `/` |
 | `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys` |
 | `scrape_interval` | The rate in seconds at which metrics are collected from the host operating system. | `5` |
-| `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)"` |
+| `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)` |
 | `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
 | `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
 | `systemd_service_restart_metrics` | Determines if the collector will include service restart metrics. | `false` |
