@@ -23,7 +23,7 @@ This plugin uses the following configuration parameters:
 | `external_id` | Specify an external ID for the STS API. You can use this option with the `role_arn` parameter if your role requires an external ID. | _none_ |
 | `log_key` | By default, the whole log record will be sent to Firehose. If you specify a key name with this option, then only the value of that key will be sent to Firehose. For example, if you are using the Fluentd Docker log driver, you can specify `log_key log` and only the log message will be sent to Firehose. | _none_ |
 | `profile` | AWS profile name to use. | _none_ |
-| `region` | The AWS region. China regions (`cn-north-1`, `cn-northwest-1`) and the AWS European Sovereign Cloud region (`eusc-de-east-1`) are supported; Fluent Bit automatically uses the correct endpoint suffix (`.amazonaws.com.cn` or `.amazonaws.eu`) and no custom `endpoint` is required. | _none_ |
+| `region` | The AWS region. China regions (`cn-*`), the AWS European Sovereign Cloud regions (`eusc-*`), and Amazon Dedicated Cloud regions (`us-iso-*`, `us-isob-*`, `us-isof-*`, `eu-isoe-*`) are supported; Fluent Bit automatically uses the correct endpoint suffix (`.amazonaws.com.cn`, `.amazonaws.eu`, `.c2s.ic.gov`, `.sc2s.sgov.gov`, `.csp.hci.ic.gov`, or `.cloud.adc-e.uk`) and no custom `endpoint` is required. | _none_ |
 | `role_arn` | ARN of an IAM role to assume (for cross-account access). | _none_ |
 | `simple_aggregation` | Enable record aggregation to combine multiple records into single API calls. This reduces the number of requests and can improve throughput. | `false` |
 | `sts_endpoint` | Custom endpoint for the STS API. | _none_ |

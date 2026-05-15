@@ -29,7 +29,7 @@ The following parameters are mandatory for both Forward and Secure Forward modes
 | `require_ack_response` | Send the `chunk` option and wait for an `ack` response from the server. This enables at-least-once delivery and lets the receiving server control traffic rate. Requires Fluentd `v0.14.0` or later. | `false` |
 | `compress` | Set to `gzip` to enable gzip compression. Incompatible with `time_as_integer true` and tags set dynamically using the [Rewrite Tag](../filters/rewrite-tag.md) filter. Requires Fluentd server `v0.14.7` or later. | _none_ |
 | `fluentd_compat` | Send metrics and traces using a Fluentd-compatible format. | `false` |
-| `retain_metadata_in_forward_mode` | Retain metadata when operating in forward mode. | `false` |
+| `retain_metadata_in_forward_mode` | Retain metadata when operating in forward mode. | `true` |
 | `add_option` | Add an extra Forward protocol option. This is an advanced setting and can be specified multiple times. Enabling it also enables `send_options`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 

@@ -9,7 +9,7 @@ The _HTTP_ input plugin lets Fluent Bit open an HTTP port that you can then rout
 
 ## Configuration parameters
 
-The table below includes both:
+The following table includes both:
 
 - settings specific to the HTTP input plugin
 - shared `http_server.*` listener settings that are used by several HTTP-based inputs
@@ -22,6 +22,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `add_remote_addr`          | Adds a `REMOTE_ADDR` field to the record. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header. | `false`   |
 | `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`    |
 | `buffer_max_size`          | Specify the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                   | `4M`      |
+| `enable_health_endpoint`   | Enable a `GET /health` endpoint for this input instance. When enabled, the endpoint returns a JSON response with `status` and `timestamp` fields.   | `false`   |
 | `http2`                    | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                 | `true`    |
 | `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                      | `0`       |
 | `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                             | `1`       |

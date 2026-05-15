@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_exec`, `trace_malloc`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -130,7 +130,7 @@ All traces include the following fields:
 
 | Field | Description |
 |:------|:------------|
-| `event_type` | Type of event (`signal`, `malloc`, `bind`, or `vfs`). |
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, `exec`, `tcp`, or `vfs`). |
 | `pid` | Process ID that generated the event. |
 | `tid` | Thread ID that generated the event. |
 | `comm` | Command name (process name) that generated the event. |
@@ -166,6 +166,22 @@ The `trace_bind` trace includes these additional fields:
 | `bound_dev_if` | Network device interface the socket is bound to. |
 | `error_raw` | Error code for the bind operation (`0` indicates success). |
 
+### TCP trace fields
+
+The `trace_tcp` trace captures TCP connection lifecycle events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `event_type` | TCP event subtype (`listen`, `accept`, or `connect`). |
+| `fd` | File descriptor for the socket. |
+| `backlog` | Listen backlog size (for `listen` events). |
+| `new_fd` | New file descriptor returned by the kernel (for `accept` events). |
+| `peer_port` | Remote peer port number (for `accept` events). |
+| `peer_addr` | Remote peer IP address (for `accept` events). |
+| `remote_port` | Remote port number (for `connect` events). |
+| `remote_addr` | Remote IP address (for `connect` events). |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
 ### `VFS` trace fields
 
 The `trace_vfs` trace includes these additional fields:
@@ -177,4 +193,20 @@ The `trace_vfs` trace includes these additional fields:
 | `flags` | Flags passed to the `VFS` operation. |
 | `mode` | File mode bits for the operation. |
 | `fd` | File descriptor returned by the operation. |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
+### Exec trace fields
+
+The `trace_exec` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `stage` | Execution stage. One of `enter`, `exit`, or `unknown`. |
+| `ppid` | Parent process ID. |
+| `filename` | Path of the executable being run. |
+| `argv` | First argument of the command (`argv[0]`). |
+| `argv1` | Second argument of the command (`argv[1]`). |
+| `argv2` | Third argument of the command (`argv[2]`). |
+| `argv_last` | Final captured argument when more than three are present. |
+| `argc` | Total number of arguments. |
 | `error_raw` | Error code for the operation (`0` indicates success). |

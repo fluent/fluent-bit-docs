@@ -136,7 +136,7 @@ The following descriptions apply to metrics outputted in Prometheus format by th
 The following terms are key to understanding how Fluent Bit processes metrics:
 
 - **Record**: a single message collected from a source, such as a single long line in a file.
-- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
+- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk is tracked together as a single unit.
 
   The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful. If an unrecoverable error is encountered, the chunk fails entirely. Otherwise, the output can request a retry.
 
@@ -165,13 +165,13 @@ The following descriptions apply to metrics outputted in JSON format by the `/ap
 | `chunks.fs_chunks`                            | The total number of chunks saved to the filesystem. | chunks  |
 | `chunks.fs_chunks_up`                         | The count of chunks that are both in file system and in memory. | chunks  |
 | `chunks.fs_chunks_down`                       | The count of chunks that are only in the file system. | chunks  |
-| `input_chunks.{plugin name}.status.overlimit` | Indicates whether the input instance exceeded its configured `Mem_Buf_Limit.` | boolean |
+| `input_chunks.{plugin name}.status.overlimit` | Indicates whether the input instance exceeded its configured `Mem_Buf_Limit`. | boolean |
 | `input_chunks.{plugin name}.status.mem_size`  | The size of memory that this input is consuming to buffer logs in chunks. | bytes   |
 | `input_chunks.{plugin name}.status.mem_limit` | The buffer memory limit (`Mem_Buf_Limit`) that applies to this input plugin. | bytes   |
 | `input_chunks.{plugin name}.chunks.total`     | The current total number of chunks owned by this input instance. | chunks  |
 | `input_chunks.{plugin name}.chunks.up`        | The current number of chunks that are in memory for this input. If file system storage is enabled, chunks that are "up" are also stored in the filesystem layer. | chunks  |
 | `input_chunks.{plugin name}.chunks.down`      | The current number of chunks that are "down" in the filesystem for this input. | chunks  |
-| `input_chunks.{plugin name}.chunks.busy`      | Chunks are that are being processed or sent by outputs and aren't eligible to have new data appended. | chunks  |
+| `input_chunks.{plugin name}.chunks.busy`      | Chunks that are being processed or sent by outputs and aren't eligible to have new data appended. | chunks  |
 | `input_chunks.{plugin name}.chunks.busy_size` | The sum of the byte size of each chunk which is currently marked as busy. | bytes   |
 
 ### V2 metrics
@@ -185,13 +185,11 @@ The following descriptions apply to metrics outputted in Prometheus format by th
 The following terms are key to understanding how Fluent Bit processes metrics:
 
 - **Record**: a single message collected from a source, such as a single long line in a file.
-- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk are tracked together as a single unit.
+- **Chunk**: log records ingested and stored by Fluent Bit input plugin instances. A batch of records in a chunk is tracked together as a single unit.
 
   The Fluent Bit engine attempts to fit records into chunks of at most `2 MB`, but the size can vary at runtime. Chunks are then sent to an output. An output plugin instance can successfully send the full chunk to the destination and mark it as successful. If an unrecoverable error is encountered, the chunk fails entirely. Otherwise, the output can request a retry.
 
-Some metrics are available only for specific plugins or runtime modes. For
-example, the `fluentbit_input_http_server_ingress_queue_*` metrics are exposed
-only for HTTP-based inputs that use `http_server.workers` greater than `1`.
+Some metrics are available only for specific plugins or runtime modes. For example, the `fluentbit_input_http_server_ingress_queue_*` metrics are exposed only for HTTP-based inputs that use `http_server.workers` greater than `1`.
 
 | Metric Name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
@@ -228,10 +226,14 @@ only for HTTP-based inputs that use `http_server.workers` greater than `1`.
 | `fluentbit_output_retried_records_total` | name: the name or alias for the output instance | The number of log records that experienced a retry. This metric is calculated at the chunk level, the count increased when an entire chunk is marked for retry. An output plugin might perform multiple actions that generate many error messages when uploading a single chunk. | counter | records |
 | `fluentbit_output_retries_failed_total` | name: the name or alias for the output instance | The number of times that retries expired for a chunk. Each plugin configures a `Retry_Limit`, which applies to chunks. When the `Retry_Limit` is exceeded, the chunk is discarded and this metric is incremented. | counter | chunks  |
 | `fluentbit_output_retries_total`        | name: the name or alias for the output instance | The number of times this output instance requested a retry for a chunk. | counter | chunks  |
+| `fluentbit_processor_errors_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of errors that a processor unit encountered. | counter | errors |
+| `fluentbit_processor_invocations_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of processor unit invocations. | counter | invocations |
+| `fluentbit_processor_items_add_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of items that a processor unit added. Incremented when `items_out_total` exceeds `items_in_total`. | counter | records |
+| `fluentbit_processor_items_drop_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of items that a processor unit dropped. Incremented when `items_in_total` exceeds `items_out_total`. | counter | records |
+| `fluentbit_processor_items_in_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of items that a processor unit received. | counter | records |
+| `fluentbit_processor_items_out_total` | scope: the plugin type that owns the processor (`input` or `output`), owner: the name or alias of the input or output instance that owns the processor chain, processor: the name of the processor unit, stage: the zero-based position of this processor in the chain, signal: the data type being processed (`logs`, `metrics`, `traces`, or `profiles`) | The total number of items that a processor unit produced. | counter | records |
 | `fluentbit_uptime`                      | hostname: the hostname on running Fluent Bit | The number of seconds that Fluent Bit has been running. | counter | seconds |
 | `fluentbit_process_start_time_seconds`  | hostname: the hostname on running Fluent Bit | The Unix Epoch time stamp for when Fluent Bit started. | gauge   | seconds |
-| `fluentbit_build_info`                  | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The returned value is originated from initializing the Unix Epoch time stamp of configuration context. | gauge   | seconds |
-| `fluentbit_hot_reloaded_times`          | hostname: the hostname on running Fluent Bit | Collect the count of hot reloaded times. | counter | times |
 
 #### Storage layer
 
@@ -578,6 +580,4 @@ Health status = (HC_Errors_Count > 5) OR (HC_Retry_Failure_Count > 5) IN 5 secon
 
 ## Telemetry Pipeline
 
-[Telemetry Pipeline](https://chronosphere.io/platform/telemetry-pipeline/) is a
-hosted service that lets you monitor your Fluent Bit agents including data flow,
-metrics, and configurations.
+[Telemetry Pipeline](https://chronosphere.io/platform/telemetry-pipeline/) is a hosted service that lets you monitor your Fluent Bit agents including data flow, metrics, and configurations.
