@@ -303,7 +303,7 @@ pipeline:
   Match    *
   Brokers  b-1.mycluster.kafka.us-east-1.amazonaws.com:9098
   Topics   my-topic
-```
+  rdkafka.sasl.mechanism aws_msk_iam
 
 {% endtab %}
 {% endtabs %}
