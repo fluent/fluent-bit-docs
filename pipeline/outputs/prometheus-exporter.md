@@ -22,6 +22,7 @@ This plugin supports the following parameters:
 | `add_label` | This lets you add custom labels to all metrics exposed through the Prometheus exporter. You can have multiple of these fields. | _none_ |
 | `add_timestamp` | Add timestamp to every metric honoring collection time. | `false` |
 | `host` | IP address or hostname Fluent Bit will bind to when hosting Prometheus metrics. The `listen` parameter is deprecated in 1.9.0 and later. | `0.0.0.0` |
+| `http_server.idle_timeout` | Maximum time an idle HTTP client connection is kept open. Connections that remain idle beyond this duration are closed. Accepts time values such as `10s` or `1m`. | `10s` |
 | `port` | TCP port Fluent Bit will bind to when hosting Prometheus metrics. | `2021` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
