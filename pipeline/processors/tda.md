@@ -101,7 +101,7 @@ Persistent homology requires a **scale parameter** (Rips radius / distance thres
 1. **Automatic multi-quantile scan** (`threshold = 0`, default)
 
    * The off-diagonal distances are collected, sorted, and several quantiles are evaluated, for example `q ∈ {0.10, 0.20, …, 0.90}`.
-   * For each candidate quantile `q`, a threshold `r_q` is chosen and Betti numbers are computed using Ripser.
+   * For each candidate quantile `q`, a threshold `r_q` is chosen and Betti numbers are computed using `Ripser`.
    * The plugin prefers the scale where **Betti₁** (loops) is maximized; if all Betti₁ are zero, it falls back to Betti₀ as a secondary indicator.
 
 2. **Fixed quantile mode** (`0 < threshold < 1`)
@@ -111,18 +111,18 @@ Persistent homology requires a **scale parameter** (Rips radius / distance thres
 
 Internally, quantile selection is handled by `tda_choose_threshold_from_dist`, which gathers all `i > j` entries of the distance matrix, sorts them, and picks the specified quantile index.
 
-### 5. Persistent Homology through Ripser
+### 5. Persistent Homology through `Ripser`
 
-Once the compressed lower-triangular distance matrix is built, it is passed to a thin wrapper around **Ripser**, a well-known implementation of Vietoris-Rips persistent homology:
+Once the compressed lower-triangular distance matrix is built, it is passed to a thin wrapper around **`Ripser`**, a well-known implementation of Vietoris-Rips persistent homology:
 
 1. **Compression and C API**
 
-   * The dense `n_embed × n_embed` matrix is converted into Ripser's `compressed_lower_distance_matrix`.
-   * The wrapper function `flb_ripser_compute_betti_from_dense_distance` runs Ripser up to `max_dim = 2` (H₀, H₁, H₂), using coefficients in ($\mathbb{Z}/2\mathbb{Z}$), and accumulates persistence intervals into Betti numbers with a small persistence cutoff to ignore very short-lived noise features.
+   * The dense `n_embed × n_embed` matrix is converted into `Ripser`'s `compressed_lower_distance_matrix`.
+   * The wrapper function `flb_ripser_compute_betti_from_dense_distance` runs `Ripser` up to `max_dim = 2` (H₀, H₁, H₂), using coefficients in ($\mathbb{Z}/2\mathbb{Z}$), and accumulates persistence intervals into Betti numbers with a small persistence cutoff to ignore very short-lived noise features.
 
 2. **Interval aggregation**
 
-   * A callback (`interval_recorder`) receives all persistence intervals ($\text{birth}$, $\text{death}$) from Ripser.
+   * A callback (`interval_recorder`) receives all persistence intervals ($\text{birth}$, $\text{death}$) from `Ripser`.
    * Intervals with very small persistence are filtered out, and the remaining ones are counted per homology dimension to form Betti numbers.
 
 3. **Multi-scale selection**
