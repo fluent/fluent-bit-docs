@@ -190,7 +190,7 @@ These interpretations are consistent with results from condensed matter physics 
 
 ### Basic setup with `fluentbit_metrics`
 
-The following example computes TDA on Fluent Bit's own internal metrics, using `metrics_selector` to remove a few high-cardinality or uninteresting metrics before feeding them into `tda`:
+The following example computes TDA on Fluent Bit own internal metrics, using `metrics_selector` to remove a few high-cardinality or uninteresting metrics before feeding them into `tda`:
 
 ```yaml
 service:
@@ -265,11 +265,11 @@ This configuration reconstructs the system in an effective dimension of `4 × fe
 
 ## When to use `tda`
 
-`tda` is particularly useful when:
+`tda` is particularly effective when:
 
 * You suspect **non-linear or multi-modal behavior** in your system (For example, on/off regimes, congestion collapse, periodic retries).
 * Standard indicators (mean, percentiles, error rates) show "noise," but you want to know whether that noise hides **coherent structure**.
-* You want to build alerts not simply on "levels" of metrics, but on **changes in the topology** of system behavior. For example:
+* You want to build alerts not only on "levels" of metrics, but on **changes in the topology** of system behavior. For example:
 
   * "Raise an alert if Betti₁ remains above 5 for more than 5 minutes."
   * "Mark windows where Betti₂ becomes non-zero as potential phase transitions."
