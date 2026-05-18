@@ -77,7 +77,11 @@ $$
 
 If `n_raw < (m − 1)τ + 1`, TDA is skipped until enough data has accumulated.
 
-This embedding follows the idea of **`Takens` theorem**, which states that, under mild conditions, the dynamics of a system can be reconstructed from delay-embedded observations of a single time series or a low-dimensional observable [2]. In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
+This embedding follows the idea of **`Takens` theorem** [2].
+
+Under mild conditions, the theorem states that system dynamics can be reconstructed from delay-embedded observations of a single time series or low-dimensional observable.
+
+In this plugin, the observable is the multi-dimensional vector of aggregated metrics.
 
 Intuitively:
 
@@ -92,7 +96,11 @@ $$
 d(i, j) = \left| x_i - x_j \right|_2
 $$
 
-The implementation iterates over all pairs `(i, j)` with `i > j`, accumulates squared differences across both feature dimensions and lags, and then takes the square root; the matrix is stored symmetrically with zeros on the diagonal.
+The implementation iterates over all pairs `(i, j)` with `i > j`
+and accumulates squared differences across feature dimensions and lags.
+
+The square root is then taken, and the matrix is stored symmetrically
+with zeros on the diagonal.
 
 ### 4. Threshold selection (Rips scale)
 
@@ -113,7 +121,7 @@ Internally, quantile selection is handled by `tda_choose_threshold_from_dist`, w
 
 ### 5. Persistent Homology through `Ripser`
 
-Once the compressed lower-triangular distance matrix is built, it is passed to a thin wrapper around **`Ripser`**, a well-known implementation of Vietoris-Rips persistent homology:
+Once the compressed lower-triangular distance matrix is built, it's passed to a thin wrapper around **`Ripser`**, a well-known implementation of Vietoris-Rips persistent homology:
 
 1. **Compression and C API**
 
@@ -137,11 +145,15 @@ Once the compressed lower-triangular distance matrix is built, it is passed to a
 
 | Metric name            | Type  | Description                                                                                                                                                                                                                                      |
 | ---------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fluentbit_tda_betti0` | gauge | Approximate Betti₀. The number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes".                                                                 |
+| `fluentbit_tda_betti0` | gauge | Approximate Betti₀. The number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes."                                                                 |
 | `fluentbit_tda_betti1` | gauge | Approximate Betti₁. The number of 1-dimensional loops / cycles in the Rips complex. Non-zero values often signal **recurrent, quasi-periodic, or cycling behavior**, typical of intermittent failure / recovery patterns and other regime switches. |
 | `fluentbit_tda_betti2` | gauge | Approximate Betti₂. The number of 2-dimensional voids (higher-order structures). These can appear when the system explores different "surfaces" in state space, for example, transitioning between distinct operating modes.                               |
 
-Each metric is timestamped with the current time at the moment of TDA computation and is exported through the same metrics context it received, so downstream metric outputs can scrape or forward them like any other Fluent Bit metric.
+Each metric is timestamped at the time of TDA computation.
+
+The metric is exported through the same metrics context that produced it.
+
+Downstream metric outputs can scrape or forward these metrics like any other Fluent Bit metric.
 
 ---
 
@@ -153,7 +165,7 @@ Topologically, Betti numbers count the number of "holes" of each dimension in a 
 * **Betti₁**: 1-dimensional holes (loops / cycles).
 * **Betti₂**: 2-dimensional voids, and so on.
 
-In our context:
+In this TDA context:
 
 * The sliding window of metrics is a **point cloud in phase space**.
 * The Rips complex at a given scale connects points that are close in this space.
@@ -170,7 +182,7 @@ Some practical patterns:
 
    * A brief outage or spike happens once and resolves.
    * The embedding sees a short excursion but no sustained cycling, so Betti₁ and Betti₂ often remain near `0`.
-   * In the provided HTTP example, a single failing chunk does not significantly raise Betti₁/₂.
+   * In the provided HTTP example, a single failing chunk doesn't significantly raise Betti₁/₂.
 
 3. **Intermittent failure / unstable regime**
 
@@ -271,19 +283,19 @@ This configuration reconstructs the system in an effective dimension of `4 × fe
 * Standard indicators (mean, percentiles, error rates) show "noise," but you want to know whether that noise hides **coherent structure**.
 * You want to build alerts not only on "levels" of metrics, but on **changes in the topology** of system behavior. For example:
 
-  * "Raise an alert if Betti₁ remains above 5 for more than 5 minutes."
+  * "Raise an alert if Betti₁ remains 5 or greater for more than 5 minutes."
   * "Mark windows where Betti₂ becomes non-zero as potential phase transitions."
 
 Because the plugin operates on an arbitrary selection of metrics (chosen upstream through `metrics_selector` or by how you configure `fluentbit_metrics`), you can tailor the TDA to focus on:
 
 * Network health (latency histograms, connection failures, TLS handshake errors),
 * Resource saturation (CPU, memory, buffer usage),
-* Pipeline-level signals (retries, DLQ usage, chunk failures),
+* Pipeline-level signals (retries, Dead Latter Queue usage, chunk failures),
 * Or any other metric subset that meaningfully characterizes the state of your system.
 
 ---
 
 ## References
 
-1. I. Donato, M. Gori, A. Sarti, "Persistent homology analysis of phase transitions," _Physical Review E_, 93, 052138, 2016.
+1. I. `Donato`, M. `Gori`, A. `Sarti`, "Persistent homology analysis of phase transitions," _Physical Review E_, 93, 052138, 2016.
 2. F. `Takens` "Detecting strange attractors in turbulence," in D. Rand and L.-S. Young (eds.), _Dynamical Systems and Turbulence_, Lecture Notes in Mathematics, vol. 898, Springer, 1981, pp. 366-381.
