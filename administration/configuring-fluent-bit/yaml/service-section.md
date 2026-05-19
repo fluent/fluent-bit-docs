@@ -34,6 +34,7 @@ The `service` section of YAML configuration files defines global properties of t
 | `scheduler.cap` | Sets a maximum retry time in seconds. | `2000` |
 | `sp.convert_from_str_to_num` | If enabled, the stream processor converts strings that represent numbers to a numeric type. | `true` |
 | `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
+| `thread.flush_on_shutdown` | If enabled, the engine waits for threaded input ring buffers to flush during graceful shutdown, preventing data loss from threaded inputs. Possible values: `on` or `off`. | `off` |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
 The `service` section only controls the built-in monitoring and control HTTP server. Plugin-specific HTTP listener settings such as `http_server.http2`, `http_server.buffer_max_size`, `http_server.buffer_chunk_size`, `http_server.max_connections`, `http_server.workers`, `http_server.ingress_queue_event_limit`, and `http_server.ingress_queue_byte_limit` are configured on the relevant input plugin in the [`pipeline.inputs`](../yaml/pipeline-section.md#shared-http-listener-settings-for-inputs) section.
