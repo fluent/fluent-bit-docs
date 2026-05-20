@@ -88,6 +88,7 @@ Only HTTP endpoints are supported.
 | `oauth2.scope`                            | Optional `OAuth 2.0` scope.                                                    | _none_ |
 | `oauth2.timeout`                          | Timeout for `OAuth 2.0` token requests.                                        | `0s`   |
 | `oauth2.token_url`                        | `OAuth 2.0` token endpoint URL.                                                | _none_ |
+| `oauth2.user_agent`                       | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
 | `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
 | `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
 | `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
