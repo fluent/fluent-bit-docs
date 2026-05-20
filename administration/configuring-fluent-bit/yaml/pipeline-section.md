@@ -196,6 +196,7 @@ Output plugins that support outgoing `OAuth 2.0` authentication can expose the f
 | `oauth2.refresh_skew_seconds` | Seconds before expiry at which to refresh the access token. | `60` |
 | `oauth2.timeout` | Timeout for token requests. | `0s` |
 | `oauth2.connect_timeout` | Connect timeout for token requests. | `0s` |
+| `oauth2.user_agent` | Optional `User-Agent` header to include on OAuth 2.0 token requests. | _none_ |
 
 ### Example output configuration
 
