@@ -1,22 +1,41 @@
 ---
-description: Send logs to Databricks through Zerobus
+description: Send logs to `Databricks` through `Zerobus`
 ---
 
-# Zerobus
+# `Zerobus`
 
 {% hint style="info" %}
 **Supported event types:** `logs`
 {% endhint %}
 
-The _Zerobus_ output plugin lets you ingest log records into a [Databricks](https://www.databricks.com/) table through the Zerobus streaming ingestion interface. Records are converted to JSON and sent by using the Zerobus SDK using gRPC.
+The `Zerobus` output plugin lets you ingest log records into a [`Databricks`](https://www.databricks.com/) table through the `Zerobus` streaming ingestion interface. Records are converted to JSON and sent by using the `Zerobus` SDK over `gRPC`.
 
-Before you begin, you need a Databricks workspace with a Unity Catalog table configured for Zerobus ingestion, and an OAuth 2.0 service principal (client ID and client secret) with appropriate permissions.
+Before you begin, you need a `Databricks` workspace with a `Unity Catalog` table configured for `Zerobus` ingestion, and an `OAuth 2.0` service principal (`client_id` and `client_secret`) with appropriate permissions.
 
 ## Build requirements
 
-If you are compiling Fluent Bit from source, the `zerobus-ffi` shared library and header must be installed on your build environment before building. Pre-built binaries are available from the [zerobus-sdk releases](https://github.com/databricks/zerobus-sdk/releases).
+If you are compiling Fluent Bit from source, the `zerobus-ffi` shared library and header must be installed on your build environment before building. Pre-built binaries are available from the [`zerobus-sdk` releases](https://github.com/databricks/zerobus-sdk/releases).
 
-Download `zerobus-ffi-1.1.0.tar.gz` and place the files for your platform (`linux-x86_64` or `linux-aarch64`) into the following directories:
+Download, extract, and install `zerobus-ffi-1.2.0.tar.gz` on Linux:
+
+```bash
+curl -L -o zerobus-ffi-1.2.0.tar.gz "https://github.com/databricks/zerobus-sdk/releases/download/ffi%2Fv1.2.0/zerobus-ffi-1.2.0.tar.gz"
+tar -xzf zerobus-ffi-1.2.0.tar.gz
+
+ZEROBUS_FFI_PLATFORM=linux-x86_64
+sudo cp zerobus-ffi-1.2.0/${ZEROBUS_FFI_PLATFORM}/libzerobus_ffi.so /usr/local/lib/
+sudo cp zerobus-ffi-1.2.0/${ZEROBUS_FFI_PLATFORM}/libzerobus_ffi.a /usr/local/lib/
+sudo cp zerobus-ffi-1.2.0/${ZEROBUS_FFI_PLATFORM}/zerobus.h /usr/local/include/
+sudo ldconfig
+```
+
+The archive extracts to a `zerobus-ffi-1.2.0` directory with the following platform directories:
+
+- `linux-aarch64`
+- `linux-x86_64`
+- `windows-x86_64`
+
+For `linux-aarch64`, set `ZEROBUS_FFI_PLATFORM=linux-aarch64` instead. The Linux installation commands place these files into the following directories:
 
 | File | Destination |
 | :--- | :--- |
@@ -24,17 +43,15 @@ Download `zerobus-ffi-1.1.0.tar.gz` and place the files for your platform (`linu
 | `libzerobus_ffi.a` | `/usr/local/lib/` |
 | `zerobus.h` | `/usr/local/include/` |
 
-After placing the files, run `sudo ldconfig` to update the shared library cache.
-
 ## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `endpoint` | Zerobus gRPC endpoint URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
-| `workspace_url` | Databricks workspace URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
-| `table_name` | Fully qualified Unity Catalog table name in `catalog.schema.table` format. | _none_ |
-| `client_id` | OAuth 2.0 client ID for authentication. | _none_ |
-| `client_secret` | OAuth 2.0 client secret for authentication. | _none_ |
+| `endpoint` | `Zerobus` `gRPC` endpoint URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
+| `workspace_url` | `Databricks` workspace URL. If no scheme is provided, `https://` is automatically prepended. | _none_ |
+| `table_name` | Fully qualified `Unity Catalog` table name in `catalog.schema.table` format. | _none_ |
+| `client_id` | `OAuth 2.0` client ID for authentication. | _none_ |
+| `client_secret` | `OAuth 2.0` client secret for authentication. | _none_ |
 | `add_tag` | If enabled, the Fluent Bit tag is added as a `_tag` field in each record. | `true` |
 | `time_key` | Key name for the injected timestamp. The timestamp is formatted as RFC 3339 with nanosecond precision. Set to an empty string to disable timestamp injection. | `_time` |
 | `log_key` | Comma-separated list of record keys to include in the output. When unset, all keys are included. | _none_ |
@@ -42,7 +59,7 @@ After placing the files, run `sudo ldconfig` to update the shared library cache.
 
 ## Get started
 
-To send log records to Databricks through Zerobus, configure the plugin with your Zerobus endpoint, workspace URL, table name, and OAuth 2.0 credentials.
+To send log records to `Databricks` through `Zerobus`, configure the plugin with your `Zerobus` endpoint, workspace URL, table name, and `OAuth 2.0` credentials.
 
 ### Configuration file
 
@@ -71,18 +88,18 @@ pipeline:
 
 ```text
 [INPUT]
-    Name  tail
-    Tag   app.logs
-    Path  /var/log/app/*.log
+  Name  tail
+  Tag   app.logs
+  Path  /var/log/app/*.log
 
 [OUTPUT]
-    Name           zerobus
-    Match          *
-    Endpoint       https://<workspace-id>.zerobus.<region>.cloud.databricks.com
-    Workspace_Url  https://<instance-name>.cloud.databricks.com
-    Table_Name     catalog.schema.logs
-    Client_Id      <your-client-id>
-    Client_Secret  <your-client-secret>
+  Name           zerobus
+  Match          *
+  Endpoint       https://<workspace-id>.zerobus.<region>.cloud.databricks.com
+  Workspace_Url  https://<instance-name>.cloud.databricks.com
+  Table_Name     catalog.schema.logs
+  Client_Id      <your-client-id>
+  Client_Secret  <your-client-secret>
 ```
 
 {% endtab %}
@@ -142,15 +159,15 @@ pipeline:
 
 ```text
 [OUTPUT]
-    Name           zerobus
-    Match          *
-    Endpoint       https://<workspace-id>.zerobus.<region>.cloud.databricks.com
-    Workspace_Url  https://<instance-name>.cloud.databricks.com
-    Table_Name     catalog.schema.logs
-    Client_Id      <your-client-id>
-    Client_Secret  <your-client-secret>
-    Log_Key        level,message
-    Raw_Log_Key    _raw
+  Name           zerobus
+  Match          *
+  Endpoint       https://<workspace-id>.zerobus.<region>.cloud.databricks.com
+  Workspace_Url  https://<instance-name>.cloud.databricks.com
+  Table_Name     catalog.schema.logs
+  Client_Id      <your-client-id>
+  Client_Secret  <your-client-secret>
+  Log_Key        level,message
+  Raw_Log_Key    _raw
 ```
 
 {% endtab %}
