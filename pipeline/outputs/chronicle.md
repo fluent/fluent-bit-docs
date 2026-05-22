@@ -24,8 +24,11 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 | :--- | :--- | :--- |
 | `customer_id` | The customer ID identifying the Google Chronicle tenant to stream into. | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS` |
+| `label` | Add a Chronicle label as a key and value pair. You can set this option multiple times. The label value can be a static string or a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
 | `log_key` | By default, the whole log record is sent to Google Chronicle. If you specify a key name with this option, only the value of that key is sent. | _none_ |
 | `log_type` | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://docs.cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). | _none_ |
+| `namespace` | Set the Chronicle namespace for uploaded logs. If `namespace_key` is also set, this value is used when the record accessor doesn't resolve or resolves to an empty value. | _none_ |
+| `namespace_key` | Record accessor that selects the Chronicle namespace from each record. When records in the same chunk resolve to different namespaces or labels, Fluent Bit sends them in separate Chronicle batches. | _none_ |
 | `project_id` | The project ID containing the Google Chronicle tenant to stream into. | Value of the `project_id` in the credentials file |
 | `region` | The GCP region in which to store security logs. Supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is treated as `US`. | _none_ |
 | `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_EMAIL` |
@@ -67,6 +70,50 @@ pipeline:
   Match        *
   Customer_Id  my_customer_id
   Log_Type     my_super_awesome_type
+```
+
+{% endtab %}
+{% endtabs %}
+
+The following example sets a fallback namespace, resolves the namespace from the record when present, and sends static and record-derived labels with each Chronicle batch:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  outputs:
+    - name: chronicle
+      match: '*'
+      customer_id: my_customer_id
+      log_type: my_super_awesome_type
+      namespace: fallback-namespace
+      namespace_key: $tenant_namespace
+      label: env production
+      label: cluster_name $cluster['name']
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name dummy
+  Tag  dummy
+
+[OUTPUT]
+  Name          chronicle
+  Match         *
+  Customer_Id   my_customer_id
+  Log_Type      my_super_awesome_type
+  Namespace     fallback-namespace
+  Namespace_Key $tenant_namespace
+  Label         env production
+  Label         cluster_name $cluster['name']
 ```
 
 {% endtab %}
