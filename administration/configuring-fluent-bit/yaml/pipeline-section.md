@@ -100,6 +100,7 @@ plugin-specific behavior.
 | `http_server.workers` | Set the number of HTTP listener worker threads. | `1` |
 | `http_server.ingress_queue_event_limit` | Set the maximum number of deferred ingress queue entries. This setting applies only when `http_server.workers` is greater than `1`. | `8192` |
 | `http_server.ingress_queue_byte_limit` | Set the maximum size of the deferred ingress queue. This setting applies only when `http_server.workers` is greater than `1`. | `256M` |
+| `http_server.idle_timeout` | Maximum time an idle accepted HTTP connection is kept open. Connections that remain idle beyond this duration are closed. Set to `0` to disable. Accepts time values such as `10s` or `1m`. | `10s` |
 
 When `http_server.workers` is `1`, Fluent Bit does not use the deferred
 ingress queue, so the two `http_server.ingress_queue_*` settings have no
