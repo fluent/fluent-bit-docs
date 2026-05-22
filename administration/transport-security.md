@@ -29,6 +29,12 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.verify_hostname`     | Force TLS verification of host names.                                                                                                   | `off`   |
 | `tls.verify_client_cert`  | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off`   |
 
+{% hint style="info" %}
+
+When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't include the TLS Server Name Indication (SNI) extension, which is consistent with [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066). Certificate validation still applies against the IP address. If the server requires SNI or uses a hostname-based certificate, use a hostname as the connection target and set `tls.vhost` if needed.
+
+{% endhint %}
+
 To use TLS on input plugins, you must provide both a certificate and a private key.
 
 The listed properties can be enabled in the configuration file, specifically in each output plugin section or directly through the command line.
