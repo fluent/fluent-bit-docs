@@ -28,7 +28,7 @@ If the `${VARIABLE:-DEFAULT}` syntax is used, Fluent Bit will use the `DEFAULT` 
 1. The variable **isn't defined** (unset).
 2. The variable is defined but set to an **empty string** (`''`).
 
-Nesting **isn't supported**. You cannot use the `${}` syntax within another `${}` definition. `${MY_VAR:-${OTHER_VAR}}` would be invalid.
+Nesting **isn't supported**. You can't use the `${}` syntax within another `${}` definition. `${MY_VAR:-${OTHER_VAR}}` would be invalid.
 
 ## Example
 
