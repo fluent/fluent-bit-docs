@@ -21,28 +21,28 @@ To get more details about how to set up these components, refer to the following
 - [Azure Logs Ingestion API](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)
 - [Send data to Azure Monitor Logs with Logs ingestion API (setup DCE, DCR and Log Analytics)](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal)
 
-## Authentication Methods
+## Authentication methods
 
-Fluent-Bit can use various authentication methods to send records to Azure Log Analytics:
+Fluent Bit can use various authentication methods to send records to Azure Log Analytics:
 
-### Service Principal Authentication (Default)
+### Service principal authentication 
 
-For service principal authentication, you'll need to create an Azure AD application:
+Service principal authentication is the default method. To use it, you mst create an Azure AD application:
 
-- [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 - [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
 
 Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
 
-### Managed Identity Authentication
+### Managed identity authentication
 
-When running on Azure services that support Managed Identities (such as Azure VMs, AKS, or App Service):
+When running on Azure services that support managed identities (such as Azure VMs, AKS, or App Service):
 
-1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster)
-2. Configure Fluent Bit with `auth_type` set to `managed_identity`
-3. For system-assigned identity, set `client_id` to `system`
-4. For user-assigned identity, set `client_id` to the managed identity's client ID (GUID)
+1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster).
+1. Configure Fluent Bit with `auth_type` set to `managed_identity`.
+1. For system-assigned identity, set `client_id` to `system`.
+1. For user-assigned identity, set `client_id` to the managed identity's client ID (GUID).
 
 ## Configuration parameters
 
