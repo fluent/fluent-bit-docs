@@ -117,7 +117,7 @@ The OpenTelemetry plugin supports all four OTLP signal types: logs, metrics, tra
 
 ### Encoding
 
-By default the plugin sends all signals as binary protobuf (`Content-Type: application/x-protobuf`). Set `encoding json` to send logs, metrics, and traces as OTLP JSON (`Content-Type: application/json`) instead. Use this when sending to receivers that only accept JSON, such as HTTP webhook endpoints.
+By default the plugin sends all signals as binary protobuf (`Content-Type: application/x-protobuf`). Set `encoding json` to send logs, metrics, and traces as OTLP JSON (`Content-Type: application/json`) instead. Use this when sending to OTLP/HTTP receivers that support JSON encoding.
 
 {% hint style="info" %}
 The `encoding` option applies to **OTLP/HTTP** exports only. When `grpc` is `on`, logs, metrics, and traces are sent over OTLP/gRPC using protobuf framing.
