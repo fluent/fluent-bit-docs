@@ -1,13 +1,11 @@
 
-# TDA (Topological Data Analysis)
+# Topological data analysis (`TDA`)
 
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ee1ad690-a3e9-434f-9635-3e53c670e96c" />
 
 The `tda` processor applies **Topological Data Analysis (TDA)**—specifically, **persistent homology**—to Fluent Bit metrics stream and exports **Betti numbers** that summarize the shape of recent behavior in metric space.
 
-This processor is intended for detecting **phase transitions**, **regime changes**, and **intermittent instabilities** that are difficult to detect from individual counters, gauges, or standard statistical aggregates.
-It can, for example, differentiate between a single, one-off failure and an extended period of intermittent failures where the system never settles into a stable regime.
-Currently, `tda` works only in the **metrics pipeline** (`processors.metrics`).
+This processor is intended for detecting **phase transitions**, **regime changes**, and **intermittent instabilities** that are difficult to detect from individual counters, gauges, or standard statistical aggregates. It can, for example, differentiate between a single, one-off failure and an extended period of intermittent failures where the system never settles into a stable regime. Currently, `tda` works only in the **metrics pipeline** (`processors.metrics`).
 
 ---
 
@@ -17,11 +15,11 @@ The `tda` processor supports the following configuration parameters:
 
 | Key           | Description                                                                                                                                                                                          | Default |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `window_size` | Number of samples to keep in the TDA sliding window. This controls how far back in time the topology is estimated.                                                                                   | `60`    |
-| `min_points`  | Minimum number of samples required in the window before running TDA. Until this limit is reached, no Betti metrics are emitted.                                                                      | `10`    |
-| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by `Takens` theorem.           | `3`     |
 | `embed_delay` | Delay `τ` in samples between successive lags used in delay embedding.                                                                                                                                | `1`     |
+| `embed_dim`   | Delay embedding dimension `m`. `m = 1` disables embedding (original behavior). For example, `m = 3` reconstructs state vectors `(x_t, x_{t-τ}, x_{t-2τ})` as suggested by `Takens` theorem.          | `3`     |
+| `min_points`  | Minimum number of samples required in the window before running TDA. Until this limit is reached, no Betti metrics are emitted.                                                                      | `10`    |
 | `threshold`   | Distance scale selector. `0` enables an automatic **multi-quantile scan** across several candidate thresholds; a value in `(0, 1)` is interpreted as a single quantile used to pick the Rips radius. | `0`     |
+| `window_size` | Number of samples to keep in the TDA sliding window. This controls how far back in time the topology is estimated.                                                                                   | `60`    |
 
 All parameters are optional; defaults are suitable as a starting point for many workloads.
 
@@ -67,7 +65,7 @@ $$
 x_t ;\to; (x_t,; x_{t-\tau},; \dots,; x_{t-(m-1)\tau})
 $$
 
-where each `x_·` is the **D-dimensional normalized metrics vector** at that time. This yields embedded points in (\mathbb{R}^{mD}).
+where each `x_·` is the **D-dimensional normalized metrics vector** at that time. This yields embedded points in $\mathbb{R}^{mD}$.
 
 Because all lags must be inside the window, the number of embedded points is:
 
@@ -96,11 +94,9 @@ $$
 d(i, j) = \left| x_i - x_j \right|_2
 $$
 
-The implementation iterates over all pairs `(i, j)` with `i > j`
-and accumulates squared differences across feature dimensions and lags.
+The implementation iterates over all pairs `(i, j)` with `i > j` and accumulates squared differences across feature dimensions and lags.
 
-The square root is then taken, and the matrix is stored symmetrically
-with zeros on the diagonal.
+The square root is then taken, and the matrix is stored symmetrically with zeros on the diagonal.
 
 ### 4. Threshold selection (Rips scale)
 
@@ -145,9 +141,9 @@ Once the compressed lower-triangular distance matrix is built, it's passed to a 
 
 | Metric name            | Type  | Description                                                                                                                                                                                                                                      |
 | ---------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `fluentbit_tda_betti0` | gauge | Approximate Betti₀. The number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes."                                                                 |
-| `fluentbit_tda_betti1` | gauge | Approximate Betti₁. The number of 1-dimensional loops / cycles in the Rips complex. Non-zero values often signal **recurrent, quasi-periodic, or cycling behavior**, typical of intermittent failure / recovery patterns and other regime switches. |
-| `fluentbit_tda_betti2` | gauge | Approximate Betti₂. The number of 2-dimensional voids (higher-order structures). These can appear when the system explores different "surfaces" in state space, for example, transitioning between distinct operating modes.                               |
+| `fluentbit_tda_betti0` | gauge | Approximate Betti₀. The number of connected components (clusters) in the embedded point cloud at the selected scale. Large values indicate fragmentation into many "micro-regimes."                                                              |
+| `fluentbit_tda_betti1` | gauge | Approximate Betti₁. The number of 1-dimensional loops / cycles in the Rips complex. Non-zero values often signal **recurrent, quasi-periodic, cycling behavior**, typical of intermittent failure / recovery patterns and other regime switches. |
+| `fluentbit_tda_betti2` | gauge | Approximate Betti₂. The number of 2-dimensional voids (higher-order structures). These can appear when the system explores different "surfaces" in state space, for example, transitioning between distinct operating modes.                     |
 
 Each metric is timestamped at the time of TDA computation.
 
