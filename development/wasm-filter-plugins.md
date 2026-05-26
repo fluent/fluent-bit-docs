@@ -32,7 +32,7 @@ Fluent Bit supports the following Wasm tool chains:
 
 ## Get started
 
-As described in the general options in the [source installation](../installation/sources/build-and-install.md) guide, Wasm support is enabled by default. Compile Fluent Bit with Wasm support, for example:
+As described in the general options in the [source installation](../installation/downloads/source/build-and-install.md) guide, Wasm support is enabled by default. Compile Fluent Bit with Wasm support, for example:
 
 ```text
 cd build/

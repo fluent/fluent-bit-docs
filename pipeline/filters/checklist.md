@@ -1,5 +1,9 @@
 # CheckList
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _CheckList_ plugin (introduced in version 1.8.4) looks up a value in a specified list to see if it exists. The plugin then allows the addition of a record to indicate if the value was found.
 
 ## Configuration parameters
@@ -9,11 +13,11 @@ The plugin supports the following configuration parameters
 | Key | Description | Default |
 | :-- | :---------- | :------ |
 | `file` | The single value file that Fluent Bit will use as a lookup table to determine if the specified `lookup_key` exists. | _none_ |
-| `lookup_key` | The specific key to look up and determine if it exists. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
-| `record` | The record to add if the `lookup_key` is found in the specified `file`. You can add multiple record parameters. | _none_ |
-| `mode` | Set the check mode. `exact` and `partial` are supported. | `exact`|
-| `print_query_time` | Print to stdout the elapsed query time for every matched record. | `false` |
 | `ignore_case` | Compare strings by ignoring case. | `false` |
+| `lookup_key` | The specific key to look up and determine if it exists. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | `log` |
+| `mode` | Set the check mode. `exact` and `partial` are supported. | `exact` |
+| `print_query_time` | Print to stdout the elapsed query time for every matched record. | `false` |
+| `record` | The record to add if the `lookup_key` is found in the specified `file`. You can add multiple record parameters. | _none_ |
 
 ## Example configuration
 
@@ -37,7 +41,6 @@ pipeline:
       record:
         - ioc abc
         - badurl null
-      log_level: debug
 
   outputs:
     - name: stdout
@@ -49,24 +52,23 @@ pipeline:
 
 ```text
 [INPUT]
-  name           tail
-  tag            test1
-  path           test1.log
-  read_from_head true
-  parser         json
+  Name           tail
+  Tag            test1
+  Path           test1.log
+  Read_From_Head true
+  Parser         json
 
 [FILTER]
-  name       checklist
-  match      test1
-  file       ip_list.txt
-  lookup_key $remote_addr
-  record     ioc    abc
-  record     badurl null
-  log_level  debug
+  Name       checklist
+  Match      test1
+  File       ip_list.txt
+  Lookup_Key $remote_addr
+  Record     ioc    abc
+  Record     badurl null
 
 [OUTPUT]
-  name       stdout
-  match      test1
+  Name       stdout
+  Match      test1
 ```
 
 {% endtab %}

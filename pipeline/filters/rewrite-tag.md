@@ -4,6 +4,10 @@ description: Powerful and flexible routing
 
 # Rewrite tag
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Tags make [routing](../../pipeline/router.md) possible. Tags are set in the configuration of the `INPUT` definitions where the records are generated. There are scenarios when you might want to modify the tag in the pipeline to perform more advanced and flexible routing.
 
 The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.
@@ -25,10 +29,10 @@ The `rewrite_tag` filter supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
-| `Rule` | Defines the matching criteria and the format of the tag for the matching record. The Rule format has four components: `KEY REGEX NEW_TAG KEEP`. |
-| `Emitter_Name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
-| `Emitter_Storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
-| `Emitter_Mem_Buf_Limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer below the `10M` limit. |
+| `emitter_mem_buf_limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
+| `emitter_name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
+| `emitter_storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
+| `rule` | Defines the matching criteria and the format of the tag for the matching record. The rule format has four components: `KEY REGEX NEW_TAG KEEP`. |
 
 ## Rules
 
@@ -55,8 +59,8 @@ The key represents the name of the _record key_ that holds the `value` to use to
 
 To match against the value of the key `name`, you must use `$name`. The key selector is flexible enough to allow to match nested levels of sub-maps from the structure. To capture the value of the nested key `s2`, specify `$ss['s1']['s2']`, for short:
 
--`$name` = `abc-123`
--`$ss['s1']['s2']` = `flb`
+- `$name` = `abc-123`
+- `$ss['s1']['s2']` = `flb`
 
 A key must point to a value that contains a string. It's not valid for numbers, Boolean values, maps, or arrays.
 
@@ -74,9 +78,9 @@ This example uses parentheses to specify groups of data. If the pattern matches 
 
 If `$name` equals `abc-123`, then the following placeholders will be created:
 
--`$0` = `abc-123`
--`$1` = `abc`
--`$2` = `123`
+- `$0` = `abc-123`
+- `$1` = `abc`
+- `$2` = `123`
 
 If the regular expression doesn't match an incoming record, the rule will be skipped and the next rule (if present) will be processed.
 
@@ -150,7 +154,7 @@ pipeline:
   Log_Level info
 
 [INPUT]
-  NAME   dummy
+  Name   dummy
   Dummy  {"tool": "fluent", "sub": {"s1": {"s2": "bit"}}}
   Tag    test_tag
 
@@ -232,4 +236,4 @@ The records generated are handled by the internal emitter, so the new records ar
 
 The _Emitter_ is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an emitter instance to use it exclusively to emit records, allowing for granular control of who is emitting what.
 
-Change the Emitter name in the metrics by adding the `Emitter_Name` configuration property described previously.
+Change the Emitter name in the metrics by adding the `emitter_name` configuration property described previously.
