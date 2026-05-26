@@ -159,7 +159,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-#### User assigned Managed Identity Authentication
+#### User-assigned managed identity authentication
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
