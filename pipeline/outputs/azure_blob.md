@@ -180,7 +180,7 @@ pipeline:
 
 ### Workload identity
 
-Use [Azure Workload Identity](https://azure.github.io/azure-workload-identity/docs/) to exchange a Kubernetes-projected service account token for an Azure AD access token. This is the recommended approach for workloads running in AKS.
+Use [Azure Workload Identity](https://azure.github.io/azure-workload-identity/docs/) to exchange a Kubernetes-projected service account token for an `Azure AD` access token. This is the recommended approach for workloads running in `AKS`.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
