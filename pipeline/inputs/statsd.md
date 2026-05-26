@@ -1,5 +1,9 @@
 # StatsD
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics`
+{% endhint %}
+
 The _StatsD_ input plugin lets you receive metrics using the StatsD protocol.
 
 ## Configuration parameters

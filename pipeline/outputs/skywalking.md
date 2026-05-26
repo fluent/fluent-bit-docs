@@ -4,15 +4,13 @@ The _Apache SkyWalking_ output plugin lets you flush your records to an [Apache 
 
 ## Configuration parameters
 
-This plugin supports the following parameters:
-
-| Parameter | Description | Default    |
-|:--------- |:----------- |:-----------|
-| `host` | Hostname of Apache SkyWalking OAP. |` 127.0.0.1` |
-| `port` | TCP port of the Apache SkyWalking OAP. | `12800` |
+| Key | Description | Default |
+| :--- | :--- | :--- |
 | `auth_token` | Authentication token if needed for Apache SkyWalking OAP. | _none_ |
-| `svc_name` | Service name that Fluent Bit belongs to. | `sw-service` |
+| `host` | Hostname of Apache SkyWalking OAP. | `127.0.0.1` |
+| `port` | TCP port of the Apache SkyWalking OAP. | `12800` |
 | `svc_inst_name` | Service instance name of Fluent Bit. | `fluent-bit` |
+| `svc_name` | Service name that Fluent Bit belongs to. | `sw-service` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ### TLS / SSL
@@ -50,8 +48,8 @@ pipeline:
 
 [OUTPUT]
   Name          skywalking
-  svc_name      dummy-service
-  svc_inst_name dummy-service-fluentbit
+  Svc_Name      dummy-service
+  Svc_Inst_Name dummy-service-fluentbit
 ```
 
 {% endtab %}

@@ -103,6 +103,7 @@ HEC
 Homebrew
 hostname
 Hostname
+hostnames
 Ingester
 Ingestor
 inotify

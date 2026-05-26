@@ -4,6 +4,10 @@ description: Collect Kubernetes events
 
 # Kubernetes events
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Kubernetes exports events through the API server. This input plugin lets you retrieve those events as logs and process them through the pipeline.
 
 ## Configuration parameters

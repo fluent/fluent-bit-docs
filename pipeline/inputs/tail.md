@@ -1,5 +1,9 @@
 # Tail
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Tail_ input plugin lets you monitor text files. Its behavior is similar to the `tail -f` shell command.
 
 The plugin reads every matched file in the `Path` pattern. For every new line found (separated by a newline character `\n`), it generates a new record. Optionally, you can use a database file so the plugin can have a history of tracked files and a state of offsets. This helps resume a state if the service is restarted.
@@ -158,6 +162,16 @@ If you don't already have an override file, you can use the following command to
 ```shell
 systemctl edit fluent-bit.service
 ```
+
+### Inotify queue overflow handling
+
+When the Linux inotify event queue overflows (indicated by an `IN_Q_OVERFLOW` event), Fluent Bit automatically reconciles all monitored files. During reconciliation it:
+
+- Detects rotated files by comparing inodes and file names and re-registers watches as needed.
+- Resets offset tracking for files that have been truncated.
+- Retries watch registration for files that previously failed, for example due to `ENOSPC` when `fs.inotify.max_user_watches` is exhausted.
+
+This behavior ensures that no log lines are silently skipped after a queue overflow. To reduce the risk of overflow, increase the kernel limits described in the previous section.
 
 ## Multiline support
 

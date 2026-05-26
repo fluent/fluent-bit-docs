@@ -1,5 +1,9 @@
 # Syslog
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Syslog_ input plugin lets you collect `syslog` messages through a Unix socket server (UDP or TCP) or over the network using TCP or UDP.
 
 ## Configuration parameters

@@ -4,7 +4,7 @@ Fluent Bit is compatible with the latest Apple macOS software for x86_64 and App
 
 ## Installation packages
 
-Installation packages can be found [in the Fluent Bit repository](https://packages.fluentbit.io/macos/).
+Installation packages can be found [in the Fluent Bit repository](https://packages.fluentbit.io/).
 
 ## Requirements
 
@@ -163,7 +163,7 @@ To make the access path easier to Fluent Bit binary, extend the `PATH` variable:
 export PATH=/opt/fluent-bit/bin:$PATH
 ```
 
-To test, try Fluent Bit by generating a test message using the [Dummy input plugin](../../pipeline/inputs/dummy) which prints to the standard output interface every one second:
+To test, try Fluent Bit by generating a test message using the [Dummy input plugin](../../pipeline/inputs/dummy.md) which prints to the standard output interface every one second:
 
 ```shell
 fluent-bit -i dummy -o stdout -f 1

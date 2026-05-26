@@ -4,6 +4,10 @@ description: A plugin based on Prometheus Node Exporter to collect system and ho
 
 # Node exporter metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 [Prometheus Node exporter](https://github.com/prometheus/node_exporter) is a popular way to collect system level metrics from operating systems, such as CPU, disk, network, and process statistics. Fluent Bit includes a node exporter metrics plugin that builds off the Prometheus design to collect system level metrics without having to manage two separate processes or agents.
 
 The _Node exporter metrics_ plugin contains a subset of collectors and metrics available from Prometheus Node exporter.

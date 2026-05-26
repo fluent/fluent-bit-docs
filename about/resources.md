@@ -29,8 +29,8 @@ Fluent Bit workshop for getting started with cloud native telemetry pipelines
 
 You can also view the source files for these workshops on [GitLab](https://gitlab.com/o11y-workshops/workshop-fluentbit).
 
-## Logging with Fluent Bit and Amazon OpenSearch workshop by Amazon
+## Fluent Bit pod logging on Kubernetes workshop by Amazon
 
-This workshop by Amazon goes through common Kubernetes logging patterns and routing data to OpenSearch and visualizing with OpenSearch dashboards.
+This workshop by Amazon covers deploying Fluent Bit for pod-level logging on Kubernetes and routing data to CloudWatch Logs.
 
-{% embed url="https://eksworkshop.com/" %}
+{% embed url="https://eksworkshop.com/docs/observability/logging/pod-logging/fluentbit-setup" %}
