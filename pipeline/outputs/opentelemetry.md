@@ -28,7 +28,7 @@ OTLP/HTTP supports both HTTP/1.1 and HTTP/2. OTLP/gRPC requires HTTP/2 and is en
 | `grpc_metrics_uri`                        | gRPC endpoint URI for metric exports.                                          | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
 | `grpc_profiles_uri`                       | gRPC endpoint URI for profile exports.                                         | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
 | `grpc_traces_uri`                         | gRPC endpoint URI for trace exports.                                           | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
-| `header`                                  | Add a HTTP header key/value pair. Multiple headers can be set.                 | _none_ |
+| `header`                                  | Add an HTTP header key/value pair. Multiple headers can be set.                | _none_ |
 | `host`                                    | IP address or hostname of the target HTTP server.                              | `127.0.0.1`                                                                     |
 | `http2`                                   | Enable, disable or force HTTP/2 usage. Accepted values: `on`, `off`, or `force`.                                                                        | `off`  |
 | `http_passwd`                             | Set HTTP auth password.                                                        | _none_ |
@@ -117,7 +117,7 @@ The OpenTelemetry plugin supports all four OTLP signal types: logs, metrics, tra
 
 ### Encoding
 
-By default the plugin sends all signals as binary protobuf (`Content-Type: application/x-protobuf`). Set `encoding json` to send logs, metrics, and traces as OTLP JSON (`Content-Type: application/json`) instead. This is useful when sending to receivers that only accept JSON, such as HTTP webhook endpoints.
+By default the plugin sends all signals as binary protobuf (`Content-Type: application/x-protobuf`). Set `encoding json` to send logs, metrics, and traces as OTLP JSON (`Content-Type: application/json`) instead. Use this when sending to receivers that only accept JSON, such as HTTP webhook endpoints.
 
 {% hint style="info" %}
 The `encoding` option applies to **OTLP/HTTP** exports only. When `grpc` is `on`, logs, metrics, and traces are sent over OTLP/gRPC using protobuf framing.
