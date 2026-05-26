@@ -37,7 +37,7 @@ OTLP/HTTP supports both HTTP/1.1 and HTTP/2. OTLP/gRPC requires HTTP/2 and is en
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `log_suppress_interval`                   | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression.                                    | `0`    |
 | `logs_attributes_metadata_key`            | Metadata key used to read log record attributes.                               | `$Attributes`                                                                   |
-| `logs_body_key`                           | Record accessor patterns used to populate the OTLP log body. The first matching key wins. Can be specified multiple times. Defaults to `$log` then `$message`. | _none_ |
+| `logs_body_key`                           | Record accessor patterns used to populate the OTLP log body. The first matching key wins. This option can be specified multiple times. Defaults to `$log` then `$message`. | _none_ |
 | `logs_body_key_attributes`                | When `true`, record fields not matched by `logs_body_key` are added to the log record's attributes instead of being dropped.                            | `false`|
 | `logs_instrumentation_scope_metadata_key` | Metadata key used to read the instrumentation scope.                           | `InstrumentationScope`                                                          |
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
