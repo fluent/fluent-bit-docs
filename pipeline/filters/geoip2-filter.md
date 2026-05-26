@@ -4,9 +4,13 @@ description: Look up Geo data from IP.
 
 # GeoIP2 filter
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The GeoIP2 filter lets you enrich the incoming data stream with location data from the GeoIP2 database.
 
-The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+The `GeoLite2-City.mmdb` database is available from [MaxMind's official site](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/).
 
 ## Configuration parameters
 
@@ -15,7 +19,7 @@ This plugin supports the following configuration parameters:
 | Key | Description |
 | :--- | :--- |
 | `database` | Path to the GeoIP2 database. |
-| `lookup_key` | Field name to process. |
+| `lookup_key` | Field name to process. Multiple `lookup_key` entries are supported. |
 | `record` | Defines the `KEY LOOKUP_KEY VALUE` triplet. |
 
 ## Get started
@@ -34,7 +38,7 @@ pipeline:
   filters:
     - name: geoip2
       match: '*'
-      database: GioLite2-City.mmdb
+      database: GeoLite2-City.mmdb
       lookup_key: remote_addr
       record:
         - country remote_addr %{country.names.en}
@@ -57,7 +61,7 @@ pipeline:
   Name geoip2
   Match *
   Database GeoLite2-City.mmdb
-  Lookup_key remote_addr
+  Lookup_Key remote_addr
   Record country remote_addr %{country.names.en}
   Record isocode remote_addr %{country.iso_code}
 
@@ -69,7 +73,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-Each `Record` parameter specifies the following triplet:
+Each `record` parameter specifies the following triplet:
 
 - `country`: The field name to be added to records.
 - `remote_addr`: The lookup key to process.

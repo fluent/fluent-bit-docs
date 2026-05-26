@@ -7,6 +7,7 @@ Plugins that interact with AWS services fetch credentials from the following pro
 - [EKS Web Identity Token (OIDC)](#eks-web-identity-token-oidc)
 - [ECS HTTP credentials endpoint](#ecs-http-credentials-endpoint)
 - [EC2 Instance Profile Credentials (IMDS)](#ec2-instance-profile-credentials-imds)
+- [`AWS Greengrass` credentials](#aws-greengrass-credentials)
 
 All AWS plugins additionally support a `role_arn` (or `AWS_ROLE_ARN`, for [Elasticsearch](../pipeline/outputs/elasticsearch.md)) configuration parameter. If specified, the fetched credentials are used to assume the given role.
 
@@ -21,7 +22,7 @@ Plugins read the shared `config` file at `$AWS_CONFIG_FILE` (or `$HOME/.aws/conf
 The shared settings evaluate in the following order:
 
 | Setting | File | Description |
-|---|---|---|
+| --- | --- | --- |
 | `credential_process` | `config` | Linux only. See [Sourcing credentials with an external process in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html). |
 | `aws_access_key_id`, `aws_secret_access_key`, `aws_session_token` | `credentials` | Access key ID and secret key to use to authenticate. The session token must be set for temporary credentials. |
 
@@ -33,7 +34,7 @@ Credentials are fetched using a signed web identity token for a Kubernetes servi
 
 ## ECS HTTP credentials endpoint
 
-Credentials are fetched for the ECS task's role. See [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-iam-roles.html).
+Credentials are fetched for the ECS task's role. See [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
 
 ## EKS Pod Identity credentials
 
@@ -42,3 +43,7 @@ Credentials are fetched using  a pod identity endpoint. See [Learn how EKS Pod I
 ## EC2 instance profile credentials (IMDS)
 
 Fetches credentials for the EC2 instance profile's role. See [IAM roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html). As of Fluent Bit version 1.8.8, IMDSv2 is used by default and IMDSv1 might be disabled. Prior versions of Fluent Bit require enabling IMDSv1 on EC2.
+
+## `AWS Greengrass` credentials
+
+Fluent Bit fetches credentials from a localhost endpoint provided by the AWS IoT `Greengrass` token exchange service. The token exchange service runs as a local server on `Greengrass` core devices and provides AWS credentials through the `AWS_CONTAINER_CREDENTIALS_FULL_URI` and `AWS_CONTAINER_AUTHORIZATION_TOKEN` environment variables. For more information, see the AWS documentation about [Token exchange service](https://docs.aws.amazon.com/greengrass/v2/developerguide/token-exchange-service-component.html).
