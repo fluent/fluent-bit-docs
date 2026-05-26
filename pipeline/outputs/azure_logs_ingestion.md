@@ -75,7 +75,7 @@ Follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/lo
 
 Use this configuration file to get started:
 
-#### Service Principal Authentication (Default)
+#### Service principal authentication 
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
