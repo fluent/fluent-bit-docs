@@ -12,7 +12,8 @@ This plugin supports the following parameters:
 | `host` | IP address or hostname of the target Kafka REST Proxy server. | `127.0.0.1` |
 | `include_tag_key` | Append the tag name to the final record. | `false` |
 | `message_key` | Optional message key to set. | _none_ |
-| `message_key_field` | If set, the value of `message_key_field` in the record indicates the message key. If not set nor found in the record, `message_key` will be used (if set).  | _none_ || `partition` | Optional partition number. | `-1` |
+| `message_key_field` | If set, the value of `message_key_field` in the record indicates the message key. If not set nor found in the record, `message_key` will be used (if set).  | _none_ |
+| `partition` | Optional partition number. | `-1` |
 | `port` | TCP port of the target Kafka REST Proxy server. | `8082` |
 | `tag_key` | If `include_tag_key` is enabled, defines the key name for the tag. | `_flb-key` |
 | `time_key` | Name of the field that holds the record timestamp. | `@timestamp` |
