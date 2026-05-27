@@ -3,3 +3,7 @@ node_modules/*
 .gitignore
 old/*
 .DS_Store
+.idea/
+.cursor
+CLAUDE.md
+.claude*

@@ -8,29 +8,50 @@ first: '\b([A-Z]{3,5})\b'
 second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
+  - AAD
+  - ABI
   - ACL
+  - AMD
+  - ANSI
   - API
+  - APT
   - ARN
   - ASC
+  - ASCII
   - ASP
+  - ASYNC
   - AWS
+  - BMP
+  - BSD
   - CIDR
   - CLI
+  - CNCF
+  - CORS
   - CPU
+  - CRI
   - CRD
   - CSS
   - CSV
+  - DCO
   - DEBUG
   - DESC
   - DOM
   - DNS
+  - DOS
   - DPI
   - DPPS
+  - DST
+  - ECR
+  - ECS
+  - EKS
   - FAQ
   - FIPS
+  - GBK
   - GCC
   - GCP
+  - GCS
   - GDB
+  - GELF
   - GET
   - GNU
   - GPG
@@ -38,31 +59,56 @@ exceptions:
   - GTK
   - GUI
   - GZIP
+  - HEC
+  - HMAC
   - HPA
-  - IAM
   - HTML
   - HTTP
   - HTTPS
+  - IAM
+  - IBM
   - IDE
+  - IMDS
+  - ISO
   - JAR
   - JSON
   - JSX
+  - KQL
   - LESS
   - LLDB
+  - LLVM
   - LTS
+  - LTSV
+  - MIME
+  - MAC
+  - MQTT
+  - MSI
+  - MSK
+  - NATS
   - NET
+  - NGINX
+  - NIC
   - NOTE
+  - NSIS
   - NVDA
+  - OAP
+  - OEM
+  - OOM
   - OSS
+  - OTLP
   - PATH
   - PEM
   - PDF
+  - PID
   - PHP
   - POSIX
   - POST
+  - PWM
   - RAM
+  - RBAC
   - REPL
   - REST
+  - RFC
   - RHEL
   - RPC
   - RSA
@@ -70,18 +116,27 @@ exceptions:
   - SCM
   - SCSS
   - SDK
+  - SDS
+  - SHA
   - SIEM
+  - SIMD
   - SLA
+  - SLES
+  - SNI
   - SQL
   - SSH
   - SSL
+  - SSM
   - SSO
+  - STS
+  - SUSE
   - SVG
   - TBD
   - TCP
   - TLS
   - TRE
   - TODO
+  - UAE
   - UDP
   - URI
   - URL
@@ -89,7 +144,13 @@ exceptions:
   - UTC
   - UTF
   - UUID
+  - VPC
+  - VRAM
+  - WASI
+  - WASM
+  - WMI
   - XML
   - XSS
   - YAML
+  - YUM
   - ZIP

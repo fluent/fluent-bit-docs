@@ -1,7 +1,7 @@
 ---
 extends: existence
 message: 'Avoid words like "%s" that imply ease of use, because the user may find this action difficult.'
-level: suggestion
+level: warning
 ignorecase: true
 tokens:
   - easy
