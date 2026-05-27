@@ -1,19 +1,19 @@
 # Memory metrics 
 
-The _mem_metrics_, or memory metrics plugin, generates metrics for memory statistics for processes using the `smaps_rollup` file for each process in /proc. This plugin works exclusively on Linux.
+The `_mem_metrics_`, or memory metrics plugin, generates metrics for memory statistics for processes using the `smaps_rollup` file for each process in `/proc`. This plugin works exclusively on Linux.
 
-# Configuration parameters
+## Configuration parameters
 
-| **Key***      | Description                                        | Default      |
+| Key           | Description                                        | Default      |
 | :------------ | :------------------------------------------------- | :----------- |
-| `proc_path`     | The path of the proc pseudo filesystem.             | `/proc`        |
-| `filter_exec`   | Filter for a single executable by path.             | **inactive** |
 | `filter_cmd`    | Filter by command line.                             | **inactive** |
-| `filter_pid`    | Filter by comma delimited list of PIDs.             | **inactive** |
-| `interval_sec` | Set the interval seconds between events generation. | `5`            |
+| `filter_exec`   | Filter for a single executable by path.             | **inactive** |
+| `filter_pid`    | Filter by comma delimited list of `PIDs`.             | **inactive** |
 | `interval_nsec` | Set the nanoseconds interval (sub seconds).         | `0`            |
+| `interval_sec` | Set the interval seconds between events generation. | `5`            |
+| `proc_path`     | The path of the proc pseudo filesystem.             | `/proc`        |
 
-The `filter_pid` can include or be set to either `0` or `self` to refer to the fluent-bit process itself.
+The `filter_pid` can include or be set to either `0` or `self` to refer to the Fluent Bit process itself.
 
 ## Get started
 
@@ -21,7 +21,7 @@ You can run the plugin from the command line or through a configuration file. By
 
 ### Command line
 
-```bash
+```shell
 $ fluent-bit -i mem_metrics -o stdout
 Fluent Bit v2.1.8
 * Copyright (C) 2015-2022 The Fluent Bit Authors
@@ -55,36 +55,37 @@ Fluent Bit v2.1.8
 
 Minimal pipeline for logging memory metrics to the console:
 
-```ini
+```text
 [INPUT]
-    Name mem_metrics
-    Tag  mem
+  Name mem_metrics
+  Tag  mem
 
 [OUTPUT]
-    Name  stdout
-    Match mem
+  Name  stdout
+  Match mem
 ```
 
 Log all instances of Fluent Bit to Prometheus:
 
-```ini
+```text
 [INPUT]
-    Name       mem_metrics
-    Filter_cmd fluent-bit
-    Tag        mem
+  Name       mem_metrics
+  Filter_cmd fluent-bit
+  Tag        mem
 
 [OUTPUT]
-    Name                 prometheus_remote_write
-    Match                mem
-    Host                 localhost
-    Port                 9090
-    Uri                  /prometheus/v1/write?prometheus_server=mem
+  Name                 prometheus_remote_write
+  Match                mem
+  Host                 localhost
+  Port                 9090
+  Uri                  /prometheus/v1/write?prometheus_server=mem
 ```
 
 ### Exposed metrics
 
 All metrics are logged as gauges since they can both increase and decrease. Supported gauges are:
 
+```text
   - node_smaps_rollup_rss
   - node_smaps_rollup_pss
     - type=clean
@@ -109,3 +110,5 @@ All metrics are logged as gauges since they can both increase and decrease. Supp
   - node_smaps_rollup_swap
   - node_smaps_rollup_swap_pss
   - node_smaps_rollup_locked
+```
+
