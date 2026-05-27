@@ -1,6 +1,6 @@
 # Ubuntu
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for long-term support releases of Ubuntu. The latest officially supported version is Noble Numbat (24.04).
+Fluent Bit is distributed as the `fluent-bit` package and is available for long-term support releases of Ubuntu. The latest officially supported version is Ubuntu 26.04. Long-term support releases are also available for Noble Numbat (24.04) and Jammy Jellyfish (22.04).
 
 The recommended secure deployment approach is to use the following instructions.
 

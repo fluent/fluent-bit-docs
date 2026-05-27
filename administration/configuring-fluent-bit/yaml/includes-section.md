@@ -1,8 +1,8 @@
 # Includes
 
-The `includes` section lets you specify additional YAML configuration files to be merged into the current configuration. These files are identified as a list of filenames and can include relative or absolute paths. If no absolute path is provided, the file is assumed to be located in a directory relative to the file that references it.
+The `includes` section of YAML configuration files lets you specify additional YAML files to be merged into the current configuration. This lets you organize complex configurations into smaller, manageable files and include them as needed.
 
-Use this section to organize complex configurations into smaller, manageable files and include them as needed.
+These files are identified as a list of filenames and can include relative or absolute paths. If a path isn't specified as absolute, it will be treated as relative to the file that includes it.
 
 ## Usage
 
@@ -15,7 +15,11 @@ The following example demonstrates how to include additional YAML files using re
     └── inclusion-2.yaml
 ```
 
-The content of `fluent-bit.yaml`:
+{% hint style="info" %}
+Environment variables aren't supported in includes section. The path for each file must be specified as a literal string.
+{% endhint %}
+
+You can reference these files in `fluent-bit.yaml` as follows:
 
 ```yaml
 includes:
@@ -24,5 +28,3 @@ includes:
 ```
 
 Ensure that the included files are formatted correctly and contain valid YAML configurations for seamless integration.
-
-If a path isn't specified as absolute, it will be treated as relative to the file that includes it.

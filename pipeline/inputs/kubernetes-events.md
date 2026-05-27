@@ -4,28 +4,30 @@ description: Collect Kubernetes events
 
 # Kubernetes events
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 Kubernetes exports events through the API server. This input plugin lets you retrieve those events as logs and process them through the pipeline.
 
 ## Configuration
 
-Starting with Fluent Bit 3.1, the Kubernetes Events plugin uses a Kubernetes
-watch stream instead of polling. Previous versions use the interval parameters for
-reconnecting the Kubernetes watch stream.
-
 | Key                   | Description                                                                    | Default                                                |
 |-----------------------|--------------------------------------------------------------------------------|--------------------------------------------------------|
 | `db`                  | Set a database file to keep track of recorded Kubernetes events.               | _none_                                                 |
+| `db.journal_mode`     | Set the journal mode for databases. Values: `DELETE`, `TRUNCATE`, `PERSIST`, `MEMORY`, `WAL`, `OFF`. | `WAL` |
+| `db.locking`          | Specify that the database will be accessed only by Fluent Bit. Enabling this feature helps increase performance when accessing the database but restricts external tools from querying the content. | `false` |
 | `db.sync`             | Set a database sync method. Accepted values: `extra`, `full`, `normal`, `off`. | `normal`                                               |
-| `interval_sec`        | Set the reconnect interval (seconds).                                          | `0`                                                    |
 | `interval_nsec`       | Set the reconnect interval (sub seconds: nanoseconds).                         | `500000000`                                            |
-| `kube_url`            | API Server endpoint.                                                           | `https://kubernetes.default.svc`                       |
+| `interval_sec`        | Set the reconnect interval (seconds).                                          | `0`                                                    |
 | `kube_ca_file`        | Kubernetes TLS CA file.                                                        | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt` |
 | `kube_ca_path`        | Kubernetes TLS ca path.                                                        | _none_                                                 |
-| `kube_token_file`     | Kubernetes authorization token file.                                           | `/var/run/secrets/kubernetes.io/serviceaccount/token`  |
-| `kube_token_ttl`      | Kubernetes token time to live, until it's read again from the token file.      | `10m`                                                  |
+| `kube_namespace`      | Kubernetes namespace to query events from.                                     | `all`                                                  |
 | `kube_request_limit`  | Kubernetes limit parameter for events query, no limit applied when set to `0`. | `0`                                                    |
 | `kube_retention_time` | Kubernetes retention time for events.                                          | `1h`                                                   |
-| `kube_namespace`      | Kubernetes namespace to query events from.                                     | `all`                                                  |
+| `kube_token_file`     | Kubernetes authorization token file.                                           | `/var/run/secrets/kubernetes.io/serviceaccount/token`  |
+| `kube_token_ttl`      | Kubernetes token time to live, until it's read again from the token file.      | `10m`                                                  |
+| `kube_url`            | API Server endpoint.                                                           | `https://kubernetes.default.svc`                       |
 | `tls.debug`           | Debug level between `0` (nothing) and `4` (every detail).                      | `0`                                                    |
 | `tls.verify`          | Enable or disable verification of TLS peer certificate.                        | `On`                                                   |
 | `tls.vhost`           | Set optional TLS virtual host.                                                 | _none_                                                 |
@@ -44,7 +46,7 @@ The Kubernetes service account used by Fluent Bit must have `get`, `list`, and `
 
 ### Basic configuration file
 
-In the following configuration file, the Kubernetes events plugin collects events every `5` seconds (default for `interval_nsec`) and exposes them through the [standard output plugin](../outputs/standard-output.md) on the console:
+In the following configuration file, the Kubernetes events plugin collects events and exposes them through the [standard output plugin](../outputs/standard-output.md) on the console:
 
 
 {% tabs %}
