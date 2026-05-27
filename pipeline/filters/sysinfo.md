@@ -1,5 +1,9 @@
 # Sysinfo
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Sysinfo_ filter lets you append system information like the Fluent Bit version or hostname.
 
 ## Configuration parameters
@@ -9,10 +13,10 @@ The plugin supports the following configuration parameters:
 | Key | Description | Supported platform |
 | --- | --- | --- |
 | `fluentbit_version_key` | Specify the key name for the Fluent Bit version.| All |
-| `os_name_key` | Specify the key name for operating system name. For example, `Linux`, `win64` or `macos`.| All |
 | `hostname_key`| Specify the key name for hostname. | All |
-| `os_version_key` | Specify the key name for the operating system version. Not supported on some platforms. | Linux |
 | `kernel_version_key` | Specify the key name for kernel version. Not supported on some platforms.| Linux |
+| `os_name_key` | Specify the key name for operating system name. For example, `Linux`, `win64` or `macOS`.| All |
+| `os_version_key` | Specify the key name for the operating system version. Not supported on some platforms. | Linux |
 
 Some properties are supported by specific platforms.
 
@@ -34,8 +38,8 @@ pipeline:
   filters:
     - name: sysinfo
       match: '*'
-      Fluentbit_version_key: flb_ver
-      Os_name_key: os_name
+      fluentbit_version_key: flb_ver
+      os_name_key: os_name
 
   outputs:
     - name: stdout
@@ -53,12 +57,12 @@ pipeline:
 [FILTER]
   Name sysinfo
   Match *
-  Fluentbit_version_key flb_ver
-  Os_name_key os_name
+  Fluentbit_Version_Key flb_ver
+  Os_Name_Key os_name
 
 [OUTPUT]
-  name stdout
-  match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}
