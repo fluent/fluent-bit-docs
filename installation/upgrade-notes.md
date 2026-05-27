@@ -11,7 +11,7 @@ This allows users to expect the new release binary to appear and allow/deny/upda
 
 ## Fluent Bit v4.0+
 
-The default configuration file has been switched to use YAML format and a different name (`.yaml` file suffix instead of `.conf`).
+By default, configuration files use YAML syntax and the `.yaml` file extension. 
 
 You may need to update your custom deployments to either use YAML configuration files
 or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
