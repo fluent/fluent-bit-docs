@@ -10,11 +10,11 @@ The metrics selector processor supports the following configuration parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `metric_name` | The string that determines which metrics are affected by this processor, depending on the active [matching operation](#matching-operations). | _none_ |
-| `context` | Specifies matching context. Possible values: `metric_name` or `delete_label`. | `metrics_name` |
 | `action` | Specifies whether to include or exclude matching metrics. Possible values: `INCLUDE` or `EXCLUDE`. | _none_ |
-| `operation_type` | Specifies the [matching operation](#matching-operations) to apply to the value of `metric_name`. Possible values: `PREFIX` or `SUBSTRING`. | _none_ |
+| `context` | Specifies matching context. Possible values: `metric_name` or `delete_label_value`. | `metric_name` |
 | `label` | Specifies a label key and value pair. | _none_ |
+| `metric_name` | The string that determines which metrics are affected by this processor, depending on the active [matching operation](#matching-operations). | _none_ |
+| `operation_type` | Specifies the [matching operation](#matching-operations) to apply to the value of `metric_name`. Possible values: `PREFIX` or `SUBSTRING`. | _none_ |
 
 ## Matching operations
 
