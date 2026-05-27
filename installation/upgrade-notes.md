@@ -15,8 +15,10 @@ The default configuration file has been switched to use YAML format and a differ
 
 This may require updating any custom deployments to either provide a YAML configuration or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
 
-For Linux the Systemd unit will need overriding to specify `-c <legacy config file>`.
-Similarly for containers, Windows and macOS the default launch command is changed to point at the YAML config file by default.
+In Linux environments, you must override the systemd unit to specify `-c <legacy config file>`.
+
+Similarly, in Windows and macOS container environments, the default launch command uses YAML configuration files
+by default.
 
 ## Fluent Bit v1.9.9
 
