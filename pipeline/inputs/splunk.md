@@ -1,24 +1,46 @@
 # Splunk
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Splunk_ input plugin handles [Splunk HTTP HEC](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) requests.
 
 ## Configuration parameters
 
 This plugin uses the following configuration parameters:
 
+The table below includes both:
+
+- settings specific to the Splunk input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
+
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
 | Key                       | Description                                                                                                                                                        | Default         |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`.                               | `512K`          |
-| `buffer_max_size`         | Set the maximum buffer size to receive a JSON message.                                                                                                             | `4M`            |
-| `http2`                   | Enable HTTP/2 support.                                                                                                                                             | `true`          |
+| `add_remote_addr`         | Inject a remote address field into the record, using the `X-Forwarded-For` header or the connection address as the value.                                          | `false`         |
+| `buffer_chunk_size`       | Set the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`          |
+| `buffer_max_size`         | Set the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                                      | `4M`            |
+| `http2`                   | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                                | `true`          |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                                 | `0`             |
+| `http_server.workers`     | Number of HTTP listener worker threads.                                                                                                                            | `1`             |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                          | `8192`          |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                | `256M`          |
 | `listen`                  | The address to listen on.                                                                                                                                          | `0.0.0.0`       |
 | `port`                    | The port for Fluent Bit to listen on.                                                                                                                              | `8088`          |
+| `remote_addr_key`         | Record key name used to store the remote address when `add_remote_addr` is enabled.                                                                                | `remote_addr`   |
 | `splunk_token`            | Specify a Splunk token for HTTP HEC authentication. If multiple tokens are specified (with commas and no spaces), usage will be divided across each of the tokens. | _none_          |
 | `splunk_token_key`        | Set a record key for storing the Splunk token for HTTP HEC. Use only when `store_token_in_metadata` is `false`.                                                    | `@splunk_token` |
 | `store_token_in_metadata` | Store Splunk HEC tokens in the Fluent Bit metadata. If set to `false`, they will be stored as key-value pairs in the record data.                                  | `true`          |
 | `success_header`          | Add an HTTP header key/value pair on success. Multiple headers can be set.                                                                                         | _none_          |
 | `tag_key`                 | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                                | _none_          |
 | `threaded`                | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                            | `false`         |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
 
 ## Get started
 
@@ -107,6 +129,44 @@ pipeline:
     Name         splunk
     Port         8088
     Splunk_Token my-secret-token,another-token
+
+[OUTPUT]
+    Name  stdout
+    Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Add a remote address field
+
+When `add_remote_addr` is set to `true`, a remote address field is injected into every record. The value is extracted from the `X-Forwarded-For` header, or falls back to the connection address if the header isn't present. Use `remote_addr_key` to customize the field name.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: splunk
+      port: 8088
+      add_remote_addr: true
+      remote_addr_key: remote_addr
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name            splunk
+    Port            8088
+    Add_Remote_Addr true
+    Remote_Addr_Key remote_addr
 
 [OUTPUT]
     Name  stdout

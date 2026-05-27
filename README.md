@@ -37,9 +37,11 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
+If you are upgrading from the Fluent Bit `4.2` series, start with [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md) and [Upgrade notes](installation/upgrade-notes.md).
+
 ## Fluent Bit, Fluentd, and CNCF
 
-Fluent Bit is a [CNCF](https://cncf.io) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
+Fluent Bit is a [CNCF](https://www.cncf.io/) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
 
 Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper/) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
 

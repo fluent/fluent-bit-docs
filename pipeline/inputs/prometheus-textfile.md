@@ -1,5 +1,9 @@
 # Prometheus text file
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _Prometheus text file_ input plugin allows Fluent Bit to read metrics from Prometheus text format files (`.prom` files) on the local filesystem. Use this plugin to collect custom metrics that are written to files by external applications or scripts, similar to the Prometheus Node Exporter text file collector.
 
 ## Configuration parameters

@@ -24,7 +24,7 @@ The `regex` parser supports the following format-specific configuration paramete
 
 Fluent Bit uses the [Onigmo](https://github.com/k-takata/Onigmo) regular expression library in Ruby mode.
 
-You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](http://rubular.com/) web editor to test your expressions.
+You can use only alphanumeric characters and underscore in group names. For example, a group name like `(?<user-name>.*)` causes an error due to the invalid dash (`-`) character. Use the [Rubular](https://rubular.com/) web editor to test your expressions.
 
 The following parser configuration example provides rules that can be applied to an Apache HTTP Server log entry:
 

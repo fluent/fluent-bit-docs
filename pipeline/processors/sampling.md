@@ -76,6 +76,7 @@ Tail sampling uses the following `sampling_settings` configuration parameters:
 | Key | Description | Default |
 | --- | :---------- | ------- |
 | `decision_wait` | Specifies how long to buffer spans before making a sampling decision, allowing full trace evaluation. | `30s` |
+| `legacy_reconcile` | Uses the legacy tail-sampling reconciliation path instead of the optimized reconciler. Keep this disabled unless you need behavior parity while comparing results with older deployments. | `false` |
 | `max_traces` | Specifies the maximum number of traces that can be held in memory. When the limit is reached, the oldest trace is deleted. | _none_ |
 
 ### Conditions
@@ -127,10 +128,10 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 5s
-              conditions:
-                - type: latency
-                  threshold_ms_low: 200
-                  threshold_ms_high: 3000
+            conditions:
+              - type: latency
+                threshold_ms_low: 200
+                threshold_ms_high: 3000
 
   outputs:
     - name: stdout
@@ -175,10 +176,10 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 5s
-              conditions:
-                - type: span_count
-                  min_spans: 3
-                  max_spans: 5
+            conditions:
+              - type: span_count
+                min_spans: 3
+                max_spans: 5
 
   outputs:
     - name: stdout
@@ -222,9 +223,9 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 5s
-              conditions:
-                - type: status_code
-                  status_codes: [ERROR]
+            conditions:
+              - type: status_code
+                status_codes: [ERROR]
 
   outputs:
     - name: stdout
@@ -275,29 +276,29 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 2s
-              conditions:
-                # Exact matching
-                - type: string_attribute
-                  match_type: strict
-                  key: "http.method"
-                  values: ["GET"]
+            conditions:
+              # Exact matching
+              - type: string_attribute
+                match_type: strict
+                key: "http.method"
+                values: ["GET"]
 
                 # Check if attribute exists
-                - type: string_attribute
-                  match_type: exists
-                  key: "service.name"
+              - type: string_attribute
+                match_type: exists
+                key: "service.name"
 
-                # Regex pattern matching
-                - type: string_attribute
-                  match_type: regex
-                  key: "http.url"
-                  values: ["^https://api\\..*", ".*\\/health$"]
+              # Regex pattern matching
+              - type: string_attribute
+                match_type: regex
+                key: "http.url"
+                values: ["^https://api\\..*", ".*\\/health$"]
 
-                # Multiple regex patterns for error conditions
-                - type: string_attribute
-                  match_type: regex
-                  key: "error.message"
-                  values: ["timeout.*", "connection.*failed", ".*rate.?limit.*"]
+              # Multiple regex patterns for error conditions
+              - type: string_attribute
+                match_type: regex
+                key: "error.message"
+                values: ["timeout.*", "connection.*failed", ".*rate.?limit.*"]
 
   outputs:
     - name: stdout
@@ -344,11 +345,11 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 5s
-              conditions:
-                - type: numeric_attribute
-                  key: "http.status_code"
-                  min_value: 400
-                  max_value: 504
+            conditions:
+              - type: numeric_attribute
+                key: "http.status_code"
+                min_value: 400
+                max_value: 504
 
   outputs:
     - name: stdout
@@ -393,10 +394,10 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 2s
-              conditions:
-                - type: boolean_attribute
-                  key: "user.logged"
-                  value: false
+            conditions:
+              - type: boolean_attribute
+                key: "user.logged"
+                value: false
 
   outputs:
     - name: stdout
@@ -440,9 +441,9 @@ pipeline:
             type: tail
             sampling_settings:
               decision_wait: 2s
-              conditions:
-                - type: trace_state
-                  values: [debug=false, priority=high]
+            conditions:
+              - type: trace_state
+                values: [debug=false, priority=high]
 
   outputs:
     - name: stdout

@@ -1,5 +1,9 @@
 # Health
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Health_ input plugin lets you check how healthy a TCP server is. It checks by issuing a TCP connection at regular intervals.
 
 ## Configuration parameters
@@ -59,7 +63,7 @@ pipeline:
   Host          127.0.0.1
   Port          80
   Interval_Sec  1
-  Interval_NSec 0
+  Interval_Nsec 0
 
 [OUTPUT]
   Name   stdout

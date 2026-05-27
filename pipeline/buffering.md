@@ -110,21 +110,21 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush                     1
+  Flush                     1
   Log_Level                 info
-  storage.path              /var/log/flb-storage/
-  storage.type              filesystem
-  storage.inherit           on
-  storage.sync              normal
-  storage.max_chunks_up     128
+  Storage.Path              /var/log/flb-storage/
+  Storage.Type              filesystem
+  Storage.Inherit           on
+  Storage.Sync              normal
+  Storage.Max_Chunks_Up     128
 
 [INPUT]
-  name          cpu
+  Name          cpu
   # Inherits storage.type: filesystem from SERVICE
 
 [INPUT]
-  name          mem
-  storage.type  memory  # Overrides the inherited default
+  Name          mem
+  Storage.Type  memory  # Overrides the inherited default
 ```
 
 {% endtab %}
@@ -173,26 +173,26 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush                     1
+  Flush                     1
   Log_Level                 info
-  storage.path              /var/log/flb-storage/
-  storage.sync              normal
-  storage.checksum          off
-  storage.max_chunks_up     128
-  storage.backlog.mem_limit 5M
+  Storage.Path              /var/log/flb-storage/
+  Storage.Sync              normal
+  Storage.Checksum          off
+  Storage.Max_Chunks_Up     128
+  Storage.Backlog.Mem_Limit 5M
 
 [INPUT]
-  name          cpu
-  storage.type  filesystem
+  Name          cpu
+  Storage.Type  filesystem
 
 [INPUT]
-  name          mem
-  storage.type  memory
+  Name          mem
+  Storage.Type  memory
 
 [INPUT]
-  name           dummy
-  storage.type   memrb
-  mem_buf_limit  10M
+  Name           dummy
+  Storage.Type   memrb
+  Mem_Buf_Limit  10M
 ```
 
 {% endtab %}
@@ -237,22 +237,22 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush                     1
+  Flush                     1
   Log_Level                 info
-  storage.path              /var/log/flb-storage/
-  storage.sync              normal
-  storage.checksum          off
-  storage.max_chunks_up     128
-  storage.backlog.mem_limit 5M
+  Storage.Path              /var/log/flb-storage/
+  Storage.Sync              normal
+  Storage.Checksum          off
+  Storage.Max_Chunks_Up     128
+  Storage.Backlog.Mem_Limit 5M
 
 [INPUT]
-  name                      cpu
-  storage.type              filesystem
+  Name                      cpu
+  Storage.Type              filesystem
 
 [OUTPUT]
-  name                      stackdriver
-  match                     *
-  storage.total_limit_size  5M
+  Name                      stackdriver
+  Match                     *
+  Storage.Total_Limit_Size  5M
 ```
 
 {% endtab %}
