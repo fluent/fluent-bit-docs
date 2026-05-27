@@ -108,11 +108,9 @@ pipeline:
   Placement_Group   true
   Partition_Number  true
   Host_Id           true
-  Ec2_Instance_Id   true
-  Ec2_Instance_Type true
   Ipv6              true
   Private_Ip        true
-  Public_Ip         true  
+  Public_Ip         true
   Ami_Id            true
   Account_Id        true
   Hostname          true
