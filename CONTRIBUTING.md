@@ -5,7 +5,7 @@
 
 First of all, thanks for taking the time to read this guide. The fact that you're here means you're interested in contributing to Fluent Bit, and we greatly appreciate your time.
 
-This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
+This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/manual/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
 
 Fluent Bit has a group of dedicated maintainers who oversee this repository, including several technical writers. These writers will review any pull requests you open, so don't be afraid to contribute, even if you're not a writer by trade. Your suggestions are valuable, and we'll help you wrangle any stray commas.
 
@@ -15,7 +15,6 @@ Before you contribute to the Fluent Bit docs, review these critical tips:
 
 - [Sign off](#sign-off-your-git-commits) your Git commits.
 - Use [soft line wraps](#line-wraps) in Markdown files.
-- To link between pages, use [absolute file paths](#links).
 - Review the results of [linters](#linters) for style and formatting guidance.
 
 ## Review process
@@ -67,15 +66,7 @@ The active [linters](#linters) in this repository flag certain style errors and,
 
 ## Formatting guidelines
 
-The Fluent Bit docs library is built and hosted through [GitBook](https://docs.gitbook.com/). Unfortunately, GitBook doesn't support local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook account can verify that things are formatted correctly after you open a new pull request.
-
-### Links
-
-When cross-linking between in this repository, use a full absolute path whenever possible. For example:
-
-```text
-[LTSV](../pipeline/parsers/ltsv.md) and [Logfmt](../pipeline/parsers/logfmt.md)
-```
+The Fluent Bit docs library is built and hosted through [GitBook](https://gitbook.com/docs/). Unfortunately, GitBook doesn't support local previews for contributors, but a Fluent Bit maintainer with a dedicated GitBook account can verify that things are formatted correctly after you open a new pull request.
 
 ### Line wraps
 
@@ -119,6 +110,53 @@ When you create a new `.md` file for a new page, you must add an entry to this r
 
 Similarly, if you update the `# h1` title header of an existing page, be sure to update that page's `SUMMARY.md` entry to match. `SUMMARY.md` entries takes precedence over in-page headers, which means that if you update a page's `# h1` title without updating `SUMMARY.md`, the unchanged `SUMMARY.md` title will persist in both the rendered page and the table of contents.
 
+## Plugin documentation
+
+When documenting a Fluent Bit plugin, follow these standards to keep plugin pages consistent.
+
+### Configuration parameters table
+
+- **Sort parameters alphabetically** by key name.
+- **List all parameters** defined in the plugin's `config_map`, plus the common `workers` parameter.
+- **Use `_none_` in the Default cell** when the parameter's default is `NULL` in the source `config_map`. Leave the cell empty only when the parameter has no entry in `config_map` at all (for example, `host` and `port`, which come from the network defaults).
+- Use this table header format:
+
+  ```markdown
+  | Key | Description | Default |
+  | --- | ----------- | ------- |
+  ```
+
+### Configuration examples
+
+Every plugin page should include both a YAML and a classic configuration example, presented as tabs:
+
+```markdown
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+...
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+...
+{% endtab %}
+{% endtabs %}
+```
+
+### Key casing in examples
+
+Key casing differs between the two configuration formats:
+
+- **YAML** (`fluent-bit.yaml`): All keys are lowercase. For example: `api_key`, `log_level`, `match`.
+- **Classic** (`fluent-bit.conf`): Keys use Title_Case — capitalize the first letter of every underscore-separated word. For example: `Api_Key`, `Log_Level`, `Match`.
+
+| YAML key | Classic key |
+| --- | --- |
+| `api_key` | `Api_Key` |
+| `log_group_name` | `Log_Group_Name` |
+| `match` | `Match` |
+| `name` | `Name` |
+
+This applies to all keys in every section (`[SERVICE]`, `[INPUT]`, `[OUTPUT]`, and so on).
+
 ## Linters
 
 This repository runs linters as GitHub Actions for each pull request. If a linter finds errors or makes suggested changes, you can view these results in the **Files changed** tab.
@@ -126,17 +164,17 @@ This repository runs linters as GitHub Actions for each pull request. If a linte
 <details>
 <summary>:mag: Examples: linter results</summary>
 
-![An example of a warning-level Vale result.](/.gitbook/assets/vale-example-warning.png)
+![An example of a warning-level Vale result.](./.gitbook/assets/vale-example-warning.png)
 
-![An example of an error-level Vale result.](/.gitbook/assets/vale-example-error.png)
+![An example of an error-level Vale result.](./.gitbook/assets/vale-example-error.png)
 
-![An example of a Markdownlint result.](/.gitbook/assets/markdownlint-example.png)
+![An example of a Markdownlint result.](./.gitbook/assets/markdownlint-example.png)
 
 </details>
 
 ### Vale
 
-[Vale](https://vale.sh/docs/) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
+[Vale](https://vale.sh/docs) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
 
 Vale tests for the Fluent Bit docs are stored in the [`/vale-styles`](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles) folder. Most Vale tests are at the `suggestion` or `warning` level and won't block pull requests from merging. However, tests at the `error` level will block merging until the associated issue is fixed.
 
