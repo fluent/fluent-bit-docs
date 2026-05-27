@@ -1,2 +1,1 @@
-# Files Schema / Structure
-
+# Files schema and structure

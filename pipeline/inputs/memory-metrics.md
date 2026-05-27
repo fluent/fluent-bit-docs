@@ -1,59 +1,101 @@
-# Memory Metrics
+# Memory metrics
 
-The **mem** input plugin, gathers the information about the memory and swap usage of the running system every certain interval of time and reports the total amount of memory and the amount of free available.
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
 
-## Getting Started
+The _Memory_ (`mem`) input plugin gathers memory and swap usage on Linux at a fixed interval and reports totals and free space. The plugin emits log-based metrics (for Prometheus-format metrics see the Node Exporter metrics input plugin).
 
-In order to get memory and swap usage from your system, you can run the plugin from the command line or through the configuration file:
+## Metrics reported
 
-### Command Line
+| Key          | Description                                                             | Units       |
+|:-------------|:------------------------------------------------------------------------|:------------|
+| `Mem.free`   | Free or available memory reported by the kernel.                        | Kilobytes   |
+| `Mem.total`  | Total system memory.                                                    | Kilobytes   |
+| `Mem.used`   | Memory in use (`Mem.total` - `Mem.free`).                               | Kilobytes   |
+| `proc_bytes` | Optional. Resident set size for the configured process (`pid`).         | Bytes       |
+| `proc_hr`    | Optional. Human-readable value of `proc_bytes` (for example, `12.00M`). | Formatted   |
+| `Swap.free`  | Free swap space.                                                        | Kilobytes   |
+| `Swap.total` | Total system swap.                                                      | Kilobytes   |
+| `Swap.used`  | Swap space in use (`Swap.total` - `Swap.free`).                         | Kilobytes   |
 
-```bash
-$ fluent-bit -i mem -t memory -o stdout -m '*'
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+## Configuration parameters
 
-[2017/03/03 21:12:35] [ info] [engine] started
-[0] memory: [1488543156, {"Mem.total"=>1016044, "Mem.used"=>841388, "Mem.free"=>174656, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[1] memory: [1488543157, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[2] memory: [1488543158, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
-[3] memory: [1488543159, {"Mem.total"=>1016044, "Mem.used"=>841420, "Mem.free"=>174624, "Swap.total"=>2064380, "Swap.used"=>139888, "Swap.free"=>1924492}]
+The plugin supports the following configuration parameters:
+
+| Key             | Description                                                                                             | Default |
+|:----------------|:--------------------------------------------------------------------------------------------------------|:--------|
+| `interval_nsec` | Polling interval in nanoseconds.                                                                        | `0`     |
+| `interval_sec`  | Polling interval in seconds.                                                                            | `1`     |
+| `pid`           | Process ID to measure. When set, the plugin also reports `proc_bytes` and `proc_hr`.                    | _none_  |
+| `threaded`      | Run this input in its own [thread](../../administration/multithreading.md#inputs).                      | `false` |
+
+## Get started
+
+To collect memory and swap usage from your system, run the plugin from the command line or through the configuration file.
+
+### Command line
+
+Run the following command from the command line:
+
+```shell
+fluent-bit -i mem -t memory -o stdout -m '*'
 ```
 
-## Threading
+The output is similar to:
 
-You can enable the `threaded` setting to run this input in its own
-[thread](../../administration/multithreading.md#inputs).
+```text
+...
+[0] memory: [[1751381087.225589224, {}], {"Mem.total"=>3986708, "Mem.used"=>560708, "Mem.free"=>3426000, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381088.228411537, {}], {"Mem.total"=>3986708, "Mem.used"=>560708, "Mem.free"=>3426000, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381089.225600084, {}], {"Mem.total"=>3986708, "Mem.used"=>561480, "Mem.free"=>3425228, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+[0] memory: [[1751381090.228345064, {}], {"Mem.total"=>3986708, "Mem.used"=>561480, "Mem.free"=>3425228, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0}]
+...
+```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[INPUT]
-    Name   mem
-    Tag    memory
-
-[OUTPUT]
-    Name   stdout
-    Match  *
-```
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-    inputs:
-        - name: mem
-          tag: memory
-    outputs:
-        - name: stdout
-          match: '*'
+  inputs:
+    - name: mem
+      tag: memory
+      interval_sec: 5
+      pid: 1234
+
+  outputs:
+    - name: stdout
+      match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name          mem
+  Tag           memory
+  Interval_Sec  5
+  Interval_Nsec 0
+  Pid           1234
+
+[OUTPUT]
+  Name   stdout
+  Match  *
+```
+
 {% endtab %}
 {% endtabs %}
+
+Example output when `pid` is set:
+
+```text
+...
+[0] memory: [[1751381087.225589224, {}], {"Mem.total"=>3986708, "Mem.used"=>560708, "Mem.free"=>3426000, "Swap.total"=>0, "Swap.used"=>0, "Swap.free"=>0, "proc_bytes"=>12349440, "proc_hr"=>"11.78M"}]
+...
+```
