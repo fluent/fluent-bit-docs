@@ -78,7 +78,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-### Parsing the MESSAGE field
+### Parsing the `MESSAGE` field
 
 By default, the _Systemd_ plugin logs all fields in the journal verbatim. If you want to parse the `MESSAGE` field, you can configure your service to specify a parser. For example, to parse the `MESSAGE` field as JSON, you can use something like the following systemd configuration:
 
