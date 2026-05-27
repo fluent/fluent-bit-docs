@@ -72,7 +72,7 @@ Consider a JSON file `data.log` with the following content:
 {"color": "green", "label": {"name": "abc"}, "meta": null}
 ```
 
-The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the  keys `color` and `label` exist.
+The following files configure a pipeline to consume the log, while applying an Expect filter to validate that the keys `color` and `label` exist.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -81,29 +81,29 @@ The following is the Fluent Bit YAML configuration file:
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers.yaml
+  flush: 1
+  log_level: info
+  parsers_file: parsers.yaml
 
 pipeline:
-    inputs:
-        - name: tail
-          path: data.log
-          parser: json
-          exit_on_eof: on
+  inputs:
+    - name: tail
+      path: data.log
+      parser: json
+      exit_on_eof: on
 
-    # First 'expect' filter to validate that our data was structured properly
-    filters:
-        - name: expect
-          match: '*'
-          key_exists:
-            - color
-            - $label['name']
-          action: exit
+  # First 'expect' filter to validate that our data was structured properly
+  filters:
+    - name: expect
+      match: '*'
+      key_exists:
+        - color
+        - $label['name']
+      action: exit
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -114,8 +114,8 @@ The following is the Fluent Bit YAML parsers file:
 
 ```yaml
 parsers:
-    - name: json
-      format: json
+  - name: json
+    format: json
 ```
 
 {% endtab %}
@@ -175,51 +175,51 @@ The following is the Fluent Bit YAML configuration file:
 
 ```yaml
 service:
-    flush: 1
-    log_level: info
-    parsers_file: parsers.yaml
+  flush: 1
+  log_level: info
+  parsers_file: parsers.yaml
 
 pipeline:
-    inputs:
-        - name: tail
-          path: data.log
-          parser: json
-          exit_on_eof: on
+  inputs:
+    - name: tail
+      path: data.log
+      parser: json
+      exit_on_eof: on
 
-    # First 'expect' filter to validate that our data was structured properly
-    filters:
-        - name: expect
-          match: '*'
-          key_exists:
-            - color
-            - $label['name']
-          action: exit
+  # First 'expect' filter to validate that our data was structured properly
+  filters:
+    - name: expect
+      match: '*'
+      key_exists:
+        - color
+        - $label['name']
+      action: exit
 
-        # Match records that only contains map 'label' with key 'name' = 'abc'
-        - name: grep
-          match: '*'
-          regex: "$label['name'] ^abc$"
+    # Match records that only contains map 'label' with key 'name' = 'abc'
+    - name: grep
+      match: '*'
+      regex: "$label['name'] ^abc$"
 
-        # Check that every record contains 'label' with a non-null value
-        - name: expect
-          match: '*'
-          key_val_eq: $label['name'] abc
-          action: exit
+    # Check that every record contains 'label' with a non-null value
+    - name: expect
+      match: '*'
+      key_val_eq: $label['name'] abc
+      action: exit
 
-        # Append a new key to the record using an environment variable
-        - name: record_modifier
-          match: '*'
-          record: hostname ${HOSTNAME}
+    # Append a new key to the record using an environment variable
+    - name: record_modifier
+      match: '*'
+      record: hostname ${HOSTNAME}
 
-        # Check that every record contains 'hostname' key
-        - name: expect
-          match: '*'
-          key_exists: hostname
-          action: exit
+    # Check that every record contains 'hostname' key
+    - name: expect
+      match: '*'
+      key_exists: hostname
+      action: exit
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
