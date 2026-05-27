@@ -442,12 +442,12 @@ using `fallback` as default index name if `destination_index` value isn't presen
 
 ```text
 [OUTPUT]
-    Name es
-    Match *
-    # ...
-    Index fallback
-    Target_index fluent-$destination_index
-    # ...
+  Name es
+  Match *
+  # ...
+  Index fallback
+  Target_index fluent-$destination_index
+  # ...
 ```
 
 For records that don't have the field `destination_index`, the value of `index` (`fallback`) will be used.
