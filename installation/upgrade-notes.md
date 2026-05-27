@@ -13,7 +13,8 @@ This allows users to expect the new release binary to appear and allow/deny/upda
 
 The default configuration file has been switched to use YAML format and a different name (`.yaml` file suffix instead of `.conf`).
 
-This may require updating any custom deployments to either provide a YAML configuration or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
+You may need to update your custom deployments to either use YAML configuration files
+or switch back to using legacy configuration in the arguments to the Fluent Bit binary.
 
 In Linux environments, you must override the systemd unit to specify `-c <legacy config file>`.
 
