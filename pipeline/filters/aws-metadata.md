@@ -1,5 +1,9 @@
 # AWS metadata
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _AWS Filter_ enriches logs with AWS Metadata. The plugin adds the EC2 instance ID and availability zone to log records. To use this plugin, you must be running in EC2 and have the [instance metadata service enabled](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html).
 
 ## Configuration parameters
@@ -8,28 +12,29 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
-| `partition` | The [partition](https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html), such as `aws`. | `true` |
-| `domain` | The domain for AWS resources in the region, such as `amazonaws.com`. | `false` |
-| `region` | The [region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions), such as `us-east-1`. | `false` |
-| `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones), such as `us-east-1a`. | `true` |
+| `account_id` | The account ID for the current EC2 instance. | `false` |
+| `ami_id` | The EC2 instance image ID. | `false` |
+| `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), such as `us-east-1a`. | `true` |
 | `az_id` | The [availability zone ID](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#az-ids), such as `use1-az1`. | `false` |
-| `placement_group` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) name. | `false` |
-| `partition_number` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) partition number. | `false` |
-| `host_id` | The [dedicated host](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html) ID. | `false` |
+| `domain` | The domain for AWS resources in the region, such as `amazonaws.com`. | `false` |
 | `ec2_instance_id` | The EC2 instance ID. | `true` |
 | `ec2_instance_type` | The EC2 instance type. | `false` |
-| `private_ip` | The EC2 instance private IPv4 address. | `false` |
-| `public_ip` | The EC2 instance public IPv4 address. | `false` |
-| `ipv6` | The EC2 instance IPv6 address. | `false` |
-| `ami_id` | The EC2 instance image ID. | `false` |
-| `account_id` | The account ID for the current EC2 instance. | `false` |
+| `enable_entity` | Enables entity prefix for fields used for constructing entity. | `false` |
+| `host_id` | The [dedicated host](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html) ID. | `false` |
 | `hostname` | The hostname for the current EC2 instance. | `false` |
-| `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
-| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
-| `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
+| `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
+| `ipv6` | The EC2 instance IPv6 address. | `false` |
+| `partition` | The [partition](https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html), such as `aws`. | `true` |
+| `partition_number` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) partition number. | `false` |
+| `placement_group` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) name. | `false` |
+| `private_ip` | The EC2 instance private IP. | `false` |
+| `public_ip` | The EC2 instance public IPv4 address. | `false` |
+| `region` | The [region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions), such as `us-east-1`. | `false` |
+| `retry_interval_s` | Defines minimum duration in seconds between retries for fetching EC2 instance tags. | `300` |
+| `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
 | `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
-| `retry_interval_s` |Defines minimum duration between retries for fetching EC2 instance tags. | `300` |
+| `tags_include` | Defines a list of specific EC2 tag keys to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be ignored. Example: `Name,tag1,tag2`. | _none_ |
+| `vpc_id` | The VPC ID for the current EC2 instance. | `false` |
 
 If you run Fluent Bit in a container, you might need to use instance metadata v1. The plugin behaves the same regardless of which version is used.
 
@@ -58,27 +63,27 @@ The following is an example of a configuration file:
 
 ```yaml
 pipeline:
-    inputs:
-        - name: dummy
-          tag: dummy
+  inputs:
+    - name: dummy
+      tag: dummy
 
-    filters:
-        - name: aws
-          match: '*'
-          imds_version: v1
-          az: true
-          ec2_instance_id: true
-          ec2_instance_type: true
-          private_ip: true
-          ami_id: true
-          account_id: true
-          hostname: true
-          vpc_id: true
-          tags_enabled: true
+  filters:
+    - name: aws
+      match: '*'
+      imds_version: v1
+      az: true
+      ec2_instance_id: true
+      ec2_instance_type: true
+      private_ip: true
+      ami_id: true
+      account_id: true
+      hostname: true
+      vpc_id: true
+      tags_enabled: true
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -86,35 +91,37 @@ pipeline:
 
 ```text
 [INPUT]
-    Name dummy
-    Tag dummy
+  Name              dummy
+  Tag               dummy
 
 [FILTER]
-    Name aws
-    Match *
-    imds_version v1
-    partition true
-    domain true
-    region true
-    az true
-    az_id true
-    placement_group true
-    partition_number true
-    host_id true
-    ec2_instance_id true
-    ec2_instance_type true
-    private_ip true
-    public_ip true
-    ipv6 true
-    ami_id true
-    account_id true
-    hostname true
-    vpc_id true
-    tags_enabled true
+  Name              aws
+  Match             *
+  Imds_Version      v1
+  Partition         true
+  Az                true
+  Domain            true
+  Region            true
+  Az_Id             true
+  Ec2_Instance_Id   true
+  Ec2_Instance_Type true
+  Placement_Group   true
+  Partition_Number  true
+  Host_Id           true
+  Ec2_Instance_Id   true
+  Ec2_Instance_Type true
+  Ipv6              true
+  Private_Ip        true
+  Public_Ip         true  
+  Ami_Id            true
+  Account_Id        true
+  Hostname          true
+  Vpc_Id            true
+  Tags_Enabled      true
 
 [OUTPUT]
-    Name stdout
-    Match *
+  Name              stdout
+  Match             *
 ```
 
 {% endtab %}
@@ -128,7 +135,7 @@ To achieve this, AWS Filter can be configured with `tags_enabled true` to enable
 
 ### Requirements
 
-To use the `tags_enabled true` feature in Fluent Bit, the [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option must be enabled on the EC2 instance where Fluent Bit is running. Without this option enabled, Fluent Bit won't be able to retrieve the tags associated with the EC2 instance. However, this doesn't mean that Fluent Bit will fail or stop working altogether. Instead, if [instance-metadata-tags](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-instance-metadata-options.html) option isn't enabled, Fluent Bit will continue to operate normally and capture other values, such as the EC2 instance ID or availability zone, based on its configuration.
+To use the `tags_enabled true` feature in Fluent Bit, the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option must be enabled on the EC2 instance where Fluent Bit is running. Without this option enabled, Fluent Bit won't be able to retrieve the tags associated with the EC2 instance. However, this doesn't mean that Fluent Bit will fail or stop working altogether. Instead, if the `instance-metadata-tags` option isn't enabled, Fluent Bit will continue to operate normally and capture other values, such as the EC2 instance ID or availability zone, based on its configuration.
 
 ### Example
 
@@ -142,11 +149,11 @@ Assume the EC2 instance has many tags, some of which have lengthy values that ar
 ```yaml
 pipeline:
 
-    filters:
-        - name: aws
-          match: '*'
-          tags_enabled: true
-          tags_include: department,project
+  filters:
+    - name: aws
+      match: '*
+      tags_enabled: true
+      tags_include: department,project
 ```
 
 {% endtab %}
@@ -154,10 +161,10 @@ pipeline:
 
 ```text
 [FILTER]
-    Name aws
-    Match *
-    tags_enabled true
-    tags_include department,project
+  Name         aws
+  Match        *
+  Tags_Enabled true
+  Tags_Include department,project
 ```
 
 {% endtab %}
@@ -193,10 +200,10 @@ pipeline:
 
 ```text
 [FILTER]
-  Name aws
-  Match *
-  tags_enabled true
-  tags_exclude department
+  Name         aws
+  Match        *
+  Tags_Enabled true
+  Tags_Exclude department
 ```
 
 {% endtab %}
