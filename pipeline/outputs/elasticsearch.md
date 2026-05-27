@@ -450,4 +450,4 @@ using `fallback` as default index name if `destination_index` value is not prese
     # ...
 ```
 
-For records that do not have the field `destination__index`, the value of `Index` (`fallback`) will be used.
+For records that do not have the field `destination_index`, the value of `Index` (`fallback`) will be used.
