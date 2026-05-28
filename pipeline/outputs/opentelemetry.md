@@ -122,7 +122,7 @@ By default the plugin sends all signals as binary protobuf (`Content-Type: appli
 {% hint style="info" %}
 The `encoding` option applies to **OTLP/HTTP** exports only. When `grpc` is `on`, logs, metrics, and traces are sent over OTLP/gRPC using protobuf framing.
 
-Profiles are always sent as protobuf regardless of the `encoding` setting — no OTLP JSON encoder exists for the profiles signal yet.
+Profiles are always sent as protobuf regardless of the `encoding` setting, no OTLP JSON encoder exists for the profiles signal yet.
 {% endhint %}
 
 {% tabs %}
