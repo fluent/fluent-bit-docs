@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 
 | Key          | Description |
 | ------------ | ----------- |
-| `Event`       | SOME/IP event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
-| `RPC`         | SOME/IP request to send when service is available. The configuration can have multiple RPCs, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload". The request payload should be base64 encoded. |
+| `event`       | SOME/IP event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
+| `rpc`         | SOME/IP request to send when service is available. The configuration can have multiple RPCs, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload`. The request payload should be base64 encoded. |
 
 ## Get Started
 
@@ -21,8 +21,9 @@ To subscribe to SOME/IP events or send request/receive SOME/IP response, run the
 
 The _someip_ plugin can be enabled with options from the command line:
 
-```bash
+```shell
 ./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
+```
 
 ### Configuration file
 
@@ -34,9 +35,12 @@ In your main configuration file append the following sections:
 pipeline:
   inputs:
     - name: someip
-      Event: '4,1,32768,1'
-      Event: '4,1,32769,2'
-      RPC: '4,1,1,CgAQAw=='
+      event:
+        - '4,1,32768,1'
+        - '4,1,32769,2'
+      rpc: '4,1,1,CgAQAw=='
+```
+{% endtab %}
 {% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
@@ -49,6 +53,7 @@ pipeline:
 
 [OUTPUT]
     Name        stdout
+```
 {% endtab %}
 {% endtabs %}
 
@@ -56,8 +61,8 @@ pipeline:
 
 Once Fluent Bit is running, you can send some SOME/IP messages using the SOME/IP test service provided.
 
-```bash
-$ bin/someip_test_service 
+```shell
+$ bin/someip_test_service
 2025-02-06 22:18:06.211337  [info] Parsed vsomeip configuration in 0ms
 ...
 Sending event with message Event Number 1
@@ -68,7 +73,7 @@ Sent notification for service 4, event 32768
 
 In [Fluent Bit](http://fluentbit.io) we should see the following output:
 
-```bash
+```shell
 $ bin/fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
 Fluent Bit v3.2.0
 * Copyright (C) 2015-2024 The Fluent Bit Authors
@@ -106,5 +111,3 @@ Received message for service 4 event = 32768
 [0] someip.0: [[1738880290.622781511, {}], {"record type"=>"event", "service"=>4, "instance"=>1, "event"=>32768, "payload"=>"RXZlbnQgTnVtYmVyIDI="}]
 ...
 ```
-
-
