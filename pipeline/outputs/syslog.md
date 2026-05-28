@@ -95,16 +95,17 @@ Example log:
 
 ```json
 {
-  "hostname": "myhost",
-  "appname": "myapp",
-  "procid": "1234",
-  "msgid": "ID98",
-  "uls@0": {
-    "logtype": "access",
-    "clustername": "mycluster",
-    "namespace": "mynamespace"
-  },
-  "log": "Sample app log message."
+    "hostname": "myhost",
+    "appname": "myapp",
+    "procid": "1234",
+    "msgid": "ID98",
+    "uls@0": {
+        "logtype": "access",
+        "clustername": "mycluster",
+        "namespace": "mynamespace",
+        "tag": [ "tag1", "tag2" ]
+    },
+    "log": "Sample app log message."
 }
 ```
 
@@ -158,9 +159,7 @@ pipeline:
 Example output:
 
 ```text
-...
-<14>1 2021-07-12T14:37:35.569848Z myhost myapp 1234 ID98 [uls@0 logtype="access" clustername="mycluster" namespace="mynamespace"] Sample app log message.
-...
+<14>1 2021-07-12T14:37:35.569848Z myhost myapp 1234 ID98 [uls@0 logtype="access" clustername="mycluster" namespace="mynamespace" tag="tag1" tag="tag2"] Sample app log message.
 ```
 
 ### Add structured data authentication token
