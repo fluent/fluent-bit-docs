@@ -1,25 +1,25 @@
 # SOMEIP
 
-The _someip_ input plugin is used to interact with a SOME/IP communication network to subscribe to events and to exchange request/response with SOME/IP services.
+The `someip` input plugin is used to interact with a `SOME/IP` communication network to subscribe to events and to exchange request/response with `SOME/IP` services.
 
-This plugin uses the [vsomeip library](https://github.com/COVESA/vsomeip) (built-in dependency).
+This plugin uses the [`vsomeip`](https://github.com/COVESA/vsomeip) library (built-in dependency).
 
-## Configuration Parameters
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
 | Key          | Description |
 | ------------ | ----------- |
-| `event`       | SOME/IP event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
-| `rpc`         | SOME/IP request to send when service is available. The configuration can have multiple RPCs, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload`. The request payload should be base64 encoded. |
+| `event`       | `SOME/IP` event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
+| `rpc`         | `SOME/IP` request to send when service is available. The configuration can have multiple RPC entries, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload`. The request payload should be base64 encoded. |
 
-## Get Started
+## Get started
 
-To subscribe to SOME/IP events or send request/receive SOME/IP response, run the plugin from the command line or through the configuration file:
+To subscribe to `SOME/IP` events or send request/receive `SOME/IP` response, run the plugin from the command line or through the configuration file:
 
 ### Command line
 
-The _someip_ plugin can be enabled with options from the command line:
+The `someip` plugin can be enabled with options from the command line:
 
 ```shell
 ./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
@@ -59,7 +59,7 @@ pipeline:
 
 ## Testing
 
-Once Fluent Bit is running, you can send some SOME/IP messages using the SOME/IP test service provided.
+Once Fluent Bit is running, you can send some `SOME/IP` messages using the `SOME/IP` test service provided.
 
 ```shell
 $ bin/someip_test_service
@@ -71,7 +71,7 @@ Sending event with message Event Number 2
 Sent notification for service 4, event 32768
 ```
 
-In [Fluent Bit](http://fluentbit.io) we should see the following output:
+The following output displays in [Fluent Bit](http://fluentbit.io):
 
 ```shell
 $ bin/fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
