@@ -158,6 +158,9 @@ pipeline:
       logs_trace_id_message_key: trace_id
       logs_severity_text_message_key: loglevel
       logs_severity_number_message_key: lognum
+      logs_resource_attributes_message_key:
+        - application_id  # promote message fields to Resource attributes
+        - service_name
 
       # add user-defined labels
       add_label:
