@@ -4,6 +4,10 @@ description: Select or exclude records using regular expressions.
 
 # Grep
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Grep_ filter plugin lets you match or exclude specific records based on regular expression patterns for values or nested values.
 
 ## Configuration parameters
@@ -12,14 +16,15 @@ The plugin supports the following configuration parameters:
 
 | Key | Value Format | Record Type | Description |
 | :--- | :--- | :--- | :--- |
-| `Regex` | `KEY REGEX` | String | Keep records in which the content of `KEY` matches the regular expression. |
-| `Exclude` | `KEY REGEX` | String | Exclude records in which the content of `KEY` matches the regular expression. |
+| `exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. | _none_ |
+| `logical_op` | `Operation` | Specify a logical operator: `AND`, `OR` or `legacy`. In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses `OR`). Available from 2.1 or higher. | `legacy` |
 | `number_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is equal to `NUMBER`. |
 | `number_not_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is not equal to `NUMBER`. |
 | `number_less_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than the `NUMBER`. |
 | `number_less_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than or equal to `NUMBER`. |
 | `number_greater_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than the `NUMBER`. |
 | `number_greater_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than or equal to `NUMBER`. |
+| `regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. | _none_ |
 
 
 If you use the number compare parameters with a `KEY` that doesn't have a `NUMBER` as a value, it will be excluded.
@@ -85,27 +90,27 @@ pipeline:
 
 ```text
 [SERVICE]
-  parsers_file /path/to/parsers.conf
+  Parsers_File /path/to/parsers.conf
 
 [INPUT]
-  name   tail
-  path   lines.txt
-  parser json
+  Name   tail
+  Path   lines.txt
+  Parser json
 
 [FILTER]
-  name   grep
-  match  *
-  regex  log aa
+  Name   grep
+  Match  *
+  Regex  log aa
 
 [OUTPUT]
-  name   stdout
-  match  *
+  Name   stdout
+  Match  *
 ```
 
 {% endtab %}
 {% endtabs %}
 
-The filter lets you use multiple rules which are applied in order, you can have many `Regex` and `Exclude` entries as required ([more information](#multiple-conditions)).
+The filter lets you use multiple rules which are applied in order, you can have many `regex` and `exclude` entries as required ([more information](#multiple-conditions)).
 
 ### Nested fields example
 
@@ -204,15 +209,15 @@ or is missing or empty, then it will be excluded.
 
 ### Multiple conditions
 
-If you want to set multiple `Regex` or `Exclude`, you must use the `legacy` mode. In this case, the `Exclude` must be first and you can have only one `Regex`.
-If `Exclude` match, the string is blocked. You can have multiple `Exclude` entry.
-After, if there is no `Regex`, the line is sent to the output.
+If you want to set multiple `regex` or `exclude`, you must use the `legacy` mode. In this case, the `exclude` must be first and you can have only one `regex`.
+If `exclude` matches, the string is blocked. You can have multiple `exclude` entries.
+After, if there is no `regex`, the line is sent to the output.
 
-If there is a `Regex` and it matches, the line is sent to the output, else, it's blocked.
+If there is a `regex` and it matches, the line is sent to the output, else, it's blocked.
 
-If you want to set multiple `Regex` or `Exclude`, you can use `Logical_Op` property to use logical conjunction or disjunction.
+If you want to set multiple `regex` or `exclude`, you can use `logical_op` property to use logical conjunction or disjunction.
 
-If `Logical_Op` is set, setting both `Regex` and `Exclude` results in an error.
+If `logical_op` is set, setting both `regex` and `exclude` results in an error.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -242,16 +247,16 @@ pipeline:
 
 ```text
 [INPUT]
-  Name dummy
+  Name  dummy
   Dummy {"endpoint":"localhost", "value":"something"}
-  Tag dummy
+  Tag   dummy
 
 [FILTER]
-  Name grep
-  Match *
+  Name       grep
+  Match      *
   Logical_Op or
-  Regex value something
-  Regex value error
+  Regex      value something
+  Regex      value error
 
 [OUTPUT]
   Name stdout
