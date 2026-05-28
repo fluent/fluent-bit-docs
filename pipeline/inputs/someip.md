@@ -17,13 +17,12 @@ The plugin supports the following configuration parameters:
 
 To subscribe to SOME/IP events or send request/receive SOME/IP response, run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
-The **someip** plugin can be enabled with options from the command line:
+The _someip_ plugin can be enabled with options from the command line:
 
 ```bash
-$ ./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
-```
+./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
 
 ### Configuration File
 
