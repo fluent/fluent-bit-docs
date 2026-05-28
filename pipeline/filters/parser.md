@@ -12,11 +12,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
+| `hash_value_field` | Stores the parsed values as a hash value in a field. By default this is not enabled | |
 | `key_name` | Specify field name in record to parse. | _none_ |
 | `parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
 | `preserve_key` | Keep the original `key_name` field in the parsed result. If false, the field will be removed. | `false` |
 | `reserve_data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `false` |
-| `Unescape_key` | Deprecated. This option is retained only for backward compatibility and should not be used in new configurations. | _deprecated_ |
+| `unescape_key` | Deprecated. This option is retained only for backward compatibility and should not be used in new configurations. | _deprecated_ |
 
 ## Get started
 
