@@ -27,22 +27,22 @@ Fluent Bit can use various authentication methods to send records to Azure Log A
 
 ### Service principal authentication 
 
-Service principal authentication is the default method. To use it, you mst create an Azure AD application:
+Service principal authentication is the default method. To use it, you must create an Azure AD application:
 
 - [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- [Authorize the app in your database](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+- [Assign the app permissions to the Data Collection Rule](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-api#assign-permissions-to-a-dcr)
 
 Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
 
 ### Managed identity authentication
 
-When running on Azure services that support managed identities (such as Azure VMs, AKS, or App Service):
+When running on Azure services that support managed identities (such as Azure VMs, Azure Kubernetes Service (AKS), or App Service):
 
 1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster).
 1. Configure Fluent Bit with `auth_type` set to `managed_identity`.
 1. For system-assigned identity, set `client_id` to `system`.
-1. For user-assigned identity, set `client_id` to the managed identity's client ID (GUID).
+1. For user-assigned identity, set `client_id` to the managed identity's globally unique identifier (client ID).
 
 ## Configuration parameters
 
@@ -228,13 +228,13 @@ pipeline:
 [OUTPUT]
   Name            azure_logs_ingestion
   Match           sample
-  client_id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
-  auth_type       managed_identity
-  dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
-  dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  table_name      ladcr_CL
-  time_generated  true
-  time_key        Time
+  Client_Id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+  Auth_Type       managed_identity
+  Dce_Url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+  Dcr_Id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Table_Name      ladcr_CL
+  Time_Generated  true
+  Time_Key        Time
   Compress        true
 ```
 
@@ -310,13 +310,13 @@ pipeline:
 [OUTPUT]
   Name            azure_logs_ingestion
   Match           sample
-  client_id       system
-  auth_type       managed_identity
-  dce_url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
-  dcr_id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  table_name      ladcr_CL
-  time_generated  true
-  time_key        Time
+  Client_Id       system
+  Auth_Type       managed_identity
+  Dce_Url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+  Dcr_Id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Table_Name      ladcr_CL
+  Time_Generated  true
+  Time_Key        Time
   Compress        true
 ```
 
