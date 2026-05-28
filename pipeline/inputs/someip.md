@@ -10,8 +10,8 @@ The plugin supports the following configuration parameters:
 
 | Key          | Description |
 | ------------ | ----------- |
-| `event`       | `SOME/IP` event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
-| `rpc`         | `SOME/IP` request to send when service is available. The configuration can have multiple RPC entries, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload`. The request payload should be base64 encoded. |
+| `event`       | `SOME/IP` event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma-separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
+| `rpc`         | `SOME/IP` request to send when service is available. The configuration can have multiple RPC entries, one on each line. An RPC is composed as a comma-separated list with, `service_ID, service_instance, method_ID, request_payload`. The request payload should be base64 encoded. |
 
 ## Get started
 
@@ -71,7 +71,7 @@ Sending event with message Event Number 2
 Sent notification for service 4, event 32768
 ```
 
-The following output displays in [Fluent Bit](http://fluentbit.io):
+The following output displays in [Fluent Bit](https://fluentbit.io):
 
 ```shell
 $ bin/fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
