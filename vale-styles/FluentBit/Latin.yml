@@ -1,0 +1,17 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/abbreviations'
+ignorecase: true
+level: error
+nonword: true
+action:
+  name: replace
+swap:
+  '\b(?:eg|e\.g\.)[\s,]': for example
+  '\b(?:ie|i\.e\.)[\s,]': that is
+  'ad-hoc': if needed
+  '[\s]et al[\s]': and others
+  '[\s]etc[\s|.]': and so on
+  '[\s]via[\s]': through or by using
+  'vice versa': and the reverse
+  '[\s]vs[\s|.]': versus

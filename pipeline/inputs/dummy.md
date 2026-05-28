@@ -1,51 +1,82 @@
 # Dummy
 
-The **dummy** input plugin, generates dummy events. It is useful for testing, debugging, benchmarking and getting started with Fluent Bit.
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
 
-## Configuration Parameters
+The _Dummy_ input plugin generates dummy events. Use this plugin for testing, debugging, benchmarking and getting started with Fluent Bit.
+
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Dummy | Dummy JSON record. Default: `{"message":"dummy"}` |
-| Start\_time\_sec | Dummy base timestamp in seconds. Default: 0 |
-| Start\_time\_nsec | Dummy base timestamp in nanoseconds. Default: 0 |
-| Rate | Events number generated per second. Default: 1 |
-| Samples | If set, the events number will be limited. e.g. If Samples=3, the plugin only generates three events and stops. |
+| Key | Description | Default |
+|:----|:------------|:--------|
+| `copies` | Number of messages to generate each time messages are generated. | `1` |
+| `dummy` | Dummy JSON record. | `{"message":"dummy"}` |
+| `fixed_timestamp` | If enabled, use a fixed timestamp. This allows the message to be pre-generated once. | `false` |
+| `flush_on_startup` | If set to `true`, the first dummy event is generated at startup. | `false` |
+| `interval_nsec` | Set time interval, in nanoseconds, at which every message is generated. If set, `rate` configuration is ignored. | `0` |
+| `interval_sec` | Set time interval, in seconds, at which every message is generated. If set, `rate` configuration is ignored. | `0` |
+| `metadata` | Dummy JSON metadata. | `{}` |
+| `rate` | Rate at which messages are generated, expressed in how many times per second. | `1` |
+| `samples` | Limit the number of events generated. For example, if `samples=3`, the plugin generates only three events and stops. `0` means no limit. | `0` |
+| `start_time_nsec` | Set a dummy base timestamp, in nanoseconds. If set to `-1`, the current time is used. | `-1` |
+| `start_time_sec` | Set a dummy base timestamp, in seconds. If set to `-1`, the current time is used. | `-1` |
+| `test_hang_on_exit` | Test-only option that simulates a hang during shutdown for hot reload watchdog testing. Don't use this in production configurations. | `false` |
+| `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 
-## Getting Started
+## Get started
 
 You can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
-```bash
-$ fluent-bit -i dummy -o stdout
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+Run the plugin from the command line using the following command:
 
-[2017/07/06 21:55:29] [ info] [engine] started
-[0] dummy.0: [1499345730.015265366, {"message"=>"dummy"}]
-[1] dummy.0: [1499345731.002371371, {"message"=>"dummy"}]
-[2] dummy.0: [1499345732.000267932, {"message"=>"dummy"}]
-[3] dummy.0: [1499345733.000757746, {"message"=>"dummy"}]
+```shell
+fluent-bit -i dummy -o stdout
 ```
 
-### Configuration File
+which returns results like the following:
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+```text
+...
+[0] dummy.0: [[1686451466.659962491, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1686451467.659679509, {}], {"message"=>"dummy"}]
+...
+```
 
-```python
+### Configuration file
+
+In your main configuration file append the following:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message": "custom dummy"}'
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name   dummy
-    Tag    dummy.log
+  Name   dummy
+  Dummy  {"message": "custom dummy"}
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
+{% endtab %}
+{% endtabs %}

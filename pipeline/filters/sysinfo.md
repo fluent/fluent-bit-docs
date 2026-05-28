@@ -1,0 +1,81 @@
+# Sysinfo
+
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
+The _Sysinfo_ filter lets you append system information like the Fluent Bit version or hostname.
+
+## Configuration parameters
+
+The plugin supports the following configuration parameters:
+
+| Key | Description | Supported platform |
+| --- | --- | --- |
+| `fluentbit_version_key` | Specify the key name for the Fluent Bit version.| All |
+| `hostname_key`| Specify the key name for hostname. | All |
+| `kernel_version_key` | Specify the key name for kernel version. Not supported on some platforms.| Linux |
+| `os_name_key` | Specify the key name for operating system name. For example, `Linux`, `win64` or `macOS`.| All |
+| `os_version_key` | Specify the key name for the operating system version. Not supported on some platforms. | Linux |
+
+Some properties are supported by specific platforms.
+
+## Get started
+
+To start filtering records, you can run the filter from the command line or through the configuration file.
+
+The following configuration file is to append the Fluent Bit version and operating system name.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: test
+
+  filters:
+    - name: sysinfo
+      match: '*'
+      fluentbit_version_key: flb_ver
+      os_name_key: os_name
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name dummy
+  Tag test
+
+[FILTER]
+  Name sysinfo
+  Match *
+  Fluentbit_Version_Key flb_ver
+  Os_Name_Key os_name
+
+[OUTPUT]
+  Name stdout
+  Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
+You can also run the filter from command line.
+
+```shell
+fluent-bit -i dummy -o stdout -F sysinfo -m '*' -p fluentbit_version_key=flb_ver -p os_name_key=os_name
+```
+
+The output will be something like the following:
+
+```text
+[0] dummy.0: [[1699172858.989654355, {}], {"message"=>"dummy", "flb_ver"=>"2.2.0", "os_name"=>"linux"}]
+```

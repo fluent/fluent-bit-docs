@@ -1,55 +1,97 @@
 # MQTT
 
-The **MQTT** input plugin, allows to retrieve messages/data from MQTT control packets over a TCP connection. The incoming data to receive _must_ be a JSON map.
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
 
-## Configuration Parameters
+The _MQTT_ input plugin retrieves messages and data from MQTT control packets over a TCP connection. The incoming data to receive must be a JSON map.
+
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| Listen | Listener network interface, default: 0.0.0.0 |
-| Port | TCP port where listening for connections, default: 1883 |
+| Key           | Description                                                                                             | Default      |
+|:--------------|:--------------------------------------------------------------------------------------------------------|:-------------|
+| `buffer_size` | Maximum payload size (in bytes) for a single MQTT message.                                              | `2048`       |
+| `listen`      | Listener network interface.                                                                             | `0.0.0.0`    |
+| `payload_key` | Field name where the MQTT message payload will be stored in the output record.                          | _none_       |
+| `port`        | TCP port where listening for connections.                                                               | `1883`       |
+| `threaded`    | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false`      |
 
-## Getting Started
+{% hint style="info" %}
+- `buffer_size` defaults to `2048` bytes; messages larger than this limit are dropped.
+- Defaults for `listen` and `port` are `0.0.0.0` and `1883`, so you can omit them if you want the standard MQTT listener.
+- Payloads are expected to be JSON maps; non-JSON payloads will fail to parse.
+{% endhint %}
 
-In order to start listening for MQTT messages, you can run the plugin from the command line or through the configuration file:
+### TLS / SSL
 
-### Command Line
+The MQTT input plugin supports TLS/SSL. For the available options and guidance, see [Transport Security](../../administration/transport-security.md).
 
-Since the **MQTT** input plugin let Fluent Bit behave as a server, we need to dispatch some messages using some MQTT client, in the following example _mosquitto_ tool is being used for the purpose:
+## Get started
 
-```bash
-$ fluent-bit -i mqtt -t data -o stdout -m '*'
-Fluent Bit v1.x.x
-* Copyright (C) 2019-2020 The Fluent Bit Authors
-* Copyright (C) 2015-2018 Treasure Data
-* Fluent Bit is a CNCF sub-project under the umbrella of Fluentd
-* https://fluentbit.io
+To listen for MQTT messages, you can run the plugin from the command line or through the configuration file.
 
-[2016/05/20 14:22:52] [ info] starting engine
+### Command line
+
+The MQTT input plugin lets Fluent Bit behave as a server. Dispatch some messages using a MQTT client. In the following example, the `mosquitto` tool is being used for the purpose:
+
+Running the following command:
+
+```shell
+fluent-bit -i mqtt -t data -o stdout -m '*'
+```
+
+Returns a response like the following:
+
+```text
+...
 [0] data: [1463775773, {"topic"=>"some/topic", "key1"=>123, "key2"=>456}]
+...
 ```
 
-The following command line will send a message to the **MQTT** input plugin:
+The following command line will send a message to the MQTT input plugin:
 
-```bash
-$ mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
+```shell
+mosquitto_pub  -m '{"key1": 123, "key2": 456}' -t some/topic
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following:
 
-```python
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: mqtt
+      tag: data
+      listen: 0.0.0.0
+      port: 1883
+      payload_key: payload
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
 [INPUT]
-    Name   mqtt
-    Tag    data
-    Listen 0.0.0.0
-    Port   1883
+  Name   mqtt
+  Tag    data
+  Listen 0.0.0.0
+  Port   1883
+  Payload_Key payload
 
 [OUTPUT]
-    Name   stdout
-    Match  *
+  Name   stdout
+  Match  *
 ```
 
+{% endtab %}
+{% endtabs %}

@@ -1,0 +1,11 @@
+extends: existence
+message: 'Use "and" instead of "&" in content.'
+level: error
+scope: text
+nonword: true
+tokens:
+  - '\s&\s'
+  - '^&\s'
+  - '\s&$'
+  - '\s&[^\w]'
+  - '[^\w]&\s'

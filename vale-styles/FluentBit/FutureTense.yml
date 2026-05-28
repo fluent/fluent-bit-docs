@@ -1,0 +1,10 @@
+---
+extends: existence
+message: "'%s' might be in future tense. Strive for active voice and present tense in your documentation."
+ignorecase: true
+level: suggestion
+raw:
+  - "(going to( |\n|[[:punct:]])[a-zA-Z]*|"
+  - "will( |\n|[[:punct:]])[a-zA-Z]*|"
+  - "won't( |\n|[[:punct:]])[a-zA-Z]*|"
+  - "[a-zA-Z]*'ll( |\n|[[:punct:]])[a-zA-Z]*)"
