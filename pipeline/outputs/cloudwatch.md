@@ -105,7 +105,8 @@ For an instance of `Localstack` running at `http://localhost:4566`, use the foll
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
-In your main configuration file, append the following _Output_ section:
+```yaml
+pipeline:
 
   outputs:
     - name: cloudwatch_logs
@@ -191,8 +192,6 @@ Here is the configuration:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
-
-Recall that the Kubernetes filter can add metadata which will look like the following:
 
 ```yaml
 pipeline:
