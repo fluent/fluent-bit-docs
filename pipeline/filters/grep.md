@@ -14,17 +14,17 @@ The _Grep_ filter plugin lets you match or exclude specific records based on reg
 
 The plugin supports the following configuration parameters:
 
-| Key | Value Format | Record Type | Description |
-| :--- | :--- | :--- | :--- |
-| `exclude`    | `KEY REGEX` | Exclude records where the content of `KEY` matches the regular expression. | _none_ |
-| `logical_op` | `Operation` | Specify a logical operator: `AND`, `OR` or `legacy`. In `legacy` mode the behaviour is either `AND` or `OR` depending on whether the `grep` is including (uses `AND`) or excluding (uses `OR`). Available from 2.1 or higher. | `legacy` |
-| `number_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is equal to `NUMBER`. |
-| `number_not_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is not equal to `NUMBER`. |
-| `number_less_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than the `NUMBER`. |
-| `number_less_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is less than or equal to `NUMBER`. |
-| `number_greater_than` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than the `NUMBER`. |
-| `number_greater_than_or_equal` | `KEY NUMBER` | number | Keep records in which the content of `KEY` is greater than or equal to `NUMBER`. |
-| `regex`      | `KEY REGEX` | Keep records where the content of `KEY` matches the regular expression. | _none_ |
+| Key | Value Format | Record Type | Description | Default |
+| :--- | :--- | :--- | :--- | :--- |
+| `exclude` | `KEY REGEX` | string | Exclude records where the content of `KEY` matches the regular expression. | _none_ |
+| `logical_op` | `Operation` | - | Specify a logical operator: `AND`, `OR`, or `legacy`. In `legacy` mode, the behavior is `AND` when including or `OR` when excluding. Available in version 2.1 and later. | `legacy` |
+| `number_equal` | `KEY NUMBER` | number | Keep records where the value of `KEY` equals `NUMBER`. | _none_ |
+| `number_not_equal` | `KEY NUMBER` | number | Keep records where the value of `KEY` doesn't equal `NUMBER`. | _none_ |
+| `number_less_than` | `KEY NUMBER` | number | Keep records where the value of `KEY` is less than `NUMBER`. | _none_ |
+| `number_less_than_or_equal` | `KEY NUMBER` | number | Keep records where the value of `KEY` is less than or equal to `NUMBER`. | _none_ |
+| `number_greater_than` | `KEY NUMBER` | number | Keep records where the value of `KEY` is greater than `NUMBER`. | _none_ |
+| `number_greater_than_or_equal` | `KEY NUMBER` | number | Keep records where the value of `KEY` is greater than or equal to `NUMBER`. | _none_ |
+| `regex` | `KEY REGEX` | string | Keep records where the content of `KEY` matches the regular expression. | _none_ |
 
 
 If you use the number compare parameters with a `KEY` that doesn't have a `NUMBER` as a value, it will be excluded.
@@ -272,3 +272,69 @@ The output looks similar to:
 [0] dummy: [1674348410.558341857, {"endpoint"=>"localhost", "value"=>"something"}]
 [0] dummy: [1674348411.546425499, {"endpoint"=>"localhost", "value"=>"something"}]
 ```
+
+### Arithmetic comparisons
+
+Use the arithmetic comparison parameters to filter records based on numeric field values. If the target key doesn't exist or its value isn't a number, the record is excluded.
+
+Consider the following record example:
+
+```json
+{"host": "web-01", "status_code": 200, "response_time_ms": 350}
+```
+
+To keep only records where `status_code` equals `200`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  filters:
+    - name: grep
+      match: '*'
+      number_equal: status_code 200
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[FILTER]
+  Name         grep
+  Match        *
+  Number_Equal status_code 200
+```
+
+{% endtab %}
+{% endtabs %}
+
+To keep only records where `status_code` is in the 4xx range (400—499), combine two operators with `logical_op: and`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  filters:
+    - name: grep
+      match: '*'
+      logical_op: and
+      number_greater_than_or_equal: status_code 400
+      number_less_than: status_code 500
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[FILTER]
+  Name                         grep
+  Match                        *
+  Logical_Op                   and
+  Number_Greater_Than_Or_Equal status_code 400
+  Number_Less_Than             status_code 500
+```
+
+{% endtab %}
+{% endtabs %}
