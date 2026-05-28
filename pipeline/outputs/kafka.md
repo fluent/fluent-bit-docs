@@ -308,13 +308,13 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-See `aws_msk_iam` and `aws_msk_iam_cluster_arn` in the [configuration parameters](#configuration-parameters) table.
+See `rdkafka.sasl.mechanism` and `aws_region` in the [configuration parameters](#configuration-parameters) table.
 
 The AWS region is automatically detected from the broker hostname for standard MSK endpoints.
 
 {% hint style="info" %}
 
-When using `aws_msk_iam`, Fluent Bit automatically sets `rdkafka.security.protocol` to `SASL_SSL`. You don't need to configure it manually.
+When `rdkafka.sasl.mechanism` is set to `aws_msk_iam`, Fluent Bit automatically sets `rdkafka.security.protocol` to `SASL_SSL`. You don't need to set it manually.
 
 {% endhint %}
 
