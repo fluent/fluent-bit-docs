@@ -96,7 +96,6 @@ The following AWS IAM permissions are required to use this plugin:
 
 When you enable compression using the `compression` parameter, records are compressed before upload to Kinesis Data Streams.
 
-
 {% hint style="info" %}
 
 Each log record is individually compressed by Fluent Bit before sending. Consumers must decompress each record using the same compression format.
