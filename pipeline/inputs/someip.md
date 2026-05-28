@@ -2,7 +2,7 @@
 
 The _someip_ input plugin is used to interact with a SOME/IP communication network to subscribe to events and to exchange request/response with SOME/IP services.
 
-This plugin uses the [vsomeip library](https://github.com/COVESA/vsomeip) \(built-in dependency\).
+This plugin uses the [vsomeip library](https://github.com/COVESA/vsomeip) (built-in dependency).
 
 ## Configuration Parameters
 
