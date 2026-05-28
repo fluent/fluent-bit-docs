@@ -1,8 +1,12 @@
 # Tensorflow
 
-The _Tensorflow_ filter plugin allows running machine learning inference tasks on the records of data coming from input plugins or stream processors. This filter uses [Tensorflow Lite](https://www.tensorflow.org/lite/) as the inference engine, and requires Tensorflow Lite shared library to be present during build and at runtime.
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
 
-Tensorflow Lite is a lightweight open source deep learning framework used for mobile and IoT applications. Tensorflow Lite only handles inference, not training. It loads pre-trained models (`.tflite` files) that are converted into Tensorflow Lite format (`FlatBuffer`). You can read more on converting [Tensorflow models](https://www.tensorflow.org/lite/convert).
+The _Tensorflow_ filter plugin allows running machine learning inference tasks on the records of data coming from input plugins or stream processors. This filter uses [Tensorflow Lite](https://ai.google.dev/edge/litert) as the inference engine, and requires Tensorflow Lite shared library to be present during build and at runtime.
+
+Tensorflow Lite is a lightweight open source deep learning framework used for mobile and IoT applications. Tensorflow Lite only handles inference, not training. It loads pre-trained models (`.tflite` files) that are converted into Tensorflow Lite format (`FlatBuffer`). You can read more on converting [Tensorflow models](https://ai.google.dev/edge/litert/conversion/tensorflow/overview).
 
 The Tensorflow plugin for Fluent Bit has the following limitations:
 
@@ -13,12 +17,12 @@ The Tensorflow plugin for Fluent Bit has the following limitations:
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default |
-| :--- | :--- | :--- |
-| `input_field` | Specify the name of the field in the record to apply inference on. | _none_ |
-| `model_file` | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_ |
-| `include_input_fields` | Include all input filed in filter's output. | `True` |
-| `normalization_value` | Divide input values to `normalization_value`. | _none_ |
+| Key                    | Description                                                         | Default |
+|:-----------------------|:--------------------------------------------------------------------|:--------|
+| `include_input_fields` | Include all input fields in filter's output.                        | `true`  |
+| `input_field`          | Specify the name of the field in the record to apply inference on.  | _none_  |
+| `model_file`           | Path to the model file (`.tflite`) to be loaded by Tensorflow Lite. | _none_  |
+| `normalization_value`  | Divide input values to `normalization_value`.                       | _none_  |
 
 ## Creating a Tensorflow Lite shared library
 
@@ -32,8 +36,8 @@ To create a Tensorflow Lite shared library:
    bazel build -c opt //tensorflow/lite/c:tensorflowlite_c  # see https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/c
    ```
 
-   The script creates the shared library
-   `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
+   The script creates the shared library `bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so`.
+
 1. Copy the library to a location such as `/usr/lib` that can be used by Fluent Bit.
 
 ## Building Fluent Bit with Tensorflow filter plugin
@@ -51,13 +55,12 @@ If the Tensorflow plugin initializes correctly, it reports successful creation o
 The command:
 
 ```shell
-fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p
+fluent-bit -i mqtt -p 'tag=mqtt.data' -F tensorflow -m '*' -p 'input_field=image' -p 'model_file=/home/user/model.tflite' -p 'include_input_fields=false' -p 'normalization_value=255' -o stdout
 ```
 
 produces an output like:
 
 ```text
-'include_input_fields=false' -p 'normalization_value=255' -o stdout
 [2020/08/04 20:00:00] [ info] Tensorflow Lite interpreter created!
 [2020/08/04 20:00:00] [ info] [tensorflow] ===== input #1 =====
 [2020/08/04 20:00:00] [ info] [tensorflow] type: FLOAT32  dimensions: {1, 224, 224, 3}
@@ -110,10 +113,10 @@ pipeline:
 [FILTER]
   Name                 tensorflow
   Match                mqtt.data
-  input_field          image
-  model_file           /home/m/model.tflite
-  include_input_fields false
-  normalization_value  255
+  Input_Field          image
+  Model_File           /home/m/model.tflite
+  Include_Input_Fields false
+  Normalization_Value  255
 
 [OUTPUT]
   Name  stdout
