@@ -4,7 +4,7 @@
 
 The Fluent Bit _Loki_ built-in output plugin lets you send your log or events to a Loki service. It supports data enrichment with Kubernetes labels, custom label keys, and Tenant ID, along with other information.
 
-There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/clients/fluentbit/) with different configuration options.
+There is a separate Golang output plugin provided by [Grafana](https://grafana.com/docs/loki/latest/send-data/fluentbit/) with different configuration options.
 
 ## Configuration parameters
 
@@ -25,11 +25,12 @@ There is a separate Golang output plugin provided by [Grafana](https://grafana.c
 | `structured_metadata` | (Optional.) Comma-separated list of `key=value` strings specifying structured metadata for the log line. Like the `labels` parameter, values can reference record keys using record accessors. See [Use `structured_metadata`.](#use-structured_metadata). | _none_ |
 | `structured_metadata_map_keys` | (Optional.) Comma-separated list of record key strings specifying record values of type `map`, used to dynamically populate structured metadata for the log line. Values can only reference record keys using record accessors, which should reference map values. Each entry from the referenced map will be used to add an entry to the structured metadata. See [Use `structured_metadata`.](#use-structured_metadata). | _none_ |
 | `remove_keys` | (Optional.) List of keys to remove. | _none_ |
-| `drop_single_key` | When set to `true` and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in `line_format`. If set to `raw` and the log line is a string, the log line will be sent unquoted. | `off` |
+| `drop_single_key` | When set to `true` and after extracting labels only a single key remains, the log line sent to Loki will be the value of that key in `line_format`. If set to `raw` and the log line is a string, the log line will be sent unquoted. | _none_ |
 | `line_format` | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`, the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together (separated by a single space) in the format. | `json` |
-| `auto_kubernetes_labels` | If set to `true`, adds all Kubernetes labels to the Stream labels. | `off` |
+| `auto_kubernetes_labels` | If set to `true`, adds all Kubernetes labels to the stream labels. | `false` |
 | `tenant_id_key` | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. Use to set Tenant ID dynamically. | _none_ |
-| `compress` | Set payload compression mechanism. The only available option is `gzip`. | `""` (no compression) |
+| `buffer_size` | Maximum HTTP response buffer size. | `512KB` |
+| `compress` | Set payload compression mechanism. The only available option is `gzip`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Labels
@@ -74,9 +75,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name   loki
-  match  *
-  labels job=fluentbit, $sub['stream']
+  Name   loki
+  Match  *
+  Labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -111,9 +112,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name   loki
-  match  *
-  labels job=fluentbit, mystream=$sub['stream']
+  Name   loki
+  Match  *
+  Labels job=fluentbit, mystream=$sub['stream']
 ```
 
 {% endtab %}
@@ -150,10 +151,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name       loki
-  match      *
-  labels     job=fluentbit
-  label_keys $sub['stream']
+  Name       loki
+  Match      *
+  Labels     job=fluentbit
+  Label_Keys $sub['stream']
 ```
 
 {% endtab %}
@@ -178,9 +179,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name   loki
-  match  *
-  labels job=fluentbit, $sub['stream']
+  Name   loki
+  Match  *
+  Labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -229,9 +230,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name   loki
-  match  *
-  label_map_path /path/to/map.json
+  Name           loki
+  Match          *
+  Label_Map_Path /path/to/map.json
 ```
 
 {% endtab %}
@@ -256,9 +257,9 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name   loki
-  match  *
-  labels job=fluentbit, $sub['stream']
+  Name   loki
+  Match  *
+  Labels job=fluentbit, $sub['stream']
 ```
 
 {% endtab %}
@@ -292,10 +293,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name                   loki
-  match                  *
-  labels                 job=fluentbit
-  auto_kubernetes_labels on
+  Name                   loki
+  Match                  *
+  Labels                 job=fluentbit
+  Auto_Kubernetes_Labels on
 ```
 
 {% endtab %}
@@ -337,10 +338,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name            loki
-  match           *
-  drop_single_key on
-  line_format     json
+  Name            loki
+  Match           *
+  Drop_Single_Key on
+  Line_Format     json
 ```
 
 {% endtab %}
@@ -404,10 +405,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name                loki
-  match               *
-  labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
-  structured_metadata pod=$kubernetes['pod_name']
+  Name                loki
+  Match               *
+  Labels              cluster=my-k8s-cluster, region=us-east-1, namespace=$kubernetes['namespace_name']
+  Structured_Metadata pod=$kubernetes['pod_name']
 ```
 
 {% endtab %}
@@ -441,10 +442,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name                         loki
-  match                        *
-  labels                       cluster=my-k8s-cluster, region=us-east-1
-  structured_metadata_map_keys $kubernetes
+  Name                         loki
+  Match                        *
+  Labels                       cluster=my-k8s-cluster, region=us-east-1
+  Structured_Metadata_Map_Keys $kubernetes
 ```
 
 {% endtab %}
@@ -470,10 +471,10 @@ pipeline:
 
 ```text
 [OUTPUT]
-  name                loki
-  match               *
-  labels              cluster=my-k8s-cluster, region=us-east-1
-  structured_metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
+  Name                loki
+  Match               *
+  Labels              cluster=my-k8s-cluster, region=us-east-1
+  Structured_Metadata $kubernetes['namespace_name'],$kubernetes['pod_name']
 ```
 
 {% endtab %}
@@ -519,11 +520,11 @@ pipeline:
   Name        loki
   Match       *
   Host        logs-prod-eu-west-0.grafana.net
-  port        443
-  tls         on
-  tls.verify  on
-  http_user   XXX
-  http_passwd XXX
+  Port        443
+  Tls         on
+  Tls.verify  on
+  Http_User   XXX
+  Http_Passwd XXX
 ```
 
 {% endtab %}
@@ -562,22 +563,22 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush     1
-  log_level info
+  Flush     1
+  Log_Level info
 
 [INPUT]
-  name      dummy
-  dummy     {"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}
-  samples   1
+  Name      dummy
+  Dummy     {"key": 1, "sub": {"stream": "stdout", "id": "some id"}, "kubernetes": {"labels": {"team": "Santiago Wanderers"}}}
+  Samples   1
 
 [OUTPUT]
-  name                   loki
-  match                  *
-  host                   127.0.0.1
-  port                   3100
-  labels                 job=fluentbit
-  label_keys             $sub['stream']
-  auto_kubernetes_labels on
+  Name                   loki
+  Match                  *
+  Host                   127.0.0.1
+  Port                   3100
+  Labels                 job=fluentbit
+  Label_Keys             $sub['stream']
+  Auto_Kubernetes_Labels on
 ```
 
 {% endtab %}

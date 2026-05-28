@@ -1,5 +1,9 @@
 # Nest
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Nest_ filter plugin lets you operate on or with nested data. Its modes of operation are:
 
 - `nest`: Take a set of records and place them in a map.
@@ -7,7 +11,7 @@ The _Nest_ filter plugin lets you operate on or with nested data. Its modes of o
 
 ## Example usage for `nest`
 
-As an example using JSON notation, to nest keys matching the `Wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
+As an example using JSON notation, to nest keys matching the `wildcard` value `Key*` under a new key `NestKey` the transformation becomes:
 
 Input:
 
@@ -33,7 +37,7 @@ Output:
 
 ## Example usage for `lift`
 
-As an example using JSON notation, to lift keys nested under the `Nested_under` value `NestKey*` the transformation becomes:
+As an example using JSON notation, to lift keys nested under the `nested_under` value `NestKey*` the transformation becomes:
 
 Input:
 
@@ -63,12 +67,12 @@ The plugin supports the following configuration parameters:
 
 | Key | Value format | Operation | Description |
 | :--- | :--- | :--- | :--- |
-| `Operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
-| `Wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
-| `Nest_under` | Field string | `nest` | Nest records matching the `Wildcard` under this key |
-| `Nested_under` | Field string | `lift` | Lift records nested under the `Nested_under` key |
-| `Add_prefix` | Field string | Any | Prefix affected keys with this string |
-| `Remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
+| `add_prefix` | Field string | Any | Prefix affected keys with this string |
+| `nest_under` | Field string | `nest` | Nest records matching the `wildcard` under this key |
+| `nested_under` | Field string | `lift` | Lift records nested under the `nested_under` key |
+| `operation` | Enum [`nest` or `lift`] |  | Select the operation `nest` or `lift` |
+| `remove_prefix` | Field string | Any | Remove prefix from affected keys if it matches this string |
+| `wildcard` | Field wildcard | `nest` | Nest records which field matches the wildcard |
 
 ## Get started
 
@@ -130,7 +134,7 @@ pipeline:
   Nest_under Memstats
   Remove_prefix Mem.
 
- [OUTPUT]
+[OUTPUT]
   Name  stdout
   Match *
 ```
@@ -165,18 +169,18 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard:
+      operation: nest
+      wildcard:
         - Mem.*
         - Swap.*
-      Nest_under: Stats
-      Add_prefix: NESTED
+      nest_under: Stats
+      add_prefix: NESTED
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Stats
-      Remove_prefix: NESTED
+      operation: lift
+      nested_under: Stats
+      remove_prefix: NESTED
 
   outputs:
     - name: stdout
@@ -240,21 +244,21 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: Mem.*
-      Nest_under: LAYER1
+      operation: nest
+      wildcard: Mem.*
+      nest_under: LAYER1
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER1*
-      Nest_under: LAYER2
+      operation: nest
+      wildcard: LAYER1*
+      nest_under: LAYER2
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER2*
-      Nest_under: LAYER3
+      operation: nest
+      wildcard: LAYER2*
+      nest_under: LAYER3
 
   outputs:
     - name: stdout
@@ -338,39 +342,39 @@ pipeline:
   filters:
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: Mem.*
-      Nest_under: LAYER1
+      operation: nest
+      wildcard: Mem.*
+      nest_under: LAYER1
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER1*
-      Nest_under: LAYER2
+      operation: nest
+      wildcard: LAYER1*
+      nest_under: LAYER2
 
     - name: nest
       match: '*'
-      Operation: nest
-      Wildcard: LAYER2*
-      Nest_under: LAYER3
+      operation: nest
+      wildcard: LAYER2*
+      nest_under: LAYER3
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: LAYER3
-      Add_prefix: Lifted3_
+      operation: lift
+      nested_under: LAYER3
+      add_prefix: Lifted3_
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Lifted3_LAYER2
-      Add_prefix: Lifted3_Lifted2_
+      operation: lift
+      nested_under: Lifted3_LAYER2
+      add_prefix: Lifted3_Lifted2_
 
     - name: nest
       match: '*'
-      Operation: lift
-      Nested_under: Lifted3_Lifted2_LAYER1
-      Add_prefix: Lifted3_Lifted2_Lifted1_
+      operation: lift
+      nested_under: Lifted3_Lifted2_LAYER1
+      add_prefix: Lifted3_Lifted2_Lifted1_
 
   outputs:
     - name: stdout
