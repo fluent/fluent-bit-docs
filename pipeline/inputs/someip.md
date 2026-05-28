@@ -13,9 +13,9 @@ The plugin supports the following configuration parameters:
 | `Event`       | SOME/IP event to subscribe to. The configuration can have multiple events, one on each line. An event is identified by a comma separated list with, `service_ID, event_ID, event_group_ID_1, event_group_ID_2, ...`. The event must include at least one `event_group_ID`, but can be associated with multiple. |
 | `RPC`         | SOME/IP request to send when service is available. The configuration can have multiple RPCs, one on each line. An RPC is composed as a comma separated list with, `service_ID, service_instance, method_ID, request_payload". The request payload should be base64 encoded. |
 
-## Getting Started
+## Get Started
 
-In order to subscribe to SOME/IP events or send request/receive SOME/IP response, you can run the plugin from the command line or through the configuration file:
+To subscribe to SOME/IP events or send request/receive SOME/IP response, run the plugin from the command line or through the configuration file:
 
 ### Command Line
 
