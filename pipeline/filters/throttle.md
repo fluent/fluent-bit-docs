@@ -70,7 +70,7 @@ will become:
 
 The last pane of the window was overwritten and one message was dropped. If you can accept the cost of latency for collector messages, use the `Retain` parameter to retain all the logs.
 
-### Do not drop messages 
+### Don't drop messages
 
 When `Retain` isn't set or is set to `false`, if the rate limit is exceeded, throttle drops the messages.
 
