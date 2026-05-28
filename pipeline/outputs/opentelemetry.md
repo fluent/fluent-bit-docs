@@ -44,7 +44,7 @@ Only HTTP endpoints are supported.
 | `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
 | `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
 | `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`
-| `logs_resource_attributes_message_key`    | Specify a `Resource` key.                                                      | _none_                                                                      |
+| `logs_resource_attributes_message_key`    | Specify a message field key whose value is promoted into the OpenTelemetry Resource attributes. Can be specified multiple times.                        | _none_                                                                      |
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
 | `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
