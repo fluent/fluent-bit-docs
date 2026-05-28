@@ -24,9 +24,9 @@ The _someip_ plugin can be enabled with options from the command line:
 ```bash
 ./fluent-bit -i someip -p Event=4,1,32768,1 -o stdout
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your main configuration file append the following sections:
 
 {% tabs %}
 {% tab title="fluent-bit.conf" %}
