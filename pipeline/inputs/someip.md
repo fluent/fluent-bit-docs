@@ -29,6 +29,14 @@ The _someip_ plugin can be enabled with options from the command line:
 In your main configuration file append the following sections:
 
 {% tabs %}
+{% tab title="fluent-bit.yaml" %}
+```yaml
+pipeline:
+  inputs:
+    - name: someip
+      Event: '4,1,32768,1'
+      Event: '4,1,32769,2'
+      RPC: '4,1,1,CgAQAw=='
 {% tab title="fluent-bit.conf" %}
 ```text
 [INPUT]
@@ -41,18 +49,6 @@ In your main configuration file append the following sections:
 
 [OUTPUT]
     Name        stdout
-```
-{% endtab %}
-
-{% tab title="fluent-bit.yaml" %}
-```yaml
-pipeline:
-  inputs:
-    - name: someip
-      Event: '4,1,32768,1'
-      Event: '4,1,32769,2'
-      RPC: '4,1,1,CgAQAw=='
-```
 {% endtab %}
 {% endtabs %}
 
