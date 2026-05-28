@@ -74,6 +74,14 @@ pipeline:
       metric_name: count_all_dummy_messages
       metric_description: 'This metric counts dummy messages'
 
+    - name: log_to_metrics
+      match: 'dummy.log*'
+      tag: test_metric
+      metric_mode: counter
+      metric_name: total_duration
+      metric_description: 'This metric counts the total time spent across all messages'
+      value_field: duration
+
   outputs:
     - name: prometheus_exporter
       match: '*'
@@ -86,8 +94,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush              1
-  log_level          info
+  Flush              1
+  Log_Level          info
 
 [INPUT]
   Name               dummy
@@ -100,27 +108,27 @@ pipeline:
   Tag                dummy.log2
 
 [FILTER]
-  name               log_to_metrics
-  match              dummy.log*
-  tag                test_metric
-  metric_mode        counter
-  metric_name        count_all_dummy_messages
-  metric_description This metric counts dummy messages
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        counter
+  Metric_Name        count_all_dummy_messages
+  Metric_Description This metric counts dummy messages
 
 [FILTER]
-    name               log_to_metrics
-    match              dummy.log*
-    tag                test_metric
-    metric_mode        counter
-    metric_name        total_duration 
-    metric_description This metric counts the total time spent across all messages
-    value_field        duration
+  Name               log_to_metrics
+  Match              dummy.log*
+  Tag                test_metric
+  Metric_Mode        counter
+  Metric_Name        total_duration
+  Metric_Description This metric counts the total time spent across all messages
+  Value_Field        duration
 
 [OUTPUT]
-  name               prometheus_exporter
-  match              *
-  host               0.0.0.0
-  port               9999
+  Name               prometheus_exporter
+  Match              *
+  Host               0.0.0.0
+  Port               9999
 ```
 
 {% endtab %}
