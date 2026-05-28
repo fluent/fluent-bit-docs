@@ -92,9 +92,9 @@ pipeline:
       customer_id: my_customer_id
       log_type: my_super_awesome_type
       namespace: fallback-namespace
-      namespace_key: $tenant_namespace
-      label: env production
-      label: cluster_name $cluster['name']
+      namespace_key: "$tenant_namespace"
+      label: "env production"
+      label: "cluster_name $cluster['name']"
 ```
 
 {% endtab %}
