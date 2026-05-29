@@ -1,4 +1,4 @@
-# openSUSE and SUSE Linux Enterprise Server (SLES)
+# `openSUSE` and `SUSE Linux Enterprise Server` (`SLES`)
 
 Fluent Bit is distributed as the `fluent-bit` package and is available for OpenSUSE-Leap 15.6 and SLES 15.7 systems.
 
@@ -18,11 +18,11 @@ For SLES, Fluent Bit uses [SUSE Base Container Images (BCI)](https://www.suse.co
 
 The recommended secure deployment approach is to use the following instructions:
 
-## Ensure you select the correct openSUSE verse SLES Package
+## Ensure you select the correct `openSUSE` or `SLES` package
 
 The openSUSE package is built and tested specifically for openSUSE Leap environments, ensuring compatibility with openSUSE libraries, update cycles, and system dependencies. Using the openSUSE package on openSUSE Leap systems helps avoid potential issues with mismatched dependencies or unsupported features that might arise from using SLES packages.
 
-The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which might include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it can lead to library incompatibilities.
+The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which might include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap isn't recommended, as it can lead to library incompatibilities.
 
 
 In summary:
@@ -32,13 +32,13 @@ In summary:
 This ensures you receive the correct updates and compatibility for your chosen platform.
 
 
-## openSUSE Leap
+## `openSUSE Leap`
 
 Ensure your system repositories are up to date. For openSUSE Leap, use the following repository path:
 
 - `https://packages.fluentbit.io/opensuse/leap/$releaserver`
 
-### Configure Zypper for openSUSE Leap
+### Configure `zypper` for `openSUSE` Leap
 
 1. In `/etc/zypp/repos.d/`, add a new file called `fluent-bit.repo`.
 1. Add the following content to the file (replace `$releaserver` with your Leap version. For example, `15.6`):
@@ -55,13 +55,13 @@ Ensure your system repositories are up to date. For openSUSE Leap, use the follo
 
 1. As a best practice, enable `gpgcheck` for security reasons. Fluent Bit signs its repository metadata and all Fluent Bit packages.
 
-## SUSE Linux Enterprise Server (SLES)
+## `SUSE Linux Enterprise Server` (`SLES`)
 
 Ensure your system repositories are up to date. For SLES, use the following repository path:
 
 - `https://packages.fluentbit.io/sles/$releasever`
 
-### Configure Zypper for SLES
+### Configure `zypper` for `SLES`
 
 1. In `/etc/zypp/repos.d/`, add a new file called `fluent-bit.repo`.
 1. Add the following content to the file:
@@ -113,9 +113,9 @@ The default Fluent Bit configuration collects metrics of CPU usage and sends the
 
 ## FAQ
 
-### Zypper install fails with a `404 - Page not found` error for the package mirror
+### `zypper install` fails with a `404 - Page not found` error for the package mirror
 
-Ensure you use the correct `$releaserver` (for example, `15.6`) in your repo path:
+Ensure you use the correct `$releaserver` (for example, `15.6`) in your repository path:
 
 For openSUSE Leap:
 
@@ -129,8 +129,8 @@ For SLES
 baseurl=https://packages.fluentbit.io/sles/15.7/
 ```
 
-zypper knows about special variables like $releasever. It has its own internal logic to replace these with the correct values from your system's baseproduct file.
+`zypper` knows about special variables like `$releasever`. It has its own internal logic to replace these with the correct values from your system's `baseproduct` file.
 
-### Zypper install fails with incompatible dependencies
+### `zypper install` fails with incompatible dependencies
 
-OpenSUSE might track more recent dependencies than SLES. If you encounter dependency issues, ensure you are using the correct repository path for your OS distro.
+OpenSUSE might track more recent dependencies than SLES. If you encounter dependency issues, ensure you are using the correct repository path for your OS distribution.
