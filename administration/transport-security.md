@@ -35,37 +35,6 @@ When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't i
 
 {% endhint %}
 
-* [Amazon S3](../pipeline/outputs/s3.md)
-* [Apache SkyWalking](../pipeline/outputs/skywalking.md)
-* [Azure](../pipeline/outputs/azure.md)
-* [Azure Blob](../pipeline/outputs/azure_blob.md)
-* [Azure Data Explorer (Kusto)](../pipeline/outputs/azure_kusto.md)
-* [Azure Logs Ingestion API](../pipeline/outputs/azure_logs_ingestion.md)
-* [BigQuery](../pipeline/outputs/bigquery.md)
-* [Datadog](../pipeline/outputs/datadog.md)
-* [Doris](../pipeline/outputs/doris.md)
-* [Elasticsearch](../pipeline/outputs/elasticsearch.md)
-* [Forward](../pipeline/outputs/forward.md)
-* [GELF](../pipeline/outputs/gelf.md)
-* [Google Chronicle](../pipeline/outputs/chronicle.md)
-* [HTTP](../pipeline/outputs/http.md)
-* [InfluxDB](../pipeline/outputs/influxdb.md)
-* [Kafka REST Proxy](../pipeline/outputs/kafka-rest-proxy.md)
-* [LogDNA](../pipeline/outputs/logdna.md)
-* [Loki](../pipeline/outputs/loki.md)
-* [New Relic](../pipeline/outputs/new-relic.md)
-* [OpenSearch](../pipeline/outputs/opensearch.md)
-* [OpenTelemetry](../pipeline/outputs/opentelemetry.md)
-* [Oracle Cloud Infrastructure Logging Analytics](../pipeline/outputs/oci-logging-analytics.md)
-* [Prometheus Remote Write](../pipeline/outputs/prometheus-remote-write.md)
-* [Slack](../pipeline/outputs/slack.md)
-* [Splunk](../pipeline/outputs/splunk.md)
-* [Stackdriver](../pipeline/outputs/stackdriver.md)
-* [Syslog](../pipeline/outputs/syslog.md)
-* [TCP and TLS](../pipeline/outputs/tcp-and-tls.md)
-* [Treasure Data](../pipeline/outputs/treasure-data.md)
-* [WebSocket](../pipeline/outputs/websocket.md)
-
 To use TLS on input plugins, you must provide both a certificate and a private key.
 
 The listed properties can be enabled in the configuration file, specifically in each output plugin section or directly through the command line.
@@ -81,6 +50,7 @@ The following output plugins can take advantage of the TLS feature:
 - [BigQuery](../pipeline/outputs/bigquery.md)
 - [Dash0](../pipeline/outputs/dash0.md)
 - [Datadog](../pipeline/outputs/datadog.md)
+- [Doris](../pipeline/outputs/doris.md)
 - [Elasticsearch](../pipeline/outputs/elasticsearch.md)
 - [Forward](../pipeline/outputs/forward.md)
 - [GELF](../pipeline/outputs/gelf.md)
