@@ -15,8 +15,8 @@ pipeline:
   inputs:
     - name: dummy
       dummy: '{"top": {".dotted": "value"}}'
-      
-  outputs:       
+
+  outputs:
     - name: es
       host: elasticsearch
       replace_dots: on

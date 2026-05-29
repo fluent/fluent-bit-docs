@@ -1,6 +1,6 @@
 # Upstream servers
 
-Fluent Bit [output plugins](../../../pipeline/outputs/) aim to connect to external services to deliver logs over the network. Being able to connect to one node (host) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The `Upstream` feature provides this capability.
+Fluent Bit [output plugins](../../../pipeline/outputs.md) aim to connect to external services to deliver logs over the network. Being able to connect to one node (host) is normal and enough for more of the use cases, but there are other scenarios where balancing across different nodes is required. The `Upstream` feature provides this capability.
 
 An `Upstream` defines a set of nodes that will be targeted by an output plugin, by the nature of the implementation an output plugin must support the `Upstream` feature. The following plugin has `Upstream` support:
 
@@ -60,4 +60,6 @@ The following example defines an `Upstream` called forward-balancing which aims 
   shared_key secret
 ```
 
-Every `Upstream` definition must exists in its own configuration file in the file system. Adding multiple `Upstream` configurations in the same file or different files isn't allowed.
+Every `Upstream` definition must exists in its own configuration file in the file
+system. Adding multiple `Upstream` configurations in the same file or different files
+isn't allowed.
