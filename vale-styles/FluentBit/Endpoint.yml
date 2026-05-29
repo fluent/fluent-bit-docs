@@ -1,0 +1,9 @@
+extends: substitution
+message: 'Use "%s" instead of "%s".'
+level: error
+ignorecase: true
+swap:
+  end point: endpoint
+  end-point: endpoint
+  end points: endpoints
+  end-points: endpoints

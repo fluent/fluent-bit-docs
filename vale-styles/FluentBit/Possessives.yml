@@ -1,7 +1,7 @@
 ---
 extends: existence
 message: "Rewrite '%s' to not use 's."
-level: suggestion
+level: warning
 ignorecase: true
 tokens:
   - Bit's

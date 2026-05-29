@@ -1,114 +1,153 @@
-# Elasticsearch (Bulk API)
+# Elasticsearch
 
-The **elasticsearch** input plugin handles both Elasticsearch and OpenSearch Bulk API requests.
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
 
-## Configuration Parameters
+The _Elasticsearch_ input plugin handles both Elasticsearch and OpenSearch Bulk API requests.
+
+## Configuration parameters
 
 The plugin supports the following configuration parameters:
 
-| Key | Description | Default value |
-| :--- | :--- | :--- |
-| buffer\_max\_size | Set the maximum size of buffer. | 4M |
-| buffer\_chunk\_size | Set the buffer chunk size. | 512K |
-| tag\_key | Specify a key name for extracting as a tag. | `NULL` |
-| meta\_key | Specify a key name for meta information. | "@meta" |
-| hostname | Specify hostname or FQDN. This parameter can be used for "sniffing" (auto-discovery of) cluster node information. | "localhost" |
-| version  | Specify Elasticsearch server version. This parameter is effective for checking a version of Elasticsearch/OpenSearch server version. | "8.0.0" |
-| threaded | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
+The table below includes both:
 
-**Note:** The Elasticsearch cluster uses "sniffing" to optimize the connections between its cluster and clients.
-Elasticsearch can build its cluster and dynamically generate a connection list which is called "sniffing".
-The `hostname` will be used for sniffing information and this is handled by the sniffing endpoint.
+- settings specific to the Elasticsearch input plugin
+- shared `http_server.*` listener settings that are used by several HTTP-based inputs
 
-## Getting Started
+For a cross-plugin explanation of the shared listener settings, see
+[Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
+
+| Key                 | Description                                                                                                                              | Default value |
+|:--------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:--------------|
+| `buffer_chunk_size`   | Set the buffer chunk size. Compatibility alias for `http_server.buffer_chunk_size`.                                                                      | `512K`        |
+| `buffer_max_size`     | Set the maximum size of buffer. Compatibility alias for `http_server.buffer_max_size`.                                                                   | `4M`          |
+| `hostname`            | Specify hostname or fully qualified domain name. This parameter can be used for "sniffing" (auto-discovery of) cluster node information.                 | `localhost`   |
+| `http2`               | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                      | `true`        |
+| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                         | `0`           |
+| `http_server.workers` | Number of HTTP listener worker threads.                                                                                                                  | `1`           |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                             | `8192`        |
+| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                   | `256M`        |
+| `listen`              | The address to listen on.                                                                                                                                | `0.0.0.0`     |
+| `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
+| `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
+| `tag_key`           | Specify a key name for extracting as a tag.                                                                                              | `NULL`        |
+| `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`       |
+| `version`           | Specify the Elasticsearch version that Fluent Bit reports to clients during sniffing and API requests.                                   | `8.0.0`       |
+
+The `http_server.ingress_queue_event_limit` and
+`http_server.ingress_queue_byte_limit` settings matter only when
+`http_server.workers` is greater than `1`.
+
+### TLS / SSL
+
+The Elasticsearch input plugin supports TLS/SSL for receiving data from Beats agents or other clients over encrypted connections. For more details about the properties available and general configuration, refer to [Transport Security](../../administration/transport-security.md).
+
+When configuring TLS for Elasticsearch ingestion, common options include:
+
+- `tls.verify`: Enable or disable certificate validation for incoming connections.
+- `tls.ca_file`: Specify a CA certificate to validate client certificates when using mutual TLS (mTLS).
+- `tls.crt_file` and `tls.key_file`: Provide the server certificate and private key.
+
+### Sniffing
+
+Elasticsearch clients use a process called "sniffing" to automatically discover cluster nodes. When a client connects, it can query the cluster to retrieve a list of available nodes and their addresses. This allows the client to distribute requests across the cluster and adapt when nodes join or leave.
+
+The `hostname` parameter specifies the hostname or fully qualified domain name that Fluent Bit returns during sniffing requests. Clients use this information to build their connection list. Set this value to match how clients should reach this Fluent Bit instance (for example, an external IP or load balancer address rather than `localhost` in production environments).
+
+## Get started
 
 In order to start performing the checks, you can run the plugin from the command line or through the configuration file:
 
-### Command Line
+### Command line
 
 From the command line you can configure Fluent Bit to handle Bulk API requests with the following options:
 
-```bash
-$ fluent-bit -i elasticsearch -p port=9200 -o stdout
+```shell
+fluent-bit -i elasticsearch -p port=9200 -o stdout
 ```
 
-### Configuration File
+### Configuration file
 
-In your main configuration file append the following _Input_ & _Output_ sections:
+In your configuration file append the following:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[INPUT]
-    name elasticsearch
-    listen 0.0.0.0
-    port 9200
-
-[OUTPUT]
-    name stdout
-    match *
-```
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-    inputs:
-        - name: elasticsearch
-          listen: 0.0.0.0
-          port: 9200
+  inputs:
+    - name: elasticsearch
+      listen: 0.0.0.0
+      port: 9200
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  name   elasticsearch
+  listen 0.0.0.0
+  port   9200
+
+[OUTPUT]
+  name  stdout
+  match *
+```
+
 {% endtab %}
 {% endtabs %}
 
-As described above, the plugin will handle ingested Bulk API requests.
-For large bulk ingestions, you may have to increase buffer size with **buffer_max_size** and **buffer_chunk_size** parameters:
+As described previously, the plugin will handle ingested Bulk API requests. For large bulk ingestion, you might have to increase buffer size using the `buffer_max_size` and `buffer_chunk_size` parameters:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
-```python
-[INPUT]
-    name elasticsearch
-    listen 0.0.0.0
-    port 9200
-    buffer_max_size 20M
-    buffer_chunk_size 5M
-
-[OUTPUT]
-    name stdout
-    match *
-```
-{% endtab %}
-
 {% tab title="fluent-bit.yaml" %}
+
 ```yaml
 pipeline:
-    inputs:
-        - name: elasticsearch
-          listen: 0.0.0.0
-          port: 9200
-          buffer_max_size: 20M
-          buffer_chunk_size: 5M
+  inputs:
+    - name: elasticsearch
+      listen: 0.0.0.0
+      port: 9200
+      buffer_max_size: 20M
+      buffer_chunk_size: 5M
 
-    outputs:
-        - name: stdout
-          match: '*'
+  outputs:
+    - name: stdout
+      match: '*'
 ```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  name              elasticsearch
+  listen            0.0.0.0
+  port              9200
+  buffer_max_size   20M
+  buffer_chunk_size 5M
+
+[OUTPUT]
+  name  stdout
+  match *
+```
+
 {% endtab %}
 {% endtabs %}
 
 #### Ingesting from beats series
 
-Ingesting from beats series agents is also supported.
-For example, [Filebeats](https://www.elastic.co/beats/filebeat), [Metricbeat](https://www.elastic.co/beats/metricbeat), and [Winlogbeat](https://www.elastic.co/beats/winlogbeat) are able to ingest their collected data through this plugin.
+Ingesting from beats series agents is also supported. For example, [Filebeats](https://www.elastic.co/beats/filebeat), [Metricbeat](https://www.elastic.co/beats/metricbeat), and [Winlogbeat](https://www.elastic.co/beats/winlogbeat) are able to ingest their collected data through this plugin.
 
-Note that Fluent Bit's node information is returning as Elasticsearch 8.0.0.
+The Fluent Bit node information is returning as Elasticsearch 8.0.0.
 
-So, users have to specify the following configurations on their beats configurations:
+Users must specify the following configurations on their beats configurations:
 
 ```yaml
 output.elasticsearch:
@@ -116,10 +155,7 @@ output.elasticsearch:
   ilm: false
 ```
 
-For large log ingestion on these beat plugins,
-users might have to configure rate limiting on those beats plugins
-when Fluent Bit indicates that the application is exceeding the size limit for HTTP requests:
-
+For large log ingestion on these beat plugins, users might have to configure rate limiting on those beats plugins when Fluent Bit indicates that the application is exceeding the size limit for HTTP requests:
 
 ```yaml
 processors:

@@ -1,55 +1,120 @@
-# Chronicle
+# Google Chronicle
 
-The Chronicle output plugin allows ingesting security logs into [Google Chronicle](https://chronicle.security/) service. This connector is designed to send unstructured security logs.
+The _Google Chronicle_ output plugin lets you ingest security logs into the [Google Chronicle](https://cloud.google.com/security/products/security-operations) service. This connector is designed to send unstructured security logs.
 
-## Google Cloud Configuration
+## Google Cloud configuration
 
-Fluent Bit streams data into an existing Google Chronicle tenant using a service account that you specify. Therefore, before using the Chronicle output plugin, you must create a service account, create a Google Chronicle tenant, authorize the service account to write to the tenant, and provide the service account credentials to Fluent Bit.
+Fluent Bit streams data into an existing Google Chronicle tenant using a service account that you specify. Before using the Chronicle output plugin, you must:
 
-### Creating a Service Account
+1. Create a service account.
 
-To stream security logs into Google Chronicle, the first step is to create a Google Cloud service account for Fluent Bit:
+   To stream security logs into Google Chronicle, create a [Google Cloud service account](https://docs.cloud.google.com/iam/docs/service-accounts-create) for Fluent Bit:
 
-* [Creating a Google Cloud Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
+1. Create a tenant of Google Chronicle.
 
-### Creating a Tenant of Google Chronicle
+   Fluent Bit doesn't create a tenant of Google Chronicle for your security logs, so you must create this ahead of time.
 
-Fluent Bit does not create a tenant of Google Chronicle for your security logs, so you must create this ahead of time.
+1. Retrieve service account credentials.
 
-### Retrieving Service Account Credentials
+   The Fluent Bit Chronicle output plugin uses a JSON credentials file for authentication credentials. Download the credentials file by following the instructions for [Creating and Managing Service Account Keys](https://docs.cloud.google.com/iam/docs/keys-create-delete).
 
-Fluent Bit's Chronicle output plugin uses a JSON credentials file for authentication credentials. Download the credentials file by following these instructions:
+## Configuration parameters
 
-* [Creating and Managing Service Account Keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
-
-## Configurations Parameters
-
-| Key | Description | default |
+| Key | Description | Default |
 | :--- | :--- | :--- |
-| google\_service\_credentials | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable _$GOOGLE\_SERVICE\_CREDENTIALS_ |
-| service\_account\_email | Account email associated with the service. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_EMAIL_ |
-| service\_account\_secret | Private key content associated with the service account. Only available if **no credentials file** has been provided. | Value of environment variable _$SERVICE\_ACCOUNT\_SECRET_ |
-| project\_id | The project id containing the tenant of Google Chronicle to stream into. | The value of the `project_id` in the credentials file |
-| customer\_id | The customer id to identify the tenant of Google Chronicle to stream into. The value of the `customer_id` should be specified in the configuration file. |  |
-| log\_type | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). |  |
-| region | The GCP region in which to store security logs. Currently, there are several supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is handled as `US`.   |  |
-| log\_key | By default, the whole log record will be sent to Google Chronicle. If you specify a key name with this option, then only the value of that key will be sent to Google Chronicle. | |
-| workers | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `customer_id` | The customer ID identifying the Google Chronicle tenant to stream into. | _none_ |
+| `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS` |
+| `label` | Add a Chronicle label as a key and value pair. You can set this option multiple times. The label value can be a static string or a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). | _none_ |
+| `log_key` | By default, the whole log record is sent to Google Chronicle. If you specify a key name with this option, only the value of that key is sent. | _none_ |
+| `log_type` | The log type to parse logs as. Google Chronicle supports parsing for [specific log types only](https://docs.cloud.google.com/chronicle/docs/ingestion/parser-list/supported-default-parsers). | _none_ |
+| `namespace` | Set the Chronicle namespace for uploaded logs. If `namespace_key` is also set, this value is used when the record accessor doesn't resolve or resolves to an empty value. | _none_ |
+| `namespace_key` | Record accessor that selects the Chronicle namespace from each record. When records in the same chunk resolve to different namespaces or labels, Fluent Bit sends them in separate Chronicle batches. | _none_ |
+| `project_id` | The project ID containing the Google Chronicle tenant to stream into. | Value of the `project_id` in the credentials file |
+| `region` | The GCP region in which to store security logs. Supported regions: `US`, `EU`, `UK`, `ASIA`. Blank is treated as `US`. | _none_ |
+| `service_account_email` | Account email associated with the service. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_EMAIL` |
+| `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_SECRET` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 See Google's [official documentation](https://cloud.google.com/chronicle/docs/reference/ingestion-api) for further details.
 
-## Configuration File
+## Configuration file
 
-If you are using a _Google Cloud Credentials File_, the following configuration is enough to get you started:
+If you are using a Google Cloud credentials file, the following configuration will get you started:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  outputs:
+    - name: chronicle
+      match: '*'
+      customer_id: my_customer_id
+      log_type: my_super_awesome_type
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
 
 ```text
 [INPUT]
-    Name  dummy
-    Tag   dummy
+  Name dummy
+  Tag  dummy
 
 [OUTPUT]
-    Name       chronicle
-    Match      *
-    customer_id my_customer_id
-    log_type my_super_awesome_type
+  Name         chronicle
+  Match        *
+  Customer_Id  my_customer_id
+  Log_Type     my_super_awesome_type
 ```
+
+{% endtab %}
+{% endtabs %}
+
+The following example sets a fallback namespace, resolves the namespace from the record when present, and sends static and record-derived labels with each Chronicle batch:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+
+  outputs:
+    - name: chronicle
+      match: '*'
+      customer_id: my_customer_id
+      log_type: my_super_awesome_type
+      namespace: fallback-namespace
+      namespace_key: "$tenant_namespace"
+      label: "env production"
+      label: "cluster_name $cluster['name']"
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name dummy
+  Tag  dummy
+
+[OUTPUT]
+  Name          chronicle
+  Match         *
+  Customer_Id   my_customer_id
+  Log_Type      my_super_awesome_type
+  Namespace     fallback-namespace
+  Namespace_Key $tenant_namespace
+  Label         env production
+  Label         cluster_name $cluster['name']
+```
+
+{% endtab %}
+{% endtabs %}
