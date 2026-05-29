@@ -11,7 +11,7 @@ Fluent Bit is distributed as the `fluent-bit` package and is available for [Rasp
 The first step is to add the Fluent Bit server GPG key to your keyring so you can get Fluent Bit signed packages:
 
 ```shell
-sudo sh -c 'curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add - '
+curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor | sudo tee /usr/share/keyrings/fluentbit-keyring.gpg > /dev/null
 ```
 
 ## Update your sources lists
@@ -20,22 +20,22 @@ On Debian and derivative systems such as Raspbian, you need to add the Fluent Bi
 
 Add the following content at bottom of your `/etc/apt/sources.list` file.
 
-### Raspbian 12 (Bookworm)
+### Raspbian 12 \(`Bookworm`\)
 
 ```shell
-echo "deb https://packages.fluentbit.io/raspbian/bookworm bookworm main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/raspbian/bookworm bookworm main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
-### Raspbian 11 (Bullseye)
+### Raspbian 11 \(`Bullseye`\)
 
 ```shell
-echo "deb https://packages.fluentbit.io/raspbian/bullseye bullseye main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/raspbian/bullseye bullseye main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
-### Raspbian 10 (Buster)
+### Raspbian 10 \(`Buster`\)
 
 ```shell
-echo "deb https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
+echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/raspbian/buster buster main" | sudo tee /etc/apt/sources.list.d/fluent-bit.list
 ```
 
 ### Update your repositories database
