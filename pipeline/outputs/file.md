@@ -12,6 +12,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | :--- | :--- | :--- |
 | `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. | _none_ |
 | `format` | The [format](#format) of the file content. | _none_ |
+| `line_append` | Append new data to the end of log in same line. | `false` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
 | `path` | Directory path to store files. If not set, Fluent Bit will write the files in its own working directory. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
