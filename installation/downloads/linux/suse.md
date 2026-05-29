@@ -22,7 +22,7 @@ The recommended secure deployment approach is to use the following instructions:
 
 The openSUSE package is built and tested specifically for openSUSE Leap environments, ensuring compatibility with openSUSE libraries, update cycles, and system dependencies. Using the openSUSE package on openSUSE Leap systems helps avoid potential issues with mismatched dependencies or unsupported features that might arise from using SLES packages.
 
-The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which may include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it can lead to library incompatibilities.
+The SLES package is tailored for SUSE Linux Enterprise Server and is built against the SUSE Base Container Image, which might include different versions of libraries. It uses enterprise repositories with specific package versions, while Leap uses free, community driven repositories that have a broader range of packages. Installing the SLES package on openSUSE Leap is not recommended, as it can lead to library incompatibilities.
 
 
 In summary:
