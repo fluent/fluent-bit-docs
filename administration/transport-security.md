@@ -62,7 +62,7 @@ When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't i
 * [Splunk](../pipeline/outputs/splunk.md)
 * [Stackdriver](../pipeline/outputs/stackdriver.md)
 * [Syslog](../pipeline/outputs/syslog.md)
-* [TCP & TLS](../pipeline/outputs/tcp-and-tls.md)
+* [TCP and TLS](../pipeline/outputs/tcp-and-tls.md)
 * [Treasure Data](../pipeline/outputs/treasure-data.md)
 * [WebSocket](../pipeline/outputs/websocket.md)
 

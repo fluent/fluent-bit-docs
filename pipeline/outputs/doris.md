@@ -4,16 +4,16 @@ description: Send logs to Apache Doris
 
 # Apache Doris
 
-The **doris** output plugin lets you ingest your records into an
+The _Apache Doris_ output plugin lets you ingest your records into an
 [Apache Doris](https://doris.apache.org) database. To use this plugin, you must have an
 operational Doris service running in your environment.
 
-## Configuration Parameters
+## Configuration parameters
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `host` | HTTP address of the target Doris frontend (fe) or frontend (be). | `127.0.0.1` |
-| `port` | HTTP port of the target Doris frontend (fe) or frontend (be). | `8030` |
+| `host` | HTTP address of the target Doris frontend (FE) or backend (BE). | `127.0.0.1` |
+| `port` | HTTP port of the target Doris frontend (FE) or backend (BE). | `8030` |
 | `user` | Username for Doris access. | _none_ |
 | `password` | Password for Doris access. | _none_ |
 | `database` | The target Doris database. | _none_ |
@@ -34,7 +34,7 @@ for more details about the supported properties and general configuration.
 
 To insert records into a Doris database, run the plugin from the command line or define a configuration file:
 
-### Command Line
+### Command line
 
 The Doris plugin can read the parameters from the command through the `-p` argument,
 
@@ -52,7 +52,7 @@ fluent-bit -i cpu -t cpu -o doris \
     -p header='columns date, cpu_p, log=cast(cpu_p as string)'
 ```
 
-### Configuration File
+### Configuration file
 
 In your main configuration file, append the following `Input` and `Output` sections.
 
