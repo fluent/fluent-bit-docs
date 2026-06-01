@@ -63,30 +63,6 @@ Fluent Bit exposes the following configuration properties.
 | `upload_timeout`                       | Optional. Specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than `x` minutes and haven't reached `upload_file_size` limit yet.                                                                                                  | `30m`                         |
 | `workers`                              | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                                                                   | `0`                           |
 
-## Service principal authentication
-
-Azure Blob output supports Microsoft Entra ID service principal authentication. To use this authentication method, set `auth_type` to `service_principal` and provide the required credentials: `tenant_id`, `client_id`, and `client_secret`.
-
-The service principal must have permission to write to the target storage account or container. For example, assign the `Storage Blob Data Contributor` role to the service principal.
-
-Service principal authentication requires TLS to be enabled (`tls` set to `on`).
-
-### Example configuration
-
-```ini
-[OUTPUT]
-    Name              azure_blob
-    Match             *
-    account_name      mystorageaccount
-    container_name    logs
-    blob_type         blockblob
-    auth_type         service_principal
-    tenant_id         <tenant-id>
-    client_id         <client-id>
-    client_secret     <client-secret>
-    tls               on
-```
-
 ### Path templating
 
 When `path` is set, Fluent Bit resolves the value as a template (similar to the Amazon S3 output) before each upload. The resolved prefix is persisted alongside buffered files, so retries and restarts keep writing to the same Azure path. Leading and trailing slashes are removed automatically to avoid duplicate separators.
@@ -181,6 +157,48 @@ pipeline:
 After you run the configuration file, you will be able to query the data using the Azure Storage Explorer. The example generates the following content in the explorer:
 
 ![Azure Blob](../../.gitbook/assets/azure_blob.png)
+
+### Configuration with service principal authentication
+
+To authenticate with Microsoft Entra ID service principal credentials, set `auth_type` to `service_principal` and configure `tenant_id`, `client_id`, and `client_secret`. The service principal must have permission to write to the target storage account or container, such as the `Storage Blob Data Contributor` role.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: azure_blob
+      match: "*"
+      account_name: YOUR_ACCOUNT_NAME
+      container_name: logs
+      blob_type: blockblob
+      auth_type: service_principal
+      tenant_id: YOUR_TENANT_ID
+      client_id: YOUR_CLIENT_ID
+      client_secret: YOUR_CLIENT_SECRET
+      tls: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name           azure_blob
+  Match          *
+  Account_Name   YOUR_ACCOUNT_NAME
+  Container_Name logs
+  Blob_Type      blockblob
+  Auth_Type      service_principal
+  Tenant_Id      YOUR_TENANT_ID
+  Client_Id      YOUR_CLIENT_ID
+  Client_Secret  YOUR_CLIENT_SECRET
+  Tls            on
+```
+
+{% endtab %}
+{% endtabs %}
 
 ### Configuring and using Azure Emulator: Azurite
 
