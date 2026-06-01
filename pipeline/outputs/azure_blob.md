@@ -23,7 +23,7 @@ Fluent Bit exposes the following configuration properties.
 | Key                                    | Description                                                                                                                                                                                                                                                                            | Default                       |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------- |
 | `account_name`                         | Azure Storage account name.                                                                                                                                                                                                                                                            | _none_                        |
-| `auth_type`                            | Specify the type to authenticate against the service. Supported values: `key`, `sas`.                                                                                                                                                                                                  | `key`                         |
+| `auth_type`                            | Specify the type to authenticate against the service. Supported values: `key`, `sas`, `service_principal`.                                                                                                                                                                             | `key`                         |
 | `auto_create_container`                | If `container_name` doesn't exist in the remote service, enabling this option handles the exception and auto-creates the container.                                                                                                                                                    | `true`                        |
 | `azure_blob_buffer_key`                | Set the Azure Blob buffer key which needs to be specified when using multiple instances of Azure Blob output plugin and buffering is enabled.                                                                                                                                          | `key`                         |
 | `blob_type`                            | Specify the desired blob type. Supported values: `appendblob`, `blockblob`.                                                                                                                                                                                                            | `appendblob`                  |
@@ -31,6 +31,9 @@ Fluent Bit exposes the following configuration properties.
 | `buffer_dir`                           | Specifies the location of directory where the buffered data will be stored.                                                                                                                                                                                                            | `/tmp/fluent-bit/azure-blob/` |
 | `buffer_file_delete_early`             | Whether to delete the buffered file early after successful blob creation.                                                                                                                                                                                                              | `false`                       |
 | `buffering_enabled`                    | Enable buffering into disk before ingesting into Azure Blob.                                                                                                                                                                                                                           | `false`                       |
+| `client_id`                            | Microsoft Entra ID application/client ID. Mandatory when `auth_type` is `service_principal`.                                                                                                                                                                                           | _none_                        |
+| `client_secret`                        | Microsoft Entra ID client secret. Mandatory when `auth_type` is `service_principal`.                                                                                                                                                                                                   | _none_                        |
+| `tenant_id`                            | Microsoft Entra ID tenant ID. Mandatory when `auth_type` is `service_principal`.                                                                                                                                                                                                       | _none_                        |
 | `compress`                             | Sets payload compression in network transfer. Supported values: `gzip`, `zstd`.                                                                                                                                                                                                        | _none_                        |
 | `compress_blob`                        | Enables compression in the final `blockblob` file. When enabled without `compress`, it uses GZIP; if `compress` is also set, it inherits that codec. This option isn't compatible when `blob_type` = `appendblob`. Fluent Bit returns a configuration error and fails to start.        | `false`                       |
 | `configuration_endpoint_bearer_token`  | Bearer token for the configuration endpoint.                                                                                                                                                                                                                                           | _none_                        |
@@ -59,6 +62,30 @@ Fluent Bit exposes the following configuration properties.
 | `upload_parts_timeout`                 | Timeout for uploading parts of a blob file.                                                                                                                                                                                                                                            | `10M`                         |
 | `upload_timeout`                       | Optional. Specify a timeout for uploads. Fluent Bit will start ingesting buffer files which have been created more than `x` minutes and haven't reached `upload_file_size` limit yet.                                                                                                  | `30m`                         |
 | `workers`                              | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output.                                                                                                                                                                   | `0`                           |
+
+## Service principal authentication
+
+Azure Blob output supports Microsoft Entra ID service principal authentication. To use this authentication method, set `auth_type` to `service_principal` and provide the required credentials: `tenant_id`, `client_id`, and `client_secret`.
+
+The service principal must have permission to write to the target storage account or container. For example, assign the `Storage Blob Data Contributor` role to the service principal.
+
+Service principal authentication requires TLS to be enabled (`tls` set to `on`).
+
+### Example configuration
+
+```ini
+[OUTPUT]
+    Name              azure_blob
+    Match             *
+    account_name      mystorageaccount
+    container_name    logs
+    blob_type         blockblob
+    auth_type         service_principal
+    tenant_id         <tenant-id>
+    client_id         <client-id>
+    client_secret     <client-secret>
+    tls               on
+```
 
 ### Path templating
 
