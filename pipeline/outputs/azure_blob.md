@@ -160,7 +160,7 @@ After you run the configuration file, you will be able to query the data using t
 
 ### Configuration with service principal authentication
 
-To authenticate with Microsoft Entra ID service principal credentials, set `auth_type` to `service_principal` and configure `tenant_id`, `client_id`, and `client_secret`. The service principal must have permission to write to the target storage account or container, such as the `Storage Blob Data Contributor` role.
+To authenticate with Microsoft Entra ID service principal credentials, set `auth_type` to `service_principal` and configure `tenant_id`, `client_id`, and `client_secret`. The service principal must have permission to write to the target storage account or container, such as the `Storage Blob Data Contributor` role. Service principal authentication requires `tls` to be set to `on` to ensure secure communication.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
