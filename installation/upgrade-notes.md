@@ -36,11 +36,11 @@ If you tune `http`, `splunk`, `elasticsearch`, `opentelemetry`, or `prometheus_r
 
 Input plugins that support TLS now also support `tls.verify_client_cert`. Enable this option to require and validate the client certificate presented by the sender.
 
-If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
+If you end TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
 
 ### New internal logs input
 
-Fluent Bit `v5.0` adds the `fluentbit_logs` input plugin, which mirrors Fluent Bit's own internal log stream back into the data pipeline as structured log records.
+Fluent Bit `v5.0` adds the `fluentbit_logs` input plugin, which mirrors the Fluent Bit internal log stream back into the data pipeline as structured log records.
 
 Use this input if you want to forward Fluent Bit diagnostics to another destination, filter them, or store them alongside the rest of your telemetry.
 
@@ -65,7 +65,7 @@ If you previously handled authentication outside Fluent Bit for these cases, rev
 
 Starting in Fluent Bit v5.0.4, the `forward` output plugin's `retain_metadata_in_forward_mode` option defaults to `true` (previously `false`). When `true`, Fluent Bit embeds event metadata into the Forward protocol payload using the extended MessagePack format.
 
-Fluentd receivers do not understand this format and will reject events with a warning similar to:
+Fluentd receivers don't understand this format and will reject events with a warning similar to:
 
 ```text
 [input1] skip invalid event: host="..." tag="..." time=[..., {}] record={...}
@@ -92,7 +92,7 @@ pipeline:
     Match   *
     Host    fluentd-host
     Port    24224
-    retain_metadata_in_forward_mode false
+    Retain_Metadata_In_Forward_Mode false
 ```
 {% endtab %}
 {% endtabs %}
