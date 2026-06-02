@@ -61,6 +61,44 @@ Fluent Bit `v5.0` expands `OAuth 2.0` support in both directions:
 
 If you previously handled authentication outside Fluent Bit for these cases, review the plugin pages for the new built-in options.
 
+### Forward output: `retain_metadata_in_forward_mode` default changed to `true`
+
+Starting in Fluent Bit v5.0.4, the `forward` output plugin's `retain_metadata_in_forward_mode` option defaults to `true` (previously `false`). When `true`, Fluent Bit embeds event metadata into the Forward protocol payload using the extended MessagePack format.
+
+Fluentd receivers do not understand this format and will reject events with a warning similar to:
+
+```text
+[input1] skip invalid event: host="..." tag="..." time=[..., {}] record={...}
+```
+
+If you send data from Fluent Bit to a Fluentd aggregator using the `forward` output, explicitly set `retain_metadata_in_forward_mode false` to restore the previous behavior:
+
+{% tabs %}
+{% tab title="YAML" %}
+```yaml
+pipeline:
+  outputs:
+    - name: forward
+      match: "*"
+      host: fluentd-host
+      port: 24224
+      retain_metadata_in_forward_mode: false
+```
+{% endtab %}
+{% tab title="Classic" %}
+```text
+[OUTPUT]
+    Name    forward
+    Match   *
+    Host    fluentd-host
+    Port    24224
+    retain_metadata_in_forward_mode false
+```
+{% endtab %}
+{% endtabs %}
+
+For more details, see [GitHub issue #11877](https://github.com/fluent/fluent-bit/issues/11877).
+
 For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5.0](whats-new-in-fluent-bit-v5.0.md).
 
 ## Fluent Bit v4.2
