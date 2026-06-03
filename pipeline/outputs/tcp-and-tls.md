@@ -34,7 +34,7 @@ The following parameters are available to configure a secure channel connection 
 
 #### JSON format
 
-This example specifies gathering [CPU](../inputs/cpu-metrics) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
+This example specifies gathering [CPU](../inputs/cpu-metrics.md) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
 
 ```shell
 fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v
