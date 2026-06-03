@@ -163,6 +163,16 @@ If you don't already have an override file, you can use the following command to
 systemctl edit fluent-bit.service
 ```
 
+### Inotify queue overflow handling
+
+When the Linux inotify event queue overflows (indicated by an `IN_Q_OVERFLOW` event), Fluent Bit automatically reconciles all monitored files. During reconciliation it:
+
+- Detects rotated files by comparing inodes and file names and re-registers watches as needed.
+- Resets offset tracking for files that have been truncated.
+- Retries watch registration for files that previously failed, for example due to `ENOSPC` when `fs.inotify.max_user_watches` is exhausted.
+
+This behavior ensures that no log lines are silently skipped after a queue overflow. To reduce the risk of overflow, increase the kernel limits described in the previous section.
+
 ## Multiline support
 
 Fluent Bit 1.8 and later supports multiline core capabilities for the Tail input plugin. Fluent Bit supports the both the old and new configuration mechanisms. To avoid breaking changes, users are encouraged to use the latest one. The two mechanisms are:

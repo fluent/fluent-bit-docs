@@ -15,6 +15,7 @@ This plugin supports the following configuration parameters:
 | `empty_stream_on_read` | If enabled, when an HTTP client consumes the data from a stream, the stream content will be removed. | `off` |
 | `host` | The network address for the HTTP server to listen on. | `0.0.0.0` |
 | `http_cors_allow_origin` | Specify the value for the HTTP `Access-Control-Allow-Origin` header (CORS). | _none_ |
+| `http_server.idle_timeout` | Maximum time an idle HTTP client connection is kept open. Connections that remain idle beyond this duration are closed. Accepts time values such as `10s` or `1m`. | `10s` |
 | `port` | The TCP port for the HTTP server to listen on. | `2025` |
 | `stream_queue_size`| Specify the maximum queue size per stream. Each specific stream for logs, metrics, and traces can hold up to `stream_queue_size` bytes. | `20M` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
