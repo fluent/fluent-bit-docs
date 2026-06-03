@@ -36,7 +36,7 @@ If you tune `http`, `splunk`, `elasticsearch`, `opentelemetry`, or `prometheus_r
 
 Input plugins that support TLS now also support `tls.verify_client_cert`. Enable this option to require and validate the client certificate presented by the sender.
 
-If you end TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
+If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
 
 ### New internal logs input
 
