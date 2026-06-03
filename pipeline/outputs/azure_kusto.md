@@ -250,7 +250,7 @@ pipeline:
 ```
 [OUTPUT]
   Match *
-  Name azure_kust
+  Name azure_kusto
   Auth_Type workload_identity
   Tenant_Id <tenant_id>
   Client_Id <client_id>
