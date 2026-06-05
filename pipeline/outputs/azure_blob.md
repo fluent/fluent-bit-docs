@@ -83,6 +83,7 @@ pipeline:
       account_name: YOUR_ACCOUNT_NAME
       shared_key: YOUR_SHARED_KEY
       container_name: logs
+      blob_type: blockblob
       path: "/$TAG[0]/$TAG[4]/%Y/%m/%d/%H/%3N/$UUID"
       buffering_enabled: true
 ```
