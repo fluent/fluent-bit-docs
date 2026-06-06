@@ -42,6 +42,8 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tags       | Manifest Architectures    | Description                                                    |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 5.0.7-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.0.7 | amd64, arm64, arm/v7 | Release [v5.0.7](https://fluentbit.io/announcements/v5.0.7/) |
 | 5.0.6-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.0.6 | amd64, arm64, arm/v7 | Release [v5.0.6](https://fluentbit.io/announcements/v5.0.6/) |
 | 5.0.3-debug | amd64, arm64, arm/v7 | Debug images |
