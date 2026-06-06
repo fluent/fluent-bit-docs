@@ -30,7 +30,7 @@ Fluent Bit exposes the following configuration properties.
 | `blob_uri_length`                      | Set the length of the generated blob URI used when creating and uploading objects to Azure Blob Storage.                                                                                                                                                                               | `64`                          |
 | `buffer_dir`                           | Specifies the location of directory where the buffered data will be stored.                                                                                                                                                                                                            | `/tmp/fluent-bit/azure-blob/` |
 | `buffer_file_delete_early`             | Whether to delete the buffered file early after successful blob creation.                                                                                                                                                                                                              | `false`                       |
-| `buffering_enabled`                    | Enable buffering into disk before ingesting into Azure Blob.                                                                                                                                                                                                                           | `false`                       |
+| `buffering_enabled`                    | Enable buffering into disk before ingesting into Azure Blob. This option requires `blob_type` to be set to `blockblob`. It isn't compatible when `blob_type` = `appendblob`. Fluent Bit returns a configuration error and fails to start.                                  | `false`                       |
 | `compress`                             | Sets payload compression in network transfer. Supported values: `gzip`, `zstd`.                                                                                                                                                                                                        | _none_                        |
 | `compress_blob`                        | Enables compression in the final `blockblob` file. When enabled without `compress`, it uses GZIP; if `compress` is also set, it inherits that codec. This option isn't compatible when `blob_type` = `appendblob`. Fluent Bit returns a configuration error and fails to start.        | `false`                       |
 | `configuration_endpoint_bearer_token`  | Bearer token for the configuration endpoint.                                                                                                                                                                                                                                           | _none_                        |
@@ -83,6 +83,7 @@ pipeline:
       account_name: YOUR_ACCOUNT_NAME
       shared_key: YOUR_SHARED_KEY
       container_name: logs
+      blob_type: blockblob
       path: "/$TAG[0]/$TAG[4]/%Y/%m/%d/%H/%3N/$UUID"
       buffering_enabled: true
 ```
