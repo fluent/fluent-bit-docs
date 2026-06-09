@@ -13,6 +13,10 @@ fluent-bit -i stdin -o stdout
 
 If the `stdin` stream is closed (`end-of-file`), the plugin instructs Fluent Bit to exit with success (`0`) after flushing any pending output.
 
+{% hint style="info" %}
+Windows support for the `stdin` plugin was added in Fluent Bit v5.0.7. On Windows, the plugin reads from the standard input handle using native Win32 APIs.
+{% endhint %}
+
 ## Configuration parameters
 
 The plugin supports the following configuration parameters:
