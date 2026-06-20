@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_dns`, `trace_exec`, `trace_malloc`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_dns`, `trace_exec`, `trace_malloc`, `trace_sched`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -220,7 +220,22 @@ The `trace_dns` trace captures DNS query and response events and includes these 
 | `error_raw` | Error code for the operation (`0` indicates success). |
 | `latency_ns` | Round-trip latency in nanoseconds between query and response. |
 | `query` | Resolved DNS query name (for example, `example.com`). |
-| `query_type` | Numeric DNS query type (for example, `1` for IPv4 address (A record), `28` for IPv6 address (AAAA record)). |
+| `query_type` | Numeric DNS query type (for example, `1` for IPv4 address (A record), `28` for IPv6 address (`AAAA` record)). |
 | `rcode` | DNS response code (`0` indicates no error). |
 | `response` | Set to `1` if the record is a DNS response; `0` if it's a query. |
 | `txid` | DNS transaction ID. |
+
+### `Sched` trace fields
+
+The `trace_sched` trace captures CPU scheduling switch events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `cpu` | CPU that ran the scheduling switch. |
+| `prev_pid` | Process ID of the task being scheduled out. |
+| `prev_prio` | Priority of the task being scheduled out. |
+| `prev_state` | Kernel task state of the task being scheduled out. |
+| `next_pid` | Process ID of the task being scheduled in. |
+| `next_prio` | Priority of the task being scheduled in. |
+| `runq_latency_ns` | Run-queue latency in nanoseconds between `wakeup` and scheduling in (`0` when not tracked). |
+| `wakeup_tracked` | Set to `true` when a matching `wakeup` was tracked for the run-queue latency calculation. |
