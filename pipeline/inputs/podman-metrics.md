@@ -63,6 +63,18 @@ container_network_transmit_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3b
 # HELP container_network_transmit_errors_total Network transmitted errors
 # TYPE container_network_transmit_errors_total counter
 container_network_transmit_errors_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest",interface="eth0"} 0
+# HELP container_disk_read_bytes_total Container block I/O bytes read
+# TYPE container_disk_read_bytes_total counter
+container_disk_read_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 16498688
+# HELP container_disk_write_bytes_total Container block I/O bytes written
+# TYPE container_disk_write_bytes_total counter
+container_disk_write_bytes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 24576
+# HELP container_disk_reads_total Container block I/O reads completed
+# TYPE container_disk_reads_total counter
+container_disk_reads_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 193
+# HELP container_disk_writes_total Container block I/O writes completed
+# TYPE container_disk_writes_total counter
+container_disk_writes_total{id="858319c39f3f52cd44aa91a520aafb84ded3bc4b4a1e04130ccf87043149bbbf",name="blissful_wescoff",image="docker.io/library/ubuntu:latest"} 6
 # HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
 # TYPE fluentbit_input_storage_overlimit gauge
 fluentbit_input_storage_overlimit{name="podman_metrics.0"} 0
