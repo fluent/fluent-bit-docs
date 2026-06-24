@@ -4,9 +4,9 @@
 **Supported event types:** `logs` `metrics` `traces` `profiles`
 {% endhint %}
 
-The OpenTelemetry plugin lets you take logs, metrics, traces, and profiles from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
+The OpenTelemetry plugin lets you take logs, metrics, traces, and profiles from Fluent Bit and submit them to an OpenTelemetry receiver over OTLP/HTTP or OTLP/gRPC.
 
-Only HTTP endpoints are supported.
+OTLP/HTTP supports both HTTP/1.1 and HTTP/2. OTLP/gRPC requires HTTP/2 and is enabled with the `grpc` option.
 
 
 | Key     | Description  | Default |
@@ -22,42 +22,43 @@ Only HTTP endpoints are supported.
 | `aws_sts_endpoint`                        | Custom endpoint for the AWS STS API, used with the `aws_role_arn` option.      | _none_ |
 | `batch_size`                              | Set the maximum number of log records to be flushed at a time.                 | `1000` |
 | `compress`                                | Set payload compression mechanism. Options available are `gzip` and `zstd`.    | _none_ |
-| `grpc`                                    | Enable, disable or auto-detect gRPC usage. Accepted values: `on`, `off`, `auto`. | `off`  |
-| `grpc_logs_uri`                           | Specify an optional gRPC URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
-| `grpc_metrics_uri`                        | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
-| `grpc_profiles_uri`                       | Specify an optional gRPC URI for profiles OTel endpoint.                       | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
-| `grpc_traces_uri`                         | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
-| `header`                                  | Add a HTTP header key/value pair. Multiple headers can be set.                 | _none_ |
+| `encoding`                                | Set the encoding used to send logs, metrics, and traces over OTLP/HTTP. Accepted values: `protobuf` (default, `Content-Type: application/x-protobuf`) or `json` (`Content-Type: application/json`). Profiles always use `protobuf`. | `protobuf` |
+| `grpc`                                    | Enable gRPC transport (OTLP/gRPC). When enabled, HTTP/2 is automatically activated. Accepted values: `on`, `off`. | `off`  |
+| `grpc_logs_uri`                           | gRPC endpoint URI for log exports.                                             | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
+| `grpc_metrics_uri`                        | gRPC endpoint URI for metric exports.                                          | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
+| `grpc_profiles_uri`                       | gRPC endpoint URI for profile exports.                                         | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
+| `grpc_traces_uri`                         | gRPC endpoint URI for trace exports.                                           | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
+| `header`                                  | Add an HTTP header key/value pair. Multiple headers can be set.                | _none_ |
 | `host`                                    | IP address or hostname of the target HTTP server.                              | `127.0.0.1`                                                                     |
-| `http2`                                   | Enable, disable or force HTTP/2 usage. Accepted values : `on`, `off`, or `force`.                                                                       | `off`  |
+| `http2`                                   | Enable, disable or force HTTP/2 usage. Accepted values: `on`, `off`, or `force`.                                                                        | `off`  |
 | `http_passwd`                             | Set HTTP auth password.                                                        | _none_ |
 | `http_user`                               | Set HTTP auth user.                                                            | _none_ |
 | `log_level`                               | Specifies the log level for output plugin. If not set here, plugin uses global log level in `service` section.                                          | `info` |
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `log_suppress_interval`                   | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression.                                    | `0`    |
-| `logs_attributes_metadata_key`            | Specify an `Attributes` key.                                                   | `$Attributes`                                                                   |
-| `logs_body_key`                           | Specify an optional HTTP URI for the target OTel endpoint.                     | _none_ |
-| `logs_body_key_attributes`                | If set and it matched a pattern, it includes the remaining fields in the record as attributes.                                                          | `false`|
-| `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key.                                         | `InstrumentationScope`                                                          |
+| `logs_attributes_metadata_key`            | Metadata key used to read log record attributes.                               | `$Attributes`                                                                   |
+| `logs_body_key`                           | Record accessor patterns used to populate the OTLP log body. The first matching key wins. This option can be specified multiple times. Defaults to `$log` then `$message`. | _none_ |
+| `logs_body_key_attributes`                | When `true`, record fields not matched by `logs_body_key` are added to the log record's attributes instead of being dropped.                            | `false`|
+| `logs_instrumentation_scope_metadata_key` | Metadata key used to read the instrumentation scope.                           | `InstrumentationScope`                                                          |
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
 | `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
-| `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
-| `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
-| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
-| `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
-| `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
-| `logs_severity_text_message_key`          | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `logs_severity_text_metadata_key`         | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `logs_span_id_message_key`                | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
-| `logs_span_id_metadata_key`               | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
-| `logs_timestamp_metadata_key`             | Specify a `Timestamp` key.                                                     | `$Timestamp`                                                                    |
-| `logs_trace_flags_metadata_key`           | Specify a `TraceFlags` key.                                                    | `$TraceFlags`                                                                   |
-| `logs_trace_id_message_key`               | Specify a `TraceId` key.                                                       | `$TraceId`                                                                      |
-| `logs_trace_id_metadata_key`              | Specify a `TraceId` key.                                                       | `$TraceId`                                                                      |
-| `logs_uri`                                | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/logs`                                                                      |
+| `logs_metadata_key`                       | Top-level metadata key used to look up OTLP metadata added by `in_opentelemetry`. | `otlp` |
+| `logs_observed_timestamp_metadata_key`    | Metadata key used to read the observed timestamp.                              | `$ObservedTimestamp`                                                            |
+| `logs_resource_metadata_key`              | Metadata key used to read the OTLP resource.                                   | `Resource`                                                                      |
+| `logs_severity_number_message_key`        | Record body key used to read the severity number.                              | `$SeverityNumber`                                                               |
+| `logs_severity_number_metadata_key`       | Metadata key used to read the severity number.                                 | `$SeverityNumber`                                                               |
+| `logs_severity_text_message_key`          | Record body key used to read the severity text.                                | `$SeverityText`                                                                 |
+| `logs_severity_text_metadata_key`         | Metadata key used to read the severity text.                                   | `$SeverityText`                                                                 |
+| `logs_span_id_message_key`                | Record body key used to read the span ID.                                      | `$SpanId`                                                                       |
+| `logs_span_id_metadata_key`               | Metadata key used to read the span ID.                                         | `$SpanId`                                                                       |
+| `logs_timestamp_metadata_key`             | Metadata key used to read the log timestamp.                                   | `$Timestamp`                                                                    |
+| `logs_trace_flags_metadata_key`           | Metadata key used to read the trace flags.                                     | `$TraceFlags`                                                                   |
+| `logs_trace_id_message_key`               | Record body key used to read the trace ID.                                     | `$TraceId`                                                                      |
+| `logs_trace_id_metadata_key`              | Metadata key used to read the trace ID.                                        | `$TraceId`                                                                      |
+| `logs_uri`                                | HTTP URI for the logs OTLP endpoint.                                           | `/v1/logs`                                                                      |
 | `match`                                   | Set a tag pattern to match records that output should process. Exact matches or wildcards (for example `*`).                                            | _none_ |
 | `match_regex`                             | Set a regular expression to match tags for output routing. This allows more flexible matching compared to wildcards.                             | _none_ |
-| `metrics_uri`                             | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/metrics`                                                                   |
+| `metrics_uri`                             | HTTP URI for the metrics OTLP endpoint.                                        | `/v1/metrics`                                                                   |
 | `net.connect_timeout`                     | Set maximum time allowed to establish a connection, this time includes the TLS handshake.                                                               | `10s`  |
 | `net.connect_timeout_log_error`           | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.                                      | `true` |
 | `net.dns.mode`                            | Select the primary DNS connection type (TCP or UDP).                           | _none_ |
@@ -90,7 +91,7 @@ Only HTTP endpoints are supported.
 | `oauth2.token_url`                        | `OAuth 2.0` token endpoint URL.                                                | _none_ |
 | `oauth2.user_agent`                       | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
 | `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
-| `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
+| `profiles_uri`                            | HTTP URI for the profiles OTLP endpoint.                                       | `/v1development/profiles`                                                       |
 | `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
 | `retry_limit`                             | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely. | `1`    |
 | `tls`                                     | Enable or disable TLS/SSL support.                                             | `off`  |
@@ -108,22 +109,58 @@ Only HTTP endpoints are supported.
 | `tls.vhost`                               | Hostname to be used for TLS SNI extension.                                     | _none_ |
 | `tls.windows.certstore_name`              | Sets the `certstore` name on an output (Windows).                                | _none_ |
 | `tls.windows.use_enterprise_store`        | Sets whether using enterprise `certstore` or not on an output (Windows).         | _none_ |
-| `traces_uri`                              | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/traces`                                                                    |
+| `traces_uri`                              | HTTP URI for the traces OTLP endpoint.                                         | `/v1/traces`                                                                    |
 | `workers`                                 | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 
-The OpenTelemetry plugin works with logs and only the metrics collected from one of the metric input plugins. In the following example, log records generated by the dummy plugin and the host metrics collected by the node exporter metrics plugin are exported by the OpenTelemetry output plugin.
+The OpenTelemetry plugin supports all four OTLP signal types: logs, metrics, traces, and profiles. In the following example, log records generated by the dummy plugin and host metrics from the node exporter metrics plugin are exported together over OTLP/HTTP.
+
+### Encoding
+
+By default the plugin sends all signals as binary protobuf (`Content-Type: application/x-protobuf`). Set `encoding json` to send logs, metrics, and traces as OTLP JSON (`Content-Type: application/json`) instead. Use this when sending to OTLP/HTTP receivers that support JSON encoding.
+
+{% hint style="info" %}
+The `encoding` option applies to **OTLP/HTTP** exports only. When `grpc` is `on`, logs, metrics, and traces are sent over OTLP/gRPC using protobuf framing.
+
+Profiles are always sent as protobuf regardless of the `encoding` setting, no OTLP JSON encoder exists for the profiles signal yet.
+{% endhint %}
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
-# -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs and traces and delivers
-# them through the OpenTelemetry plugin to a local collector :
-#
+pipeline:
+  outputs:
+    - name: opentelemetry
+      match: "*"
+      host: localhost
+      port: 4318
+      encoding: json
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name     opentelemetry
+  Match    *
+  Host     localhost
+  Port     4318
+  Encoding json
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Full example
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+# Collect host metrics and dummy logs, export via OpenTelemetry output
 service:
   flush: 1
   log_level: info
@@ -157,7 +194,6 @@ pipeline:
       logs_trace_id_message_key: trace_id
       logs_severity_text_message_key: loglevel
       logs_severity_number_message_key: lognum
-      # add user-defined labels
       add_label:
         - app fluent-bit
         - color blue
@@ -167,11 +203,7 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-# Dummy Logs and traces with Node Exporter Metrics export using OpenTelemetry output plugin
-# -------------------------------------------
-# The following example collects host metrics on Linux and dummy logs and traces and delivers
-# them through the OpenTelemetry plugin to a local collector :
-#
+# Collect host metrics and dummy logs, export via OpenTelemetry output
 [SERVICE]
   Flush                1
   Log_Level            info
@@ -201,12 +233,11 @@ pipeline:
   Log_response_payload True
   Tls                  On
   Tls.verify           Off
-  Logs_Body_Key $message
-  Logs_Span_Id_Message_Key span_id
-  Logs_Trace_Id_Message_Key trace_id
-  Logs_Severity_Text_Message_Key loglevel
+  Logs_Body_Key        $message
+  Logs_Span_Id_Message_Key     span_id
+  Logs_Trace_Id_Message_Key    trace_id
+  Logs_Severity_Text_Message_Key   loglevel
   Logs_Severity_Number_Message_Key lognum
-  # add user-defined labels
   Add_Label            app fluent-bit
   Add_Label            color blue
 ```
