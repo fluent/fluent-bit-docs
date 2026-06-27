@@ -40,7 +40,7 @@ If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `t
 
 ### New internal logs input
 
-Fluent Bit `v5.0` adds the `fluentbit_logs` input plugin, which mirrors Fluent Bit's own internal log stream back into the data pipeline as structured log records.
+Fluent Bit `v5.0` adds the `fluentbit_logs` input plugin, which mirrors the Fluent Bit internal log stream back into the data pipeline as structured log records.
 
 Use this input if you want to forward Fluent Bit diagnostics to another destination, filter them, or store them alongside the rest of your telemetry.
 
@@ -60,6 +60,44 @@ Fluent Bit `v5.0` expands `OAuth 2.0` support in both directions:
 - The HTTP output can acquire access tokens with `oauth2.enable` and supports `basic`, `post`, and `private_key_jwt` client authentication.
 
 If you previously handled authentication outside Fluent Bit for these cases, review the plugin pages for the new built-in options.
+
+### Forward output: `retain_metadata_in_forward_mode` default changed to `true`
+
+Starting in Fluent Bit v5.0.4, the `forward` output plugin's `retain_metadata_in_forward_mode` option defaults to `true` (previously `false`). When `true`, Fluent Bit embeds event metadata into the Forward protocol payload using the extended MessagePack format.
+
+Fluentd receivers don't understand this format and will reject events with a warning similar to:
+
+```text
+[input1] skip invalid event: host="..." tag="..." time=[..., {}] record={...}
+```
+
+If you send data from Fluent Bit to a Fluentd aggregator using the `forward` output, explicitly set `retain_metadata_in_forward_mode false` to restore the previous behavior:
+
+{% tabs %}
+{% tab title="YAML" %}
+```yaml
+pipeline:
+  outputs:
+    - name: forward
+      match: "*"
+      host: fluentd-host
+      port: 24224
+      retain_metadata_in_forward_mode: false
+```
+{% endtab %}
+{% tab title="Classic" %}
+```text
+[OUTPUT]
+    Name    forward
+    Match   *
+    Host    fluentd-host
+    Port    24224
+    Retain_Metadata_In_Forward_Mode false
+```
+{% endtab %}
+{% endtabs %}
+
+For more details, see [GitHub issue #11877](https://github.com/fluent/fluent-bit/issues/11877).
 
 For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5.0](whats-new-in-fluent-bit-v5.0.md).
 

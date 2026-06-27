@@ -25,7 +25,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
    You must configure workload identity federation in GCP before using it with Fluent Bit.
 
    - [Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#aws)
-   - [Obtaining short-lived credentials with identity federation](https://cloud.google.com/iam/docs/using-workload-identity-federation)
+   - [Obtaining short-lived credentials with identity federation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds)
 
 ## Configuration parameters
 

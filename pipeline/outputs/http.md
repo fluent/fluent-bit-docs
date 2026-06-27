@@ -50,6 +50,7 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `oauth2.scope` | Optional `OAuth 2.0` scope. | _none_ |
 | `oauth2.timeout` | Timeout for `OAuth 2.0` token requests. Defaults to `http.response_timeout` when unset. | `0s` |
 | `oauth2.token_url` | `OAuth 2.0` token endpoint URL. | _none_ |
+| `oauth2.user_agent` | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
 | `port` | TCP port of the target HTTP Server. | `80` |
 | `proxy` | Specify an HTTP Proxy. The expected format of this value is `http://HOST:PORT`. HTTPS isn't supported. It's recommended to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. | _none_ |
 | `uri` | Specify an optional HTTP URI for the target web server. For example, `/somepath`. | _none_ |

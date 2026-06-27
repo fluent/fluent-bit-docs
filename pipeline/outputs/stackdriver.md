@@ -222,7 +222,7 @@ This will produce the following log:
 
 This makes the `resource_labels` API the recommended choice for supporting new or existing resource types that have all resource labels known before runtime or available on the payload during runtime.
 
-For instance, for a Kubernetes resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](../filters/kubernetes) to pack all six resource labels. The following example shows what this could look like for a `k8s_container` resource:
+For instance, for a Kubernetes resource type, `resource_labels` can be used in tandem with the [Kubernetes filter](../filters/kubernetes.md) to pack all six resource labels. The following example shows what this could look like for a `k8s_container` resource:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
