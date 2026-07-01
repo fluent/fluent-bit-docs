@@ -403,6 +403,19 @@ If you need labels or annotations that change in place to be reflected sooner, y
 - `kube_meta_namespace_cache_ttl`: the equivalent option for namespace labels and annotations, which defaults to `900` seconds. See [Kubernetes namespace meta](#kubernetes-namespace-meta).
 - `cache_use_docker_id`: re-fetch metadata when the container ID changes. This refreshes metadata when a Pod, and therefore its container, is restarted, but it doesn't help when labels or annotations are edited in place without a restart.
 
+### Example: a StatefulSet Pod whose labels change
+
+Consider a `StatefulSet` Pod `web-0` in the `prod` namespace, labeled `version: v1`. On the first log record from that Pod, the filter caches its metadata and enriches records with a `version` label of `v1`. Now update the label in place, without restarting the Pod:
+
+```text
+kubectl label pod web-0 -n prod version=v2 --overwrite
+```
+
+- With the default `kube_meta_cache_ttl` of `0`, the Pod keeps the same name, so the cache key is unchanged and the entry never expires. Records keep being enriched with `version: v1` until the Pod is restarted or the entry is evicted.
+- With `kube_meta_cache_ttl` set to, for example, `60`, the cached entry expires roughly 60 seconds after it was created. The next record for `web-0` re-fetches the metadata, and later records are enriched with `version: v2`.
+
+If instead the Pod is recreated (for example, a rolling update), it returns with the same name but a new container. In that case, `cache_use_docker_id On` also refreshes the metadata, because the container ID is then part of the cache key.
+
 ## Using Kubelet to get metadata
 
 An [issue](https://github.com/fluent/fluent-bit/issues/1948) about `kube-apiserver` suggests it will fail and become unresponsive when a cluster is too large and receives too many requests. For this feature, the Fluent Bit Kubernetes filter will send the request to the Kubelet `/pods` endpoint instead of `kube-apiserver` to retrieve the pods information and use it to enrich the log. Since Kubelet is running locally in nodes, the request response would be faster and each node would receive a request only one time. This could preserve `kube-apiserver` capacity to handle other requests. When this feature is enabled, you should see no difference in the Kubernetes metadata added to logs, but the `kube-apiserver` bottleneck should be avoided when the cluster is large.
