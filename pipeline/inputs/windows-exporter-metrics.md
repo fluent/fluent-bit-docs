@@ -32,34 +32,36 @@ For example, if the global interval is set to `1` and an override interval of `6
 
 This helps with down-sampling when collecting metrics.
 
-| Key                                      | Description                                                                                                                                                    | Default                                                                  |
-|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| `scrape_interval`                        | The rate in seconds at which metrics are collected from the Windows host.                                                                                     | `1`                                                                      |
-| `enable_collector`                       | Enable one collector by name. This key can be specified multiple times to build an allow-list of collectors to run.                                            | _none_                                                                   |
-| `we.logical_disk.allow_disk_regex`       | Specify the regular expression for logical disk metrics to allow collection of.                                                                                | `"/.+/"` (all)                                                           |
-| `we.logical_disk.deny_disk_regex`        | Specify the regular expression for logical disk metrics to prevent collection of or ignore.                                                                    | `NULL` (all)                                                             |
-| `we.net.allow_nic_regex`                 | Specify the regular expression for network metrics captured by the name of the NIC.                                                                            | `"/.+/"` (all)                                                           |
-| `we.service.where`                       | Specify the `WHERE` clause for retrieving service metrics.                                                                                                     | `NULL`                                                                   |
-| `we.service.include`                     | Specify the key value pairs for the include condition for the `WHERE` clause of service metrics.                                                               | `NULL`                                                                   |
-| `we.service.exclude`                     | Specify the key value pairs for the exclude condition for the `WHERE` clause of service metrics.                                                               | `NULL`                                                                   |
-| `we.process.allow_process_regex`         | Specify the regular expression covering the process metrics to collect.                                                                                        | `"/.+/"` (all)                                                           |
-| `we.process.deny_process_regex`          | Specify the regular expression for process metrics to prevent collection of or ignore.                                                                         | `NULL` (all)                                                             |
-| `collector.cpu.scrape_interval`          | The rate in seconds at which `cpu` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0`                                                                      |
-| `collector.net.scrape_interval`          | The rate in seconds at which `net` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0`                                                                      |
-| `collector.logical_disk.scrape_interval` | The rate in seconds at which `logical_disk` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used. | `0`                                                                      |
-| `collector.cs.scrape_interval`           | The rate in seconds at which `cs` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.           | `0`                                                                      |
-| `collector.os.scrape_interval`           | The rate in seconds at which `os` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.           | `0`                                                                      |
-| `collector.thermalzone.scrape_interval`  | The rate in seconds at which `thermalzone` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.  | `0`                                                                      |
-| `collector.cpu_info.scrape_interval`     | The rate in seconds at which `cpu_info` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.     | `0`                                                                      |
-| `collector.logon.scrape_interval`        | The rate in seconds at which `logon` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.        | `0`                                                                      |
-| `collector.system.scrape_interval`       | The rate in seconds at which `system` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.       | `0`                                                                      |
-| `collector.service.scrape_interval`      | The rate in seconds at which `service` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0`                                                                      |
-| `collector.memory.scrape_interval`       | The rate in seconds at which `memory` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.       | `0`                                                                      |
-| `collector.paging_file.scrape_interval`  | The rate in seconds at which `paging_file` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.  | `0`                                                                      |
-| `collector.process.scrape_interval`      | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.      | `0`                                                                      |
-| `collector.tcp.scrape_interval`          | The rate in seconds at which `tcp` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.          | `0`                                                                      |
-| `collector.cache.scrape_interval`        | The rate in seconds at which `cache` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.        | `0`                                                                      |
-| `metrics`                                | Specify which metrics are collected. Comma-separated list of collector names.                                                                                  | `"cpu,cpu_info,os,net,logical_disk,cs,cache,thermalzone,logon,system,service,tcp"` |
+| Key                                            | Description                                                                                                                                                              | Default                                                                            |
+|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| `scrape_interval`                              | The rate in seconds at which metrics are collected from the Windows host.                                                                                                | `1`                                                                                |
+| `enable_collector`                             | Enable one collector by name. This key can be specified multiple times to build an allow-list of collectors to run.                                                      | _none_                                                                             |
+| `we.logical_disk.allow_disk_regex`             | Specify the regular expression for logical disk metrics to allow collection of.                                                                                          | `"/.+/"` (all)                                                                     |
+| `we.logical_disk.deny_disk_regex`              | Specify the regular expression for logical disk metrics to prevent collection of or ignore.                                                                              | `NULL` (all)                                                                       |
+| `we.net.allow_nic_regex`                       | Specify the regular expression for network metrics captured by the name of the NIC.                                                                                      | `"/.+/"` (all)                                                                     |
+| `we.service.where`                             | Specify the `WHERE` clause for retrieving service metrics.                                                                                                               | `NULL`                                                                             |
+| `we.service.include`                           | Specify the key-value pairs for the include condition for the `WHERE` clause of service metrics.                                                                         | `NULL`                                                                             |
+| `we.service.exclude`                           | Specify the key value pairs for the exclude condition for the `WHERE` clause of service metrics.                                                                         | `NULL`                                                                             |
+| `we.process.allow_process_regex`               | Specify the regular expression covering the process metrics to collect.                                                                                                  | `"/.+/"` (all)                                                                     |
+| `we.process.deny_process_regex`                | Specify the regular expression for process metrics to prevent collection of or ignore.                                                                                   | `NULL` (all)                                                                       |
+| `collector.cpu.scrape_interval`                | The rate in seconds at which `cpu` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                    | `0`                                                                                |
+| `collector.net.scrape_interval`                | The rate in seconds at which `net` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                    | `0`                                                                                |
+| `collector.logical_disk.scrape_interval`       | The rate in seconds at which `logical_disk` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.           | `0`                                                                                |
+| `collector.cs.scrape_interval`                 | The rate in seconds at which `cs` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                     | `0`                                                                                |
+| `collector.os.scrape_interval`                 | The rate in seconds at which `os` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                     | `0`                                                                                |
+| `collector.thermalzone.scrape_interval`        | The rate in seconds at which `thermalzone` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.            | `0`                                                                                |
+| `collector.cpu_info.scrape_interval`           | The rate in seconds at which `cpu_info` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.               | `0`                                                                                |
+| `collector.logon.scrape_interval`              | The rate in seconds at which `logon` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                  | `0`                                                                                |
+| `collector.system.scrape_interval`             | The rate in seconds at which `system` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                 | `0`                                                                                |
+| `collector.service.scrape_interval`            | The rate in seconds at which `service` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                | `0`                                                                                |
+| `collector.memory.scrape_interval`             | The rate in seconds at which `memory` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                 | `0`                                                                                |
+| `collector.paging_file.scrape_interval`        | The rate in seconds at which `paging_file` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.            | `0`                                                                                |
+| `collector.process.scrape_interval`            | The rate in seconds at which `process` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                | `0`                                                                                |
+| `collector.tcp.scrape_interval`                | The rate in seconds at which `tcp` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                    | `0`                                                                                |
+| `collector.cache.scrape_interval`              | The rate in seconds at which `cache` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.                  | `0`                                                                                |
+| `collector.performancecounter.scrape_interval` | The rate in seconds at which `performancecounter` metrics are collected. Values greater than `0` override the global default. Otherwise, the global default is used.     | `0`                                                                                |
+| `performancecounter`                           | Define a Windows Performance Counter to collect. This key can be specified multiple times. Use the `metric_name=counter_path` form, where `metric_name` is user-defined. | _none_                                                                             |
+| `metrics`                                      | Specify which metrics are collected. Comma-separated list of collector names.                                                                                            | `"cpu,cpu_info,os,net,logical_disk,cs,cache,thermalzone,logon,system,service,tcp"` |
 
 ## Collectors available
 
@@ -67,23 +69,24 @@ The following table describes the available collectors as part of this plugin. A
 
 The Version column specifies the Fluent Bit version where the collector is available.
 
-| Name           | Description                                                                                                 | OS      | Version |
-|----------------|-------------------------------------------------------------------------------------------------------------|---------|---------|
-| `cpu`          | Exposes CPU statistics including `utilization`, `interrupts`, and `DPCs`.                                        | Windows | v1.9    |
-| `net`          | Exposes network interface statistics such as bytes transferred, packets, and errors.                       | Windows | v2.0.8  |
-| `logical_disk` | Exposes logical disk statistics including read/write operations, latency, and free space.                 | Windows | v2.0.8  |
-| `cs`           | Exposes computer system statistics including model, manufacturer, and system type.                        | Windows | v2.0.8  |
-| `os`           | Exposes operating system statistics including version, build number, and service pack information.        | Windows | v2.0.8  |
-| `thermalzone`  | Exposes thermal zone statistics including temperature readings.                                            | Windows | v2.0.8  |
-| `cpu_info`     | Exposes CPU information including model, cores, threads, and clock speed.                                 | Windows | v2.0.8  |
-| `logon`        | Exposes logon session statistics including active sessions and session types.                             | Windows | v2.0.8  |
-| `system`       | Exposes system-level statistics including uptime, processes, and threads.                                  | Windows | v2.0.8  |
-| `service`      | Exposes Windows service statistics including service state, start mode, and status.                      | Windows | v2.1.6  |
-| `memory`       | Exposes memory statistics including available, cached, and committed bytes.                               | Windows | v2.1.9  |
-| `paging_file`  | Exposes paging file statistics including usage, peak usage, and allocation.                                | Windows | v2.1.9  |
-| `process`      | Exposes process-level statistics including CPU usage, memory consumption, handles, and threads per process. | Windows | v2.1.9  |
-| `tcp`          | Exposes TCP connection statistics including active connections, segments, and errors.                       | Windows | v4.1.0  |
-| `cache`        | Exposes cache statistics including cache hits, misses, and utilization.                                   | Windows | v4.1.0  |
+| Name                 | Description                                                                                                 | OS      | Version |
+|----------------------|-------------------------------------------------------------------------------------------------------------|---------|---------|
+| `cpu`                | Exposes CPU statistics including `utilization`, `interrupts`, and `DPCs`.                                   | Windows | v1.9    |
+| `net`                | Exposes network interface statistics such as bytes transferred, packets, and errors.                        | Windows | v2.0.8  |
+| `logical_disk`       | Exposes logical disk statistics including read/write operations, latency, and free space.                   | Windows | v2.0.8  |
+| `cs`                 | Exposes computer system statistics including model, manufacturer, and system type.                          | Windows | v2.0.8  |
+| `os`                 | Exposes operating system statistics including version, build number, and service pack information.          | Windows | v2.0.8  |
+| `thermalzone`        | Exposes thermal zone statistics including temperature readings.                                             | Windows | v2.0.8  |
+| `cpu_info`           | Exposes CPU information including model, cores, threads, and clock speed.                                   | Windows | v2.0.8  |
+| `logon`              | Exposes logon session statistics including active sessions and session types.                               | Windows | v2.0.8  |
+| `system`             | Exposes system-level statistics including uptime, processes, and threads.                                   | Windows | v2.0.8  |
+| `service`            | Exposes Windows service statistics including service state, start mode, and status.                         | Windows | v2.1.6  |
+| `memory`             | Exposes memory statistics including available, cached, and committed bytes.                                 | Windows | v2.1.9  |
+| `paging_file`        | Exposes paging file statistics including usage, peak usage, and allocation.                                 | Windows | v2.1.9  |
+| `process`            | Exposes process-level statistics including CPU usage, memory consumption, handles, and threads per process. | Windows | v2.1.9  |
+| `tcp`                | Exposes TCP connection statistics including active connections, segments, and errors.                       | Windows | v4.1.0  |
+| `cache`              | Exposes cache statistics including cache hits, misses, and utilization.                                     | Windows | v4.1.0  |
+| `performancecounter` | Exposes user-defined Windows Performance Counters through Performance Data Helper.                          | Windows | v5.0.8  |
 
 ## Threading
 
@@ -337,7 +340,7 @@ SELECT * FROM Win32_Service WHERE (NOT Name LIKE 'UdkUserSvc%' AND NOT Name LIKE
 1. `we.service.include` translated and applied into the where clause in the service collector
 2. `we.service.exclude` translated and applied into the where clause in the service collector
     1. If the `we.service.include` is applied, translated `we.service.include` and `we.service.exclude` conditions are concatenated with `AND`.
-1. `we.service.where` is handled as-is into the where clause in the service collector .
+3. `we.service.where` is handled as-is into the where clause in the service collector .
     1. If either of the previous parameters is applied, the clause will be applied with `AND (` _the value of `we.service.where`_ `)`.
 
 For example, when a user specifies the parameter as follows:
@@ -424,12 +427,63 @@ pipeline:
 
 In this example, CPU and memory metrics are collected every 5 seconds, while system metrics are collected every 60 seconds. The global `scrape_interval` of 10 seconds determines how often metrics are published to the output.
 
+### Custom performance counters
+
+The `performancecounter` collector exposes Windows Performance Counters that aren't covered by the built-in collectors. Use it for Windows Server roles, applications, drivers, or custom components that publish counters through Performance Data Helper (PDH). Examples include Internet Information Services (IIS), Microsoft SQL Server (MSSQL), .NET Framework, GPU engines, and application-specific counter sets.
+
+The collector isn't enabled by default. Add `performancecounter` to `metrics`, then define one or more `PerformanceCounter` entries. Each entry uses the `name=counter_path` form:
+
+```text
+PerformanceCounter metric_name=\Object(instance)\Counter
+```
+
+Fluent Bit exports each configured counter as a gauge named `windows_performancecounter_<metric_name>`.
+
+Example configuration:
+
+```text
+[SERVICE]
+    flush_interval 3
+    http_server    on
+    http_port      2020
+    log_level      debug
+
+[INPUT]
+    name             windows_exporter_metrics
+    tag              windows
+    scrape_interval  2
+    metrics          cpu,logical_disk,memory,performancecounter
+
+    PerformanceCounter process_fluent_bit_thread_count=\Process(fluent-bit)\Thread Count
+    PerformanceCounter gpu_3d_utilization=\GPU Engine(*engtype_3D)\Utilization Percentage
+    PerformanceCounter gpu_copy_utilization=\GPU Engine(*engtype_Copy)\Utilization Percentage
+    PerformanceCounter gpu_video_decode_utilization=\GPU Engine(*engtype_VideoDecode)\Utilization Percentage
+
+[OUTPUT]
+    name stdout
+```
+
+This configuration creates metrics like:
+
+```text
+windows_performancecounter_process_fluent_bit_thread_count
+windows_performancecounter_gpu_3d_utilization
+windows_performancecounter_gpu_copy_utilization
+windows_performancecounter_gpu_video_decode_utilization
+```
+
+Wildcard counter paths are expanded when the collector starts. If the counter path includes instances, Fluent Bit adds the instance name as the `instance` label:
+
+```text
+windows_performancecounter_gpu_3d_utilization{instance="pid_2660_luid_0x00000000_0x0001406D_phys_0_eng_0_engtype_3D#0"} = 14.387620901817147
+```
+
 ## Requirements and permissions
 
-The Windows Exporter metrics plugin uses Windows Management Instrumentation (WMI) to collect metrics. The following requirements apply:
+The Windows Exporter metrics plugin uses Windows Management Instrumentation (WMI) and Performance Data Helper (PDH) to collect metrics. The following requirements apply:
 
 - **Operating System**: Windows only (Windows 7/Server 2008 R2 or later)
-- **Permissions**: The Fluent Bit process must have appropriate permissions to query WMI. Most metrics can be collected with standard user permissions, but some collectors might require elevated privileges.
+- **Permissions**: The Fluent Bit process must have appropriate permissions to query WMI and the configured Performance Counters. Most metrics can be collected with standard user permissions, but some collectors might require elevated privileges.
 - **WMI Service**: The Windows Management Instrumentation service must be running.
 
 If you encounter permission errors, try running Fluent Bit with administrator privileges or ensure the service account has the necessary WMI query permissions.
