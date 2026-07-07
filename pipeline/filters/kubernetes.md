@@ -55,6 +55,7 @@ The plugin supports the following configuration parameters:
 | `kube_meta_cache_ttl` | Configurable time-to-live for Kubernetes cached pod metadata. By default, it's set to `0` which means `TTL` for cache entries is disabled and cache entries are evicted at random when capacity is reached. To enable this option, set the number to a time interval. For example, set the value to `60` or `60s` and cache entries which have been created more than 60 seconds ago will be evicted. | `0` |
 | `kube_meta_namespace_cache_ttl` | Configurable time-to-live for Kubernetes cached namespace metadata. If set to `0`, entries are evicted at random when capacity is reached. | `900` (seconds) |
 | `kube_meta_preload_cache_dir` | If set, Kubernetes metadata can be cached or pre-loaded from files in JSON format in this directory, named `namespace-pod.meta`. | _none_ |
+| `kube_namespace_file` | Path to the file that contains the pod's namespace. | `/var/run/secrets/kubernetes.io/serviceaccount/namespace` |
 | `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
 | `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
 | `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
@@ -386,7 +387,7 @@ The filter can now gather the values of `pod_name` and `namespace`. With that in
 
 ## Metadata cache and freshness
 
-To keep the request rate against the Kubernetes API server (or Kubelet) low, the filter caches the metadata it retrieves for each Pod. On the first record for a given Pod, the filter queries the API server (or the Kubelet, see [Using Kubelet to get metadata](#using-kubelet-to-get-metadata)) and stores the result in an in-memory cache keyed by the Pod's `namespace` and `pod_name`. Subsequent records that resolve to the same key reuse the cached metadata instead of issuing another request.
+To keep the request rate against the Kubernetes API server (or Kubelet) low, the filter caches the metadata it retrieves for each Pod. On the first record for a given Pod, the filter queries the API server (or the Kubelet, see [Using Kubelet to get metadata](#using-kubelet-to-get-metadata)). It stores the result in an in-memory cache keyed by the Pod's `namespace` and `pod_name`. Subsequent records that resolve to the same key reuse the cached metadata instead of issuing another request.
 
 Because the cache is keyed by `namespace` and `pod_name`, how fresh the labels and annotations are depends on how long an entry stays cached:
 
@@ -403,7 +404,7 @@ If you need labels or annotations that change in place to be reflected sooner, y
 - `kube_meta_namespace_cache_ttl`: the equivalent option for namespace labels and annotations, which defaults to `900` seconds. See [Kubernetes namespace meta](#kubernetes-namespace-meta).
 - `cache_use_docker_id`: re-fetch metadata when the container ID changes. This refreshes metadata when a Pod, and therefore its container, is restarted, but it doesn't help when labels or annotations are edited in place without a restart.
 
-### Example: a StatefulSet Pod whose labels change
+### Example: a `StatefulSet Pod` whose labels change
 
 Consider a `StatefulSet` Pod `web-0` in the `prod` namespace, labeled `version: v1`. On the first log record from that Pod, the filter caches its metadata and enriches records with a `version` label of `v1`. Now update the label in place, without restarting the Pod:
 
