@@ -43,7 +43,9 @@ Only HTTP endpoints are supported.
 | `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
 | `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
 | `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
-| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
+| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`
+| `logs_resource_attributes_message_key`    | Specify a message field key whose value is promoted into the OpenTelemetry Resource attributes. Can be specified multiple times.                        | _none_                                                                      |
+| `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
 | `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
 | `logs_severity_text_message_key`          | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
@@ -157,6 +159,10 @@ pipeline:
       logs_trace_id_message_key: trace_id
       logs_severity_text_message_key: loglevel
       logs_severity_number_message_key: lognum
+      logs_resource_attributes_message_key:
+        - application_id  # promote message fields to Resource attributes
+        - service_name
+
       # add user-defined labels
       add_label:
         - app fluent-bit
@@ -201,11 +207,13 @@ pipeline:
   Log_response_payload True
   Tls                  On
   Tls.verify           Off
-  Logs_Body_Key $message
-  Logs_Span_Id_Message_Key span_id
-  Logs_Trace_Id_Message_Key trace_id
-  Logs_Severity_Text_Message_Key loglevel
-  Logs_Severity_Number_Message_Key lognum
+  Logs_Body_Key                        $message
+  Logs_Span_Id_Message_Key             span_id
+  Logs_Trace_Id_Message_Key            trace_id
+  Logs_Severity_Text_Message_Key       loglevel
+  Logs_Severity_Number_Message_Key     lognum
+  Logs_Resource_Attributes_Message_Key application_id
+  Logs_Resource_Attributes_Message_Key service_name
   # add user-defined labels
   Add_Label            app fluent-bit
   Add_Label            color blue
