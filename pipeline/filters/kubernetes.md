@@ -416,6 +416,10 @@ kubectl label pod web-0 -n prod version=v2 --overwrite
 
 If instead the Pod is recreated (for example, a rolling update), it returns with the same name but a new container. In that case, `cache_use_docker_id On` also refreshes the metadata, because the container ID is then part of the cache key.
 
+## Enrich Fluent Bit internal logs
+
+When the source records come from the [Fluent Bit logs](../inputs/fluentbit-logs.md) (`fluentbit_logs`) input plugin, the filter enriches them with the metadata of the local Fluent Bit Pod instead of querying the API server. The namespace is read from the `kube_namespace_file` path, and the Pod name is taken from the `HOSTNAME` environment variable, falling back to the system hostname. This lets you attach Kubernetes metadata to Fluent Bit internal diagnostic logs without contacting the API server.
+
 ## Using Kubelet to get metadata
 
 An [issue](https://github.com/fluent/fluent-bit/issues/1948) about `kube-apiserver` suggests it will fail and become unresponsive when a cluster is too large and receives too many requests. For this feature, the Fluent Bit Kubernetes filter will send the request to the Kubelet `/pods` endpoint instead of `kube-apiserver` to retrieve the pods information and use it to enrich the log. Since Kubelet is running locally in nodes, the request response would be faster and each node would receive a request only one time. This could preserve `kube-apiserver` capacity to handle other requests. When this feature is enabled, you should see no difference in the Kubernetes metadata added to logs, but the `kube-apiserver` bottleneck should be avoided when the cluster is large.
