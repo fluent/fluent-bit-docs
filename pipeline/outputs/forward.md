@@ -41,8 +41,8 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 | --- | ----------- | ------- |
 | `shared_key` | A key string known by the remote Fluentd used for authorization. | _none_ |
 | `empty_shared_key` | Connect to Fluentd with a zero-length shared secret. | `false` |
-| `username` | Specify the username to present to a Fluentd server that enables `user_auth`. | _none_ |
-| `password` | Specify the password corresponding to the username. | _none_ |
+| `username` | Specify the username to present to a Fluentd server that enables `user_auth`. Requires `shared_key` or `empty_shared_key` to be set, because credentials are exchanged only during the secure forward handshake. Otherwise, Fluent Bit fails to start. | _none_ |
+| `password` | Specify the password corresponding to the username. Requires `shared_key` or `empty_shared_key`, the same as `username`. | _none_ |
 | `self_hostname` | Default value of the auto-generated certificate common name (CN). | `localhost` |
 | `tls` | Enable or disable TLS support. | `Off` |
 | `tls.verify` | Force certificate validation. | `On` |
