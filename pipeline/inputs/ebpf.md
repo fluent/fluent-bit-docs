@@ -20,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_dns`, `trace_exec`, `trace_malloc`, `trace_sched`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_dns`, `trace_exec`, `trace_malloc`, `trace_openssl`, `trace_sched`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -130,7 +130,8 @@ All traces include the following fields:
 
 | Field | Description |
 |:------|:------------|
-| `event_type` | Type of event (`signal`, `malloc`, `bind`, `exec`, `tcp`, or `vfs`). |
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, `exec`, `tcp`, `vfs`, `tls_handshake`, `tls_read`, `tls_write`, or `tls_shutdown`). |
+| `event_id` | Per-CPU monotonic identifier for the event. |
 | `pid` | Process ID that generated the event. |
 | `tid` | Thread ID that generated the event. |
 | `comm` | Command name (process name) that generated the event. |
@@ -239,3 +240,14 @@ The `trace_sched` trace captures CPU scheduling switch events and includes these
 | `next_prio` | Priority of the task being scheduled in. |
 | `runq_latency_ns` | Run-queue latency in nanoseconds between `wakeup` and scheduling in (`0` when not tracked). |
 | `wakeup_tracked` | Set to `true` when a matching `wakeup` was tracked for the run-queue latency calculation. |
+
+### OpenSSL trace fields
+
+The `trace_openssl` trace captures OpenSSL TLS operations using user-space probes and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `trace` | OpenSSL operation. One of `openssl_tls_read`, `openssl_tls_write`, `openssl_tls_shutdown`, or `openssl_tls_handshake`. |
+| `ssl_ptr` | Pointer to the OpenSSL `SSL` object associated with the operation. |
+| `latency_ns` | Operation latency in nanoseconds. |
+| `ret` | Return value of the OpenSSL call. |
