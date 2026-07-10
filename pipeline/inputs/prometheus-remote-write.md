@@ -65,14 +65,14 @@ pipeline:
 
 ```text
 [INPUT]
-  name prometheus_remote_write
-  listen 127.0.0.1
-  port 8080
-  uri /api/prom/push
+  Name prometheus_remote_write
+  Listen 127.0.0.1
+  Port 8080
+  Uri /api/prom/push
 
 [OUTPUT]
-  name stdout
-  match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}

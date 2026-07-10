@@ -79,7 +79,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  parsers_file /path/to/parsers.conf
+  Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name   tail

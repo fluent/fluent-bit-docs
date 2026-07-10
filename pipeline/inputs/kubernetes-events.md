@@ -73,17 +73,17 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush           1
-  log_level       info
+  Flush           1
+  Log_Level       info
 
 [INPUT]
-  name            kubernetes_events
-  tag             k8s_events
-  kube_url        https://kubernetes.default.svc
+  Name            kubernetes_events
+  Tag             k8s_events
+  Kube_URL        https://kubernetes.default.svc
 
 [OUTPUT]
-  name            stdout
-  match           *
+  Name            stdout
+  Match           *
 ```
 
 {% endtab %}
