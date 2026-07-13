@@ -4,10 +4,58 @@
 **Supported event types:** `logs` `metrics` `traces` `profiles`
 {% endhint %}
 
-The OpenTelemetry plugin lets you take logs, metrics, traces, and profiles from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
+The OpenTelemetry output plugin lets you send logs, metrics, traces, and profiles from Fluent Bit to an OpenTelemetry Protocol (OTLP) endpoint. It supports OTLP/HTTP and OTLP/gRPC.
 
-Only HTTP endpoints are supported.
+## Transport
 
+By default, the plugin uses OTLP/HTTP with Protocol Buffers over HTTP/1.1. Set `grpc` to `on` to use OTLP/gRPC over HTTP/2 instead. Enabling gRPC automatically enables HTTP/2, including HTTP/2 without TLS (h2c), so you don't also need to set `http2`.
+
+The transport setting applies to every supported signal routed to this output. The plugin selects the corresponding URI for each signal:
+
+| Signal | OTLP/HTTP default | OTLP/gRPC default |
+|---|---|---|
+| Logs | `/v1/logs` | `/opentelemetry.proto.collector.logs.v1.LogsService/Export` |
+| Metrics | `/v1/metrics` | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export` |
+| Traces | `/v1/traces` | `/opentelemetry.proto.collector.trace.v1.TraceService/Export` |
+| Profiles | `/v1development/profiles` | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
+
+Set `host` and `port` separately. For example, the standard OpenTelemetry Collector ports are `4318` for OTLP/HTTP and `4317` for OTLP/gRPC. Turn on `tls` when the endpoint requires a secure connection.
+
+{% hint style="info" %}
+`http2` controls the HTTP protocol version independently of the OTLP transport. Setting `http2` to `on` without setting `grpc` to `on` sends OTLP/HTTP over HTTP/2; it doesn't enable gRPC.
+{% endhint %}
+
+For example, this output sends every supported signal to an OpenTelemetry Collector using plaintext OTLP/gRPC on its standard port:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: opentelemetry
+      match: "*"
+      host: otel-collector
+      port: 4317
+      grpc: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name   opentelemetry
+  Match  *
+  Host   otel-collector
+  Port   4317
+  Grpc   On
+```
+
+{% endtab %}
+{% endtabs %}
+
+## Configuration parameters
 
 | Key     | Description  | Default |
 |---------|--------------|---------|
@@ -21,22 +69,22 @@ Only HTTP endpoints are supported.
 | `aws_service`                             | AWS destination service code, used by SigV4 authentication.                    | `logs` |
 | `aws_sts_endpoint`                        | Custom endpoint for the AWS STS API, used with the `aws_role_arn` option.      | _none_ |
 | `batch_size`                              | Set the maximum number of log records to be flushed at a time.                 | `1000` |
-| `compress`                                | Set payload compression mechanism. Options available are `gzip` and `zstd`.    | _none_ |
-| `grpc`                                    | Enable, disable or auto-detect gRPC usage. Accepted values: `on`, `off`, `auto`. | `off`  |
-| `grpc_logs_uri`                           | Specify an optional gRPC URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
-| `grpc_metrics_uri`                        | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
-| `grpc_profiles_uri`                       | Specify an optional gRPC URI for profiles OTel endpoint.                       | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
-| `grpc_traces_uri`                         | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
+| `compress`                                | Set the OTLP/HTTP payload compression mechanism. Available options are `gzip` and `zstd`. | _none_ |
+| `grpc`                                    | Use OTLP/gRPC over HTTP/2. Accepted values are `on` and `off`. Enabling this option also enables HTTP/2. | `off`  |
+| `grpc_logs_uri`                           | Set the gRPC method path for log exports.                                      | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
+| `grpc_metrics_uri`                        | Set the gRPC method path for metric exports.                                   | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
+| `grpc_profiles_uri`                       | Set the gRPC method path for profile exports.                                  | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
+| `grpc_traces_uri`                         | Set the gRPC method path for trace exports.                                    | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
 | `header`                                  | Add a HTTP header key/value pair. Multiple headers can be set.                 | _none_ |
-| `host`                                    | IP address or hostname of the target HTTP server.                              | `127.0.0.1`                                                                     |
-| `http2`                                   | Enable, disable or force HTTP/2 usage. Accepted values : `on`, `off`, or `force`.                                                                       | `off`  |
+| `host`                                    | IP address or hostname of the target OTLP server.                              | `127.0.0.1`                                                                     |
+| `http2`                                   | Control HTTP/2 independently of `grpc`. Accepted values are `on`, `off`, and `force`. With TLS, `on` negotiates the protocol and `force` requires HTTP/2. You don't need to set this when `grpc` is `on`. | `off`  |
 | `http_passwd`                             | Set HTTP auth password.                                                        | _none_ |
 | `http_user`                               | Set HTTP auth user.                                                            | _none_ |
 | `log_level`                               | Specifies the log level for output plugin. If not set here, plugin uses global log level in `service` section.                                          | `info` |
 | `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
 | `log_suppress_interval`                   | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression.                                    | `0`    |
 | `logs_attributes_metadata_key`            | Specify an `Attributes` key.                                                   | `$Attributes`                                                                   |
-| `logs_body_key`                           | Specify an optional HTTP URI for the target OTel endpoint.                     | _none_ |
+| `logs_body_key`                           | Set a record accessor that selects the value to use as the OTLP log body.       | _none_ |
 | `logs_body_key_attributes`                | If set and it matched a pattern, it includes the remaining fields in the record as attributes.                                                          | `false`|
 | `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key.                                         | `InstrumentationScope`                                                          |
 | `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
@@ -89,7 +137,7 @@ Only HTTP endpoints are supported.
 | `oauth2.timeout`                          | Timeout for `OAuth 2.0` token requests.                                        | `0s`   |
 | `oauth2.token_url`                        | `OAuth 2.0` token endpoint URL.                                                | _none_ |
 | `oauth2.user_agent`                       | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
-| `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
+| `port`                                    | TCP port of the target OTLP server.                                            | `80`   |
 | `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
 | `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
 | `retry_limit`                             | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely. | `1`    |
@@ -113,7 +161,7 @@ Only HTTP endpoints are supported.
 
 ## Get started
 
-The OpenTelemetry plugin works with logs and only the metrics collected from one of the metric input plugins. In the following example, log records generated by the dummy plugin and the host metrics collected by the node exporter metrics plugin are exported by the OpenTelemetry output plugin.
+The following example exports log records generated by the dummy plugin, host metrics collected by the node exporter metrics plugin, and traces generated by the event type input. It uses OTLP/HTTP over TLS.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
