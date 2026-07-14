@@ -50,6 +50,7 @@ The following output plugins can take advantage of the TLS feature:
 - [BigQuery](../pipeline/outputs/bigquery.md)
 - [Dash0](../pipeline/outputs/dash0.md)
 - [Datadog](../pipeline/outputs/datadog.md)
+- [Doris](../pipeline/outputs/doris.md)
 - [Elasticsearch](../pipeline/outputs/elasticsearch.md)
 - [Forward](../pipeline/outputs/forward.md)
 - [GELF](../pipeline/outputs/gelf.md)

@@ -182,6 +182,7 @@
   * [Counter](pipeline/outputs/counter.md)
   * [Dash0](pipeline/outputs/dash0.md)
   * [Datadog](pipeline/outputs/datadog.md)
+  * [Doris](pipeline/outputs/doris.md)
   * [Dynatrace](pipeline/outputs/dynatrace.md)
   * [Elasticsearch](pipeline/outputs/elasticsearch.md)
   * [Exit](pipeline/outputs/exit.md)
