@@ -15,7 +15,7 @@ The _OpenSearch_ output plugin lets you ingest your records into an [OpenSearch]
 This plugin supports the following parameters:
 
 | Key | Description | Default |
-|:--- |:----------- |:------- |
+| :--- | :----------- | :------- |
 | `aws_auth` | Enable AWS Sigv4 Authentication for Amazon OpenSearch Service. | `Off` |
 | `aws_external_id` | External ID for the AWS IAM Role specified with `aws_role_arn`. | _none_ |
 | `aws_profile` | AWS profile name. | `default` |
@@ -55,6 +55,12 @@ This plugin supports the following parameters:
 
 The parameters `index` and `type` can be confusing if you are new to OpenSearch. If you have used a common relational database before, they can be compared to the `database` and `table` concepts. Also see [the FAQ](opensearch.md#faq).
 
+{% hint style="info" %}
+
+In YAML configuration, quote any [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) format value that begins with `%`, such as `logstash_dateformat` and `time_key_format`. YAML treats `%` as a reserved character, so an unquoted value like `logstash_dateformat: %Y.%m.%d` fails to parse. Use `logstash_dateformat: "%Y.%m.%d"` instead.
+
+{% endhint %}
+
 ### TLS / SSL
 
 The OpenSearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
@@ -63,11 +69,11 @@ The OpenSearch output plugin supports TLS/SSL. For more details about the proper
 
 The `write_operation` can be any of:
 
-| Operation        | Description                                                                                        |
-|------------------|----------------------------------------------------------------------------------------------------|
-| `create` (default) | Adds new data - if the data already exists (based on its id), the op is skipped.                   |
-| `index`            | New data is added while existing data (based on its id) is replaced (reindexed).                   |
-| `update`           | Updates existing data (based on its id). If no data is found, the op is skipped.                   |
+| Operation          | Description                                                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `create` (default) | Adds new data - if the data already exists (based on its id), the op is skipped.                      |
+| `index`            | New data is added while existing data (based on its id) is replaced (reindexed).                      |
+| `update`           | Updates existing data (based on its id). If no data is found, the op is skipped.                      |
 | `upsert`           | Known as `merge` or `insert` if the data doesn't exist. Updates if the data exists (based on its id). |
 
 {% hint style="info" %}
