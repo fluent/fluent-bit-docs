@@ -660,8 +660,8 @@ pipeline:
 [FILTER]
     Name                    kubernetes
     Match                   kube.*
-    aws_use_pod_association true
-    set_platform            eks
+    Aws_Use_Pod_Association true
+    Set_Platform            eks
 ```
 
 {% endtab %}

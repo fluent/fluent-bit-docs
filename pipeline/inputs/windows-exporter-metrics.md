@@ -141,19 +141,19 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-  flush           1
-  log_level       info
+  Flush           1
+  Log_Level       info
 
 [INPUT]
-  name            windows_exporter_metrics
-  tag             node_metrics
-  scrape_interval 2
+  Name            windows_exporter_metrics
+  Tag             node_metrics
+  Scrape_Interval 2
 
 [OUTPUT]
-  name            prometheus_exporter
-  match           node_metrics
-  host            0.0.0.0
-  port            2021
+  Name            prometheus_exporter
+  Match           node_metrics
+  Host            0.0.0.0
+  Port            2021
 ```
 
 {% endtab %}
@@ -191,8 +191,8 @@ pipeline:
 
 ```text
 [INPUT]
-  name                        windows_exporter_metrics
-  tag                         windows_metrics
+  Name                        windows_exporter_metrics
+  Tag                         windows_metrics
   we.logical_disk.allow_disk_regex ^(C|D):$
 ```
 
@@ -221,8 +221,8 @@ pipeline:
 
 ```text
 [INPUT]
-  name            windows_exporter_metrics
-  tag             windows_metrics
+  Name            windows_exporter_metrics
+  Tag             windows_metrics
   we.net.allow_nic_regex (Ethernet|Wi-Fi)
 ```
 
@@ -251,8 +251,8 @@ pipeline:
 
 ```text
 [INPUT]
-  name                      windows_exporter_metrics
-  tag                       windows_metrics
+  Name                      windows_exporter_metrics
+  Tag                       windows_metrics
   we.process.deny_process_regex (System|Idle|svchost)
 ```
 
@@ -380,10 +380,10 @@ pipeline:
 
 ```text
 [INPUT]
-  name            windows_exporter_metrics
-  tag             windows_metrics
-  metrics         cpu,memory,logical_disk
-  scrape_interval 5
+  Name            windows_exporter_metrics
+  Tag             windows_metrics
+  Metrics         cpu,memory,logical_disk
+  Scrape_Interval 5
 ```
 
 {% endtab %}
@@ -414,9 +414,9 @@ pipeline:
 
 ```text
 [INPUT]
-  name                        windows_exporter_metrics
-  tag                         windows_metrics
-  scrape_interval             10
+  Name                        windows_exporter_metrics
+  Tag                         windows_metrics
+  Scrape_Interval             10
   collector.cpu.scrape_interval 5
   collector.memory.scrape_interval 5
   collector.system.scrape_interval 60
@@ -443,16 +443,16 @@ Example configuration:
 
 ```text
 [SERVICE]
-    flush_interval 3
-    http_server    on
-    http_port      2020
-    log_level      debug
+    Flush_Interval 3
+    HTTP_Server    on
+    HTTP_Port      2020
+    Log_Level      debug
 
 [INPUT]
-    name             windows_exporter_metrics
-    tag              windows
-    scrape_interval  2
-    metrics          cpu,logical_disk,memory,performancecounter
+    Name             windows_exporter_metrics
+    Tag              windows
+    Scrape_Interval  2
+    Metrics          cpu,logical_disk,memory,performancecounter
 
     PerformanceCounter process_fluent_bit_thread_count=\Process(fluent-bit)\Thread Count
     PerformanceCounter gpu_3d_utilization=\GPU Engine(*engtype_3D)\Utilization Percentage
@@ -460,7 +460,7 @@ Example configuration:
     PerformanceCounter gpu_video_decode_utilization=\GPU Engine(*engtype_VideoDecode)\Utilization Percentage
 
 [OUTPUT]
-    name stdout
+    Name stdout
 ```
 
 This configuration creates metrics like:

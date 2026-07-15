@@ -217,8 +217,8 @@ pipeline:
 
 ```text
 [INPUT]
-  name              tail
-  path              /var/log/containers/*.log
+  Name              tail
+  Path              /var/log/containers/*.log
   multiline.parser  docker, cri
 ```
 
@@ -464,9 +464,9 @@ pipeline:
 
 ```text
 [INPUT]
-  name    tail
-  path    /var/log/containers/*.log
-  db      test.db
+  Name    tail
+  Path    /var/log/containers/*.log
+  DB      test.db
 ```
 
 {% endtab %}

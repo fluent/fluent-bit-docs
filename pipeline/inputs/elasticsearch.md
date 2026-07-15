@@ -91,13 +91,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name   elasticsearch
-  listen 0.0.0.0
-  port   9200
+  Name   elasticsearch
+  Listen 0.0.0.0
+  Port   9200
 
 [OUTPUT]
-  name  stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -127,15 +127,15 @@ pipeline:
 
 ```text
 [INPUT]
-  name              elasticsearch
-  listen            0.0.0.0
-  port              9200
-  buffer_max_size   20M
-  buffer_chunk_size 5M
+  Name              elasticsearch
+  Listen            0.0.0.0
+  Port              9200
+  Buffer_Max_Size   20M
+  Buffer_Chunk_Size 5M
 
 [OUTPUT]
-  name  stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
