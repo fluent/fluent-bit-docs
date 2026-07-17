@@ -58,6 +58,7 @@ This helps with down-sampling when collecting metrics.
 | `collector.textfile.scrape_interval` | The rate in seconds at which `textfile` metrics are collected from the host operating system. | `0` |
 | `collector.thermalzone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
 | `collector.time.scrape_interval` | The rate in seconds at which `time` metrics are collected from the host operating system. | `0` |
+| `collector.timex.scrape_interval` | The rate in seconds at which `timex` metrics are collected from the host operating system. | `0` |
 | `collector.uname.scrape_interval` | The rate in seconds at which `uname` metrics are collected from the host operating system. | `0` |
 | `collector.vmstat.scrape_interval` | The rate in seconds at which `vmstat` metrics are collected from the host operating system. | `0` |
 | `diskstats.ignore_device_regex` | Specify the regular expression for the` diskstats` to prevent collection of/ignore. | `^(ram\|loop\|fd\|(h\|s\|v\|xv)d[a-z]\|nvme\\d+n\\d+p)\\d+$` |
@@ -100,6 +101,7 @@ The Version column specifies the Fluent Bit version where the collector is avail
 | `textfile`          | Exposes custom metrics from text files. Requires `collector.textfile.path` to be set.            | Linux            | 2.2.0   |
 | `thermal_zone`      | Exposes thermal statistics from `/sys/class/thermal/thermal_zone/*`.                             | Linux            | 2.2.1   |
 | `time`              | Exposes the current system time.                                                                 | Linux            | 1.8     |
+| `timex`             | Exposes selected `adjtimex(2)` system call stats.                                                | Linux            | TBD     |
 | `uname`             | Exposes system information as provided by the `uname` system call.                               | Linux, macOS     | 1.8     |
 | `vmstat`            | Exposes statistics from `/proc/vmstat`.                                                          | Linux            | 1.8.2   |
 
