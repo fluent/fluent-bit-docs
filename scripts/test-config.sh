@@ -29,6 +29,10 @@ fi
 # Check if the file is listed in the suppression list. If it is, we skip validation for this file.
 # We just use an array of suppressed files for now - add any new files to suppress to this list.
 SUPPRESSED_FILES=(
+    # These currently fail due to a known issue so skip them for now. See https://github.com/fluent/fluent-bit/issues/12113 and remove suppressions once this is in place.
+    "pipeline/outputs/azure_blob.md"
+    "pipeline/outputs/nats.md"
+    "pipeline/outputs/kafka-rest-proxy.md"
     # Skip the examples for contribution.
     "CONTRIBUTING.md"
     # Requires the WASM filter to be built and loaded.
