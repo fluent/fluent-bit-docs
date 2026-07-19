@@ -59,6 +59,11 @@ Extracts Fluent Bit configuration code blocks from Markdown files. This is used 
 - `fence-language`: The code fence language (e.g., `yaml` or `text`)
 - `index|count` (Optional): Extract a specific example by index, or use `count` to get the total number of examples. Defaults to 1 (first example)
 
+**Features:**
+- Automatically removes common leading indentation from extracted examples
+- Handles indented tabs in Markdown (e.g., nested within list items or other structures)
+- Preserves relative indentation within the configuration
+
 **Examples:**
 ```bash
 # Count total YAML examples in a file
