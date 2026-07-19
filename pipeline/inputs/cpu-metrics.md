@@ -82,7 +82,7 @@ pipeline:
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-```shell
+```text
 [INPUT]
   Name cpu
   Tag  my_cpu
