@@ -27,7 +27,7 @@ The plugin needs a parser file which defines how to parse each field.
 This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="parser.yaml" %}
 
 ```yaml
 parsers:
@@ -37,7 +37,7 @@ parsers:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="parser.conf" %}
 
 ```text
 [PARSER]
