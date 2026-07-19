@@ -65,13 +65,11 @@ For example, the following configuration file adds the default [`apache` parser]
 pipeline:
   inputs:
     - name: tail
-      path: /input/input.log
-      refresh_interval: 1
+      path: /var/log/apache.log
       parser: apache
 
-    - name: http
-      listen: 0.0.0.0
-      port: 8888
+    - name: tail
+      path: /var/log/custom.log
       parser: custom_parser1
 ```
 
