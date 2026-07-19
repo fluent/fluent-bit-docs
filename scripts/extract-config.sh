@@ -65,6 +65,8 @@ BEGIN {
     if (!count_mode) {
         target_index = int(target_index_or_mode)
     }
+    line_count = 0
+    min_indent = -1
 }
 
 {
@@ -118,7 +120,27 @@ BEGIN {
         exit
     }
 
-    print line
+    # Store line for later processing (to handle indentation removal)
+    if (!count_mode && in_fence && fence_count == target_index) {
+        lines[line_count] = line
+        
+        # Calculate minimum indentation from non-empty lines
+        if (line != "") {
+            # Count leading spaces
+            indent = 0
+            for (i = 1; i <= length(line); i++) {
+                if (substr(line, i, 1) == " ") {
+                    indent++
+                } else {
+                    break
+                }
+            }
+            if (min_indent == -1 || indent < min_indent) {
+                min_indent = indent
+            }
+        }
+        line_count++
+    }
 }
 
 END {
@@ -126,11 +148,20 @@ END {
         # In count mode, output the count
         print fence_count
     } else {
-        # In extract mode, validate that we found what we were looking for
+        # In extract mode, first validate that we found what we were looking for
         if (found_tab && found_fence) {
             if (!closed_fence) {
                 printf "ERROR: code fence was not closed in tab: %s\n", wanted_title > "/dev/stderr"
                 exit 1
+            }
+            # Print lines with common leading indentation removed
+            for (i = 0; i < line_count; i++) {
+                line = lines[i]
+                if (min_indent > 0 && line != "") {
+                    # Remove the common indentation
+                    line = substr(line, min_indent + 1)
+                }
+                print line
             }
         } else if (found_tab && !found_fence) {
             printf "ERROR: %s code fence #%d not found in tab: %s\n", wanted_language, target_index, wanted_title > "/dev/stderr"
