@@ -136,11 +136,11 @@ Routing also provides support for regular expressions with the `match_regex` pat
 ```yaml
 pipeline:
   inputs:
-    - name: temperature_sensor
-      tag: temp_sensor_A
+    - name: dummy
+      tag: temperature_sensor_A
 
-    - name: humidity_sensor
-      tag: humid_sensor_B
+    - name: dummy
+      tag: humidity_sensor_B
 
   outputs:
     - name: stdout
@@ -152,12 +152,12 @@ pipeline:
 
 ```text
 [INPUT]
-  Name temperature_sensor
-  Tag  temp_sensor_A
+  Name dummy
+  Tag  temperature_sensor_A
 
 [INPUT]
-  Name humidity_sensor
-  Tag  humid_sensor_B
+  Name dummy
+  Tag  humidity_sensor_B
 
 [OUTPUT]
   Name         stdout
@@ -207,7 +207,7 @@ When a record arrives, Fluent Bit evaluates the conditions for each route in ord
 The `routes` block uses the following syntax:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="routing.yaml" %}
 
 ```yaml
 pipeline:
@@ -405,7 +405,7 @@ pipeline:
     - name: splunk
       alias: critical_output
       host: splunk.example.com
-      token: ${SPLUNK_TOKEN}
+      splunk_token: '{SPLUNK_TOKEN}'
 
     - name: stdout
       alias: standard_output
@@ -599,7 +599,7 @@ pipeline:
   Tag  app.logs
 
 [OUTPUT]
-  Name  elasticsearch
+  Name  es
   Alias error_destination
   Host  errors.example.com
   Index error-logs
