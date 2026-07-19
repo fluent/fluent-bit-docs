@@ -53,6 +53,8 @@ SUPPRESSED_FILES=(
     "pipeline/inputs/windows-system-statistics.md"
     "pipeline/inputs/windows-exporter-metrics.md"
     "pipeline/inputs/windows-event-log.md"
+    # Windows-specific configuration examples are not supported in the Linux image.
+    "installation/downloads/kubernetes.md"
 )
 for suppressed_file in "${SUPPRESSED_FILES[@]}"; do
     if [[ "$FILE" == "$suppressed_file" ]]; then
