@@ -40,23 +40,31 @@ set -eu
 # END
 
 # We want to pull out the contents of the code fence with language "yaml"/"text" from the tab with title "fluent-bit.yaml"/"fluent-bit.conf".
-# Usage: ./extract-config.sh <file> <tab title> <fence language>
+# Usage: ./extract-config.sh <file> <tab title> <fence language> [index|count]
 # e.g.
-#   ./extract-config.sh README.md "fluent-bit.yaml" yaml
+#   ./extract-config.sh README.md "fluent-bit.yaml" yaml         # Extract first example
+#   ./extract-config.sh README.md "fluent-bit.yaml" yaml 2       # Extract second example
+#   ./extract-config.sh README.md "fluent-bit.yaml" yaml count   # Count total examples
 #
 
-FILE=${1:?"Usage: $0 FILE TAB_TITLE LANGUAGE"}
-TITLE=${2:?"Usage: $0 FILE TAB_TITLE LANGUAGE"}
-LANGUAGE=${3:?"Usage: $0 FILE TAB_TITLE LANGUAGE"}
+FILE=${1:?"Usage: $0 FILE TAB_TITLE LANGUAGE [INDEX|count]"}
+TITLE=${2:?"Usage: $0 FILE TAB_TITLE LANGUAGE [INDEX|count]"}
+LANGUAGE=${3:?"Usage: $0 FILE TAB_TITLE LANGUAGE [INDEX|count]"}
+INDEX_OR_MODE=${4:-1}  # Extract the Nth matching code fence, or use "count" to get total count
 
 # We only use AWK to keep it simple and portable. 
 # We could use a more powerful parser, but that would require additional dependencies.
 # For macOS ensure AWK is GNU awk (gawk) and not the default BSD awk. You can install gawk via Homebrew: `brew install gawk`.
 
-awk -v wanted_title="$TITLE" -v wanted_language="$LANGUAGE" '
+awk -v wanted_title="$TITLE" -v wanted_language="$LANGUAGE" -v target_index_or_mode="$INDEX_OR_MODE" '
 BEGIN {
     tab_marker = "{% tab title=\"" wanted_title "\" %}"
     fence_marker = "```" wanted_language
+    fence_count = 0
+    count_mode = (target_index_or_mode == "count")
+    if (!count_mode) {
+        target_index = int(target_index_or_mode)
+    }
 }
 
 {
@@ -79,13 +87,27 @@ BEGIN {
 
     if (!in_fence) {
         if (marker == "{% endtab %}") {
-            reached_endtab = 1
-            exit
+            if (count_mode) {
+                # In count mode, reset in_tab to look for more tabs
+                in_tab = 0
+            } else if (fence_count < target_index) {
+                # Reset and look for the next tab if we havent found enough fences yet
+                in_tab = 0
+                found_tab = 1  # Keep looking for more tabs
+            }
+            next
         }
 
         if (marker == fence_marker) {
-            found_fence = 1
-            in_fence = 1
+            fence_count++
+            if (count_mode) {
+                # In count mode, just keep counting
+                next
+            }
+            if (fence_count == target_index) {
+                found_fence = 1
+                in_fence = 1
+            }
         }
 
         next
@@ -100,12 +122,18 @@ BEGIN {
 }
 
 END {
-    if (found_tab) {
-        if (!found_fence) {
-            printf "ERROR: %s code fence not found in tab: %s\n", wanted_language, wanted_title > "/dev/stderr"
-            exit 1
-        } else if (!closed_fence) {
-            printf "ERROR: code fence was not closed in tab: %s\n", wanted_title > "/dev/stderr"
+    if (count_mode) {
+        # In count mode, output the count
+        print fence_count
+    } else {
+        # In extract mode, validate that we found what we were looking for
+        if (found_tab && found_fence) {
+            if (!closed_fence) {
+                printf "ERROR: code fence was not closed in tab: %s\n", wanted_title > "/dev/stderr"
+                exit 1
+            }
+        } else if (found_tab && !found_fence) {
+            printf "ERROR: %s code fence #%d not found in tab: %s\n", wanted_language, target_index, wanted_title > "/dev/stderr"
             exit 1
         }
     }
