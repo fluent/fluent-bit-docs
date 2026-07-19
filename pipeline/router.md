@@ -345,12 +345,12 @@ pipeline:
                 - default_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
 
-    - name: elasticsearch
+    - name: es
       alias: info_destination
       host: logs.example.com
       index: info-logs
@@ -461,7 +461,7 @@ pipeline:
       uri: /v2/enqueue
       format: json
 
-    - name: elasticsearch
+    - name: es
       alias: elasticsearch_output
       host: logs.example.com
       index: application-logs
@@ -513,7 +513,7 @@ pipeline:
       alias: security_output
       host: security-splunk.example.com
 
-    - name: elasticsearch
+    - name: es
       alias: general_output
       host: logs.example.com
 ```
@@ -583,7 +583,7 @@ pipeline:
                 - error_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
@@ -668,12 +668,12 @@ pipeline:
                 - dev_logs_output
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: prod_logs_output
       host: prod-logs.example.com
       index: production-logs
 
-    - name: elasticsearch
+    - name: es
       alias: dev_logs_output
       host: dev-logs.example.com
       index: development-logs
