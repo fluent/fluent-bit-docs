@@ -7,11 +7,7 @@ set -euo pipefail
 # Errors are on stderr and the script will exit with a non-zero status if any validation fails.
 
 # To run for all Markdown files in the repository, you can use the following command:
-# find . -type f -iname "*.md" | while read -r file; do
-#     if ! ./scripts/test-config.sh "$file"; then
-#         echo "FAILED: $file" | tee -a "$LOG_FILE"
-#     fi
-# done
+# find . -type f -iname "*.md" | while read -r file; do ./scripts/test-config.sh $file; done
 
 SOURCE=${BASH_SOURCE[0]}
 while [ -L "$SOURCE" ]; do
@@ -74,10 +70,13 @@ for suppressed_file in "${SUPPRESSED_FILES[@]}"; do
     fi
 done
 
+# Override these to use a different default container runtime or Fluent Bit image for validation. 
 CONTAINER_RUNTIME=${CONTAINER_RUNTIME:-docker}
+# This is useful for testing against a specific version of Fluent Bit or a custom build.
+VALIDATION_IMAGE=${VALIDATION_IMAGE:-fluent/fluent-bit:latest}
 # Always pull the latest Fluent Bit image to ensure we are validating against the most recent version.
-if ! $CONTAINER_RUNTIME pull fluent/fluent-bit:latest &>/dev/null; then
-    echo "ERROR: Failed to pull Fluent Bit container image" >&2
+if ! $CONTAINER_RUNTIME pull "$VALIDATION_IMAGE" &>/dev/null; then
+    echo "ERROR: Failed to pull Fluent Bit container image $VALIDATION_IMAGE" >&2
     exit 1
 fi
 
@@ -118,12 +117,12 @@ for LANGUAGE in "yaml" "text"; do
         fi
        
         # Use the Fluent Bit container to validate the configuration snippet
-        if ! $CONTAINER_RUNTIME run --rm -t -v "$OUTPUT_FILE":"$OUTPUT_FILE":ro fluent/fluent-bit:latest fluent-bit --dry-run --config="$OUTPUT_FILE" &>/dev/null; then
+        if ! $CONTAINER_RUNTIME run --rm -t -v "$OUTPUT_FILE":"$OUTPUT_FILE":ro "$VALIDATION_IMAGE" fluent-bit --dry-run --config="$OUTPUT_FILE" &>/dev/null; then
             FAILED_VALIDATIONS+=("$LANGUAGE example $EXAMPLE_INDEX")
             # Provide the configuration and failure output for debugging purposes on stderr
             echo "ERROR: Validation failed for $LANGUAGE example $EXAMPLE_INDEX in $FILE" >&2
             cat "$OUTPUT_FILE" >&2
-            $CONTAINER_RUNTIME run --rm -t -v "$OUTPUT_FILE":"$OUTPUT_FILE":ro fluent/fluent-bit:latest fluent-bit --dry-run --config="$OUTPUT_FILE" >&2 || true
+            $CONTAINER_RUNTIME run --rm -t -v "$OUTPUT_FILE":"$OUTPUT_FILE":ro "$VALIDATION_IMAGE" fluent-bit --dry-run --config="$OUTPUT_FILE" >&2 || true
         else
             PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
         fi
