@@ -67,13 +67,6 @@ If you're using Fluent Bit for shipping Kubernetes logs, you can use something l
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-parsers:
-  - name: docker
-    format: json
-    time_key: time
-    time_format: '%Y-%m-%dT%H:%M:%S.%L'
-    time_keep: off
-
 pipeline:
   inputs:
     - name: tail
@@ -142,13 +135,6 @@ pipeline:
     Port                    12201
     Mode                    tcp
     Gelf_Short_Message_Key  data
-
-[PARSER]
-    Name                    docker
-    Format                  json
-    Time_Key                time
-    Time_Format             %Y-%m-%dT%H:%M:%S.%L
-    Time_Keep               Off
 ```
 
 {% endtab %}
