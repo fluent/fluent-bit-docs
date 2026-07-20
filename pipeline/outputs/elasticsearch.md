@@ -41,6 +41,7 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 | `replace_dots` | When enabled, replace field name dots with underscore. Required by Elasticsearch 2.0-2.3. | `Off` |
 | `suppress_type_name` | When enabled, mapping types is removed and `type` option is ignored. Elasticsearch 8.0.0 or higher [no longer supports mapping types](https://www.elastic.co/docs/manage-data/data-store/mapping/removal-of-mapping-types). | `Off` |
 | `tag_key` | When `include_tag_key` is enabled, this property defines the key name for the tag. | `flb-key` |
+| `target_index` | When included: destination index will be rendered using this record accessor syntax. If any field in the record accessor expression isn't found in the record, the value of `Index` setting is used. | _none_ |
 | `time_key` | When `logstash_format` is enabled, each record will get a new timestamp field. The `time_key` property defines the name of that field. | `@timestamp` |
 | `time_key_format` | When `logstash_format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `time_key_nanos` | When `logstash_format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
@@ -439,3 +440,20 @@ pipeline:
 {% endtabs %}
 
 For records that don't have the field `kubernetes.namespace_name`, the default prefix `logstash` will be used.
+
+### `Target_index`
+
+The following snippet demonstrates using `destination_index` record value as the Elasticsearch destination index,
+using `fallback` as default index name if `destination_index` value isn't present in record.
+
+```text
+[OUTPUT]
+  Name es
+  Match *
+  # ...
+  Index fallback
+  Target_index fluent-$destination_index
+  # ...
+```
+
+For records that don't have the field `destination_index`, the value of `index` (`fallback`) will be used.
