@@ -38,7 +38,7 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `oauth2.auth_method` | `OAuth 2.0` client authentication method. Supported values: `basic`, `post`, `private_key_jwt`. | `basic` |
 | `oauth2.client_id` | `OAuth 2.0` client ID. | _none_ |
 | `oauth2.client_secret` | `OAuth 2.0` client secret. | _none_ |
-| `oauth2.client_secret_file` | Optional `OAuth 2.0` client_secret file path. | _none_ |
+| `oauth2.client_secret_file` | Optional path to a file containing the `OAuth 2.0` client secret. Overrides `oauth2.client_secret`. | _none_ |
 | `oauth2.connect_timeout` | Connect timeout for `OAuth 2.0` token requests. | `0s` |
 | `oauth2.enable` | Enable `OAuth 2.0` client credentials for outgoing requests. | `false` |
 | `oauth2.jwt_aud` | Audience for `private_key_jwt` JSON Web Token (JWT) assertion. Defaults to the value of `oauth2.token_url` when not set. | _none_ |
