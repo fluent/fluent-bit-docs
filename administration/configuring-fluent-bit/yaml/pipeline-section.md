@@ -185,6 +185,7 @@ Output plugins that support outgoing `OAuth 2.0` authentication can expose the f
 | `oauth2.token_url` | Token endpoint URL. | _none_ |
 | `oauth2.client_id` | Client ID. | _none_ |
 | `oauth2.client_secret` | Client secret. | _none_ |
+| `oauth2.client_secret_file` | Optional path to a file containing the client secret. Overrides `oauth2.client_secret`. | _none_ |
 | `oauth2.scope` | Optional scope parameter. | _none_ |
 | `oauth2.audience` | Optional audience parameter. | _none_ |
 | `oauth2.resource` | Optional resource parameter. | _none_ |
