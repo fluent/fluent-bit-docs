@@ -136,11 +136,11 @@ Routing also provides support for regular expressions with the `match_regex` pat
 ```yaml
 pipeline:
   inputs:
-    - name: temperature_sensor
-      tag: temp_sensor_A
+    - name: dummy
+      tag: temperature_sensor_A
 
-    - name: humidity_sensor
-      tag: humid_sensor_B
+    - name: dummy
+      tag: humidity_sensor_B
 
   outputs:
     - name: stdout
@@ -152,12 +152,12 @@ pipeline:
 
 ```text
 [INPUT]
-  Name temperature_sensor
-  Tag  temp_sensor_A
+  Name dummy
+  Tag  temperature_sensor_A
 
 [INPUT]
-  Name humidity_sensor
-  Tag  humid_sensor_B
+  Name dummy
+  Tag  humidity_sensor_B
 
 [OUTPUT]
   Name         stdout
@@ -207,7 +207,7 @@ When a record arrives, Fluent Bit evaluates the conditions for each route in ord
 The `routes` block uses the following syntax:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="routing.yaml" %}
 
 ```yaml
 pipeline:
@@ -345,12 +345,12 @@ pipeline:
                 - default_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
 
-    - name: elasticsearch
+    - name: es
       alias: info_destination
       host: logs.example.com
       index: info-logs
@@ -405,7 +405,7 @@ pipeline:
     - name: splunk
       alias: critical_output
       host: splunk.example.com
-      token: ${SPLUNK_TOKEN}
+      splunk_token: '{SPLUNK_TOKEN}'
 
     - name: stdout
       alias: standard_output
@@ -461,7 +461,7 @@ pipeline:
       uri: /v2/enqueue
       format: json
 
-    - name: elasticsearch
+    - name: es
       alias: elasticsearch_output
       host: logs.example.com
       index: application-logs
@@ -513,7 +513,7 @@ pipeline:
       alias: security_output
       host: security-splunk.example.com
 
-    - name: elasticsearch
+    - name: es
       alias: general_output
       host: logs.example.com
 ```
@@ -583,7 +583,7 @@ pipeline:
                 - error_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
@@ -599,7 +599,7 @@ pipeline:
   Tag  app.logs
 
 [OUTPUT]
-  Name  elasticsearch
+  Name  es
   Alias error_destination
   Host  errors.example.com
   Index error-logs
@@ -668,12 +668,12 @@ pipeline:
                 - dev_logs_output
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: prod_logs_output
       host: prod-logs.example.com
       index: production-logs
 
-    - name: elasticsearch
+    - name: es
       alias: dev_logs_output
       host: dev-logs.example.com
       index: development-logs

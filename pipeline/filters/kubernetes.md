@@ -360,10 +360,11 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-[PARSER]
-  Name    custom-tag
-  Format  regex
-  Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
+# Ensure this is added to parsers_file loaded in the SERVICE section
+# [PARSER]
+#   Name    custom-tag
+#   Format  regex
+#   Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
 
 [INPUT]
   Name              tail
@@ -488,7 +489,7 @@ pipeline:
       parser: docker
       docker_mode: on
       mem_buf_limit: 50MB
-      skip_login_lines: on
+      skip_long_lines: on
       refresh_interval: 10
 
   filters:

@@ -95,8 +95,16 @@ pipeline:
   filters:
     - name: lua
       match: '*'
-      script: kafka.lua
       call: modify_kafka_message
+      code: |
+        local count = 0
+        function modify_kafka_message(tag, timestamp, record)
+            count = count + 1
+            local payload = record.payload
+            payload.topic = record.topic
+            payload.status = 'processed by fluent-bit, total records: '..tostring(count)
+            return 1, timestamp, payload
+        end
 
   outputs:
     - name: kafka
@@ -118,8 +126,8 @@ pipeline:
 [FILTER]
   Name    lua
   Match   *
-  Script  kafka.lua
   Call    modify_kafka_message
+  Code    local count = 0 function modify_kafka_message(tag, timestamp, record) count = count + 1 local payload = record.payload payload.topic = record.topic payload.status = 'processed by fluent-bit, total records: '..tostring(count) return 1, timestamp, payload end
 
 [OUTPUT]
   Name    kafka
@@ -134,7 +142,18 @@ The previous example will connect to the broker listening on `kafka-broker:9092`
 
 Since the payload will be in JSON format, the plugin is configured to parse the payload with `format json`.
 
-Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker.
+Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker, this is shown inline for each configuration but is as follows:
+
+```lua
+local count = 0
+function modify_kafka_message(tag, timestamp, record)
+    count = count + 1
+    local payload = record.payload
+    payload.topic = record.topic
+    payload.status = 'processed by fluent-bit, total records: '..tostring(count)
+    return 1, timestamp, payload
+end
+```
 
 The example can be executed locally with `make start` in the `examples/kafka_filter` directory (`docker/compose` is used).
 

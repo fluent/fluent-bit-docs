@@ -102,7 +102,8 @@ pipeline:
       # Inherits storage.type: filesystem from service
 
     - name: mem
-      storage.type: memory  # Overrides the inherited default
+      # Overrides the inherited default
+      storage.type: memory
 ```
 
 {% endtab %}
@@ -124,7 +125,8 @@ pipeline:
 
 [INPUT]
   Name          mem
-  Storage.Type  memory  # Overrides the inherited default
+  # Overrides the inherited default
+  Storage.Type  memory
 ```
 
 {% endtab %}

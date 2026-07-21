@@ -15,7 +15,7 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 Use the following command to start Fluent Bit while using a configuration file:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="Legacy Configuration: fluent-bit.conf" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
@@ -24,7 +24,7 @@ docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
 
 {% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
+{% tab title="YAML configuration: fluent-bit.yaml" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \

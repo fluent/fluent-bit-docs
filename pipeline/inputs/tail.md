@@ -272,8 +272,8 @@ pipeline:
       path: /var/log/syslog
 
   outputs:
-    - stdout:
-      match: *
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -368,13 +368,13 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-# Note this is generally added to parsers.conf and referenced in [SERVICE]
-[PARSER]
-  Name multiline
-  Format regex
-  Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
-  Time_Key  time
-  Time_Format %b %d %H:%M:%S
+# Note this is added to parsers.conf and referenced in [SERVICE]
+# [PARSER]
+#   Name multiline
+#   Format regex
+#   Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
+#   Time_Key  time
+#   Time_Format %b %d %H:%M:%S
 
 [INPUT]
   Name             tail
