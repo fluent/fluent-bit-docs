@@ -22,6 +22,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.crt_file`        | Absolute path to Certificate file.                                                                                                      | _none_  |
 | `tls.key_file`        | Absolute path to private Key file.                                                                                                      | _none_  |
 | `tls.key_passwd`      | Optional password for `tls.key_file` file.                                                                                              | _none_  |
+| `tls.crl_file`        | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. | _none_  |
 | `tls.max_version`     | Specify the maximum version of TLS.                                                                                                     | _none_  |
 | `tls.min_version`     | Specify the minimum version of TLS.                                                                                                     | _none_  |
 | `tls.verify`              | Force certificate validation.                                                                                                           | `on`    |
