@@ -146,7 +146,7 @@ After Fluent Bit connects, you should see output in JSON format:
 
 ### Raw message format
 
-When `raw_message_key` is set, the plugin sends the value of the specified key as a raw message instead of formatting it as JSON. This is for when you want to send pre-formatted messages:
+When `raw_message_key` is set, the plugin sends the value of the specified key as a raw message instead of applying formatting, causing the `format` property to be ignored:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -163,7 +163,7 @@ pipeline:
       match: '*'
       host: 127.0.0.1
       port: 5170
-      raw_message_key: message
+      raw_message_key: $message
 ```
 
 {% endtab %}
@@ -180,7 +180,50 @@ pipeline:
   Match          *
   Host           127.0.0.1
   Port           5170
-  Raw_Message_Key message
+  Raw_Message_Key $message
+```
+
+{% endtab %}
+{% endtabs %}
+
+The `$` sign is required to signal the record accessor to extract the value from the specified key - this can be a top-level or nested field:
+
+{% tabs %}
+{% tab title="Top-level field" %}
+
+Example log:
+
+```json
+{
+  "timestamp": "2026-07-05T14:32:07Z",
+  "message": "<34>Jul  5 14:32:07 myhost kernel: Payload detected: 54 42 50 20 77 61 73 20 68 65 72 65"
+}
+```
+
+Setting `raw_message_key` to `$message` will yield:
+
+```text
+<34>Jul  5 14:32:07 myhost kernel: Payload detected: 54 42 50 20 77 61 73 20 68 65 72 65
+```
+
+{% endtab %}
+{% tab title="Nested field" %}
+
+Example log:
+
+```json
+{
+  "timestamp": "2026-07-05T14:32:07Z",
+  "message": {
+    "original": "<34>Jul  5 14:32:07 myhost kernel: Payload detected: 54 42 50 20 77 61 73 20 68 65 72 65"
+  }
+}
+```
+
+Setting `raw_message_key` to `$message['original']` will yield:
+
+```text
+<34>Jul  5 14:32:07 myhost kernel: Payload detected: 54 42 50 20 77 61 73 20 68 65 72 65
 ```
 
 {% endtab %}

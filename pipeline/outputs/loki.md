@@ -29,6 +29,7 @@ There is a separate Golang output plugin provided by [Grafana](https://grafana.c
 | `line_format` | Format to use when flattening the record to a log line. Valid values are `json` or `key_value`. If set to `json`, the log line sent to Loki will be the Fluent Bit record dumped as JSON. If set to `key_value`, the log line will be each item in the record concatenated together (separated by a single space) in the format. | `json` |
 | `auto_kubernetes_labels` | If set to `true`, adds all Kubernetes labels to the stream labels. | `false` |
 | `tenant_id_key` | Specify the name of the key from the original record that contains the Tenant ID. The value of the key is set as `X-Scope-OrgID` of HTTP header. Use to set Tenant ID dynamically. | _none_ |
+| `tenant_id_key_error_handling` | Set how `tenant_id_key` split request failures affect the whole chunk. Options are `partial_success` (treat mixed success and failure as success; records for failed tenants are dropped), or `partial_error` (retry mixed success and failure; might result in duplicate records for successful tenants). | `partial_success` |
 | `buffer_size` | Maximum HTTP response buffer size. | `512KB` |
 | `compress` | Set payload compression mechanism. The only available option is `gzip`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
@@ -307,6 +308,49 @@ Based on the JSON example provided, the internal stream labels will be:
 ```text
 job="fluentbit", team="Santiago Wanderers"
 ```
+
+## Use `tenant_id_key`
+
+Use `tenant_id_key` to route records to Loki tenants dynamically. Fluent Bit reads the tenant ID from the specified record key and sends it as the `X-Scope-OrgID` HTTP header. When a chunk contains records for multiple tenants, Fluent Bit splits the chunk into one request per tenant.
+
+If `tenant_id_key` resolves to a missing or empty value for a record, Fluent Bit falls back to the static `tenant_id`, if set, and sends `X-Scope-OrgID` with that value. If both `tenant_id_key` and `tenant_id` are missing or empty, Fluent Bit treats the record as single-tenant and sends no `X-Scope-OrgID` header. This fallback behavior also applies when using `tenant_id_key_error_handling`, so fallback records are included in the corresponding per-tenant request.
+
+The `tenant_id_key_error_handling` option controls how Fluent Bit treats mixed results when one tenant request succeeds and another fails:
+
+- `partial_success`: treat the chunk as successful when at least one tenant request succeeds. This is the default.
+- `partial_error`: retry the chunk when any tenant request fails, even if another tenant request succeeds.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: loki
+      match: '*'
+      host: 127.0.0.1
+      port: 3100
+      tenant_id_key: tenant_id
+      tenant_id_key_error_handling: partial_error
+      remove_keys: tenant_id
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name                         loki
+  Match                        *
+  Host                         127.0.0.1
+  Port                         3100
+  Tenant_ID_Key                tenant_id
+  Tenant_ID_Key_Error_Handling partial_error
+  Remove_Keys                  tenant_id
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Use `drop_single_key`
 

@@ -52,6 +52,12 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 
 If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
 
+{% hint style="info" %}
+
+In YAML configuration, quote any [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) format value that begins with `%`, such as `logstash_dateformat` and `time_key_format`. YAML treats `%` as a reserved character, so an unquoted value like `logstash_dateformat: %Y.%m.%d` fails to parse. Use `logstash_dateformat: "%Y.%m.%d"` instead.
+
+{% endhint %}
+
 ### TLS / SSL
 
 The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
@@ -60,12 +66,12 @@ The Elasticsearch output plugin supports TLS/SSL. For more details about the pro
 
 The `write_operation` can be any of:
 
-| Operation   | Description |
-| ----------- | ----------- |
-| `create`    | Adds new data. If the data already exists (based on its id), the op is skipped.|
-| `index`     | New data is added while existing data (based on its id) is replaced (reindexed).|
-| `update`    | Updates existing data (based on its id). If no data is found, the op is skipped. |
-| `upsert`    | Merge or insert if the data doesn't exist, updates if the data exists (based on its id).|
+| Operation | Description                                                                              |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `create`  | Adds new data. If the data already exists (based on its id), the op is skipped.          |
+| `index`   | New data is added while existing data (based on its id) is replaced (reindexed).         |
+| `update`  | Updates existing data (based on its id). If no data is found, the op is skipped.         |
+| `upsert`  | Merge or insert if the data doesn't exist, updates if the data exists (based on its id). |
 
 {% hint style="info" %}
 

@@ -55,6 +55,7 @@ The plugin supports the following configuration parameters:
 | `kube_meta_cache_ttl` | Configurable time-to-live for Kubernetes cached pod metadata. By default, it's set to `0` which means `TTL` for cache entries is disabled and cache entries are evicted at random when capacity is reached. To enable this option, set the number to a time interval. For example, set the value to `60` or `60s` and cache entries which have been created more than 60 seconds ago will be evicted. | `0` |
 | `kube_meta_namespace_cache_ttl` | Configurable time-to-live for Kubernetes cached namespace metadata. If set to `0`, entries are evicted at random when capacity is reached. | `900` (seconds) |
 | `kube_meta_preload_cache_dir` | If set, Kubernetes metadata can be cached or pre-loaded from files in JSON format in this directory, named `namespace-pod.meta`. | _none_ |
+| `kube_namespace_file` | Path to the file that contains the pod's namespace. | `/var/run/secrets/kubernetes.io/serviceaccount/namespace` |
 | `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
 | `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
 | `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
@@ -384,6 +385,42 @@ pipeline:
 
 The filter can now gather the values of `pod_name` and `namespace`. With that information, it will check in the local cache (internal hash table) if some metadata for that key pair exists. If it exists, it will enrich the record with the metadata value. Otherwise, it connects to the Kubernetes Master/API Server and retrieves that information.
 
+## Metadata cache and freshness
+
+To keep the request rate against the Kubernetes API server (or Kubelet) low, the filter caches the metadata it retrieves for each Pod. On the first record for a given Pod, the filter queries the API server (or the Kubelet, see [Using Kubelet to get metadata](#using-kubelet-to-get-metadata)). It stores the result in an in-memory cache keyed by the Pod's `namespace` and `pod_name`. Subsequent records that resolve to the same key reuse the cached metadata instead of issuing another request.
+
+Because the cache is keyed by `namespace` and `pod_name`, how fresh the labels and annotations are depends on how long an entry stays cached:
+
+- With the default `kube_meta_cache_ttl` of `0`, cache entries have no time-based expiry and are only evicted at random once the cache reaches capacity. For short-lived Pods, such as `Deployment` replicas, this is usually fine: a recreated Pod gets a new name, which is a new cache key, and therefore fresh metadata.
+- For long-lived Pods with a stable name, such as `StatefulSet` members, the entry created at first enrichment can persist for the lifetime of the process. If the Pod's labels or annotations are changed in place, without recreating the Pod, records keep being enriched with the values captured when the entry was first cached, until the Pod restarts or the entry is evicted.
+
+{% hint style="info" %}
+This is expected behavior. The cache trades metadata freshness for a lower request rate against the Kubernetes API server, which matters on large clusters.
+{% endhint %}
+
+If you need labels or annotations that change in place to be reflected sooner, you can tune the cache with the following options, keeping the added request load in mind:
+
+- `kube_meta_cache_ttl`: set a time-to-live, for example `60` or `60s`, so that Pod metadata entries expire and are re-fetched on the next record. Staleness is then bounded by roughly the TTL, at the cost of one extra request per Pod each time an entry expires. Lower values increase freshness and load; higher values reduce both.
+- `kube_meta_namespace_cache_ttl`: the equivalent option for namespace labels and annotations, which defaults to `900` seconds. See [Kubernetes namespace meta](#kubernetes-namespace-meta).
+- `cache_use_docker_id`: re-fetch metadata when the container ID changes. This refreshes metadata when a Pod, and therefore its container, is restarted, but it doesn't help when labels or annotations are edited in place without a restart.
+
+### Example: a `StatefulSet Pod` whose labels change
+
+Consider a `StatefulSet` Pod `web-0` in the `prod` namespace, labeled `version: v1`. On the first log record from that Pod, the filter caches its metadata and enriches records with a `version` label of `v1`. Now update the label in place, without restarting the Pod:
+
+```text
+kubectl label pod web-0 -n prod version=v2 --overwrite
+```
+
+- With the default `kube_meta_cache_ttl` of `0`, the Pod keeps the same name, so the cache key is unchanged and the entry never expires. Records keep being enriched with `version: v1` until the Pod is restarted or the entry is evicted.
+- With `kube_meta_cache_ttl` set to, for example, `60`, the cached entry expires roughly 60 seconds after it was created. The next record for `web-0` re-fetches the metadata, and later records are enriched with `version: v2`.
+
+If instead the Pod is recreated (for example, a rolling update), it returns with the same name but a new container. In that case, `cache_use_docker_id On` also refreshes the metadata, because the container ID is then part of the cache key.
+
+## Enrich Fluent Bit internal logs
+
+When the source records come from the [Fluent Bit logs](../inputs/fluentbit-logs.md) (`fluentbit_logs`) input plugin, the filter enriches them with the metadata of the local Fluent Bit Pod instead of querying the API server. The namespace is read from the `kube_namespace_file` path, and the Pod name is taken from the `HOSTNAME` environment variable, falling back to the system hostname. This lets you attach Kubernetes metadata to Fluent Bit internal diagnostic logs without contacting the API server.
+
 ## Using Kubelet to get metadata
 
 An [issue](https://github.com/fluent/fluent-bit/issues/1948) about `kube-apiserver` suggests it will fail and become unresponsive when a cluster is too large and receives too many requests. For this feature, the Fluent Bit Kubernetes filter will send the request to the Kubelet `/pods` endpoint instead of `kube-apiserver` to retrieve the pods information and use it to enrich the log. Since Kubelet is running locally in nodes, the request response would be faster and each node would receive a request only one time. This could preserve `kube-apiserver` capacity to handle other requests. When this feature is enabled, you should see no difference in the Kubernetes metadata added to logs, but the `kube-apiserver` bottleneck should be avoided when the cluster is large.
@@ -623,8 +660,8 @@ pipeline:
 [FILTER]
     Name                    kubernetes
     Match                   kube.*
-    aws_use_pod_association true
-    set_platform            eks
+    Aws_Use_Pod_Association true
+    Set_Platform            eks
 ```
 
 {% endtab %}
@@ -680,7 +717,7 @@ Learn how to solve them to ensure that the Fluent Bit Kubernetes filter is opera
 
 - You can't see new objects getting metadata
 
-  In some cases, you might see only some objects being appended with metadata while other objects aren't enriched. This can occur when local data is cached and doesn't contain the correct ID for the Kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated, which will then be reflected in Fluent Bit logs. In some cases for `Pod` objects, this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped.
+  In some cases, you might see only some objects being appended with metadata while other objects aren't enriched. This can occur when local data is cached and doesn't contain the correct ID for the Kubernetes object that requires enrichment. For most Kubernetes objects the Kubernetes API server is updated, which will then be reflected in Fluent Bit logs. In some cases for `Pod` objects, this refresh to the Kubernetes API server can be skipped, causing metadata to be skipped. If a Pod's labels or annotations were updated in place and the changes aren't appearing, see [Metadata cache and freshness](#metadata-cache-and-freshness).
 
 ## Credit
 

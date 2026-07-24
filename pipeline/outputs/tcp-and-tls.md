@@ -30,11 +30,13 @@ The following parameters are available to configure a secure channel connection 
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
 
+## Getting started
+
 ### Command line
 
 #### JSON format
 
-This example specifies gathering [CPU](../inputs/cpu-metrics) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
+This example specifies gathering [CPU](../inputs/cpu-metrics.md) usage metrics and send them in JSON lines mode to a remote endpoint using netcat service.
 
 ```shell
 fluent-bit -i cpu -o tcp://127.0.0.1:5170 -p format=json_lines -v
@@ -102,3 +104,130 @@ Which return results like:
 (ExtType(code=0, data=b'b\n5\xc65\x05\x14\xac'), {'cpu_p': 0.1875, 'user_p': 0.125, 'system_p': 0.0625, 'cpu0.p_cpu': 0.0, 'cpu0.p_user': 0.0, 'cpu0.p_system': 0.0, 'cpu1.p_cpu': 0.0, 'cpu1.p_user': 0.0, 'cpu1.p_system': 0.0, 'cpu2.p_cpu': 1.0, 'cpu2.p_user': 0.0, 'cpu2.p_system': 1.0, 'cpu3.p_cpu': 0.0, 'cpu3.p_user': 0.0, 'cpu3.p_system': 0.0, 'cpu4.p_cpu': 0.0, 'cpu4.p_user': 0.0, 'cpu4.p_system': 0.0, 'cpu5.p_cpu': 0.0, 'cpu5.p_user': 0.0, 'cpu5.p_system': 0.0, 'cpu6.p_cpu': 0.0, 'cpu6.p_user': 0.0, 'cpu6.p_system': 0.0, 'cpu7.p_cpu': 0.0, 'cpu7.p_user': 0.0, 'cpu7.p_system': 0.0, 'cpu8.p_cpu': 0.0, 'cpu8.p_user': 0.0, 'cpu8.p_system': 0.0, 'cpu9.p_cpu': 1.0, 'cpu9.p_user': 1.0, 'cpu9.p_system': 0.0, 'cpu10.p_cpu': 0.0, 'cpu10.p_user': 0.0, 'cpu10.p_system': 0.0, 'cpu11.p_cpu': 0.0, 'cpu11.p_user': 0.0, 'cpu11.p_system': 0.0, 'cpu12.p_cpu': 0.0, 'cpu12.p_user': 0.0, 'cpu12.p_system': 0.0, 'cpu13.p_cpu': 0.0, 'cpu13.p_user': 0.0, 'cpu13.p_system': 0.0, 'cpu14.p_cpu': 0.0, 'cpu14.p_user': 0.0, 'cpu14.p_system': 0.0, 'cpu15.p_cpu': 0.0, 'cpu15.p_user': 0.0, 'cpu15.p_system': 0.0})
 ...
 ```
+
+### Configuration file
+
+The following is a basic setup to forward logs over TCP:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+
+  outputs:
+    - name: tcp
+      match: '*'
+      host: 192.168.10.12
+      port: 5170
+      format: json_lines
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name cpu
+  Tag  cpu
+
+[OUTPUT]
+  Name  tcp
+  Match *
+  Host  192.168.10.12
+  Port  5170
+  Format json_lines
+```
+
+{% endtab %}
+{% endtabs %}
+
+## Examples
+
+### Raw message key
+
+When `raw_message_key` is set, the plugin sends the value of the specified key as a raw message instead of applying formatting, causing the `format` property to be ignored:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/app.log
+      tag: app
+
+  outputs:
+    - name: tcp
+      match: '*'
+      host: 127.0.0.1
+      port: 5170
+      raw_message_key: $message
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name tail
+  Path /var/log/app.log
+  Tag  app
+
+[OUTPUT]
+  Name           tcp
+  Match          *
+  Host           127.0.0.1
+  Port           5170
+  Raw_Message_Key $message
+```
+
+{% endtab %}
+{% endtabs %}
+
+The `$` sign is required to signal the record accessor to extract the value from the specified key - this can be a top-level or nested field:
+
+{% tabs %}
+{% tab title="Top-level field" %}
+
+Example log:
+
+```json
+{
+  "timestamp": "2026-07-05T14:32:07Z",
+  "message": "<34>Jul  5 14:32:07 myhost app: Cache key S2VlcCBjYWxtIGFuZCBsb2cgb24="
+}
+```
+
+Setting `raw_message_key` to `$message` will yield:
+
+```text
+<34>Jul  5 14:32:07 myhost app: Cache key S2VlcCBjYWxtIGFuZCBsb2cgb24=
+```
+
+{% endtab %}
+{% tab title="Nested field" %}
+
+Example log:
+
+```json
+{
+  "timestamp": "2026-07-05T14:32:07Z",
+  "message": {
+    "original": "<34>Jul  5 14:32:07 myhost app: Cache key S2VlcCBjYWxtIGFuZCBsb2cgb24="
+  }
+}
+```
+
+Setting `raw_message_key` to `$message['original']` will yield:
+
+```text
+<34>Jul  5 14:32:07 myhost app: Cache key S2VlcCBjYWxtIGFuZCBsb2cgb24=
+```
+
+{% endtab %}
+{% endtabs %}
