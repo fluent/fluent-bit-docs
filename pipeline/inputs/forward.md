@@ -25,6 +25,7 @@ The plugin supports the following configuration parameters:
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                    | `false`   |
 | `unix_path`         | Specify the path to Unix socket to receive a Forward message. If set, `listen` and `port` are ignored.                                                                                                                                                                                                                                     | _none_    |
 | `unix_perm`         | Set the permission of the Unix socket file. If `unix_path` isn't set, this parameter is ignored.                                                                                                                                                                                                                                           | _none_    |
+| `workers`           | The number of listener workers that accept and process incoming connections. Not supported with `unix_path`; a value greater than `1` while `unix_path` is set causes startup to fail.                                                                                                                                                     | `1`       |
 
 ### TLS / SSL
 
