@@ -31,6 +31,7 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `http_method` | Specify `POST` versus `PUT` HTTP method. | `POST` |
 | `http_passwd` | Basic Auth password. Requires `http_user` to be set. | _none_ |
 | `http_user` | Basic Auth username. | _none_ |
+| `http_bearer_token_file` | Bearer authorization token file. Incompatible with basic auth and oauth2. | _none_ |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | _none_ |
 | `json_date_key` | Specify the name of the time key in the output record. To disable the time key, set the value to `false`. | `date` |
 | `log_response_payload` | Specify if the response payload should be logged or not. | `true` |
