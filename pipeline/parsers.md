@@ -22,7 +22,7 @@ For example, a parser can turn an unstructured log entry like this:
 192.168.2.20 - - [28/Jul/2006:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-...into a structured JSON object like this:
+The parser turns that entry into a structured JSON object like this:
 
 ```json
 {

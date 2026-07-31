@@ -88,7 +88,7 @@ pipeline:
 
 ### Avro support
 
-Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin but this is not enabled by default for releases.
+Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin but this isn't enabled by default for releases.
 
 Avro support is optional and must be activated at build time by using a build definition with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
 

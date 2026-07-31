@@ -167,7 +167,7 @@ systemctl edit fluent-bit.service
 
 When the Linux inotify event queue overflows (indicated by an `IN_Q_OVERFLOW` event), Fluent Bit automatically reconciles all monitored files. During reconciliation it:
 
-- Detects rotated files by comparing inodes and file names and re-registers watches as needed.
+- Detects rotated files by comparing `inode` numbers and file names and re-registers watches as needed.
 - Resets offset tracking for files that have been truncated.
 - Retries watch registration for files that previously failed, for example due to `ENOSPC` when `fs.inotify.max_user_watches` is exhausted.
 
