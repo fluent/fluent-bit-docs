@@ -4,7 +4,7 @@ description: Send logs to Bronto
 
 # Bronto
 
-Stream logs to [Bronto](https://bronto.io) by using the [HTTP plugin](http.md) to send data to a Bronto ingestion endpoint. Bronto parses and structures logs after ingestion, so you can send raw log records as JSON lines.
+Stream logs to [Bronto](https://docs.bronto.io) by using the [HTTP plugin](http.md) to send data to a Bronto ingestion endpoint. Bronto parses and structures logs after ingestion, so you can send raw log records as JSON lines.
 
 Bronto exposes region-specific ingestion endpoints:
 
@@ -104,6 +104,7 @@ pipeline:
       match: '*'
       host: ingestion.<REGION>.bronto.io
       port: 443
+      tls: on
       logs_uri: /v1/logs
       header:
         - x-bronto-api-key <YOUR_API_KEY>
@@ -120,6 +121,7 @@ pipeline:
   Match      *
   Host       ingestion.<REGION>.bronto.io
   Port       443
+  Tls        On
   Logs_Uri   /v1/logs
   Header     x-bronto-api-key    <YOUR_API_KEY>
   Header     x-bronto-dataset    <YOUR_DATASET_NAME>
