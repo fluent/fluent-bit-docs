@@ -12,6 +12,14 @@ The `service` section of YAML configuration files defines global properties of t
 | `dns.resolver` | Sets the DNS resolver implementation. Possible values: `LEGACY`, `ASYNC`. | _none_ |
 | `enable_chunk_trace` | If enabled, activates chunk tracing for debugging purposes. Requires Fluent Bit to be built with the `FLB_HAVE_CHUNK_TRACE` option. Possible values: `off` or `on`. | `off` |
 | `flush` | Sets the flush time in `seconds.nanoseconds`. The engine loop uses a flush timeout to define when to flush the records ingested by input plugins through the defined output plugins. | `1` |
+| `flush.adaptive` | If enabled, Fluent Bit adjusts the flush interval at runtime based on chunk backpressure. See [Adaptive flush intervals](#adaptive-flush-intervals). Possible values: `off` or `on`. | `off` |
+| `flush.adaptive.down_steps` | Sets how many consecutive samples at a lower pressure level are required before Fluent Bit lengthens the flush interval. | `3` |
+| `flush.adaptive.high_pressure` | Sets the chunk backpressure percentage that makes Fluent Bit target its shortest flush interval. | `75` |
+| `flush.adaptive.low_pressure` | Sets the chunk backpressure percentage that makes Fluent Bit target its longest flush interval. | `25` |
+| `flush.adaptive.max_interval` | Sets the upper bound in seconds for the adaptive flush interval. | `2` |
+| `flush.adaptive.medium_pressure` | Sets the chunk backpressure percentage that makes Fluent Bit shorten the flush interval to three quarters of the `flush` value. | `50` |
+| `flush.adaptive.min_interval` | Sets the lower bound in seconds for the adaptive flush interval. | `0.5` |
+| `flush.adaptive.up_steps` | Sets how many consecutive samples at a higher pressure level are required before Fluent Bit shortens the flush interval. | `2` |
 | `grace` | Sets the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define the wait time on exit. | `5` |
 | `hc_errors_count` | Sets the number of errors that must occur within the health check period before the health check endpoint reports an unhealthy status. | `5` |
 | `hc_period` | Sets the health check evaluation period in seconds. | `60` |
@@ -32,11 +40,61 @@ The `service` section of YAML configuration files defines global properties of t
 | `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to external plugins (.so files) that Fluent Bit can load at runtime. Plugins can also be declared directly in the [`plugins` section](../yaml/plugins-section.md) of YAML configuration files. | _none_ |
 | `scheduler.base` | Sets the base of exponential backoff. | `5` |
 | `scheduler.cap` | Sets a maximum retry time in seconds. | `2000` |
+| `security.fips_mode` | If enabled, Fluent Bit requires the OpenSSL FIPS provider at startup and exits if it isn't available. See [FIPS mode](#fips-mode). Possible values: `off` or `on`. | `off` |
 | `sp.convert_from_str_to_num` | If enabled, the stream processor converts strings that represent numbers to a numeric type. | `true` |
 | `streams_file` | Path for the [stream processor](../../../stream-processing/overview.md) configuration file. This file defines the rules and operations for stream processing in Fluent Bit. Stream processor configurations can also be defined directly in the `streams` section of YAML configuration files. | _none_ |
 | `windows.maxstdio` | If specified, adjusts the limit of `stdio`. Only provided for Windows. Values from `512` to `2048` are allowed. | `512` |
 
 The `service` section only controls the built-in monitoring and control HTTP server. Plugin-specific HTTP listener settings such as `http_server.http2`, `http_server.buffer_max_size`, `http_server.buffer_chunk_size`, `http_server.max_connections`, `http_server.workers`, `http_server.ingress_queue_event_limit`, `http_server.ingress_queue_byte_limit`, and `http_server.idle_timeout` are configured on the relevant input plugin in the [`pipeline.inputs`](../yaml/pipeline-section.md#shared-http-listener-settings-for-inputs) section.
+
+## Adaptive flush intervals
+
+Adaptive flush intervals are available in Fluent Bit version 5.1 and greater.
+
+The `flush` key sets a fixed flush interval. A short interval keeps latency low but wastes cycles when there's little data to deliver, and a long interval delays delivery when a pipeline is under load. Enabling `flush.adaptive` lets Fluent Bit move between those two behaviors on its own.
+
+When `flush.adaptive` is enabled, Fluent Bit samples the highest chunk backpressure percentage across all input instances and maps that sample to a pressure level. Each level applies a multiplier to the configured `flush` value:
+
+| Backpressure sample | Flush interval |
+| --- | --- |
+| `flush.adaptive.high_pressure` or greater | `flush` multiplied by `0.5` |
+| `flush.adaptive.medium_pressure` or greater | `flush` multiplied by `0.75` |
+| Greater than `flush.adaptive.low_pressure` | `flush` unchanged |
+| `flush.adaptive.low_pressure` or less | `flush` multiplied by `2` |
+
+The resulting interval is then clamped to the range set by `flush.adaptive.min_interval` and `flush.adaptive.max_interval`, so those two keys always take precedence over the multipliers.
+
+To keep the interval from oscillating between levels, Fluent Bit requires repeated samples before it changes level: `flush.adaptive.up_steps` consecutive samples to move to a higher pressure level, and `flush.adaptive.down_steps` consecutive samples to move to a lower one. A sample that matches the current level resets the count. If Fluent Bit can't apply the new interval, it keeps the interval that's already in effect.
+
+The following example flushes every 1.5 seconds under normal conditions, drops to 0.75 seconds when chunk backpressure reaches 80%, and backs off to a maximum of three seconds when the pipeline is idle:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1.5
+  flush.adaptive: on
+  flush.adaptive.min_interval: 0.5
+  flush.adaptive.max_interval: 3
+  flush.adaptive.high_pressure: 80
+```
+
+{% endtab %}
+{% endtabs %}
+
+## FIPS mode
+
+FIPS mode is available in Fluent Bit version 5.1 and greater. It requires OpenSSL 3.0 or greater with the FIPS provider installed on the host.
+
+When `security.fips_mode` is enabled, Fluent Bit activates the OpenSSL FIPS provider during startup and verifies that a FIPS-approved algorithm can be fetched from it. If the provider isn't available or can't be activated, Fluent Bit logs the OpenSSL errors and exits instead of starting with non-compliant cryptography. You can set the same behavior from the command line with the [`--enable-fips`](../../configuring-fluent-bit.md#require-fips-mode-with---enable-fips) flag.
+
+FIPS mode can't be changed by [hot reload](../../../administration/hot-reload.md). If a reloaded configuration changes `security.fips_mode`, Fluent Bit halts the reload and keeps running with the previous configuration.
+
+Enabling FIPS mode changes the behavior of plugins that rely on MD5:
+
+- The [Amazon S3](../../../pipeline/outputs/s3.md) output rejects `send_content_md5` at startup, because that header requires MD5.
+- The [Azure Blob](../../../pipeline/outputs/azure_blob.md) output derives block IDs using SHA-256 instead of MD5.
 
 ## Storage configuration
 

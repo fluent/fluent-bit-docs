@@ -20,6 +20,14 @@ The `Service` section defines global properties of the service. The following ke
 | Key             | Description   | Default Value |
 | --------------- | ------------- | ------------- |
 | `flush`           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when it's required to flush the records ingested by input plugins through the defined output plugins.  | `1` |
+| `flush.adaptive` | If enabled, the flush interval is adjusted at runtime based on chunk backpressure. See [Adaptive flush intervals](../yaml/service-section.md#adaptive-flush-intervals). | `Off` |
+| `flush.adaptive.min_interval` | Lower bound in seconds for the adaptive flush interval. | `0.5` |
+| `flush.adaptive.max_interval` | Upper bound in seconds for the adaptive flush interval. | `2` |
+| `flush.adaptive.low_pressure` | Chunk backpressure percentage that selects the longest flush interval. | `25` |
+| `flush.adaptive.medium_pressure` | Chunk backpressure percentage that shortens the flush interval to three quarters of the `flush` value. | `50` |
+| `flush.adaptive.high_pressure` | Chunk backpressure percentage that selects the shortest flush interval. | `75` |
+| `flush.adaptive.up_steps` | Consecutive samples at a higher pressure level required before the flush interval is shortened. | `2` |
+| `flush.adaptive.down_steps` | Consecutive samples at a lower pressure level required before the flush interval is lengthened. | `3` |
 | `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
 | daemon          | Boolean. Determines whether Fluent Bit should run as a Daemon (background). Allowed values are: `yes`, `no`, `on`, and `off`. Don't enable when using a Systemd based unit, such as the one provided in Fluent Bit packages.  | `Off` |
 | `dns.mode`        | Set the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per plugin basis. | `UDP` |
@@ -36,6 +44,7 @@ The `Service` section defines global properties of the service. The following ke
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
 | `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
+| `security.fips_mode` | If enabled, the OpenSSL FIPS provider is required at startup and Fluent Bit exits if it isn't available. See [FIPS mode](../yaml/service-section.md#fips-mode). | `Off` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
 | `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
