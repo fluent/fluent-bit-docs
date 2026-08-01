@@ -6,6 +6,8 @@ description: Send logs to Elasticsearch (including Amazon OpenSearch Service)
 
 The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [Elasticsearch](https://www.elastic.co) database. To use this plugin, you must have an operational Elasticsearch service running in your environment.
 
+In Fluent Bit 5.1 and later, `elasticsearch` is accepted as an alias for the plugin name `es`. Both `name: es` and `name: elasticsearch` load this output plugin. The alias applies only to output plugins. The [Elasticsearch input plugin](../inputs/elasticsearch.md) is named `elasticsearch` and is unaffected.
+
 ## Configuration parameters
 
 | Key | Description | Default |
