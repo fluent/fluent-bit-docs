@@ -10,8 +10,8 @@ Bronto exposes region-specific ingestion endpoints:
 
 | Region | Host |
 | :--- | :--- |
-| EU | `ingestion.eu.bronto.io` |
-| US | `ingestion.us.bronto.io` |
+| `EU` | `ingestion.eu.bronto.io` |
+| `US` | `ingestion.us.bronto.io` |
 
 ## Configuration parameters
 
@@ -21,9 +21,9 @@ Bronto uses the standard [HTTP output plugin](http.md) parameters together with 
 | :--- | :--- | :--- |
 | `compress` | Compress the payload before sending. Use `gzip` for Bronto. | _none_ |
 | `format` | The payload format to send. Use `json_lines` for Bronto. | `json` |
-| `host` | Your Bronto ingestion endpoint: `ingestion.eu.bronto.io` (EU) or `ingestion.us.bronto.io` (US). | |
-| `port` | TCP port of the Bronto ingestion endpoint. Use `443`. | |
-| `tls` | Enable TLS. Required by Bronto endpoints. Use `on`. | _none_ |
+| `host` | Your Bronto ingestion endpoint: `ingestion.eu.bronto.io` (`EU`) or `ingestion.us.bronto.io` (`US`). | `127.0.0.1` |
+| `port` | TCP port of the Bronto ingestion endpoint. Use `443`. | `80` |
+| `tls` | Enable TLS. Required by Bronto endpoints. Use `on`. | `off` |
 
 ### Headers
 
@@ -45,7 +45,7 @@ The HTTP output plugin supports TLS/SSL. For more details about the properties a
 To get started with sending logs to Bronto:
 
 1. In the Bronto UI, go to **Settings** > **API Keys** > **Add API Key** and create a key. An **Ingestion** role is sufficient for sending logs.
-1. In your main Fluent Bit configuration file append the following, replacing `<REGION>`, `<YOUR_API_KEY>`, `<YOUR_DATASET_NAME>`, and `<YOUR_COLLECTION_NAME>` with your values:
+1. In your main Fluent Bit configuration file, append the following, replacing `<REGION>`, `<YOUR_API_KEY>`, `<YOUR_DATASET_NAME>`, and `<YOUR_COLLECTION_NAME>` with your values:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
