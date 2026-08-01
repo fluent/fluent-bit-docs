@@ -211,6 +211,22 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
+## Certificate reload
+
+Automatic certificate reload is available in Fluent Bit version 5.1 and greater.
+
+Fluent Bit reloads TLS certificates from disk without a restart or a [hot reload](hot-reload.md). No configuration is required, and there's no reload interval to tune.
+
+Each time Fluent Bit creates a new TLS session, it checks the certificate directory set by `tls.ca_path`, and the individual certificate and key files set by `tls.ca_file`, `tls.crt_file`, and `tls.key_file`. If any of them changed, Fluent Bit builds a new TLS context from disk and uses it for that session and the sessions that follow. This applies to both directions: output plugins connecting to a remote server, and input plugins accepting incoming connections.
+
+For each of these paths, Fluent Bit compares whether the path exists, its size, and its modification and change timestamps. On Linux it also compares the device and `inode` numbers, and uses nanosecond timestamp precision. The `inode` comparison matters in practice. It detects a certificate replaced by renaming a new file over the old one, along with the symlink swap that Kubernetes performs when a mounted secret is updated.
+
+For `tls.ca_path`, Fluent Bit inspects the directory itself rather than each certificate inside it. This detects certificates added to, removed from, or renamed within the directory, because those operations change the directory's own timestamps. A certificate file that's modified in place inside that directory doesn't trigger a reload. To have such an update detected, replace the file by renaming a new one over it, or reference it directly with `tls.ca_file`.
+
+Sessions that are already established keep the context they were created with. A long-lived connection continues to use the previous certificate until it's reconnected.
+
+If the new files can't be loaded, for example because a certificate and key were written separately and Fluent Bit read them mid-update, it logs `detected certificate file changes but reload failed` and keeps the previous context. Connections continue to work with the certificate that was already loaded, and the next session retries the reload.
+
 ## Tips and tricks
 
 ### Generate a self-signed certificates for testing purposes
