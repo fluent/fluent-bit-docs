@@ -31,7 +31,7 @@ The plugin hardcodes the destination host (`napi.arvancloud.ir`), port (`443`), 
 
 Fluent Bit builds one JSON object per flush:
 
-```jsonhttps://messages.google.com/web/u/1
+```json
 {
   "logs": [
     {
