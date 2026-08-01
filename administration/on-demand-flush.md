@@ -64,7 +64,15 @@ The default value of the counter is `0`.
 
 ## Confirm a flush
 
-Use the `flush_now_count` returned by the `POST`/`PUT` response, or by a separate `GET /api/v2/flush` call, to confirm that a specific request resulted in a new flush. If the pipeline doesn't acknowledge the flush within the internal timeout, the `POST`/`PUT` endpoint responds with HTTP status `503` instead:
+A successful request returns HTTP status `200` with the incremented counter:
+
+```json
+{"flush":"done","flush_now_count":3}
+```
+
+`flush_now_count` is a process-wide counter incremented once per on-demand flush processed by the engine. It's incremented when buffered chunks are dispatched to the output plugins. A `200` only guarantees the engine is processing chunks, not that they got pushed out or received by the outputs. Because the counter is global, it can't be used to correlate a response with a specific request when several flushes are issued concurrently.
+
+If the engine doesn't acknowledge the request within 2 seconds, the endpoint responds with HTTP status `503` and the counter unchanged:
 
 ```json
 {"flush":"timeout","flush_now_count":0}
