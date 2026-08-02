@@ -23,9 +23,9 @@ Fluent Bit posts a JSON body to the fixed endpoint `https://napi.arvancloud.ir/l
 | `log_type_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a field from the record to use as `logType`. When the field exists and isn't empty, it takes priority over `log_type`. | _none_ |
 | `tag_key` | Field name used for the Fluent Bit tag when `include_tag_key` is enabled. | `tag` |
 | `timestamp_format` | Optional `strptime`-style format used to parse the value selected by `timestamp_key`. When set, Fluent Bit parses the field and rewrites it as UTC RFC3339 with microseconds. When omitted, the `timestamp_key` value is forwarded as-is. | _none_ |
-| `timestamp_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a record field to use as the CloudLogs `timestamp`. If unset, missing, empty, or unparseable, Fluent Bit uses the event timestamp. | _none_ |
+| `timestamp_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a record field to use as the CloudLogs `timestamp`. If the key is unset, or the field is missing, empty, or can't be parsed, Fluent Bit uses the event timestamp. | _none_ |
 
-The plugin hardcodes the destination host (`napi.arvancloud.ir`), port (`443`), URI (`/logging/v1/entries/write`), and HTTPS. Host, port, and URI aren't configurable.
+The destination host (`napi.arvancloud.ir`), port (`443`), URI (`/logging/v1/entries/write`), and HTTPS scheme are fixed by the plugin. Host, port, and URI aren't configurable.
 
 ## Request payload
 
@@ -68,7 +68,7 @@ Behavior notes:
 | `200`-`205` | Success (`FLB_OK`) |
 | `400`, `401`, `403` | Failure without retry (`FLB_ERROR`) |
 | `429` | Retry (`FLB_RETRY`) |
-| `500` and above | Retry (`FLB_RETRY`) |
+| `500` or greater | Retry (`FLB_RETRY`) |
 | Other HTTP client errors | Failure without retry (`FLB_ERROR`) |
 | Connection or transport failure | Retry (`FLB_RETRY`) |
 
@@ -104,7 +104,7 @@ pipeline:
 [OUTPUT]
   Name    arvancloud_cloudlogs
   Match   *
-  apikey  YOUR_API_KEY_HERE
+  Apikey  YOUR_API_KEY_HERE
 ```
 
 {% endtab %}
@@ -147,14 +147,14 @@ pipeline:
 [OUTPUT]
   Name              arvancloud_cloudlogs
   Match             *
-  apikey            YOUR_API_KEY_HERE
-  log_type          myapp
-  log_type_key      $category
-  timestamp_key     $ts
-  timestamp_format  %Y-%m-%dT%H:%M:%SZ
-  gzip              true
-  include_tag_key   true
-  tag_key           fluentbit_tag
+  Apikey            YOUR_API_KEY_HERE
+  Log_Type          myapp
+  Log_Type_Key      $category
+  Timestamp_Key     $ts
+  Timestamp_Format  %Y-%m-%dT%H:%M:%SZ
+  Gzip              true
+  Include_Tag_Key   true
+  Tag_Key           fluentbit_tag
 ```
 
 {% endtab %}
