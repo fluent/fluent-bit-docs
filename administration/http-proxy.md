@@ -40,10 +40,10 @@ When `HTTP_PROXY`/`http_proxy` uses the `https` scheme, Fluent Bit establishes a
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `tls.proxy.ca_file` | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`, which verifies the destination's certificate. Only applies to output plugins. _Supported in v5.1 or later._ | _none_ |
-| `tls.proxy.ca_path` | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Only applies to output plugins. _Supported in v5.1 or later._ | _none_ |
-| `tls.proxy.verify` | Force certificate validation for the HTTPS proxy connection. Only applies to output plugins. _Supported in v5.1 or later._ | `on` |
-| `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Only applies to output plugins. _Supported in v5.1 or later._ | `on` |
+| `tls.proxy.ca_file` | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`, which verifies the destination's certificate. Only applies to output plugins. Supported in v5.1 or later. | _none_ |
+| `tls.proxy.ca_path` | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Only applies to output plugins. Supported in v5.1 or later. | _none_ |
+| `tls.proxy.verify` | Force certificate validation for the HTTPS proxy connection. Only applies to output plugins. Supported in v5.1 or later. | `on` |
+| `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Only applies to output plugins. Supported in v5.1 or later. | `on` |
 
 {% hint style="info" %}
 
@@ -84,12 +84,14 @@ pipeline:
   Match              *
   Host               backend.example.com
   Port               443
-  tls                on
+  Tls                on
   tls.proxy.ca_file  /etc/certs/proxy-ca.crt
 ```
 
 {% endtab %}
 {% endtabs %}
+
+Then set the proxy environment variable to the HTTPS proxy:
 
 ```text
 HTTP_PROXY='https://proxy.example.com:3129'
