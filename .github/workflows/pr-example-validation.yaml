@@ -34,15 +34,22 @@ jobs:
         #
         # On pull requests, HEAD refers to the merge commit.
         # We want to compare against the base of the PR.
-        # Use git diff-tree to get files changed between the PR base and the current commit.
+        # Use git diff to get files changed between the PR base and the current commit.
         # --name-only lists only the names of the files.
         # --diff-filter=AMCR will only show Added, Modified, Copied, Renamed files.
         # We grep for *.md files you are interested in.
         # The 'docs/' prefix is a common convention but adjust as necessary.
         run: |
-          changed_md=$(git diff-tree --no-commit-id --name-only --diff-filter=AMCR ${{ github.event.pull_request.base.sha }}...HEAD | grep './.*\.md$' || true)
+          changed_md=$(git diff --name-only --diff-filter=AMCR ${{ github.event.pull_request.base.sha }}...HEAD | grep '\.md$' || true)
           echo "Changed Markdown files: $changed_md"
-          echo "list=${changed_md}" >> $GITHUB_OUTPUT
+          # The value is newline-separated, so it needs the multiline output delimiter syntax.
+          # A random delimiter avoids any chance of the value terminating the block early.
+          delimiter=$(openssl rand -hex 16)
+          {
+            echo "list<<${delimiter}"
+            echo "${changed_md}"
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Validate example configurations provided in any changed files

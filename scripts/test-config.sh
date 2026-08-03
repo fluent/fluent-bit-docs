@@ -83,20 +83,37 @@ fi
 FAILED_VALIDATIONS=()
 PASSED_VALIDATIONS=0
 
+# Write the extracted configuration to a private temporary directory.
+# We resolve the physical path because on macOS /tmp and $TMPDIR are symlinks into
+# /private, which the Docker Desktop file sharing cannot resolve. Bind mounting an
+# unresolved path silently mounts an empty directory instead of the configuration,
+# and every example then fails with a misleading YAML parse error.
+# A per-run directory also keeps concurrent invocations from overwriting each other.
+WORK_DIR=$(cd -P "$(mktemp -d)" && pwd -P)
+trap 'rm -rf "$WORK_DIR"' EXIT
+
 # Loop over YAML and legacy .conf configurations
 for LANGUAGE in "yaml" "text"; do
     if [ "$LANGUAGE" = "yaml" ]; then
         TAB_TITLE="fluent-bit.yaml"
-        OUTPUT_FILE="/tmp/fluent-bit.yaml"
+        OUTPUT_FILE="$WORK_DIR/fluent-bit.yaml"
     else
         TAB_TITLE="fluent-bit.conf"
-        OUTPUT_FILE="/tmp/fluent-bit.conf"
+        OUTPUT_FILE="$WORK_DIR/fluent-bit.conf"
     fi
 
     # Stage 1: Count how many examples exist for this language in the file
     # We do this so we know we should have X examples to validate, and we can report if any are missing or fail validation or extraction.
-    EXAMPLE_COUNT=$("$SCRIPT_DIR/extract-config.sh" "$FILE" "$TAB_TITLE" "$LANGUAGE" count 2>/dev/null || echo 0)
-    
+    # A genuine extraction failure must not be reported as zero examples, otherwise a
+    # broken environment would quietly skip validation for every file and still pass.
+    if ! EXAMPLE_COUNT=$("$SCRIPT_DIR/extract-config.sh" "$FILE" "$TAB_TITLE" "$LANGUAGE" count 2>"$WORK_DIR/count-error.txt"); then
+        echo "ERROR: Failed to count $LANGUAGE examples in $FILE" >&2
+        cat "$WORK_DIR/count-error.txt" >&2
+        FAILED_VALIDATIONS+=("$LANGUAGE example count")
+        continue
+    fi
+
+    # No examples for this language in this file is a legitimate outcome, not a failure.
     if [ "$EXAMPLE_COUNT" -eq 0 ]; then
         continue
     fi
