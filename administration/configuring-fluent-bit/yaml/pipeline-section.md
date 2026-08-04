@@ -79,6 +79,39 @@ The `name` parameter is required and defines for Fluent Bit which input plugin s
 
 There is no hard-coded limit on the number of input plugins. The practical maximum depends on available system resources such as memory and file descriptors.
 
+### Count log records by tag for inputs
+
+Each input can override the service-wide [`telemetry.metrics.logs.tag_records.enabled`](service-section.md#count-log-records-by-tag) setting with a nested `telemetry` block of its own. An input that doesn't set this block inherits the `service` value.
+
+Only the `enabled` key is valid at the input level. Setting `max_series` or `max_tag_length` on an input is a startup error, because those limits are service-wide.
+
+The following example enables per-tag counting for the whole service and disables it for one noisy input:
+
+```yaml
+service:
+  telemetry:
+    metrics:
+      logs:
+        tag_records:
+          enabled: true
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: app.logs
+      path: /var/log/app/*.log
+
+    - name: tail
+      alias: high_cardinality
+      tag: dynamic.*
+      path: /var/log/dynamic/*.log
+      telemetry:
+        metrics:
+          logs:
+            tag_records:
+              enabled: false
+```
+
 ### Shared HTTP listener settings for inputs
 
 Some HTTP-based input plugins share the same listener implementation and support the following common settings in addition to their plugin-specific parameters:
