@@ -1,6 +1,6 @@
 # Syslog
 
-The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats over UDP, TCP, and Datagram Transport Layer Security (DTLS) transports. TLS isn't a transport of its own. Enable it to secure a TCP connection, or use `dtls` to secure datagram transport.
+The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats over UDP, TCP, TLS, and Datagram Transport Layer Security (DTLS) transports.
 
 ## Configuration parameters
 
@@ -36,15 +36,15 @@ The `mode` parameter selects the transport used to reach the Syslog server:
 | --- | --- | --- |
 | `udp` | Datagrams. | Must remain `off`. |
 | `tcp` | Stream. Set `tls` to `on` to secure the connection. | Optional. |
-| `tls` | Stream. Behaves the same as `tcp`. | Required to secure the connection. |
-| `dtls` | Datagrams secured with DTLS. | Required. |
+| `tls` | Stream secured with TLS. | Optional. Enabled automatically. |
+| `dtls` | Datagrams secured with DTLS. | Optional. Enabled automatically. |
 
-Setting `mode` to `tls` doesn't secure the connection on its own. Fluent Bit selects TLS based on the `tls` parameter, so `mode: tls` without `tls: on` sends messages over a plain TCP connection. Always set `tls` to `on` when you want a secure channel.
+Setting `mode` to `tls` or `dtls` enables TLS automatically, so you don't need to set `tls` to `on` for those modes. Setting it explicitly is harmless. To secure a `tcp` connection, you must set `tls` to `on`.
 
-Fluent Bit validates these combinations at startup and refuses to start when they conflict:
+Fluent Bit validates the configuration at startup and refuses to start in these cases:
 
-- `mode` set to `dtls` without `tls` set to `on` fails with `mode=dtls requires tls=on`.
 - `mode` set to `udp` with `tls` set to `on` fails with `mode=udp with tls=on is unsupported`. Use `dtls` instead, which is the supported way to secure datagram transport.
+- `mode` set to `tls` or `dtls` in a build compiled without TLS support fails with `TLS support is unavailable`.
 
 DTLS support is available in Fluent Bit version 5.1 and greater. Earlier versions support only `udp`, `tcp`, and `tls`.
 
@@ -111,7 +111,7 @@ pipeline:
 
 ### Secure datagram transport with DTLS
 
-To send messages over DTLS, set `mode` to `dtls` and enable `tls`. The Syslog server must listen for DTLS on the configured port:
+To send messages over DTLS, set `mode` to `dtls`. The Syslog server must listen for DTLS on the configured port:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -125,7 +125,6 @@ pipeline:
       host: syslog.yourserver.com
       port: 6514
       mode: dtls
-      tls: on
       tls.verify: on
       tls.ca_file: /path/to/ca.crt
       syslog_format: rfc5424
@@ -142,7 +141,6 @@ pipeline:
   Host                 syslog.yourserver.com
   Port                 6514
   Mode                 dtls
-  Tls                  on
   Tls.verify           on
   Tls.ca_file          /path/to/ca.crt
   Syslog_Format        rfc5424
