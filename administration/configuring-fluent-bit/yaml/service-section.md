@@ -111,10 +111,16 @@ The following keys can be set as children to the `telemetry.metrics.logs.tag_rec
 | Key | Description | Default Value |
 | --- | ----------- | ------------- |
 | `enabled` | Enables per-tag counting of ingested log records. Individual inputs can override this value in the [`pipeline.inputs`](../yaml/pipeline-section.md#count-log-records-by-tag-for-inputs) section. Possible values: `false` or `true`. | `false` |
-| `max_series` | Sets the maximum number of distinct input and tag combinations to track. This budget is shared across all inputs. After the limit is reached, records carrying a tag that isn't already tracked are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `max_series`. Tags that are already tracked continue to be counted. Set to `0` to remove the limit. | `500` |
-| `max_tag_length` | Sets the maximum length in bytes of a tag to track. Records with a longer tag are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `tag_length_limit`. Longer tags are skipped rather than truncated. Set to `0` to remove the limit. | `128` |
+| `max_series` | Sets the maximum number of distinct input and tag combinations to track. This budget is shared across all inputs. After the limit is reached, records carrying a tag that isn't already tracked are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `max_series`. Tags that are already tracked continue to be counted. Set to `0` or less to remove the limit. | `500` |
+| `max_tag_length` | Sets the maximum length in bytes of a tag to track. Records with a longer tag are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `tag_length_limit`. Longer tags are skipped rather than truncated. Set to `0` or less to remove the limit. | `128` |
 
-Both `max_series` and `max_tag_length` can only be set in the `service` section. Fluent Bit rejects unknown keys in this block at startup, so a misspelled key prevents the service from starting.
+Both `max_series` and `max_tag_length` can only be set in the `service` section.
+
+Each of these two limits accepts an integer, or a string that contains only an integer. Strings are expanded for [environment variables](environment-variables-section.md) before they're parsed, so `${MAX_SERIES}` is valid. The resulting value must fit in a signed 32-bit integer.
+
+Fluent Bit fails to start when a limit isn't a complete integer, such as `notanumber` or `10abc`, or falls outside the signed 32-bit range. Neither limit enforces a minimum. Both `0` and negative values are accepted and remove the limit instead of causing an error.
+
+Fluent Bit also rejects unknown keys in this block at startup, so a misspelled key prevents the service from starting.
 
 The following example enables per-tag counting and lowers both limits:
 
