@@ -28,7 +28,7 @@ The plugin supports the following configuration parameters:
 
 ## Batch behavior
 
-Fluent Bit delivers records to filters in batches. The expect filter evaluates every record in a batch against your rules, and the configured `action` determines what happens next:
+Fluent Bit delivers records to filters in batches. The expect filter evaluates each data record in a batch against your rules, and the configured `action` determines what happens next. Two exceptions apply across the batch: `exit` stops evaluation at the first record that fails a rule, and `result_key` never adds a result to marker records.
 
 - `warn`: each record that fails a rule logs its own `expect check failed` warning. A batch that contains several failing records produces several warnings.
 - `exit`: Fluent Bit stops at the first record that fails a rule and exits with status code `255`. The remaining records in the batch aren't evaluated.
