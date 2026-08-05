@@ -14,6 +14,10 @@ The _File_ output plugin lets you write the data received through the input plug
 | `format` | The [format](#format) of the file content. | _none_ |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
 | `path` | Directory path to store files. If not set, Fluent Bit will write the files in its own working directory. | _none_ |
+| `rotate` | Enable size-based [log rotation](#log-rotation). When enabled, files that exceed `rotate_max_size` are rotated and optionally compressed. | `false` |
+| `rotate_gzip` | Compress rotated files using gzip. Only applies when `rotate` is enabled. | `true` |
+| `rotate_max_files` | Maximum number of rotated files to retain per output file. Oldest files are deleted first. Must be `1` or greater. Only applies when `rotate` is enabled. | `7` |
+| `rotate_max_size` | Maximum size of the active output file before rotation is triggered. Supports size suffixes: `k` (kilobytes), `m` (megabytes), `g` (gigabytes). Only applies when `rotate` is enabled. | `100M` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Format
@@ -111,6 +115,64 @@ You will get the following output:
 ```text
 1564462620.000254 used=1045448 free=31760160 total=32805608
 ```
+
+## Log rotation
+
+The File output plugin supports size-based log rotation.
+
+When `rotate` is enabled, the plugin monitors the size of each output file. Once a file exceeds `rotate_max_size`, the next flush rotates the file by renaming it with a timestamp suffix in the format `<filename>.<YYYYMMDD_HHMMSS_XXXXXXXX>`. The `YYYYMMDD_HHMMSS` is the machine-local timestamp of the rotation, and `XXXXXXXX` is a random hex identifier that guarantees unique filenames if multiple rotations happen within the same second.
+
+If `rotate_gzip` is enabled (the default), rotated files are compressed with gzip and stored with an additional `.gz` extension (for example, `cpu.log.20260512_134500_a1b2c3d4.gz`).
+
+The plugin retains up to `rotate_max_files` rotated files per output file. When the limit is reached, the oldest rotated files are deleted automatically.
+
+Log rotation works with all supported output [formats](#format): default (`out_file`), `plain`, `csv`, `ltsv`, `template`, and `msgpack`. File operations are thread-safe, so rotation can be used alongside multiple [workers](../../administration/multithreading.md#outputs).
+
+### Log rotation example
+
+The following configuration writes CPU metrics to file with rotation enabled. Files are rotated at 50 MB and the five most recent rotated files are retained with gzip compression:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+      tag: cpu
+
+  outputs:
+    - name: file
+      match: '*'
+      path: /var/log/fluent-bit
+      file: cpu.log
+      rotate: true
+      rotate_max_size: 50M
+      rotate_max_files: 5
+      rotate_gzip: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name cpu
+  Tag  cpu
+
+[OUTPUT]
+  Name             file
+  Match            *
+  Path             /var/log/fluent-bit
+  File             cpu.log
+  Rotate           true
+  Rotate_Max_Size  50M
+  Rotate_Max_Files 5
+  Rotate_Gzip      true
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Get started
 
