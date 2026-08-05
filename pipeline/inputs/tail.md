@@ -55,6 +55,7 @@ The plugin supports the following configuration parameters:
 | `truncate_long_lines` | When enabled, truncates lines that exceed the buffer capacity after input encoding conversion to UTF-8. Use this option when dealing with character encoding conversions that might expand the line length. | `false` |
 | `unicode.encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
 | `watcher_interval` | Set the interval for the watcher that monitors symbolic link rotation. This is an advanced option for fine-tuning how often Fluent Bit checks if symbolic links have been rotated. | `2s` |
+| `windows.path_encoding` | Windows only. Set the encoding Fluent Bit uses to interpret the configured `path` value. Supported values: `ansi`, `utf8` (also accepted as `utf-8`). See [Windows path encoding](#windows-path-encoding). | `ansi` |
 
 ## Buffers and memory management
 
@@ -497,6 +498,44 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Windows path encoding
+
+The `windows.path_encoding` parameter is available in Fluent Bit version 5.1 and greater, and applies only to Windows.
+
+By default, Fluent Bit interprets the `path` value using the system's active ANSI code page and calls the ANSI Windows file APIs. Paths containing characters that the active code page can't represent, such as Japanese or emoji directory names on a system using a Western code page, can't be matched or opened in this mode.
+
+Setting `windows.path_encoding` to `utf8` makes Fluent Bit treat the configured path as UTF-8, convert it to UTF-16, and call the wide-character Windows file APIs to glob, stat, and open files. Fluent Bit also handles extended-length path prefixes such as `\\?\` in this mode, so it can reach paths longer than the legacy `MAX_PATH` limit. Filenames reported in the records are converted back to UTF-8.
+
+If you set `windows.path_encoding` to any value other than `ansi`, `utf8`, or `utf-8`, Fluent Bit logs an error and the plugin fails to start.
+
+This parameter controls how Fluent Bit reads the path, not how it reads the contents of a file. To convert the encoding of the log data itself, see [Character encoding conversion](#character-encoding-conversion).
+
+The following example enables UTF-8 path handling. Write the `path` value as UTF-8, and save your configuration file with UTF-8 encoding so that Fluent Bit receives the path as you intended:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: 'C:\logs\app\*.log'
+      windows.path_encoding: utf8
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                  tail
+  Path                  C:\logs\app\*.log
+  Windows.Path_Encoding utf8
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Character encoding conversion
 
