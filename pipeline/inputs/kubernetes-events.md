@@ -28,11 +28,20 @@ Kubernetes exports events through the API server. This input plugin lets you ret
 | `kube_token_file` | Kubernetes authorization token file. | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
 | `kube_token_ttl` | Kubernetes token time to live, until it's read again from the token file. | `10m` |
 | `kube_url` | API Server endpoint. | `https://kubernetes.default.svc` |
+| `kube_watch_timeout` | Maximum duration of a Kubernetes watch request, and the read idle timeout applied to the watch connection. Set to `0` to disable both timeouts. Available in Fluent Bit 5.1 and later. | `10m` |
 | `tls.debug` | Set TLS debug level: `0` (no debug), `1` (error), `2` (state change), `3` (info), and `4` (verbose). | `0` |
 | `tls.verify` | Enable or disable verification of TLS peer certificate. | `true` |
 | `tls.vhost` | Set optional TLS virtual host. | _none_ |
 
-In Fluent Bit 3.1 or later, this plugin uses a Kubernetes watch stream instead of polling. In versions earlier than 3.1, the interval parameters are used for reconnecting the Kubernetes watch stream.
+In Fluent Bit 3.1 or later, this plugin uses a Kubernetes watch stream instead of polling, and the `interval_sec` and `interval_nsec` parameters set how often the watch stream reconnects. In versions earlier than 3.1, the plugin polls the API server, and these parameters set the polling interval.
+
+### Watch connection lifetime
+
+A watch connection can stop delivering events without closing, for example when a network device between Fluent Bit and the API server drops an idle connection. Fluent Bit would then hold a connection that never returns data.
+
+To bound this, `kube_watch_timeout` sets a maximum lifetime for each watch request. Fluent Bit passes the value to the API server as the `timeoutSeconds` parameter, so the server closes the watch when the timeout elapses. Fluent Bit also applies the same value as a read idle timeout on its own HTTP client. It then opens a new watch and continues from the last resource version it recorded, so the reconnection doesn't miss events.
+
+Setting `kube_watch_timeout` to `0` disables both timeouts and restores the previous behavior, where a watch connection stays open indefinitely.
 
 ## Threading
 
