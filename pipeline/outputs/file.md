@@ -10,10 +10,15 @@ The _File_ output plugin lets you write the data received through the input plug
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. | _none_ |
+| `fallback_file` | Static filename used when a `fallback` action is applied. Required whenever `path` or `file` uses a record accessor. See [Dynamic destinations](#dynamic-destinations). | _none_ |
+| `fallback_path` | Static directory path used together with `fallback_file` when a `fallback` action is applied. | _none_ |
+| `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions. | _none_ |
 | `format` | The [format](#format) of the file content. | _none_ |
+| `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions can resolve to. Set to `0` for unlimited. | `1024` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
-| `path` | Directory path to store files. If not set, Fluent Bit will write the files in its own working directory. | _none_ |
+| `on_limit_reached` | Action to take for a record whose destination would exceed `max_dynamic_files`. Accepted values: `error`, `drop`, `fallback`. | `error` |
+| `on_missing_field` | Action to take for a record whose record accessor field is missing, or resolves to an unsafe value. Accepted values: `error`, `drop`, `fallback`. | `error` |
+| `path` | Directory path to store files. If not set, Fluent Bit will write the files in its own working directory. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions, which must follow a static prefix. | _none_ |
 | `rotate` | Enable size-based [log rotation](#log-rotation). When enabled, files that exceed `rotate_max_size` are rotated and optionally compressed. | `false` |
 | `rotate_gzip` | Compress rotated files using gzip. Only applies when `rotate` is enabled. | `true` |
 | `rotate_max_files` | Maximum number of rotated files to retain per output file. Oldest files are deleted first. Must be `1` or greater. Only applies when `rotate` is enabled. | `7` |
@@ -169,6 +174,75 @@ pipeline:
   Rotate_Max_Size  50M
   Rotate_Max_Files 5
   Rotate_Gzip      true
+```
+
+{% endtab %}
+{% endtabs %}
+
+## Dynamic destinations
+
+Dynamic destinations are available in Fluent Bit version 5.1 and greater.
+
+The `path` and `file` parameters accept [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions, which lets one output instance write records to different files based on the content of each record. Fluent Bit treats a destination as dynamic when `path` or `file` contains a `$` character.
+
+Two rules apply when you configure a dynamic destination:
+
+- A dynamic `path` must begin with a static prefix. Fluent Bit rejects a `path` that starts with a record accessor, so that generated paths always stay under a directory you chose.
+- You must set `fallback_file`. Fluent Bit fails to start if a record accessor is used without it, because there would be nowhere to write records whose destination can't be resolved.
+
+Fluent Bit rejects a resolved destination as unsafe when the filename is empty, is `.` or `..`, or contains a path separator or one of the characters `:`, `*`, `?`, `"`, `<`, `>`, or `|`. Path components of `.` and `..` are also rejected. This keeps a record value from redirecting output outside of the configured directory.
+
+Generated directories are only created if you also enable `mkdir`.
+
+### Actions for unresolved destinations
+
+Two settings control what happens to a record whose destination Fluent Bit can't use. `on_missing_field` applies when the record accessor field is missing or resolves to an unsafe value, and `on_limit_reached` applies when writing to a new destination would exceed `max_dynamic_files`. Both accept the same actions:
+
+| Action | Behavior |
+| --- | --- |
+| `error` | Log an error and fail the flush, so the chunk is retried. |
+| `drop` | Log a warning and discard the record. |
+| `fallback` | Write the record to `fallback_path` and `fallback_file` instead. |
+
+The `max_dynamic_files` limit counts distinct destinations that this output instance has written to, which bounds the number of files a high-cardinality record field can create. Records that resolve to a destination already in use aren't affected by the limit.
+
+### Dynamic destination example
+
+The following configuration writes each record to a file named after its `app` field, under a per-namespace directory. Records without both fields go to `/var/log/fluent-bit/unrouted.log`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: file
+      match: '*'
+      path: /var/log/fluent-bit/$namespace
+      file: $app.log
+      mkdir: true
+      max_dynamic_files: 256
+      on_missing_field: fallback
+      on_limit_reached: fallback
+      fallback_path: /var/log/fluent-bit
+      fallback_file: unrouted.log
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name              file
+  Match             *
+  Path              /var/log/fluent-bit/$namespace
+  File              $app.log
+  Mkdir             true
+  Max_Dynamic_Files 256
+  On_Missing_Field  fallback
+  On_Limit_Reached  fallback
+  Fallback_Path     /var/log/fluent-bit
+  Fallback_File     unrouted.log
 ```
 
 {% endtab %}
