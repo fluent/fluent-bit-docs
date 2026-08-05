@@ -76,6 +76,7 @@ exceptions:
   - Google Cloud
   - Google Cloud BigQuery
   - Google Cloud Platform
+  - Google Cloud Storage
   - GPG
   - GPU
   - Grafana

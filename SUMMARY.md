@@ -192,6 +192,7 @@
   * [Graylog Extended Log Format (GELF)](pipeline/outputs/gelf.md)
   * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
+  * [Google Cloud Storage](pipeline/outputs/gcs.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
   * [Kafka Producer](pipeline/outputs/kafka.md)
