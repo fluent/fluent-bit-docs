@@ -4,7 +4,7 @@ description: Send logs to Azure Data Explorer (Kusto)
 
 # Azure Data Explorer
 
-The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/products/data-explorer/) cluster, using the [Queued Ingestion](https://learn.microsoft.com/en-us/kusto/api/netfx/about-kusto-ingest?view=azure-data-explorer&preserve-view=true&tabs=csharp#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://blog.fabric.microsoft.com/en-us/blog/eventhouse-overview-handling-real-time-data-with-microsoft-fabric/) cluster in Microsoft Fabric Real Time Analytics.
+The _Kusto_ output plugin lets you ingest your logs into an [Azure Data Explorer](https://azure.microsoft.com/en-us/products/data-explorer/) cluster, using the [Queued Ingestion](https://learn.microsoft.com/en-us/kusto/api/netfx/about-kusto-ingest?view=azure-data-explorer&preserve-view=true&tabs=csharp#queued-ingestion) mechanism. This output plugin can also be used to ingest logs into an [Eventhouse](https://learn.microsoft.com/en-us/fabric/real-time-intelligence/eventhouse) cluster in Microsoft Fabric Real Time Analytics.
 
 ## Authentication methods
 
@@ -16,7 +16,7 @@ For service principal authentication, you'll need to create an Azure AD applicat
 
 - [Register an Application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- [Authorize the app in your database](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/management/access-control/principals-and-identity-providers#azure-ad-tenants)
+- [Authorize the app in your database](https://learn.microsoft.com/en-us/kusto/management/reference-security-principals?view=azure-data-explorer#referencing-microsoft-entra-principals-and-groups)
 
 Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
 
