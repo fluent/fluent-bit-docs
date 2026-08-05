@@ -64,7 +64,7 @@ This helps with down-sampling when collecting metrics.
 | `diskstats.ignore_device_regex` | Specify the regular expression for the` diskstats` to prevent collection of/ignore. | `^(ram\|loop\|fd\|(h\|s\|v\|xv)d[a-z]\|nvme\\d+n\\d+p)\\d+$` |
 | `filesystem.ignore_filesystem_type_regex` | Specify the regular expression for the `filesystem` types to prevent collection of or ignore. | `^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$` |
 | `filesystem.ignore_mount_point_regex` | Specify the regular expression for the `mount` points to prevent collection of/ignore. | `^/(dev\|proc\|run/credentials/.+\|sys\|var/lib/docker/.+\|var/lib/containers/storage/.+)($\|/)` |
-| `metrics` | Specify which metrics are collected from the host operating system. These metrics depend on `/procfs`, `/sysfs`, systemd, or custom files. The actual values of metrics will be read from `/proc`, `/sys`, or systemd as needed. `cpu`, `cpufreq`, `meminfo`, `diskstats`, `filesystem`, `stat`, `loadavg`, `vmstat`, `netdev`, `netstat`, `sockstat`, `filefd`, `nvme`, and `processes` depend on `procfs`. `cpufreq`, `hwmon`, and `thermal_zone` depend on `sysfs`. `systemd` depends on systemd services. `textfile` requires explicit path configuration using `collector.textfile.path`. | `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,netstat,sockstat,filefd,systemd,nvme,thermal_zone,hwmon"` |
+| `metrics` | Specify which metrics are collected from the host operating system. The available collectors and their data sources depend on the operating system. On Linux, these metrics depend on `/procfs`, `/sysfs`, systemd, or custom files, and the actual values of metrics will be read from `/proc`, `/sys`, or systemd as needed: `cpu`, `cpufreq`, `meminfo`, `diskstats`, `filesystem`, `stat`, `loadavg`, `vmstat`, `netdev`, `netstat`, `sockstat`, `filefd`, `nvme`, and `processes` depend on `procfs`. `cpufreq`, `hwmon`, `thermal_zone`, and `powersupplyclass` depend on `sysfs`. `systemd` depends on systemd services. `textfile` requires explicit path configuration using `collector.textfile.path`. On macOS, the collectors read from native system interfaces instead of `/proc` and `/sys`: `filesystem` uses `getmntinfo`, `diskstats` and `powersupplyclass` use `IOKit`, and `cpu`, `meminfo`, `netdev`, `loadavg`, and `uname` use `sysctl` and related system calls. The default differs by operating system. | Linux: `"cpu,cpufreq,meminfo,diskstats,filesystem,uname,stat,time,loadavg,vmstat,netdev,netstat,sockstat,filefd,systemd,nvme,thermal_zone,hwmon,powersupplyclass"`. macOS: `"cpu,loadavg,meminfo,diskstats,filesystem,uname,netdev,powersupplyclass"` |
 | `path.procfs` | The mount point used to collect process information and metrics. | `/proc` |
 | `path.rootfs` | The root filesystem mount point. | `/` |
 | `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys` |
@@ -77,33 +77,38 @@ This helps with down-sampling when collecting metrics.
 
 ## Collectors available
 
-The following table describes the available collectors as part of this plugin. They're enabled by default and respect the original metrics name, descriptions, and types from Prometheus Exporter. You can use your current dashboards without any compatibility problem.
+The following table describes the available collectors as part of this plugin. They respect the original metrics name, descriptions, and types from Prometheus Exporter, so you can use your current dashboards without any compatibility problem.
+
+Most collectors are enabled by default. The `metrics` parameter lists the exact set enabled for your operating system. The `textfile` collector also requires `collector.textfile.path` to be set before it produces anything.
 
 The Version column specifies the Fluent Bit version where the collector is available.
 
-| Name                | Description                                                                                      | Operating system | Version |
-|---------------------|--------------------------------------------------------------------------------------------------|------------------|---------|
-| `cpu`               | Exposes CPU statistics.                                                                          | Linux, macOS     | 1.8     |
-| `cpufreq`           | Exposes CPU frequency statistics.                                                                | Linux            | 1.8     |
-| `diskstats`         | Exposes disk I/O statistics.                                                                     | Linux, macOS     | 1.8     |
-| `filefd`            | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                  | Linux            | 1.8.2   |
-| `filesystem`        | Exposes filesystem statistics from `/proc/*/mounts`.                                             | Linux            | 2.0.9   |
-| `hwmon`             | Exposes hardware monitoring metrics from `/sys/class/hwmon`.                                     | Linux            | 2.2.0   |
-| `loadavg`           | Exposes load average.                                                                            | Linux, macOS     | 1.8     |
-| `meminfo`           | Exposes memory statistics.                                                                       | Linux, macOS     | 1.8     |
-| `netdev`            | Exposes network interface statistics such as bytes transferred.                                  | Linux, macOS     | 1.8.2   |
-| `netstat`           | Exposes network statistics from `/proc/net/netstat`.                                             | Linux            | 2.2.0   |
-| `nvme`              | Exposes `nvme` statistics from `/proc`.                                                          | Linux            | 2.2.0   |
-| `processes`         | Exposes processes statistics from `/proc`.                                                       | Linux            | 2.2.0   |
-| `sockstat`          | Exposes socket statistics from `/proc/net/sockstat`.                                             | Linux            | 2.2.0   |
-| `stat`              | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions. | Linux            | 1.8     |
-| `systemd`           | Exposes statistics from `systemd`.                                                               | Linux            | 2.1.3   |
-| `textfile`          | Exposes custom metrics from text files. Requires `collector.textfile.path` to be set.            | Linux            | 2.2.0   |
-| `thermal_zone`      | Exposes thermal statistics from `/sys/class/thermal/thermal_zone/*`.                             | Linux            | 2.2.1   |
-| `time`              | Exposes the current system time.                                                                 | Linux            | 1.8     |
-| `timex`             | Exposes selected `adjtimex(2)` system call stats.                                                | Linux            | TBD     |
-| `uname`             | Exposes system information as provided by the `uname` system call.                               | Linux, macOS     | 1.8     |
-| `vmstat`            | Exposes statistics from `/proc/vmstat`.                                                          | Linux            | 1.8.2   |
+| Name               | Description                                                                                                                                    | Operating system | Version                  |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------------|--------------------------|
+| `cpu`              | Exposes CPU statistics.                                                                                                                        | Linux, macOS     | 1.8                      |
+| `cpufreq`          | Exposes CPU frequency statistics.                                                                                                              | Linux            | 1.8                      |
+| `diskstats`        | Exposes disk I/O statistics.                                                                                                                   | Linux, macOS     | 1.8                      |
+| `filefd`           | Exposes file descriptor statistics from `/proc/sys/fs/file-nr`.                                                                                | Linux            | 1.8.2                    |
+| `filesystem`       | Exposes filesystem statistics from `/proc/*/mounts` on Linux, and from `getmntinfo` on macOS.                                                  | Linux, macOS     | Linux: 2.0.9, macOS: 5.1 |
+| `hwmon`            | Exposes hardware monitoring metrics from `/sys/class/hwmon`.                                                                                   | Linux            | 2.2.0                    |
+| `loadavg`          | Exposes load average.                                                                                                                          | Linux, macOS     | 1.8                      |
+| `meminfo`          | Exposes memory statistics.                                                                                                                     | Linux, macOS     | 1.8                      |
+| `netdev`           | Exposes network interface statistics such as bytes transferred.                                                                                | Linux, macOS     | 1.8.2                    |
+| `netstat`          | Exposes network statistics from `/proc/net/netstat`, including the `TcpExt` and `IpExt` counters.                                              | Linux            | 2.2.0                    |
+| `nvme`             | Exposes `nvme` statistics from `/proc`.                                                                                                        | Linux            | 2.2.0                    |
+| `powersupplyclass` | Exposes power supply statistics, such as battery capacity and charge state, from `/sys/class/power_supply` on Linux and from `IOKit` on macOS. | Linux, macOS     | 5.1                      |
+| `processes`        | Exposes processes statistics from `/proc`.                                                                                                     | Linux            | 2.2.0                    |
+| `sockstat`         | Exposes socket statistics from `/proc/net/sockstat`.                                                                                           | Linux            | 2.2.0                    |
+| `stat`             | Exposes various statistics from `/proc/stat`. This includes boot time, forks, and interruptions.                                               | Linux            | 1.8                      |
+| `systemd`          | Exposes statistics from `systemd`.                                                                                                             | Linux            | 2.1.3                    |
+| `textfile`         | Exposes custom metrics from text files. Requires `collector.textfile.path` to be set.                                                          | Linux            | 2.2.0                    |
+| `thermal_zone`     | Exposes thermal statistics from `/sys/class/thermal/thermal_zone/*`.                                                                           | Linux            | 2.2.1                    |
+| `time`             | Exposes the current system time.                                                                                                               | Linux            | 1.8                      |
+| `timex`            | Exposes selected `adjtimex(2)` system call stats.                                                                                              | Linux            | Unreleased               |
+| `uname`            | Exposes system information as provided by the `uname` system call.                                                                             | Linux, macOS     | 1.8                      |
+| `vmstat`           | Exposes statistics from `/proc/vmstat`.                                                                                                        | Linux            | 1.8.2                    |
+
+Collectors marked `Unreleased` aren't present in any released version yet, and enabling them has no effect. The `timex` collector is tracked in [`fluent-bit#11718`](https://github.com/fluent/fluent-bit/pull/11718).
 
 ## Threading
 
