@@ -96,6 +96,47 @@ Enabling FIPS mode changes the behavior of plugins that rely on MD5:
 - The [Amazon S3](../../../pipeline/outputs/s3.md) output rejects `send_content_md5` at startup, because that header requires MD5.
 - The [Azure Blob](../../../pipeline/outputs/azure_blob.md) output derives block IDs using SHA-256 instead of MD5.
 
+## Telemetry configuration
+
+The `telemetry` key holds a nested block that controls optional internal metrics. Unlike the other `service` keys, these settings have no flat dotted-key form and no [classic mode](../classic-mode/configuration-file.md) equivalent. Define them as a nested map in YAML.
+
+### Count log records by tag
+
+Fluent Bit can count the log records each input ingests for every tag and expose the result as the `fluentbit_input_logs_tag_records_total` metric. For details about the metrics this feature produces, see [Monitoring](../../monitoring.md#v2-metrics).
+
+This tracking is disabled by default because it creates one metric series for each combination of input and tag, which can increase cardinality in your metrics backend.
+
+The following keys can be set as children to the `telemetry.metrics.logs.tag_records` key:
+
+| Key | Description | Default Value |
+| --- | ----------- | ------------- |
+| `enabled` | Enables per-tag counting of ingested log records. Individual inputs can override this value in the [`pipeline.inputs`](../yaml/pipeline-section.md#count-log-records-by-tag-for-inputs) section. Possible values: `false` or `true`. | `false` |
+| `max_series` | Sets the maximum number of distinct input and tag combinations to track. This budget is shared across all inputs. After the limit is reached, records carrying a tag that isn't already tracked are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `max_series`. Tags that are already tracked continue to be counted. Set to `0` or less to remove the limit. | `500` |
+| `max_tag_length` | Sets the maximum length in bytes of a tag to track. Records with a longer tag are counted in `fluentbit_input_logs_tag_records_untracked_total` with the reason `tag_length_limit`. Longer tags are skipped rather than truncated. Set to `0` or less to remove the limit. | `128` |
+
+Both `max_series` and `max_tag_length` can only be set in the `service` section.
+
+Each of these two limits accepts an integer, or a string that contains only an integer. Strings are expanded for [environment variables](environment-variables-section.md) before they're parsed, so `${MAX_SERIES}` is valid. The resulting value must fit in a signed 32-bit integer.
+
+Fluent Bit fails to start when a limit isn't a complete integer, such as `notanumber` or `10abc`, or falls outside the signed 32-bit range. Neither limit enforces a minimum. Both `0` and negative values are accepted and remove the limit instead of causing an error.
+
+Fluent Bit also rejects unknown keys in this block at startup, so a misspelled key prevents the service from starting.
+
+The following example enables per-tag counting and lowers both limits:
+
+```yaml
+service:
+  flush: 1
+  http_server: on
+  telemetry:
+    metrics:
+      logs:
+        tag_records:
+          enabled: true
+          max_series: 200
+          max_tag_length: 64
+```
+
 ## Storage configuration
 
 The following storage-related keys can be set as children to the `storage` key:
