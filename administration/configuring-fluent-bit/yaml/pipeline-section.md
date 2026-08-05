@@ -108,6 +108,8 @@ effect.
 
 For backward compatibility, some plugins also accept the legacy aliases `http2`, `buffer_max_size`, `buffer_chunk_size`, `max_connections`, and `workers`.
 
+These plugins also pause and resume the shared listener in response to [backpressure](../../backpressure.md#pause-behavior-for-http-based-inputs). While an input is paused, Fluent Bit accepts and immediately closes incoming connections instead of buffering the requests, so clients must retry.
+
 ### Incoming `OAuth 2.0` `JWT` validation settings
 
 The HTTP-based input plugins that support bearer token validation share the following `oauth2.*` settings:
