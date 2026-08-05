@@ -23,6 +23,14 @@ The `Service` section defines global properties of the service. The following ke
 | daemon          | Boolean. Determines whether Fluent Bit should run as a Daemon (background). Allowed values are: `yes`, `no`, `on`, and `off`. Don't enable when using a Systemd based unit, such as the one provided in Fluent Bit packages.  | `Off` |
 | `dns.mode`        | Set the primary transport layer protocol used by the asynchronous DNS resolver. It can be overridden on a per-plugin basis. | `UDP` |
 | `flush`           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when it's required to flush the records ingested by input plugins through the defined output plugins.  | `1` |
+| `flush.adaptive` | If enabled, the flush interval is adjusted at runtime based on chunk backpressure. See [Adaptive flush intervals](../yaml/service-section.md#adaptive-flush-intervals). | `Off` |
+| `flush.adaptive.min_interval` | Lower bound in seconds for the adaptive flush interval. | `0.5` |
+| `flush.adaptive.max_interval` | Upper bound in seconds for the adaptive flush interval. | `2` |
+| `flush.adaptive.low_pressure` | Chunk backpressure percentage that selects the longest flush interval. | `25` |
+| `flush.adaptive.medium_pressure` | Chunk backpressure percentage that shortens the flush interval to three quarters of the `flush` value. | `50` |
+| `flush.adaptive.high_pressure` | Chunk backpressure percentage that selects the shortest flush interval. | `75` |
+| `flush.adaptive.up_steps` | Consecutive samples at a higher pressure level required before the flush interval is shortened. | `2` |
+| `flush.adaptive.down_steps` | Consecutive samples at a lower pressure level required before the flush interval is lengthened. | `3` |
 | `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
 | `http_listen`     | Set listening interface for HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port`       | Set TCP Port for the HTTP Server. | `2020` |
@@ -35,6 +43,7 @@ The `Service` section defines global properties of the service. The following ke
 | `plugins_file`    | Path for a `plugins` configuration file. A `plugins` configuration file defines paths for external plugins. [See an example](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
 | `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
 | `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
+| `security.fips_mode` | If enabled, the OpenSSL FIPS provider is required at startup and Fluent Bit exits if it isn't available. See [FIPS mode](../yaml/service-section.md#fips-mode). | `Off` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
 | `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/overview.md). | _none_|
 | `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |

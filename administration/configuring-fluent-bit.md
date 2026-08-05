@@ -45,3 +45,15 @@ As of Fluent Bit 4.2, `--dry-run` performs full property validation in addition 
 ```
 [error] [config] dummy: unknown configuration property 'invalid_property_that_does_not_exist'.
 ```
+
+### Require FIPS mode with `--enable-fips`
+
+Available in Fluent Bit version 5.1 and greater.
+
+Use the `--enable-fips` flag to require the OpenSSL FIPS provider at startup:
+
+```shell
+fluent-bit --enable-fips -c /path/to/fluent-bit.yaml
+```
+
+This flag sets the `security.fips_mode` service property. If the FIPS provider isn't available, Fluent Bit exits instead of starting. For the requirements and the effect on plugin behavior, see [FIPS mode](configuring-fluent-bit/yaml/service-section.md#fips-mode).
