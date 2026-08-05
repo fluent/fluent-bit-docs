@@ -79,6 +79,8 @@ Fluent Bit starts and generates output in your terminal:
 [2020/03/10 19:08:24] [ info] [http_server] listen iface=0.0.0.0 tcp_port=2020
 ```
 
+In Fluent Bit 5.1 and later, a monitoring endpoint that can't start is treated as a startup failure. If the HTTP server can't bind, for example because `http_port` is already in use or `http_listen` isn't a valid local address, Fluent Bit logs `could not start HTTP server` and exits instead of running without the endpoint. In earlier versions, Fluent Bit continued to start and process data, and the failure only surfaced when something tried to reach the endpoint.
+
 Use `curl` to gather information about the HTTP server. The following command sends the command output to the `jq` program, which outputs human-readable JSON data to the terminal.
 
 ```shell
