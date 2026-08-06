@@ -209,7 +209,7 @@ pipeline:
 
 #### Resolve schemas from a registry
 
-Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater.
+Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. This feature is part of Avro support and requires the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`), which isn't enabled by default. See [Avro support](#avro-support).
 
 Instead of setting `schema_str` and `schema_id` in your configuration, you can point Fluent Bit at a Confluent Schema Registry and let it fetch the schema at runtime. Set `schema_registry_url` to enable this. If `schema_str` and `schema_id` are both set, Fluent Bit uses them and never contacts the registry.
 
