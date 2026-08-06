@@ -37,7 +37,7 @@ description: High Performance Telemetry Agent for Logs, Metrics and Traces
 
 For more details about changes in each release, refer to the [official release notes](https://fluentbit.io/announcements/).
 
-If you are upgrading from the Fluent Bit `4.2` series, start with [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md) and [Upgrade notes](installation/upgrade-notes.md).
+If you are upgrading from the Fluent Bit `4.2` series, start with [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md) and [Upgrade notes](installation/upgrade-notes.md).
 
 ## Fluent Bit, Fluentd, and CNCF
 
