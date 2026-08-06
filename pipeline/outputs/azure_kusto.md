@@ -120,7 +120,7 @@ By default, Kusto will insert incoming ingestion data into a table by inferring 
 | `net.keepalive_idle_timeout`           | Set maximum time allowed for an idle `Keepalive` connection..                | `false`                        |
 | `net.keepalive_max_recycle`            | Set maximum number of times a keepalive connection can be used before it's retried.                                                                  | `2000`                         |
 | `net.max_worker_connections`           | Set the maximum number of active TCP connections that can be used per worker thread.                                                                  | `0`                            |
-| `net.proxy_env_ignore`                 | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                                                                 | `false`                        |
+| `net.proxy_env_ignore`                 | Ignore the `HTTP_PROXY`/`http_proxy` and `NO_PROXY`/`no_proxy` environment variables when set.                                                        | `false`                        |
 | `net.source_address`                   | Specify network address to bind for data traffic.                            | _none_                         |
 | `net.tcp_keepalive`                    | Enable or disable Keepalive support.                                         | `off`                          |
 | `net.tcp_keepalive_interval`           | Interval between TCP keepalive probes when no response is received on a `keepidle` probe.                                                               | `-1`                           |
@@ -144,6 +144,10 @@ By default, Kusto will insert incoming ingestion data into a table by inferring 
 | `tls.key_passwd`                       | Optional password for tls.key_file file.                                     | _none_                         |
 | `tls.max_version`                      | Specify the maximum version of TLS.                                          | _none_                         |
 | `tls.min_version`                      | Specify the minimum version of TLS.                                          | _none_                         |
+| `tls.proxy.ca_file`                    | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`. See [HTTP proxy](../../administration/http-proxy.md). Supported in v5.1 or later. | _none_                         |
+| `tls.proxy.ca_path`                    | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Supported in v5.1 or later. | _none_                         |
+| `tls.proxy.verify`                     | Force certificate validation for the HTTPS proxy connection. Supported in v5.1 or later. | `on`                           |
+| `tls.proxy.verify_hostname`            | Force hostname verification for the HTTPS proxy connection. Supported in v5.1 or later. | `on`                           |
 | `tls.verify`                           | Force certificate validation.                                                | `on`                           |
 | `tls.verify_hostname`                  | Enable or disable to verify hostname.                                        | `off`                          |
 | `tls.vhost`                            | Hostname to be used for TLS SNI extension.                                   | _none_                         |
