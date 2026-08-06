@@ -222,7 +222,7 @@ The schema is fetched once and reused for the lifetime of the plugin instance. I
 
 To authenticate, set either `schema_registry_http_user` and `schema_registry_http_passwd` for HTTP basic authentication, or `schema_registry_bearer_token` for bearer token authentication.
 
-For high availability, set `schema_registry_url` to a comma-separated list of registry URLs. Fluent Bit tries the next endpoint in the list when a request fails, and continues from the last successful endpoint on the following resolution.
+For high availability, set `schema_registry_url` to a comma-separated list of registry URLs. During the initial schema fetch, Fluent Bit tries the next endpoint in the list when a request fails. Once the schema is successfully resolved, it's cached for the lifetime of the plugin instance, and the registry isn't contacted again.
 
 Except for `schema_registry_framing`, each of these settings also accepts a dotted spelling that matches Confluent client configuration, such as `schema.registry.url` for `schema_registry_url`. The two spellings are interchangeable.
 
@@ -239,7 +239,7 @@ pipeline:
       brokers: 192.168.1.3:9092
       topics: test
       format: avro
-      schema_registry_url: 'http://registry-1:8081,http://registry-2:8081'
+      schema_registry_url: 'https://registry-1:8081,https://registry-2:8081'
       schema_registry_subject: fluent-bit-logs-value
       schema_registry_version: latest
       schema_registry_http_user: fluentbit
@@ -256,7 +256,7 @@ pipeline:
   Brokers                     192.168.1.3:9092
   Topics                      test
   Format                      avro
-  Schema_Registry_Url         http://registry-1:8081,http://registry-2:8081
+  Schema_Registry_Url         https://registry-1:8081,https://registry-2:8081
   Schema_Registry_Subject     fluent-bit-logs-value
   Schema_Registry_Version     latest
   Schema_Registry_Http_User   fluentbit
