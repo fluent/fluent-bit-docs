@@ -42,6 +42,7 @@ exceptions:
   - CNCF
   - Code
   - Collector
+  - Confluent Schema Registry
   - Cosmos
   - CPU
   - Crowdstrike
@@ -113,6 +114,7 @@ exceptions:
   - MongoDB
   - MQTT
   - MSK
+  - Nano Server
   - NATS
   - New Relic
   - Observability Platform
@@ -171,5 +173,6 @@ exceptions:
   - WebSocket
   - Windows
   - Windows Event
+  - Windows Server
   - YAML
   - YUM

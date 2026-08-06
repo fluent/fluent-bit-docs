@@ -4,7 +4,7 @@ This page gives a quick user-focused overview of the main changes in the Fluent 
 
 For migration-impacting changes, see [Upgrade notes](upgrade-notes.md).
 
-## v5.1
+## Fluent Bit v5.1
 
 Fluent Bit `v5.1` focuses on network ingestion throughput, adds several new inputs and outputs, and hardens TLS and FIPS compliance options.
 
@@ -12,11 +12,11 @@ Fluent Bit `v5.1` focuses on network ingestion throughput, adds several new inpu
 
 #### Multi-worker network ingestion
 
-The [TCP](../pipeline/inputs/tcp.md), [UDP](../pipeline/inputs/udp.md), and [Forward](../pipeline/inputs/forward.md) inputs add a `workers` setting that lets a single listener accept and decode traffic across multiple worker threads, similar to the shared HTTP listener worker support introduced for HTTP-based inputs in `v5.0`.
+The [TCP](../pipeline/inputs/tcp.md), [UDP](../pipeline/inputs/udp.md), and [Forward](../pipeline/inputs/forward.md) inputs add a `workers` setting that lets a single listener accept and decode traffic across multiple worker threads. This mirrors the shared HTTP listener worker support introduced for HTTP-based inputs in `v5.0`.
 
 #### OpenTelemetry protobuf ingestion
 
-The [OpenTelemetry input](../pipeline/inputs/opentelemetry.md) reduces allocation overhead when decoding large batched Protobuf payloads, improving throughput for high-volume `OTLP/HTTP` workloads. There's no new configuration setting for this: it applies automatically to payloads above an internal size threshold.
+The [OpenTelemetry input](../pipeline/inputs/opentelemetry.md) reduces allocation overhead when decoding large batched Protobuf payloads, improving throughput for high-volume `OTLP/HTTP` workloads. There's no new configuration setting for this: it applies automatically to payloads over an internal size threshold.
 
 #### Input rate gate
 
@@ -26,7 +26,7 @@ Every input plugin can now enable a rate gate to pause ingestion once it exceeds
 
 #### FIPS mode
 
-Fluent Bit can start in FIPS mode with `--enable-fips`, which validates on startup that the linked OpenSSL library has an active FIPS provider and blocks non-FIPS-approved hashes, such as MD5, in outputs like [Amazon S3](../pipeline/outputs/s3.md) and [Azure Blob](../pipeline/outputs/azure_blob.md). See [Configuring Fluent Bit](../administration/configuring-fluent-bit.md).
+Fluent Bit can start in FIPS mode with `--enable-fips`, which validates on startup that the linked OpenSSL library has an active FIPS provider. This blocks non-FIPS-approved hashes, such as MD5, in outputs like [Amazon S3](../pipeline/outputs/s3.md) and [Azure Blob](../pipeline/outputs/azure_blob.md). See [Configuring Fluent Bit](../administration/configuring-fluent-bit.md).
 
 #### Automatic TLS certificate reload
 
@@ -42,7 +42,7 @@ The [Syslog output](../pipeline/outputs/syslog.md) `mode` setting now accepts `t
 
 ### Inputs
 
-#### New Event Tracing for Windows (ETW) input
+#### New event tracing for Windows (ETW) input
 
 The [Event Tracing for Windows input](../pipeline/inputs/event-tracing-windows.md) collects events from ETW providers or the Windows kernel logger on Windows hosts.
 
@@ -50,7 +50,7 @@ The [Event Tracing for Windows input](../pipeline/inputs/event-tracing-windows.m
 
 The [GPU metrics input](../pipeline/inputs/gpu-metrics.md) adds NVIDIA GPU collection through NVML, including automatic discovery of Multi-Instance GPU (MIG) devices, alongside its existing AMD support.
 
-#### Node Exporter Metrics collector additions
+#### Node exporter metrics collector additions
 
 The [Node Exporter Metrics input](../pipeline/inputs/node-exporter-metrics.md) adds:
 
@@ -92,7 +92,7 @@ Upgrading the `fluent-bit` Debian or Ubuntu package now reloads `systemd` unit f
 
 Event timestamps at or after the 2038 32-bit `time_t` rollover now round-trip correctly through the internal msgpack `EventTime` encoding that Fluent Bit uses, instead of overflowing.
 
-## v5.0
+## Fluent Bit v5.0
 
 Fluent Bit `v5.0` adds new inputs and processors, expands authentication and TLS options, and standardizes configuration for HTTP-based plugins. It also delivers an important round of performance and scalability work, especially for pipelines that ingest logs, metrics, and traces through HTTP-based protocols. This section gives a quick user-focused overview of the main changes since Fluent Bit `v4.2`.
 
@@ -123,7 +123,7 @@ The biggest user-facing beneficiaries are:
 - [OpenTelemetry input](../pipeline/inputs/opentelemetry.md)
 - [Prometheus remote write input](../pipeline/inputs/prometheus-remote-write.md)
 
-If you run large HTTP or OTLP ingestion workloads, `v5.0` is not only a feature release. It is also a meaningful runtime improvement.
+If you run large HTTP or OTLP ingestion workloads, `v5.0` isn't only a feature release. It's also a meaningful runtime improvement.
 
 ### Configuration and operations
 
@@ -215,7 +215,7 @@ The [cumulative to delta processor](../pipeline/processors/cumulative-to-delta.m
 
 #### New topological data analysis processor
 
-The [topological data analysis processor](../pipeline/processors/tda.md) adds a metrics processor for topology-based analysis workflows.
+The [topological data analysis processor](../pipeline/processors/tda.md) adds a metrics processor for topological data analysis workflows.
 
 #### Sampling processor updates
 
