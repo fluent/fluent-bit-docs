@@ -138,6 +138,7 @@ MTTx
 multiline
 multithreading
 Musl
+Nano
 namespace
 namespaces
 netcat
