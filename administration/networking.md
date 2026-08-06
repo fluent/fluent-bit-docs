@@ -69,7 +69,7 @@ The following table describes the network configuration properties available and
 | `net.dns.resolver`              | Select the primary DNS resolver type (`LEGACY` or `ASYNC`).                                                        | _none_  |
 | `net.keepalive_max_recycle`     | Set maximum number of times a keepalive connection can be used before it's retired.                                | `2000`  |
 | `net.max_worker_connections`    | Set maximum number of TCP connections that can be established per worker.                                          | `0`     |
-| `net.proxy_env_ignore`          | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                              | `false` |
+| `net.proxy_env_ignore`          | Ignore the `HTTP_PROXY`/`http_proxy` and `NO_PROXY`/`no_proxy` environment variables when set.                     | `false` |
 | `net.tcp_keepalive`             | Enable or disable Keepalive support.                                                                               | `off`   |
 | `net.tcp_keepalive_time`        | Interval between the last data packet sent and the first TCP keepalive probe.                                      | `-1`    |
 | `net.tcp_keepalive_interval`    | Interval between TCP keepalive probes when no response is received on a `keepidle` probe.                          | `-1`    |

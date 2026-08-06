@@ -12,22 +12,26 @@ Both NPN and ALPN are used when client and server are establishing SSL/TLS conne
 
 Both input and output plugins that perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
-| Property              | Description                                                                                                                             | Default |
-|:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `tls`                 | Enable or disable TLS support.                                                                                                          | `off`   |
-| `tls.debug`           | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1`     |
-| `tls.ca_file`         | Absolute path to CA certificate file.                                                                                                   | _none_  |
-| `tls.ca_path`         | Absolute path to scan for certificate files.                                                                                            | _none_  |
-| `tls.ciphers`         | Specify TLS ciphers up to TLSv1.2.                                                                                                      | _none_  |
-| `tls.crt_file`        | Absolute path to Certificate file.                                                                                                      | _none_  |
-| `tls.key_file`        | Absolute path to private Key file.                                                                                                      | _none_  |
-| `tls.key_passwd`      | Optional password for `tls.key_file` file.                                                                                              | _none_  |
-| `tls.max_version`     | Specify the maximum version of TLS.                                                                                                     | _none_  |
-| `tls.min_version`     | Specify the minimum version of TLS.                                                                                                     | _none_  |
-| `tls.verify`              | Force certificate validation.                                                                                                           | `on`    |
-| `tls.vhost`               | Hostname to be used for TLS SNI extension.                                                                                              | _none_  |
-| `tls.verify_hostname`     | Force TLS verification of host names.                                                                                                   | `off`   |
-| `tls.verify_client_cert`  | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off`   |
+| Property | Description | Default |
+| :--- | :--- | :--- |
+| `tls` | Enable or disable TLS support. | `off` |
+| `tls.debug` | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1` |
+| `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
+| `tls.ciphers` | Specify TLS ciphers up to TLSv1.2. | _none_ |
+| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
+| `tls.key_file` | Absolute path to private Key file. | _none_ |
+| `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
+| `tls.max_version` | Specify the maximum version of TLS. | _none_ |
+| `tls.min_version` | Specify the minimum version of TLS. | _none_ |
+| `tls.proxy.ca_file` | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`, which verifies the destination's certificate. Only applies to output plugins connecting through an HTTPS proxy. See [HTTP proxy](http-proxy.md). Supported in v5.1 or later. | _none_ |
+| `tls.proxy.ca_path` | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | _none_ |
+| `tls.proxy.verify` | Force certificate validation for the HTTPS proxy connection. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | `on` |
+| `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | `on` |
+| `tls.verify` | Force certificate validation. | `on` |
+| `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
+| `tls.verify_hostname` | Force TLS verification of host names. | `off` |
+| `tls.verify_client_cert` | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off` |
 
 {% hint style="info" %}
 
