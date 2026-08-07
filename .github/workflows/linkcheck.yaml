@@ -1,18 +1,17 @@
-name: Links
+name: Link checks
 
 on:
   schedule:
     - cron: "00 18 1 * *"
-
-# Uncomment the following line while testing links in a single PR. Recomment when
-# done. Be sure to comment out the 'Create Issue from File' section while testing.
-# pull_request
+  pull_request:
 
 jobs:
   linkChecker:
     runs-on: ubuntu-latest
     permissions:
-      issues: write # required for peter-evans/create-issue-from-file
+      contents: read
+      # required for peter-evans/create-issue-from-file
+      issues: write
     steps:
       - uses: actions/checkout@v7
 
@@ -21,13 +20,12 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: --accept '100..=103,200..=299,401,403,429,999' --verbose --no-progress .
-          fail: false
+          # Fail if PR is opened with broken links, but don't fail on scheduled runs.
+          fail: ${{ github.event_name == 'pull_request' }}
           jobSummary: true
 
-# If testing links on pull_request, comment these lines out!
-
       - name: Create Issue From File
-        if: steps.lychee.outputs.exit_code != 0
+        if: ${{ github.event_name != 'pull_request' && steps.lychee.outputs.exit_code != 0 }}
         uses: peter-evans/create-issue-from-file@v6
         with:
           title: Link Checker Report
