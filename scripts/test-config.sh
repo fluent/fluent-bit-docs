@@ -50,6 +50,7 @@ SUPPRESSED_FILES=(
     "pipeline/inputs/windows-system-statistics.md"
     "pipeline/inputs/windows-exporter-metrics.md"
     "pipeline/inputs/windows-event-log.md"
+    "pipeline/inputs/event-tracing-windows.md"
     # Windows-specific configuration examples are not supported in the Linux image.
     "installation/downloads/kubernetes.md"
 )
