@@ -141,6 +141,10 @@ Every plugin page should include both a YAML and a classic configuration example
 {% endtabs %}
 ```
 
+We have some checks in CI to validate these examples so ensure the `scripts/validate-changed-files.sh` script passes for your branch vs the origin.
+This uses the Fluent Bit linux container so may not always pass, e.g. for Windows plugins.
+Suppressions can be defined in the `scripts/test-config.sh` script with a comment explaining why.
+
 ### Key casing in examples
 
 Key casing differs between the two configuration formats:
