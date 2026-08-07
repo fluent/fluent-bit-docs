@@ -221,7 +221,19 @@ The following table describes the Linux container tags that are available on Doc
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
-Container images for Windows Server 2019 and Windows Server 2022 are provided for v2.0.6 and later. These can be found as tags on the same Docker Hub registry.
+Windows container images are provided on the same Docker Hub registry, tagged with a `windows-` prefix:
+
+| Tag pattern | Base image | Windows Server version |
+| --- | --- | --- |
+| `windows-2022-<version>` | Server Core | 2022 |
+| `windows-2025-<version>` | Server Core | 2025 |
+| `windows-nano-2025-<version>` | Nano Server | 2025 |
+
+Windows Server 2025 support, and the Nano Server image, are available in Fluent Bit version 5.1 and greater. Nano Server images are smaller than their Server Core counterparts, but don't include PowerShell and can't run plugins that shell out to external commands, such as `exec`. The Nano Server image ships with a default configuration that listens on the [Forward](../../pipeline/inputs/forward.md) input and writes to `stdout`, since there's no shell available to write one if needed.
+
+```shell
+docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.1.0
+```
 
 ## Multi-architecture images
 
