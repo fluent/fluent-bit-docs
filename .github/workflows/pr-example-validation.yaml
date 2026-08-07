@@ -25,52 +25,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Get changed Markdown files
-        # We do not use the usual changed files action because of previous security issues.
-        id: changed_files
-        # This complex command finds files changed in the PR, filtering for `.md` and also ensuring they are in the `docs` directory.
-        # It ensures we only process files that are part of the PR and match our pattern.
-        # Note: The `github.event.pull_request.base.sha` is used to get the base commit of the PR, which is important for accurate diffing.
-        #
-        # On pull requests, HEAD refers to the merge commit.
-        # We want to compare against the base of the PR.
-        # Use git diff to get files changed between the PR base and the current commit.
-        # --name-only lists only the names of the files.
-        # --diff-filter=AMCR will only show Added, Modified, Copied, Renamed files.
-        # We grep for *.md files you are interested in.
-        # The 'docs/' prefix is a common convention but adjust as necessary.
+      - name: Validate example configurations in changed files
         run: |
-          changed_md=$(git diff --name-only --diff-filter=AMCR ${{ github.event.pull_request.base.sha }}...HEAD | grep '\.md$' || true)
-          echo "Changed Markdown files: $changed_md"
-          # The value is newline-separated, so it needs the multiline output delimiter syntax.
-          # A random delimiter avoids any chance of the value terminating the block early.
-          delimiter=$(openssl rand -hex 16)
-          {
-            echo "list<<${delimiter}"
-            echo "${changed_md}"
-            echo "${delimiter}"
-          } >> "$GITHUB_OUTPUT"
+          ./scripts/validate-changed-files.sh "${{ github.event.pull_request.base.sha }}" HEAD
         shell: bash
-
-      - name: Validate example configurations provided in any changed files
-        run: |
-          if [ -z "${CHANGED_MD_FILES:-}" ]; then
-            echo "No Markdown files changed in this PR. Skipping validation."
-            exit 0
-          fi
-
-          error_count=0
-
-          # Loop through each changed file
-          for FILE in $CHANGED_MD_FILES; do
-            echo "Processing changed file: $FILE"
-            ./scripts/test-config.sh "$FILE" || error_count=$((error_count + 1))
-          done
-
-          if [ $error_count -ne 0 ]; then
-            echo "ERROR: Validation failed for $error_count file(s)."
-            exit 1
-          fi
-        shell: bash
-        env:
-          CHANGED_MD_FILES: ${{ steps.changed_files.outputs.list }}

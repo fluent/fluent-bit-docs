@@ -95,11 +95,81 @@ The `count` parameter returns the total number of matching code fences for the s
 2. Avoid trying to extract examples that don't exist
 3. Ensure all extraction errors are legitimate
 
-Example output:
+### `validate-changed-files.sh`
+
+Validates configuration examples in Markdown files that have been changed relative to a base branch. This script is used by the CI/CD pipeline but can also be run locally before pushing changes.
+
+**Usage:**
 
 ```bash
-$ ./scripts/extract-config.sh pipeline/inputs/tail.md "fluent-bit.yaml" yaml count
-5
+./scripts/validate-changed-files.sh [base_ref] [head_ref]
+```
+
+**Parameters:**
+
+- `base_ref` (optional): The base commit/branch to compare against. Defaults to `origin/main`
+- `head_ref` (optional): The head commit/branch to compare to. Defaults to `HEAD`
+
+**How it works:**
+
+1. Uses `get-changed-files.sh` to identify Markdown files changed between the base and head refs
+2. Runs `test-config.sh` on each changed file
+3. Reports all validation failures
+4. Exits with non-zero status if any file validation fails
+
+**Examples:**
+
+```bash
+# Validate changes in current branch against origin/main
+./scripts/validate-changed-files.sh
+
+# Validate changes in a specific branch
+./scripts/validate-changed-files.sh origin/main origin/feature-branch
+
+# Validate changes between specific commits
+./scripts/validate-changed-files.sh abc123def456 xyz789abc123
+```
+
+### `get-changed-files.sh`
+
+Identifies Markdown files that have been changed between two commits or branches. This is used by `validate-changed-files.sh` but can also be called directly for scripting purposes.
+
+**Usage:**
+
+```bash
+./scripts/get-changed-files.sh [base_ref] [head_ref]
+```
+
+**Parameters:**
+
+- `base_ref` (optional): The base commit/branch to compare against. Defaults to `origin/main`
+- `head_ref` (optional): The head commit/branch to compare to. Defaults to `HEAD`
+
+**How it works:**
+
+Uses `git diff` to find files that have been Added, Modified, Copied, or Renamed (AMCR) between the two refs, filtering for `.md` files only.
+
+**Output:**
+
+Lists changed Markdown files, one per line.
+
+**Examples:**
+
+```bash
+# Find changes in current branch against origin/main
+./scripts/get-changed-files.sh
+
+# Find changes in a specific branch
+./scripts/get-changed-files.sh origin/main origin/feature-branch
+
+# Using commit range format (with three dots)
+./scripts/get-changed-files.sh origin/main...HEAD
+
+# Iterate over changed files for processing
+./scripts/get-changed-files.sh | while read -r file; do
+    echo "Processing: $file"
+    # Your processing logic here
+done
 ```
 
 ## Markdown format
