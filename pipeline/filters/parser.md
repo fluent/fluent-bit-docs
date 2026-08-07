@@ -55,8 +55,9 @@ The path of the parser file should be written in configuration file under the `[
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -80,7 +81,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -154,8 +155,9 @@ Now add `reserve_data` to the filter section of the corresponding configuration 
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -180,7 +182,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -248,8 +250,9 @@ Now add `reserve_data` and `preserve_key` to the filter section of the correspon
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -275,7 +278,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
