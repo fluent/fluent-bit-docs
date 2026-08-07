@@ -7,37 +7,69 @@ jobs:
   actionlint-pr:
     runs-on: ubuntu-latest
     name: PR - Actionlint
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
     steps:
-      - uses: actions/checkout@v7
-      - run: |
-          echo "::add-matcher::.github/actionlint-matcher.json"
-          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-          ./actionlint -color -shellcheck=
-        shell: bash
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@d63ba7532e0942965320cd8d73cbae4c7b3c5283 # v1.73.1
+        with:
+          # Disable shellcheck as done elsewhere and speeds up process
+          actionlint_flags: -shellcheck=
+          fail_level: "warning"
+          reporter: github-pr-review # Better annotation in PRs
+          github_token: ${{ secrets.github_token }}
 
   shellcheck-pr:
     runs-on: ubuntu-latest
     name: PR - Shellcheck
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
     steps:
-      - uses: actions/checkout@v7
-      - uses: ludeeus/action-shellcheck@master
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run shellcheck
+        uses: reviewdog/action-shellcheck@0722bbdb0d47f04c1b53b8734d2422ac63a45ec6 # v1.32.1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_level: "warning"
+          reporter: github-pr-review # Better annotation in PRs
+          exclude: |
+            */.git/*
 
   markdownlint:
     name: runner / markdownlint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: markdownlint
-        uses: prologic/action-markdownlint@v0.28.0
+        uses: prologic/action-markdownlint@6f0e0e8703a9e840ffefa37a2775832c51c1c640 # v0.28.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review # Change reporter. (Only `github-pr-check` is supported at the moment).
   vale:
     name: runner / vale
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
     steps:
-      - uses: actions/checkout@v7
-      - uses: errata-ai/vale-action@2.1.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: errata-ai/vale-action@518a9136acc6e6668ce7c00d367051e0941e87ff # v3.0.0
         with:
           files: all
           fail_on_error: true
