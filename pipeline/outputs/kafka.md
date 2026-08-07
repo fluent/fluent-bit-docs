@@ -233,7 +233,7 @@ Except for `schema_registry_framing`, each of these settings also accepts a dott
 The following example resolves the latest version of the `fluent-bit-logs-value` subject from either of two registry endpoints:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="avro-fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -247,11 +247,11 @@ pipeline:
       schema_registry_subject: fluent-bit-logs-value
       schema_registry_version: latest
       schema_registry_http_user: fluentbit
-      schema_registry_http_passwd: SCHEMA_REGISTRY_PASSWORD
+      schema_registry_http_passwd: ${SCHEMA_REGISTRY_PASSWORD}
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="avro-fluent-bit.conf" %}
 
 ```text
 [OUTPUT]
@@ -264,7 +264,7 @@ pipeline:
   Schema_Registry_Subject     fluent-bit-logs-value
   Schema_Registry_Version     latest
   Schema_Registry_Http_User   fluentbit
-  Schema_Registry_Http_Passwd SCHEMA_REGISTRY_PASSWORD
+  Schema_Registry_Http_Passwd ${SCHEMA_REGISTRY_PASSWORD}
 ```
 
 {% endtab %}
