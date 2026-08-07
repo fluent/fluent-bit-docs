@@ -5,8 +5,32 @@ on:
     - cron: "00 18 1 * *"
   pull_request:
 
+permissions: {}
+
+env:
+  # Single definition to simplify any future changes to the linkcheck configuration.
+  LYCHEE_ARGS: --accept '100..=103,200..=299,401,403,429,999' --verbose --no-progress .
+
 jobs:
-  linkChecker:
+  linkchecker-pr:
+    if: ${{ github.event_name == 'pull_request' }}
+    name: PR - Link Checker
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: ${{ env.LYCHEE_ARGS }}
+          fail: true
+          jobSummary: true
+
+  linkchecker-scheduled:
+    if: ${{ github.event_name == 'schedule' }}
+    name: Monthly Link Checker
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -19,13 +43,13 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --accept '100..=103,200..=299,401,403,429,999' --verbose --no-progress .
-          # Fail if PR is opened with broken links, but don't fail on scheduled runs.
-          fail: ${{ github.event_name == 'pull_request' }}
+          args: ${{ env.LYCHEE_ARGS }}
+          # Do not fail scheduled runs; report by issue when links are broken.
+          fail: false
           jobSummary: true
 
       - name: Create Issue From File
-        if: ${{ github.event_name != 'pull_request' && steps.lychee.outputs.exit_code != 0 }}
+        if: ${{ steps.lychee.outputs.exit_code != 0 }}
         uses: peter-evans/create-issue-from-file@v6
         with:
           title: Link Checker Report
