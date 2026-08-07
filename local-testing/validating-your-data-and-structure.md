@@ -83,7 +83,6 @@ The following is the Fluent Bit YAML configuration file:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -177,7 +176,6 @@ The following is the Fluent Bit YAML configuration file:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:

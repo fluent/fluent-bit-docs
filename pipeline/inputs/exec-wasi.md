@@ -67,7 +67,8 @@ Then, you can specify the `parsers.conf` in the main Fluent Bit configuration:
 service:
   flush: 1
   daemon: off
-  parsers_file: parsers.yaml
+  # Configure this to load your custom parser if required
+  # parsers_file: parsers.yaml
   log_level: info
   http_server: off
   http_listen: 0.0.0.0
@@ -94,7 +95,8 @@ pipeline:
 [SERVICE]
   Flush        1
   Daemon       Off
-  Parsers_File parsers.conf
+  # Configure this to load your custom parser if required
+  # Parsers_File parsers.conf
   Log_Level    info
   HTTP_Server  Off
   HTTP_Listen  0.0.0.0

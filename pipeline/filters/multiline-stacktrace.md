@@ -72,7 +72,8 @@ This is the primary Fluent Bit YAML configuration file. It includes the `parsers
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers_multiline.yaml
+  # Configure this to load your custom parser if required
+  # parsers_file: parsers_multiline.yaml
 
 pipeline:
   inputs:
@@ -100,7 +101,8 @@ This is the primary Fluent Bit classic configuration file. It includes the `pars
 [SERVICE]
   Flush                 1
   Log_Level             info
-  Parsers_File          parsers_multiline.conf
+  # Configure this to load your custom parser if required
+  # Parsers_File          parsers_multiline.conf
 
 [INPUT]
   Name                  tail
