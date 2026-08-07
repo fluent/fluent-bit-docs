@@ -42,7 +42,7 @@ if [ -z "$changed_files" ]; then
 fi
 
 echo "Files to validate:"
-echo "$changed_files" | sed 's/^/  /'
+echo "${changed_files/^/  /}"
 echo ""
 
 error_count=0
