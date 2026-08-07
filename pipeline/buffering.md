@@ -139,8 +139,46 @@ You can configure buffering settings for any input plugin by using these configu
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `mem_buf_limit` | Sets a limit for how much buffered data the plugin can write to memory. With memory-only buffering, the plugin pauses until more memory becomes available after this limit is reached. With memory ring buffer (`memrb`) buffering, the oldest chunks are dropped to make room for new data instead of pausing. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. If unspecified, no limit is enforced. | `0` |
+| `rate_gate` | Enables input rate gate control, which pauses ingestion for this input plugin once it exceeds the byte or record rate limits set with `rate_gate.max_bytes` and `rate_gate.max_records`. | `false` |
+| `rate_gate.backpressure` | When `rate_gate` is enabled, factors existing retry and busy-chunk pressure into the effective rate limit instead of relying only on `rate_gate.max_bytes` and `rate_gate.max_records`. | `true` |
+| `rate_gate.max_bytes` | When `rate_gate` is enabled, sets the maximum input byte rate per second before ingestion is paused. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. A value of `0` means no byte-rate limit. | `0` |
+| `rate_gate.max_records` | When `rate_gate` is enabled, sets the maximum input record rate per second before ingestion is paused. A value of `0` means no record-rate limit. | `0` |
+| `rate_gate.resume_ratio` | When `rate_gate` is enabled, sets the hysteresis threshold, as a ratio of the configured limits, that the measured rate must fall under before ingestion resumes. If both `rate_gate.max_bytes` and `rate_gate.max_records` are configured, both measured rates must fall under their respective resume thresholds before ingestion resumes, regardless of which limit originally triggered the pause. | `0.80` |
+| `rate_window` | Sets the time window used to compute this input's byte and record ingestion rate. The computed rate is always published in per-second units, regardless of the window used to measure it. | `1s` |
 | `storage.pause_on_chunks_overlimit` | If filesystem buffering is enabled, specifies how the input plugin should behave after the global `storage.max_chunks_up` limit is reached. When set to `off`, the plugin will stop buffering data to memory but continue buffering data to the filesystem. When set to `on`, the plugin will stop both memory buffering and filesystem buffering until more memory becomes available. Possible values: `on`, `off`. | `off` |
 | `storage.type` | Specifies the buffering mechanism to use for this input plugin. To enable filesystem buffering, a global [`storage.path`](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration) value must be set in the `service` section of your configuration file. When set to `memrb`, Fluent Bit uses a memory ring buffer that automatically drops the oldest chunks when the buffer is full to make room for new data. Accepted values: `memory`, `filesystem`, `memrb`. | `memory` |
+
+`rate_gate` is available in Fluent Bit version 5.1 and greater. The following configuration example enables the rate gate on an input plugin. Ingestion pauses whenever the input exceeds 5 MB per second or 10,000 records per second, and resumes once both the byte rate and the record rate fall back to 80% of their respective limits:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      rate_window: 1s
+      rate_gate: true
+      rate_gate.max_bytes: 5M
+      rate_gate.max_records: 10000
+      rate_gate.resume_ratio: 0.80
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                     forward
+  Rate_Window              1s
+  Rate_Gate                true
+  Rate_Gate.Max_Bytes      5M
+  Rate_Gate.Max_Records    10000
+  Rate_Gate.Resume_Ratio   0.80
+```
+
+{% endtab %}
+{% endtabs %}
 
 The following configuration example sets global settings in `service` to support filesystem buffering, then configures input plugins with filesystem buffering, memory-only buffering, and memory ring buffer buffering:
 
