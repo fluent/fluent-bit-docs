@@ -1,6 +1,7 @@
 redirects:
     # Installation
     installation/upgrade_notes:       ./installation/upgrade-notes.md
+    installation/whats-new-in-fluent-bit-v5.0: ./installation/whats-new-in-fluent-bit-v5.md
     installation/supported_platforms: ./installation/downloads.md
     installation/docker: ./installation/downloads/docker.md
     installation/windows: ./installation/downloads/windows.md
