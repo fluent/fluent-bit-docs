@@ -127,7 +127,6 @@ The following is the Fluent Bit classic configuration file:
 [SERVICE]
     flush        1
     log_level    info
-    parsers_file parsers.conf
 
 [INPUT]
     name        tail
@@ -228,7 +227,6 @@ pipeline:
 [SERVICE]
     flush        1
     log_level    info
-    parsers_file parsers.conf
 
 [INPUT]
     name         tail
