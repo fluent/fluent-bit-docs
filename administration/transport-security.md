@@ -35,7 +35,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 
 {% hint style="info" %}
 
-When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't include the TLS Server Name Indication (SNI) extension, which is consistent with [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066). Certificate validation still applies against the IP address. If the server requires SNI or uses a hostname-based certificate, use a hostname as the connection target and set `tls.vhost` if needed.
+When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't include the TLS Server Name Indication (SNI) extension, which is consistent with [RFC 6066](https://www.rfc-editor.org/info/rfc6066/). Certificate validation still applies against the IP address. If the server requires SNI or uses a hostname-based certificate, use a hostname as the connection target and set `tls.vhost` if needed.
 
 {% endhint %}
 
