@@ -168,7 +168,7 @@ systemctl edit fluent-bit.service
 
 When the Linux inotify event queue overflows (indicated by an `IN_Q_OVERFLOW` event), Fluent Bit automatically reconciles all monitored files. During reconciliation it:
 
-- Detects rotated files by comparing inodes and file names and re-registers watches as needed.
+- Detects rotated files by comparing `inode` numbers and file names and re-registers watches as needed.
 - Resets offset tracking for files that have been truncated.
 - Retries watch registration for files that previously failed, for example due to `ENOSPC` when `fs.inotify.max_user_watches` is exhausted.
 
@@ -273,8 +273,8 @@ pipeline:
       path: /var/log/syslog
 
   outputs:
-    - stdout:
-      match: *
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -369,13 +369,13 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-# Note this is generally added to parsers.conf and referenced in [SERVICE]
-[PARSER]
-  Name multiline
-  Format regex
-  Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
-  Time_Key  time
-  Time_Format %b %d %H:%M:%S
+# Note this is added to parsers.conf and referenced in [SERVICE]
+# [PARSER]
+#   Name multiline
+#   Format regex
+#   Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
+#   Time_Key  time
+#   Time_Format %b %d %H:%M:%S
 
 [INPUT]
   Name             tail
@@ -514,7 +514,7 @@ This parameter controls how Fluent Bit reads the path, not how it reads the cont
 The following example enables UTF-8 path handling. Write the `path` value as UTF-8, and save your configuration file with UTF-8 encoding so that Fluent Bit receives the path as you intended:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="windows-fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -525,7 +525,7 @@ pipeline:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="windows-fluent-bit.conf" %}
 
 ```text
 [INPUT]

@@ -22,7 +22,7 @@ For example, a parser can turn an unstructured log entry like this:
 192.168.2.20 - - [28/Jul/2006:10:27:10 -0300] "GET /cgi-bin/try/ HTTP/1.0" 200 3395
 ```
 
-...into a structured JSON object like this:
+The parser turns that entry into a structured JSON object like this:
 
 ```json
 {
@@ -65,13 +65,11 @@ For example, the following configuration file adds the default [`apache` parser]
 pipeline:
   inputs:
     - name: tail
-      path: /input/input.log
-      refresh_interval: 1
+      path: /var/log/apache.log
       parser: apache
 
-    - name: http
-      listen: 0.0.0.0
-      port: 8888
+    - name: tail
+      path: /var/log/custom.log
       parser: custom_parser1
 ```
 

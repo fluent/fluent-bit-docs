@@ -15,7 +15,7 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 Use the following command to start Fluent Bit while using a configuration file:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="Legacy Configuration: fluent-bit.conf" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
@@ -24,7 +24,7 @@ docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
 
 {% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
+{% tab title="YAML configuration: fluent-bit.yaml" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
@@ -317,7 +317,7 @@ The reasons for using distroless are well covered in
 - Reduces false positives on scans (and reduces resources required for scanning).
 - Reduces supply chain security requirements to only what you need.
 - Helps prevent unauthorised processes or users interacting with the container.
-- Less need to harden the container (and container runtime, K8s, and so on).
+- Less need to harden the container (and container runtime, Kubernetes, and so on).
 - Faster CI/CD processes.
 
 With any choice, there are downsides:

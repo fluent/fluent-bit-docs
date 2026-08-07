@@ -553,7 +553,7 @@ pipeline:
       tls: on
       tls.verify: on
       http_user: XXX
-      http_password: XXX
+      http_passwd: XXX
 ```
 
 {% endtab %}

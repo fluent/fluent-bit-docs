@@ -95,7 +95,9 @@ pipeline:
 
 ### Avro support
 
-Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin. Avro support is optional and must be activated at build time by using a build def with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
+Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin but this isn't enabled by default for releases.
+
+Avro support is optional and must be activated at build time by using a build definition with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
 
 - `out_kafka` with Avro encoding
 - Fluent Bit Prometheus
@@ -112,7 +114,7 @@ cmake -DFLB_DEV=On -DFLB_OUT_KAFKA=On -DFLB_TLS=On -DFLB_TESTS_RUNTIME=On -DFLB_
 In this example, the Fluent Bit configuration tails Kubernetes logs, updates the log lines with Kubernetes metadata using the Kubernetes filter. It then sends the updated log lines to a Kafka broker encoded with a specific Avro schema.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="AVRO enabled: fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -141,6 +143,7 @@ pipeline:
       match: '*'
       brokers: 192.168.1.3:9092
       topics: test
+      # AVRO support must be enabled for schema support
       schema_str:  '{"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}'
       schema_id: some_schema_id
       rdkafka.client.id: some_client_id
@@ -158,7 +161,7 @@ pipeline:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="AVRO enabled: fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -186,6 +189,7 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+  # AVRO support must be enabled for schema support
   Schema_Str  {"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}
   Schema_Id some_schema_id
   rdkafka.client.id some_client_id
@@ -229,7 +233,7 @@ Except for `schema_registry_framing`, each of these settings also accepts a dott
 The following example resolves the latest version of the `fluent-bit-logs-value` subject from either of two registry endpoints:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="avro-fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -247,7 +251,7 @@ pipeline:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="avro-fluent-bit.conf" %}
 
 ```text
 [OUTPUT]

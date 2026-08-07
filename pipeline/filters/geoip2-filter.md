@@ -33,7 +33,7 @@ The following configuration processes the incoming `remote_addr` and appends cou
 pipeline:
   inputs:
     - name: dummy
-      dummy: {"remote_addr": "8.8.8.8"}
+      dummy: '{"remote_addr": "8.8.8.8"}'
 
   filters:
     - name: geoip2

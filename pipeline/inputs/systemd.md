@@ -53,7 +53,6 @@ In your main configuration file append the following sections:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -72,7 +71,6 @@ pipeline:
 [SERVICE]
   Flush        1
   Log_Level    info
-  Parsers_File parsers.conf
 
 [INPUT]
   Name            systemd
