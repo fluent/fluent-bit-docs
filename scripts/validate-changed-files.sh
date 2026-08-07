@@ -9,15 +9,15 @@ set -euo pipefail
 #   ./scripts/validate-changed-files.sh [base_ref] [head_ref]
 #
 # Parameters:
-#   base_ref (optional): The base commit/branch to compare against (default: origin/main)
+#   base_ref (optional): The base commit/branch to compare against (default: origin/master)
 #   head_ref (optional): The head commit/branch to compare to (default: HEAD)
 #
 # Examples:
-#   # Validate changes in current branch against origin/main
+#   # Validate changes in current branch against origin/master
 #   ./scripts/validate-changed-files.sh
 #
 #   # Validate changes in a specific branch
-#   ./scripts/validate-changed-files.sh origin/main origin/feature-branch
+#   ./scripts/validate-changed-files.sh origin/master origin/feature-branch
 #
 
 SOURCE=${BASH_SOURCE[0]}
@@ -29,11 +29,12 @@ done
 SCRIPT_DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
 
 # Get the list of changed files
-BASE_REF="${1:-origin/main}"
+BASE_REF="${1:-origin/master}"
 HEAD_REF="${2:-HEAD}"
 
 echo "Getting changed Markdown files..."
-changed_files=$("$SCRIPT_DIR/get-changed-files.sh" "$BASE_REF" "$HEAD_REF" || true)
+# Do NOT suppress errors with || true - we need to know if get-changed-files.sh fails
+changed_files=$("$SCRIPT_DIR/get-changed-files.sh" "$BASE_REF" "$HEAD_REF")
 
 if [ -z "$changed_files" ]; then
     echo "No Markdown files changed. Skipping validation."
