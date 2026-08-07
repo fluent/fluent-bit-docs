@@ -1,6 +1,7 @@
 name: Link checks
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "00 18 1 * *"
   pull_request:
@@ -29,7 +30,7 @@ jobs:
           jobSummary: true
 
   linkchecker-scheduled:
-    if: ${{ github.event_name == 'schedule' }}
+    if: ${{ github.event_name != 'pull_request' }}
     name: Monthly Link Checker
     runs-on: ubuntu-latest
     permissions:
