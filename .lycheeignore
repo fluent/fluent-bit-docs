@@ -1,0 +1,5 @@
+# Ignore certain landing pages for link checking, these may change redirects to internally
+https://console.treasuredata.com/users/sign_in
+https://app.datadoghq.com/logs/activation
+# Ignore the redirects for Github logins when creating custom issues
+^https:\/\/github\.com\/fluent\/fluent-bit\/issues\/new\?.*

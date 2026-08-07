@@ -7,7 +7,7 @@ Follow this tutorial to learn more about stream processing.
 This tutorial requires the following components:
 
 * Fluent Bit
-* [Docker Engine](https://www.docker.com/products/docker-engine)
+* Container runtime, e.g. [Docker Engine](https://www.docker.com/)
 * A stream processing [sample file](https://raw.githubusercontent.com/fluent/fluent-bit-docs/37b477786d6e28eb223e08611c26ec93671a34ac/stream-processing/samples/sp-samples-1k.log)
 
 ## Steps

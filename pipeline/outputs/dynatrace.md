@@ -83,7 +83,7 @@ pipeline:
 
 <!-- vale FluentBit.Simplicity = NO -->
 
-- [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/shortlink/lma-stream-logs-with-fluent-bit)
+- [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-stream-logs-with-fluent-bit)
 - [Fluent Bit integration in Dynatrace Hub](https://www.dynatrace.com/hub/detail/fluent-bit/?filter=log-management-and-analytics)
 - [Video: Stream a Log File to Dynatrace using Fluent Bit](https://www.youtube.com/watch?v=JJJNxhtJ6R0)
 - [Blog: Easily stream logs from Fluent Bit to Dynatrace](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-stream-logs-with-fluent-bit)
