@@ -8,6 +8,20 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.1
+
+### Debian and Ubuntu package upgrades restart the service
+
+Upgrading the `fluent-bit` package on Debian or Ubuntu now runs `systemctl daemon-reload` and restarts the service as part of the upgrade, but only when the service is already running on a host that uses `systemd`. A stopped service stays stopped, and installing the package for the first time doesn't start it. If an unplanned restart isn't safe, stop the service before upgrading and start it again afterward. See [Debian](downloads/linux/debian.md#upgrade-fluent-bit) and [Ubuntu](downloads/linux/ubuntu.md#upgrade-fluent-bit).
+
+### Syslog output `mode` accepts `tls` and `dtls`
+
+The [Syslog output](../pipeline/outputs/syslog.md) `mode` setting now accepts `tls` and `dtls`, both of which automatically enable TLS, in addition to the existing `tcp` and `udp` values. Existing configurations that pair `mode: tcp` with a separate `tls: on` setting are unaffected.
+
+### 64-bit timestamp handling beyond 2038
+
+Event timestamps at or after the 2038 32-bit `time_t` rollover now round-trip correctly through the internal msgpack `EventTime` encoding that Fluent Bit uses. On platforms where `time_t` is still 32-bit, timestamps remain bound by that platform's range.
+
 ## Fluent Bit v5.0
 
 ### `hot_reloaded_times` metric type change
@@ -75,6 +89,7 @@ If you send data from Fluent Bit to a Fluentd aggregator using the `forward` out
 
 {% tabs %}
 {% tab title="YAML" %}
+
 ```yaml
 pipeline:
   outputs:
@@ -84,8 +99,10 @@ pipeline:
       port: 24224
       retain_metadata_in_forward_mode: false
 ```
+
 {% endtab %}
 {% tab title="Classic" %}
+
 ```text
 [OUTPUT]
     Name    forward
@@ -94,12 +111,13 @@ pipeline:
     Port    24224
     Retain_Metadata_In_Forward_Mode false
 ```
+
 {% endtab %}
 {% endtabs %}
 
 For more details, see [GitHub issue #11877](https://github.com/fluent/fluent-bit/issues/11877).
 
-For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5.0](whats-new-in-fluent-bit-v5.0.md).
+For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5](whats-new-in-fluent-bit-v5.md).
 
 ## Fluent Bit v4.2
 
@@ -108,7 +126,7 @@ For a broader overview of user-visible additions in this release, see [What's ne
 The HTTP endpoint paths exposed by the Vivo exporter output plugin have changed. All endpoints now follow an `/api/v1/` prefix:
 
 | Signal | Endpoint |
-|---|---|
+| --- | --- |
 | Logs | `/api/v1/logs` |
 | Metrics | `/api/v1/metrics` |
 | Traces | `/api/v1/traces` |
