@@ -514,7 +514,7 @@ This parameter controls how Fluent Bit reads the path, not how it reads the cont
 The following example enables UTF-8 path handling. Write the `path` value as UTF-8, and save your configuration file with UTF-8 encoding so that Fluent Bit receives the path as you intended:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="windows-fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -525,7 +525,7 @@ pipeline:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="windows-fluent-bit.conf" %}
 
 ```text
 [INPUT]
