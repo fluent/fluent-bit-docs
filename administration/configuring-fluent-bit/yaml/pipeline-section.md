@@ -133,7 +133,7 @@ When the gate is enabled and either the measured byte rate or record rate exceed
 
 While `rate_gate.backpressure` is enabled, the limits you configure aren't applied directly. Fluent Bit divides each limit by the number of busy chunks plus pending retry attempts, plus one. An input with no pending work is held to the full limit, while an input whose destination is backed up is held to a progressively smaller share of it, which slows ingestion before chunks accumulate. Set `rate_gate.backpressure` to `false` to apply the configured limits as fixed values instead.
 
-The following example limits an HTTP input to 5&nbsp;MB per second, measured over a five-second window:
+The following example limits an HTTP input to 5MB per second, measured over a five-second window:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
