@@ -61,6 +61,7 @@ deprovisions
 Devo
 distroless
 DogStatsD
+Doris
 downsample
 downsampled
 downsamples

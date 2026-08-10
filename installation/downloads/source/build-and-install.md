@@ -283,6 +283,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_CLOUDWATCH_LOGS`](../../../pipeline/outputs/cloudwatch.md)                     | Enable Amazon CloudWatch output plugin                   | `On`    |
 | [`FLB_OUT_COUNTER`](../../../pipeline/outputs/counter.md)                                | Enable Counter output plugin                             | `On`    |
 | [`FLB_OUT_DATADOG`](../../../pipeline/outputs/datadog.md)                                | Enable Datadog output plugin                             | `On`    |
+| [`FLB_OUT_DORIS`](../../../pipeline/outputs/doris.md)                                    | Enable Apache Doris output plugin                        | `On`    |
 | [`FLB_OUT_ES`](../../../pipeline/outputs/elasticsearch.md)                               | Enable Elastic Search output plugin                      | `On`    |
 | [`FLB_OUT_EXIT`](../../../pipeline/outputs/exit.md)                                      | Enable Exit output plugin                                | `On`    |
 | [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                                      | Enable File output plugin                                | `On`    |
