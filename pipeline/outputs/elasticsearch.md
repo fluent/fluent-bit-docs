@@ -25,6 +25,7 @@ In Fluent Bit 5.1 and later, `elasticsearch` is accepted as an alias for the plu
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
 | `current_time_index` | Use current time for index generation instead of message record. | `Off` |
 | `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` |
+| `header` | Add additional arbitrary HTTP header key/value pair. Multiple headers can be set. | _none_ |
 | `host` | IP address or hostname of the target Elasticsearch instance. | `127.0.0.1` |
 | `http_api_key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `http_user` or `cloud_auth` are defined, this parameter is ignored. | _none_ |
 | `http_passwd` | Password for user defined in `http_user`. | _none_ |
