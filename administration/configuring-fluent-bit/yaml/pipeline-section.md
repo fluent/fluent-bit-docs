@@ -112,6 +112,46 @@ pipeline:
               enabled: false
 ```
 
+### Rate metrics and rate limiting for inputs
+
+Available in Fluent Bit version 5.1 and greater.
+
+Every input plugin measures its own ingestion rate, and can optionally pause itself when that rate gets too high. All input plugins support the following settings:
+
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `rate_window` | Time window used to measure the ingestion rate, such as `1s`, `1m`, or `1h`. Whatever window you choose, the resulting rate is always published in per-second units. | `1s` |
+| `rate_gate` | Enable the rate gate, which pauses ingestion while the measured rate exceeds the configured limits. | `false` |
+| `rate_gate.max_bytes` | Maximum ingestion rate in bytes per second. Set to `0` to leave the byte rate unlimited. This value must follow [unit size](../../configuring-fluent-bit.md#unit-sizes) specifications. | `0` |
+| `rate_gate.max_records` | Maximum ingestion rate in records per second. Set to `0` to leave the record rate unlimited. | `0` |
+| `rate_gate.backpressure` | Lower the effective limits while the input has busy chunks or pending delivery retries. | `true` |
+| `rate_gate.resume_ratio` | Fraction of the effective limit that the measured rate must fall to before ingestion resumes. Accepts a value greater than `0` and less than or equal to `1`. | `0.80` |
+
+Rate measurement is always active, and publishes the [`fluentbit_input_rate_bytes` and `fluentbit_input_rate_records`](../../monitoring.md#v2-metrics) metrics. The rate gate is opt-in and takes effect only when you enable `rate_gate` and set at least one of `rate_gate.max_bytes` or `rate_gate.max_records` to a non-zero value. A limit of `0` is unlimited.
+
+When the gate is enabled and either the measured byte rate or record rate exceeds its limit, Fluent Bit pauses the input, logs a warning, and schedules a one-shot timer to reevaluate the rate. The input resumes only when both measured rates are no greater than their respective effective limits multiplied by `rate_gate.resume_ratio`. Limits set to `0` are unlimited and are excluded from both checks. This gap between the pause and resume thresholds keeps an input at the limit from repeatedly pausing and resuming.
+
+While `rate_gate.backpressure` is enabled, the limits you configure aren't applied directly. Fluent Bit divides each limit by the number of busy chunks plus pending retry attempts, plus one. An input with no pending work is held to the full limit, while an input whose destination is backed up is held to a progressively smaller share of it, which slows ingestion before chunks accumulate. Set `rate_gate.backpressure` to `false` to apply the configured limits as fixed values instead.
+
+The following example limits an HTTP input to 5MB per second, measured over a five-second window:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+      rate_window: 5s
+      rate_gate: true
+      rate_gate.max_bytes: 5M
+```
+
+{% endtab %}
+{% endtabs %}
+
 ### Shared HTTP listener settings for inputs
 
 Some HTTP-based input plugins share the same listener implementation and support the following common settings in addition to their plugin-specific parameters:
