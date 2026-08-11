@@ -18,6 +18,12 @@ Upgrading the `fluent-bit` package on Debian or Ubuntu now runs `systemctl daemo
 
 The [Syslog output](../pipeline/outputs/syslog.md) `mode` setting now accepts `tls` and `dtls`, both of which automatically enable TLS, in addition to the existing `tcp` and `udp` values. Existing configurations that pair `mode: tcp` with a separate `tls: on` setting are unaffected.
 
+### Input rate metrics and rate gate
+
+All input plugins now measure their own ingestion rate and can optionally pause when that rate is too high. Rate measurement is always on and exposes new `fluentbit_input_rate_bytes` and `fluentbit_input_rate_records` metrics. The `rate_window` setting controls the time window used to measure this byte and record rate, and defaults to `1s`. The rate gate itself is opt-in: set `rate_gate` to `true` and configure `rate_gate.max_bytes` or `rate_gate.max_records` to pause ingestion once it exceeds a threshold, with `rate_gate.backpressure` and `rate_gate.resume_ratio` controlling how the effective limit and resume behavior work. See [Rate metrics and rate limiting for inputs](../administration/configuring-fluent-bit/yaml/pipeline-section.md#rate-metrics-and-rate-limiting-for-inputs) and [per-input buffering settings](../pipeline/buffering.md#per-input-settings) for details.
+
+No action is required unless you want to opt in to the new rate gate.
+
 ### 64-bit timestamp handling beyond 2038
 
 Event timestamps at or after the 2038 32-bit `time_t` rollover now round-trip correctly through the internal msgpack `EventTime` encoding that Fluent Bit uses. On platforms where `time_t` is still 32-bit, timestamps remain bound by that platform's range.
@@ -50,7 +56,7 @@ If you tune `http`, `splunk`, `elasticsearch`, `opentelemetry`, or `prometheus_r
 
 Input plugins that support TLS now also support `tls.verify_client_cert`. Enable this option to require and validate the client certificate presented by the sender.
 
-If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
+If Fluent Bit is the TLS termination point and you need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
 
 ### New internal logs input
 
