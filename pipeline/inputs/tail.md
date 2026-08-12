@@ -232,6 +232,14 @@ It will use the first parser which has a `start_state` that matches the log.
 
 For example, it will first try `docker`, and if `docker` doesn't match, it will then try `cri`.
 
+### Pretty-printed JSON files
+
+For log files that contain JSON objects split across multiple lines (pretty-printed JSON), use the built-in `json` multiline parser on tail. Pair it with the [Parser filter](../filters/parser.md) to parse the assembled `log` field.
+
+For JSON Lines (one complete JSON object per line), set `parser: json` on the tail input instead — no multiline parser is needed.
+
+See [Multiline parsing — JSON](../parsers/multiline-parsing.md#json) for a full configuration example.
+
 ### Old multiline configuration parameters
 
 For the old multiline configuration, the following options exist to configure the handling of multiline logs:

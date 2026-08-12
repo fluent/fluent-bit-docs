@@ -17,6 +17,8 @@ Along with multiline filters, you can enable one of the following built-in Fluen
 - Ruby
 - Java (Google Cloud Platform Java stack trace format)
 
+For pretty-printed JSON objects split across lines, use the built-in `json` multiline parser on the [Tail plugin](../inputs/tail.md#pretty-printed-json-files) instead of this filter. See [Multiline parsing — JSON](../../pipeline/parsers/multiline-parsing.md#json).
+
 When using this filter:
 
 - The usage of this filter depends on a previous configuration of a [multiline parser](../../pipeline/parsers/multiline-parsing.md) definition.
