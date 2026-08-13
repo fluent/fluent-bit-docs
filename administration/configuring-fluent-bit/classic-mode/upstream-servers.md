@@ -5,6 +5,7 @@ Fluent Bit [output plugins](../../../pipeline/outputs.md) aim to connect to exte
 An `Upstream` defines a set of nodes that will be targeted by an output plugin, by the nature of the implementation an output plugin must support the `Upstream` feature. The following plugin has `Upstream` support:
 
 - [Forward](../../../pipeline/outputs/forward.md)
+- [Elasticsearch](../../../pipeline/outputs/elasticsearch.md)
 
 The current balancing mode implemented is `round-robin`.
 

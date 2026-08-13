@@ -25,6 +25,7 @@ exceptions:
   - AWS
   - AWS MSK IAM
   - AWS IAM
+  - AWS SigV4
   - Azure
   - Azure Blob
   - Azure Data Explorer
