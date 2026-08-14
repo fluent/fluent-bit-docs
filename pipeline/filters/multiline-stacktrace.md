@@ -17,7 +17,7 @@ Along with multiline filters, you can enable one of the following built-in Fluen
 - Ruby
 - Java (Google Cloud Platform Java stack trace format)
 
-For pretty-printed JSON objects split across lines, use the built-in `json` multiline parser on the [Tail plugin](../inputs/tail.md#pretty-printed-json-files) instead of this filter. See [Multiline parsing — JSON](../../pipeline/parsers/multiline-parsing.md#json).
+The built-in `json` multiline parser groups pretty-printed JSON objects split across lines. When reading from a log file, prefer setting it on the [Tail plugin](../inputs/tail.md#pretty-printed-json-files) rather than on this filter. See [Multiline parsing: JSON](../../pipeline/parsers/multiline-parsing.md#json).
 
 When using this filter:
 
@@ -46,7 +46,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | -------- | ----------- |
-| `buffer` | Enable buffered mode. In buffered mode, the filter can concatenate multiple lines from inputs that ingest records one by one (like Forward), rather than in chunks, re-emitting them into the beginning of the pipeline (with the same tag) using the `in_emitter` instance. With buffer off, this filter won't work with most inputs, except Tail. |
+| `buffer` | Enable buffered mode. In buffered mode, the filter can concatenate multiple lines from inputs that ingest records one by one, such as Forward, rather than in chunks. It re-emits them into the beginning of the pipeline with the same tag, using the `in_emitter` instance. With buffer off, this filter won't work with most inputs, except Tail. |
 | `debug_flush` | Enable debug logging for flush operations. Default: `false`. |
 | `emitter_mem_buf_limit` | Set a limit on the amount of memory the emitter can consume if the outputs provide backpressure. The default for this limit is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline pauses if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
 | `emitter_name` | Name for the emitter input instance which re-emits the completed records at the beginning of the pipeline. |
