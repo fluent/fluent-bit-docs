@@ -113,18 +113,18 @@ For version 1.9 and later, `td-agent-bit` is a deprecated package and was remove
 
 ## Installation packages
 
-The latest stable version is 5.1.0.
+The latest stable version is 5.1.1.
 
 <!-- vale off -->
 
 | INSTALLERS | SHA256 CHECKSUMS |
 |----------- | ---------------- |
-| [`fluent-bit-5.1.0-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win32.exe) | [d423cb3064303d8c690d0e1db791deff8abef3c6404ec2db05d78cbfba277c15](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win32.exe.sha256) |
-| [`fluent-bit-5.1.0-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win32.zip) | [6b5bd7791c0af71e029fd1c108d32ecba16c5ccb583707083637575c9afca8fb](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win32.zip.sha256) |
-| [`fluent-bit-5.1.0-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win64.exe) | [f929a7c3d3c886035135b9dd15fe42615d0259af8cded0370c02ddaec41c17b1](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win64.exe.sha256) |
-| [`fluent-bit-5.1.0-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win64.zip) | [de614af5914aafc3e05ac361340207e130bfe2971d7970a99e8c2451edd672af](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win64.zip.sha256) |
-| [`fluent-bit-5.1.0-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-winarm64.exe) | [d7638aa1976c5ef287e6602e7d7e6e9709ffac291878dbd5b16e7e1768726c9d](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-winarm64.exe.sha256) |
-| [`fluent-bit-5.1.0-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-winarm64.zip) | [3ab93e71270f93232b6cc05b6ed819007b64c3be9a155feb5de54cf9deac5d0a](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-winarm64.zip.sha256) |
+| [`fluent-bit-5.1.1-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.exe) | [323a919e37f1dd15e3aa2d83878972937dbf776dfb49537fcf30e581a4622b88](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.exe.sha256) |
+| [`fluent-bit-5.1.1-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.zip) | [dce1619768a03c51eaf50dbe61503658ff8c458bc764bc0c867d77cb9023c71a](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.zip.sha256) |
+| [`fluent-bit-5.1.1-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.exe) | [877771b17776cebc066e68bbde9bf5c85c98814c5dd19ceef45a4561d1bae81c](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.exe.sha256) |
+| [`fluent-bit-5.1.1-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.zip) | [19fa6315446512a9130103b6caee39ea463e0fa60ad41e9566ab6fcf4ac42d1f](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.zip.sha256) |
+| [`fluent-bit-5.1.1-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-winarm64.exe) | [d5c66b1f68eec8f9da3009a4365651cd326c214beb89aefcb0bbcccaacfe8678](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-winarm64.exe.sha256) |
+| [`fluent-bit-5.1.1-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-winarm64.zip) | [e1ea4a95852ee564e36c65cffebb9d6e628237cf44404b87d6cdf7d6c0bad8d5](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-winarm64.zip.sha256) |
 
 <!-- vale on -->
 
@@ -132,14 +132,14 @@ These are now using the Github Actions built versions. Legacy AppVeyor builds ar
 
 MSI installers are also available:
 
-- [`fluent-bit-5.1.0-win32.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win32.msi)
-- [`fluent-bit-5.1.0-win64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-win64.msi)
-- [`fluent-bit-5.1.0-winarm64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.0-winarm64.msi)
+- [`fluent-bit-5.1.1-win32.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.msi)
+- [`fluent-bit-5.1.1-win64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.msi)
+- [`fluent-bit-5.1.1-winarm64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-winarm64.msi)
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
 ```shell
-Get-FileHash fluent-bit-5.1.0-win32.exe
+Get-FileHash fluent-bit-5.1.1-win32.exe
 ```
 
 ## Installing from a ZIP archive
@@ -149,7 +149,7 @@ Get-FileHash fluent-bit-5.1.0-win32.exe
 1. Expand the ZIP archive. You can do this by clicking **Extract All** in Explorer or `Expand-Archive` in PowerShell.
 
    ```shell
-   Expand-Archive fluent-bit-5.1.0-win64.zip
+   Expand-Archive fluent-bit-5.1.1-win64.zip
    ```
 
    The ZIP package contains the following set of files.
