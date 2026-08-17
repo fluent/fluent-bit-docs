@@ -40,8 +40,10 @@ docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
 
 The following table describes the Linux container tags that are available on Docker Hub [`fluent/fluent-bit`](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tags       | Manifest Architectures    | Description                                                    |
+| Tags | Manifest Architectures | Description |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 5.1.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.1 | amd64, arm64, arm/v7 | Release [v5.1.1](https://fluentbit.io/announcements/v5.1.1/) |
 | 5.1.0-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.1.0 | amd64, arm64, arm/v7 | Release [v5.1.0](https://fluentbit.io/announcements/v5.1.0/) |
 | 5.0.8-debug | amd64, arm64, arm/v7 | Debug images |
@@ -232,7 +234,7 @@ Windows container images are provided on the same Docker Hub registry, tagged wi
 Windows Server 2025 support, and the Nano Server image, are available in Fluent Bit version 5.1 and greater. Nano Server images are smaller than their Server Core counterparts, but don't include PowerShell and can't run plugins that shell out to external commands, such as `exec`. The Nano Server image ships with a default configuration that listens on the [Forward](../../pipeline/inputs/forward.md) input and writes to `stdout`, since there's no shell available to write one if needed.
 
 ```shell
-docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.1.0
+docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.1.1
 ```
 
 ## Multi-architecture images
