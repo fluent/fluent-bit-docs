@@ -40,7 +40,7 @@ docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
 
 The following table describes the Linux container tags that are available on Docker Hub [`fluent/fluent-bit`](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tags       | Manifest Architectures    | Description                                                    |
+| Tags | Manifest Architectures | Description |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
 | 5.1.1-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.1.1 | amd64, arm64, arm/v7 | Release [v5.1.1](https://fluentbit.io/announcements/v5.1.1/) |
