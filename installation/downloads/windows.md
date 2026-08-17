@@ -118,7 +118,7 @@ The latest stable version is 5.1.1.
 <!-- vale off -->
 
 | INSTALLERS | SHA256 CHECKSUMS |
-|----------- | ---------------- |
+| ----------- | ---------------- |
 | [`fluent-bit-5.1.1-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.exe) | [323a919e37f1dd15e3aa2d83878972937dbf776dfb49537fcf30e581a4622b88](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.exe.sha256) |
 | [`fluent-bit-5.1.1-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.zip) | [dce1619768a03c51eaf50dbe61503658ff8c458bc764bc0c867d77cb9023c71a](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win32.zip.sha256) |
 | [`fluent-bit-5.1.1-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.exe) | [877771b17776cebc066e68bbde9bf5c85c98814c5dd19ceef45a4561d1bae81c](https://packages.fluentbit.io/windows/fluent-bit-5.1.1-win64.exe.sha256) |
