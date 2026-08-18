@@ -13,7 +13,7 @@ The plugin reads every matched file in the `Path` pattern. For every new line fo
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
-|:----|:------------|:--------|
+| :--- | :--- | :--- |
 | `buffer_chunk_size` | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k` |
 | `buffer_max_size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k` |
 | `db` | Specify the database file to keep track of monitored files and offsets. Recommended to be unique per plugin. | _none_ |
@@ -185,8 +185,8 @@ Fluent Bit 1.8 and later supports multiline core capabilities for the Tail input
 
 Multiline core is exposed by the following configuration:
 
-| Key                | Description    |
-|:-------------------|:---------------|
+| Key | Description |
+| :--- | :--- |
 | `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../parsers/multiline-parsing.md) to apply to the content. |
 
 [Multiline Parser](../parsers/multiline-parsing.md) provides built-in configuration modes. When using a new `multiline.parser` definition, you must disable the old configuration from your tail section like:
@@ -232,16 +232,24 @@ It will use the first parser which has a `start_state` that matches the log.
 
 For example, it will first try `docker`, and if `docker` doesn't match, it will then try `cri`.
 
+### Pretty-printed JSON files
+
+For log files that contain JSON objects split across multiple lines (pretty-printed JSON), use the built-in `json` multiline parser on tail. Pair it with the [Parser filter](../filters/parser.md) to parse the assembled `log` field.
+
+For JSON Lines (one complete JSON object per line), set `parser: json` on the tail input instead. No multiline parser is needed.
+
+See [Multiline parsing: JSON](../parsers/multiline-parsing.md#json) for a full configuration example.
+
 ### Old multiline configuration parameters
 
 For the old multiline configuration, the following options exist to configure the handling of multiline logs:
 
-| Key                | Description       | Default |
-|:-------------------|:------------------|:--------|
-| `multiline`        | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used.                                   | `off`   |
-| `multiline_flush`  | Wait period time in seconds to process queued multiline messages.                                                        | `4`     |
-| `parser_firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_  |
-| `parser_N`         | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `parser_1 ab1`, `parser_2 ab2`, `parser_N abN`.                                   | _none_  |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `multiline` | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used. | `off` |
+| `multiline_flush` | Wait period time in seconds to process queued multiline messages. | `4` |
+| `parser_firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_ |
+| `parser_N` | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `parser_1 ab1`, `parser_2 ab2`, `parser_N abN`. | _none_ |
 
 ### Old Docker mode configuration parameters
 
