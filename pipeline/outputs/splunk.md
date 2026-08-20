@@ -33,6 +33,7 @@ Content and Splunk metadata (fields) handling configuration properties:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
+| `auto_extract_timestamp` | Let Splunk extract the timestamp from the event data instead of sending the Fluent Bit event timestamp. See [Automatic timestamp extraction](#automatic-timestamp-extraction). Supported in v5.1.1 or later. | `off` |
 | `event_field` | Set event fields for the record. This option can be set multiple times and the format is `key_name record_accessor_pattern`. | _none_ |
 | `event_host` | Specify the key name that contains the host value. This option allows a record accessors pattern. | _none_ |
 | `event_index` | The name of the index by which the event data is to be indexed. | _none_ |
@@ -209,6 +210,30 @@ Consider the following examples:
   ```
 
 For up-to-date information about the valid keys, see [Getting Data In](https://docs.splunk.com/Documentation/Splunk/7.1.10/Data/AboutHEC).
+
+### Automatic timestamp extraction
+
+Automatic timestamp extraction is available in Fluent Bit version 5.1.1 and greater.
+
+By default, Fluent Bit sends the event timestamp to Splunk in the `time` field of the event envelope. Set `auto_extract_timestamp` to `on` when the timestamp inside your event data is more accurate than the timestamp Fluent Bit assigned, for example when reading logs that were buffered elsewhere before collection.
+
+When this option is enabled, Fluent Bit sends events to `/services/collector/event?auto_extract_timestamp=true` instead of `/services/collector/event`, which tells the HTTP Event Collector to parse the timestamp out of the event data. Fluent Bit also omits the `time` field from the event envelope, so Splunk has no timestamp to prefer over the one it extracts:
+
+- `auto_extract_timestamp` off
+
+  ```json
+  {"time": "SOMETIME", "event": {"k1": "foo", "timestamp": "2026-08-17T10:00:00Z"}}
+  ```
+
+- `auto_extract_timestamp` on
+
+  ```json
+  {"event": {"k1": "foo", "timestamp": "2026-08-17T10:00:00Z"}}
+  ```
+
+If `splunk_send_raw` is also enabled, Fluent Bit doesn't generate a `time` field, but it does forward a top-level `time` key when your record contains one. Splunk prefers that value over the timestamp it would extract, so omit the top-level `time` key from your records when you want `auto_extract_timestamp` to take effect.
+
+Splunk must be able to find a timestamp in the event data. If it can't, it assigns the time at which the event was indexed. For the timestamp formats and the extraction rules Splunk applies, see [Configure timestamp recognition](https://docs.splunk.com/Documentation/Splunk/latest/Data/HowSplunkextractstimestamps).
 
 ## Splunk metric index
 
