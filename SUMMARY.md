@@ -180,6 +180,7 @@
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Apache SkyWalking](pipeline/outputs/skywalking.md)
+  * [Bronto](pipeline/outputs/bronto.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Dash0](pipeline/outputs/dash0.md)
   * [Datadog](pipeline/outputs/datadog.md)
