@@ -46,6 +46,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
 | `skip_invalid_rows` | Insert all valid rows of a request, even if invalid rows exist. When `Off`, the entire request fails if any invalid rows exist. | `Off` |
 | `table_id` | The table ID of the BigQuery table to write into. This table must exist in the specified dataset and the schema must match the output. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `buffer_size` | Sets the upper limit for the HTTP client buffer size (in bytes) when reading API responses from BigQuery. The buffer grows dynamically as needed until it reaches this limit. If a response exceeds this size, additional data is discarded and a warning is logged. | `4192` |
 
 See Google's [official documentation](https://docs.cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) for further details.
 
