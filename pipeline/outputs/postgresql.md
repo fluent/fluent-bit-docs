@@ -59,6 +59,7 @@ This plugin supports the following parameters:
 | `cockroachdb` | Set to `true` if you will connect the plugin with a CockroachDB. | `false` |
 | `connection_options` | Specifies any valid [PostgreSQL connection options](https://www.postgresql.org/docs/devel/libpq-connect.html#LIBPQ-CONNECT-OPTIONS). | `_none_` |
 | `database` | Database name to connect to. | `fluentbit` |
+| `daemon` | Set to `true` if you want run this plugin instance in daemon mode. | `false` |
 | `host` | Hostname/IP address of the PostgreSQL instance. | `127.0.0.1` |
 | `password` | Password of PostgreSQL username. | `_none_` |
 | `port` | PostgreSQL port. | `5432` |
@@ -67,6 +68,7 @@ This plugin supports the following parameters:
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 The plugin uses one PostgreSQL connection per worker. The previous `async`, `max_pool_size`, and `min_pool_size` settings are no longer supported.
+
 
 ### Libpq
 
