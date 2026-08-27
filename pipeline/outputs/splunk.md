@@ -43,6 +43,8 @@ Content and Splunk metadata (fields) handling configuration properties:
 | `event_sourcetype` | Set the `sourcetype` value to assign to the event data. | _none_ |
 | `event_sourcetype_key` | Set a record key that will populate `sourcetype`. If the key is found, it will have precedence over the value set in `event_sourcetype`. | _none_ |
 | `splunk_send_raw` | When enabled, the record keys and values are set in the top level of the map instead of under the event key. See [Sending Raw Events](#sending-raw-events) to configure this option. | `off` |
+| `time_key` | Set a record key whose value populates the top level `time` field of the HTTP Event Collector payload instead of the Fluent Bit event timestamp. Accepts a plain key name or a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern. See [Record-derived event time](#record-derived-event-time). Supported in v5.1.2 or later. | _none_ |
+| `time_key_format` | Set the `strptime(3)` compatible format used to parse the value of `time_key` when that value is a string, for example `%Y-%m-%dT%H:%M:%S.%LZ`. The `%L` field descriptor is supported for fractional seconds. Requires `time_key`. Supported in v5.1.2 or later. | _none_ |
 
 ### TLS / SSL
 
@@ -234,6 +236,61 @@ When this option is enabled, Fluent Bit sends events to `/services/collector/eve
 If `splunk_send_raw` is also enabled, Fluent Bit doesn't generate a `time` field, but it does forward a top-level `time` key when your record contains one. Splunk prefers that value over the timestamp it would extract, so omit the top-level `time` key from your records when you want `auto_extract_timestamp` to take effect.
 
 Splunk must be able to find a timestamp in the event data. If it can't, it assigns the time at which the event was indexed. For the timestamp formats and the extraction rules Splunk applies, see [Configure timestamp recognition](https://docs.splunk.com/Documentation/Splunk/latest/Data/HowSplunkextractstimestamps).
+
+### Record-derived event time
+
+Record-derived event time is available in Fluent Bit version 5.1.2 and greater.
+
+Set `time_key` to the name of a record key that holds the event time when you want Splunk to receive that value in the `time` field of the event envelope instead of the timestamp Fluent Bit assigned. Unlike [automatic timestamp extraction](#automatic-timestamp-extraction), which delegates parsing to the HTTP Event Collector, Fluent Bit parses the value itself and sends the result in the envelope.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: splunk
+      match: '*'
+      host: 127.0.0.1
+      port: 8088
+      splunk_token: 00000000-0000-0000-0000-000000000000
+      time_key: aggregator_time
+      time_key_format: '%Y-%m-%dT%H:%M:%S.%LZ'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name             splunk
+  Match            *
+  Host             127.0.0.1
+  Port             8088
+  Splunk_Token     00000000-0000-0000-0000-000000000000
+  Time_Key         aggregator_time
+  Time_Key_Format  %Y-%m-%dT%H:%M:%S.%LZ
+```
+
+{% endtab %}
+{% endtabs %}
+
+`time_key` accepts a plain key name or a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) pattern. A plain key name is treated as a top level key, so `aggregator_time` and `$aggregator_time` are equivalent. Use the record accessor form to reach a nested key, for example `$meta['ts']`.
+
+The following value types are parsed without setting `time_key_format`:
+
+- An integer or float holding a Unix timestamp, with an optional fractional part.
+- A string holding a numeric Unix timestamp.
+- An event time value produced by an earlier stage of the pipeline.
+
+Set `time_key_format` for any other string format. When `time_key` is populating the event envelope, Fluent Bit prepares the format once at startup, so an invalid format prevents the output from starting. When `time_key` isn't in use, the format is never prepared and Fluent Bit logs a warning that the option has no effect.
+
+If the key isn't present in the record, or its value can't be parsed as a timestamp, Fluent Bit uses the event timestamp instead and continues. A missing key is reported at the `debug` log level, and a value that can't be parsed is reported as a warning. Raise the log level to confirm which records fell back.
+
+These options apply only to the event envelope:
+
+- When `splunk_send_raw` is enabled there is no envelope to populate, so both options are ignored and neither is validated. Fluent Bit logs warnings at startup rather than failing, which means neither an unrelated `time_key` pattern nor an invalid `time_key_format` can stop a raw mode output from starting.
+- When `auto_extract_timestamp` is enabled the `time` field is omitted from the envelope entirely, so `time_key` has no effect. Use one option or the other.
 
 ## Splunk metric index
 
