@@ -43,7 +43,8 @@ If you are upgrading from the Fluent Bit `4.2` series, start with [What's new in
 
 Fluent Bit is a [CNCF](https://www.cncf.io/) graduated sub-project under the umbrella of [Fluentd](https://www.fluentd.org).
 
-Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper) and is now sponsored by [Chronosphere](https://chronosphere.io/). As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
+Fluent Bit was originally created by [Eduardo Silva](https://www.linkedin.com/in/edsiper) and is now sponsored by [Palo Alto Networks](https://www.paloaltonetworks.com).
+As a CNCF-hosted project, it's a fully vendor-neutral and community-driven project.
 
 ## License
 
