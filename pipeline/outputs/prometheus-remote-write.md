@@ -37,6 +37,16 @@ This plugin supports the following parameters:
 | `uri` | Specify an optional HTTP URI for the target web server, for example `/someuri`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
+## Stale metric expiration
+
+Stale metric expiration is available in Fluent Bit version 5.1.2 and greater.
+
+On each flush, Fluent Bit drops any metric whose timestamp is more than one hour old before it builds the remote write payload. Remote write backends reject samples this old as stale, and a single rejected sample fails the whole request, which would also leave the current samples undelivered.
+
+Expiration applies to each set of labels separately, so an idle time series is dropped while the actively updated series of the same metric are still sent.
+
+This cut-off is fixed at one hour and can't be configured. Metrics older than the cut-off are dropped without an error, and the remaining metrics in the same flush are still sent. When a backlog recovered from [filesystem buffering](../buffering.md#filesystem-buffering-hybrid) or a replay from an archive spans more than an hour, only the samples that are already older than the cut-off when the flush runs are dropped. Newer samples remain eligible for delivery. Because the cut-off is evaluated against the current time on each flush, a slow replay can expire more of the backlog as it progresses.
+
 ## Get started
 
 The Prometheus remote write plugin works only with metrics collected by one of the metric input plugins. In the following example, host metrics are collected by the node exporter metrics plugin and then delivered by the Prometheus remote write output plugin.
