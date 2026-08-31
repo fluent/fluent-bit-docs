@@ -196,7 +196,7 @@ Some metrics are available only for specific plugins or runtime modes. For examp
 | Metric Name | Labels | Description | Type | Unit |
 | ----------- | ------ | ----------- | ---- | ---- |
 | `fluentbit_build_info` | hostname: the hostname, version: the version of Fluent Bit, os: OS type | Build version information. The value is the Unix epoch timestamp of the configuration context initialization. | gauge | seconds |
-| `fluentbit_filter_added_records_total` | name: the name or alias for the filter instance | The number of log records added by the filter into the data pipeline. | counter | records |
+| `fluentbit_filter_add_records_total` | name: the name or alias for the filter instance | The number of log records added by the filter into the data pipeline. | counter | records |
 | `fluentbit_filter_bytes_total` | name: the name or alias for the filter instance | The number of bytes of log records that this filter instance has ingested successfully. | counter | bytes |
 | `fluentbit_filter_drop_records_total` | name: the name or alias for the filter instance | The number of log records dropped by the filter and removed from the data pipeline. | counter | records |
 | `fluentbit_filter_records_total` | name: the name or alias for the filter instance | The number of log records this filter has ingested successfully. | counter | records |
