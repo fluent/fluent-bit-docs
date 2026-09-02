@@ -26,7 +26,7 @@ This plugin supports the following parameters:
 | `buffer_size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512k` |
 | `compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ |
 | `current_time_index` | Use current time for index generation instead of message record. | `Off` |
-| `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. | `Off` |
+| `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. See [Bulk retries](#bulk-retries). | `Off` |
 | `host` | IP address or hostname of the target OpenSearch instance. | `127.0.0.1` |
 | `http_passwd` | Password for user defined in `http_user`. | _none_ |
 | `http_user` | Optional username credential for HTTP basic authentication. | _none_ |
@@ -79,6 +79,22 @@ The `write_operation` can be any of:
 {% hint style="info" %}
 
 `Id_Key` or `Generate_ID` is required for `update` and `upsert`.
+
+{% endhint %}
+
+### Bulk retries
+
+Fluent Bit sends records to the OpenSearch `_bulk` API in batches. OpenSearch can accept some documents in a batch while rejecting others, and reports this with an HTTP `200` response that contains `"errors": true` and a per-document `status` in the `items` array.
+
+When this happens, Fluent Bit inspects each item and rebuilds the payload so that it contains only the documents that weren't accepted. The flush is retried, and the next attempt sends that reduced payload instead of the original batch. Documents that OpenSearch already accepted aren't sent again, which limits duplicates caused by partial failures. This behavior is always active and has no configuration option. It applies to log records. Trace records use the previous behavior, where any reported error retries the whole batch.
+
+A document counts as accepted when its `status` is in the `2xx` range. A `409` conflict also counts as accepted, for every write operation.
+
+If Fluent Bit can't interpret the bulk response, it logs `invalid OpenSearch bulk response` and retries the entire batch. Set `trace_error` to `On` to print the request and response for diagnosis. Because a batch can still be re-sent in full in this case, set `generate_id` or `id_key` so that every document carries a stable, unique `_id` across attempts. What a repeated write then does depends on `write_operation`. With `create`, OpenSearch rejects the duplicate with a `409` conflict, which Fluent Bit counts as accepted. With `index`, `update`, or `upsert`, OpenSearch applies the write again, and these operations aren't inherently no-ops, so choose an `_id` scheme and a write operation that make a repeated write safe for your data.
+
+{% hint style="info" %}
+
+A successful bulk response can be larger than `buffer_size`, in which case Fluent Bit reads only part of it. The batch is still treated as complete when the truncated response shows a top-level `"errors": false`. Otherwise the batch is retried in full. Increase `buffer_size` if you send large batches.
 
 {% endhint %}
 
