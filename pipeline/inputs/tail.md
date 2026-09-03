@@ -625,17 +625,17 @@ pipeline:
 
 ## Metrics
 
-The Tail input plugin exposes plugin-specific metrics through the internal HTTP monitoring interface. For general monitoring configuration and metric endpoint details, see [Monitoring](../../administration/monitoring.md).
+The Tail input plugin exposes plugin-specific metrics through the internal HTTP monitoring interface. The following table lists the metrics that apply to this plugin. [Monitoring](../../administration/monitoring.md) remains the complete reference for Fluent Bit metrics, including the labels attached to each one and the endpoints that expose them.
 
-The following metrics track file lifecycle events, processing progress, and unread byte abandonment:
+These metrics track file lifecycle events, processing progress, and unread byte abandonment:
 
 | Metric | Type | Description | Unit |
 | ------ | ---- | ----------- | ---- |
 | `fluentbit_input_files_opened_total` | counter | The total number of opened files. | files |
 | `fluentbit_input_files_closed_total` | counter | The total number of closed files. | files |
 | `fluentbit_input_files_rotated_total` | counter | The total number of rotated files. | files |
-| `fluentbit_input_files_processed_bytes_total` | counter | The cumulative raw source-file bytes past which the resumable offset has advanced. | bytes |
-| `fluentbit_input_files_abandoned_bytes_total` | counter | The cumulative unread raw source-file bytes discarded when monitored files are terminally removed (`rotate_wait` expiration, file deletion, or truncation). | bytes |
+| `fluentbit_input_files_processed_bytes_total` | counter | The cumulative number of raw source-file bytes processed. This counter advances with the resumable offset, so bytes held in the buffer as an incomplete trailing line aren't counted until that line completes. | bytes |
+| `fluentbit_input_files_abandoned_bytes_total` | counter | The cumulative number of unread raw source-file bytes discarded when a monitored file is truncated or removed from the monitored list. Removal includes file deletion, rotation, and `rotate_wait` expiration. | bytes |
 | `fluentbit_input_long_line_skipped_total` | counter | The total number of skipped occurrences for long lines when `skip_long_lines` is enabled. | occurrences |
 | `fluentbit_input_long_line_truncated_total` | counter | The total number of truncated occurrences for long lines when `truncate_long_lines` is enabled. | occurrences |
 | `fluentbit_input_multiline_truncated_total` | counter | The total number of truncated occurrences for multiline messages when `multiline.parser` is configured. | occurrences |
@@ -648,4 +648,17 @@ $$
 \text{Completeness} = \frac{\text{processed\_bytes}}{\text{processed\_bytes} + \text{abandoned\_bytes}}
 $$
 
-Under normal operation without premature file removal or backpressure drops during rotation, `fluentbit_input_files_abandoned_bytes_total` remains `0`, yielding a completeness ratio of `1.0`.
+The denominator is zero when both counters are `0`, which is the case at startup before Fluent Bit processes or abandons any bytes. Treat the ratio as not applicable in that case instead of as a failure. Alerting rules must guard against this division by zero.
+
+When the denominator is non-zero and `fluentbit_input_files_abandoned_bytes_total` is `0`, the ratio is `1.0`. This is the expected value under normal operation without premature file removal or backpressure drops during rotation.
+
+Both metrics are cumulative counters, so this formula reports completeness across the entire lifetime of the Fluent Bit process. A single abandonment event lowers the value permanently, even after the underlying problem is fixed. To measure completeness over a recent window instead, apply the same formula to the rate of each counter:
+
+```text
+sum(rate(fluentbit_input_files_processed_bytes_total[5m]))
+/
+(sum(rate(fluentbit_input_files_processed_bytes_total[5m]))
+  + sum(rate(fluentbit_input_files_abandoned_bytes_total[5m])) > 0)
+```
+
+The trailing `> 0` drops the result when the denominator is zero, which happens when both counters exist but neither advances during the window. Without that filter, the query evaluates `0 / 0` and returns a NaN sample instead of an empty result.
