@@ -622,3 +622,30 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+## Metrics
+
+The Tail input plugin exposes plugin-specific metrics through the internal HTTP monitoring interface. For general monitoring configuration and metric endpoint details, see [Monitoring](../../administration/monitoring.md).
+
+The following metrics track file lifecycle events, processing progress, and unread byte abandonment:
+
+| Metric | Type | Description | Unit |
+| ------ | ---- | ----------- | ---- |
+| `fluentbit_input_files_opened_total` | counter | The total number of opened files. | files |
+| `fluentbit_input_files_closed_total` | counter | The total number of closed files. | files |
+| `fluentbit_input_files_rotated_total` | counter | The total number of rotated files. | files |
+| `fluentbit_input_files_processed_bytes_total` | counter | The cumulative raw source-file bytes past which the resumable offset has advanced. | bytes |
+| `fluentbit_input_files_abandoned_bytes_total` | counter | The cumulative unread raw source-file bytes discarded when monitored files are terminally removed (`rotate_wait` expiration, file deletion, or truncation). | bytes |
+| `fluentbit_input_long_line_skipped_total` | counter | The total number of skipped occurrences for long lines when `skip_long_lines` is enabled. | occurrences |
+| `fluentbit_input_long_line_truncated_total` | counter | The total number of truncated occurrences for long lines when `truncate_long_lines` is enabled. | occurrences |
+| `fluentbit_input_multiline_truncated_total` | counter | The total number of truncated occurrences for multiline messages when `multiline.parser` is configured. | occurrences |
+
+### Monitor log completeness
+
+Comparing `fluentbit_input_files_processed_bytes_total` and `fluentbit_input_files_abandoned_bytes_total` provides a lag-independent indicator of whether log data was fully drained before files were removed from rotation or deleted:
+
+$$
+\text{Completeness} = \frac{\text{processed\_bytes}}{\text{processed\_bytes} + \text{abandoned\_bytes}}
+$$
+
+Under normal operation without premature file removal or backpressure drops during rotation, `fluentbit_input_files_abandoned_bytes_total` remains `0`, yielding a completeness ratio of `1.0`.
