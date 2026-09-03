@@ -22,9 +22,11 @@ This plugin supports the following parameters:
 | `gelf_short_message_key` | Key to use as the short message for GELF format output. | _none_ |
 | `gelf_timestamp_key` | Key to use as the timestamp for GELF format output. | _none_ |
 | `group_id` | Consumer group ID. | _none_ |
+| `headers_key` | Top-level record field containing a map to use as Kafka message headers. A blank value disables this option. | _none_ |
 | `message_key` | Optional key to store the message. | _none_ |
 | `message_key_field` | If set, the value of `message_key_field` in the record will indicate the message key. If not set or not found in the record, `message_key` is used if set. | _none_ |
 | `otlp_logs_partition_by_resource` | When using `otlp_json` or `otlp_proto` format for logs, send each OTLP resource's logs as a separate Kafka message. | `false` |
+| `preserve_headers_key` | Keep the map selected by `headers_key` in the serialized message payload. | `false` |
 | `queue_full_retries` | Number of local retries to enqueue data when the `rdkafka` queue is full. The interval between retries is 1 second. Set to `0` for unlimited retries. | `10` |
 | `raw_log_key` | When using the `raw` format, the value of `raw_log_key` in the record is sent to Kafka as the payload. | _none_ |
 | `rdkafka.{property}` | `{property}` can be any [librdkafka property](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md). | _none_ |
@@ -88,6 +90,60 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Set record-derived Kafka message headers
+
+Use `headers_key` to select a top-level record field containing Kafka message headers. If the configured field name isn't blank, Fluent Bit matches it exactly. An empty or whitespace-only value disables record-derived headers.
+
+The selected field must be a map. Header names must be strings. Header values can be strings, binary values, or null values. Fluent Bit preserves the map's order and duplicate header names. It skips unsupported entries and logs a warning. A map is valid even when it contains unsupported entries.
+
+By default, Fluent Bit removes a valid selected map from the serialized message payload after converting its entries to Kafka message headers. Removal covers the entire map, including any unsupported entries that Fluent Bit skipped, so those entries reach neither the Kafka message headers nor the payload. Set `preserve_headers_key` to `true` to keep the original map in the payload. A missing selected field doesn't change the payload. A selected field with a non-map value also remains in the payload to avoid data loss. An empty map is valid and follows the configured preservation behavior.
+
+Record-derived headers work with the `avro`, `gelf`, `json`, `msgpack`, and `raw` formats. They aren't supported with the `otlp_json` or `otlp_proto` formats. Kafka message headers require brokers compatible with Apache Kafka 0.11 or later.
+
+The following example converts the `kafka_headers` map to Kafka message headers and removes that map from the JSON message body:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: example.logs
+      dummy: '{"message":"example","kafka_headers":{"trace-id":"abc-123","content-type":"application/json"}}'
+
+  outputs:
+    - name: kafka
+      match: example.logs
+      brokers: 192.0.2.10:9092
+      topics: example-logs
+      format: json
+      headers_key: kafka_headers
+      preserve_headers_key: false
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name  dummy
+  Tag   example.logs
+  Dummy {"message":"example","kafka_headers":{"trace-id":"abc-123","content-type":"application/json"}}
+
+[OUTPUT]
+  Name        kafka
+  Match       example.logs
+  Brokers     192.0.2.10:9092
+  Topics      example-logs
+  Format      json
+  Headers_Key kafka_headers
+  Preserve_Headers_Key false
 ```
 
 {% endtab %}
@@ -328,7 +384,7 @@ If you are compiling Fluent Bit from source, ensure the following requirements a
 - Build Requirements
 
 | Platform | Requirements |
-|----------|-------------|
+| :--- | :--- |
 | **Linux/macOS** | The packages `libsasl2` and `libsasl2-dev` must be installed on your build environment. |
 | **Windows** | No additional SASL libraries required. Windows uses the built-in Security Support Provider Interface (SSPI) for SASL authentication, which only requires OpenSSL/TLS to be enabled. |
 
