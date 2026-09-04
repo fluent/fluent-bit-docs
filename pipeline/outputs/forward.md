@@ -56,7 +56,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 
 ## Forward setup
 
-Before proceeding, ensure that [Fluentd](https://www.fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation) document.
+Before proceeding, ensure that [Fluentd](https://www.fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation/) document.
 
 After installing Fluentd, create the following configuration file example which lets you to stream data into it:
 
