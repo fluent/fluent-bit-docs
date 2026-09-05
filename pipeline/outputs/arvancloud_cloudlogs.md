@@ -22,8 +22,7 @@ Fluent Bit posts a JSON body to the fixed endpoint `https://napi.arvancloud.ir/l
 | `log_type` | Static `logType` value used when `log_type_key` isn't set, or when the record field referenced by `log_type_key` is missing or empty. | `fluentbit` |
 | `log_type_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a field from the record to use as `logType`. When the field exists and isn't empty, it takes priority over `log_type`. | _none_ |
 | `tag_key` | Field name used for the Fluent Bit tag when `include_tag_key` is enabled. | `tag` |
-| `timestamp_format` | Optional `strptime`-style format used to parse the value selected by `timestamp_key`. When set, Fluent Bit parses the field and rewrites it as UTC RFC3339 with microseconds. When omitted, the `timestamp_key` value is forwarded as-is. | _none_ |
-| `timestamp_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a record field to use as the CloudLogs `timestamp`. If the key is unset, or the field is missing, empty, or can't be parsed, Fluent Bit uses the event timestamp. | _none_ |
+| `timestamp_key` | Optional [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) that selects a record field to forward as the CloudLogs `timestamp`. The value is sent as-is. If the key is unset, or the field is missing or empty, Fluent Bit uses the event timestamp formatted as UTC RFC3339 with microseconds. | _none_ |
 
 The destination host (`napi.arvancloud.ir`), port (`443`), URI (`/logging/v1/entries/write`), and HTTPS scheme are fixed by the plugin. Host, port, and URI aren't configurable.
 
@@ -57,9 +56,10 @@ Behavior notes:
 - When `include_tag_key` is enabled, the tag is added as a sibling field of `payload` using `tag_key`.
 - `logType` resolution order is `log_type_key` (when present and non-empty), then `log_type`.
 - Timestamp resolution:
-  1. If `timestamp_key` and `timestamp_format` are set, parse the field and emit UTC RFC3339 with microseconds (for example `2024-01-15T10:30:45.000000Z`).
-  2. If `timestamp_key` is set without `timestamp_format`, forward the field value as-is.
-  3. Otherwise, or if extraction or parsing fails, use the Fluent Bit event timestamp formatted as UTC RFC3339 with microseconds.
+  1. If `timestamp_key` is set and the field exists and isn't empty, forward the field value as-is.
+  2. Otherwise, use the Fluent Bit event timestamp formatted as UTC RFC3339 with microseconds (for example `2024-01-15T10:30:45.000000Z`).
+
+To parse a timestamp string into event time, use a [parser](../parsers/configuring-parser.md).
 
 ## HTTP response handling
 
@@ -120,7 +120,7 @@ pipeline:
   inputs:
     - name: dummy
       tag: app.logs
-      dummy: '{"message":"hello","category":"security","ts":"2024-01-15T10:30:45Z"}'
+      dummy: '{"message":"hello","category":"security","ts":"2024-01-15T10:30:45.123456+01:00"}'
 
   outputs:
     - name: arvancloud_cloudlogs
@@ -129,7 +129,6 @@ pipeline:
       log_type: myapp
       log_type_key: $category
       timestamp_key: $ts
-      timestamp_format: '%Y-%m-%dT%H:%M:%SZ'
       gzip: true
       include_tag_key: true
       tag_key: fluentbit_tag
@@ -142,7 +141,7 @@ pipeline:
 [INPUT]
   Name   dummy
   Tag    app.logs
-  Dummy  {"message":"hello","category":"security","ts":"2024-01-15T10:30:45Z"}
+  Dummy  {"message":"hello","category":"security","ts":"2024-01-15T10:30:45.123456+03:30"}
 
 [OUTPUT]
   Name              arvancloud_cloudlogs
@@ -151,7 +150,6 @@ pipeline:
   Log_Type          myapp
   Log_Type_Key      $category
   Timestamp_Key     $ts
-  Timestamp_Format  %Y-%m-%dT%H:%M:%SZ
   Gzip              true
   Include_Tag_Key   true
   Tag_Key           fluentbit_tag
@@ -160,7 +158,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-With that example, Fluent Bit derives `logType` from `$category` (`security`), normalizes `$ts` to `2024-01-15T10:30:45.000000Z`, compresses the request body with gzip when possible, and includes the tag under `fluentbit_tag`.
+With that example, Fluent Bit derives `logType` from `$category` (`security`), forwards `$ts` as the CloudLogs timestamp, compresses the request body with gzip when possible, and includes the tag under `fluentbit_tag`.
 
 ## References
 
