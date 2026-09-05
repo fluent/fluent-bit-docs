@@ -141,7 +141,7 @@ pipeline:
 [INPUT]
   Name   dummy
   Tag    app.logs
-  Dummy  {"message":"hello","category":"security","ts":"2024-01-15T10:30:45.123456+03:30"}
+  Dummy  {"message":"hello","category":"security","ts":"2024-01-15T10:30:45.123456+01:00"}
 
 [OUTPUT]
   Name              arvancloud_cloudlogs
