@@ -22,6 +22,7 @@ exceptions:
   - Apache Arrow
   - API
   - APIs
+  - ArvanCloud CloudLogs
   - AWS
   - AWS MSK IAM
   - AWS IAM
