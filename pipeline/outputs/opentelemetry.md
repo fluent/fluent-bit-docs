@@ -105,6 +105,7 @@ pipeline:
 | `logs_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/logs` |
 | `match` | Set a tag pattern to match records that output should process. Exact matches or wildcards (for example `*`). | _none_ |
 | `match_regex` | Set a regular expression to match tags for output routing. This allows more flexible matching compared to wildcards. | _none_ |
+| `metrics_max_datapoints` | Set the maximum number of metric data points per OTLP export request. Fluent Bit splits a metrics payload that exceeds this value into multiple export requests. `0` disables the limit and sends each payload as a single request. Negative values are rejected at startup. See [Metrics batching](#metrics-batching). Supported in v5.1.2 or later. | `0` |
 | `metrics_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/metrics` |
 | `net.connect_timeout` | Set maximum time allowed to establish a connection, this time includes the TLS handshake. | `10s` |
 | `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | `true` |
@@ -162,6 +163,22 @@ pipeline:
 | `tls.windows.use_enterprise_store` | Sets whether using enterprise `certstore` or not on an output (Windows). | _none_ |
 | `traces_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/traces` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+
+## Metrics batching
+
+Some OTLP receivers reject export requests that carry too many metric data points. Set `metrics_max_datapoints` to cap the number of data points in a single request. When a metrics payload exceeds the limit, Fluent Bit splits it into several export requests and sends them in order.
+
+By default, `metrics_max_datapoints` is `0`, which disables splitting and sends each metrics payload as one request.
+
+When splitting is active and one of the requests fails after an earlier request in the same payload already succeeded, Fluent Bit logs a warning similar to the following and doesn't retry:
+
+```text
+metric payload partially succeeded (2/5 batches); skipping retry to avoid resending accepted data
+```
+
+Fluent Bit skips the retry because a retry sends the whole payload again, which would duplicate the data points the receiver already accepted. The data points in the remaining requests are dropped. If a request fails before any request in the payload succeeds, Fluent Bit retries the payload as usual.
+
+Choose a value that your receiver accepts without needing frequent splits. A value that's too low increases the number of requests and the chance of a partial send.
 
 ## Get started
 
