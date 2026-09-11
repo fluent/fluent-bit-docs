@@ -34,7 +34,7 @@ The `service` section of YAML configuration files defines global properties of t
 | `json.convert_nan_to_null` | If enabled, `NaN` is converted to `null` when Fluent Bit converts `msgpack` to JSON. | `false` |
 | `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
 | `log_file` | Absolute path for an optional log file. By default, all logs are redirected to the standard error interface (`stderr`). | _none_ |
-| `log_level` | Sets the logging verbosity level. Possible values: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. For example, if `debug` is set, it will include `error`, `warning`, `info`, and `debug`. The `trace` mode is only available if Fluent Bit was built with the `FLB_TRACE` option enabled. | `info` |
+| `log_level` | Sets the logging verbosity level. Possible values: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. For example, if `debug` is set, it will include `error`, `warning`, `info`, and `debug`. The `trace` mode is only available if Fluent Bit was built with the `FLB_TRACE` option enabled. You can also set this value with the `FLB_LOG_LEVEL` environment variable. See [Log level](#log-level). | `info` |
 | `multiline_buffer_limit` | Sets the default buffer size limit for multiline parsers. This value must follow [unit size](../../configuring-fluent-bit.md#unit-sizes) specifications. | `2MB` |
 | `parsers_file` | Path for [standalone parsers configuration files](../yaml/parsers-section.md#standalone-parsers-files). You can include one or more files. | _none_ |
 | `plugins_file` | Path for a `plugins` configuration file. This file specifies the paths to external plugins (.so files) that Fluent Bit can load at runtime. Plugins can also be declared directly in the [`plugins` section](../yaml/plugins-section.md) of YAML configuration files. | _none_ |
@@ -82,6 +82,22 @@ service:
 
 {% endtab %}
 {% endtabs %}
+
+## Log level
+
+The `log_level` key sets the verbosity of the logs Fluent Bit produces about itself. You can set the same value with the `FLB_LOG_LEVEL` environment variable.
+
+`FLB_LOG_LEVEL` accepts the same values as the `log_level` key. Values aren't case-sensitive, and `warning` is accepted as an alias for `warn`.
+
+In Fluent Bit version 5.1.2 and greater, setting `FLB_LOG_LEVEL` takes precedence over the `log_level` key. Setting both is valid: Fluent Bit applies the value from the environment variable and ignores the configured value. This lets you raise verbosity for a single run without editing the configuration file:
+
+```shell
+FLB_LOG_LEVEL=debug fluent-bit --config fluent-bit.yaml
+```
+
+{% hint style="info" %}
+In Fluent Bit versions 5.1.0 and 5.1.1, setting `FLB_LOG_LEVEL` and `log_level` at the same time causes startup to fail with `could not configure service property log_level`. Fluent Bit version 5.1.2 and greater applies the correct precedence instead.
+{% endhint %}
 
 ## FIPS mode
 
