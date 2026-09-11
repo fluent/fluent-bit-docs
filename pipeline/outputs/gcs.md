@@ -42,7 +42,7 @@ The metadata server isn't a fallback for a failed credentials file. It's used on
 
 {% hint style="info" %}
 
-Workload Identity Federation is available in Fluent Bit version 5.1.3 and greater.
+Workload Identity Federation is available in Fluent Bit version 5.1.2 and greater.
 
 {% endhint %}
 
