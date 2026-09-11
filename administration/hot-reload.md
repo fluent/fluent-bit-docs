@@ -37,6 +37,20 @@ service:
 {% endtab %}
 {% endtabs %}
 
+## Relative paths
+
+A configuration file can reference other files with a relative path, including `parsers_file`, `plugins_file`, upstream high availability files, and the stream processor `streams_file`.
+
+Fluent Bit resolves a relative reference in two steps. It first looks for the file at the path exactly as written, relative to the working directory of the Fluent Bit process. If no file exists there, it looks for the file in the directory that holds the main configuration file. An absolute path is used as provided and isn't retried.
+
+Fluent Bit version 5.1.2 and greater keeps track of the main configuration file's directory across a hot reload. In earlier versions, the reloaded configuration lost that directory, so a relative reference that resolved at startup failed to resolve after a reload. On those versions, use absolute paths for referenced files if you rely on hot reload.
+
+If Fluent Bit can't preserve the directory while reloading, it stops the reload, keeps the previous configuration running, and logs:
+
+```text
+[reload] copying configuration path failed. Reloading is halted
+```
+
 ## How to reload
 
 After updating the configuration, use one of the following methods to perform a hot reload:
