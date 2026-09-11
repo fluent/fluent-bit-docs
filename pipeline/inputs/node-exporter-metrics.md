@@ -93,7 +93,7 @@ The Version column specifies the Fluent Bit version where the collector is avail
 | `hwmon`            | Exposes hardware monitoring metrics from `/sys/class/hwmon`.                                                                                                                       | Linux            | 2.2.0                      |
 | `loadavg`          | Exposes load average.                                                                                                                                                              | Linux, macOS     | 1.8                        |
 | `meminfo`          | Exposes memory statistics.                                                                                                                                                         | Linux, macOS     | 1.8                        |
-| `netdev`           | Exposes network interface statistics such as bytes transferred.                                                                                                                    | Linux, macOS     | 1.8.2                      |
+| `netdev`           | Exposes network interface statistics such as bytes transferred. See [Network interface metric expiration](#network-interface-metric-expiration).                                   | Linux, macOS     | 1.8.2                      |
 | `netstat`          | Exposes network statistics from `/proc/net/netstat`, including the `TcpExt` and `IpExt` counters.                                                                                  | Linux            | 2.2.0                      |
 | `nvme`             | Exposes `nvme` statistics from `/proc`.                                                                                                                                            | Linux            | 2.2.0                      |
 | `powersupplyclass` | Exposes power supply statistics, such as battery capacity and charge state, from `/sys/class/power_supply` on Linux and from `IOKit` on macOS.                                     | Linux, macOS     | 5.1                        |
@@ -126,6 +126,18 @@ macOS has no `/sys/class/thermal` equivalent, so the collector reads `IOKit` ins
 The three `cpu_` metrics come from the operating system's CPU power status, which macOS only reports when a limit has been recorded. They're absent until then, and each is created individually, so you might see some of the three before the others. The ratios are reported as fractions between `0` and `1` rather than as percentages.
 
 A sensor that doesn't report a product name is labeled `Unknown #N`, where `N` counts the unnamed sensors found during that scrape.
+
+### Network interface metric expiration
+
+Network interface metric expiration is available in Fluent Bit version 5.1.2 and greater.
+
+Every time the `netdev` collector runs, it removes the metrics for any network interface it didn't observe during that scan. Expiration applies to each interface separately, so the interfaces still present keep reporting as usual.
+
+In earlier versions, an interface that went away kept its last known values in every following scrape. The set of reported interfaces then grew without bound on hosts that create and destroy interfaces frequently, such as container hosts with short-lived virtual interfaces. Consumers also couldn't tell a departed interface from an idle one.
+
+Because a departed interface stops producing samples instead of repeating its final value, a time series for that interface ends rather than flattening. Queries that expect a continuous series for every interface the host has ever had need to account for series that stop.
+
+This behavior applies to the `netdev` collector on both Linux and macOS. Other collectors are unaffected.
 
 ## Threading
 
