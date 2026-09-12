@@ -64,6 +64,7 @@
 * [Monitoring](administration/monitoring.md)
 * [Multithreading](administration/multithreading.md)
 * [Networking](administration/networking.md)
+* [On-demand flush](administration/on-demand-flush.md)
 * [Performance tips](administration/performance.md)
 * [Scheduling and retries](administration/scheduling-and-retries.md)
 * [TLS](administration/transport-security.md)
