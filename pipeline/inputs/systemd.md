@@ -131,3 +131,91 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+## Parse messages with a per-unit parser
+
+The Systemd input plugin can select a [parser](../parsers.md) at runtime, on a per-entry basis, based on the value of the `FLUENT_BIT_PARSER` journal field. When this field is present, the plugin applies the named parser to the entry's `MESSAGE` field and emits the parsed key/value pairs as structured fields instead of the raw message.
+
+Use this when the application that emits the logs knows how its messages are formatted (for example `logfmt` or `json`). You can advertise the parser directly from the systemd unit file using `LogExtraFields`, without adding any plugin configuration:
+
+```ini
+[Service]
+LogExtraFields=FLUENT_BIT_PARSER=logfmt
+```
+
+Every journal entry produced by that unit then carries `FLUENT_BIT_PARSER=logfmt`, and Fluent Bit parses the `MESSAGE` field with the `logfmt` parser (which must be defined in your parsers configuration).
+
+Behavior notes:
+
+- The `FLUENT_BIT_PARSER` field is treated as metadata: it's removed from the emitted record and doesn't count toward `max_fields`.
+- Only the `MESSAGE` field is parsed. The parsed fields replace the raw `MESSAGE` in the resulting record.
+- If the named parser doesn't exist, or if parsing fails, Fluent Bit falls back to emitting the original, unmodified `MESSAGE` (an error is logged when the parser can't be found).
+- The parser is resolved per entry, so different units can request different parsers on the same journal.
+
+### Configuration example
+
+Define the parser you want to reference. This example uses a `logfmt` parser:
+
+{% tabs %}
+{% tab title="parsers.yaml" %}
+
+```yaml
+parsers:
+  - name: logfmt
+    format: logfmt
+```
+
+{% endtab %}
+{% tab title="parsers.conf" %}
+
+```text
+[PARSER]
+  Name   logfmt
+  Format logfmt
+```
+
+{% endtab %}
+{% endtabs %}
+
+Load the parsers file and run the Systemd input as usual:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+  parsers_file: parsers.yaml
+
+pipeline:
+  inputs:
+    - name: systemd
+      tag: host.*
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  Flush        1
+  Log_Level    info
+  Parsers_File parsers.conf
+
+[INPUT]
+  Name  systemd
+  Tag   host.*
+
+[OUTPUT]
+  Name   stdout
+  Match  *
+```
+
+{% endtab %}
+{% endtabs %}
+
+With `LogExtraFields=FLUENT_BIT_PARSER=logfmt` set on the emitting unit, a message such as `level=info msg="request handled" status=200` is emitted as structured fields (`level`, `msg`, `status`) instead of a single `MESSAGE` string.
