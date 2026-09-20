@@ -9,7 +9,7 @@ The `service` section of YAML configuration files defines global properties of t
 | `dns.mode` | Sets the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per-plugin basis. | `UDP` |
 | `dns.prefer_ipv4` | If enabled, the DNS resolver prefers IPv4 results when resolving hostnames. Possible values: `off` or `on`. | `off` |
 | `dns.prefer_ipv6` | If enabled, the DNS resolver prefers IPv6 results when resolving hostnames. Possible values: `off` or `on`. | `off` |
-| `dns.resolver` | Sets the DNS resolver implementation. Possible values: `LEGACY`, `ASYNC`. | _none_ |
+| `dns.resolver` | Sets the DNS resolver implementation. `ASYNC` uses the non-blocking resolver that runs on the Fluent Bit event loop, and `LEGACY` uses the blocking operating system resolver. When unset, each connection uses the resolver that matches the operating mode of the plugin making the connection. Can be overridden on a per-plugin basis. Possible values: `LEGACY`, `ASYNC`. | _none_ |
 | `enable_chunk_trace` | If enabled, activates chunk tracing for debugging purposes. Requires Fluent Bit to be built with the `FLB_HAVE_CHUNK_TRACE` option. Possible values: `off` or `on`. | `off` |
 | `flush` | Sets the flush time in `seconds.nanoseconds`. The engine loop uses a flush timeout to define when to flush the records ingested by input plugins through the defined output plugins. | `1` |
 | `flush.adaptive` | If enabled, Fluent Bit adjusts the flush interval at runtime based on chunk backpressure. See [Adaptive flush intervals](#adaptive-flush-intervals). Possible values: `off` or `on`. | `off` |

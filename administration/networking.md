@@ -36,6 +36,16 @@ If a connection keepalive is enabled, there might be scenarios where the connect
 
 The global `dns.mode` value issues DNS requests using the specified protocol, either TCP or UDP. If a transport layer protocol is specified, plugins that configure the `net.dns.mode` setting override the global setting.
 
+### DNS resolver
+
+The `net.dns.resolver` value selects which resolver implementation resolves hostnames for outbound connections. `ASYNC` uses the bundled asynchronous resolver, which runs on the Fluent Bit event loop and doesn't block the worker while a lookup is in flight. `LEGACY` uses the operating system resolver through `getaddrinfo()`, which blocks the worker until the lookup completes.
+
+When neither the global `dns.resolver` nor `net.dns.resolver` is set, each connection uses the resolver that matches the operating mode of the plugin making the connection. Asynchronous plugins use the asynchronous resolver, and synchronous plugins use the operating system resolver. When only `net.dns.resolver` is unset, the plugin inherits the global `dns.resolver` value instead. Setting `ASYNC` doesn't make a synchronous plugin asynchronous. Set `LEGACY` when you need name resolution to follow the behavior of the host platform, and expect the worker to block for the duration of each lookup.
+
+The `net.dns.mode` setting applies only to the asynchronous resolver. When `net.dns.resolver` is set to `LEGACY`, the operating system determines the transport protocol and `net.dns.mode` has no effect.
+
+The global `dns.resolver` value sets the resolver for every plugin. Plugins that configure the `net.dns.resolver` setting override the global setting.
+
 ### Maximum connections per worker
 
 For optimal performance, Fluent Bit tries to deliver data quickly and create TCP connections on-demand and in keepalive mode. In highly scalable environments, you might limit how many connections are created in parallel.
@@ -66,7 +76,7 @@ The following table describes the network configuration properties available and
 | `net.dns.mode`                  | Select the primary DNS connection type (`TCP` or `UDP`).                                                           | _none_  |
 | `net.dns.prefer_ipv4`           | Prioritize IPv4 DNS results when trying to establish a connection.                                                 | `false` |
 | `net.dns.prefer_ipv6`           | Prioritize IPv6 DNS results when trying to establish a connection.                                                 | `false` |
-| `net.dns.resolver`              | Select the primary DNS resolver type (`LEGACY` or `ASYNC`).                                                        | _none_  |
+| `net.dns.resolver`              | Select the DNS resolver implementation: `ASYNC` (non-blocking) or `LEGACY` (operating system resolver).            | _none_  |
 | `net.keepalive_max_recycle`     | Set maximum number of times a keepalive connection can be used before it's retired.                                | `2000`  |
 | `net.max_worker_connections`    | Set maximum number of TCP connections that can be established per worker.                                          | `0`     |
 | `net.proxy_env_ignore`          | Ignore the `HTTP_PROXY`/`http_proxy` and `NO_PROXY`/`no_proxy` environment variables when set.                     | `false` |
