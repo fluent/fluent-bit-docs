@@ -16,7 +16,7 @@ The plugin supports the following configuration parameters:
 | `parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
 | `preserve_key` | Keep the original `key_name` field in the parsed result. If false, the field will be removed. | `false` |
 | `reserve_data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `false` |
-| `Unescape_key` | Deprecated. This option is retained only for backward compatibility and should not be used in new configurations. | _deprecated_ |
+| `Unescape_key` | Deprecated. This option is retained only for backward compatibility and shouldn't be used in new configurations. | _deprecated_ |
 
 ## Get started
 
@@ -27,7 +27,7 @@ The plugin needs a parser file which defines how to parse each field.
 This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="parser.yaml" %}
 
 ```yaml
 parsers:
@@ -37,7 +37,7 @@ parsers:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="parser.conf" %}
 
 ```text
 [PARSER]
@@ -55,8 +55,9 @@ The path of the parser file should be written in configuration file under the `[
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -80,7 +81,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -154,8 +155,9 @@ Now add `reserve_data` to the filter section of the corresponding configuration 
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -180,7 +182,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -248,8 +250,9 @@ Now add `reserve_data` and `preserve_key` to the filter section of the correspon
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -275,7 +278,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy

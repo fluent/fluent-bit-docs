@@ -5,7 +5,7 @@
 
 First of all, thanks for taking the time to read this guide. The fact that you're here means you're interested in contributing to Fluent Bit, and we greatly appreciate your time.
 
-This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/manual/). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
+This repository contains the files for the [Fluent Bit documentation library](https://docs.fluentbit.io/manual). Keeping these docs separate from the [main Fluent Bit repository](https://github.com/fluent/fluent-bit) helps reduce the number of commits to the Fluent Bit source code and makes it easier to maintain both projects.
 
 Fluent Bit has a group of dedicated maintainers who oversee this repository, including several technical writers. These writers will review any pull requests you open, so don't be afraid to contribute, even if you're not a writer by trade. Your suggestions are valuable, and we'll help you wrangle any stray commas.
 
@@ -102,7 +102,7 @@ awkwardly.
 ### Quotes
 
 By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
-curly quotes. If you copy-paste from one of these tools, you must correct the quotes back to straight quotes. You can also turn off smart quotes in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en) or [Microsoft Word](https://support.microsoft.com/en-us/office/smart-quotes-in-word-and-powerpoint-702fc92e-b723-4e3d-b2cc-71dedaf2f343) to prevent this problem.
+curly quotes. If you copy-paste from one of these tools, you must correct the quotes back to straight quotes. You can also turn off smart quotes in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en) or [Microsoft Word](https://support.microsoft.com/en-US/Word/smart-quotes-in-word-and-powerpoint) to prevent this problem.
 
 ### Table of contents
 
@@ -141,6 +141,10 @@ Every plugin page should include both a YAML and a classic configuration example
 {% endtabs %}
 ```
 
+We have some checks in CI to validate these examples so ensure the `scripts/validate-changed-files.sh` script passes for your branch vs the origin.
+This uses the Fluent Bit linux container so may not always pass, e.g. for Windows plugins.
+Suppressions can be defined in the `scripts/test-config.sh` script with a comment explaining why.
+
 ### Key casing in examples
 
 Key casing differs between the two configuration formats:
@@ -174,7 +178,7 @@ This repository runs linters as GitHub Actions for each pull request. If a linte
 
 ### Vale
 
-[Vale](https://vale.sh/docs) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
+[Vale](https://docs.vale.sh/) lints prose for style and clarity. In addition to reviewing the results of each Vale test in GitHub, you can use the [Vale plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to view errors and suggestions locally.
 
 Vale tests for the Fluent Bit docs are stored in the [`/vale-styles`](https://github.com/fluent/fluent-bit-docs/tree/master/vale-styles) folder. Most Vale tests are at the `suggestion` or `warning` level and won't block pull requests from merging. However, tests at the `error` level will block merging until the associated issue is fixed.
 

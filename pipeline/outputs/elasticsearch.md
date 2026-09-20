@@ -6,6 +6,8 @@ description: Send logs to Elasticsearch (including Amazon OpenSearch Service)
 
 The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [Elasticsearch](https://www.elastic.co) database. To use this plugin, you must have an operational Elasticsearch service running in your environment.
 
+In Fluent Bit 5.1 and later, `elasticsearch` is accepted as an alias for the plugin name `es`. Both `name: es` and `name: elasticsearch` load this output plugin. The alias applies only to output plugins. The [Elasticsearch input plugin](../inputs/elasticsearch.md) is named `elasticsearch` and is unaffected.
+
 ## Configuration parameters
 
 | Key | Description | Default |
@@ -22,7 +24,7 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 | `cloud_id` | If using Elastic's Elasticsearch Service you can specify the `cloud_id` of the cluster running. The string has the format `<deployment_name>:<base64_info>`. Once decoded, the `base64_info` string has the format `<deployment_region>$<elasticsearch_hostname>$<kibana_hostname>`. | _none_ |
 | `compress` | Set payload compression mechanism. Option available is `gzip`. | _none_ |
 | `current_time_index` | Use current time for index generation instead of message record. | `Off` |
-| `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. | `Off` |
+| `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying ES. See [Bulk retries](#bulk-retries). | `Off` |
 | `host` | IP address or hostname of the target Elasticsearch instance. | `127.0.0.1` |
 | `http_api_key` | API key for authenticating with Elasticsearch. Must be `base64` encoded. If `http_user` or `cloud_auth` are defined, this parameter is ignored. | _none_ |
 | `http_passwd` | Password for user defined in `http_user`. | _none_ |
@@ -52,6 +54,12 @@ The _Elasticsearch_ (`es`) output plugin lets you ingest your records into an [E
 
 If you have used a common relational database, the parameters `index` and `type` can be compared to the `database` and `table` concepts.
 
+{% hint style="info" %}
+
+In YAML configuration, quote any [strftime](https://man7.org/linux/man-pages/man3/strftime.3.html) format value that begins with `%`, such as `logstash_dateformat` and `time_key_format`. YAML treats `%` as a reserved character, so an unquoted value like `logstash_dateformat: %Y.%m.%d` fails to parse. Use `logstash_dateformat: "%Y.%m.%d"` instead.
+
+{% endhint %}
+
 ### TLS / SSL
 
 The Elasticsearch output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
@@ -60,16 +68,32 @@ The Elasticsearch output plugin supports TLS/SSL. For more details about the pro
 
 The `write_operation` can be any of:
 
-| Operation   | Description |
-| ----------- | ----------- |
-| `create`    | Adds new data. If the data already exists (based on its id), the op is skipped.|
-| `index`     | New data is added while existing data (based on its id) is replaced (reindexed).|
-| `update`    | Updates existing data (based on its id). If no data is found, the op is skipped. |
-| `upsert`    | Merge or insert if the data doesn't exist, updates if the data exists (based on its id).|
+| Operation | Description                                                                              |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `create`  | Adds new data. If the data already exists (based on its id), the op is skipped.          |
+| `index`   | New data is added while existing data (based on its id) is replaced (reindexed).         |
+| `update`  | Updates existing data (based on its id). If no data is found, the op is skipped.         |
+| `upsert`  | Merge or insert if the data doesn't exist, updates if the data exists (based on its id). |
 
 {% hint style="info" %}
 
 `Id_Key` or `Generate_ID` is required for `update` and `upsert`.
+
+{% endhint %}
+
+### Bulk retries
+
+Fluent Bit sends records to the Elasticsearch `_bulk` API in batches. Elasticsearch can accept some documents in a batch while rejecting others, and reports this with an HTTP `200` response that contains `"errors": true` and a per-document `status` in the `items` array.
+
+When this happens, Fluent Bit inspects each item and rebuilds the payload so that it contains only the documents that weren't accepted. The flush is retried, and the next attempt sends that reduced payload instead of the original batch. Documents that Elasticsearch already accepted aren't sent again, which limits duplicates caused by partial failures. This behavior is always active and has no configuration option.
+
+A document counts as accepted when its `status` is in the `2xx` range. A `409` conflict also counts as accepted, but only for the `create` operation, where the conflict confirms the document already exists. A `409` returned for any other operation is treated as a failure and retried.
+
+If Fluent Bit can't interpret the bulk response, it logs `invalid Elasticsearch bulk response` and retries the entire batch. Set `trace_error` to `On` to print the request and response for diagnosis. Because a batch can still be re-sent in full in this case, set `generate_id` or `id_key` so that every document carries a stable, unique `_id` across attempts. What a repeated write then does depends on `write_operation`. With `create`, Elasticsearch rejects the duplicate with a `409` conflict, which Fluent Bit counts as accepted. With `index`, `update`, or `upsert`, Elasticsearch applies the write again, and these operations aren't inherently no-ops, so choose an `_id` scheme and a write operation that make a repeated write safe for your data.
+
+{% hint style="info" %}
+
+A successful bulk response can be larger than `buffer_size`, in which case Fluent Bit reads only part of it. The batch is still treated as complete when the truncated response shows a top-level `"errors": false`. Otherwise the batch is retried in full. Increase `buffer_size` if you send large batches.
 
 {% endhint %}
 

@@ -121,7 +121,9 @@ Decoder example Fluent Bit configuration files:
 
 ```yaml
 service:
-  parsers_file: parsers.yaml
+  # Replace with the correct value
+  # parsers_file: /fluent-bit/etc/parsers.yaml
+  parsers_file: /fluent-bit/etc/parsers.conf
 
 pipeline:
   inputs:
@@ -139,7 +141,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File parsers.conf
+  Parsers_File /fluent-bit/etc/parsers.conf
 
 [INPUT]
   Name        tail

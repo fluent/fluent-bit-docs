@@ -33,7 +33,7 @@
   * [Kubernetes](installation/downloads/kubernetes.md)
   * [macOS](installation/downloads/macos.md)
   * [Windows](installation/downloads/windows.md)
-* [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md)
+* [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md)
 * [Upgrade notes](installation/upgrade-notes.md)
 
 ## Administration
@@ -121,6 +121,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [UDP](pipeline/inputs/udp.md)
+  * [Event tracing for Windows](pipeline/inputs/event-tracing-windows.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
@@ -179,6 +180,7 @@
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Apache SkyWalking](pipeline/outputs/skywalking.md)
+  * [ArvanCloud CloudLogs](pipeline/outputs/arvancloud_cloudlogs.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Dash0](pipeline/outputs/dash0.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -191,6 +193,7 @@
   * [Graylog Extended Log Format (GELF)](pipeline/outputs/gelf.md)
   * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
+  * [Google Cloud Storage](pipeline/outputs/gcs.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
   * [Kafka Producer](pipeline/outputs/kafka.md)

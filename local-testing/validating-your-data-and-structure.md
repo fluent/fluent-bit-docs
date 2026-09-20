@@ -83,7 +83,6 @@ The following is the Fluent Bit YAML configuration file:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -128,7 +127,6 @@ The following is the Fluent Bit classic configuration file:
 [SERVICE]
     flush        1
     log_level    info
-    parsers_file parsers.conf
 
 [INPUT]
     name        tail
@@ -177,7 +175,6 @@ The following is the Fluent Bit YAML configuration file:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -230,7 +227,6 @@ pipeline:
 [SERVICE]
     flush        1
     log_level    info
-    parsers_file parsers.conf
 
 [INPUT]
     name         tail

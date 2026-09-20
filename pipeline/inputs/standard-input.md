@@ -204,8 +204,9 @@ You can then use the parsers file in a `stdin` plugin in the main Fluent Bit con
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: parsers.yaml
+# service:
+  # Configure this to load your custom parser if required
+  # parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -223,7 +224,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File parsers.conf
+  # Configure this to load your custom parser if required
+  # Parsers_File parsers.conf
 
 [INPUT]
   Name    stdin

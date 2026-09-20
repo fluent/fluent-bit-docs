@@ -29,6 +29,13 @@ This plugin supports the following parameters:
 | `raw_log_key` | When using the `raw` format, the value of `raw_log_key` in the record is sent to Kafka as the payload. | _none_ |
 | `rdkafka.{property}` | `{property}` can be any [librdkafka property](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md). | _none_ |
 | `schema_id` | Avro schema ID. Requires the Avro encoder build option. | _none_ |
+| `schema_registry_bearer_token` | Bearer token used to authenticate to the Schema Registry. Also accepted as `schema.registry.bearer.token`. | _none_ |
+| `schema_registry_framing` | Wire format used to frame messages encoded with a registry-resolved schema. Only `cp1`, the Confluent wire format, is supported. | `cp1` |
+| `schema_registry_http_passwd` | Password for Schema Registry HTTP basic authentication. Also accepted as `schema.registry.http.password`. | _none_ |
+| `schema_registry_http_user` | User for Schema Registry HTTP basic authentication. Also accepted as `schema.registry.http.user`. | _none_ |
+| `schema_registry_subject` | Schema Registry subject to resolve the Avro schema from. Also accepted as `schema.registry.subject`. See [Resolve schemas from a registry](#resolve-schemas-from-a-registry). | _none_ |
+| `schema_registry_url` | Base URL of a Confluent Schema Registry, or a comma-separated list of URLs. Also accepted as `schema.registry.url`. | _none_ |
+| `schema_registry_version` | Version of the subject to resolve. Also accepted as `schema.registry.version`. | `latest` |
 | `schema_str` | Avro schema string. Requires the Avro encoder build option. | _none_ |
 | `timestamp_format` | Specify the timestamp format. Allowed values: `double`, `iso8601` (seconds precision), `iso8601_ns` (nanoseconds precision). | `double` |
 | `timestamp_key` | Key to store the record timestamp. | `@timestamp` |
@@ -88,7 +95,9 @@ pipeline:
 
 ### Avro support
 
-Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin. Avro support is optional and must be activated at build time by using a build def with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
+Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin but this isn't enabled by default for releases.
+
+Avro support is optional and must be activated at build time by using a build definition with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
 
 - `out_kafka` with Avro encoding
 - Fluent Bit Prometheus
@@ -105,7 +114,7 @@ cmake -DFLB_DEV=On -DFLB_OUT_KAFKA=On -DFLB_TLS=On -DFLB_TESTS_RUNTIME=On -DFLB_
 In this example, the Fluent Bit configuration tails Kubernetes logs, updates the log lines with Kubernetes metadata using the Kubernetes filter. It then sends the updated log lines to a Kafka broker encoded with a specific Avro schema.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="AVRO enabled: fluent-bit.yaml" %}
 
 ```yaml
 pipeline:
@@ -134,6 +143,7 @@ pipeline:
       match: '*'
       brokers: 192.168.1.3:9092
       topics: test
+      # AVRO support must be enabled for schema support
       schema_str:  '{"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}'
       schema_id: some_schema_id
       rdkafka.client.id: some_client_id
@@ -151,7 +161,7 @@ pipeline:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="AVRO enabled: fluent-bit.conf" %}
 
 ```text
 [INPUT]
@@ -179,6 +189,7 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+  # AVRO support must be enabled for schema support
   Schema_Str  {"name":"avro_logging","type":"record","fields":[{"name":"timestamp","type":"string"},{"name":"stream","type":"string"},{"name":"log","type":"string"},{"name":"kubernetes","type":{"name":"krec","type":"record","fields":[{"name":"pod_name","type":"string"},{"name":"namespace_name","type":"string"},{"name":"pod_id","type":"string"},{"name":"labels","type":{"type":"map","values":"string"}},{"name":"annotations","type":{"type":"map","values":"string"}},{"name":"host","type":"string"},{"name":"container_name","type":"string"},{"name":"docker_id","type":"string"},{"name":"container_hash","type":"string"},{"name":"container_image","type":"string"}]}},{"name":"cluster_name","type":"string"},{"name":"fabric","type":"string"}]}
   Schema_Id some_schema_id
   rdkafka.client.id some_client_id
@@ -195,6 +206,65 @@ pipeline:
   Format avro
   rdkafka.log_level 7
   rdkafka.metadata.broker.list 192.168.1.3:9092
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### Resolve schemas from a registry
+
+Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. This feature is part of Avro support and requires the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`), which isn't enabled by default. See [Avro support](#avro-support).
+
+Instead of setting `schema_str` and `schema_id` in your configuration, you can point Fluent Bit at a Confluent Schema Registry and let it fetch the schema at runtime. Set `schema_registry_url` to enable this. If `schema_str` and `schema_id` are both set, Fluent Bit uses them and never contacts the registry.
+
+Fluent Bit resolves the schema in one of two ways:
+
+- If `schema_registry_subject` is set, it requests `/subjects/{subject}/versions/{version}`, where the version comes from `schema_registry_version` and defaults to `latest`.
+- Otherwise, it requests `/schemas/ids/{id}` using the value of `schema_id`.
+
+The schema is fetched once and reused for the lifetime of the plugin instance. If the registry can't be reached or returns an error, the chunk is retried.
+
+To authenticate, set either `schema_registry_http_user` and `schema_registry_http_passwd` for HTTP basic authentication, or `schema_registry_bearer_token` for bearer token authentication.
+
+For high availability, set `schema_registry_url` to a comma-separated list of registry URLs. During the initial schema fetch, Fluent Bit tries the next endpoint in the list when a request fails. Once the schema is successfully resolved, it's cached for the lifetime of the plugin instance, and the registry isn't contacted again.
+
+Except for `schema_registry_framing`, each of these settings also accepts a dotted spelling that matches Confluent client configuration, such as `schema.registry.url` for `schema_registry_url`. The two spellings are interchangeable.
+
+The following example resolves the latest version of the `fluent-bit-logs-value` subject from either of two registry endpoints:
+
+{% tabs %}
+{% tab title="avro-fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: kafka
+      match: '*'
+      brokers: 192.168.1.3:9092
+      topics: test
+      format: avro
+      schema_registry_url: 'https://registry-1:8081,https://registry-2:8081'
+      schema_registry_subject: fluent-bit-logs-value
+      schema_registry_version: latest
+      schema_registry_http_user: fluentbit
+      schema_registry_http_passwd: ${SCHEMA_REGISTRY_PASSWORD}
+```
+
+{% endtab %}
+{% tab title="avro-fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name                        kafka
+  Match                       *
+  Brokers                     192.168.1.3:9092
+  Topics                      test
+  Format                      avro
+  Schema_Registry_Url         https://registry-1:8081,https://registry-2:8081
+  Schema_Registry_Subject     fluent-bit-logs-value
+  Schema_Registry_Version     latest
+  Schema_Registry_Http_User   fluentbit
+  Schema_Registry_Http_Passwd ${SCHEMA_REGISTRY_PASSWORD}
 ```
 
 {% endtab %}

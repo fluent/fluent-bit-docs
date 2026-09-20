@@ -60,7 +60,6 @@ In your main configuration file append the following sections:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -82,7 +81,6 @@ pipeline:
 [SERVICE]
   Flush               1
   Log_Level           info
-  Parsers_File        parsers.conf
 
 [INPUT]
   Name                syslog
@@ -141,7 +139,6 @@ Put the following content in your configuration file:
 ```yaml
 service:
   flush: 1
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -162,7 +159,6 @@ pipeline:
 ```text
 [SERVICE]
   Flush        1
-  Parsers_File parsers.conf
 
 [INPUT]
   Name     syslog
@@ -207,7 +203,6 @@ Put the following content in your Fluent Bit configuration:
 ```yaml
 service:
   flush: 1
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -228,7 +223,6 @@ pipeline:
 ```text
 [SERVICE]
   Flush        1
-  Parsers_File parsers.conf
 
 [INPUT]
   Name      syslog

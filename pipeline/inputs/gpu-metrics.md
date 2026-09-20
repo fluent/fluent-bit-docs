@@ -4,9 +4,14 @@
 **Supported event types:** `metrics`
 {% endhint %}
 
-The _gpu_metrics_ input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
+The `gpu_metrics` input plugin collects graphics processing unit (GPU) performance metrics from graphics cards on Linux systems. It provides real-time monitoring of GPU utilization, memory usage (VRAM), clock frequencies, power consumption, temperature, and fan speeds.
 
-The plugin reads metrics directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) without requiring external tools or libraries. Only AMD GPUs are supported through the `amdgpu` kernel driver. NVIDIA and Intel GPUs aren't supported.
+The plugin supports two GPU vendors:
+
+- **AMD**: Metrics are read directly from the Linux `sysfs` filesystem (`/sys/class/drm/`) through the `amdgpu` kernel driver, without requiring external tools or libraries.
+- **NVIDIA**: Metrics are collected through the NVIDIA Management Library (NVML) when the `libnvidia-ml` shared library from the NVIDIA driver is available. NVML collection is enabled by default and can be turned off with `enable_nvml`.
+
+Intel GPUs aren't supported.
 
 ## Metrics collected
 
@@ -22,6 +27,10 @@ The plugin collects the following metrics for each detected GPU:
 | `gpu_temperature_celsius` | GPU die temperature in degrees Celsius. Can be disabled with `enable_temperature` set to `false`. |
 | `gpu_fan_speed_rpm`       | Fan rotation speed in Revolutions per Minute (RPM). |
 | `gpu_fan_pwm_percent`     | Fan PWM duty cycle as a percentage (0-100). Indicates fan intensity.  |
+| `gpu_process_memory_used_bytes` | Per-process GPU memory usage in bytes, labeled by process ID (`pid`). NVIDIA (NVML) only. |
+| `gpu_mig_device_info`     | Multi-Instance GPU (`MIG`) device information, labeled with `parent_uuid`, `gpu_instance_id`, and `compute_instance_id`. NVIDIA (NVML) only. |
+
+Every metric includes `card` and `vendor` labels. The `vendor` label is `amd` or `nvidia`, depending on which GPU reported the metric.
 
 ### Clock metrics
 
@@ -41,12 +50,15 @@ The plugin supports the following configuration parameters:
 |----------------------|-------------------------------------------------------------------------------------------------------------------------|-----------|
 | `cards_exclude`      | Pattern specifying which GPU cards to exclude from monitoring. Uses the same syntax as `cards_include`.                   | _none_    |
 | `cards_include`      | Pattern specifying which GPU cards to monitor. Supports wildcards (*), ranges (0-3), and comma-separated lists (0,2,4). | `*`       |
+| `enable_nvml`        | Enable NVIDIA GPU metrics collection through NVML (the NVIDIA Management Library). Requires the `libnvidia-ml` shared library from the NVIDIA driver to be present. | `true`    |
 | `enable_power`       | Enable collection of power consumption metrics (`gpu_power_watts`).                                                     | `true`    |
 | `enable_temperature` | Enable collection of temperature metrics (`gpu_temperature_celsius`).                                                   | `true`    |
 | `path_sysfs`         | Path to the `sysfs` root directory. Typically used for testing or non-standard systems.                                   | `/sys`    |
 | `scrape_interval`    | Interval in seconds between metric collection cycles.                                                                   | `5`       |
 
 ## GPU detection
+
+### `AMD` GPUs
 
 The GPU metrics plugin scans for any supported AMD GPU using the `amdgpu` kernel driver. Any GPU using legacy drivers is ignored.
 
@@ -63,11 +75,27 @@ Example output:
 73:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Granite Ridge [Radeon Graphics] (rev c5)
 ```
 
+### NVIDIA GPUs
+
+When `enable_nvml` is `true` (the default), the plugin detects NVIDIA GPUs through NVML, provided the `libnvidia-ml` shared library from the NVIDIA driver is installed. If the library isn't present, NVML collection is skipped and a message is logged.
+
+To confirm your NVIDIA driver and GPUs are visible run:
+
+```shell
+nvidia-smi -L
+```
+
+Example output:
+
+```text
+GPU 0: NVIDIA A100-SXM4-40GB (UUID: GPU-1a2b3c4d-5e6f-7890-abcd-ef1234567890)
+```
+
 ### Multiple GPU systems
 
-In systems with multiple GPUs, the GPU metrics plugin will detect all AMD cards by default. You can control which GPUs you want to monitor with the `cards_include` and `cards_exclude` parameters.
+In systems with multiple GPUs, the GPU metrics plugin detects all supported AMD and NVIDIA cards by default. You can control which GPUs you want to monitor with the `cards_include` and `cards_exclude` parameters. Because AMD and NVIDIA cards are enumerated differently, choose filter values based on the card's vendor.
 
-To list the GPUs running in your system run the following command:
+For AMD cards, `cards_include`, `cards_exclude`, and the `card` metric label use the numeric `sysfs` card number (for example, `0` for `card0`). To list the AMD cards in your system run the following command:
 
 ```shell
 ls /sys/class/drm/card*/device/vendor
@@ -79,6 +107,21 @@ Example output:
 /sys/class/drm/card0/device/vendor
 /sys/class/drm/card1/device/vendor
 ```
+
+For NVIDIA cards, `cards_include` and `cards_exclude` use the NVML device index, which is the `GPU <n>` number reported by `nvidia-smi -L`. To list the NVIDIA cards and their indexes run the following command:
+
+```shell
+nvidia-smi -L
+```
+
+Example output:
+
+```text
+GPU 0: NVIDIA A100-SXM4-40GB (UUID: GPU-1a2b3c4d-5e6f-7890-abcd-ef1234567890)
+GPU 1: NVIDIA A100-SXM4-40GB (UUID: GPU-0f9e8d7c-6b5a-4321-fedc-ba0987654321)
+```
+
+For example, `cards_include: 0` selects `GPU 0`. On emitted metrics, the NVIDIA `card` label is the GPU UUID shown by `nvidia-smi -L`, falling back to the NVML index only when the UUID can't be read.
 
 ## Getting started
 
@@ -127,6 +170,7 @@ pipeline:
     - name: gpu_metrics
       cards_exclude: "0"
       cards_include: "1"
+      enable_nvml: true
       enable_power: true
       enable_temperature: true
       path_sysfs: /sys
@@ -145,6 +189,7 @@ pipeline:
   Name                gpu_metrics
   Cards_Exclude       0
   Cards_Include       1
+  Enable_Nvml         true
   Enable_Power        true
   Enable_Temperature  true
   Path_Sysfs          /sys

@@ -177,8 +177,8 @@ This example excludes certain file patterns and uses filesystem storage for bett
 pipeline:
   inputs:
     - name: blob
-      path: /data/artifacts/**/*
-      exclude_pattern: *.tmp,*.bak,*.old
+      path: '/data/artifacts/**/*'
+      exclude_pattern: '*.tmp,*.bak,*.old'
       storage.type: filesystem
       storage.pause_on_chunks_overlimit: true
       mem_buf_limit: 50M

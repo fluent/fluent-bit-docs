@@ -13,7 +13,7 @@ The plugin reads every matched file in the `Path` pattern. For every new line fo
 The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
-|:----|:------------|:--------|
+| :--- | :--- | :--- |
 | `buffer_chunk_size` | Set the initial buffer size to read file data. This value is used to increase buffer size. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k` |
 | `buffer_max_size` | Set the limit of the buffer size per monitored file. When a buffer needs to be increased, this value is used to restrict the memory buffer growth. If reading a file exceeds this limit, the file is removed from the monitored file list. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `32k` |
 | `db` | Specify the database file to keep track of monitored files and offsets. Recommended to be unique per plugin. | _none_ |
@@ -55,6 +55,7 @@ The plugin supports the following configuration parameters:
 | `truncate_long_lines` | When enabled, truncates lines that exceed the buffer capacity after input encoding conversion to UTF-8. Use this option when dealing with character encoding conversions that might expand the line length. | `false` |
 | `unicode.encoding` | Set the Unicode character encoding of the file data. This parameter requests two-byte aligned chunk and buffer sizes. If data isn't aligned for two bytes, Fluent Bit will use two-byte alignment automatically to avoid character breakages on consuming boundaries. Supported values: `UTF-16LE`, `UTF-16BE`, and `auto`. | _none_ |
 | `watcher_interval` | Set the interval for the watcher that monitors symbolic link rotation. This is an advanced option for fine-tuning how often Fluent Bit checks if symbolic links have been rotated. | `2s` |
+| `windows.path_encoding` | Windows only. Set the encoding Fluent Bit uses to interpret the configured `path` value. Supported values: `ansi`, `utf8` (also accepted as `utf-8`). See [Windows path encoding](#windows-path-encoding). | `ansi` |
 
 ## Buffers and memory management
 
@@ -167,7 +168,7 @@ systemctl edit fluent-bit.service
 
 When the Linux inotify event queue overflows (indicated by an `IN_Q_OVERFLOW` event), Fluent Bit automatically reconciles all monitored files. During reconciliation it:
 
-- Detects rotated files by comparing inodes and file names and re-registers watches as needed.
+- Detects rotated files by comparing `inode` numbers and file names and re-registers watches as needed.
 - Resets offset tracking for files that have been truncated.
 - Retries watch registration for files that previously failed, for example due to `ENOSPC` when `fs.inotify.max_user_watches` is exhausted.
 
@@ -184,8 +185,8 @@ Fluent Bit 1.8 and later supports multiline core capabilities for the Tail input
 
 Multiline core is exposed by the following configuration:
 
-| Key                | Description    |
-|:-------------------|:---------------|
+| Key | Description |
+| :--- | :--- |
 | `multiline.parser` | Specify one or multiple [Multiline Parser definitions](../parsers/multiline-parsing.md) to apply to the content. |
 
 [Multiline Parser](../parsers/multiline-parsing.md) provides built-in configuration modes. When using a new `multiline.parser` definition, you must disable the old configuration from your tail section like:
@@ -217,8 +218,8 @@ pipeline:
 
 ```text
 [INPUT]
-  name              tail
-  path              /var/log/containers/*.log
+  Name              tail
+  Path              /var/log/containers/*.log
   multiline.parser  docker, cri
 ```
 
@@ -231,16 +232,24 @@ It will use the first parser which has a `start_state` that matches the log.
 
 For example, it will first try `docker`, and if `docker` doesn't match, it will then try `cri`.
 
+### Pretty-printed JSON files
+
+For log files that contain JSON objects split across multiple lines (pretty-printed JSON), use the built-in `json` multiline parser on tail. Pair it with the [Parser filter](../filters/parser.md) to parse the assembled `log` field.
+
+For JSON Lines (one complete JSON object per line), set `parser: json` on the tail input instead. No multiline parser is needed.
+
+See [Multiline parsing: JSON](../parsers/multiline-parsing.md#json) for a full configuration example.
+
 ### Old multiline configuration parameters
 
 For the old multiline configuration, the following options exist to configure the handling of multiline logs:
 
-| Key                | Description       | Default |
-|:-------------------|:------------------|:--------|
-| `multiline`        | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used.                                   | `off`   |
-| `multiline_flush`  | Wait period time in seconds to process queued multiline messages.                                                        | `4`     |
-| `parser_firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_  |
-| `parser_N`         | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `parser_1 ab1`, `parser_2 ab2`, `parser_N abN`.                                   | _none_  |
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| `multiline` | If enabled, the plugin will try to discover multiline messages and use the proper parsers to compose the outgoing messages. When this option is enabled the Parser option isn't used. | `off` |
+| `multiline_flush` | Wait period time in seconds to process queued multiline messages. | `4` |
+| `parser_firstline` | Name of the parser that matches the beginning of a multiline message. The regular expression defined in the parser must include a group name (named `capture`), and the value of the last match group must be a string. | _none_ |
+| `parser_N` | Optional. Extra parser to interpret and structure multiline entries. This option can be used to define multiple parsers. For example, `parser_1 ab1`, `parser_2 ab2`, `parser_N abN`. | _none_ |
 
 ### Old Docker mode configuration parameters
 
@@ -272,8 +281,8 @@ pipeline:
       path: /var/log/syslog
 
   outputs:
-    - stdout:
-      match: *
+    - name: stdout
+      match: '*'
 ```
 
 {% endtab %}
@@ -368,13 +377,13 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-# Note this is generally added to parsers.conf and referenced in [SERVICE]
-[PARSER]
-  Name multiline
-  Format regex
-  Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
-  Time_Key  time
-  Time_Format %b %d %H:%M:%S
+# Note this is added to parsers.conf and referenced in [SERVICE]
+# [PARSER]
+#   Name multiline
+#   Format regex
+#   Regex /(?<time>[A-Za-z]+ \d+ \d+\:\d+\:\d+)(?<message>.*)/
+#   Time_Key  time
+#   Time_Format %b %d %H:%M:%S
 
 [INPUT]
   Name             tail
@@ -464,9 +473,9 @@ pipeline:
 
 ```text
 [INPUT]
-  name    tail
-  path    /var/log/containers/*.log
-  db      test.db
+  Name    tail
+  Path    /var/log/containers/*.log
+  DB      test.db
 ```
 
 {% endtab %}
@@ -497,6 +506,44 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Windows path encoding
+
+The `windows.path_encoding` parameter is available in Fluent Bit version 5.1 and greater, and applies only to Windows.
+
+By default, Fluent Bit interprets the `path` value using the system's active ANSI code page and calls the ANSI Windows file APIs. Paths containing characters that the active code page can't represent, such as Japanese or emoji directory names on a system using a Western code page, can't be matched or opened in this mode.
+
+Setting `windows.path_encoding` to `utf8` makes Fluent Bit treat the configured path as UTF-8, convert it to UTF-16, and call the wide-character Windows file APIs to glob, stat, and open files. Fluent Bit also handles extended-length path prefixes such as `\\?\` in this mode, so it can reach paths longer than the legacy `MAX_PATH` limit. Filenames reported in the records are converted back to UTF-8.
+
+If you set `windows.path_encoding` to any value other than `ansi`, `utf8`, or `utf-8`, Fluent Bit logs an error and the plugin fails to start.
+
+This parameter controls how Fluent Bit reads the path, not how it reads the contents of a file. To convert the encoding of the log data itself, see [Character encoding conversion](#character-encoding-conversion).
+
+The following example enables UTF-8 path handling. Write the `path` value as UTF-8, and save your configuration file with UTF-8 encoding so that Fluent Bit receives the path as you intended:
+
+{% tabs %}
+{% tab title="windows-fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: 'C:\logs\app\*.log'
+      windows.path_encoding: utf8
+```
+
+{% endtab %}
+{% tab title="windows-fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                  tail
+  Path                  C:\logs\app\*.log
+  Windows.Path_Encoding utf8
+```
+
+{% endtab %}
+{% endtabs %}
 
 ## Character encoding conversion
 

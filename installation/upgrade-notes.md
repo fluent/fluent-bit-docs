@@ -8,6 +8,26 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.1
+
+### Debian and Ubuntu package upgrades restart the service
+
+Upgrading the `fluent-bit` package on Debian or Ubuntu now runs `systemctl daemon-reload` and restarts the service as part of the upgrade, but only when the service is already running on a host that uses `systemd`. A stopped service stays stopped, and installing the package for the first time doesn't start it. If an unplanned restart isn't safe, stop the service before upgrading and start it again afterward. See [Debian](downloads/linux/debian.md#upgrade-fluent-bit) and [Ubuntu](downloads/linux/ubuntu.md#upgrade-fluent-bit).
+
+### Syslog output `mode` accepts `tls` and `dtls`
+
+The [Syslog output](../pipeline/outputs/syslog.md) `mode` setting now accepts `tls` and `dtls`, both of which automatically enable TLS, in addition to the existing `tcp` and `udp` values. Existing configurations that pair `mode: tcp` with a separate `tls: on` setting are unaffected.
+
+### Input rate metrics and rate gate
+
+All input plugins now measure their own ingestion rate and can optionally pause when that rate is too high. Rate measurement is always on and exposes new `fluentbit_input_rate_bytes` and `fluentbit_input_rate_records` metrics. The `rate_window` setting controls the time window used to measure this byte and record rate, and defaults to `1s`. The rate gate itself is opt-in: set `rate_gate` to `true` and configure `rate_gate.max_bytes` or `rate_gate.max_records` to pause ingestion once it exceeds a threshold, with `rate_gate.backpressure` and `rate_gate.resume_ratio` controlling how the effective limit and resume behavior work. See [Rate metrics and rate limiting for inputs](../administration/configuring-fluent-bit/yaml/pipeline-section.md#rate-metrics-and-rate-limiting-for-inputs) and [per-input buffering settings](../pipeline/buffering.md#per-input-settings) for details.
+
+No action is required unless you want to opt in to the new rate gate.
+
+### 64-bit timestamp handling beyond 2038
+
+Event timestamps at or after the 2038 32-bit `time_t` rollover now round-trip correctly through the internal msgpack `EventTime` encoding that Fluent Bit uses. On platforms where `time_t` is still 32-bit, timestamps remain bound by that platform's range.
+
 ## Fluent Bit v5.0
 
 ### `hot_reloaded_times` metric type change
@@ -36,7 +56,7 @@ If you tune `http`, `splunk`, `elasticsearch`, `opentelemetry`, or `prometheus_r
 
 Input plugins that support TLS now also support `tls.verify_client_cert`. Enable this option to require and validate the client certificate presented by the sender.
 
-If you terminate TLS directly in Fluent Bit and need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
+If Fluent Bit is the TLS termination point and you need mutual TLS (`mTLS`), add `tls.verify_client_cert on` together with the usual `tls.crt_file` and `tls.key_file` settings.
 
 ### New internal logs input
 
@@ -75,6 +95,7 @@ If you send data from Fluent Bit to a Fluentd aggregator using the `forward` out
 
 {% tabs %}
 {% tab title="YAML" %}
+
 ```yaml
 pipeline:
   outputs:
@@ -84,8 +105,10 @@ pipeline:
       port: 24224
       retain_metadata_in_forward_mode: false
 ```
+
 {% endtab %}
 {% tab title="Classic" %}
+
 ```text
 [OUTPUT]
     Name    forward
@@ -94,12 +117,13 @@ pipeline:
     Port    24224
     Retain_Metadata_In_Forward_Mode false
 ```
+
 {% endtab %}
 {% endtabs %}
 
 For more details, see [GitHub issue #11877](https://github.com/fluent/fluent-bit/issues/11877).
 
-For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5.0](whats-new-in-fluent-bit-v5.0.md).
+For a broader overview of user-visible additions in this release, see [What's new in Fluent Bit v5](whats-new-in-fluent-bit-v5.md).
 
 ## Fluent Bit v4.2
 
@@ -108,7 +132,7 @@ For a broader overview of user-visible additions in this release, see [What's ne
 The HTTP endpoint paths exposed by the Vivo exporter output plugin have changed. All endpoints now follow an `/api/v1/` prefix:
 
 | Signal | Endpoint |
-|---|---|
+| --- | --- |
 | Logs | `/api/v1/logs` |
 | Metrics | `/api/v1/metrics` |
 | Traces | `/api/v1/traces` |

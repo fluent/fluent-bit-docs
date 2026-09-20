@@ -15,7 +15,7 @@ docker run -ti cr.fluentbit.io/fluent/fluent-bit
 Use the following command to start Fluent Bit while using a configuration file:
 
 {% tabs %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="Legacy Configuration: fluent-bit.conf" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
@@ -24,7 +24,7 @@ docker run -ti -v ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf \
 
 {% endtab %}
 
-{% tab title="fluent-bit.yaml" %}
+{% tab title="YAML configuration: fluent-bit.yaml" %}
 
 ```shell
 docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
@@ -40,8 +40,14 @@ docker run -ti -v ./fluent-bit.yaml:/fluent-bit/etc/fluent-bit.yaml \
 
 The following table describes the Linux container tags that are available on Docker Hub [`fluent/fluent-bit`](https://hub.docker.com/r/fluent/fluent-bit/) repository:
 
-| Tags       | Manifest Architectures    | Description                                                    |
+| Tags | Manifest Architectures | Description |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 5.1.2-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.2 | amd64, arm64, arm/v7 | Release [v5.1.2](https://fluentbit.io/announcements/v5.1.2/) |
+| 5.1.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.1 | amd64, arm64, arm/v7 | Release [v5.1.1](https://fluentbit.io/announcements/v5.1.1/) |
+| 5.1.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.0 | amd64, arm64, arm/v7 | Release [v5.1.0](https://fluentbit.io/announcements/v5.1.0/) |
 | 5.0.8-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.0.8 | amd64, arm64, arm/v7 | Release [v5.0.8](https://fluentbit.io/announcements/v5.0.8/) |
 | 5.0.7-debug | amd64, arm64, arm/v7 | Debug images |
@@ -219,7 +225,19 @@ The following table describes the Linux container tags that are available on Doc
 
 It's strongly suggested that you always use the latest image of Fluent Bit.
 
-Container images for Windows Server 2019 and Windows Server 2022 are provided for v2.0.6 and later. These can be found as tags on the same Docker Hub registry.
+Windows container images are provided on the same Docker Hub registry, tagged with a `windows-` prefix:
+
+| Tag pattern | Base image | Windows Server version |
+| --- | --- | --- |
+| `windows-2022-<version>` | Server Core | 2022 |
+| `windows-2025-<version>` | Server Core | 2025 |
+| `windows-nano-2025-<version>` | Nano Server | 2025 |
+
+Windows Server 2025 support, and the Nano Server image, are available in Fluent Bit version 5.1 and greater. Nano Server images are smaller than their Server Core counterparts, but don't include PowerShell and can't run plugins that shell out to external commands, such as `exec`. The Nano Server image ships with a default configuration that listens on the [Forward](../../pipeline/inputs/forward.md) input and writes to `stdout`, since there's no shell available to write one if needed.
+
+```shell
+docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.1.1
+```
 
 ## Multi-architecture images
 
@@ -303,7 +321,7 @@ The reasons for using distroless are well covered in
 - Reduces false positives on scans (and reduces resources required for scanning).
 - Reduces supply chain security requirements to only what you need.
 - Helps prevent unauthorised processes or users interacting with the container.
-- Less need to harden the container (and container runtime, K8s, and so on).
+- Less need to harden the container (and container runtime, Kubernetes, and so on).
 - Faster CI/CD processes.
 
 With any choice, there are downsides:

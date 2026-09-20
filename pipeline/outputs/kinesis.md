@@ -132,7 +132,7 @@ You can use the Fluent Bit SSM Public Parameters to find the Amazon ECR image UR
 aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
-For more details, see the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/get-set-up-for-amazon-ecr.html).
+For more details, see the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/what-is-ecr.html).
 
 ### Docker Hub
 

@@ -21,6 +21,7 @@ The plugin supports the following configuration parameters:
 | `separator`          | When `format` is set to `none`, Fluent Bit needs a separator string to split the records.                                                                                                                                                                 | `LF` or `0x10` (break line) |
 | `source_address_key` | Specify the key to inject the source address.                                                                                                                                                                                                             | _none_                      |
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                   | `false`                     |
+| `workers`            | The number of listener workers that accept and process incoming connections on the port.                                                                                                                                                                  | `1`                         |
 
 ## Get started
 
