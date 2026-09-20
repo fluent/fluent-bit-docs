@@ -134,6 +134,7 @@ pipeline:
 | `store_dir` | Directory used to locally buffer data before uploading it. | `/tmp/fluent-bit/gcs` |
 | `store_dir_limit_size` | Limits the amount of data buffered in `store_dir` to limit disk usage. When the limit is reached, data is discarded. Set to `0` for unlimited. | `0` |
 | `subject_token_type` | `OIDC` subject token type presented to the Google Security Token Service. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | `urn:ietf:params:oauth:token-type:jwt` |
+| `total_file_size` | Maximum size of the file currently being buffered for a tag. When that file reaches this size, Fluent Bit uploads it as an object, even when `upload_timeout` hasn't elapsed. Files already sealed and waiting to upload don't count toward this size, so a tag can hold more than this amount on disk. The minimum accepted value is `1M`. Set to `0` to upload only when `upload_timeout` elapses. See [Buffering](#buffering). | `100M` |
 | `unify_tag` | Whether to buffer records from every tag into a single file instead of one file per tag. See [Unified tag buffering](#unified-tag-buffering). | `false` |
 | `unify_tag_name` | Logical tag that replaces the record tag when `unify_tag` is enabled. It's stored as the buffer chunk metadata and used for `$TAG` in `gcs_key_format`. It doesn't set the name of the local buffer file. See [Unified tag buffering](#unified-tag-buffering). | `fluent-bit-buffer-file-unify-tag.log` |
 | `upload_timeout` | When this amount of time elapses, Fluent Bit uploads the buffered data and starts a new object. Set to `60m` to upload a new object every hour. | `10m` |
@@ -187,13 +188,24 @@ pipeline:
 
 ## Buffering
 
-This plugin buffers records as files in `store_dir` and uploads them when `upload_timeout` elapses, so it requires a writeable filesystem. Because the plugin has its own buffering system, the `storage.total_limit_size` parameter isn't meaningful. Use `store_dir_limit_size` and `store_chunk_limit` to limit disk usage instead.
+This plugin buffers records as files in `store_dir` and uploads them when either `upload_timeout` elapses or the file currently being buffered for a tag reaches `total_file_size`, so it requires a writeable filesystem. Because the plugin has its own buffering system, the `storage.total_limit_size` parameter isn't meaningful. Use `store_dir_limit_size` and `store_chunk_limit` to limit disk usage instead.
+
+When adding a batch of records would push a buffered file past `total_file_size`, Fluent Bit seals that file, schedules it for immediate upload, and starts a new file for the incoming records. A sealed file never receives more data, even if its upload fails and is retried later. Because the check runs against whole batches, an uploaded object can be slightly smaller or larger than `total_file_size`. Set `total_file_size` to `0` to disable the size trigger and upload only on `upload_timeout`. A non-zero value smaller than `1M` fails at startup with `'total_file_size' must be at least 1M (or 0 to disable the size trigger)`.
 
 ### Unified tag buffering
 
 By default, each tag buffers into its own file, which is inefficient when a pipeline produces many small chunks under many tags, such as one tag per container. Set `unify_tag` to `true` to buffer records from every tag together under the single logical tag set by `unify_tag_name`. Fluent Bit generates local buffer file names internally, so `unify_tag_name` doesn't appear on disk.
 
 When `unify_tag` is enabled, the value of `unify_tag_name` replaces the record tag for the rest of the upload path. As a result, `$TAG` and `$TAG[n]` in `gcs_key_format` resolve to `unify_tag_name` instead of the original tag. If your object names depend on the tag, remove those formatters from `gcs_key_format` before enabling this option.
+
+## Networking and TLS configuration
+
+This plugin inherits the core Fluent Bit networking and TLS settings. The upload connection to `storage.googleapis.com` always uses TLS on port 443, so you don't need to turn TLS on. Use these settings to tune how that connection behaves:
+
+- [Networking Setup](../../administration/networking.md): `net.*` properties such as connection timeouts, keepalive behavior, and the source address. Fluent Bit applies these to the GCS upload connection. They don't apply to the separate connections used to obtain credentials from the Google Security Token Service, IAM Credentials, or metadata server endpoints.
+- [Security and TLS](../../administration/transport-security.md): `tls.*` properties such as `tls.ca_file`, `tls.verify`, and `tls.vhost`, which control certificate validation for the upload connection.
+
+Set only the properties your environment requires. Most of them take a value or a path rather than an on or off flag, and the defaults are suitable for connecting to Cloud Storage.
 
 ## Get started
 
