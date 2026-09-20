@@ -26,6 +26,7 @@ This plugin supports the following parameters:
 | `buffer_size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512k` |
 | `compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ |
 | `current_time_index` | Use current time for index generation instead of message record. | `Off` |
+| `drop_unrecoverable_records` | Drop log records that the `_bulk` API rejects with an unrecoverable error instead of retrying them. Doesn't apply to trace records. Enabling this option causes data loss. See [Bulk retries](#bulk-retries). | `Off` |
 | `generate_id` | When enabled, generate `_id` for outgoing records. This prevents duplicate records when retrying. See [Bulk retries](#bulk-retries). | `Off` |
 | `host` | IP address or hostname of the target OpenSearch instance. | `127.0.0.1` |
 | `http_passwd` | Password for user defined in `http_user`. | _none_ |
@@ -47,7 +48,7 @@ This plugin supports the following parameters:
 | `time_key` | When `logstash_format` is enabled, each record will get a new timestamp field. The `time_key` property defines the name of that field. | `@timestamp` |
 | `time_key_format` | When `logstash_format` is enabled, this property defines the format of the timestamp. | `%Y-%m-%dT%H:%M:%S` |
 | `time_key_nanos` | When `logstash_format` is enabled, enabling this property sends nanosecond precision timestamps. | `Off` |
-| `trace_error` | When enabled, print the OpenSearch API calls to stdout when OpenSearch returns an error (for diagnostics only). | `Off` |
+| `trace_error` | Log diagnostics whenever a bulk request doesn't fully succeed, either because OpenSearch reported failed operations or because Fluent Bit couldn't interpret the bulk response. Logs the request payload at `debug` level and the OpenSearch response at `error` level. | `Off` |
 | `trace_output` | When enabled, print the OpenSearch API calls to stdout (for diagnostics only). | `Off` |
 | `type` | Type name. This option is ignored if `suppress_type_name` is enabled. | `_doc` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
@@ -86,11 +87,21 @@ The `write_operation` can be any of:
 
 Fluent Bit sends records to the OpenSearch `_bulk` API in batches. OpenSearch can accept some documents in a batch while rejecting others, and reports this with an HTTP `200` response that contains `"errors": true` and a per-document `status` in the `items` array.
 
-When this happens, Fluent Bit inspects each item and rebuilds the payload so that it contains only the documents that weren't accepted. The flush is retried, and the next attempt sends that reduced payload instead of the original batch. Documents that OpenSearch already accepted aren't sent again, which limits duplicates caused by partial failures. This behavior is always active and has no configuration option. It applies to log records. Trace records use the previous behavior, where any reported error retries the whole batch.
+When this happens, Fluent Bit inspects each item and rebuilds the payload so that it contains only the documents that weren't accepted. If any documents remain after this filtering, the flush is retried and the next attempt sends that reduced payload instead of the original batch. If no documents remain, Fluent Bit treats the flush as successful and doesn't retry it. Documents that OpenSearch already accepted aren't sent again, which limits duplicates caused by partial failures. This filtering is always active and has no configuration option, but `drop_unrecoverable_records` controls what happens to the documents that remain. It applies to log records. Trace records use the previous behavior, where any reported error retries the whole batch.
 
 A document counts as accepted when its `status` is in the `2xx` range. A `409` conflict also counts as accepted, for every write operation.
 
-If Fluent Bit can't interpret the bulk response, it logs `invalid OpenSearch bulk response` and retries the entire batch. Set `trace_error` to `On` to print the request and response for diagnosis. Because a batch can still be re-sent in full in this case, set `generate_id` or `id_key` so that every document carries a stable, unique `_id` across attempts. What a repeated write then does depends on `write_operation`. With `create`, OpenSearch rejects the duplicate with a `409` conflict, which Fluent Bit counts as accepted. With `index`, `update`, or `upsert`, OpenSearch applies the write again, and these operations aren't inherently no-ops, so choose an `_id` scheme and a write operation that make a repeated write safe for your data.
+By default, every log document that wasn't accepted stays in the retry payload, including documents OpenSearch rejected for a reason that won't change on a later attempt, such as a mapping conflict. These documents are retried like any other failure, subject to the [`Retry_Limit`](../../administration/scheduling-and-retries.md) set for the output. Set `drop_unrecoverable_records` to `On` to drop them instead of retrying them. Fluent Bit then treats a failed document as unrecoverable when its `status` is in the `4xx` range, except for `408`, `409`, and `429`. The `408` and `429` statuses, and every `5xx` status, are still retried. A `409` conflict is never dropped, because it counts as accepted for every write operation. When every failed document in a batch is dropped this way, nothing remains to send, so Fluent Bit treats the flush as successful instead of retrying it. Because the option acts on the per-document bulk response, it has no effect on trace records.
+
+Whenever a bulk response reports failures, Fluent Bit logs an error summarizing how many documents failed, the status, type, and reason of the first error, and how many documents it's retrying. When `drop_unrecoverable_records` is enabled and documents were dropped, the summary also reports the dropped count, and those documents are added to the output's dropped records metric.
+
+{% hint style="warning" %}
+
+Enabling `drop_unrecoverable_records` discards the rejected documents permanently. Use it when repeated retries of documents OpenSearch won't accept are causing a backlog, and you accept losing those documents.
+
+{% endhint %}
+
+If Fluent Bit can't interpret the bulk response, it logs `invalid OpenSearch bulk response` and retries the entire batch. Set `trace_error` to `On` to log the request and response for diagnosis. Because a batch can still be re-sent in full in this case, set `generate_id` or `id_key` so that every document carries a stable, unique `_id` across attempts. What a repeated write then does depends on `write_operation`. With `create`, OpenSearch rejects the duplicate with a `409` conflict, which Fluent Bit counts as accepted. With `index`, `update`, or `upsert`, OpenSearch applies the write again, and these operations aren't inherently no-ops, so choose an `_id` scheme and a write operation that make a repeated write safe for your data.
 
 {% hint style="info" %}
 
