@@ -112,9 +112,9 @@ By default, Kusto will insert incoming ingestion data into a table by inferring 
 | `net.connect_timeout`                  | Set maximum time allowed to establish a connection, this time includes the TLS handshake.                                                             | `10s`                          |
 | `net.connect_timeout_log_error`        | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.                                    | `true`                         |
 | `net.dns.mode`                         | Select the primary DNS connection type (TCP or UDP).                         | _none_                         |
-| `net.dns.prefer_ipv4`                  | Select the primary DNS resolver type (LEGACY or ASYNC).                      | `false`                        |
+| `net.dns.prefer_ipv4`                  | Prioritize IPv4 DNS results when trying to establish a connection.           | `false`                        |
 | `net.dns.prefer_ipv6`                  | Prioritize IPv6 DNS results when trying to establish a connection.           | `false`                        |
-| `net.dns.resolver`                     | Select the primary DNS resolver type (LEGACY or ASYNC).                      | _none_                         |
+| `net.dns.resolver`                     | Select the DNS resolver implementation: `ASYNC` or `LEGACY`.                 | _none_                         |
 | `net.io_timeout`                       | Set maximum time a connection can stay idle while assigned.                  | `0s`                           |
 | `net.keepalive`                        | Enable or disable `Keepalive` support.                                       | `false`                        |
 | `net.keepalive_idle_timeout`           | Set maximum time allowed for an idle `Keepalive` connection..                | `false`                        |
