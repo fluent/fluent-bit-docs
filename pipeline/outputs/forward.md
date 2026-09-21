@@ -48,6 +48,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 | `tls.verify` | Force certificate validation. | `On` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), and `4` (Verbose). | `1` |
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. | _none_ |
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file`. | _none_ |
