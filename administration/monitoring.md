@@ -126,6 +126,7 @@ Fluent Bit exposes the following endpoints for monitoring.
 | `/api/v2/metrics/prometheus` | Display internal metrics per loaded plugin ready in Prometheus Server format. | Prometheus Text 0.0.4 |
 | `/api/v2/health`             | Returns Fluent Bit health status as JSON. HTTP 200 when healthy, HTTP 500 when unhealthy. Response fields: `status` (`ok` or `error`), `errors`, `retries_failed`, `error_limit`, `retry_failure_limit`, `period_limit`. | JSON |
 | `/api/v2/reload`             | Execute hot reloading (`POST`, `PUT`) or get the status of hot reloading (`GET`). Unsupported methods return `405 Method Not Allowed` with an `Allow: GET, POST, PUT` header. See the [hot-reloading documentation](hot-reload.md). | JSON |
+| `/api/v2/flush`              | Trigger an on-demand flush of currently buffered records (`POST`, `PUT`) or get the current flush count (`GET`). Unsupported methods return `405 Method Not Allowed` with an `Allow: GET, POST, PUT` header. See the [on-demand flush documentation](on-demand-flush.md). | JSON |
 
 ### V1 metrics
 
