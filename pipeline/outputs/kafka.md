@@ -96,7 +96,7 @@ pipeline:
 
 ### Avro support
 
-Fluent Bit comes with support for Avro encoding for the `out_kafka` plugin but this isn't enabled by default for releases.
+Fluent Bit can encode records as Avro messages for the `out_kafka` plugin, but this support isn't included in any official release packages or container images. To use it, you must build Fluent Bit from source.
 
 Avro support is optional and must be activated at build time by using a build definition with `cmake`: `-DFLB_AVRO_ENCODER=On` such as in the following example which activates:
 
@@ -214,7 +214,7 @@ pipeline:
 
 ### Protobuf support
 
-Fluent Bit can encode records as Protobuf messages for the `out_kafka` plugin, but this isn't enabled by default for releases.
+Fluent Bit can encode records as Protobuf messages for the `out_kafka` plugin, but this support isn't included in any official release packages or container images. To use it, you must build Fluent Bit from source.
 
 Protobuf support is optional and must be activated at build time with `-DFLB_PROTOBUF_ENCODER=On`. The build requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. In a build without it, setting `format` to `protobuf` fails at startup with `format protobuf requires FLB_PROTOBUF_ENCODER=On`.
 
@@ -269,7 +269,7 @@ pipeline:
 
 ### Resolve schemas from a registry
 
-Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. It requires either the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`) or the Protobuf encoder build option (`-DFLB_PROTOBUF_ENCODER=On`), neither of which is enabled by default. See [Avro support](#avro-support) and [Protobuf support](#protobuf-support).
+Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. It requires either the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`) or the Protobuf encoder build option (`-DFLB_PROTOBUF_ENCODER=On`), neither of which is included in official release builds. See [Avro support](#avro-support) and [Protobuf support](#protobuf-support).
 
 With `format` set to `avro`, the registry is an alternative to setting `schema_str` and `schema_id` in your configuration. With `format` set to `protobuf`, the registry is the only source of the schema. Set `schema_registry_url` to enable registry resolution. For Avro, if `schema_str` and `schema_id` are both set, Fluent Bit uses them and never contacts the registry.
 
