@@ -23,6 +23,18 @@ The following example payloads are modified for readability.
 
 Records shown in example payloads are the three first commits of the Fluent Bit repository.
 
+### Nesting depth limit
+
+In Fluent Bit version 5.1.3 and greater, converting a record to any of these JSON formats serializes at most 512 levels of nested maps and arrays. Maps and arrays through level 512 are preserved. When a record nests deeper than this limit, Fluent Bit writes each non-empty map or array at level 513 as `null`, omits its contents, and keeps the rest of the record intact. An empty map or array at level 513 is still written as `{}` or `[]`.
+
+Fluent Bit logs the following warning at most once for each serialization pass, no matter how many branches are affected:
+
+```text
+[warn] [pack] msgpack to JSON conversion exceeded the maximum nesting depth (512), truncating remaining structure
+```
+
+With `json`, a pass covers the full array of queued records. With `json_lines` and `json_stream`, a pass covers one record. If the output buffer is too small, Fluent Bit grows it and retries in a new pass, which can log the warning again.
+
 ### `json`
 
 Queued records encoded as a single JSON array of JSON encoded Fluent Bit records.
