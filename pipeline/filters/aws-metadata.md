@@ -15,12 +15,21 @@ The plugin supports the following configuration parameters:
 | `account_id` | The account ID for the current EC2 instance. | `false` |
 | `ami_id` | The EC2 instance image ID. | `false` |
 | `az` | The [availability zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), such as `us-east-1a`. | `true` |
+| `az_id` | The [availability zone ID](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#az-ids), such as `use1-az1`. | `false` |
+| `domain` | The domain for AWS resources in the region, such as `amazonaws.com`. | `false` |
 | `ec2_instance_id` | The EC2 instance ID. | `true` |
 | `ec2_instance_type` | The EC2 instance type. | `false` |
 | `enable_entity` | Enables entity prefix for fields used for constructing entity. | `false` |
+| `host_id` | The [dedicated host](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html) ID. | `false` |
 | `hostname` | The hostname for the current EC2 instance. | `false` |
 | `imds_version` | Specify which version of the instance metadata service to use. Valid values are `v1` and `v2`. | `v2` |
+| `ipv6` | The EC2 instance IPv6 address. | `false` |
+| `partition` | The [partition](https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html), such as `aws`. | `true` |
+| `partition_number` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) partition number. | `false` |
+| `placement_group` | The [placement group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) name. | `false` |
 | `private_ip` | The EC2 instance private IP. | `false` |
+| `public_ip` | The EC2 instance public IPv4 address. | `false` |
+| `region` | The [region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions), such as `us-east-1`. | `false` |
 | `retry_interval_s` | Defines minimum duration in seconds between retries for fetching EC2 instance tags. | `300` |
 | `tags_enabled` | Specifies whether to attach EC2 instance tags. The EC2 instance must have the [`instance-metadata-tags`](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-metadata-options.html) option enabled, which is disabled by default. | `false` |
 | `tags_exclude` | Defines a list of specific EC2 tag keys not to inject into the logs. Tag keys must be comma-separated (`,`). Tags not included in this list will be injected into the logs. If both `tags_include` and `tags_exclude` are specified, the configuration is invalid and the plugin fails. Example: `Name,tag1,tag2` | _none_ |
@@ -82,17 +91,26 @@ pipeline:
 
 ```text
 [INPUT]
-  Name dummy
-  Tag  dummy
+  Name              dummy
+  Tag               dummy
 
 [FILTER]
   Name              aws
   Match             *
   Imds_Version      v1
+  Partition         true
   Az                true
+  Domain            true
+  Region            true
+  Az_Id             true
   Ec2_Instance_Id   true
   Ec2_Instance_Type true
+  Placement_Group   true
+  Partition_Number  true
+  Host_Id           true
+  Ipv6              true
   Private_Ip        true
+  Public_Ip         true
   Ami_Id            true
   Account_Id        true
   Hostname          true
@@ -100,8 +118,8 @@ pipeline:
   Tags_Enabled      true
 
 [OUTPUT]
-  Name  stdout
-  Match *
+  Name              stdout
+  Match             *
 ```
 
 {% endtab %}
@@ -129,11 +147,11 @@ Assume the EC2 instance has many tags, some of which have lengthy values that ar
 ```yaml
 pipeline:
 
-    filters:
-        - name: aws
-          match: '*'
-          tags_enabled: true
-          tags_include: department,project
+  filters:
+    - name: aws
+      match: '*
+      tags_enabled: true
+      tags_include: department,project
 ```
 
 {% endtab %}
@@ -141,10 +159,10 @@ pipeline:
 
 ```text
 [FILTER]
-    Name         aws
-    Match        *
-    Tags_Enabled true
-    Tags_Include department,project
+  Name         aws
+  Match        *
+  Tags_Enabled true
+  Tags_Include department,project
 ```
 
 {% endtab %}
