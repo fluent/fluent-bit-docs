@@ -62,7 +62,7 @@ The [Node Exporter Metrics input](../pipeline/inputs/node-exporter-metrics.md) a
 
 #### New Google Cloud Storage output
 
-The [Google Cloud Storage output](../pipeline/outputs/gcs.md) uploads records to a GCS bucket with service-account `OAuth 2.0` authentication and optional gzip compression. Fluent Bit uploads an object when `upload_timeout` elapses, or when the file currently being buffered for a tag reaches `total_file_size`.
+The [Google Cloud Storage output](../pipeline/outputs/gcs.md) uploads records to a GCS bucket with service-account `OAuth 2.0` authentication and optional gzip compression. Fluent Bit uploads an object when `upload_timeout` elapses. In Fluent Bit version 5.1.3 and greater, Fluent Bit also uploads an object when the file currently being buffered for a tag reaches `total_file_size`.
 
 #### Kafka output Confluent Schema Registry support
 
@@ -75,10 +75,6 @@ The [File output](../pipeline/outputs/file.md) adds size-based log rotation with
 #### Elasticsearch output alias
 
 The output name `elasticsearch` is now a built-in alias for the [Elasticsearch output](../pipeline/outputs/elasticsearch.md) plugin `es`, so either name works in configuration files.
-
-#### Syslog output octet counting framing
-
-The [Syslog output](../pipeline/outputs/syslog.md) can frame messages using the RFC 6587 octet-counting method. Set `syslog_framing` to `octet_counting` with `tcp` or `tls` mode to prefix each message with its byte length instead of appending a newline.
 
 ### Packaging
 
