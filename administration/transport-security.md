@@ -19,7 +19,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
 | `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
 | `tls.ciphers` | Specify TLS ciphers up to TLSv1.2. | _none_ |
-| `tls.crl_file`        | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. | _none_  |
+| `tls.crl_file`        | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_  |
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
