@@ -12,6 +12,8 @@ The _ArvanCloud CloudLogs_ output plugin sends log records to the [ArvanCloud Cl
 
 Fluent Bit posts a JSON body to the fixed endpoint `https://napi.arvancloud.ir/logging/v1/entries/write`. Each Fluent Bit record is wrapped in the CloudLogs entry schema. Authentication uses an API key sent in the `Authorization` header as `apikey <value>`.
 
+This plugin is available in Fluent Bit version 5.1.3 and greater. It's included in official builds. If you compile Fluent Bit from source, the `FLB_OUT_ARVANCLOUD_CLOUDLOGS` build option is enabled by default.
+
 ## Configuration parameters
 
 | Key | Description | Default |
