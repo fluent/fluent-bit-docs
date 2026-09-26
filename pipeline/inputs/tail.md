@@ -31,6 +31,7 @@ The plugin supports the following configuration parameters:
 | `generic.encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
 | `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
 | `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
+| `ignore_unavailable` | Ignore file paths that don't exist during scanning, and suppress the related errors and warnings. Set to `true` when the same configuration runs across environments where some log files might not be present. | `false` |
 | `inotify_watcher` | Set to `false` to use file stat watcher instead of `inotify`. | `true` |
 | `key` | When a message is unstructured (no parser applied), it's appended as a string under the key name `log`. This option lets you define an alternative name for that key. | `log` |
 | `mem_buf_limit` | Set a memory limit that the Tail plugin can use when appending data to the engine. If the limit is reached, it will be paused. When the data is flushed, it resumes. | _none_ |
