@@ -32,7 +32,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.verify` | Force certificate validation. | `on` |
 | `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
 | `tls.verify_hostname` | Force TLS verification of host names. | `off` |
-| `tls.verify_client_cert` | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off` |
+| `tls.verify_client_cert` | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. In v5.1.3 or later, enabling this option also forces certificate validation for the connection, even when `tls.verify` is `off`. Fluent Bit logs a warning when you combine the two settings that way. | `off` |
 
 {% hint style="info" %}
 
