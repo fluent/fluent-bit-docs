@@ -138,7 +138,7 @@ By default, Kusto will insert incoming ingestion data into a table by inferring 
 | `tls.ca_file`                          | Absolute path to CA certificate file.                                        | _none_                         |
 | `tls.ca_path`                          | Absolute path to scan for certificate files.                                 | _none_                         |
 | `tls.ciphers`                          | Specify TLS ciphers up to TLSv1.2.                                           | _none_                         |
-| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. | _none_ |
+| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_ |
 | `tls.crt_file`                         | Absolute path to Certificate file.                                           | _none_                         |
 | `tls.debug`                            | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                   | `1`                            |
 | `tls.key_file`                         | Absolute path to private Key file.                                           | _none_                         |
