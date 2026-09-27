@@ -15,7 +15,7 @@ This plugin supports the following parameters:
 | `brokers` | Single or multiple list of Kafka brokers. For example, `192.168.1.3:9092`, `192.168.1.4:9092`. | _none_ |
 | `client_id` | Client ID to use when connecting to Kafka. | _none_ |
 | `dynamic_topic` | Adds unknown topics (found in `topic_key`) to `topics`. Only a default topic needs to be configured in `topics`. | `false` |
-| `format` | Specify data format. Available formats: `avro` (requires Avro encoder build option), `gelf`, `json`, `msgpack`, `otlp_json` (supports logs, metrics, and traces events), `otlp_proto` (supports logs, metrics, and traces events), `protobuf` (requires Protobuf encoder build option), `raw`. | `json` |
+| `format` | Specify data format. Available formats: `avro` (requires Avro encoder build option), `gelf`, `json`, `msgpack`, `otlp_json` (supports logs, metrics, and traces events), `otlp_proto` (supports logs, metrics, and traces events), `protobuf` (requires Protobuf encoder build option, and Fluent Bit v5.1.3 or later), `raw`. | `json` |
 | `gelf_full_message_key` | Key to use as the long message for GELF format output. | _none_ |
 | `gelf_host_key` | Key to use as the host for GELF format output. | _none_ |
 | `gelf_level_key` | Key to use as the log level for GELF format output. | _none_ |
@@ -25,7 +25,7 @@ This plugin supports the following parameters:
 | `message_key` | Optional key to store the message. | _none_ |
 | `message_key_field` | If set, the value of `message_key_field` in the record will indicate the message key. If not set or not found in the record, `message_key` is used if set. | _none_ |
 | `otlp_logs_partition_by_resource` | When using `otlp_json` or `otlp_proto` format for logs, send each OTLP resource's logs as a separate Kafka message. | `false` |
-| `protobuf_message` | Fully qualified name of the Protobuf message used to encode records. Optional when the registered root schema declares exactly one message, and required otherwise. Requires the Protobuf encoder build option. See [Protobuf support](#protobuf-support). | _none_ |
+| `protobuf_message` | Fully qualified name of the Protobuf message used to encode records. Optional when the registered root schema declares exactly one message, and required otherwise. Requires the Protobuf encoder build option. See [Protobuf support](#protobuf-support). Supported in v5.1.3 or later. | _none_ |
 | `queue_full_retries` | Number of local retries to enqueue data when the `rdkafka` queue is full. The interval between retries is 1 second. Set to `0` for unlimited retries. | `10` |
 | `raw_log_key` | When using the `raw` format, the value of `raw_log_key` in the record is sent to Kafka as the payload. | _none_ |
 | `rdkafka.{property}` | `{property}` can be any [librdkafka property](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md). | _none_ |
@@ -214,7 +214,7 @@ pipeline:
 
 ### Protobuf support
 
-Fluent Bit can encode records as Protobuf messages for the `out_kafka` plugin, but this support isn't included in any official release packages or container images. To use it, you must build Fluent Bit from source.
+Protobuf support is available in Fluent Bit version 5.1.3 and greater. Fluent Bit can encode records as Protobuf messages for the `out_kafka` plugin, but this support isn't included in any official release packages or container images. To use it, you must build Fluent Bit from source.
 
 Protobuf support is optional and must be activated at build time with `-DFLB_PROTOBUF_ENCODER=On`. The build requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. In a build without it, setting `format` to `protobuf` fails at startup with `format protobuf requires FLB_PROTOBUF_ENCODER=On`.
 
@@ -269,7 +269,7 @@ pipeline:
 
 ### Resolve schemas from a registry
 
-Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. It requires either the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`) or the Protobuf encoder build option (`-DFLB_PROTOBUF_ENCODER=On`), neither of which is included in official release builds. See [Avro support](#avro-support) and [Protobuf support](#protobuf-support).
+Resolving schemas from a Confluent Schema Registry is available in Fluent Bit version 5.1 and greater. It requires either the Avro encoder build option (`-DFLB_AVRO_ENCODER=On`) or, in version 5.1.3 and greater, the Protobuf encoder build option (`-DFLB_PROTOBUF_ENCODER=On`). Neither option is included in official release builds. See [Avro support](#avro-support) and [Protobuf support](#protobuf-support).
 
 With `format` set to `avro`, the registry is an alternative to setting `schema_str` and `schema_id` in your configuration. With `format` set to `protobuf`, the registry is the only source of the schema. Set `schema_registry_url` to enable registry resolution. For Avro, if `schema_str` and `schema_id` are both set, Fluent Bit uses them and never contacts the registry.
 
