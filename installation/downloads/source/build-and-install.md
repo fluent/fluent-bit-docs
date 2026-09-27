@@ -121,7 +121,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_PARSER`             | Build with Parser support                                                                                                   | `Yes`                         |
 | `FLB_POSIX_TLS`          | Force POSIX thread storage                                                                                                  | `No`                          |
 | `FLB_PROFILES`           | Enable profiles support                                                                                                     | `Yes`                         |
-| `FLB_PROTOBUF_ENCODER`   | Build Kafka runtime Protobuf encoding support                                                                               | `No`                          |
+| `FLB_PROTOBUF_ENCODER`   | Build Kafka runtime Protobuf encoding support. Supported in v5.1.3 or later.                                                | `No`                          |
 | `FLB_PROXY_GO`           | Enable Go plugins support                                                                                                   | `Yes`                         |
 | `FLB_RECORD_ACCESSOR`    | Enable record accessor                                                                                                      | `Yes`                         |
 | `FLB_REGEX`              | Build with Regex support                                                                                                    | `Yes`                         |
@@ -141,7 +141,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_WINDOWS_DEFAULTS`   | Build with predefined Windows settings                                                                                      | `Yes`                         |
 | `FLB_ZIG`                | Enable zig integration                                                                                                      | `Yes`                         |
 
-Enabling `FLB_PROTOBUF_ENCODER` requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. If `libprotoc` is missing, CMake stops with `FLB_PROTOBUF_ENCODER requires libprotoc development libraries`. This option also adds a C++ source file to the Kafka output plugin and requires C++11, so the build needs a C++ compiler.
+`FLB_PROTOBUF_ENCODER` is available in Fluent Bit version 5.1.3 and greater. Enabling it requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. If `libprotoc` is missing, CMake stops with `FLB_PROTOBUF_ENCODER requires libprotoc development libraries`. This option also adds a C++ source file to the Kafka output plugin and requires C++11, so the build needs a C++ compiler.
 
 ### Development options
 
@@ -273,7 +273,7 @@ The following table describes the filters available on this version:
 
 Output plugins let you flush the information to some external interface, service, or terminal.
 
-The following table describes the output plugins available:
+The following table describes the output plugins available. `FLB_OUT_ARVANCLOUD_CLOUDLOGS` is available in Fluent Bit version 5.1.3 and greater.
 
 | Option                                                                                   | Description                                              | Default |
 |:-----------------------------------------------------------------------------------------|:---------------------------------------------------------|:--------|
