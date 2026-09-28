@@ -42,6 +42,7 @@ coroutines
 cron
 Crowdstrike
 CRDs
+Cybersecurity
 DaemonSet
 Dash0
 Datadog
