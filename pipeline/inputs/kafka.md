@@ -14,6 +14,7 @@ This plugin uses the official [librdkafka C library](https://github.com/confluen
 
 | Key                  | Description                                                                                                                              | Default      |
 |:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|:-------------|
+| `async_commit` | Enable Kafka commit operation asynchronously. This parameter accepts a boolean value of `true` or `false`.                                     | `false` |
 | `brokers`            | Single or multiple list of Kafka Brokers. For example: `192.168.1.3:9092`, `192.168.1.4:9092`.                                           | _none_       |
 | `buffer_max_size`    | Specify the maximum size of buffer per cycle to poll Kafka messages from subscribed topics. To increase throughput, specify larger size. | `4M`         |
 | `client_id`          | Client id passed to librdkafka.                                                                                                          | _none_       |
@@ -22,7 +23,7 @@ This plugin uses the official [librdkafka C library](https://github.com/confluen
 | `group_id`           | Group id passed to librdkafka.                                                                                                           | `fluent-bit` |
 | `poll_ms`            | Kafka brokers polling interval in milliseconds.                                                                                          | `500`        |
 | `poll_timeout_ms`    | Timeout in milliseconds for Kafka consumer poll operations. Only effective when `threaded` is enabled.                                   | `1`          |
-| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md).                    | _none_       |
+| `rdkafka.{property}` | `{property}` can be any [librdkafka properties](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md).                | _none_       |
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                  | `false`      |
 | `topics`             | Single entry or list of comma-separated topics (`,`) that Fluent Bit will subscribe to.                                                  | _none_       |
 
