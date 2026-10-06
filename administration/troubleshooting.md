@@ -249,7 +249,9 @@ You should start seeing output similar to the following:
 
 ### Parameters for the output in Tap
 
-When activating Tap, any plugin parameter can be given. These parameters can be used to modify the output format, the name of the time key, the format of the date, and other details.
+When activating Tap, you can pass parameters to the output. These parameters can be used to modify the output format, the name of the time key, and the format of the date.
+
+In v5.1.3 or later, the HTTP API accepts only the `stdout` and `calyptia` outputs, and only the `format`, `json_date_key`, and `json_date_format` parameters. Output names are case-sensitive and parameter names are case-insensitive. Any other output or parameter returns a `403` error with the message `output plugin or parameter not allowed`. In earlier versions, any plugin parameter can be given.
 
 The following example uses the parameter `"format": "json"` to demonstrate how to show `stdout` in JSON format.
 
