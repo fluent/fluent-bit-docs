@@ -30,6 +30,7 @@ The plugin supports the following configuration parameters:
 
 - When using the Syslog input plugin, Fluent Bit requires access to the parsers configuration file. The path to this file can be specified with the option `-R` or through the `parsers_file` key in the service section.
 - When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `buffer_chunk_size` option, which defaults to 32kb.
+- In v5.1.3 or later, when using `tcp` or `unix_tcp` with `newline` framing, empty lines are ignored and don't produce records.
 
 ## Get started
 
