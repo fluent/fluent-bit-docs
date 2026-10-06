@@ -44,6 +44,8 @@ SUPPRESSED_FILES=(
     # Not currently supported in the container image.
     "pipeline/filters/tensorflow.md"
     "pipeline/inputs/ebpf.md"
+    # Not yet present in the released validation image.
+    "pipeline/inputs/aegisbpf.md"
     # Windows plugins are not available in the Linux image.
     "installation/downloads/windows.md"
     "pipeline/inputs/windows-event-log-winevtlog.md"
