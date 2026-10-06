@@ -53,7 +53,7 @@ This helps with down-sampling when collecting metrics.
 | `collector.processes.scrape_interval` | The rate in seconds at which system-level `process` metrics are collected from the host operating system. | `0` |
 | `collector.sockstat.scrape_interval` | The rate in seconds at which `sockstat` metrics are collected from the host operating system. | `0` |
 | `collector.stat.scrape_interval` | The rate in seconds at which `stat` metrics are collected from the host operating system. | `0` |
-| `collector.systemd.scrape_interval` | The rate in seconds at which `systemd` metrics are collected from the host operating system. | `0` |
+| `collector.systemd.scrape_interval` | The rate in seconds at which `systemd` metrics are collected from the host operating system. In v5.1.3 or later, `systemd` metric series that weren't observed in the latest successful scan are expired, so removed units no longer report stale values. | `0` |
 | `collector.textfile.path` | Specify path or directory to collect textfile metrics from the host operating system. | Not set by default. |
 | `collector.textfile.scrape_interval` | The rate in seconds at which `textfile` metrics are collected from the host operating system. | `0` |
 | `collector.thermalzone.scrape_interval` | The rate in seconds at which `thermal_zone` metrics are collected from the host operating system. | `0` |
