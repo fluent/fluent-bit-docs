@@ -60,6 +60,18 @@ DLQ files remain on disk until manually removed. Monitor disk usage and implemen
 
 For more details on DLQ configuration, see [Dead letter queue](./dead-letter-queue.md).
 
+## Engine channel capacity is low
+
+In v5.1.3 or later, Fluent Bit limits the number of flush requests that can be in flight at the same time. On Linux the limit is 4096. On other platforms the limit is 1024. Tasks that exceed the limit start on the next flush cycle.
+
+On Linux, when Fluent Bit starts it checks the capacity of its internal engine channel, which is a pipe. Once a user exceeds the `fs.pipe-user-pages-soft` limit, the kernel creates pipes with a single page of capacity on Linux versions before 5.14, and two pages on Linux 5.14 and later. If the channel can't hold the default number of requests, Fluent Bit lowers the limit to half of the number of events the channel can hold and logs the following warning:
+
+```text
+[warn] [engine] engine channel capacity is low, limiting flush requests in flight to 256
+```
+
+The number in the message depends on the pipe capacity of your system. To avoid the lower limit, raise the `fs.pipe-user-pages-soft` kernel setting. You can't configure the limit in Fluent Bit.
+
 ## Tap
 
 Tap can be used to generate events or records detailing what messages pass through Fluent Bit, at what time and what filters affect them.
