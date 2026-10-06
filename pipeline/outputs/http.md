@@ -23,8 +23,8 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `gelf_short_message_key` | Specify the key to use as the `short` message in `gelf` format. | _none_ |
 | `gelf_timestamp_key` | Specify the key to use for `timestamp` in `gelf` format. | _none_ |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `header_tag` | Specify an optional HTTP header field for the original message tag. | _none_ |
-| `headers_key` | Specify the key to use as the headers of the request (must prefix with `$`). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content type of the data contained in `body_key`. | _none_ |
+| `header_tag` | Specify an optional HTTP header field for the original message tag. In v5.1.3 or later, the header is skipped with a warning if the tag contains a carriage return, line feed, or null character. | _none_ |
+| `headers_key` | Specify the key to use as the headers of the request (must prefix with `$`). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content type of the data contained in `body_key`. In v5.1.3 or later, any header whose name or value contains a carriage return, line feed, or null character is skipped with a warning. | _none_ |
 | `host` | IP address or hostname of the target HTTP Server. | `127.0.0.1` |
 | `http.read_idle_timeout` | Set maximum allowed time between two consecutive reads. If set to `0s`, uses the `io_timeout` value from the network setup. | `0s` |
 | `http.response_timeout` | Set maximum time to wait for a server response. | `60s` |
