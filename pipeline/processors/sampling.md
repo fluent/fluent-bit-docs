@@ -31,6 +31,8 @@ Head sampling uses the following `sampling_settings` configuration parameters:
 | --- | :---------- |
 | `sampling_percentage` | Sets the probability of sampling trace. Must be a value between `0` and `100`. For example, `40` samples 40% of traces randomly. |
 
+In v5.1.3 or later, head sampling drops spans that don't have a `trace_id` because it can't sample them. Fluent Bit logs a debug message for each dropped span. To see this message, set `log_level` to `debug` in the `service` section or on the `sampling` processor.
+
 This example uses head sampling to process a smaller percentage of the overall ingested traces and spans. It accomplishes this by setting up the pipeline to ingest on the OpenTelemetry defined port using the OpenTelemetry Protocol (OTLP). The `processor` section defines traces for head sampling and the percentage of traces and spans to forward to the specified output plugins.
 
 {% tabs %}
