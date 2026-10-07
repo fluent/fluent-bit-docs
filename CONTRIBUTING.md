@@ -102,7 +102,7 @@ awkwardly.
 ### Quotes
 
 By default, Google Docs and Microsoft Word turn standard straight quotes into "smart"
-curly quotes. If you copy-paste from one of these tools, you must correct the quotes back to straight quotes. You can also turn off smart quotes in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en) or [Microsoft Word](https://support.microsoft.com/en-US/Word/smart-quotes-in-word-and-powerpoint) to prevent this problem.
+curly quotes. If you copy-paste from one of these tools, you must correct the quotes back to straight quotes. You can also turn off smart quotes in [Google Docs](https://support.google.com/docs/thread/217182974/can-i-turn-smart-quotes-off-in-a-google-doc?hl=en) or [Microsoft Word](https://support.microsoft.com/en-us/word/smart-quotes-in-word-and-powerpoint) to prevent this problem.
 
 ### Table of contents
 
