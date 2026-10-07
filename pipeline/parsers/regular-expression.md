@@ -6,7 +6,7 @@ Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regul
 
 {% hint style="warning" %}
 
-This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
+This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://community.owasp.org/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
 {% endhint %}
 

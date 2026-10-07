@@ -46,7 +46,7 @@ Workload Identity Federation is available in Fluent Bit version 5.1.2 and greate
 
 {% endhint %}
 
-[Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation) lets Fluent Bit authenticate to Cloud Storage without a service account key. Use it when Fluent Bit runs outside Google Cloud, or on Google Kubernetes Engine where the workload receives a projected `OIDC` token. Set `enable_identity_federation` to `true` to select this mode.
+[Workload Identity Federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation) lets Fluent Bit authenticate to Cloud Storage without a service account key. Use it when Fluent Bit runs outside Google Cloud, or on Google Kubernetes Engine where the workload receives a projected `OIDC` token. Set `enable_identity_federation` to `true` to select this mode.
 
 When this mode is enabled, the plugin ignores the credentials file, both credentials environment variables, and the metadata server. Setting both `enable_identity_federation` and `google_service_credentials` fails at startup with `'google_service_credentials' and 'enable_identity_federation' are mutually exclusive`.
 
