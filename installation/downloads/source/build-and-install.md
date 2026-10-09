@@ -218,7 +218,7 @@ The following input plugins are available:
 | [`FLB_IN_UDP`](../../../pipeline/inputs/udp.md)                                             | Enable UDP input plugin                                                   | `On`    |
 | [`FLB_IN_WINLOG`](../../../pipeline/inputs/windows-event-log.md)                            | Enable Windows Event Log input plugin (Windows Only)                      | `Off`   |
 | [`FLB_IN_WINEVTLOG`](../../../pipeline/inputs/windows-event-log-winevtlog.md)               | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `Off`   |
-| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
+| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `Off`   |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
 
