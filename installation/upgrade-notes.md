@@ -28,6 +28,14 @@ No action is required unless you want to opt in to the new rate gate.
 
 Event timestamps at or after the 2038 32-bit `time_t` rollover now round-trip correctly through the internal msgpack `EventTime` encoding that Fluent Bit uses. On platforms where `time_t` is still 32-bit, timestamps remain bound by that platform's range.
 
+### `tls.verify_client_cert` applies even when `tls.verify` is off
+
+In v5.1.2 and earlier, setting `tls.verify_client_cert on` had no effect on a listener that also set `tls.verify off`. Fluent Bit never asked the client for a certificate and accepted any client that connected, despite the option requesting mutual TLS (`mTLS`).
+
+In v5.1.3 and later, enabling `tls.verify_client_cert` always forces certificate validation for that listener. Fluent Bit logs a warning when you combine it with `tls.verify off`, and clients that don't present a certificate signed by the configured CA are rejected.
+
+Review any input plugin that sets both options. If you rely on accepting clients without a certificate, remove `tls.verify_client_cert` from that input before you upgrade. If you intended `mTLS`, no change is required, and the listener starts enforcing it.
+
 ## Fluent Bit v5.0
 
 ### `hot_reloaded_times` metric type change
@@ -280,7 +288,7 @@ The change introduced in the 1.0 series switched from absolute path to the base 
 
 ```text kube.apache.log ```
 
-THe Fluent Bit v1.1 release restored the default behavior and now the Tag is composed using the absolute path of the monitored file.
+The Fluent Bit v1.1 release restored the default behavior and now the Tag is composed using the absolute path of the monitored file.
 
 Having absolute path in the Tag is relevant for routing and flexible configuration where it also helps to keep compatibility with Fluentd behavior.
 
