@@ -96,3 +96,15 @@ If `storage.pause_on_chunks_overlimit` is set to `on` for an input plugin, the i
 Fluent Bit implements the concept of logical queues for buffered chunks. Based on its tag, a chunk can be routed to multiple destinations. Fluent Bit keeps an internal reference from where each chunk was created and where it needs to go. To limit the number of queued chunks, set the `storage.total_limit_size` for any active output plugins that route data ingested by input plugins that use filesystem buffering.
 
 Network failures or latency in third-party services is common for output destinations. In some cases, a chunk is tagged for multiple destinations with varying response times, or one destination is generating more backpressure than others. If an output plugin reaches its configured `storage.total_limit_size` capacity, the oldest chunk from its queue will be discarded to make room for new data.
+
+## Limit flush requests in flight
+
+In v5.1.3 or later, Fluent Bit limits the number of flush requests that can be in flight at the same time. This prevents the engine from blocking while it writes to an output worker that's itself blocked writing its result back to the engine. On Linux the limit is 4096. On other platforms the limit is 1024.
+
+When the limit is reached, Fluent Bit doesn't start more tasks until the next flush cycle. The tasks remain queued and aren't dropped. Fluent Bit logs a debug message in the following format:
+
+```text
+[debug] [engine] 4096 flush requests in flight, deferring tasks of input dummy.0 to the next flush cycle
+```
+
+You can't configure this limit. On Linux, Fluent Bit can lower it at startup if the engine channel capacity is small.
