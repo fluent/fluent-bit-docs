@@ -23,6 +23,8 @@ The plugin supports the following configuration parameters:
 | `threaded`           | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                   | `false`                     |
 | `workers`            | The number of listener workers that accept and process incoming connections on the port.                                                                                                                                                                  | `1`                         |
 
+In v5.1.3 or later, when `format` is `json` and a payload can't be encoded or ingested, the plugin logs the warning `skipping unprocessable JSON payload` and consumes the affected bytes instead of processing them again. Any records from that payload that were already routed before the failure remain delivered; consuming the bytes prevents them from being duplicated on a later read.
+
 ## Get started
 
 To receive JSON messages over TCP, you can run the plugin from the command line or through the configuration file.
