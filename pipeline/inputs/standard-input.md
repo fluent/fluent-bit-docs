@@ -32,7 +32,7 @@ The plugin supports the following configuration parameters:
 If no parser is configured for the `stdin` plugin, it expects valid JSON input data in one of the following formats:
 
 - A JSON object with one or more key-value pairs: `{ "key": "value", "key2": "value2" }`
-- A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#event-or-record) format, which can be:
+- A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#events-or-records) format, which can be:
   - `[TIMESTAMP, { "key": "value" }]` where TIMESTAMP is a floating point value representing a timestamp in seconds.
   - From Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where _`TIMESTAMP`_ has the same meaning as previous and _`METADATA`_ is a JSON object.
 
