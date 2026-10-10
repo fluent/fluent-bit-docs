@@ -103,7 +103,7 @@ In Fluent Bit versions 5.1.0 and 5.1.1, setting `FLB_LOG_LEVEL` and `log_level` 
 
 FIPS mode is available in Fluent Bit version 5.1 and greater. It requires OpenSSL 3.0 or greater with the FIPS provider installed on the host.
 
-When `security.fips_mode` is enabled, Fluent Bit activates the OpenSSL FIPS provider during startup and verifies that a FIPS-approved algorithm can be fetched from it. If the provider isn't available or can't be activated, Fluent Bit logs the OpenSSL errors and exits instead of starting with non-compliant cryptography. You can set the same behavior from the command line with the [`--enable-fips`](../../configuring-fluent-bit.md#require-fips-mode-with---enable-fips) flag.
+When `security.fips_mode` is enabled, Fluent Bit activates the OpenSSL FIPS provider during startup and verifies that a FIPS-approved algorithm can be fetched from it. If the provider isn't available or can't be activated, Fluent Bit logs the OpenSSL errors and exits instead of starting with non-compliant cryptography. You can set the same behavior from the command line with the [`--enable-fips`](../../configuring-fluent-bit.md#require-fips-mode-with-enable-fips) flag.
 
 FIPS mode can't be changed by [hot reload](../../../administration/hot-reload.md). If a reloaded configuration changes `security.fips_mode`, Fluent Bit halts the reload and keeps running with the previous configuration.
 
@@ -176,7 +176,7 @@ The following storage-related keys can be set as children to the `storage` key:
 
 For storage and buffering details, see [Buffering](../../../pipeline/buffering.md) and [Backpressure](../../backpressure.md).
 
-For scheduler and retry details, see [Scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
+For scheduler and retry details, see [Scheduling and retries](../../scheduling-and-retries.md).
 
 ## Configuration example
 

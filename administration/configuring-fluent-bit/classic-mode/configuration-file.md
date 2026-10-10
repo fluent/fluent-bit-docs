@@ -57,7 +57,7 @@ The following is an example of a `SERVICE` section:
   Log_Level       debug
 ```
 
-For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
+For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md).
 
 ## Config input
 
