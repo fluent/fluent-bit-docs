@@ -2,7 +2,7 @@
 
 Use the _regular expression_ parser format to create custom parsers with Ruby regular expressions. These regular expressions use named capture to define which content belongs to which key name.
 
-Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
+Use [Tail multiline](../inputs/tail.md#multiline-support) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
 
 {% hint style="warning" %}
 
