@@ -21,7 +21,7 @@ This plugin supports the following parameters:
 | `aws_profile` | AWS profile name. | `default` |
 | `aws_region` | Specify the AWS region for Amazon OpenSearch Service. | _none_ |
 | `aws_role_arn` | AWS IAM Role to assume to put records to your Amazon cluster. | _none_ |
-| `aws_service_name` | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See the [FAQ](#fluent-bit-and-amazon-opensearch-serverless) section on Amazon OpenSearch Serverless for more information. | `es` |
+| `aws_service_name` | Service name to be used in AWS Sigv4 signature. For integration with Amazon OpenSearch Serverless, set to `aoss`. See [Fluent Bit and Amazon OpenSearch Serverless](#fluent-bit-and-amazon-opensearch-serverless) for more information. | `es` |
 | `aws_sts_endpoint` | Specify the custom STS endpoint to be used with STS API for Amazon OpenSearch Service. | _none_ |
 | `buffer_size` | Specify the buffer size used to read the response from the OpenSearch HTTP service. Use for debugging purposes where it's required to read full responses. The response size grows depending of the number of records inserted. Set this value to `False` to set an unlimited amount of memory. Otherwise set the value according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `512k` |
 | `compress` | Set payload compression mechanism. Allowed value: `gzip`. Enabling compression reduces network bandwidth usage but might increase CPU usage. | _none_ |
