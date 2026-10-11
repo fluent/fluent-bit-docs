@@ -4,7 +4,7 @@
 
 ## About
 
-* [What is Fluent Bit?](about/what-is-fluent-bit.md)
+* [What's Fluent Bit?](about/what-is-fluent-bit.md)
 * [Fluentd and Fluent Bit](about/fluentd-and-fluent-bit.md)
 * [Lab resources](about/resources.md)
 
@@ -33,6 +33,7 @@
   * [Kubernetes](installation/downloads/kubernetes.md)
   * [macOS](installation/downloads/macos.md)
   * [Windows](installation/downloads/windows.md)
+* [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md)
 * [Upgrade notes](installation/upgrade-notes.md)
 
 ## Administration
@@ -87,6 +88,7 @@
   * [Elasticsearch](pipeline/inputs/elasticsearch.md)
   * [Exec](pipeline/inputs/exec.md)
   * [Exec WASI](pipeline/inputs/exec-wasi.md)
+  * [Fluent Bit logs](pipeline/inputs/fluentbit-logs.md)
   * [Fluent Bit metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
   * [GPU metrics](pipeline/inputs/gpu-metrics.md)
@@ -119,6 +121,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [UDP](pipeline/inputs/udp.md)
+  * [Event tracing for Windows](pipeline/inputs/event-tracing-windows.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
@@ -132,14 +135,16 @@
   * [Regular expression format](pipeline/parsers/regular-expression.md)
   * [Decoder settings](pipeline/parsers/decoders.md)
 * [Processors](pipeline/processors.md)
+  * [Conditional processing](pipeline/processors/conditional-processing.md)
   * [Content modifier](pipeline/processors/content-modifier.md)
+  * [Cumulative to delta](pipeline/processors/cumulative-to-delta.md)
+  * [Filters as processors](pipeline/processors/filters.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry envelope](pipeline/processors/opentelemetry-envelope.md)
   * [Sampling](pipeline/processors/sampling.md)
   * [SQL](pipeline/processors/sql.md)
-  * [Filters as processors](pipeline/processors/filters.md)
-  * [Conditional processing](pipeline/processors/conditional-processing.md)
+  * [Topological data analysis](pipeline/processors/tda.md)
 * [Filters](pipeline/filters.md)
   * [AWS metadata](pipeline/filters/aws-metadata.md)
   * [CheckList](pipeline/filters/checklist.md)
@@ -175,6 +180,7 @@
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Apache SkyWalking](pipeline/outputs/skywalking.md)
+  * [ArvanCloud CloudLogs](pipeline/outputs/arvancloud_cloudlogs.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Dash0](pipeline/outputs/dash0.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -187,6 +193,7 @@
   * [Graylog Extended Log Format (GELF)](pipeline/outputs/gelf.md)
   * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
+  * [Google Cloud Storage](pipeline/outputs/gcs.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
   * [Kafka Producer](pipeline/outputs/kafka.md)
@@ -214,8 +221,8 @@
   * [Standard output](pipeline/outputs/standard-output.md)
   * [Syslog](pipeline/outputs/syslog.md)
   * [TCP and TLS](pipeline/outputs/tcp-and-tls.md)
-  * [UDP](pipeline/outputs/udp.md)
   * [Treasure Data](pipeline/outputs/treasure-data.md)
+  * [UDP](pipeline/outputs/udp.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
 

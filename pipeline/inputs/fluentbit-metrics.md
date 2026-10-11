@@ -4,6 +4,10 @@ description:  A plugin to collect Fluent Bit metrics
 
 # Fluent Bit metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 Fluent Bit exposes [metrics](../../administration/monitoring.md) to let you monitor the internals of your pipeline. The collected metrics can be processed similarly to those from the [Prometheus Node Exporter input plugin](node-exporter-metrics.md). They can be sent to output plugins including [Prometheus Exporter](../outputs/prometheus-exporter.md), [Prometheus Remote Write](../outputs/prometheus-remote-write.md) or [OpenTelemetry](../outputs/opentelemetry.md).
 
 {% hint style="info" %}
@@ -96,19 +100,19 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-  flush           1
-  log_level       info
+  Flush           1
+  Log_Level       info
 
 [INPUT]
-  name            fluentbit_metrics
-  tag             internal_metrics
-  scrape_interval 2
+  Name            fluentbit_metrics
+  Tag             internal_metrics
+  Scrape_Interval 2
 
 [OUTPUT]
-  name            prometheus_exporter
-  match           internal_metrics
-  host            0.0.0.0
-  port            2021
+  Name            prometheus_exporter
+  Match           internal_metrics
+  Host            0.0.0.0
+  Port            2021
 ```
 
 {% endtab %}

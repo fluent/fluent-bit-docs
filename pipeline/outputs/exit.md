@@ -16,6 +16,42 @@ At least one of these parameters must be set. If more than one is set the plugin
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Record_Count` | Number of records to wait for before exiting. |  _none_ |
-| `Flush_Count` | Number of flushes to wait for before exiting.| _none_ |
-| `Time_Count` | Number of seconds to wait for before exiting. | _none_ |
+| `flush_count` | Number of flushes to wait for before exiting. | `-1` |
+| `record_count` | Number of records to wait for before exiting. | `-1` |
+| `time_count` | Number of seconds to wait for before exiting. | `-1` |
+
+## Get started
+
+The following example uses a `dummy` input to generate records and exits Fluent Bit after 5 records have been received.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: test
+
+  outputs:
+    - name: exit
+      match: '*'
+      record_count: 5
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name  dummy
+  Tag   test
+
+[OUTPUT]
+  Name         exit
+  Match        *
+  Record_Count 5
+```
+
+{% endtab %}
+{% endtabs %}

@@ -4,12 +4,11 @@ The _Flow counter_ output plugin lets you count up records and their size.
 
 ## Configuration parameters
 
-The plugin supports the following configuration parameters:
-
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Unit` | The unit of duration. Allowed values: `second`, `minute`, `hour`, `day` | `minute` |
-| `Workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+| `event_based` | When enabled, use the timestamp from the log event for time bucketing instead of the current wall-clock time. | `false` |
+| `unit` | The unit of duration. Allowed values: `second`, `minute`, `hour`, `day`. | `minute` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
 

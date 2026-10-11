@@ -2,6 +2,8 @@
 
 Use the _LTSV_ parser format to create custom parsers compatible with [Labeled Tab-separated Values (LTSV)](http://ltsv.org/) data.
 
+For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
+
 LTSV is a variant of the Tab-separated Values (TSV) format. Each record in an LTSV file is represented as a single line. Each field is separated by a tab and has a label and a value. The label and its value are separated by a colon (`:`).
 
 Here is an example how to use this format in the Apache access log.

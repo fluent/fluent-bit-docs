@@ -147,11 +147,11 @@ The following is an example of a main configuration file.
 
 ```yaml
 service:
-  - /path/to/plugins.yaml
-  
+  plugins_file: /path/to/plugins.yaml
+
 pipeline:
   inputs:
-    - name dummy
+    - name: dummy
 
   outputs:
     - name: gstdout
@@ -197,12 +197,24 @@ The following configuration keys are reserved by Fluent Bit and must not be used
 - `tls`
 - `tls.ca_file`
 - `tls.ca_path`
+- `tls.ciphers`
+- `tls.crl_file`
 - `tls.crt_file`
 - `tls.debug`
 - `tls.key_file`
 - `tls.key_passwd`
+- `tls.max_version`
+- `tls.min_version`
+- `tls.proxy.ca_file`
+- `tls.proxy.ca_path`
+- `tls.proxy.verify`
+- `tls.proxy.verify_hostname`
 - `tls.verify`
+- `tls.verify_hostname`
 - `tls.vhost`
+- `tls.windows.certstore_name`
+- `tls.windows.client_thumbprints`
+- `tls.windows.use_enterprise_store`
 - `workers`
 
 ### Run using a configuration file

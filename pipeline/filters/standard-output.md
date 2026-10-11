@@ -1,5 +1,9 @@
 # Standard output
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The standard output filter allows printing the data flowing through the filter plugin to `stdout`, which can be used while debugging.
 
 The plugin has no configuration parameters.

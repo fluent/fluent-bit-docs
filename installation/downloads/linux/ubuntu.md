@@ -1,6 +1,6 @@
 # Ubuntu
 
-Fluent Bit is distributed as the `fluent-bit` package and is available for long-term support releases of Ubuntu. The latest officially supported version is Noble Numbat (24.04).
+Fluent Bit is distributed as the `fluent-bit` package and is available for long-term support releases of Ubuntu. The latest officially supported version is Ubuntu 26.04. Long-term support releases are also available for Noble Numbat (24.04) and Jammy Jellyfish (22.04).
 
 The recommended secure deployment approach is to use the following instructions.
 
@@ -85,3 +85,17 @@ $ systemctl status fluent-bit
 The default configuration of `fluent-bit` is collecting metrics of CPU usage and
 sending the records to the standard output. You can see the outgoing data in your
 `/var/log/syslog` file.
+
+## Upgrade Fluent Bit
+
+Upgrading the `fluent-bit` package reloads the `systemd` unit files and restarts the service, so the new version starts running as soon as the upgrade finishes.
+
+The restart applies only when the service is already running on a host that uses `systemd`. A stopped service stays stopped, and installing the package for the first time doesn't start it.
+
+If a restart isn't safe to take at that moment, stop the service before you upgrade the package and start it again when you're ready:
+
+```shell
+sudo systemctl stop fluent-bit
+sudo apt-get install --only-upgrade fluent-bit
+sudo systemctl start fluent-bit
+```

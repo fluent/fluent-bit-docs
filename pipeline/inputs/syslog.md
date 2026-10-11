@@ -1,5 +1,9 @@
 # Syslog
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Syslog_ input plugin lets you collect `syslog` messages through a Unix socket server (UDP or TCP) or over the network using TCP or UDP.
 
 ## Configuration parameters
@@ -10,7 +14,7 @@ The plugin supports the following configuration parameters:
 |:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------|
 | `buffer_chunk_size`   | Set the buffer size to store incoming `syslog` messages. Memory is allocated on demand in chunks of this size rather than allocating the maximum allowed upfront. When using `udp` or `unix_udp` mode, this also sets the maximum message size.                                   | `32KB`               |
 | `buffer_max_size`     | Specify the maximum buffer size to receive a `syslog` message. If not set, the default size is the value of `buffer_chunk_size`.                                                                                                                                                  | _none_               |
-| `format`              | Specify the TCP framing format. Set to `octet_counting` for RFC 6587 compliant octet-counting framing, or `newline` for newline-delimited framing. Only applies to TCP modes (`tcp` or `unix_tcp`).                                                                               | `newline`            |
+| `format`              | Specify the TCP framing format. Set to `octet_counting` for RFC 6587 compliant octet-counting framing, or `newline` for newline-delimited framing. Only applies to TCP modes (`tcp` or `unix_tcp`). In v5.1.3 or later, an invalid `octet_counting` length closes the connection. | `newline`            |
 | `listen`              | If `mode` is set to `tcp` or `udp`, specify the network interface to bind.                                                                                                                                                                                                        | `0.0.0.0`            |
 | `mode`                | Defines transport protocol mode: UDP over Unix socket (`unix_udp`), TCP over Unix socket (`unix_tcp`), `tcp`, or `udp`                                                                                                                                                            | `unix_udp`           |
 | `parser`              | Specify an alternative parser for the message. If `mode` is set to `tcp` or `udp`, the default parser is `syslog-rfc5424`. Otherwise, `syslog-rfc3164-local` is used. If your syslog messages have fractional seconds, set this parser value to `syslog-rfc5424` instead.     | _none_               |
@@ -26,6 +30,7 @@ The plugin supports the following configuration parameters:
 
 - When using the Syslog input plugin, Fluent Bit requires access to the parsers configuration file. The path to this file can be specified with the option `-R` or through the `parsers_file` key in the service section.
 - When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `buffer_chunk_size` option, which defaults to 32kb.
+- In v5.1.3 or later, when using `tcp` or `unix_tcp` with `newline` framing, empty lines are ignored and don't produce records.
 
 ## Get started
 
@@ -56,7 +61,6 @@ In your main configuration file append the following sections:
 service:
   flush: 1
   log_level: info
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -78,7 +82,6 @@ pipeline:
 [SERVICE]
   Flush               1
   Log_Level           info
-  Parsers_File        parsers.conf
 
 [INPUT]
   Name                syslog
@@ -137,7 +140,6 @@ Put the following content in your configuration file:
 ```yaml
 service:
   flush: 1
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -158,7 +160,6 @@ pipeline:
 ```text
 [SERVICE]
   Flush        1
-  Parsers_File parsers.conf
 
 [INPUT]
   Name     syslog
@@ -203,7 +204,6 @@ Put the following content in your Fluent Bit configuration:
 ```yaml
 service:
   flush: 1
-  parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -224,7 +224,6 @@ pipeline:
 ```text
 [SERVICE]
   Flush        1
-  Parsers_File parsers.conf
 
 [INPUT]
   Name      syslog

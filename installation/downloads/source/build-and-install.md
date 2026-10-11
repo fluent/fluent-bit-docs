@@ -121,6 +121,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_PARSER`             | Build with Parser support                                                                                                   | `Yes`                         |
 | `FLB_POSIX_TLS`          | Force POSIX thread storage                                                                                                  | `No`                          |
 | `FLB_PROFILES`           | Enable profiles support                                                                                                     | `Yes`                         |
+| `FLB_PROTOBUF_ENCODER`   | Build Kafka runtime Protobuf encoding support. Supported in v5.1.3 or later.                                                | `No`                          |
 | `FLB_PROXY_GO`           | Enable Go plugins support                                                                                                   | `Yes`                         |
 | `FLB_RECORD_ACCESSOR`    | Enable record accessor                                                                                                      | `Yes`                         |
 | `FLB_REGEX`              | Build with Regex support                                                                                                    | `Yes`                         |
@@ -139,6 +140,8 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_WAMRC`              | Build with Wasm AOT compiler executable                                                                                     | `No`                          |
 | `FLB_WINDOWS_DEFAULTS`   | Build with predefined Windows settings                                                                                      | `Yes`                         |
 | `FLB_ZIG`                | Enable zig integration                                                                                                      | `Yes`                         |
+
+`FLB_PROTOBUF_ENCODER` is available in Fluent Bit version 5.1.3 and greater. Enabling it requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. If `libprotoc` is missing, CMake stops with `FLB_PROTOBUF_ENCODER requires libprotoc development libraries`. This option also adds a C++ source file to the Kafka output plugin and requires C++11, so the build needs a C++ compiler.
 
 ### Development options
 
@@ -181,6 +184,7 @@ The following input plugins are available:
 | [`FLB_IN_EXEC`](../../../pipeline/inputs/exec.md)                                           | Enable Exec input plugin                                                  | `On`    |
 | [`FLB_IN_EXEC_WASI`](../../../pipeline/inputs/exec-wasi.md)                                 | Enable Exec WASI input plugin                                             | `On`    |
 | [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md)                 | Enable Fluent Bit metrics input plugin                                    | `On`    |
+| [`FLB_IN_FLUENTBIT_LOGS`](../../../pipeline/inputs/fluentbit-logs.md)                       | Enable Fluent Bit internal logs input plugin                              | `On`    |
 | [`FLB_IN_FORWARD`](../../../pipeline/inputs/forward.md)                                     | Enable Forward input plugin                                               | `On`    |
 | [`FLB_IN_GPU_METRICS`](../../../pipeline/inputs/gpu-metrics.md)                             | Enable GPU metrics input plugin                                           | `On`    |
 | [`FLB_IN_HEAD`](../../../pipeline/inputs/head.md)                                           | Enable Head input plugin                                                  | `On`    |
@@ -195,16 +199,15 @@ The following input plugins are available:
 | [`FLB_IN_NGINX_EXPORTER_METRICS`](../../../pipeline/inputs/nginx.md)                        | Enable NGINX metrics input plugin                                         | `On`    |
 | [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
 | [`FLB_IN_OPENTELEMETRY`](../../../pipeline/inputs/opentelemetry.md)                         | Enable OpenTelemetry input plugin                                         | `On`    |
-| [`FLB_IN_NODE_EXPORTER_METRICS`](../../../pipeline/inputs/node-exporter-metrics.md)         | Enable Node exporter metrics input plugin                                 | `On`    |
 | [`FLB_IN_PODMAN_METRICS`](../../../pipeline/inputs/podman-metrics.md)                       | Enable Podman metrics input plugin                                        | `On`    |
 | [`FLB_IN_PROC`](../../../pipeline/inputs/process.md)                                        | Enable Process input plugin                                               | `On`    |
 | [`FLB_IN_PROCESS_EXPORTER_METRICS`](../../../pipeline/inputs/process-exporter-metrics.md)   | Enable Process exporter metrics input plugin                              | `On`    |
 | [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md)     | Enable Prometheus remote write input plugin                               | `On`    |
 | [`FLB_IN_PROMETHEUS_SCRAPE_METRICS`](../../../pipeline/inputs/prometheus-scrape-metrics.md) | Enable Prometheus scrape metrics input plugin                             | `On`    |
-| [`FLB_IN_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-textfile.md)         | Enable Prometheus textfile input plugin                                   | `On`    |
+| [`FLB_IN_PROMETHEUS_TEXTFILE`](../../../pipeline/inputs/prometheus-textfile.md)             | Enable Prometheus textfile input plugin                                   | `On`    |
 | [`FLB_IN_RANDOM`](../../../pipeline/inputs/random.md)                                       | Enable Random input plugin                                                | `On`    |
 | [`FLB_IN_SERIAL`](../../../pipeline/inputs/serial-interface.md)                             | Enable Serial input plugin                                                | `On`    |
-| [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Serial input plugin                                                | `On`    |
+| [`FLB_IN_SPLUNK`](../../../pipeline/inputs/splunk.md)                                       | Enable Splunk input plugin                                                | `On`    |
 | [`FLB_IN_STATSD`](../../../pipeline/inputs/statsd.md)                                       | Enable StatsD input plugin                                                | `On`    |
 | [`FLB_IN_STDIN`](../../../pipeline/inputs/standard-input.md)                                | Enable Standard input plugin                                              | `On`    |
 | [`FLB_IN_SYSLOG`](../../../pipeline/inputs/syslog.md)                                       | Enable Syslog input plugin                                                | `On`    |
@@ -215,7 +218,7 @@ The following input plugins are available:
 | [`FLB_IN_UDP`](../../../pipeline/inputs/udp.md)                                             | Enable UDP input plugin                                                   | `On`    |
 | [`FLB_IN_WINLOG`](../../../pipeline/inputs/windows-event-log.md)                            | Enable Windows Event Log input plugin (Windows Only)                      | `Off`   |
 | [`FLB_IN_WINEVTLOG`](../../../pipeline/inputs/windows-event-log-winevtlog.md)               | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `Off`   |
-| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
+| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `Off`   |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
 
@@ -232,7 +235,8 @@ The following table describes the processors available:
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
 | [`FLB_PROCESSOR_SAMPLING`](../../../pipeline/processors/sampling.md)                             | Enable sampling processor                   | `On`    |
-| [`FLB_PROCESSOR_SQl`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
+| [`FLB_PROCESSOR_SQL`](../../../pipeline/processors/sql.md)                                       | Enable SQL processor                        | `On`    |
+| [`FLB_PROCESSOR_TDA`](../../../pipeline/processors/tda.md)                                       | Enable Topological Data Analysis (`TDA`) processor | `On`    |
 
 ### Filter plugins
 
@@ -269,10 +273,11 @@ The following table describes the filters available on this version:
 
 Output plugins let you flush the information to some external interface, service, or terminal.
 
-The following table describes the output plugins available:
+The following table describes the output plugins available. `FLB_OUT_ARVANCLOUD_CLOUDLOGS` is available in Fluent Bit version 5.1.3 and greater.
 
 | Option                                                                                   | Description                                              | Default |
 |:-----------------------------------------------------------------------------------------|:---------------------------------------------------------|:--------|
+| [`FLB_OUT_ARVANCLOUD_CLOUDLOGS`](../../../pipeline/outputs/arvancloud_cloudlogs.md)      | Enable ArvanCloud CloudLogs output plugin                | `On`    |
 | [`FLB_OUT_AZURE`](../../../pipeline/outputs/azure.md)                                    | Enable Microsoft Azure output plugin                     | `On`    |
 | [`FLB_OUT_AZURE_BLOB`](../../../pipeline/outputs/azure_blob.md)                          | Enable Microsoft Azure storage blob output plugin        | `On`    |
 | [`FLB_OUT_AZURE_KUSTO`](../../../pipeline/outputs/azure_kusto.md)                        | Enable Azure Data Explorer (Kusto) output plugin         | `On`    |
@@ -286,7 +291,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_EXIT`](../../../pipeline/outputs/exit.md)                                      | Enable Exit output plugin                                | `On`    |
 | [`FLB_OUT_FILE`](../../../pipeline/outputs/file.md)                                      | Enable File output plugin                                | `On`    |
 | [`FLB_OUT_FLOWCOUNTER`](../../../pipeline/outputs/flowcounter.md)                        | Enable Flow counter output plugin                        | `On`    |
-| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](https://www.fluentd.org) output plugin   | `On`    |
+| [`FLB_OUT_FORWARD`](../../../pipeline/outputs/forward.md)                                | Enable [Fluentd](https://www.fluentd.org) output plugin  | `On`    |
 | [`FLB_OUT_GELF`](../../../pipeline/outputs/gelf.md)                                      | Enable GELF output plugin                                | `On`    |
 | [`FLB_OUT_HTTP`](../../../pipeline/outputs/http.md)                                      | Enable HTTP output plugin                                | `On`    |
 | [`FLB_OUT_INFLUXDB`](../../../pipeline/outputs/influxdb.md)                              | Enable InfluxDB output plugin                            | `On`    |
@@ -306,7 +311,7 @@ The following table describes the output plugins available:
 | [`FLB_OUT_PGSQL`](../../../pipeline/outputs/postgresql.md)                               | Enable PostgreSQL output plugin                          | `Off`   |
 | [`FLB_OUT_PLOT`](../../../pipeline/outputs/plot.md)                                      | Enable Plot output plugin                                | `On`    |
 | [`FLB_OUT_PROMETHEUS_EXPORTER`](../../../pipeline/outputs/prometheus-exporter.md)        | Enable Prometheus exporter output plugin                 | `On`    |
-| [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/inputs/prometheus-remote-write.md) | Enable Prometheus remote write output plugin             | `On`    |
+| [`FLB_OUT_PROMETHEUS_REMOTE_WRITE`](../../../pipeline/outputs/prometheus-remote-write.md)| Enable Prometheus remote write output plugin             | `On`    |
 | [`FLB_OUT_S3`](../../../pipeline/outputs/s3.md)                                          | Enable Amazon S3 output plugin                           | `On`    |
 | [`FLB_OUT_SKYWALKING`](../../../pipeline/outputs/skywalking.md)                          | Enable Apache Skywalking output plugin                   | `On`    |
 | [`FLB_OUT_SLACK`](../../../pipeline/outputs/slack.md)                                    | Enable Slack output plugin                               | `On`    |
@@ -318,4 +323,4 @@ The following table describes the output plugins available:
 | [`FLB_OUT_TCP`](../../../pipeline/outputs/tcp-and-tls.md)                                | Enable TCP/TLS output plugin                             | `On`    |
 | [`FLB_OUT_UDP`](../../../pipeline/outputs/udp.md)                                        | Enable UDP output plugin                                 | `On`    |
 | [`FLB_OUT_VIVO_EXPORTER`](../../../pipeline/outputs/vivo-exporter.md)                    | Enable Vivo exporter output plugin                       | `On`    |
-| [`FLB_OUT_WEBSOCKET`](../../../pipeline/outputs/udp.md)                                  | Enable UDP output plugin                                 | `On`    |
+| [`FLB_OUT_WEBSOCKET`](../../../pipeline/outputs/websocket.md)                            | Enable WebSocket output plugin                           | `On`    |

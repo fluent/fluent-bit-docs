@@ -8,13 +8,13 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:------------|:----------|
-| `Host` | IP address or hostname of the target WebSocket Server. | `127.0.0.1` |
-| `Port` | TCP port of the target WebSocket Server. | `80` |
-| `URI` | Specify an optional HTTP URI for the target WebSocket server. For example, `/someuri`. | `/` |
-| `Header` | Add a HTTP header key/value pair. Multiple headers can be set.  | _none_ |
-| `Format` | Specify the data format to be used in the HTTP request body. Supported formats: `json`, `json_stream`, `json_lines`, `gelf`. | `msgpack` |
-| `json_date_key` | Specify the name of the date field in output. | `date` |
+| `format` | Specify the data format to be used in the HTTP request body. Supported formats: `json`, `json_stream`, `json_lines`, `gelf`, `msgpack`. | _none_ |
+| `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `host` | IP address or hostname of the target WebSocket Server. | `127.0.0.1` |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | `double` |
+| `json_date_key` | Specify the name of the date field in output. | `date` |
+| `port` | TCP port of the target WebSocket Server. | `80` |
+| `uri` | Specify an optional HTTP URI for the target WebSocket server. For example, `/someuri`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Get started
@@ -123,7 +123,7 @@ pipeline:
   Port           8080
   URI            /
   Format         json
-  workers	   4
+  Workers        4
   net.keepalive               on
   net.keepalive_idle_timeout  30
 ```

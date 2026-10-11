@@ -5,19 +5,28 @@ The Fluent Bit data pipeline incorporates several specific concepts. Data proces
 ```mermaid
 graph LR
     accTitle: Fluent Bit data pipeline
-    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, a parser, a filter, a buffer, routing, and various outputs.
-    A[Input] --> B[Parser]
-    B --> C[Filter]
-    C --> D[Buffer]
-    D --> E((Routing))
-    E --> F[Output 1]
-    E --> G[Output 2]
-    E --> H[Output 3]
+    accDescr: A diagram of the Fluent Bit data pipeline, which includes input, processors, a parser, a filter, a buffer, routing, and various outputs.
+    A[Input] --> B[Processors]
+    B --> C[Parser]
+    C --> D[Filter]
+    D --> E[Buffer]
+    E --> F((Routing))
+    F --> G[Output 1]
+    F --> H[Output 2]
+    F --> I[Output 3]
 ```
 
 ## Inputs
 
 [Input plugins](../pipeline/inputs.md) gather information from different sources. Some plugins collect data from log files, and others gather metrics information from the operating system. There are many plugins to suit different needs.
+
+## Processors
+
+[Processors](../pipeline/processors.md) are components that modify, transform, or enhance data as it flows through the pipeline. Processors are attached directly to individual input or output plugins rather than defined globally, and they don't use tag matching.
+
+Because processors run in the same thread as their associated plugin, they can reduce performance overhead compared to filters—especially when [multithreading](../administration/multithreading.md) is enabled.
+
+Processors are configured in [YAML configuration files](../administration/configuring-fluent-bit/yaml.md) only.
 
 ## Parser
 

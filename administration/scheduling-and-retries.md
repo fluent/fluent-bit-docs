@@ -99,6 +99,8 @@ The scheduler provides a configuration option called `Retry_Limit`, which can be
 When a chunk exhausts all retry attempts or retries are disabled, the data is discarded by default. To preserve rejected data for later analysis, enable the [Dead Letter Queue (DLQ)](./dead-letter-queue.md) feature by setting `storage.keep.rejected` to `on` in the Service section.
 {% endhint %}
 
+In v5.1.3 or later, if too many flush requests are already in flight when a retry is due, Fluent Bit reschedules the retry without counting it against `Retry_Limit`.
+
 ### Retry example
 
 The following example configures two outputs, where the HTTP plugin has an unlimited number of retries, and the Elasticsearch plugin have a limit of `5` retries:

@@ -14,7 +14,7 @@ There are no additional requirements to execute Wasm plugins.
 
 Fluent Bit supports the following Wasm tool chains:
 
-- Rust on `wasm32-unknown-unknown`
+- Rust on `wasm32-wasip1`
   - rustc 1.62.1 (`e092d0b6b` 2022-07-16) or later
 - [TinyGo](https://github.com/tinygo-org/tinygo) on `wasm32-wasi`
   - v0.24.0 or later
@@ -46,14 +46,14 @@ Filters
 
 ## Build a Wasm input for input plugin
 
-Wasm input in Fluent Bit assumes WASI ABI, also known as `wasm32-wasi` on Rust target and `wasm32-wasi` on TinyGo target.
+Wasm input in Fluent Bit assumes WASI ABI, also known as `wasm32-wasip1` on Rust target and `wasm32-wasi` on TinyGo target.
 
 ### Install additional components
 
-TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-wasi` target, you must install `wasm32-wasi` by using [`rustup`](https://rustup.rs/). Then, install the target components as:
+TinyGo and WASI SDK support Wasm target by default. When using Rust's `wasm32-wasip1` target, you must install it by using [`rustup`](https://rustup.rs/). Then, install the target components as:
 
 ```text
-rustup target add wasm32-wasi
+rustup target add wasm32-wasip1
 ```
 
 ### Requirements of Wasm/WASI programs

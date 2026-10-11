@@ -1,5 +1,9 @@
 # Standard input
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Standard input_ plugin supports retrieving a message stream from the standard input interface (`stdin`) of the Fluent Bit process.
 To use it, specify the plugin name as the input. For example:
 
@@ -8,6 +12,10 @@ fluent-bit -i stdin -o stdout
 ```
 
 If the `stdin` stream is closed (`end-of-file`), the plugin instructs Fluent Bit to exit with success (`0`) after flushing any pending output.
+
+{% hint style="info" %}
+Windows support for the `stdin` plugin was added in Fluent Bit v5.0.7. On Windows, the plugin reads from the standard input handle using native Win32 APIs.
+{% endhint %}
 
 ## Configuration parameters
 
@@ -24,7 +32,7 @@ The plugin supports the following configuration parameters:
 If no parser is configured for the `stdin` plugin, it expects valid JSON input data in one of the following formats:
 
 - A JSON object with one or more key-value pairs: `{ "key": "value", "key2": "value2" }`
-- A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#event-or-record) format, which can be:
+- A 2-element JSON array in [Fluent Bit Event](../../concepts/key-concepts.md#events-or-records) format, which can be:
   - `[TIMESTAMP, { "key": "value" }]` where TIMESTAMP is a floating point value representing a timestamp in seconds.
   - From Fluent Bit v2.1.0, `[[TIMESTAMP, METADATA], { "key": "value" }]` where _`TIMESTAMP`_ has the same meaning as previous and _`METADATA`_ is a JSON object.
 
@@ -196,8 +204,9 @@ You can then use the parsers file in a `stdin` plugin in the main Fluent Bit con
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: parsers.yaml
+# service:
+  # Configure this to load your custom parser if required
+  # parsers_file: parsers.yaml
 
 pipeline:
   inputs:
@@ -215,7 +224,8 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File parsers.conf
+  # Configure this to load your custom parser if required
+  # Parsers_File parsers.conf
 
 [INPUT]
   Name    stdin

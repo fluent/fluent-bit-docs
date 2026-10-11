@@ -22,6 +22,18 @@ service:
   storage.rejected.path: rejected
 ```
 
+## Limit DLQ size
+
+To prevent the dead letter queue from growing unbounded, set `storage.rejected.limit` in the `service` section. When the total size of rejected chunks reaches this limit, Fluent Bit skips copying additional chunks and logs a warning. Accepts size values such as `100M` or `1G`. If not set, the DLQ size is unlimited.
+
+```yaml
+service:
+  storage.path: /var/log/flb-storage/
+  storage.keep.rejected: on
+  storage.rejected.path: rejected
+  storage.rejected.limit: 500M
+```
+
 ## Format
 
 Each dead letter queue file is named using this format:

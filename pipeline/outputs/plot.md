@@ -4,7 +4,7 @@ description: Generate data file for GNU Plot
 
 # Plot
 
-The _Plot_ output plugin generates data files in a format compatible with [GNU Plot](https://www.gnuplot.info/) (`gnuplot`), a command-line graphing tool. This plugin lets you export your telemetry data for visualization and analysis using `gnuplot`.
+The _Plot_ output plugin generates data files in a format compatible with GNU Plot (`gnuplot`), a command-line graphing tool. This plugin lets you export your telemetry data for visualization and analysis using `gnuplot`.
 
 ## Configuration parameters
 
@@ -12,8 +12,9 @@ This plugin supports the following parameters:
 
 | Key | Description | Default |
 |:--- |:----------- |:------- |
-| `File` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. If the file can't be opened, the plugin falls back to writing to STDOUT. | _none_ |
-| `Key` | Specify the key name from the record to extract as the value. The value must be a numeric type (integer or float). If not specified, the plugin uses the first field from the record. | _none_ |
+| `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. If the file can't be opened, the plugin falls back to writing to STDOUT. | _none_ |
+| `key` | Specify the key name from the record to extract as the value. The value must be a numeric type (integer or float). If not specified, the plugin uses the first field from the record. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
 ## Output format
 

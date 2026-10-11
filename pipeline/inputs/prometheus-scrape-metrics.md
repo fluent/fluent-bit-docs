@@ -1,5 +1,9 @@
 # Prometheus scrape metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 Fluent Bit 1.9 and later includes additional metrics features to let you collect logs and metrics from a Prometheus-based endpoint at a set interval. These metrics can be routed to metric supported endpoints such as [Prometheus Exporter](../outputs/prometheus-exporter.md), [InfluxDB](../outputs/influxdb.md) or [Prometheus Remote Write](../outputs/prometheus-remote-write.md).
 
 ## Configuration
@@ -47,16 +51,16 @@ pipeline:
 
 ```text
 [INPUT]
-  name prometheus_scrape
-  host 0.0.0.0
-  port 8201
-  tag vault
-  metrics_path /v1/sys/metrics?format=prometheus
-  scrape_interval 10s
+  Name prometheus_scrape
+  Host 0.0.0.0
+  Port 8201
+  Tag vault
+  Metrics_Path /v1/sys/metrics?format=prometheus
+  Scrape_Interval 10s
 
 [OUTPUT]
-  name stdout
-  match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}

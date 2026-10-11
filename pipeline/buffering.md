@@ -45,7 +45,7 @@ After marking a chunk as irrecoverable, Fluent Bit logs an error message and the
 
 ## Buffering modes
 
-Fluent Bit offers two modes for storing buffered data. Both modes store buffered data in memory, but filesystem buffering is a hybrid method that stores an additional copy of buffered data in the filesystem.
+Fluent Bit offers three modes for storing buffered data. Memory-only and memory ring buffer modes store data exclusively in memory, while filesystem buffering is a hybrid method that stores an additional copy of buffered data in the filesystem.
 
 You can set the buffering mode for each active [input plugin](#per-input-settings).
 
@@ -61,6 +61,14 @@ When filesystem buffering is enabled, Fluent Bit stores each chunk of buffered d
 
 This buffering method is less efficient than memory-only buffering, and uses more system overhead, but is less prone to data loss.
 
+### Memory ring buffer buffering
+
+When memory ring buffer (`memrb`) buffering is enabled, Fluent Bit stores buffered data in a fixed-size memory ring buffer. Unlike memory-only buffering, when the ring buffer is full, Fluent Bit automatically drops the oldest chunks to make room for new data instead of pausing the input plugin. Use this mode in scenarios where you want to keep the most recent data and can tolerate loss of older data.
+
+When chunks are dropped, Fluent Bit tracks the number of dropped chunks and bytes through the `memrb_dropped_chunks` and `memrb_dropped_bytes` metrics. You can monitor these metrics to understand how much data is being discarded.
+
+This buffering method prioritizes continuous data ingestion over data completeness, making it suitable for high-throughput scenarios where pausing the input isn't acceptable.
+
 ## Configuration settings
 
 {% hint style="info" %}
@@ -73,17 +81,106 @@ Use the information in this section to configure buffering settings in Fluent Bi
 
 In the [`service` section](../administration/configuring-fluent-bit/yaml/service-section.md) of Fluent Bit configuration files, several settings related to buffering are stored in the [`storage` key](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration). These are global settings that affect all input and output plugins.
 
+To set a default buffering mode for all input plugins, configure `storage.type` and enable `storage.inherit` in the `service` section. Input plugins that don't explicitly set their own `storage.type` will inherit the global value. The following example sets filesystem buffering as the default for all inputs, while allowing individual inputs to override the default:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  log_level: info
+  storage.path: /var/log/flb-storage/
+  storage.type: filesystem
+  storage.inherit: on
+  storage.sync: normal
+  storage.max_chunks_up: 128
+
+pipeline:
+  inputs:
+    - name: cpu
+      # Inherits storage.type: filesystem from service
+
+    - name: mem
+      # Overrides the inherited default
+      storage.type: memory
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[SERVICE]
+  Flush                     1
+  Log_Level                 info
+  Storage.Path              /var/log/flb-storage/
+  Storage.Type              filesystem
+  Storage.Inherit           on
+  Storage.Sync              normal
+  Storage.Max_Chunks_Up     128
+
+[INPUT]
+  Name          cpu
+  # Inherits storage.type: filesystem from SERVICE
+
+[INPUT]
+  Name          mem
+  # Overrides the inherited default
+  Storage.Type  memory
+```
+
+{% endtab %}
+{% endtabs %}
+
 ### Per-input settings
 
 You can configure buffering settings for any input plugin by using these configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `storage.type` | Specifies the buffering mechanism to use for this input plugin. To enable filesystem buffering, a global [`storage.path`](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration) value must be set in the `service` section of your configuration file. Accepted values: `memory`, `filesystem`. | `memory` |
-| `mem_buf_limit` | If memory-only buffering is enabled, sets a limit for how much buffered data the plugin can write to memory. After this limit is reached, the plugin will pause until more memory becomes available. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. If unspecified, no limit is enforced. | `0` |
+| `mem_buf_limit` | Sets a limit for how much buffered data the plugin can write to memory. With memory-only buffering, the plugin pauses until more memory becomes available after this limit is reached. With memory ring buffer (`memrb`) buffering, the oldest chunks are dropped to make room for new data instead of pausing. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. If unspecified, no limit is enforced. | `0` |
+| `rate_gate` | Enables input rate gate control, which pauses ingestion for this input plugin once it exceeds the byte or record rate limits set with `rate_gate.max_bytes` and `rate_gate.max_records`. | `false` |
+| `rate_gate.backpressure` | When `rate_gate` is enabled, factors existing retry and busy-chunk pressure into the effective rate limit instead of relying only on `rate_gate.max_bytes` and `rate_gate.max_records`. | `true` |
+| `rate_gate.max_bytes` | When `rate_gate` is enabled, sets the maximum input byte rate per second before ingestion is paused. This value must follow [unit size](../administration/configuring-fluent-bit.md#unit-sizes) specifications. A value of `0` means no byte-rate limit. | `0` |
+| `rate_gate.max_records` | When `rate_gate` is enabled, sets the maximum input record rate per second before ingestion is paused. A value of `0` means no record-rate limit. | `0` |
+| `rate_gate.resume_ratio` | When `rate_gate` is enabled, sets the hysteresis threshold, as a ratio of the configured limits, that the measured rate must fall under before ingestion resumes. If both `rate_gate.max_bytes` and `rate_gate.max_records` are configured, both measured rates must fall under their respective resume thresholds before ingestion resumes, regardless of which limit originally triggered the pause. | `0.80` |
+| `rate_window` | Sets the time window used to compute this input's byte and record ingestion rate. The computed rate is always published in per-second units, regardless of the window used to measure it. | `1s` |
 | `storage.pause_on_chunks_overlimit` | If filesystem buffering is enabled, specifies how the input plugin should behave after the global `storage.max_chunks_up` limit is reached. When set to `off`, the plugin will stop buffering data to memory but continue buffering data to the filesystem. When set to `on`, the plugin will stop both memory buffering and filesystem buffering until more memory becomes available. Possible values: `on`, `off`. | `off` |
+| `storage.type` | Specifies the buffering mechanism to use for this input plugin. To enable filesystem buffering, a global [`storage.path`](../administration/configuring-fluent-bit/yaml/service-section.md#storage-configuration) value must be set in the `service` section of your configuration file. When set to `memrb`, Fluent Bit uses a memory ring buffer that automatically drops the oldest chunks when the buffer is full to make room for new data. Accepted values: `memory`, `filesystem`, `memrb`. | `memory` |
 
-The following configuration example sets global settings in `service` to support filesystem buffering, then configures one input plugin with filesystem buffering and one input plugin with memory-only buffering:
+`rate_gate` is available in Fluent Bit version 5.1 and greater. The following configuration example enables the rate gate on an input plugin. Ingestion pauses whenever the input exceeds 5 MB per second or 10,000 records per second, and resumes once both the byte rate and the record rate fall back to 80% of their respective limits:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      rate_window: 1s
+      rate_gate: true
+      rate_gate.max_bytes: 5M
+      rate_gate.max_records: 10000
+      rate_gate.resume_ratio: 0.80
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name                     forward
+  Rate_Window              1s
+  Rate_Gate                true
+  Rate_Gate.Max_Bytes      5M
+  Rate_Gate.Max_Records    10000
+  Rate_Gate.Resume_Ratio   0.80
+```
+
+{% endtab %}
+{% endtabs %}
+
+The following configuration example sets global settings in `service` to support filesystem buffering, then configures input plugins with filesystem buffering, memory-only buffering, and memory ring buffer buffering:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -105,6 +202,10 @@ pipeline:
 
     - name: mem
       storage.type: memory
+
+    - name: dummy
+      storage.type: memrb
+      mem_buf_limit: 10M
 ```
 
 {% endtab %}
@@ -112,21 +213,26 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush                     1
-  log_Level                 info
-  storage.path              /var/log/flb-storage/
-  storage.sync              normal
-  storage.checksum          off
-  storage.max_chunks_up     128
-  storage.backlog.mem_limit 5M
+  Flush                     1
+  Log_Level                 info
+  Storage.Path              /var/log/flb-storage/
+  Storage.Sync              normal
+  Storage.Checksum          off
+  Storage.Max_Chunks_Up     128
+  Storage.Backlog.Mem_Limit 5M
 
 [INPUT]
-  name          cpu
-  storage.type  filesystem
+  Name          cpu
+  Storage.Type  filesystem
 
 [INPUT]
-  name          mem
-  storage.type  memory
+  Name          mem
+  Storage.Type  memory
+
+[INPUT]
+  Name           dummy
+  Storage.Type   memrb
+  Mem_Buf_Limit  10M
 ```
 
 {% endtab %}
@@ -171,22 +277,22 @@ pipeline:
 
 ```text
 [SERVICE]
-  flush                     1
-  log_Level                 info
-  storage.path              /var/log/flb-storage/
-  storage.sync              normal
-  storage.checksum          off
-  storage.max_chunks_up     128
-  storage.backlog.mem_limit 5M
+  Flush                     1
+  Log_Level                 info
+  Storage.Path              /var/log/flb-storage/
+  Storage.Sync              normal
+  Storage.Checksum          off
+  Storage.Max_Chunks_Up     128
+  Storage.Backlog.Mem_Limit 5M
 
 [INPUT]
-  name                      cpu
-  storage.type              filesystem
+  Name                      cpu
+  Storage.Type              filesystem
 
 [OUTPUT]
-  name                      stackdriver
-  match                     *
-  storage.total_limit_size  5M
+  Name                      stackdriver
+  Match                     *
+  Storage.Total_Limit_Size  5M
 ```
 
 {% endtab %}

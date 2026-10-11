@@ -1,6 +1,10 @@
 # eBPF
 
 {% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
+{% hint style="info" %}
 This plugin is experimental and might be unstable. Use it in development or testing environments only. Its features and behavior are subject to change.
 {% endhint %}
 
@@ -16,7 +20,7 @@ The plugin supports the following configuration parameters:
 |:----|:------------|:--------|
 | `poll_ms` | Set the polling interval in milliseconds for collecting events from the ring buffer. | `1000` |
 | `ringbuf_map_name` | Set the name of the eBPF ring buffer map to read events from. | `events` |
-| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_malloc`, `trace_signal`). This parameter can be set multiple times to enable multiple traces. | _none_ |
+| `trace` | Set the eBPF trace to enable (for example, `trace_bind`, `trace_dns`, `trace_exec`, `trace_malloc`, `trace_openssl`, `trace_sched`, `trace_signal`, `trace_tcp`, `trace_vfs`). This parameter can be set multiple times to enable multiple traces. | _none_ |
 
 ## System dependencies
 
@@ -126,7 +130,8 @@ All traces include the following fields:
 
 | Field | Description |
 |:------|:------------|
-| `event_type` | Type of event (`signal`, `malloc`, or `bind`). |
+| `event_type` | Type of event (`signal`, `malloc`, `bind`, `exec`, `tcp`, `vfs`, `tls_handshake`, `tls_read`, `tls_write`, or `tls_shutdown`). |
+| `event_id` | Per-CPU monotonic identifier for the event. |
 | `pid` | Process ID that generated the event. |
 | `tid` | Thread ID that generated the event. |
 | `comm` | Command name (process name) that generated the event. |
@@ -161,3 +166,88 @@ The `trace_bind` trace includes these additional fields:
 | `port` | Port number the socket is binding to. |
 | `bound_dev_if` | Network device interface the socket is bound to. |
 | `error_raw` | Error code for the bind operation (`0` indicates success). |
+
+### TCP trace fields
+
+The `trace_tcp` trace captures TCP connection lifecycle events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `event_type` | TCP event subtype (`listen`, `accept`, or `connect`). |
+| `fd` | File descriptor for the socket. |
+| `backlog` | Listen backlog size (for `listen` events). |
+| `new_fd` | New file descriptor returned by the kernel (for `accept` events). |
+| `peer_port` | Remote peer port number (for `accept` events). |
+| `peer_addr` | Remote peer IP address (for `accept` events). |
+| `remote_port` | Remote port number (for `connect` events). |
+| `remote_addr` | Remote IP address (for `connect` events). |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
+### `VFS` trace fields
+
+The `trace_vfs` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `operation` | `VFS` operation type (integer). |
+| `path` | File path involved in the operation. |
+| `flags` | Flags passed to the `VFS` operation. |
+| `mode` | File mode bits for the operation. |
+| `fd` | File descriptor returned by the operation. |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
+### Exec trace fields
+
+The `trace_exec` trace includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `stage` | Execution stage. One of `enter`, `exit`, or `unknown`. |
+| `ppid` | Parent process ID. |
+| `filename` | Path of the executable being run. |
+| `argv` | First argument of the command (`argv[0]`). |
+| `argv1` | Second argument of the command (`argv[1]`). |
+| `argv2` | Third argument of the command (`argv[2]`). |
+| `argv_last` | Final captured argument when more than three are present. |
+| `argc` | Total number of arguments. |
+| `error_raw` | Error code for the operation (`0` indicates success). |
+
+### DNS trace fields
+
+The `trace_dns` trace captures DNS query and response events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `error_raw` | Error code for the operation (`0` indicates success). |
+| `latency_ns` | Round-trip latency in nanoseconds between query and response. |
+| `query` | Resolved DNS query name (for example, `example.com`). |
+| `query_type` | Numeric DNS query type (for example, `1` for IPv4 address (A record), `28` for IPv6 address (`AAAA` record)). |
+| `rcode` | DNS response code (`0` indicates no error). |
+| `response` | Set to `1` if the record is a DNS response; `0` if it's a query. |
+| `txid` | DNS transaction ID. |
+
+### `Sched` trace fields
+
+The `trace_sched` trace captures CPU scheduling switch events and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `cpu` | CPU that ran the scheduling switch. |
+| `prev_pid` | Process ID of the task being scheduled out. |
+| `prev_prio` | Priority of the task being scheduled out. |
+| `prev_state` | Kernel task state of the task being scheduled out. |
+| `next_pid` | Process ID of the task being scheduled in. |
+| `next_prio` | Priority of the task being scheduled in. |
+| `runq_latency_ns` | Run-queue latency in nanoseconds between `wakeup` and scheduling in (`0` when not tracked). |
+| `wakeup_tracked` | Set to `true` when a matching `wakeup` was tracked for the run-queue latency calculation. |
+
+### OpenSSL trace fields
+
+The `trace_openssl` trace captures OpenSSL TLS operations using user-space probes and includes these additional fields:
+
+| Field | Description |
+|:------|:------------|
+| `trace` | OpenSSL operation. One of `openssl_tls_read`, `openssl_tls_write`, `openssl_tls_shutdown`, or `openssl_tls_handshake`. |
+| `ssl_ptr` | Pointer to the OpenSSL `SSL` object associated with the operation. |
+| `latency_ns` | Operation latency in nanoseconds. |
+| `ret` | Return value of the OpenSSL call. |

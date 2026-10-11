@@ -1,5 +1,9 @@
 # Exec WASI
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Exec WASI_ input plugin lets you execute Wasm programs that are WASI targets like external programs and collect event logs from there.
 
 ## Configuration parameters
@@ -63,7 +67,8 @@ Then, you can specify the `parsers.conf` in the main Fluent Bit configuration:
 service:
   flush: 1
   daemon: off
-  parsers_file: parsers.yaml
+  # Configure this to load your custom parser if required
+  # parsers_file: parsers.yaml
   log_level: info
   http_server: off
   http_listen: 0.0.0.0
@@ -90,7 +95,8 @@ pipeline:
 [SERVICE]
   Flush        1
   Daemon       Off
-  Parsers_File parsers.conf
+  # Configure this to load your custom parser if required
+  # Parsers_File parsers.conf
   Log_Level    info
   HTTP_Server  Off
   HTTP_Listen  0.0.0.0
@@ -99,7 +105,7 @@ pipeline:
 [INPUT]
   Name exec_wasi
   Tag  exec.wasi.local
-  WASI_Path /path/to/wasi/program.wasm
+  Wasi_Path /path/to/wasi/program.wasm
   Accessible_Paths .,/path/to/accessible
   Parser wasi
 

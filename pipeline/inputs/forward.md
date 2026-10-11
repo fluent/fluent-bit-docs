@@ -1,5 +1,9 @@
 # Forward
 
+{% hint style="info" %}
+**Supported event types:** `logs` `metrics` `traces`
+{% endhint %}
+
 _Forward_ is the protocol used by [Fluent Bit](https://fluentbit.io) and [Fluentd](https://www.fluentd.org) to route messages between peers. This plugin implements the input service to listen for Forward messages.
 
 ## Configuration parameters
@@ -9,18 +13,23 @@ The plugin supports the following configuration parameters:
 | Key                 | Description  | Default   |
 |:--------------------|:-------------|:----------|
 | `buffer_chunk_size` | By default the buffer to store the incoming Forward messages, don't allocate the maximum memory allowed, instead it allocate memory when it's required. The rounds of allocations are set by `buffer_chunk_size`. The value must be according to the [Unit Size ](../../administration/configuring-fluent-bit.md#unit-sizes)specification. | `1024000` |
-| `buffer_max_size`   | Specify the maximum buffer memory size used to receive a Forward message. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification.                                                                                                                                         | `6144000` |
+| `buffer_max_size`   | Specify the maximum buffer memory size used to receive a Forward message. This limit also applies to incoming payloads and decompressed data; payloads exceeding this size are rejected and the connection is closed. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `6144000` |
 | `empty_shared_key`  | Enable secure forward protocol with a zero-length shared key. Use this to enable user authentication without requiring a shared key, or to connect to Fluentd with a zero-length shared key.                                                                                                                                              | `false`   |
 | `listen`            | Listener network interface.                                                                                                                                                                                                                                                                                                                | `0.0.0.0` |
 | `port`              | TCP port to listen for incoming connections.                                                                                                                                                                                                                                                                                               | `24224`   |
 | `security.users`    | Specify the username and password pairs for secure forward authentication. Requires `shared_key` or `empty_shared_key` to be set.                                                                                                                                                                                                          |           |
 | `self_hostname`     | Hostname for secure forward authentication.                                                                                                                                                                                                                                                                                                | `localhost` |
 | `shared_key`        | Shared key for secure forward authentication.                                                                                                                                                                                                                                                                                              | _none_    |
-| `tag`               | Override the tag of the forwarded events with the defined value.                                                                                                                                                                                                                                                                           | _none_    |
+| `tag`               | Override the tag of the forwarded events with the defined value. In v5.1.3 or later, if `tag` and `tag_prefix` aren't set and an incoming tag is empty, the input name is used. If `tag_prefix` is set, it's applied to the incoming tag instead.                                                                                          | _none_    |
 | `tag_prefix`        | Prefix incoming tag with the defined value.                                                                                                                                                                                                                                                                                                | _none_    |
 | `threaded`          | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                                                                                                                                                                    | `false`   |
 | `unix_path`         | Specify the path to Unix socket to receive a Forward message. If set, `listen` and `port` are ignored.                                                                                                                                                                                                                                     | _none_    |
 | `unix_perm`         | Set the permission of the Unix socket file. If `unix_path` isn't set, this parameter is ignored.                                                                                                                                                                                                                                           | _none_    |
+| `workers`           | The number of listener workers that accept and process incoming connections. Not supported with `unix_path`; a value greater than `1` while `unix_path` is set causes startup to fail.                                                                                                                                                     | `1`       |
+
+### Payload validation
+
+In v5.1.3 or later, the plugin validates `PackedForward` and `CompressedPackedForward` payloads before it ingests them. If an entry isn't a valid log event, the plugin logs the warning `invalid PackedForward entry` and rejects the payload.
 
 ### TLS / SSL
 

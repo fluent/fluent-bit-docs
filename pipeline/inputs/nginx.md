@@ -1,5 +1,9 @@
 # NGINX exporter metrics
 
+{% hint style="info" %}
+**Supported event types:** `metrics`
+{% endhint %}
+
 The _NGINX exporter metrics_ input plugin scrapes metrics from the NGINX stub status handler.
 
 {% hint style="info" %}

@@ -12,7 +12,7 @@ There are no additional requirements to execute Wasm plugins.
 
 #### Build `flb-wamrc` (optional)
 
-`flb-wamrc` is a `flb`-prefixed Ahead of Time (AOT) compiler that's provided from [`wasm-micro-runtime`](https://github.com/bytecodealliance/wasm-micro-runtime).
+`flb-wamrc` is a `flb`-prefixed Ahead of Time (AOT) compiler that's provided from [`wasm-micro-runtime`](https://github.com/wasm-micro-runtime/wasm-micro-runtime).
 
 For `flb-wamrc` support, you must install the LLVM infrastructure and some additional libraries (`libmlir`, `libPolly`, `libedit`, and `libpfm`). For example:
 

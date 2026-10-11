@@ -75,7 +75,7 @@ parsers:
 1. Update the `parsers_file` parameter in the `service` section of your YAML configuration file:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="custom-parsers-fluent-bit.yaml" %}
 
 ```yaml
 service:

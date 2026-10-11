@@ -1,5 +1,9 @@
 # Parser
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Parser_ filter allows for parsing fields in event records.
 
 ## Configuration parameters
@@ -8,10 +12,11 @@ The plugin supports the following configuration parameters:
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `Key_Name` | Specify field name in record to parse. | _none_ |
-| `Parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
-| `Preserve_Key` | Keep the original `Key_Name` field in the parsed result. If false, the field will be removed. | `False` |
-| `Reserve_Data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `False` |
+| `key_name` | Specify field name in record to parse. | _none_ |
+| `parser` | Specify the parser name to interpret the field. Multiple parser entries are allowed (one per line). | _none_ |
+| `preserve_key` | Keep the original `key_name` field in the parsed result. If false, the field will be removed. | `false` |
+| `reserve_data` | Keep all other original fields in the parsed result. If false, all other original fields will be removed. | `false` |
+| `Unescape_key` | Deprecated. This option is retained only for backward compatibility and shouldn't be used in new configurations. | _deprecated_ |
 
 ## Get started
 
@@ -22,7 +27,7 @@ The plugin needs a parser file which defines how to parse each field.
 This is an example of parsing a record `{"data":"100 0.5 true This is example"}`.
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="parser.yaml" %}
 
 ```yaml
 parsers:
@@ -32,7 +37,7 @@ parsers:
 ```
 
 {% endtab %}
-{% tab title="fluent-bit.conf" %}
+{% tab title="parser.conf" %}
 
 ```text
 [PARSER]
@@ -50,8 +55,9 @@ The path of the parser file should be written in configuration file under the `[
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -75,7 +81,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -109,7 +115,7 @@ $ fluent-bit --config fluent-bit.conf
 [0] dummy.data: [[1750323528.603308000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 [0] dummy.data: [[1750323529.603788000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 [0] dummy.data: [[1750323530.604204000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
-[0] dummy.data: [[1750323531.603961000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]e
+[0] dummy.data: [[1750323531.603961000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example"}]
 ```
 
 You can see the records `{"data":"100 0.5 true This is example"}` are parsed.
@@ -118,7 +124,7 @@ You can see the records `{"data":"100 0.5 true This is example"}` are parsed.
 
 By default, the parser plugin only keeps the parsed fields in its output.
 
-If you enable `Reserve_Data`, all other fields are preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
+If you enable `reserve_data`, all other fields are preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -143,14 +149,15 @@ parsers:
 {% endtab %}
 {% endtabs %}
 
-Now add `Reserve_Data` to the filter section of the corresponding configuration file as follows:
+Now add `reserve_data` to the filter section of the corresponding configuration file as follows:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -175,7 +182,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -188,7 +195,7 @@ pipeline:
   Key_Name data
   Parser dummy_test
   Reserve_Data On
-    
+
 [OUTPUT]
   Name stdout
   Match *
@@ -212,7 +219,7 @@ $ fluent-bit --config fluent-bit.conf
 [0] dummy.data: [[1750325240.682903000, {}], {"INT"=>"100", "FLOAT"=>"0.5", "BOOL"=>"true", "STRING"=>"This is example", "key1"=>"value1", "key2"=>"value2"}]
 ```
 
-If you enable `Reserve_Data` and `Preserve_Key`, the original key field will also be preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
+If you enable `reserve_data` and `preserve_key`, the original key field will also be preserved. First the contents of the corresponding parsers file, depending on the choice for YAML or classic configurations, would be as follows:
 
 {% tabs %}
 {% tab title="parsers.yaml" %}
@@ -237,14 +244,15 @@ parsers:
 {% endtab %}
 {% endtabs %}
 
-Now add `Reserve_Data` and `Preserve_Key`to the filter section of the corresponding configuration file as follows:
+Now add `reserve_data` and `preserve_key` to the filter section of the corresponding configuration file as follows:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.yaml
+# service:
+  # Provide the actual path here
+  # parsers_file: /path/to/parsers.yaml
 
 pipeline:
   inputs:
@@ -270,7 +278,7 @@ pipeline:
 
 ```text
 [SERVICE]
-  Parsers_File /path/to/parsers.conf
+  # Parsers_File /path/to/parsers.conf
 
 [INPUT]
   Name dummy
@@ -284,7 +292,7 @@ pipeline:
   Parser dummy_test
   Reserve_Data On
   Preserve_Key On
-    
+
 [OUTPUT]
   Name stdout
   Match *

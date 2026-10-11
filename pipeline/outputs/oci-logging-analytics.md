@@ -4,6 +4,10 @@ description: Send logs to Oracle Cloud Infrastructure Log Analytics Service
 
 # Oracle Cloud Infrastructure Logging Analytics
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Oracle Cloud Infrastructure Logging Analytics_ output plugin lets you ingest your log records into the [Oracle Cloud Infrastructure (OCI) Log Analytics](https://docs.oracle.com/en-us/iaas/log-analytics/home.htm) service.
 
 ## Configuration parameters
@@ -13,18 +17,20 @@ This plugin uses the following configuration parameters:
 | Key | Description | Default |
 | --- | ----------- | ------- |
 | `config_file_location` | The location of the [configuration file](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm#SDK_and_CLI_Configuration_File) that contains OCI authentication details. | _none_ |
-| `profile_name` | The OCI configuration profile name to be used from the configuration file. | `DEFAULT` |
 | `namespace` | The OCI tenancy namespace to upload log data to. | _none_ |
-| `proxy` | The proxy name, in `http://host:port` format. Only supports HTTP protocol. | _none_ |
-| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
-| `oci_config_in_record` | If set to `true`, the following `oci_la_*` will be read from the record itself instead of the output plugin configuration. | `false` |
-| `oci_la_log_group_id` | Required. The Oracle Cloud Identifier (OCID) of the Log Analytics where you want to store logs. | _none_ |
-| `oci_la_log_source_name` | Required. The Log Analytics Source to use for processing log records. | _none_ |
+| `oci_config_in_record` | If set to `true`, the following `oci_la_*` parameters will be read from the record itself instead of the output plugin configuration. | `false` |
 | `oci_la_entity_id` | The OCID of the Log Analytics entity. | _none_ |
 | `oci_la_entity_type` | The entity type of the Log Analytics entity. | _none_ |
-| `oci_la_log_path` | Specifies the original location of the log files. | _none_ |
 | `oci_la_global_metadata` | Specifies additional global metadata along with original log content to Log Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
+| `oci_la_log_group_id` | Required. The Oracle Cloud Identifier (OCID) of the Log Analytics log group where you want to store logs. | _none_ |
+| `oci_la_log_path` | Specifies the original location of the log files. | _none_ |
+| `oci_la_log_set_id` | The OCID of the Log Analytics log set. | _none_ |
+| `oci_la_log_source_name` | Required. The Log Analytics Source to use for processing log records. | _none_ |
 | `oci_la_metadata` | Specifies additional metadata for a log event along with original log content to Log Analytics. The format is `key_name value`. This option can be set multiple times. | _none_ |
+| `profile_name` | The OCI configuration profile name to be used from the configuration file. | `DEFAULT` |
+| `proxy` | The proxy name, in `http://host:port` format. Only supports HTTP protocol. | _none_ |
+| `uri` | The URI for the OCI Log Analytics REST API request. | _none_ |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ### TLS/SSL
 
@@ -84,14 +90,14 @@ pipeline:
   Name dummy
   Tag dummy
 
-[Output]
+[OUTPUT]
   Name oracle_log_analytics
   Match *
   Namespace <namespace>
-  config_file_location <location>
-  profile_name ADMIN
-  oci_la_log_source_name <log-source-name>
-  oci_la_log_group_id <log-group-ocid>
+  Config_File_Location <location>
+  Profile_Name ADMIN
+  Oci_La_Log_Source_Name <log-source-name>
+  Oci_La_Log_Group_Id <log-group-ocid>
   tls On
   tls.verify Off
 ```
@@ -137,18 +143,18 @@ pipeline:
   Name dummy
   Tag dummy
 
-[Filter]
+[FILTER]
   Name modify
   Match *
   Add oci_la_log_source_name <LOG_SOURCE_NAME>
   Add oci_la_log_group_id <LOG_GROUP_OCID>
 
-[Output]
+[OUTPUT]
   Name oracle_log_analytics
   Match *
-  config_file_location <oci_file_path>
-  profile_name ADMIN
-  oci_config_in_record true
+  Config_File_Location <oci_file_path>
+  Profile_Name ADMIN
+  Oci_Config_In_Record true
   tls On
   tls.verify Off
 ```
@@ -195,18 +201,18 @@ pipeline:
   Name dummy
   Tag dummy
 
-[Output]
+[OUTPUT]
   Name oracle_log_analytics
   Match *
   Namespace example_namespace
-  config_file_location /Users/example_file_location
-  profile_name ADMIN
-  oci_la_log_source_name example_log_source
-  oci_la_log_group_id ocid.xxxxxx
-  oci_la_global_metadata glob_key1 value1
-  oci_la_global_metadata glob_key2 value2
-  oci_la_metadata key1 value1
-  oci_la_metadata key2 value2
+  Config_File_Location /Users/example_file_location
+  Profile_Name ADMIN
+  Oci_La_Log_Source_Name example_log_source
+  Oci_La_Log_Group_Id ocid.xxxxxx
+  Oci_La_Global_Metadata glob_key1 value1
+  Oci_La_Global_Metadata glob_key2 value2
+  Oci_La_Metadata key1 value1
+  Oci_La_Metadata key2 value2
   tls On
   tls.verify Off
 ```
@@ -290,7 +296,7 @@ pipeline:
   Tag dummy
 
 [FILTER]
-  Name Modify
+  Name modify
   Match *
   Add olgm.key1 val1
   Add olgm.key2 val2
@@ -300,22 +306,22 @@ pipeline:
   Match *
   Operation nest
   Wildcard olgm.*
-  Nest_under oci_la_global_metadata
-  Remove_prefix olgm.
+  Nest_Under oci_la_global_metadata
+  Remove_Prefix olgm.
 
-[Filter]
+[FILTER]
   Name modify
   Match *
   Add oci_la_log_source_name <LOG_SOURCE_NAME>
   Add oci_la_log_group_id <LOG_GROUP_OCID>
 
-[Output]
+[OUTPUT]
   Name oracle_log_analytics
   Match *
-  config_file_location <oci_file_path>
-  namespace <oci_tenancy_namespace>
-  profile_name ADMIN
-  oci_config_in_record true
+  Config_File_Location <oci_file_path>
+  Namespace <oci_tenancy_namespace>
+  Profile_Name ADMIN
+  Oci_Config_In_Record true
   tls On
   tls.verify Off
 ```

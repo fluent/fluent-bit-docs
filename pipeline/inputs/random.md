@@ -1,5 +1,9 @@
 # Random
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Random_ input plugin generates random value samples using the device interface `/dev/urandom`. If that interface is unavailable, it uses a Unix timestamp as a value.
 
 ## Configuration parameters

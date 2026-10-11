@@ -1,10 +1,14 @@
 # Kafka
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Kafka_ input plugin enables Fluent Bit to consume messages directly from one or more [Apache Kafka](https://kafka.apache.org/) topics. By subscribing to specified topics, this plugin efficiently collects and forwards Kafka messages for further processing within your Fluent Bit pipeline.
 
 Starting with version 4.0.4, the Kafka input plugin supports authentication with AWS MSK IAM, enabling integration with Amazon MSK (Managed Streaming for Apache Kafka) clusters that require IAM-based access.
 
-This plugin uses the official [librdkafka C library](https://github.com/edenhill/librdkafka) as a built-in dependency.
+This plugin uses the official [librdkafka C library](https://github.com/confluentinc/librdkafka) as a built-in dependency.
 
 ## Configuration parameters
 
@@ -91,8 +95,16 @@ pipeline:
   filters:
     - name: lua
       match: '*'
-      script: kafka.lua
       call: modify_kafka_message
+      code: |
+        local count = 0
+        function modify_kafka_message(tag, timestamp, record)
+            count = count + 1
+            local payload = record.payload
+            payload.topic = record.topic
+            payload.status = 'processed by fluent-bit, total records: '..tostring(count)
+            return 1, timestamp, payload
+        end
 
   outputs:
     - name: kafka
@@ -114,8 +126,8 @@ pipeline:
 [FILTER]
   Name    lua
   Match   *
-  Script  kafka.lua
   Call    modify_kafka_message
+  Code    local count = 0 function modify_kafka_message(tag, timestamp, record) count = count + 1 local payload = record.payload payload.topic = record.topic payload.status = 'processed by fluent-bit, total records: '..tostring(count) return 1, timestamp, payload end
 
 [OUTPUT]
   Name    kafka
@@ -130,7 +142,18 @@ The previous example will connect to the broker listening on `kafka-broker:9092`
 
 Since the payload will be in JSON format, the plugin is configured to parse the payload with `format json`.
 
-Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker.
+Every message received is then processed with `kafka.lua` and sent back to the `fb-sink` topic of the same broker, this is shown inline for each configuration but is as follows:
+
+```lua
+local count = 0
+function modify_kafka_message(tag, timestamp, record)
+    count = count + 1
+    local payload = record.payload
+    payload.topic = record.topic
+    payload.status = 'processed by fluent-bit, total records: '..tostring(count)
+    return 1, timestamp, payload
+end
+```
 
 The example can be executed locally with `make start` in the `examples/kafka_filter` directory (`docker/compose` is used).
 

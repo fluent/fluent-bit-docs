@@ -17,9 +17,6 @@ You can turn a standard processor into a conditional processor by adding a `cond
 
 These `condition` blocks use the following syntax:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
 ```yaml
 pipeline:
   inputs:
@@ -40,9 +37,6 @@ pipeline:
             value: {comparison_value2}
         <...>
 ```
-
-{% endtab %}
-{% endtabs %}
 
 Each processor can only have a single `condition` block, but that condition can include multiple rules. These rules are stored as items in the `condition.rules` array.
 
@@ -76,7 +70,7 @@ This rule evaluates to `true` for a log that contains the string `'status':200`,
 
 #### Field access
 
-The `conditions.rules.field` parameter uses [record accessor syntax](/administration/configuring-fluent-bit/classic-mode/record-accessor.md) to reference fields inside logs.
+The `conditions.rules.field` parameter uses [record accessor syntax](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) to reference fields inside logs.
 
 You can use `$field` syntax to access a top-level field, and `$field['child']['subchild']` to access nested fields.
 

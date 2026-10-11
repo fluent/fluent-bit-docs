@@ -42,6 +42,7 @@ exceptions:
   - DPI
   - DPPS
   - DST
+  - DTLS
   - ECR
   - ECS
   - EKS
@@ -80,6 +81,7 @@ exceptions:
   - LLVM
   - LTS
   - LTSV
+  - MIG
   - MIME
   - MAC
   - MQTT
@@ -92,6 +94,7 @@ exceptions:
   - NOTE
   - NSIS
   - NVDA
+  - NVML
   - OAP
   - OEM
   - OOM

@@ -1,5 +1,9 @@
 # Docker events
 
+{% hint style="info" %}
+**Supported event types:** `logs`
+{% endhint %}
+
 The _Docker events_ input plugin uses the Docker API to capture server events. A complete list of possible events returned by this plugin can be found [in the Docker documentation](https://docs.docker.com/reference/cli/docker/system/events/).
 
 ## Configuration parameters
