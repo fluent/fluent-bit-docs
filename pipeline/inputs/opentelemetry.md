@@ -111,6 +111,15 @@ For `OTLP/GRPC`:
   - `/opentelemetry.proto.collector.trace.v1.TraceService/Export`
   - `/opentelemetry.proto.collector.traces.v1.TracesService/Export`
 
+### gRPC message size limits
+
+In v5.1.4 or later, the plugin enforces the following limits on `OTLP/GRPC` requests:
+
+- Each gRPC message can't exceed 16 MiB, both as received and after decompression.
+- The combined size of all messages in a request, after decompression, can't exceed `buffer_max_size`.
+
+Messages compressed with `gzip`, `zstd`, or `snappy` (set by the `grpc-encoding` header) are decompressed in bounded steps, so a highly compressed payload is rejected as soon as its expanded size reaches the limit. Requests that exceed a limit are rejected with gRPC status `8 (RESOURCE_EXHAUSTED)` and the message `gRPC message size exceeds limit` or `expanded gRPC payload size exceeds limit`. Compressed messages that use any other `grpc-encoding` value are rejected with gRPC status `12 (UNIMPLEMENTED)`. Uncompressed messages aren't affected by the `grpc-encoding` value.
+
 ## Get started
 
 The OpenTelemetry input plugin supports the following telemetry data types:
