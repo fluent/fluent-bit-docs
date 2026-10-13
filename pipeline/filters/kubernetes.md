@@ -364,6 +364,8 @@ You can see on the [Rublar.com](https://rubular.com/r/HZz3tYAahj6JCd) website ho
 
 Under some uncommon conditions, a user might want to alter that hard-coded regular expression. Use the `Regex_Parser` option.
 
+In v5.1.4 or later, the filter validates the `namespace_name` and `pod_name` values captured by the regular expression before it uses them. A namespace name must be a valid DNS label of up to 63 characters, and a pod name must be a valid DNS subdomain of up to 253 characters. Both can contain only lowercase alphanumeric characters, `-`, and, for pod names, `.`. If a captured value isn't valid, the filter logs the warning `invalid Kubernetes namespace or pod name`. Records are then passed through without Kubernetes metadata, except when `use_journal` is enabled, in which case the record is dropped. Your custom regular expression must capture `namespace_name` and `pod_name`, and can also capture `container_name`, `container_hash`, and `docker_id` to add them to the metadata. Make sure the `namespace_name` and `pod_name` captures match only the namespace and pod name.
+
 #### Custom tags For enhanced filtering
 
 One such use case involves splitting logs by namespace, pods, containers or container ID. The tag is restructured within the tail input using match groups. Restructuring can simplify the filtering by those match groups later in the pipeline. Since the tag no longer follows the original filename, a custom `Regex_Parser` that matches the new tag structure is required:
