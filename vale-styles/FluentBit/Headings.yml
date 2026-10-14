@@ -22,6 +22,7 @@ exceptions:
   - Apache Arrow
   - API
   - APIs
+  - ArvanCloud CloudLogs
   - AWS
   - AWS MSK IAM
   - AWS IAM
@@ -42,6 +43,7 @@ exceptions:
   - CNCF
   - Code
   - Collector
+  - Confluent Schema Registry
   - Cosmos
   - CPU
   - Crowdstrike
@@ -76,6 +78,7 @@ exceptions:
   - Google Cloud
   - Google Cloud BigQuery
   - Google Cloud Platform
+  - Google Cloud Storage
   - GPG
   - GPU
   - Grafana
@@ -112,6 +115,7 @@ exceptions:
   - MongoDB
   - MQTT
   - MSK
+  - Nano Server
   - NATS
   - New Relic
   - Observability Platform
@@ -170,5 +174,6 @@ exceptions:
   - WebSocket
   - Windows
   - Windows Event
+  - Windows Server
   - YAML
   - YUM

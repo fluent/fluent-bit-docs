@@ -22,6 +22,7 @@ The plugin supports the following configuration parameters:
 - `buffer_size` defaults to `2048` bytes; messages larger than this limit are dropped.
 - Defaults for `listen` and `port` are `0.0.0.0` and `1883`, so you can omit them if you want the standard MQTT listener.
 - Payloads are expected to be JSON maps; non-JSON payloads will fail to parse.
+- In v5.1.3 or later, the plugin closes the connection when it receives a `PUBLISH` packet with an invalid QoS level (`3`), or when it can't write a reply to the client.
 {% endhint %}
 
 ### TLS / SSL

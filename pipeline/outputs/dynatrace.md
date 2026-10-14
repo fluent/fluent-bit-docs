@@ -33,45 +33,48 @@ To get started with sending logs to Dynatrace:
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
-   ```yaml
-   pipeline:
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: test
 
-     outputs:
-       - name: http
-         match: '*'
-         header:
-           - 'Content-Type application/json; charset=utf-8'
-           - 'Authorization Api-Token {your-API-token-here}'
-         allow_duplicated_headers: false
-         host: {your-environment-id}.live.dynatrace.com
-         port: 443
-         uri: /api/v2/logs/ingest
-         format: json
-         json_date_format: iso8601
-         json_date_key: timestamp
-         tls: on
-         tls.verify: on
-   ```
+  outputs:
+    - name: http
+      match: '*'
+      header:
+        - 'Content-Type application/json; charset=utf-8'
+        - 'Authorization Api-Token {your-API-token-here}'
+      allow_duplicated_headers: false
+      host: '{your-environment-id}.live.dynatrace.com'
+      port: 443
+      uri: /api/v2/logs/ingest
+      format: json
+      json_date_format: iso8601
+      json_date_key: timestamp
+      tls: on
+      tls.verify: on
+```
 
 {% endtab %}
 {% tab title="fluent-bit.conf" %}
 
-   ```text
-   [OUTPUT]
-     Name                     http
-     Match                    *
-     Header                   Content-Type application/json; charset=utf-8
-     Header                   Authorization Api-Token {your-API-token-here}
-     Allow_Duplicated_Headers false
-     Host                     {your-environment-id}.live.dynatrace.com
-     Port                     443
-     Uri                      /api/v2/logs/ingest
-     Format                   json
-     Json_Date_Format         iso8601
-     Json_Date_Key            timestamp
-     Tls                      On
-     Tls.verify               On
-   ```
+```text
+[OUTPUT]
+  Name                     http
+  Match                    *
+  Header                   Content-Type application/json; charset=utf-8
+  Header                   Authorization Api-Token {your-API-token-here}
+  Allow_Duplicated_Headers false
+  Host                     {your-environment-id}.live.dynatrace.com
+  Port                     443
+  Uri                      /api/v2/logs/ingest
+  Format                   json
+  Json_Date_Format         iso8601
+  Json_Date_Key            timestamp
+  Tls                      On
+  Tls.verify               On
+```
 
 {% endtab %}
 {% endtabs %}
@@ -80,7 +83,7 @@ To get started with sending logs to Dynatrace:
 
 <!-- vale FluentBit.Simplicity = NO -->
 
-- [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/shortlink/lma-stream-logs-with-fluent-bit)
+- [Dynatrace Fluent Bit documentation](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-stream-logs-with-fluent-bit)
 - [Fluent Bit integration in Dynatrace Hub](https://www.dynatrace.com/hub/detail/fluent-bit/?filter=log-management-and-analytics)
 - [Video: Stream a Log File to Dynatrace using Fluent Bit](https://www.youtube.com/watch?v=JJJNxhtJ6R0)
 - [Blog: Easily stream logs from Fluent Bit to Dynatrace](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-stream-logs-with-fluent-bit)

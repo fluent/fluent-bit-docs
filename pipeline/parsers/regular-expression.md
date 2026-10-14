@@ -2,11 +2,11 @@
 
 Use the _regular expression_ parser format to create custom parsers with Ruby regular expressions. These regular expressions use named capture to define which content belongs to which key name.
 
-Use [Tail multiline](../inputs/tail.md#multiline) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
+Use [Tail multiline](../inputs/tail.md#multiline-support) when you need to support regular expressions across multiple lines from a `tail`. The Tail input plugin treats each line as a separate entity.
 
 {% hint style="warning" %}
 
-This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
+This parser uses Onigmo, which is a backtracking regular expression's engine. When using complex regular expression patterns, Onigmo can take a long time to perform pattern matching. This can cause a [regular expression denial of service (ReDoS)](https://community.owasp.org/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
 {% endhint %}
 

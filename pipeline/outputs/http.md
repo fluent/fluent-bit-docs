@@ -23,8 +23,8 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `gelf_short_message_key` | Specify the key to use as the `short` message in `gelf` format. | _none_ |
 | `gelf_timestamp_key` | Specify the key to use for `timestamp` in `gelf` format. | _none_ |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `header_tag` | Specify an optional HTTP header field for the original message tag. | _none_ |
-| `headers_key` | Specify the key to use as the headers of the request (must prefix with `$`). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content type of the data contained in `body_key`. | _none_ |
+| `header_tag` | Specify an optional HTTP header field for the original message tag. In v5.1.3 or later, the header is skipped with a warning if the tag contains a carriage return, line feed, or null character. | _none_ |
+| `headers_key` | Specify the key to use as the headers of the request (must prefix with `$`). The key must contain a map, which will have the contents merged on the request headers. This can be used for many purposes, such as specifying the content type of the data contained in `body_key`. In v5.1.3 or later, any header whose name or value contains a carriage return, line feed, or null character is skipped with a warning. | _none_ |
 | `host` | IP address or hostname of the target HTTP Server. | `127.0.0.1` |
 | `http.read_idle_timeout` | Set maximum allowed time between two consecutive reads. If set to `0s`, uses the `io_timeout` value from the network setup. | `0s` |
 | `http.response_timeout` | Set maximum time to wait for a server response. | `60s` |
@@ -36,20 +36,20 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `log_response_payload` | Specify if the response payload should be logged or not. | `true` |
 | `oauth2.audience` | Optional `OAuth 2.0` audience parameter. | _none_ |
 | `oauth2.auth_method` | `OAuth 2.0` client authentication method. Supported values: `basic`, `post`, `private_key_jwt`. | `basic` |
-| `oauth2.client_id` | `OAuth 2.0` client ID. | _none_ |
-| `oauth2.client_secret` | `OAuth 2.0` client secret. | _none_ |
+| `oauth2.client_id` | Required when `oauth2.enable` is `true`. `OAuth 2.0` client ID. | _none_ |
+| `oauth2.client_secret` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `basic` or `post`. `OAuth 2.0` client secret. | _none_ |
 | `oauth2.connect_timeout` | Connect timeout for `OAuth 2.0` token requests. | `0s` |
 | `oauth2.enable` | Enable `OAuth 2.0` client credentials for outgoing requests. | `false` |
 | `oauth2.jwt_aud` | Audience for `private_key_jwt` JSON Web Token (JWT) assertion. Defaults to the value of `oauth2.token_url` when not set. | _none_ |
-| `oauth2.jwt_cert_file` | Path to certificate file used by `private_key_jwt`. | _none_ |
-| `oauth2.jwt_header` | JWT header claim name for `private_key_jwt` thumbprint. Accepted values: `kid`, `x5t`. | `kid` |
-| `oauth2.jwt_key_file` | Path to PEM private key file used by `private_key_jwt`. | _none_ |
+| `oauth2.jwt_cert_file` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `private_key_jwt`. Path to certificate file used by `private_key_jwt`. Fluent Bit derives the `oauth2.jwt_header` thumbprint from this certificate. | _none_ |
+| `oauth2.jwt_header` | JWT header claim name for the `private_key_jwt` certificate thumbprint. Supported values are `kid` (hexadecimal SHA-1), `x5t` (base64url SHA-1), and `x5t#S256` (base64url SHA-256). Fluent Bit doesn't validate this value: an unrecognized name is sent as the claim name with a hexadecimal SHA-1 thumbprint. | `kid` |
+| `oauth2.jwt_key_file` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `private_key_jwt`. Path to PEM private key file used by `private_key_jwt`. | _none_ |
 | `oauth2.jwt_ttl_seconds` | Lifetime in seconds for `private_key_jwt` JWT client assertions. | `300` |
 | `oauth2.refresh_skew_seconds` | Seconds before expiry at which to refresh the access token. | `60` |
 | `oauth2.resource` | Optional `OAuth 2.0` resource parameter. | _none_ |
 | `oauth2.scope` | Optional `OAuth 2.0` scope. | _none_ |
 | `oauth2.timeout` | Timeout for `OAuth 2.0` token requests. Defaults to `http.response_timeout` when unset. | `0s` |
-| `oauth2.token_url` | `OAuth 2.0` token endpoint URL. | _none_ |
+| `oauth2.token_url` | Required when `oauth2.enable` is `true`. `OAuth 2.0` token endpoint URL. Must use the `http` or `https` scheme. Use `https` in production: with `http`, Fluent Bit sends the client credentials without TLS. | _none_ |
 | `oauth2.user_agent` | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
 | `port` | TCP port of the target HTTP Server. | `80` |
 | `proxy` | Specify an HTTP Proxy. The expected format of this value is `http://HOST:PORT`. HTTPS isn't supported. It's recommended to configure the [HTTP proxy environment variables](https://docs.fluentbit.io/manual/administration/http-proxy) instead as they support both HTTP and HTTPS. | _none_ |

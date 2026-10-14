@@ -43,7 +43,7 @@ The`fluent-bit` package is provided through a Yum repository. To add the reposit
    ```text
    [fluent-bit]
    name=Fluent Bit
-   baseurl=https://packages.fluentbit.io/centos/$releasever/$basearch/
+   baseurl=https://packages.fluentbit.io/centos/$releasever/
    gpgcheck=1
    gpgkey=https://packages.fluentbit.io/fluentbit.key
    repo_gpgcheck=1
@@ -93,7 +93,7 @@ The `fluent-bit.repo` file for the latest installations of Fluent Bit uses a `$r
 ```text
 [fluent-bit]
 name=Fluent Bit
-baseurl=https://packages.fluentbit.io/centos/$releasever/$basearch/
+baseurl=https://packages.fluentbit.io/centos/$releasever/
 ```
 
 Depending on your Red Hat distribution version, this variable can return a value other than the OS major release version (for example, RHEL7 Server distributions return `7Server` instead of `7`). The Fluent Bit package URL uses the major OS release version, so any other value here will cause a 404.
@@ -103,7 +103,7 @@ To resolve this issue, replace the `$releasever` variable with your system's OS 
 ```text
 [fluent-bit]
 name=Fluent Bit
-baseurl=https://packages.fluentbit.io/centos/7/$basearch/
+baseurl=https://packages.fluentbit.io/centos/7/
 gpgcheck=1
 gpgkey=https://packages.fluentbit.io/fluentbit.key
 repo_gpgcheck=1

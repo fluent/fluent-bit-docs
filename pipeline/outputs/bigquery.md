@@ -5,8 +5,8 @@ The _Google Cloud BigQuery_ output plugin is an experimental plugin that lets yo
 The implementation doesn't support the following, which would be expected in a full production version:
 
 - [Application Default Credentials](https://docs.cloud.google.com/docs/authentication).
-- [Data deduplication](https://docs.cloud.google.com/bigquery/docs/streaming-data-into-bigquery) using `insertId`.
-- [Template tables](https://docs.cloud.google.com/bigquery/docs/streaming-data-into-bigquery) using `templateSuffix`.
+- [Data deduplication](https://docs.cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) using `insertId`.
+- [Template tables](https://docs.cloud.google.com/bigquery/docs/reference/rest/v2/tabledata/insertAll) using `templateSuffix`.
 
 ## Google Cloud configuration
 
@@ -25,7 +25,7 @@ Fluent Bit streams data into an existing BigQuery table using a service account 
    You must configure workload identity federation in GCP before using it with Fluent Bit.
 
    - [Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#aws)
-   - [Obtaining short-lived credentials with identity federation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds)
+   - [Obtaining short-lived credentials with identity federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds)
 
 ## Configuration parameters
 

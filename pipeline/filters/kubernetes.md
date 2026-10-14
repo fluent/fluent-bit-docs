@@ -69,6 +69,7 @@ The plugin supports the following configuration parameters:
 | `merge_log_trim` | When `merge_log` is enabled, trim (remove possible `\n` or `\r\`) field values. | `On` |
 | `merge_parser` | Optional parser name to specify how to parse the data contained in the `log` key. Recommended for developers or testing only. | _none_ |
 | `namespace_annotations` | Include Kubernetes namespace resource annotations in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
+| `namespace_exclude` | Allow a Kubernetes namespace to exclude the logs of every pod in it, using the `fluentbit.io/exclude` annotation on the namespace. Requires namespace metadata, so the service account needs `get` permission on namespaces. See [Kubernetes namespace annotations](#kubernetes-namespace-annotations). | `Off` |
 | `namespace_labels` | Include Kubernetes namespace resource labels in the extra metadata. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
 | `namespace_metadata_only` | Include Kubernetes namespace metadata and no pod metadata. When set, the values of `labels` and `annotations` are ignored. See [Kubernetes Namespace Meta](#kubernetes-namespace-meta) | `Off` |
 | `owner_references` | Include Kubernetes owner references in the extra metadata. | `Off` |
@@ -79,7 +80,7 @@ The plugin supports the following configuration parameters:
 | `tls.verify_hostname` | When enabled, turns on hostname validation for certificates. | `Off` |
 | `tls.vhost` | Set an optional TLS virtual host for the Kubernetes API server connection. | _none_ |
 | `use_journal` | When enabled, the filter reads logs in `Journald` format. | `Off` |
-| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#optional-feature-using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings. | `Off` |
+| `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings. In v5.1.3 or later, the pod name and namespace are matched exactly against the Kubelet pod list instead of by prefix. | `Off` |
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
 | `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail and Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
 
@@ -213,6 +214,43 @@ spec:
 ```
 
 The annotation value is Boolean which can take a `"true"` or `"false"`. Values must be quoted.
+
+## Kubernetes namespace annotations
+
+When `namespace_exclude` is enabled, a namespace can request that Fluent Bit skip the logs of every pod in it. Set the same `fluentbit.io/exclude` annotation on the `Namespace` object:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: noisy-apps
+  annotations:
+    fluentbit.io/exclude: "true"
+```
+
+Keep the following in mind:
+
+- Only the exact `fluentbit.io/exclude` annotation is read from a namespace. The `_stream` and `-container` suffixed forms are pod-only and are ignored when set on a namespace.
+- `fluentbit.io/parser` isn't supported on namespaces. If it's set, Fluent Bit logs `annotation 'fluentbit.io/parser' is not supported on namespaces` and ignores it.
+- Annotation values must be a quoted `"true"` or `"false"`. Any other value is rejected with an `invalid boolean value` warning and no exclusion is applied.
+- Enabling `namespace_exclude` causes namespace metadata to be fetched, so the service account needs `get` permission on namespaces. Records then include a `kubernetes_namespace` key holding at least the namespace name, even when `namespace_labels` and `namespace_annotations` are disabled. See [Kubernetes namespace meta](#kubernetes-namespace-meta).
+
+### Precedence between pod and namespace exclusion
+
+Exclusion is resolved for the `stdout` and `stderr` streams independently, in the following order:
+
+1. The pod's `fluentbit.io/exclude` value for that stream, if set.
+1. The `fluentbit.io/exclude` value set on the namespace, if present.
+1. Otherwise, the record is included.
+
+Because the pod value is checked first, a pod in an excluded namespace can opt back in with `fluentbit.io/exclude: "false"`.
+
+The two configuration options gate different directions:
+
+- `k8s-logging.exclude` is still required for a pod to exclude itself. Without it, a pod-level `fluentbit.io/exclude: "true"` is rejected with an `annotation 'fluentbit.io/exclude' not allowed` warning.
+- With `namespace_exclude` enabled, a pod-level `fluentbit.io/exclude: "false"` is accepted even when `k8s-logging.exclude` is disabled. Pods can opt back in without also gaining the ability to opt out.
+
+When the stream of a record can't be determined, the record is skipped only if both `stdout` and `stderr` resolve to excluded.
 
 ## Kubernetes owner references
 
@@ -360,10 +398,11 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-[PARSER]
-  Name    custom-tag
-  Format  regex
-  Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
+# Ensure this is added to parsers_file loaded in the SERVICE section
+# [PARSER]
+#   Name    custom-tag
+#   Format  regex
+#   Regex   ^(?<namespace_name>[^_]+)\.(?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.(?<container_name>.+)\.(?<container_id>[a-z0-9]{64})
 
 [INPUT]
   Name              tail
@@ -488,7 +527,7 @@ pipeline:
       parser: docker
       docker_mode: on
       mem_buf_limit: 50MB
-      skip_login_lines: on
+      skip_long_lines: on
       refresh_interval: 10
 
   filters:

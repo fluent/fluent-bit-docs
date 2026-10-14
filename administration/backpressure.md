@@ -1,6 +1,6 @@
 # Backpressure
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=63e37cfe-9ce3-4a18-933a-76b9198958c1" />
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=63e37cfe-9ce3-4a18-933a-76b9198958c1" alt="tracking" />
 
 It's possible for Fluent Bit to ingest or create data faster than it can flush that data to the intended destinations. This creates a condition known as _backpressure_.
 
@@ -54,6 +54,17 @@ In a few seconds, if the scheduler was able to flush the initial 700&nbsp;KB of 
 - If the plugin is paused, it invokes a `resume` callback.
 - The input plugin can continue appending more data.
 
+## Pause behavior for HTTP-based inputs
+
+The HTTP-based input plugins [`http`](../pipeline/inputs/http.md), [`splunk`](../pipeline/inputs/splunk.md), [`elasticsearch`](../pipeline/inputs/elasticsearch.md), [`opentelemetry`](../pipeline/inputs/opentelemetry.md), and [`prometheus_remote_write`](../pipeline/inputs/prometheus-remote-write.md) act on the `pause` and `resume` callbacks by pausing their [shared HTTP listener](configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs). This applies whichever backpressure mechanism paused the input.
+
+While one of these inputs is paused:
+
+- The listening socket stays open, but Fluent Bit accepts and immediately closes each incoming connection. Clients see a connection that closes before a response arrives rather than a refused connection.
+- Connections that are already open are closed instead of being kept alive, and any request still in flight is dropped.
+
+Because the client never receives a successful response for these requests, it's responsible for retrying. Configure your senders to retry on connection failure so data isn't lost while an input is paused. When the `resume` callback runs, the listener starts accepting connections again.
+
 ## Manage backpressure for filesystem buffering
 
 If one or more active input plugins use [filesystem buffering](../pipeline/buffering.md#filesystem-buffering-hybrid), use the following settings to manage backpressure.
@@ -85,3 +96,15 @@ If `storage.pause_on_chunks_overlimit` is set to `on` for an input plugin, the i
 Fluent Bit implements the concept of logical queues for buffered chunks. Based on its tag, a chunk can be routed to multiple destinations. Fluent Bit keeps an internal reference from where each chunk was created and where it needs to go. To limit the number of queued chunks, set the `storage.total_limit_size` for any active output plugins that route data ingested by input plugins that use filesystem buffering.
 
 Network failures or latency in third-party services is common for output destinations. In some cases, a chunk is tagged for multiple destinations with varying response times, or one destination is generating more backpressure than others. If an output plugin reaches its configured `storage.total_limit_size` capacity, the oldest chunk from its queue will be discarded to make room for new data.
+
+## Limit flush requests in flight
+
+In v5.1.3 or later, Fluent Bit limits the number of flush requests that can be in flight at the same time. This prevents the engine from blocking while it writes to an output worker that's itself blocked writing its result back to the engine. On Linux the limit is 4096. On other platforms the limit is 1024.
+
+When the limit is reached, Fluent Bit doesn't start more tasks until the next flush cycle. The tasks remain queued and aren't dropped. Fluent Bit logs a debug message in the following format:
+
+```text
+[debug] [engine] 4096 flush requests in flight, deferring tasks of input dummy.0 to the next flush cycle
+```
+
+You can't configure this limit. On Linux, Fluent Bit can lower it at startup if the engine channel capacity is small.

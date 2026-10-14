@@ -35,7 +35,7 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 | `service_account_secret` | Private key content associated with the service account. Only available if no credentials file has been provided. | Value of the environment variable `$SERVICE_ACCOUNT_SECRET` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
-See Google's [official documentation](https://cloud.google.com/chronicle/docs/reference/ingestion-api) for further details.
+See Google's [official documentation](https://docs.cloud.google.com/chronicle/docs/reference/ingestion-api) for further details.
 
 ## Configuration file
 

@@ -55,9 +55,6 @@ fluent-bit -i tail -p 'path=lines.txt' -F grep -p 'regex=log aa' -m '*' -o stdou
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
-service:
-  parsers_file: /path/to/parsers.conf
-
 pipeline:
   inputs:
     - name: tail
@@ -78,9 +75,6 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
-[SERVICE]
-  Parsers_File /path/to/parsers.conf
-
 [INPUT]
   Name   tail
   Path   lines.txt

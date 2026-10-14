@@ -1,6 +1,6 @@
 # Syslog
 
-The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats through different transports such as UDP, TCP, or TLS.
+The _Syslog_ output plugin lets you deliver messages to Syslog servers. It supports RFC3164 and RFC5424 formats over UDP, TCP, TLS, and Datagram Transport Layer Security (DTLS) transports.
 
 ## Configuration parameters
 
@@ -8,7 +8,7 @@ The _Syslog_ output plugin lets you deliver messages to Syslog servers. It suppo
 | --- | ----------- | ------- |
 | `allow_longer_sd_id` | If `true`, Fluent Bit allows SD-ID values longer than 32 characters. SD-ID values that exceed 32 characters violate RFC5424 standards. | `false` |
 | `host` | Domain or IP address of the remote Syslog server. | `127.0.0.1` |
-| `mode` | Desired transport type. Available options are `tcp` and `udp`. To use a TLS secure channel, set this to `tcp` and enable the `tls` option separately. Datagram Transport Layer Security (DTLS) over UDP isn't supported. | `udp` |
+| `mode` | Desired transport type. Available options are `udp`, `tcp`, `tls`, and `dtls`. See [Transport modes](#transport-modes). | `udp` |
 | `port` | TCP or UDP port of the remote Syslog server. | `514` |
 | `syslog_appname_key` | Optional. The key name from the original record that contains the application name that generated the message. | _none_ |
 | `syslog_appname_preset` | Optional. The preset application name. It will be overwritten if `syslog_appname_key` is set and a key of a record is matched. | _none_ |
@@ -28,9 +28,31 @@ The _Syslog_ output plugin lets you deliver messages to Syslog servers. It suppo
 | `syslog_severity_preset` | Optional. The preset severity number. It will be overwritten if `syslog_severity_key` is set and a key of a record is matched. | `6` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
+### Transport modes
+
+The `mode` parameter selects the transport used to reach the Syslog server:
+
+| Mode | Transport | `tls` setting |
+| --- | --- | --- |
+| `udp` | Datagrams. | Must remain `off`. |
+| `tcp` | Stream. Set `tls` to `on` to secure the connection. | Optional. |
+| `tls` | Stream secured with TLS. | Optional. Enabled automatically. |
+| `dtls` | Datagrams secured with DTLS. | Optional. Enabled automatically. |
+
+Setting `mode` to `tls` or `dtls` enables TLS automatically, so you don't need to set `tls` to `on` for those modes. Setting it explicitly is harmless. To secure a `tcp` connection, you must set `tls` to `on`.
+
+Fluent Bit validates the configuration at startup and refuses to start in these cases:
+
+- `mode` set to `udp` with `tls` set to `on` fails with `mode=udp with tls=on is unsupported`. Use `dtls` instead, which is the supported way to secure datagram transport.
+- `mode` set to `tls` or `dtls` in a build compiled without TLS support fails with `TLS support is unavailable`.
+
+DTLS support is available in Fluent Bit version 5.1 and greater. Earlier versions support only `udp`, `tcp`, and `tls`.
+
 ### TLS / SSL
 
 The Syslog output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
+
+The same TLS properties apply to `dtls` mode, including `tls.verify`, `tls.ca_file`, `tls.crt_file`, and `tls.key_file`.
 
 ## Examples
 
@@ -81,6 +103,47 @@ pipeline:
   Syslog_Procid_Key    procid
   Syslog_Msgid_Key     msgid
   Syslog_Sd_Key        sd
+  Syslog_Message_Key   message
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Secure datagram transport with DTLS
+
+To send messages over DTLS, set `mode` to `dtls`. The Syslog server must listen for DTLS on the configured port:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+
+  outputs:
+    - name: syslog
+      match: "*"
+      host: syslog.yourserver.com
+      port: 6514
+      mode: dtls
+      tls.verify: on
+      tls.ca_file: /path/to/ca.crt
+      syslog_format: rfc5424
+      syslog_message_key: message
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name                 syslog
+  Match                *
+  Host                 syslog.yourserver.com
+  Port                 6514
+  Mode                 dtls
+  Tls.verify           on
+  Tls.ca_file          /path/to/ca.crt
+  Syslog_Format        rfc5424
   Syslog_Message_Key   message
 ```
 

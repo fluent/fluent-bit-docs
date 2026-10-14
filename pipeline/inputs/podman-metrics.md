@@ -150,5 +150,9 @@ Currently supported counters are:
 - `container_network_receive_errors_total`
 - `container_network_transmit_bytes_total`
 - `container_network_transmit_errors_total`
+- `container_disk_read_bytes_total`
+- `container_disk_write_bytes_total`
+- `container_disk_reads_total`
+- `container_disk_writes_total`
 
 This plugin mimics the naming convention of Docker metrics exposed by [`cadvisor`](https://github.com/google/cadvisor).

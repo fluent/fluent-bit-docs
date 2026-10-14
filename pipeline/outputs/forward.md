@@ -4,9 +4,9 @@
 **Supported event types:** `logs` `metrics` `traces`
 {% endhint %}
 
-_Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://fluentd.org).
+_Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://www.fluentd.org).
 
-There are no configuration steps required besides specifying where [Fluentd](https://fluentd.org) is located, which can be a local or a remote destination.
+There are no configuration steps required besides specifying where [Fluentd](https://www.fluentd.org) is located, which can be a local or a remote destination.
 
 This plugin offers the following transports and modes:
 
@@ -48,6 +48,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 | `tls.verify` | Force certificate validation. | `On` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), and `4` (Verbose). | `1` |
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_ |
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file`. | _none_ |
@@ -56,7 +57,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 
 ## Forward setup
 
-Before proceeding, ensure that [Fluentd](https://fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation) document.
+Before proceeding, ensure that [Fluentd](https://www.fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation/) document.
 
 After installing Fluentd, create the following configuration file example which lets you to stream data into it:
 

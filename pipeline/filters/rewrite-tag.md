@@ -237,3 +237,15 @@ The records generated are handled by the internal emitter, so the new records ar
 The _Emitter_ is an internal Fluent Bit plugin that allows other components of the pipeline to emit custom records. On this case `rewrite_tag` creates an emitter instance to use it exclusively to emit records, allowing for granular control of who is emitting what.
 
 Change the Emitter name in the metrics by adding the `emitter_name` configuration property described previously.
+
+#### Avoid emitter cycles
+
+Make sure the filter's `match` pattern can't match the new tags the filter itself produces. When it does, the emitted records return to the same filter, which rewrites and emits them again in an endless cycle.
+
+Fluent Bit detects this case and rejects the emission rather than allowing the cycle. It logs an error like the following once for each affected emitter:
+
+```text
+[error] [in_emitter] emitter cycle detected: the filter attached to this emitter matches the records it emits (tag=...), the emission is rejected. Adjust the filter 'Match' or its rules so emitted records are not processed again
+```
+
+The record that triggered the cycle is kept in the pipeline under its original tag, regardless of the [`KEEP`](#keep) value set on the matching rule. Only the repeated emission is dropped. To resolve the error, narrow the filter's `match` pattern or change the rule so that rewritten tags no longer match it.
