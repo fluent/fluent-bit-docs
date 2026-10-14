@@ -225,6 +225,7 @@
   * [UDP](pipeline/outputs/udp.md)
   * [Vivo Exporter](pipeline/outputs/vivo-exporter.md)
   * [WebSocket](pipeline/outputs/websocket.md)
+  * [ZeroBus](pipeline/outputs/zerobus.md)
 
 ## Stream processing
 
