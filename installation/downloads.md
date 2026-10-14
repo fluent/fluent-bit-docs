@@ -28,6 +28,7 @@ Fluent Bit is available on [Linux](../installation/downloads/linux.md), includin
 - [Amazon Linux](../installation/downloads/linux/amazon-linux.md)
 - [Buildroot embedded Linux](../installation/downloads/linux/buildroot-embedded-linux.md)
 - [Debian](../installation/downloads/linux/debian.md)
+- [openSUSE / SLES](../installation/downloads/linux/suse.md)
 - [Raspbian and Raspberry Pi](../installation/downloads/linux/raspbian-raspberry-pi.md)
 - [Red Hat and CentOS](../installation/downloads/linux/redhat-centos.md)
 - [Rocky Linux and Alma Linux](../installation/downloads/linux/alma-rocky.md)
