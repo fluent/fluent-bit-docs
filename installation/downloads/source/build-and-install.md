@@ -106,6 +106,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_BINARY`             | Build executable                                                                                                            | `Yes`                         |
 | `FLB_CHUNK_TRACE`        | Enable chunk traces                                                                                                         | `Yes`                         |
 | `FLB_COVERAGE`           | Build with code-coverage                                                                                                    | `No`                          |
+| `FLB_COVERAGE_TYPE`      | Coverage type ([`gcov`](https://gcc.gnu.org/onlinedocs/gcc/Gcov-Intro.html), [`llvm`](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html))                                                            | `gcov`                        |
 | `FLB_CONFIG_YAML`        | Enable YAML configuration support                                                                                           | `Yes`                         |
 | `FLB_CORO_STACK_SIZE`    | Set coroutine stack size                                                                                                    |                               |
 | `FLB_CUSTOM_CALYPTIA`    | Enable Calyptia Support                                                                                                     | `Yes`                         |
