@@ -7,6 +7,7 @@ match: $sentence
 indicators:
   - ':'
 exceptions:
+  - AegisBPF
   - AlmaLinux
   - Amazon
   - Amazon CloudWatch
