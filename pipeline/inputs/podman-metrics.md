@@ -12,6 +12,7 @@ The metrics can be exposed later as, for example, Prometheus counters and gauges
 
 | Key               | Description                                                                                             | Default                                                          |
 |-------------------|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| `exclude_name_regex` | Excludes containers whose name matches this regular expression, evaluated before metrics are collected. Use it to skip Podman pod infrastructure containers, for example `-(infra|service)$` to skip pause and `catatonit` containers. When unset, all containers are collected. | _none_ |
 | `path.config`     | Custom path to the Podman containers configuration file.                                                | `/var/lib/containers/storage/overlay-containers/containers.json` |
 | `path.procfs`     | Custom path to the `proc` subsystem directory.                                                          | `/proc`                                                          |
 | `path.sysfs`      | Custom path to the `sysfs` subsystem directory.                                                         | `/sys/fs/cgroup`                                                 |
