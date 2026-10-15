@@ -147,10 +147,15 @@ pipeline:
 
 The following example loads a JSON lines file into the table, and publishes it when Fluent Bit reaches the end of the file. The `json` parser comes from a parsers file, such as the `parsers.conf` file that ships with Fluent Bit, loaded with `parsers_file` in the `service` section.
 
+At the end of the file, Fluent Bit waits at most [`grace`](../../administration/configuring-fluent-bit/yaml/service-section.md) seconds, `5` by default, for the records it still has to send, and stops as soon as they're sent. Records still pending after that leave the load unpublished, so set `grace` generously: a long grace doesn't slow down a load that ends earlier.
+
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
 ```yaml
+service:
+  grace: 300
+
 pipeline:
   inputs:
     - name: tail
@@ -173,6 +178,9 @@ pipeline:
 {% tab title="fluent-bit.conf" %}
 
 ```text
+[SERVICE]
+  Grace  300
+
 [INPUT]
   Name            tail
   Path            /data/import.json
