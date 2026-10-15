@@ -3,9 +3,11 @@ description: Send logs to Bronto
 ---
 
 # Bronto
+
 {% hint style="info" %}
 **Supported event types:** `logs`
 {% endhint %}
+
 Stream logs to [Bronto](https://docs.bronto.io) by using the [HTTP plugin](http.md) to send data to a Bronto ingestion endpoint. Bronto parses and structures logs after ingestion, so you can send raw log records as JSON lines.
 
 Bronto exposes region-specific ingestion endpoints:
