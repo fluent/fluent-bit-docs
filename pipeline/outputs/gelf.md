@@ -59,6 +59,12 @@ The `version` of GELF message is also mandatory and Fluent Bit sets it to 1.1 wh
 
 If you use `udp` as transport protocol and set `Compress` to `true`, Fluent Bit compresses your packets in GZIP format, which is the default compression that Graylog offers. This can be used to trade more CPU load for saving network bandwidth.
 
+### UDP message size
+
+If you use `udp` as transport protocol, messages larger than `packet_size` are compressed in GZIP format, even if `compress` is set to `false`, and then split into chunks of `packet_size` bytes. The GELF specification allows a maximum of 128 chunks per message, so a compressed message can't exceed 128 times `packet_size`.
+
+In v5.1.4 or later, a record that exceeds this limit is dropped and the plugin logs the error `message too big: <size> bytes, skipping record`. The remaining records in the chunk are still sent. In earlier versions, an oversized record caused the entire chunk to be retried.
+
 ## Configuration file example
 
 If you're using Fluent Bit for shipping Kubernetes logs, you can use something like this as your configuration file:
