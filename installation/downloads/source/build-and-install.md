@@ -221,6 +221,7 @@ The following input plugins are available:
 | [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `Off`   |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
+`FLB_IN_WINDOWS_EXPORTER_METRICS` is `Off` by default. When you build on Windows with [`FLB_WINDOWS_DEFAULTS`](#general-options) enabled, it's `On`, unless you also enable `FLB_MINIMAL`, which keeps the default `Off`. You can still override it. This behavior is available in Fluent Bit version 5.1.4 and greater.
 
 ### Processor plugins
 
