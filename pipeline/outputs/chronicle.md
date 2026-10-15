@@ -36,6 +36,7 @@ Fluent Bit streams data into an existing Google Chronicle tenant using a service
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `api` | The Google Chronicle API to send logs to. Supported values: `legacy` for the deprecated Ingestion API, and `chronicle` for the [Chronicle API](#chronicle-api). | `legacy` |
+| `compress` | Compression for the body of each request. Supported values: `gzip` and `none`. Both APIs accept `gzip`. Google Chronicle applies its request size limits to the uncompressed data. | `none` |
 | `customer_id` | The customer ID identifying the Google Chronicle tenant to stream into. With the Chronicle API, this is the instance ID of the tenant. | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud credentials JSON file. | Value of the environment variable `$GOOGLE_SERVICE_CREDENTIALS` |
 | `label` | Add a Chronicle label as a key and value pair. You can set this option multiple times. The label value can be a static string or a [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md). With the Chronicle API, each label key must be unique. | _none_ |
@@ -74,7 +75,7 @@ The Chronicle API also differs from the legacy API in the following ways:
 - Fluent Bit requests access tokens with the `https://www.googleapis.com/auth/cloud-platform` scope.
 - Fluent Bit doesn't check whether `log_type` is supported when it starts. The Chronicle API rejects logs with an unsupported log type when Fluent Bit sends them.
 - Fluent Bit doesn't retry requests that the Chronicle API rejects with a `4xx` status code, such as an unsupported log type or missing permissions, because they fail again without a configuration change. Requests rejected with `401`, `408`, or `429`, and server errors, are retried.
-- Each request can be up to 4 MB, instead of 1 MiB.
+- Each request can be up to 4 MB uncompressed, instead of 1 MiB.
 
 ## Configuration file
 
