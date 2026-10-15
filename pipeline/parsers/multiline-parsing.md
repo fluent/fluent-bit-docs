@@ -297,9 +297,9 @@ service:
   multiline_buffer_limit: 2MB   # default; limit concatenated multiline message size
 ```
 
-If the limit is reached, Fluent Bit flushes the partial record with `multiline_truncated: true` metadata immediately to prevent Out-Of-Memory (OOM) conditions.
-This option ensures predictable memory usage in Kubernetes or other constrained environments,
-particularly when using built-in parsers such as `cri` or `docker`.
+If the limit is reached, Fluent Bit flushes the partial record with `multiline_truncated: true` metadata immediately to prevent Out-Of-Memory (OOM) conditions. This option ensures predictable memory usage in Kubernetes or other constrained environments, particularly when using built-in parsers such as `cri` or `docker`.
+
+In v5.1.4 or later, the limit applies to all multiline parser types, including the built-in `cri` and `docker` parsers. In earlier versions, only parsers of type `regex` enforced the limit, so records assembled by the `cri` and `docker` parsers could grow without bound.
 
 ## Get structured data from multiline message
 
