@@ -24,7 +24,7 @@ If you compile Fluent Bit from source, the `FLB_OUT_MANTICORE` build option is e
 | `action` | `Regular` mode: the `/bulk` operation for each record, `insert` or `create`. `Shared` mode ignores it. | `insert` |
 | `buffer_size` | Specify the buffer size used to read the response from the Manticore HTTP service. | `64K` |
 | `host` | IP address or hostname of the target Manticore Search instance. | `127.0.0.1` |
-| `http_passwd` | Password for user defined in `http_user`. | _none_ |
+| `http_passwd` | Password for user defined in `http_user`. | _empty_ |
 | `http_user` | Optional username for HTTP Basic authentication. | _none_ |
 | `mode` | `Regular` or `Shared`. The value is case-insensitive. | `Regular` |
 | `port` | TCP port of the target Manticore Search HTTP listener. | `9308` |
@@ -38,9 +38,9 @@ The Manticore Search output plugin supports TLS/SSL. For more details about the 
 
 ### Record IDs
 
-Fluent Bit sends each record unchanged. Manticore takes the `id` field of the record as the document ID, converted as in a regular `INSERT`, and generates an ID for a record without one or with an ID that converts to `0`. A record without an ID gets a new ID each time it's delivered, so a record that Fluent Bit delivers again, for example on a retry, is added again. To use another field as the ID, rename it to `id` with the [Modify](../filters/modify.md) filter.
+Fluent Bit sends the body of each record unchanged, without the Fluent Bit timestamp or metadata. To keep the timestamp, add it to the record body, for example with the [Record Modifier](../filters/record-modifier.md) filter. Manticore takes the `id` field of the record as the document ID, converted as in a regular `INSERT`, and generates an ID for a record without one or with an ID that converts to `0`. A record without an ID gets a new ID each time it's delivered, so a record that Fluent Bit delivers again, for example on a retry, is added again. To use another field as the ID, rename it to `id` with the [Modify](../filters/modify.md) filter.
 
-A record must be a map with string keys. Fluent Bit converts the whole flush before sending it, so a record that isn't a map fails the flush and none of its records is sent.
+A record must be a map with string keys. Fluent Bit converts the whole flush before sending it, so a record that isn't a map drops the whole flush, without a retry, and none of its records is sent.
 
 ### Bulk retries
 
@@ -68,21 +68,25 @@ To keep the dropped chunks, use the [dead letter queue](../../administration/dea
 `Shared` mode needs a Manticore version with shared `bulk_import`, available in the 29.15.0 development packages and later, and a Fluent Bit build with output delivery metrics, which official builds include.
 {% endhint %}
 
-Data requests go to `/bulk?bulk_import=<table>&shared` and carry the records unchanged:
+Data requests go to `/bulk?bulk_import=<table>&shared`, or `&shared=<n>` when `shared_indexers` is `<n>`, and carry the records unchanged:
 
 ```json
 {"id":42,"message":"hello","status":200}
 ```
 
-After the first successful data request, the next requests only join the open load. If the daemon lost the load to a restart or a cancel, the load fails instead of starting a new load with only the later records.
+After the first successful data request, the next requests add `&shared_join` to the URI and only join the open load. If the daemon lost the load to a restart or a cancel, the load fails instead of starting a new load with only the later records.
 
-The plugin sends the Finish only if no data request failed, Fluent Bit kept no pending task or chunk, and no record was dropped. The Fluent Bit exit code doesn't report the result: the plugin logs `shared bulk_import complete: table=<table>` or `shared bulk_import failed: table=<table>`. A failed load stays unpublished, and the log names the statement that cancels its staged data:
+The plugin sends the Finish only if all of the following are true: at least one data request succeeded, no data request failed permanently, and Fluent Bit kept no pending task or chunk. No record can have been dropped, and no chunk can have used up its retries. A request that fails and then succeeds on a retry doesn't block the Finish. The Fluent Bit exit code doesn't report the result: the plugin logs `shared bulk_import complete: table=<table>` or `shared bulk_import failed: table=<table>`.
+
+If no data request succeeded, for example because the source was empty, the plugin sends no Finish but still logs `complete`. The `complete` line alone doesn't show that records were published, so check the table.
+
+A failed load stays unpublished, and the log names the statement that cancels its staged data:
 
 ```sql
 PURGE BULK_IMPORT FROM TABLE logs OPTION clear_sessions=1;
 ```
 
-A lost or malformed reply to the Finish leaves the result unknown, so check the table before you load the source again.
+A lost or malformed reply to the Finish leaves the result unknown. In that case the plugin also logs `failed`, but the log doesn't name the `PURGE` statement and tells you to coordinate recovery before replay. Check the table before you load the source again.
 
 `shared_indexers` sets how many indexers the daemon starts for the load, and so how many disk chunks the load adds to the table. The indexers run on the Manticore host and don't depend on `workers`. `0` lets the daemon choose.
 
