@@ -38,7 +38,7 @@ The Manticore Search output plugin supports TLS/SSL. For more details about the 
 
 ### Record IDs
 
-Fluent Bit sends the body of each record unchanged, without the Fluent Bit timestamp or metadata. To keep the timestamp, add it to the record body, for example with the [Record Modifier](../filters/record-modifier.md) filter. Manticore takes the `id` field of the record as the document ID, converted as in a regular `INSERT`, and generates an ID for a record without one or with an ID that converts to `0`. A record without an ID gets a new ID each time it's delivered, so a record that Fluent Bit delivers again, for example on a retry, is added again. To use another field as the ID, rename it to `id` with the [Modify](../filters/modify.md) filter.
+Fluent Bit sends the body of each record unchanged, without the Fluent Bit timestamp or metadata. To keep the timestamp, add it to the record body, for example with the [Lua](../filters/lua.md) filter. Manticore takes the `id` field of the record as the document ID, converted as in a regular `INSERT`, and generates an ID for a record without one or with an ID that converts to `0`. A record without an ID gets a new ID each time it's delivered, so a record that Fluent Bit delivers again, for example on a retry, is added again. To use another field as the ID, rename it to `id` with the [Modify](../filters/modify.md) filter.
 
 A record must be a map with string keys. Fluent Bit converts the whole flush before sending it, so a record that isn't a map drops the whole flush, without a retry, and none of its records is sent.
 
@@ -68,7 +68,7 @@ To keep the dropped chunks, use the [dead letter queue](../../administration/dea
 `Shared` mode needs a Manticore version with shared `bulk_import`, available in the 29.15.0 development packages and later, and a Fluent Bit build with output delivery metrics, which official builds include.
 {% endhint %}
 
-Data requests go to `/bulk?bulk_import=<table>&shared`, or `&shared=<n>` when `shared_indexers` is `<n>`, and carry the records unchanged:
+Data requests go to `/bulk?bulk_import=<table>&shared`, or `&shared=<n>` when `shared_indexers` is a positive `<n>`, and carry the records unchanged:
 
 ```json
 {"id":42,"message":"hello","status":200}
