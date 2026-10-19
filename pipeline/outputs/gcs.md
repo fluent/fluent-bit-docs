@@ -137,6 +137,8 @@ pipeline:
 | `total_file_size` | Maximum size of the file currently being buffered for a tag. When that file reaches this size, Fluent Bit uploads it as an object, even when `upload_timeout` hasn't elapsed. Files already sealed and waiting to upload don't count toward this size, so a tag can hold more than this amount on disk. The minimum accepted value is `1M`. Set to `0` to upload only when `upload_timeout` elapses. See [Buffering](#buffering). Supported in v5.1.3 or later. | `100M` |
 | `unify_tag` | Whether to buffer records from every tag into a single file instead of one file per tag. See [Unified tag buffering](#unified-tag-buffering). | `false` |
 | `unify_tag_name` | Logical tag that replaces the record tag when `unify_tag` is enabled. It's stored as the buffer chunk metadata and used for `$TAG` in `gcs_key_format`. It doesn't set the name of the local buffer file. See [Unified tag buffering](#unified-tag-buffering). | `fluent-bit-buffer-file-unify-tag.log` |
+| `upload_on_shutdown` | Whether to upload every buffered file when Fluent Bit stops, instead of leaving it in `store_dir` for the next start. See [Uploading on shutdown](#uploading-on-shutdown). | `false` |
+| `upload_on_shutdown_timeout` | Maximum time spent uploading buffered files on shutdown. Files not uploaded in time stay in `store_dir` for the next start. Set to `0` for no limit. Only used when `upload_on_shutdown` is `true`. | `20s` |
 | `upload_timeout` | When this amount of time elapses, Fluent Bit uploads the buffered data and starts a new object. Set to `60m` to upload a new object every hour. | `10m` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
@@ -197,6 +199,14 @@ The `total_file_size` size trigger is available in Fluent Bit version 5.1.3 and 
 By default, each tag buffers into its own file, which is inefficient when a pipeline produces many small chunks under many tags, such as one tag per container. Set `unify_tag` to `true` to buffer records from every tag together under the single logical tag set by `unify_tag_name`. Fluent Bit generates local buffer file names internally, so `unify_tag_name` doesn't appear on disk.
 
 When `unify_tag` is enabled, the value of `unify_tag_name` replaces the record tag for the rest of the upload path. As a result, `$TAG` and `$TAG[n]` in `gcs_key_format` resolve to `unify_tag_name` instead of the original tag. If your object names depend on the tag, remove those formatters from `gcs_key_format` before enabling this option.
+
+### Uploading on shutdown
+
+By default, buffered files that haven't reached `upload_timeout` or `total_file_size` stay in `store_dir` when Fluent Bit stops, and are uploaded after the next start. If `store_dir` doesn't survive the restart, such as a Kubernetes node that's removed, that data is lost. Set `upload_on_shutdown` to `true` to upload every buffered file when Fluent Bit stops.
+
+The uploads run after the output stops accepting data. When `upload_on_shutdown_timeout` is greater than `0`, Fluent Bit stops starting new file uploads once that time has elapsed, and shortens each request's connect and IO timeouts to the time that remains. This is a best-effort limit: it applies between files, so an upload already in progress isn't interrupted when the time elapses and the total shutdown time can exceed the configured value. A value of `0` disables the time bound, so the uploads run until every file is attempted. A file that fails to upload, or isn't reached in time, stays in `store_dir` for the next start, and Fluent Bit logs `<N> of <M> buffered file(s) were not uploaded on shutdown`. When every file is uploaded, it logs `uploaded all <N> buffered file(s) on shutdown`. If `preserve_data_ordering` is `true`, the uploads stop at the first failure. Nothing is uploaded on a hot reload, because the new configuration recovers `store_dir` right away.
+
+Make sure Fluent Bit has enough time to finish before it's stopped: the service `grace` period and `upload_on_shutdown_timeout` together must fit within the time your platform allows, such as `terminationGracePeriodSeconds` in Kubernetes.
 
 ## Networking and TLS configuration
 
