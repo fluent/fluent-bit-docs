@@ -1,6 +1,6 @@
 # HTTP
 
-The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It issues `POST` or `PUT` requests with the data records in [MessagePack](https://msgpack.org) (or JSON) format.
+The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It issues `POST`, `PUT`, or `PATCH` requests with the data records in [MessagePack](https://msgpack.org) (or JSON) format.
 
 ## Configuration parameters
 
@@ -28,7 +28,7 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 | `host` | IP address or hostname of the target HTTP Server. | `127.0.0.1` |
 | `http.read_idle_timeout` | Set maximum allowed time between two consecutive reads. If set to `0s`, uses the `io_timeout` value from the network setup. | `0s` |
 | `http.response_timeout` | Set maximum time to wait for a server response. | `60s` |
-| `http_method` | Specify `POST` versus `PUT` HTTP method. | `POST` |
+| `http_method` | Specify the HTTP method. Supported values: `POST`, `PUT`, and `PATCH`. `PATCH` is supported in v5.1.5 or later. | `POST` |
 | `http_passwd` | Basic Auth password. Requires `http_user` to be set. | _none_ |
 | `http_user` | Basic Auth username. | _none_ |
 | `json_date_format` | Specify the format of the date. Supported formats: `double`, `epoch`, `epoch_ms`, `iso8601`, `java_sql_timestamp`. | _none_ |
