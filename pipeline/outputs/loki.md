@@ -320,6 +320,8 @@ The `tenant_id_key_error_handling` option controls how Fluent Bit treats mixed r
 - `partial_success`: treat the chunk as successful when at least one tenant request succeeds. This is the default.
 - `partial_error`: retry the chunk when any tenant request fails, even if another tenant request succeeds.
 
+In v5.1.5 or later, Fluent Bit rejects a tenant ID that contains a control character, such as a carriage return or line feed. A tab is allowed. Fluent Bit doesn't send the request for that tenant, logs the error `invalid tenant header; dropping tenant group`, and treats the request as a failure that isn't retried. With `partial_success`, the records for that tenant are dropped. With `partial_error`, the chunk is retried when another tenant request succeeds, but the invalid tenant ID fails on every retry, so the chunk is retried until it reaches the retry limit. If a static `tenant_id` contains a control character, only requests that use the static value fail. Without `tenant_id_key`, this is every request. With `tenant_id_key`, requests for records that fall back to the static value fail, and requests that use a valid tenant ID from `tenant_id_key` are unaffected.
+
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
 
