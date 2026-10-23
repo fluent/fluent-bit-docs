@@ -69,7 +69,7 @@ This helps with down-sampling when collecting metrics.
 | `path.rootfs` | The root filesystem mount point. | `/` |
 | `path.sysfs` | The path in the filesystem used to collect system metrics. | `/sys` |
 | `scrape_interval` | The rate in seconds at which metrics are collected from the host operating system. | `5` |
-| `scrape_on_start` | Publish the first round of metrics 5 seconds after startup, instead of waiting a full `scrape_interval`. Useful with long intervals. Applies only when `scrape_interval` is greater than `2`. | `false` |
+| `scrape_on_start` | Publish the current metrics once, 5 seconds after startup, so the first round doesn't wait a full `scrape_interval`. Intended for long intervals. Regular publishing every `scrape_interval` is unchanged. When `scrape_interval` is `3` or `4`, the first regular round is published before this one. When it's `5`, both are published at the same time. Applies only when `scrape_interval` is greater than `2`. | `false` |
 | `systemd_exclude_pattern` | Regular expression to determine which units are excluded in the metrics produced by the `systemd` collector. | `.+\\.(automount\|device\|mount\|scope\|slice)` |
 | `systemd_include_pattern` | Regular expression to determine which units are included in the metrics produced by the `systemd` collector. | Not applied unless explicitly set. |
 | `systemd_include_service_task_metrics` | Determines if the collector will include service task metrics. | `false` |
