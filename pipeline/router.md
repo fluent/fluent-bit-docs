@@ -202,6 +202,8 @@ Conditional routing uses a `routes` block within input configurations to define 
 
 When a record arrives, Fluent Bit evaluates the conditions for each route in order. Records are sent to outputs whose conditions they match. You can also define a default route to catch records that don't match any other condition.
 
+In versions earlier than v5.1.5, Fluent Bit ignores the routes if a configuration has exactly one input and one output. It sends every record to that output, including records that don't match any route.
+
 ### Configuration syntax
 
 The `routes` block uses the following syntax:
