@@ -42,6 +42,10 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tags | Manifest Architectures | Description |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 5.1.5-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.5 | amd64, arm64, arm/v7 | Release [v5.1.5](https://fluentbit.io/announcements/v5.1.5/) |
+| 5.1.4-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.1.4 | amd64, arm64, arm/v7 | Release [v5.1.4](https://fluentbit.io/announcements/v5.1.4/) |
 | 5.1.3-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.1.3 | amd64, arm64, arm/v7 | Release [v5.1.3](https://fluentbit.io/announcements/v5.1.3/) |
 | 5.1.2-debug | amd64, arm64, arm/v7 | Debug images |
@@ -329,7 +333,7 @@ The reasons for using distroless are well covered in
 With any choice, there are downsides:
 
 - No shell or package manager to update or add things.
-  - Generally, dynamic updating is a bad idea in containers as the time it's done affects the outcome: two containers started at different times using the same base image can perform differently or get different dependencies.
+  - Generally, dynamic updating is a bad idea in containers as the time it's done affects the outcome. Two containers started at different times using the same base image can perform differently or get different dependencies.
   - A better approach is to rebuild a new image version. You can do this with Distroless, but it's harder and requires multistage builds or similar to provide the new dependencies.
 - Debugging can be harder.
   - More specifically you need applications set up to properly expose information for debugging rather than rely on traditional debug approaches of connecting to processes or dumping memory. This can be an upfront cost versus a runtime cost but does shift left in the development process so hopefully is a reduction overall.
