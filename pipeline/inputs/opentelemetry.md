@@ -14,7 +14,7 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 
 ## Configuration
 
-The table below includes both:
+The following table includes both:
 
 - settings specific to the OpenTelemetry input plugin
 - shared `http_server.*` listener settings that are used by several HTTP-based inputs
@@ -38,6 +38,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `log_level`                         | Specifies the log level for this plugin. If not set here, the plugin uses the global log level specified in the `service` section of your configuration file.                                 | `info`      |
 | `log_suppress_interval`             | Suppresses log messages from this plugin that appear similar within a specified time interval. `0` no suppression.                                                                            | `0`         |
 | `logs_body_key`                     | Specify a body key.                                                                                                                                                                           | _none_      |
+| `logs_max_size`                     | Maximum size of the MessagePack data generated for the logs in a single request, including group metadata. Requests that exceed this limit are rejected. Supported in v5.1.5 or later.        | `100M`      |
 | `logs_metadata_key`                 | Key name to store OpenTelemetry logs metadata in the record.                                                                                                                                  | `otlp`      |
 | `mem_buf_limit`                     | Set a memory buffer limit for the input plugin. If the limit is reached, the plugin will pause until the buffer is drained. The value is in bytes. If set to 0, the buffer limit is disabled. | `0`         |
 | `net.accept_timeout`                | Set maximum time allowed to establish an incoming connection. This time includes the TLS handshake.                                                                                           | `10s`       |
