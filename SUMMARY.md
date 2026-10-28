@@ -139,6 +139,7 @@
   * [Content modifier](pipeline/processors/content-modifier.md)
   * [Cumulative to delta](pipeline/processors/cumulative-to-delta.md)
   * [Filters as processors](pipeline/processors/filters.md)
+  * [Fluent Typed Scripting (FTS)](pipeline/processors/fts.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry envelope](pipeline/processors/opentelemetry-envelope.md)
