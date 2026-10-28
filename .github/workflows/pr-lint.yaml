@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: markdownlint
-        uses: prologic/action-markdownlint@b85a623ec721cb42896c485633f527cbd2d58063 # v0.31.5
+        uses: prologic/action-markdownlint@0f00f9816d25b024975712a1ad4ea03dbf5848a6 # v0.31.7
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review # Change reporter. (Only `github-pr-check` is supported at the moment).
