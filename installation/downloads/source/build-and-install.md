@@ -232,6 +232,7 @@ The following table describes the processors available:
 | Option                                                                                           | Description                                 | Default |
 |:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
 | [`FLB_PROCESSOR_CONTENT_MODIFIER`](../../../pipeline/processors/content-modifier.md)             | Enable content modifier processor           | `On`    |
+| [`FLB_PROCESSOR_FTS`](../../../pipeline/processors/fts.md)                                       | Enable Fluent Typed Scripting (`FTS`) processor | `On`    |
 | [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                                 | Enable metrics label manipulation processor | `On`    |
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
