@@ -67,8 +67,10 @@ exceptions:
   - FAQ
   - FlowCounter
   - Fluent Bit
+  - Fluent Typed Scripting
   - Fluentd
   - Forward
+  - FTS
   - GCP
   - GitLab
   - GitHub

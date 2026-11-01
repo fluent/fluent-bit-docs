@@ -8,6 +8,18 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.2
+
+Fluent Bit `v5.2` is the upcoming release developed on `master`. Review [What's new in Fluent Bit v5.2](whats-new-in-fluent-bit-v5.md#fluent-bit-v52) before testing an upgrade from `5.1` or an earlier series.
+
+### Native log processing
+
+Version `5.2` changes internal log decoding, processor execution, and chunk allocation. Before deploying an upgrade, test representative log payloads and processor chains with your buffering and backpressure settings. Check record contents, routing, and delivery under load.
+
+### Opt in to Fluent Typed Scripting
+
+The new `fts` processor is configured through the YAML `processors` section. Existing Lua filters continue to use the `lua` filter plugin. To adopt Fluent Typed Scripting (FTS), write policies against its typed API and configure an `fts` processor for each signal you want to process. See the [FTS processor guide](https://github.com/fluent/fluent-bit/blob/master/plugins/processor_fts/README.md) for its callback contract and resource limits.
+
 ## Fluent Bit v5.1
 
 ### Debian and Ubuntu package upgrades restart the service
