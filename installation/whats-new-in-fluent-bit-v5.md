@@ -4,6 +4,32 @@ This page gives a quick user-focused overview of the main changes in the Fluent 
 
 For migration-impacting changes, see [Upgrade notes](upgrade-notes.md).
 
+## Fluent Bit v5.2
+
+Fluent Bit `v5.2` is the upcoming release developed on `master`. It adds Fluent Typed Scripting (FTS) and improves log ingestion, processor execution, and buffering. The following highlights describe the development code ahead of the `5.2.0` release.
+
+### Fluent Typed Scripting
+
+The new `fts` processor lets you write Lua policies for logs, metrics, and traces. Typed access preserves integer widths, binary values, and nanosecond timestamps. Policies can also access OpenTelemetry resources, scopes, and attributes. FTS provides instruction, memory, and output limits, with configurable handling of policy errors. See the [FTS processor guide](https://github.com/fluent/fluent-bit/blob/master/plugins/processor_fts/README.md) for configuration and examples.
+
+### Performance and scalability
+
+#### OpenTelemetry log ingestion and processing
+
+The [OpenTelemetry input](../pipeline/inputs/opentelemetry.md) adds direct internal log decoding for JSON and Protobuf payloads. Compatible native log processor chains can run in input workers, reducing intermediate encoding and decoding. These improvements apply automatically to eligible pipelines.
+
+#### Processor chains
+
+Compatible native log processors can share processing work across a chain. Large log buffers are processed in windows to reduce temporary allocation pressure. Existing processor configurations continue to select the processors and their order.
+
+#### HTTP worker connection balancing
+
+The shared HTTP server balances accepted connections across workers. HTTP-based inputs configured with multiple workers can distribute connection handling more evenly.
+
+#### Buffer allocation
+
+Input chunks use adaptive size projections and append-sized storage hints to reduce allocation overhead as data arrives. See [Buffering](../pipeline/buffering.md) for storage configuration.
+
 ## Fluent Bit v5.1
 
 Fluent Bit `v5.1` focuses on network ingestion throughput, adds several new inputs and outputs, and hardens TLS and FIPS compliance options.

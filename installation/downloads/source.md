@@ -21,7 +21,7 @@ If you want to contribute to Fluent Bit, you should use the most recent code. Yo
 git clone https://github.com/fluent/fluent-bit
 ```
 
-The `master` branch is where the development of Fluent Bit happens. Development version users should expect issues when compiling or at run time.
+The `master` branch is where development of the upcoming Fluent Bit `5.2` release happens. This manual documents that release series. Development version users should expect issues when compiling or at run time.
 
 Fluent Bit users are encouraged to help test every development version to ensure a stable release.
 
