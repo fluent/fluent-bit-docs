@@ -8,6 +8,8 @@
 
 The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
+For policies that need typed telemetry values, metric or span transformations, or per-item rollback, see [Fluent Typed Scripting (FTS)](../processors/fluent-typed-scripting.md) and the [FTS and Lua filter comparison](../processors/fluent-typed-scripting/lua-filter.md).
+
 A Lua-based filter requires two steps:
 
 1. Configure the filter in the main configuration.
