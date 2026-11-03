@@ -200,6 +200,7 @@
   * [Kafka REST Proxy](pipeline/outputs/kafka-rest-proxy.md)
   * [LogDNA](pipeline/outputs/logdna.md)
   * [Loki](pipeline/outputs/loki.md)
+  * [Manticore Search](pipeline/outputs/manticore.md)
   * [NATS](pipeline/outputs/nats.md)
   * [New Relic](pipeline/outputs/new-relic.md)
   * [Null](pipeline/outputs/null.md)
