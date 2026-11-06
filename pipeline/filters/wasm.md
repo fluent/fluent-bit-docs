@@ -22,6 +22,7 @@ The plugin supports the following configuration parameters:
 
 | Key | Description |
 | :--- | :--- |
+| `abi_version` | Calling convention of the Wasm function: `1` for the legacy convention that returns a null-terminated string, or `2` for the [value-length convention](../../development/wasm-filter-plugins.md#abi-version-2-value-length-return). Any other value causes startup to fail. Default: `1`. |
 | `accessible_paths` | Specify the allowlist of paths to be able to access paths from Wasm programs. Default: `.` (current directory). |
 | `event_format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
 | `function_name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
