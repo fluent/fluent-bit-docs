@@ -72,6 +72,10 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
+## Map journal fields to OpenTelemetry
+
+To convert journal entries to the OpenTelemetry logs data model, attach the [journald OpenTelemetry processor](../processors/journald-otel.md) to this input. The processor matches journal field names exactly, so it doesn't recognize renamed fields when `lowercase` or `strip_underscores` is enabled.
+
 ## Get started
 
 To receive Systemd messages, you can run the plugin from the command line or through the configuration file.
