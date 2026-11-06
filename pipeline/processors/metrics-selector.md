@@ -97,3 +97,5 @@ pipeline:
     - name: stdout
       match: '*'
 ```
+
+For programmable metric normalization and explicit aggregation after attribute removal, see [Fluent Typed Scripting (FTS)](fluent-typed-scripting/metrics.md).

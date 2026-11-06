@@ -266,6 +266,7 @@ VMs
 Wasm
 Wavefront
 winevtlog
+winstat
 winlog
 Winlogbeat
 Worldmap

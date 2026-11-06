@@ -180,3 +180,7 @@ The collector JSON output will resemble the following:
 
 For more details about further processing, read the [content
 modifier](../processors/content-modifier.md) processor documentation.
+
+## Transform the envelope with Fluent Typed Scripting
+
+Place [Fluent Typed Scripting (FTS)](fluent-typed-scripting.md) after this processor to access resource, scope, and log attributes through typed properties. See the complete [log redaction recipe](fluent-typed-scripting/recipes.md#redact-logs).
