@@ -165,6 +165,12 @@ pipeline:
 | `traces_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/traces` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
+## Response limits
+
+When `http2` is set to `on` or `force`, or `grpc` is set to `on`, the size and time this plugin accepts for each HTTP response from the OTLP server are bounded by the `http_client.*` keys in the [`service` section](../../administration/configuring-fluent-bit/yaml/service-section.md#http-client-response-limits). These limits don't apply with the default `http2: off`.
+
+If a response exceeds a size or header limit, the plugin logs `HTTP response exceeded configured client limit` and drops the chunk without retrying. If `http_client.response_timeout` expires, the plugin logs a connection error and retries the chunk.
+
 ## Metrics batching
 
 Some OTLP receivers reject export requests that carry too many metric data points. Set `metrics_max_datapoints` to cap the number of data points in a single request. When a metrics payload exceeds the limit, Fluent Bit splits it into several export requests and sends them in order.

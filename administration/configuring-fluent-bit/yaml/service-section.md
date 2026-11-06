@@ -28,6 +28,11 @@ The `service` section of YAML configuration files defines global properties of t
 | `hot_reload` | Enables [hot reloading](../../../administration/hot-reload.md) of configuration with SIGHUP. | `on` |
 | `hot_reload.ensure_thread_safety` | If enabled, ensures thread safety during configuration hot reload. Disabling this can reduce reload time but can cause instability. Possible values: `off` or `on`. | `on` |
 | `hot_reload.timeout` | Sets a watchdog timeout in seconds for the hot reload process. If the reload doesn't complete within this time, Fluent Bit cancels the reload. A value of `0` disables the watchdog. | `0` |
+| `http_client.max_header_count` | Sets the maximum number of headers accepted in an HTTP response. Must be a positive integer. See [HTTP client response limits](#http-client-response-limits). | `100` |
+| `http_client.max_header_size` | Sets the maximum size of the HTTP response status line and headers. Must be at least `32` bytes. This value must follow [unit size](../../configuring-fluent-bit.md#unit-sizes) specifications. See [HTTP client response limits](#http-client-response-limits). | `65536` |
+| `http_client.max_response_size` | Sets the maximum size of an HTTP response body. This value must follow [unit size](../../configuring-fluent-bit.md#unit-sizes) specifications. See [HTTP client response limits](#http-client-response-limits). | `4194304` |
+| `http_client.max_wire_size` | Sets the maximum total number of bytes received from the network for one HTTP response, including framing. This value must follow [unit size](../../configuring-fluent-bit.md#unit-sizes) specifications. See [HTTP client response limits](#http-client-response-limits). | `67108864` |
+| `http_client.response_timeout` | Sets the maximum time in seconds to send an HTTP request and receive the complete response. Must be a positive integer without a unit suffix. See [HTTP client response limits](#http-client-response-limits). | `30` |
 | `http_listen` | Sets the listening interface for the HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port` | Sets the TCP port for the HTTP server. | `2020` |
 | `http_server` | Enables the built-in HTTP server. | `off` |
@@ -111,6 +116,20 @@ Enabling FIPS mode changes the behavior of plugins that rely on MD5:
 
 - The [Amazon S3](../../../pipeline/outputs/s3.md) output rejects `send_content_md5` at startup, because that header requires MD5.
 - The [Azure Blob](../../../pipeline/outputs/azure_blob.md) output derives block IDs using SHA-256 instead of MD5.
+
+## HTTP client response limits
+
+The `http_client.*` keys bound how much data and time Fluent Bit accepts from a remote server when it reads an HTTP response. These limits apply only to the newer HTTP client. Currently, only the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output plugin uses it, and only when `http2` is set to `on` or `force`, or `grpc` is set to `on`. With the default `http2: off`, and in all other HTTP-based plugins, these keys have no effect.
+
+Size values use [unit sizes](../../configuring-fluent-bit.md#unit-sizes), where `K`, `M`, and `G` are decimal multiples. For example, `4M` means 4,000,000 bytes, which is lower than the 4,194,304-byte default of `http_client.max_response_size`.
+
+Fluent Bit rejects invalid values: zero, negative, or malformed values, size values larger than 4,294,967,295 bytes, and `http_client.max_header_count` or `http_client.response_timeout` values that aren't whole numbers. At startup, an invalid value stops Fluent Bit from starting. During a [hot reload](../../hot-reload.md), it makes the reload fail.
+
+For HTTP/2 responses, `http_client.max_header_size` counts each header as the length of its name plus its value plus 32 bytes, and `http_client.max_header_count` includes pseudo-headers and trailers. Fluent Bit also advertises the header size limit to the server.
+
+The `http_client.response_timeout` deadline starts when Fluent Bit begins sending the request, after the connection is established, and covers sending the request and receiving the complete response. Each individual network read or write still waits no longer than `net.io_timeout` if that value is shorter.
+
+When a response exceeds `http_client.max_response_size`, `http_client.max_header_size`, `http_client.max_header_count`, or `http_client.max_wire_size`, the output plugin logs an error and drops the chunk without retrying. When the `http_client.response_timeout` deadline passes, the request fails like a connection error and the chunk is retried.
 
 ## Telemetry configuration
 
