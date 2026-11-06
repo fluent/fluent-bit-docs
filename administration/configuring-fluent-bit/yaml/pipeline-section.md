@@ -169,6 +169,7 @@ plugin-specific behavior.
 | `http_server.http2` | Enable HTTP/2 support for the input listener. | `true` |
 | `http_server.buffer_max_size` | Set the maximum size of the HTTP request buffer. | `4M` |
 | `http_server.buffer_chunk_size` | Set the allocation chunk size used for the HTTP request buffer. | `512K` |
+| `http_server.http1_max_header_size` | Set the maximum size of an HTTP/1 request line and headers, including the line-ending characters. Uses binary units: `K`, `KB`, and `KiB` all mean 1,024 bytes, and `M`/`G` scale the same way. `0` selects the default. The `http_server.buffer_max_size` limit still applies. See the HTTP/1 request header limits section after this table. | `32KiB` |
 | `http_server.max_connections` | Set the maximum number of concurrent active HTTP connections. `0` means unlimited. | `0` |
 | `http_server.workers` | Set the number of HTTP listener worker threads. | `1` |
 | `http_server.ingress_queue_event_limit` | Set the maximum number of deferred ingress queue entries. This setting applies only when `http_server.workers` is greater than `1`. | `8192` |
@@ -178,6 +179,21 @@ plugin-specific behavior.
 When `http_server.workers` is `1`, Fluent Bit does not use the deferred
 ingress queue, so the two `http_server.ingress_queue_*` settings have no
 effect.
+
+#### HTTP/1 request header limits
+
+Fluent Bit reads the request line and headers of each HTTP/1 request before it processes the request. The `http_server.http1_max_header_size` limit counts the request line, the headers, and the blank line that ends them. Fluent Bit closes the connection without a response when:
+
+- The request line and headers reach `http_server.http1_max_header_size` without the blank line that ends them.
+- The request method is longer than 11 bytes.
+- The request target contains a carriage return or line feed.
+- The protocol version doesn't start with `HTTP/1.`.
+
+If the request reaches `http_server.buffer_max_size` first, Fluent Bit responds with `413 Request Entity Too Large` and closes the connection. Setting `http_server.http1_max_header_size` higher than `http_server.buffer_max_size` has no effect beyond the buffer limit.
+
+These checks apply to HTTP/1 requests, including HTTP/1.1 requests that ask to upgrade to HTTP/2. Connections that start directly with the HTTP/2 connection preface aren't affected.
+
+Fluent Bit fails to start if `http_server.http1_max_header_size` isn't a number, is negative, or has a suffix other than `K`, `KB`, `KiB`, `M`, `MB`, `MiB`, `G`, `GB`, or `GiB`, and logs `[http_server] invalid http_server.http1_max_header_size`. The suffixes aren't case-sensitive and must follow the number without a space. Fractional values are truncated to whole bytes, and values that truncate to `0` select the default.
 
 For backward compatibility, some plugins also accept the legacy aliases `http2`, `buffer_max_size`, `buffer_chunk_size`, `max_connections`, and `workers`.
 
