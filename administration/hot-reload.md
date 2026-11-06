@@ -51,6 +51,17 @@ If Fluent Bit can't preserve the directory while reloading, it stops the reload,
 [reload] copying configuration path failed. Reloading is halted
 ```
 
+## Processor validation
+
+Fluent Bit version 5.2 and greater validates the processors attached to every input and output before it replaces the running pipeline. If a processor has an invalid configuration, Fluent Bit stops the reload, keeps the previous configuration running, and logs:
+
+```text
+[reload] processor configuration preflight failed
+[reload] reloaded config is invalid. Reloading is halted
+```
+
+Validation checks the properties of every processor, including [filters used as processors](../pipeline/processors/filters.md). For filters used as processors, it also runs the filter's startup checks, unless the filter sets `active: false`.
+
 ## How to reload
 
 After updating the configuration, use one of the following methods to perform a hot reload:
