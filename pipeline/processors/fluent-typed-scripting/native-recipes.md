@@ -38,7 +38,7 @@ Each step accepts the following keys:
 
 A recipe can contain up to 64 steps. Unknown blocks, unknown parameters, duplicate step IDs, and blocks that don't support the processor's signal fail initialization. Set `recipe_version: 1`, the default. Recipes don't support `jit: true`.
 
-Run `fluent-bit --dry-run -c fluent-bit.yaml` to validate recipes without starting the pipeline. [Hot reload](../../../administration/hot-reload.md) also validates recipes before it replaces the running pipeline.
+On a build that supports recipes, run `fluent-bit --dry-run -c fluent-bit.yaml` to validate recipes without starting the pipeline. Older development builds don't validate processor parameters with `--dry-run`, so a recipe configuration can pass the dry run and still fail at startup. See [Check recipe support](configuration.md#check-recipe-support) to confirm that a build supports recipes. [Hot reload](../../../administration/hot-reload.md) also validates recipes before it replaces the running pipeline.
 
 ## Selectors
 
@@ -63,7 +63,7 @@ Constant values can be strings, booleans, plain YAML numbers, or explicit typed 
 
 | Block | Signals | Parameters |
 | ----- | ------- | ---------- |
-| `logs.parse_json` | Logs | `source` and `destination` selectors (required); `remove_source` (default `false`); `on_missing`: `error` (default) or `skip`; `collision`: `error` (default), `overwrite`, or `preserve_destination`. |
+| `logs.parse_json` | Logs | `source` and `destination` selectors (required); `remove_source` (default `false`); `on_missing`: `error` (default) or `skip`; `collision`: `error` (default), `overwrite`, or `preserve_destination`. The source must be a string that contains a JSON object; arrays and scalar JSON values are rejected and apply `error_mode`. |
 | `logs.normalize_severity` | Logs | `source` selector and `destination` (required). `destination` is a selector, or `otel` to set the OpenTelemetry severity, which requires `context: otel`; `profile`: `common` (default); `overwrite` (default `false`); `on_missing`: `skip` (default) or `error`; `on_unknown`: `preserve` (default) or `error`. |
 | `logs.parse_timestamp` | Logs | `source` selector of RFC 3339 text (required); `on_missing`: `error` (default) or `skip`. Sets event time and preserves observed time. |
 | `logs.drop_matching` | Logs | `condition` (required). Drops the log when the condition matches. |
@@ -133,7 +133,7 @@ Both blocks accept the following parameters:
 | `max_keys` | Maximum number of tracked keys, up to `65536`. | `1024` |
 | `max_key_bytes` | Maximum encoded key size in bytes, up to `65536`. | `1024` |
 | `on_missing` | `error` fails the item when a key field is missing; `keep` passes it through without tracking. | `error` |
-| `overflow` | `keep` passes an item through untracked when capacity is full. No other value is supported. | `keep` |
+| `overflow` | `keep` passes an item through untracked when capacity is full or its encoded key exceeds `max_key_bytes`. No other value is supported. | `keep` |
 
 `logs.dedupe` keeps the first item for a key and drops repeats until the key expires after `ttl_ms`. A repeat doesn't extend the expiry time.
 
@@ -141,11 +141,13 @@ Both blocks accept the following parameters:
 
 Key values are typed: the string `"1"`, the integer `1`, and the double `1.0` are different keys. Apply parsing, normalization, and privacy steps before the stateful step.
 
-State is volatile and local to one processor instance. It's lost on restart, reload, and shutdown, and separate inputs or processes don't share it. State is committed when FTS finishes a batch, before later processing or delivery, so a later failure can suppress a duplicate whose original was lost, or consume throttle capacity without delivery. These blocks provide best-effort local suppression, not end-to-end deduplication. When capacity is full, items pass through untracked instead of evicting existing keys.
+State is volatile and local to one processor instance. It's lost on restart, reload, and shutdown, and separate inputs or processes don't share it. State is committed when FTS finishes a batch, before later processing or delivery, so a later failure can suppress a duplicate whose original was lost, or consume throttle capacity without delivery. These blocks provide best-effort local suppression, not end-to-end deduplication. When capacity is full, or an item's encoded key exceeds `max_key_bytes`, the item passes through untracked instead of evicting existing keys.
 
 ### Request log windows
 
 `window.hold_until` holds log records under a key until a fixed processing-time deadline, which starts with the first record and isn't extended by later records. If any record in the window matches `retain_when` before the deadline, every record in the window is released. Otherwise, only records that match `keep_when` are released, and the rest are discarded. For example, hold a request's logs, keep all of them when an `ERROR` occurs, and otherwise keep everything except `DEBUG`. Like the stateful blocks, it must be the last step of an input processor recipe and requires `state_commit: local`. Held records count toward `state_limit`.
+
+Retention isn't guaranteed for every window. When the window store is full, or when a record continues a group that started in an earlier chunk, the record passes through without entering the window. A `retain_when` match on such a record doesn't apply to the window, so records already held for that key can still be discarded.
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
@@ -153,7 +155,7 @@ State is volatile and local to one processor instance. It's lost on restart, rel
 | `tenant` | Optional trusted tenant selector. | _none_ |
 | `hold_ms` | How long to hold records, from `1` to `86400000` milliseconds. Required. | _none_ |
 | `retain_when` | Condition that marks a window for retention. Required. | _none_ |
-| `keep_when` | Optional condition for records to release when no record matches `retain_when`. | _none_ |
+| `keep_when` | Optional condition for records to release when no record matches `retain_when`. When omitted and no record matches `retain_when`, every held record in the window is discarded. | _none_ |
 | `late_ms` | How long to recognize late records for a closed window, from `0` to `86400000` milliseconds. | `60000` |
 | `ready_timeout_ms` | How long to retry releasing records, from `1` to `86400000` milliseconds. | `60000` |
 | `max_keys` | Maximum open windows, up to `65536`. | `1024` |
@@ -177,10 +179,10 @@ processors:
         - id: custom_step
           use: <pack-id>/<block-name>
           with:
-            # Parameters declared by the pack block.
+            <parameter>: <value>
 ```
 
-Replace `<pack-id>` with the `id` field of the pack manifest and `<block-name>` with the `name` of one of its blocks. For example, a manifest with the `id` `org.fluentbit.policy.pseudonyms` and a block named `apply` is used as `org.fluentbit.policy.pseudonyms/apply`. Relative `packages_dir` paths resolve against the Fluent Bit process working directory, not the configuration file directory, so prefer an absolute path. Pack code runs with the same trust as other configuration; review packs before deploying them.
+Replace `<pack-id>` with the `id` field of the pack manifest and `<block-name>` with the `name` of one of its blocks. List the parameters that the pack block declares under `with`. When a block has no parameters, omit `with` or set it to an empty mapping, `with: {}`. For example, a manifest with the `id` `org.fluentbit.policy.pseudonyms` and a block named `apply` is used as `org.fluentbit.policy.pseudonyms/apply`. Relative `packages_dir` paths resolve against the Fluent Bit process working directory, not the configuration file directory, so prefer an absolute path. Pack code runs with the same trust as other configuration; review packs before deploying them.
 
 ## Metrics
 
@@ -191,7 +193,7 @@ FTS recipes report the following metrics. Each has the labels `name` (the owning
 | `fluentbit_fts_recipe_callbacks_total` | Recipe callback outcomes: `keep`, `drop`, `hold`, or `error`. A failure handled by `error_mode: keep` counts as `error`. |
 | `fluentbit_fts_state_keys` | Committed keys currently tracked by a stateful block. |
 | `fluentbit_fts_evictions_total` | Keys removed after `ttl_ms` expired. |
-| `fluentbit_fts_overflow_untracked_total` | Items passed through untracked because capacity was full. |
+| `fluentbit_fts_overflow_untracked_total` | Items passed through untracked because capacity was full or their encoded key exceeded `max_key_bytes`. |
 | `fluentbit_fts_local_state_commits_total` | Committed state batches. |
 | `fluentbit_fts_dropped_by_policy_total` | Items dropped by a committed dedupe or throttle decision. |
 | `fluentbit_fts_window_events_total` | Request window events, with outcomes including `held`, `decision`, `released`, `release_retry`, `ready_expired`, `late_passthrough`, `context_passthrough`, `overflow_keep`, and `shutdown`. |
