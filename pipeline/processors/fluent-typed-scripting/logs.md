@@ -83,7 +83,7 @@ if severity and severity:number() >= 17 then
 end
 ```
 
-`fb.unpack_json` requires a build that includes Fluent Bit commit `6c52cc70ce1969f7a9e9748adfa52d52fd4b0e88`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't define the helper, so the following example fails there. To parse logs whose `message` field contains JSON, while passing plain text through unchanged:
+`fb.unpack_json` requires a build that includes Fluent Bit commit `6c52cc70ce1969f7a9e9748adfa52d52fd4b0e88`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't define the helper, so the following example fails there. To parse logs whose `message` field contains JSON, while keeping plain-text messages as they're:
 
 ```lua
 local fb = require("fluentbit")
@@ -94,6 +94,6 @@ function process(log)
 end
 ```
 
-Because `fb.redact` matches keys, not text, a message that fails to decode keeps any secret it contains. To forward only decoded records, use `if not fb.unpack_json(log, "message") then return fb.DROP end`.
+Records whose `message` doesn't decode keep their original body, and `fb.redact` still runs on it. Because `fb.redact` matches keys, not text, a message that fails to decode keeps any secret it contains. To forward only decoded records, use `if not fb.unpack_json(log, "message") then return fb.DROP end`.
 
 This fragment belongs in an OpenTelemetry log callback. See [Common helpers](common-helpers.md) for JSON parsing, redaction, and time parsing, and [Recipes](recipes.md#redact-logs) for a complete pipeline.

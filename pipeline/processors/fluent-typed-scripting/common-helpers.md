@@ -58,7 +58,7 @@ if message and message:type() == "string" then
 end
 ```
 
-The example reads `message` with `get` and checks its type first, because `get_string` raises an error when the field isn't a string. A number, boolean, or `null` in `message` leaves the record unchanged instead of failing the callback.
+The example reads `message` with `get` and checks its type first, because `get_string` raises an error when the field isn't a string. A number, boolean, or `null` in `message` skips the parsing step instead of failing the callback, and the rest of the policy still runs.
 
 ## Decode a JSON field in place
 
