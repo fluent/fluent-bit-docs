@@ -70,6 +70,7 @@ Resource, scope, and group context edits apply only to the current record. Recor
 | `fb.set_severity(log, level)` | Set severity text and number. Accepts case-insensitive `trace` (1), `debug` (5), `info` (9), `warn` (13), `error` (17), and `fatal` (21). Also accepts `information`, `informational`, `warning`, and `critical`. Preserves the supplied text. |
 | `fb.set_trace_context(log, trace_hex, span_hex)` | Set correlation IDs. Trace ID must have 32 hexadecimal characters and span ID 16; neither can be all zero. |
 | `fb.log_field(log, name)` | Read an OpenTelemetry field as a typed value, or `nil` if absent. Requires OpenTelemetry context. |
+| `fb.unpack_json(log, field)` | Decode a JSON object from a body string field and replace `log.body` with it. `field` defaults to `message`. Returns `true` on success, or `false, error` when the field is missing or not a string, the text isn't valid JSON, or the JSON isn't an object. On failure the body is unchanged. |
 
 Use `log_field` for fields such as `severity_number`, `severity_text`, `trace_id`, `span_id`, `trace_flags`, `timestamp`, `observed_timestamp`, and `event_name`. IDs read this way are typed bytes; `value()` returns binary data, not hexadecimal text.
 
@@ -81,5 +82,18 @@ if severity and severity:number() >= 17 then
     log.attributes:set("needs_review", true)
 end
 ```
+
+To parse logs whose `message` field contains JSON, while passing plain text through unchanged:
+
+```lua
+local fb = require("fluentbit")
+
+function process(log)
+    fb.unpack_json(log, "message")
+    fb.redact(log.body, {"authorization", "password"})
+end
+```
+
+Because `fb.redact` matches keys, not text, a message that fails to decode keeps any secret it contains. To forward only decoded records, use `if not fb.unpack_json(log, "message") then return fb.DROP end`.
 
 This fragment belongs in an OpenTelemetry log callback. See [Common helpers](common-helpers.md) for JSON parsing, redaction, and time parsing, and [Recipes](recipes.md#redact-logs) for a complete pipeline.
