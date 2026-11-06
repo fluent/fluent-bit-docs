@@ -119,7 +119,7 @@ Enabling FIPS mode changes the behavior of plugins that rely on MD5:
 
 ## HTTP client response limits
 
-The `http_client.*` keys bound how much data and time Fluent Bit accepts from a remote server when it reads an HTTP response. These limits apply only to the newer HTTP client. Currently, only the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output plugin uses it, and only when `http2` is set to `on` or `force`, or `grpc` is set to `on`. With the default `http2: off`, and in all other HTTP-based plugins, these keys have no effect.
+The `http_client.*` keys bound how much data and time Fluent Bit accepts from a remote server when it reads an HTTP response. These limits apply only to the newer HTTP client. Currently, only the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output plugin uses it, and only when `http2` is set to `on` or `force`, or `grpc` is set to `on`. When both `http2` and `grpc` are off, which is the default, and in all other HTTP-based plugins, these keys have no effect.
 
 Size values use [unit sizes](../../configuring-fluent-bit.md#unit-sizes), where `K`, `M`, and `G` are decimal multiples. For example, `4M` means 4,000,000 bytes, which is lower than the 4,194,304-byte default of `http_client.max_response_size`.
 
@@ -127,9 +127,9 @@ Fluent Bit rejects invalid values: zero, negative, or malformed values, size val
 
 For HTTP/2 responses, `http_client.max_header_size` counts each header as the length of its name plus its value plus 32 bytes, and `http_client.max_header_count` includes pseudo-headers and trailers. Fluent Bit also advertises the header size limit to the server.
 
-The `http_client.response_timeout` deadline starts when Fluent Bit begins sending the request, after the connection is established, and covers sending the request and receiving the complete response. Each individual network read or write still waits no longer than `net.io_timeout` if that value is shorter.
+The `http_client.response_timeout` deadline starts when Fluent Bit begins sending the request, after the connection is established, and covers sending the request and receiving the complete response. If the output's `net.io_timeout` is set and shorter than the time remaining, each individual network read or write waits no longer than `net.io_timeout`. The `net.io_timeout` default of `0s` disables only this per-operation limit, not the `http_client.response_timeout` deadline.
 
-When a response exceeds `http_client.max_response_size`, `http_client.max_header_size`, `http_client.max_header_count`, or `http_client.max_wire_size`, the output plugin logs an error and drops the chunk without retrying. When the `http_client.response_timeout` deadline passes, the request fails like a connection error and the chunk is retried.
+When a response exceeds `http_client.max_response_size`, `http_client.max_header_size`, `http_client.max_header_count`, or `http_client.max_wire_size`, the output plugin logs an error and drops the chunk without retrying. When the `http_client.response_timeout` deadline passes, the request fails like a connection error and the chunk is scheduled for retry according to the output's `retry_limit`. For metrics payloads split by `metrics_max_datapoints`, a timeout after an earlier batch succeeded isn't retried. See [Metrics batching](../../../pipeline/outputs/opentelemetry.md#metrics-batching).
 
 ## Telemetry configuration
 

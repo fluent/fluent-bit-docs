@@ -167,9 +167,9 @@ pipeline:
 
 ## Response limits
 
-When `http2` is set to `on` or `force`, or `grpc` is set to `on`, the size and time this plugin accepts for each HTTP response from the OTLP server are bounded by the `http_client.*` keys in the [`service` section](../../administration/configuring-fluent-bit/yaml/service-section.md#http-client-response-limits). These limits don't apply with the default `http2: off`.
+When `http2` is set to `on` or `force`, or `grpc` is set to `on`, the size and time this plugin accepts for each HTTP response from the OTLP server are bounded by the `http_client.*` keys in the [`service` section](../../administration/configuring-fluent-bit/yaml/service-section.md#http-client-response-limits). These limits don't apply when both `http2` and `grpc` are off, which is the default.
 
-If a response exceeds a size or header limit, the plugin logs `HTTP response exceeded configured client limit` and drops the chunk without retrying. If `http_client.response_timeout` expires, the plugin logs a connection error and retries the chunk.
+If a response exceeds a size or header limit, the plugin logs `HTTP response exceeded configured client limit` and drops the chunk without retrying. If `http_client.response_timeout` expires, the plugin logs a connection error and the chunk is scheduled for retry according to `retry_limit`. For split metrics payloads, a timeout after an earlier batch succeeded isn't retried, as described in [Metrics batching](#metrics-batching).
 
 ## Metrics batching
 
