@@ -62,11 +62,12 @@ If startup reports that `fts` isn't registered, check the build options in [Avai
 To remove a record, return `fb.DROP`. To commit edits, return nothing or `fb.KEEP`. For example, add this at the beginning of `process` to discard health checks:
 
 ```lua
-if log.body:get_string("path") == "/health" then
+local path = log.body:get("path")
+if path and path:type() == "string" and path:value() == "/health" then
     return fb.DROP
 end
 ```
 
-A missing `path` returns `nil`; a present value of a different type raises an error. See [Typed values](typed-values.md) and [Errors and limits](errors-and-limits.md) before applying a policy to mixed input.
+The example checks the type of `path` before comparing it, so records with a missing or non-string `path` pass through unchanged. Reading the field with `get_string` instead would raise an error for a non-string value. See [Typed values](typed-values.md) and [Errors and limits](errors-and-limits.md) before applying a policy to mixed input.
 
 Key-based redaction doesn't inspect free-form strings. A password inside the `message` text requires an explicit string policy. Continue with the complete [log redaction recipe](recipes.md#redact-logs).

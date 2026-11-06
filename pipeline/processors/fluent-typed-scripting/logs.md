@@ -83,7 +83,7 @@ if severity and severity:number() >= 17 then
 end
 ```
 
-To parse logs whose `message` field contains JSON, while passing plain text through unchanged:
+`fb.unpack_json` requires a build that includes Fluent Bit commit `6c52cc70ce1969f7a9e9748adfa52d52fd4b0e88`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't define the helper, so the following example fails there. To parse logs whose `message` field contains JSON, while passing plain text through unchanged:
 
 ```lua
 local fb = require("fluentbit")

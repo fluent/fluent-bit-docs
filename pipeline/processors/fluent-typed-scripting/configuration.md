@@ -20,12 +20,18 @@ Fluent Typed Scripting (FTS) uses the configuration name `fts`. Attach a process
 | `recipe_version` | Recipe grammar version. Only `1` is supported. | `1` |
 | `script` | Path to a Lua policy file. Set exactly one of `script`, `code`, or `recipe`. | _none_ |
 | `secret_refs` | Map of HMAC key references to environment variable names, resolved once during initialization. Used by `fb.hmac_sha256`. See [Hash and sign values](common-helpers.md#hash-and-sign-values). | _none_ |
-| `state_commit` | Commit mode for stateful recipe steps. The only accepted value is `local`, and it requires `recipe`. State is volatile and local to the processor instance. | _none_ |
+| `state_commit` | Commit mode for stateful recipe steps. The only accepted value is `local`, and it requires `recipe`. The stateful blocks `logs.dedupe`, `logs.throttle`, and `window.hold_until` require `state_commit: local`, a processor attached to an input, and the stateful block as the last recipe step; otherwise initialization fails. State is volatile and local to the processor instance. | _none_ |
 | `state_limit` | Maximum native state memory for stateful recipe steps, including provisional entries and bookkeeping. | `1M` |
 
 Size suffixes use decimal multipliers: `64K` is 64,000 bytes, less than the minimum `output_limit`. Use `65536` or a larger value. `32M` is 32,000,000 bytes and `64M` is 64,000,000 bytes.
 
 FTS has no `workers` parameter. Its execution follows the input or output that it's attached to.
+
+## Check recipe support
+
+`recipe` and the related `context`, `packages_dir`, `packs`, `recipe_version`, `secret_refs`, `state_commit`, and `state_limit` parameters require a build that includes Fluent Bit commit `6032b237d2275cb2883ed8942d7b269a5a8169a3`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't support them. A build that runs `script` or `code` policies, or that has FTS enabled, doesn't necessarily support `recipe`.
+
+To check a binary, start Fluent Bit with a minimal recipe, such as the example in [Native recipe blocks](native-recipes.md#recipe-structure). A build without recipe support fails at startup and reports an unknown configuration property `recipe`. Start the pipeline for this check instead of using `--dry-run`, because `--dry-run` on older development builds doesn't validate processor parameters.
 
 ## Inline policies
 

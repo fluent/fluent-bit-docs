@@ -31,9 +31,9 @@ fb.keep_keys(log.body, {"message", "level", "service.name"})
 `fb.parse_json(text)` returns a typed value, preserving integer widths. Input is limited to 1 MiB and nesting to 64 levels. Duplicate keys and invalid JSON raise errors. A valid JSON document can produce a scalar or array, so check the result before assigning a log body.
 
 ```lua
-local text = log.body:get_string("message")
-if text then
-    local ok, parsed = pcall(fb.parse_json, text)
+local message = log.body:get("message")
+if message and message:type() == "string" then
+    local ok, parsed = pcall(fb.parse_json, message:value())
     if ok and parsed:type() == "map" then
         log.body = parsed
     else
@@ -44,14 +44,21 @@ end
 
 This fragment belongs in `process(log)` with `fb` loaded. Catching a parse error with `pcall` lets the policy choose a result; it doesn't roll back earlier edits automatically. An uncaught error invokes the processor's rollback and `error_mode` behavior.
 
+`fb.try_parse_json` and `fb.decode_json` require a build that includes Fluent Bit commit `94ef261ba11bf51b2c5ec57dd486a87db0d2e03c`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't define these helpers, so the following examples fail there.
+
 `fb.try_parse_json(text)` uses the same parser and limits, but returns `nil, error` instead of raising an error when the text is invalid JSON or isn't a string, including a missing field. JSON `null` and `false` return typed values, so check for `nil` rather than for a false value:
 
 ```lua
-local parsed = fb.try_parse_json(log.body:get_string("message"))
-if parsed and parsed:type() == "map" then
-    log.body = parsed
+local message = log.body:get("message")
+if message and message:type() == "string" then
+    local parsed = fb.try_parse_json(message:value())
+    if parsed and parsed:type() == "map" then
+        log.body = parsed
+    end
 end
 ```
+
+The example reads `message` with `get` and checks its type first, because `get_string` raises an error when the field isn't a string. A number, boolean, or `null` in `message` leaves the record unchanged instead of failing the callback.
 
 ## Decode a JSON field in place
 
@@ -83,7 +90,8 @@ log.timestamp = fb.parse_time("2026-01-02T03:04:05.123456789Z")
 `fb.hash64(bytes)` returns a 16-character lowercase XXH3-64 fingerprint of a byte string up to 1 MiB. `fb.hash64_mod(bytes, modulus)` returns the remainder of that 64-bit hash for an integer modulus from `1` to `1000000000`. Use it for stable sampling. `fb.hash64_algorithm` names the fixed algorithm, `xxh3-64-v1-seed0`. Hashes provide no secrecy.
 
 ```lua
-if fb.hash64_mod(log.body:get_string("user_id") or "", 100) >= 10 then
+local user_id = log.body:get("user_id")
+if user_id and user_id:type() == "string" and fb.hash64_mod(user_id:value(), 100) >= 10 then
     return fb.DROP
 end
 ```
@@ -100,13 +108,13 @@ processors:
 ```
 
 ```lua
-local email = log.body:get_string("email")
-if email then
-    log.body:set("email", "email-v1:" .. fb.hmac_sha256("email-v1", email))
+local email = log.body:get("email")
+if email and email:type() == "string" then
+    log.body:set("email", "email-v1:" .. fb.hmac_sha256("email-v1", email:value()))
 end
 ```
 
-Fluent Bit reads each environment variable once during initialization and uses its raw bytes as the key; hexadecimal or Base64 text isn't decoded. Lua code never sees the key. A missing variable fails initialization. `secret_refs` supports up to 16 references with names up to 128 ASCII characters, and keys up to 4096 bytes. Set the key as a process environment variable, for example through your orchestrator. Don't put the key in the YAML `env` section, which stores it as plain text in the configuration file. Include the key version in emitted values so you can rotate keys with a new reference.
+Fluent Bit reads each environment variable once during initialization and uses its raw bytes as the key; hexadecimal or Base64 text isn't decoded. Lua code never sees the key. A missing variable or an empty key fails initialization. `secret_refs` supports up to 16 references, and keys up to 4096 bytes. Each reference name must contain 1 to 128 ASCII letters, digits, underscores (`_`), periods (`.`), or hyphens (`-`). Each environment variable name must contain 1 to 128 ASCII letters, digits, or underscores, and can't start with a digit. Set the key as a process environment variable, for example through your orchestrator. Don't put the key in the YAML `env` section, which stores it as plain text in the configuration file. Include the key version in emitted values so you can rotate keys with a new reference.
 
 ## Callback constants
 
