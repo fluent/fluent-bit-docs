@@ -32,3 +32,4 @@ Processors require [YAML configuration](../../administration/configuring-fluent-
 4. Use the signal references for [Logs](fluent-typed-scripting/logs.md), [Metrics](fluent-typed-scripting/metrics.md), and [Traces](fluent-typed-scripting/traces.md).
 5. Look up [Common helpers](fluent-typed-scripting/common-helpers.md) and [Errors and limits](fluent-typed-scripting/errors-and-limits.md).
 6. Adapt the complete [Recipes](fluent-typed-scripting/recipes.md).
+7. Configure built-in blocks without Lua by using [Native recipe blocks](fluent-typed-scripting/native-recipes.md).

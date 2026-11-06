@@ -16,7 +16,7 @@ Fluent Typed Scripting (FTS) uses the configuration name `fts`. Attach a process
 | `output_limit` | Maximum serialized size of a processed batch. Minimum: `65536` bytes. Records held by stateful recipe steps count toward `state_limit` instead. See the signal-specific failure behavior in [Errors and limits](errors-and-limits.md#output-limit). | `64M` |
 | `packages_dir` | Directory that contains trusted local Lua packs. Required when `packs` is set. Relative paths resolve against the Fluent Bit process working directory, not the configuration file directory. | _none_ |
 | `packs` | List of local pack manifest paths, relative to `packages_dir`. Requires `recipe` and `packages_dir`. Packs are loaded only from local files. | _none_ |
-| `recipe` | Ordered list of built-in recipe steps. Set exactly one of `script`, `code`, or `recipe`. Requires `recipe_version: 1` and `jit: false`. | _none_ |
+| `recipe` | Ordered list of built-in [recipe blocks](native-recipes.md). Set exactly one of `script`, `code`, or `recipe`. Requires `recipe_version: 1` and `jit: false`. | _none_ |
 | `recipe_version` | Recipe grammar version. Only `1` is supported. | `1` |
 | `script` | Path to a Lua policy file. Set exactly one of `script`, `code`, or `recipe`. | _none_ |
 | `secret_refs` | Map of HMAC key references to environment variable names, resolved once during initialization. Used by `fb.hmac_sha256`. See [Hash and sign values](common-helpers.md#hash-and-sign-values). | _none_ |

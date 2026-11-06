@@ -149,6 +149,7 @@
     * [Common helpers](pipeline/processors/fluent-typed-scripting/common-helpers.md)
     * [Errors and limits](pipeline/processors/fluent-typed-scripting/errors-and-limits.md)
     * [Fluent Typed Scripting (FTS) and the Lua filter](pipeline/processors/fluent-typed-scripting/lua-filter.md)
+    * [Native recipe blocks](pipeline/processors/fluent-typed-scripting/native-recipes.md)
     * [Recipes](pipeline/processors/fluent-typed-scripting/recipes.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
