@@ -63,7 +63,7 @@ When `oauth2.validate` is set to `true`, the HTTP input plugin validates the `Au
 
 `oauth2.issuer` and `oauth2.jwks_url` are both required when validation is enabled. `JWKS` keys are fetched lazily: the first request that requires validation triggers the initial retrieval from `oauth2.jwks_url`. Keys are then cached and refreshed every `oauth2.jwks_refresh_interval` seconds.
 
-If a `JWKS` response exceeds `oauth2.jwks_buffer_max_size` or doesn't arrive within `oauth2.jwks_response_timeout`, the fetch fails and Fluent Bit rejects the triggering request with a `401` response. The next request that needs validation tries the fetch again.
+A `JWKS` fetch fails when the response exceeds `oauth2.jwks_buffer_max_size` or doesn't arrive within `oauth2.jwks_response_timeout`. Until a fetch succeeds, requests that need a fetch are rejected with a `401` response, even if previously cached keys could validate the token. The fetch is synchronous, so other requests that need validation wait while it runs. For validation of these limits, time formats, and other details, see [`JWKS` fetch limits](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#jwks-fetch-limits).
 
 ## Get started
 
