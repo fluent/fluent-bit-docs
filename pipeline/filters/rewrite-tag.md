@@ -173,12 +173,10 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`:
+The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`. Run the YAML configuration as shown, or use `fluent-bit -c fluent-bit.conf` for the classic configuration:
 
 ```shell
 $ fluent-bit -c fluent-bit.yaml
-# Or, for the classic configuration:
-$ fluent-bit -c fluent-bit.conf
 
 ...
 [0] from.test_tag.new.fluent.bit.out: [[1580436933.000050569, {}], {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
@@ -249,7 +247,7 @@ The `rewrite_tag` plugin exposes an additional metric called `emit_records` that
 
 ### Understand the metrics
 
-The following example uses the filter configuration from [Configuration example](#configuration-example), not the batching example. To query its metrics, enable the HTTP server and bind it to the local host by adding `http_server: on` and `http_listen: 127.0.0.1` to its `service` section, or `HTTP_Server On` and `HTTP_Listen 127.0.0.1` in the classic configuration. The default listen address, `0.0.0.0`, exposes the metrics on every network interface. Then query the metrics exposed in the HTTP interface:
+The following example uses the filter configuration from [Configuration example](#configuration-example), not the batching example. To query its metrics, enable the HTTP server and bind it to the local host by adding `http_server: on` and `http_listen: 127.0.0.1` to its `service` section, or `HTTP_Server On` and `HTTP_Listen 127.0.0.1` in the classic configuration. The default listen address, `0.0.0.0`, listens on all IPv4 interfaces. The HTTP server has no authentication and also serves endpoints that can change Fluent Bit, such as the hot reload endpoint, so even on the local host any local user can reach it. In a container, `127.0.0.1` is the container's own loopback interface, so run the following command inside the container, for example with `docker exec`. Then query the metrics exposed in the HTTP interface:
 
 ```shell
 curl http://127.0.0.1:2020/api/v1/metrics | jq
