@@ -195,8 +195,12 @@ The HTTP-based input plugins that support bearer token validation share the foll
 | `oauth2.allowed_audience` | Audience claim to enforce when validating tokens. | _none_ |
 | `oauth2.allowed_clients` | Authorized `client_id` or `azp` claim values. This key can be specified multiple times. | _none_ |
 | `oauth2.jwks_refresh_interval` | How often in seconds to refresh cached `JWKS` keys. | `300` |
+| `oauth2.jwks_buffer_max_size` | Maximum size of the `JWKS` HTTP response, including headers and body. Must be between `4096` bytes and `16M`. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). | `1M` |
+| `oauth2.jwks_response_timeout` | Maximum time to receive the `JWKS` HTTP response after the request is sent. Must be between `1s` and `300s`. | `30s` |
 
 When validation is enabled, requests without a valid `Authorization: Bearer <token>` header are rejected.
+
+The `oauth2.jwks_buffer_max_size` and `oauth2.jwks_response_timeout` limits are checked only when `oauth2.validate` is `true`. An out-of-range value stops the input from starting. Size values use decimal units, so `1M` is 1,000,000 bytes. If a `JWKS` response exceeds `oauth2.jwks_buffer_max_size` or doesn't arrive within `oauth2.jwks_response_timeout`, Fluent Bit logs an error and rejects the token that triggered the fetch. The fetch is attempted again on the next request that needs validation.
 
 ### Example input configuration
 

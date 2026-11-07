@@ -17,30 +17,32 @@ The following table includes both:
 For a cross-plugin explanation of the shared listener settings, see
 [Shared HTTP listener settings for inputs](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#shared-http-listener-settings-for-inputs).
 
-| Key                        | Description                                                                                                                                         | Default   |
-|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| `add_remote_addr`          | Adds a `REMOTE_ADDR` field to the record. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header. | `false`   |
-| `buffer_chunk_size`        | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`    |
-| `buffer_max_size`          | Specify the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                   | `4M`      |
-| `enable_health_endpoint`   | Enable a `GET /health` endpoint for this input instance. When enabled, the endpoint returns a JSON response with `status` and `timestamp` fields.   | `false`   |
-| `http2`                    | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                 | `true`    |
-| `http_server.max_connections` | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                      | `0`       |
-| `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                             | `1`       |
-| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                          | `8192`    |
-| `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                | `256M`    |
-| `listen`                   | The address to listen on.                                                                                                                           | `0.0.0.0` |
-| `oauth2.allowed_audience`  | Audience claim to enforce when validating incoming `OAuth 2.0` `JWT` tokens.                                                                        | _none_    |
-| `oauth2.allowed_clients`   | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                      | _none_    |
-| `oauth2.issuer`            | Expected issuer (`iss`) claim. Required when `oauth2.validate` is `true`.                                                                           | _none_    |
-| `oauth2.jwks_refresh_interval` | How often in seconds to refresh the cached `JWKS` keys from `oauth2.jwks_url`.                                                                 | `300`     |
-| `oauth2.jwks_url`          | `JWKS` endpoint URL used to fetch public keys for `JWT` validation. Required when `oauth2.validate` is `true`.                                      | _none_    |
-| `oauth2.validate`          | Enable `OAuth 2.0` `JWT` validation for incoming requests.                                                                                          | `false`   |
-| `port`                     | The port for Fluent Bit to listen on.                                                                                                               | `9880`    |
-| `remote_addr_key`          | Key name for the remote address field added to the record when `add_remote_addr` is enabled.                                                        | `REMOTE_ADDR` |
-| `success_header`           | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`.                                   | _none_    |
-| `successful_response_code` | Allows setting successful response code. Supported values: `200`, `201`, and `204`.                                                                 | `201`     |
-| `tag_key`                  | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                 | _none_    |
-| `threaded`                 | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                             | `false`   |
+| Key                                     | Description                                                                                                                                                                                         | Default       |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `add_remote_addr`                       | Adds a `REMOTE_ADDR` field to the record. The value of `REMOTE_ADDR` is the client's address, which is extracted from the `X-Forwarded-For` header.                                                 | `false`       |
+| `buffer_chunk_size`                     | This sets the chunk size for incoming JSON messages. These chunks are then stored and managed in the space available by `buffer_max_size`. Compatibility alias for `http_server.buffer_chunk_size`. | `512K`        |
+| `buffer_max_size`                       | Specify the maximum buffer size to receive a JSON message. Compatibility alias for `http_server.buffer_max_size`.                                                                                   | `4M`          |
+| `enable_health_endpoint`                | Enable a `GET /health` endpoint for this input instance. When enabled, the endpoint returns a JSON response with `status` and `timestamp` fields.                                                   | `false`       |
+| `http2`                                 | Enable HTTP/2 support. Compatibility alias for `http_server.http2`.                                                                                                                                 | `true`        |
+| `http_server.max_connections`           | Maximum number of concurrent active HTTP connections. `0` means unlimited.                                                                                                                          | `0`           |
+| `http_server.workers`                   | Number of HTTP listener worker threads.                                                                                                                                                             | `1`           |
+| `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                                      | `8192`        |
+| `http_server.ingress_queue_byte_limit`  | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                            | `256M`        |
+| `listen`                                | The address to listen on.                                                                                                                                                                           | `0.0.0.0`     |
+| `oauth2.allowed_audience`               | Audience claim to enforce when validating incoming `OAuth 2.0` `JWT` tokens.                                                                                                                        | _none_        |
+| `oauth2.allowed_clients`                | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                                                                      | _none_        |
+| `oauth2.issuer`                         | Expected issuer (`iss`) claim. Required when `oauth2.validate` is `true`.                                                                                                                           | _none_        |
+| `oauth2.jwks_buffer_max_size`           | Maximum size of the `JWKS` HTTP response, including headers and body. Must be between `4096` bytes and `16M`. Uses [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes).         | `1M`          |
+| `oauth2.jwks_refresh_interval`          | How often in seconds to refresh the cached `JWKS` keys from `oauth2.jwks_url`.                                                                                                                      | `300`         |
+| `oauth2.jwks_response_timeout`          | Maximum time to receive the `JWKS` HTTP response after the request is sent. Must be between `1s` and `300s`.                                                                                        | `30s`         |
+| `oauth2.jwks_url`                       | `JWKS` endpoint URL used to fetch public keys for `JWT` validation. Required when `oauth2.validate` is `true`.                                                                                      | _none_        |
+| `oauth2.validate`                       | Enable `OAuth 2.0` `JWT` validation for incoming requests.                                                                                                                                          | `false`       |
+| `port`                                  | The port for Fluent Bit to listen on.                                                                                                                                                               | `9880`        |
+| `remote_addr_key`                       | Key name for the remote address field added to the record when `add_remote_addr` is enabled.                                                                                                        | `REMOTE_ADDR` |
+| `success_header`                        | Add an HTTP header key/value pair on success. Multiple headers can be set. For example, `X-Custom custom-answer`.                                                                                   | _none_        |
+| `successful_response_code`              | Allows setting successful response code. Supported values: `200`, `201`, and `204`.                                                                                                                 | `201`         |
+| `tag_key`                               | Specify the key name to overwrite a tag. If set, the tag will be overwritten by a value of the key.                                                                                                 | _none_        |
+| `threaded`                              | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs).                                                                                             | `false`       |
 
 The `http_server.ingress_queue_event_limit` and
 `http_server.ingress_queue_byte_limit` settings matter only when
@@ -59,6 +61,8 @@ The HTTP input plugin will accept and automatically handle gzipped content in ve
 When `oauth2.validate` is set to `true`, the HTTP input plugin validates the `Authorization: Bearer <token>` header on every incoming request. Requests with a missing, expired, or invalid token are rejected with a `401` response.
 
 `oauth2.issuer` and `oauth2.jwks_url` are both required when validation is enabled. `JWKS` keys are fetched lazily: the first request that requires validation triggers the initial retrieval from `oauth2.jwks_url`. Keys are then cached and refreshed every `oauth2.jwks_refresh_interval` seconds.
+
+If a `JWKS` response exceeds `oauth2.jwks_buffer_max_size` or doesn't arrive within `oauth2.jwks_response_timeout`, the fetch fails and Fluent Bit rejects the triggering request with a `401` response. The next request that needs validation tries the fetch again.
 
 ## Get started
 
