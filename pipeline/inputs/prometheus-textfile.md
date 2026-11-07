@@ -77,11 +77,12 @@ In v5.2 or later, a pattern that matches no files is skipped and logged only at 
 
 In v5.2 or later, the plugin merges the metrics from all files into one metrics payload for each scrape. Earlier versions sent a separate payload for each file. Merging changes how metrics with the same name in more than one file are handled:
 
-- Metrics with the same name and `HELP` text are combined into one metric family.
+- Metrics with the same name, type, and `HELP` text are combined into one metric family.
 - If the same counter, gauge, untyped, or summary series appears in more than one file, only one value is kept. Files are read in no particular order, so which value is kept isn't defined.
 - If the same histogram series appears in more than one file, its buckets, count, and sum are added together.
-- If metrics with the same name and `HELP` text have a different number of labels, or histograms have different buckets, the merge fails.
-- Metrics with the same name but different `HELP` text or type are kept as separate families. Some outputs, such as [Prometheus exporter](../outputs/prometheus-exporter.md), reject these as conflicting.
+- If a later file defines a combined metric with more labels, or with a different number of differently named labels, the merge fails. If it has the same number of labels with different names, or fewer labels with the same names, its values are merged silently under the first file's label names.
+- If a later file defines a combined histogram with a different number of buckets, the merge fails. With the same number of buckets but different bucket boundaries, the bucket values are added together silently.
+- Metrics with the same name but a different type or `HELP` text aren't combined and are kept as separate families with the same name. Some outputs, such as [Prometheus exporter](../outputs/prometheus-exporter.md), reject these as conflicting.
 
 If a merge fails, the plugin logs `could not merge metrics from <file>` and discards the whole scrape, including the error gauge. The same files fail on every scrape until they change. Define each metric in only one file to avoid these cases.
 
@@ -95,13 +96,13 @@ In v5.2 or later, each scrape also includes the following gauge:
 
 The gauge is set to `1` when a glob pattern can't be read, a matched file can't be checked or read, or a file isn't valid Prometheus text format. Metrics from files that fail are left out of the scrape, and metrics from the other files are still sent. A file that can't be read is logged only at the `debug` level, so check the gauge rather than the logs.
 
-The gauge is sent even when no file contributes metrics, except when the scrape is discarded. Alert when the gauge is `1` and when it's missing. The `input` label is the internal name of the input instance, such as `prometheus_textfile.0`, even if you set an `alias`, so `alias` doesn't change this label. Because it's a new metric in v5.2, outputs and dashboards that only allow known metric names might need to allow it.
+The gauge is sent even when no file contributes metrics, except when the scrape is discarded. Alert when the gauge is `1`, when it's missing, and when the log contains `could not merge metrics`. Some outputs keep showing the last value they received. [Prometheus exporter](../outputs/prometheus-exporter.md) keeps serving each input's previous scrape until Fluent Bit restarts or reloads its configuration, so after a merge failure the gauge can stay at `0` instead of disappearing. The `input` label is the internal name of the input instance, such as `prometheus_textfile.0`, even if you set an `alias`, so `alias` doesn't change this label. Because it's a new metric in v5.2, outputs and dashboards that only allow known metric names might need to allow it.
 
 ### File access
 
 The plugin follows symbolic links and reads any matching file that the Fluent Bit user can read, including files outside the directory in `path`. Use a specific pattern, and keep the files in a directory that only trusted processes can write to.
 
-Write each file to a temporary name that doesn't match `path`, and then rename it. A scrape that reads a partly written file reports a parse error for that file.
+Write each file to a temporary name that doesn't match `path`, and then rename it. A scrape that reads a partly written file can report a parse error for that file. It can also read content that's valid but incomplete, so some series are missing or a value is cut short, without any error. Make the file readable by the user that runs Fluent Bit before you rename it, because tools such as `mktemp` create files that only their owner can read. The following examples use `chmod 0644`, which lets every local user read the file. To limit access, set the file's group to one that the Fluent Bit user belongs to, and use `0640` instead.
 
 ## Use cases
 
@@ -110,12 +111,15 @@ Write each file to a temporary name that doesn't match `path`, and then rename i
 Applications can write custom metrics to `.prom` files, and this plugin will collect them:
 
 ```bash
-# Script writes metrics to a temporary file, then renames it
-echo "# HELP app_requests_total Total HTTP requests" > /var/lib/prometheus/textfile/app.prom.tmp
-echo "# TYPE app_requests_total counter" >> /var/lib/prometheus/textfile/app.prom.tmp
-echo "app_requests_total{status=\"200\"} 1500" >> /var/lib/prometheus/textfile/app.prom.tmp
-echo "app_requests_total{status=\"404\"} 23" >> /var/lib/prometheus/textfile/app.prom.tmp
-mv /var/lib/prometheus/textfile/app.prom.tmp /var/lib/prometheus/textfile/app.prom
+# Script writes metrics to a unique temporary file, then renames it
+TMP=$(mktemp /var/lib/prometheus/textfile/app.prom.XXXXXX)
+echo "# HELP app_requests_total Total HTTP requests" > "$TMP"
+echo "# TYPE app_requests_total counter" >> "$TMP"
+echo "app_requests_total{status=\"200\"} 1500" >> "$TMP"
+echo "app_requests_total{status=\"404\"} 23" >> "$TMP"
+# Let the Fluent Bit user read the file before publishing it
+chmod 0644 "$TMP"
+mv "$TMP" /var/lib/prometheus/textfile/app.prom
 ```
 
 ### Batch job metrics
@@ -130,7 +134,8 @@ BACKUP_START=$(date +%s)
 BACKUP_END=$(date +%s)
 DURATION=$((BACKUP_END - BACKUP_START))
 
-cat > /var/lib/prometheus/textfile/backup.prom.tmp << EOF
+TMP=$(mktemp /var/lib/prometheus/textfile/backup.prom.XXXXXX)
+cat > "$TMP" << EOF
 # HELP backup_duration_seconds Time taken to complete backup
 # TYPE backup_duration_seconds gauge
 backup_duration_seconds ${DURATION}
@@ -139,7 +144,9 @@ backup_duration_seconds ${DURATION}
 # TYPE backup_last_success_timestamp_seconds gauge
 backup_last_success_timestamp_seconds ${BACKUP_END}
 EOF
-mv /var/lib/prometheus/textfile/backup.prom.tmp /var/lib/prometheus/textfile/backup.prom
+# Let the Fluent Bit user read the file before publishing it
+chmod 0644 "$TMP"
+mv "$TMP" /var/lib/prometheus/textfile/backup.prom
 ```
 
 ### System integration
