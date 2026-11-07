@@ -169,6 +169,8 @@ pipeline:
 
 In this configuration, the `match_regex` rule is set to `.*_sensor_[AB]`. This regular expression matches any `Tag` that ends with `_sensor_A` or `_sensor_B`, regardless of what precedes it. This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.
 
+In v5.2 or later, a `match_regex` search that exceeds the regular expression work limit doesn't route records with that tag to that output. Fluent Bit logs `[router] regex match failed: -17` each time a chunk with that tag is created. Filters that use `match_regex` are skipped the same way, and log the error each time records with that tag are added. See [Regular expression work limit](parsers/regular-expression.md#regular-expression-work-limit).
+
 ## Conditional routing
 
 Conditional routing lets you route individual records to different outputs based on the content of each record. Unlike tag-based routing, which operates on entire data chunks, conditional routing evaluates conditions against each record and routes them accordingly.
