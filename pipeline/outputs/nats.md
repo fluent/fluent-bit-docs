@@ -27,19 +27,19 @@ Fluent Bit publishes each chunk of records to the NATS subject that matches the 
 - Contains a space, a tab, another ASCII control character, `*`, or `>`.
 - Starts or ends with `.`, or contains two consecutive `.` characters.
 
-Bytes outside the ASCII range, such as UTF-8 characters, are allowed and aren't encoded.
+Bytes outside the ASCII range, such as UTF-8 characters, don't make a tag invalid on their own. When a tag is encoded, every byte is encoded, including UTF-8 bytes.
 
 The `invalid_subject_action` value is case-sensitive. Any value other than `reject` or `encode` causes startup to fail.
 
 With `invalid_subject_action: reject`, the default, Fluent Bit logs `invalid NATS publish subject in tag` and drops the chunk without retrying.
 
-With `invalid_subject_action: encode`, Fluent Bit publishes to `_flb_encoded.` followed by each byte of the tag as two uppercase hexadecimal digits. For example, records with the tag `app logs` are published to `_flb_encoded.617070206C6F6773`. Tags that already start with `_flb_encoded.`, including the final `.`, are encoded the same way, even when they're valid, so they can't collide with encoded subjects. An empty tag encodes to `_flb_encoded.` with nothing after the prefix. Subscribers and NATS publish permissions must use the encoded subject. For example, subscribe to `_flb_encoded.>` to receive every encoded subject. The `tag` field in each record still contains the original tag. If Fluent Bit can't allocate memory for the encoded subject, the chunk is retried according to `retry_limit`.
+With `invalid_subject_action: encode`, Fluent Bit encodes only tags that aren't valid subjects and tags that start with `_flb_encoded.`. Valid tags, such as `app.logs`, are still published unchanged. An encoded tag is published to `_flb_encoded.` followed by each byte of the tag as two uppercase hexadecimal digits. For example, records with the tag `app logs` are published to `_flb_encoded.617070206C6F6773`. Tags that already start with `_flb_encoded.`, including the final `.`, are encoded the same way, even when they're valid, so they can't collide with encoded subjects. An empty tag encodes to `_flb_encoded.` with nothing after the prefix. Subscribers and NATS publish permissions must cover both the unchanged valid subjects and the encoded subjects. For example, subscribe to `_flb_encoded.>` to receive every encoded subject, in addition to the subjects of your valid tags. The `tag` field in each record still contains the original tag, unless the record already has its own `tag` key. See [Data format](#data-format). If Fluent Bit can't allocate memory for the encoded subject, the chunk is retried according to `retry_limit`.
 
 With either setting, Fluent Bit logs `NATS publish control line exceeds 4096 bytes` and drops the chunk without retrying if the NATS publish command line, `PUB <subject> <size>` plus the trailing carriage return and line feed, is longer than 4,096 bytes. This limit matches the default NATS `max_control_line` value and is fixed in Fluent Bit, so raising `max_control_line` on the server doesn't change it. Encoding more than doubles the length of a tag, so long tags are more likely to exceed this limit.
 
 ### Upgrade to v5.2
 
-Earlier versions send the tag as the subject without checking it. A tag that contains a space was split by the NATS server into a subject and a reply subject, so those records were published to the wrong subject. In v5.2 or later, with the default `invalid_subject_action: reject`, chunks with such tags, or tags that contain `*` or `>`, are dropped instead. Before you upgrade, rename those tags, for example with the [Rewrite Tag](../filters/rewrite-tag.md) filter, or set `invalid_subject_action: encode` and update your subscribers.
+Earlier versions send the tag as the subject without checking it. A tag that whitespace splits into two parts, such as `app logs`, was read by the NATS server as a subject and a reply subject, so those records were published to the subject `app`. A tag with three or more parts, such as `app logs extra`, produced a `PUB` command with too many fields, which the server rejects. Fluent Bit doesn't read replies from the NATS server, so it doesn't log a rejected command and counts the chunk as delivered. In v5.2 or later, with the default `invalid_subject_action: reject`, chunks with such tags, or tags that contain `*` or `>`, are dropped instead. Before you upgrade, rename those tags, for example with the [Rewrite Tag](../filters/rewrite-tag.md) filter, or set `invalid_subject_action: encode` and update your subscribers.
 
 ## Get started
 
@@ -101,7 +101,7 @@ For every set of records flushed to a NATS server, Fluent Bit uses the following
 ]
 ```
 
-Each record is an individual entity represented in a JSON array that contains a Unix timestamp, as a floating-point number of seconds, and a JSON map with a set of key/value pairs. Fluent Bit adds a `tag` key with the record tag to each map. A summarized output of the CPU input plugin will resemble the following:
+Each record is an individual entity represented in a JSON array that contains a Unix timestamp, as a floating-point number of seconds, and a JSON map with a set of key/value pairs. Fluent Bit adds a `tag` key with the record tag at the start of each map. If a record already has its own `tag` key, Fluent Bit keeps the record's value and doesn't include the record tag. To include it, rename the record's key before the NATS output with the `rename` operation of the [Modify](../filters/modify.md) filter, for example to `source_tag`. The rename only applies when the new key doesn't already exist in the record. After the rename, consumers that read `tag` receive the Fluent Bit record tag instead of the record's own value. A summarized output of the CPU input plugin will resemble the following:
 
 ```json
 [
