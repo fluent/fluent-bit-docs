@@ -39,9 +39,11 @@ service:
 
 ## Relative paths
 
-A configuration file can reference other files with a relative path, including `parsers_file`, `plugins_file`, upstream high availability files, and the stream processor `streams_file`.
+A configuration file can reference other files with a relative path, including `parsers_file`, `plugins_file`, upstream high availability files, the stream processor `streams_file`, the Lua filter `script`, and the WASM filter `wasm_path`. Classic `@INCLUDE` files follow the same order; see [Config include file](configuring-fluent-bit/classic-mode/configuration-file.md#config-include-file). A relative wildcard `@INCLUDE` pattern is the exception: it's matched only in the directory of the main configuration file, with no fallback to the working directory. If matching files exist only in the working directory, Fluent Bit fails to load the configuration.
 
-Fluent Bit resolves a relative reference in two steps. It first looks for the file at the path exactly as written, relative to the working directory of the Fluent Bit process. If no file exists there, it looks for the file in the directory that holds the main configuration file. An absolute path is used as provided and isn't retried.
+In v5.2 or later, Fluent Bit resolves a relative reference in two steps. It first looks for the file in the directory that holds the main configuration file. If no file exists there, it looks for the file at the path exactly as written, relative to the working directory of the Fluent Bit process. An absolute path is used as provided and isn't retried. If Fluent Bit starts without a configuration file, it uses the working directory.
+
+Earlier versions checked the working directory first, and looked up WASM programs only relative to the working directory. In most setups, the new order matters only when a file with the same name exists in both directories: Fluent Bit now uses the file next to the main configuration file. If that path exists but can't be accessed, for example because of its permissions, Fluent Bit doesn't fall back to the working directory and fails to load the file.
 
 Fluent Bit version 5.1.2 and greater keeps track of the main configuration file's directory across a hot reload. In earlier versions, the reloaded configuration lost that directory, so a relative reference that resolved at startup failed to resolve after a reload. On those versions, use absolute paths for referenced files if you rely on hot reload.
 
