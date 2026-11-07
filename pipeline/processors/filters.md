@@ -1,6 +1,6 @@
 # Filters as processors
 
-You can use any [filter](../filters.md) as a processor in Fluent Bit. The [Rewrite tag](../filters/rewrite-tag.md#use-as-a-processor) filter is an exception: in v5.2 or later, it can only be used as a processor on inputs.
+You can use any [filter](../filters.md) as a processor in Fluent Bit. The [Rewrite tag](../filters/rewrite-tag.md#use-as-a-processor) filter is an exception: in v5.2 or later, it can only be used as a processor on inputs. Earlier versions accepted it as an output processor, but that placement wasn't reliable and shouldn't be used.
 
 {% hint style="info" %}
 
