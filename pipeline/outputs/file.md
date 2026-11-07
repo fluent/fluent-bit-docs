@@ -15,7 +15,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | `fallback_path` | Static directory path used together with `fallback_file` when a `fallback` action is applied. | _none_ |
 | `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions. When `enable_strftime` is `true`, `strftime` placeholders are expanded using the UTC event timestamp. | _none_ |
 | `format` | The [format](#format) of the file content. | _none_ |
-| `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. When set explicitly, also limits tag-derived filenames. Set to `0` for unlimited. See [Destination limits](#destination-limits). | `1024` |
+| `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. Tag-derived filenames count when `path` is dynamic, or, in v5.2 or later, when `path` isn't dynamic, `file` isn't set, and this key is set explicitly. Set to `0` for unlimited. See [Destination limits](#destination-limits). | `1024` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
 | `on_limit_reached` | Action to take for a record whose destination would exceed `max_dynamic_files`. Accepted values: `error`, `drop`, `fallback`. | `error` |
 | `on_missing_field` | Action to take for a record whose record accessor field is missing, or resolves to an unsafe value. Accepted values: `error`, `drop`, `fallback`. | `error` |
@@ -69,7 +69,7 @@ The time field is written as seconds and nanoseconds, for example `1564462620.00
 
 In v5.2 or later, each double quote inside a value is written as two double quotes, as in RFC 4180, and arrays, maps, and extension values are also enclosed in double quotes. Strings nested in arrays and maps appear with doubled quotes, for example `"[""a"", 1]"`. Extension values are written as `(ext: <type>)` followed by every data byte as `\x` and two lowercase hexadecimal digits.
 
-When `csv_column_names` is `true`, Fluent Bit writes a header line starting with `timestamp`, followed by the quoted keys of the first record, when the file is empty.
+When `csv_column_names` is `true`, Fluent Bit writes a header line starting with `timestamp`, followed by the quoted keys of the first record, when the file is empty, including a new file created by [log rotation](#log-rotation). Fluent Bit writes each record's values in that record's own key order and doesn't align them with the header, so records with different keys or a different key order produce misaligned columns. Make sure every record written to the same file has the same keys in the same order.
 
 ### LTSV
 
@@ -247,9 +247,9 @@ Two settings control what happens to a record whose destination Fluent Bit can't
 
 The `max_dynamic_files` limit counts distinct destinations for this output instance, which bounds the number of files a high-cardinality record field can create. Records that resolve to a destination already counted aren't affected by the limit.
 
-The count is shared by all workers of the output instance, and in v5.2 or later it's enforced consistently when several workers write at the same time. In v5.2 or later, a destination counts as soon as Fluent Bit first tries to write to it, even if opening the file then fails. Destinations aren't removed from the count while Fluent Bit runs. The count starts again only when Fluent Bit restarts or reloads its configuration.
+The count is shared by all workers of the output instance, and in v5.2 or later it's enforced consistently when several workers write at the same time. In v5.2 or later, a destination counts as soon as Fluent Bit first tries to write to it, even if opening the file then fails. Destinations aren't removed from the count while Fluent Bit runs. The count starts again only when Fluent Bit restarts or reloads its configuration, and restarting doesn't delete any files. The limit bounds how many destinations one Fluent Bit run can create, not how many files stay on disk. [Log rotation](#log-rotation) only limits the rotated copies of each file and doesn't remove old destinations, so use a separate retention job to delete files that accumulate over time.
 
-When `file` isn't set, Fluent Bit names each file after the record tag. If `path` is dynamic, each combination of resolved path and tag-derived filename already counts toward the limit. When `path` and `file` aren't dynamic, tag-derived filenames are limited only if you set `max_dynamic_files` explicitly, in v5.2 or later. Setting it explicitly to its default value of `1024` still enables this limit. Because every record in a chunk has the same tag, `on_limit_reached` then applies to the whole chunk.
+When `file` isn't set, Fluent Bit names each file after the record tag. If `path` is dynamic, each combination of resolved path and tag-derived filename already counts toward the limit. When `path` isn't dynamic, tag-derived filenames are limited only if you set `max_dynamic_files` explicitly, in v5.2 or later. Setting it explicitly to its default value of `1024` still enables this limit. Because every record in a chunk has the same tag, `on_limit_reached` then applies to the whole chunk.
 
 ### Dynamic destination example
 
