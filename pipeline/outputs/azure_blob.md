@@ -261,7 +261,7 @@ Azurite Queue service is successfully listening at http://127.0.0.1:10001
 
 ## Configuration endpoint TLS
 
-Fluent Bit fetches its remote configuration from the configuration endpoint once, when the output starts. In v5.2 or later, when `configuration_endpoint_url` is an `https` URL, Fluent Bit verifies the configuration endpoint's certificate, regardless of the `tls` setting. Use an `https` URL: with an `http` URL, the connection isn't encrypted or verified, and the configuration endpoint's username, password, or bearer token is sent in plain text.
+Fluent Bit fetches its remote configuration from the configuration endpoint once, when the output starts. In v5.2 or later, when `configuration_endpoint_url` is an `https` URL, Fluent Bit verifies the configuration endpoint's certificate, regardless of the `tls` setting. Use an `https` URL: with an `http` URL, the connection isn't encrypted or verified. The configuration endpoint's username, password, or bearer token is sent in plain text, and its response, which can include the storage `shared_key` or `sas_token`, can be read by anyone who can observe the traffic. The endpoint is authenticated only when `tls.verify` is `on`. If you turn off `tls.verify`, a server that impersonates the endpoint can receive these credentials and return its own configuration, for example a different storage host, container, or path that receives your data.
 
 The configuration endpoint connection uses these output settings: `tls.verify`, `tls.debug`, `tls.ca_path`, `tls.ca_file`, `tls.crt_file`, `tls.key_file`, and `tls.key_passwd`. Other TLS settings, such as `tls.vhost`, `tls.min_version`, `tls.max_version`, `tls.ciphers`, and `tls.crl_file`, don't apply to it. See [TLS/SSL](../../administration/transport-security.md) for these settings.
 
@@ -271,6 +271,6 @@ The configuration endpoint connection uses these output settings: `tls.verify`, 
 
 Earlier versions didn't verify the configuration endpoint's certificate. In v5.2 or later, a verification failure stops Fluent Bit from starting. Before you upgrade, check for these cases:
 
-- The configuration endpoint uses a self-signed certificate, or one from a private certificate authority. Add the authority to `tls.ca_file` or `tls.ca_path`.
-- You set `tls.ca_file` or `tls.ca_path` for a private Azure Blob Storage endpoint, and the configuration endpoint uses a public certificate authority. Setting either option stops Fluent Bit from using the system certificate store, so add the public authority as well.
+- The configuration endpoint uses a self-signed certificate, or one from a private certificate authority. Add the authority to `tls.ca_path` if it's set, or to `tls.ca_file` otherwise. If you add it to `tls.ca_path`, run `openssl rehash` on that directory, because Fluent Bit only finds certificates there through their hashed file names.
+- You set `tls.ca_file` or `tls.ca_path` for a private Azure Blob Storage endpoint, and the configuration endpoint uses a public certificate authority. Setting either option stops Fluent Bit from using the system certificate store, so add the public authority to the same location.
 - The configuration endpoint's certificate doesn't match the host in the URL, for example when the URL uses an IP address that isn't in the certificate's subject alternative names. Use a URL whose host matches the certificate.
