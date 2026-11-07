@@ -1,6 +1,6 @@
 # Filters as processors
 
-You can use any [filter](../filters.md) as a processor in Fluent Bit.
+You can use [filters](../filters.md) as processors in Fluent Bit. Placement restrictions depend on the filter: for example, `rewrite_tag` supports input processors and rejects output processor placement.
 
 {% hint style="info" %}
 
@@ -89,3 +89,7 @@ In this example configuration, an input plugin uses the [Lua](../filters/lua.md)
 
 {% endtab %}
 {% endtabs %}
+
+### Rewrite tag
+
+Use [Rewrite tag](../filters/rewrite-tag.md#input-processor-batching) as an input processor to route records under a new tag and continue at the next processor stage of the same input. Its experimental `batch_size` option can group records by destination tag to reduce downstream processing overhead. Batching is disabled by default and can change interleaving between different destination tags.
