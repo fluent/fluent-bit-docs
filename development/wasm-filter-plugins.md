@@ -98,10 +98,12 @@ For Rust:
 // #[no_mangle] attribute is needed for preventing mangles and align C ABI.
 // Also we can use an arbitrary function name for filter operations w/ Wasm.
 #[no_mangle]
-pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32)
+pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32) -> *const u8
 ```
 
 The `//export XXX` attribute on TinyGo and `#[no_mangle]` attribute on Rust are required. This is because TinyGo and Rust will mangle their function names if they aren't specified.
+
+In the Rust 2024 edition, `no_mangle` is an unsafe attribute, so write `#[unsafe(no_mangle)]` instead. This form requires Rust 1.82 or later. The examples on this page use `#[no_mangle]`, which works with earlier editions.
 
 Once built, a Wasm program will be available. Then you can execute that built program with one of the following Fluent Bit configurations:
 
@@ -237,6 +239,8 @@ The function takes the same six arguments as version `1` (tag, tag length, secon
 For C:
 
 ```c
+#include <stdint.h>
+
 uint64_t c_filter_v2(const char *tag, uint32_t tag_length,
                      uint32_t seconds, uint32_t nanoseconds,
                      const char *record, uint32_t record_length)
@@ -248,11 +252,17 @@ uint64_t c_filter_v2(const char *tag, uint32_t tag_length,
 For Go (TinyGo):
 
 ```go
+package main
+
+import "unsafe"
+
 //export filter_v2
 func filter_v2(tag *byte, tagLength uint32, seconds uint32, nanoseconds uint32,
 	record *byte, recordLength uint32) uint64 {
 	return uint64(recordLength)<<32 | uint64(uint32(uintptr(unsafe.Pointer(record))))
 }
+
+func main() {}
 ```
 
 For Rust:
@@ -275,7 +285,7 @@ These examples return the incoming record unchanged.
 
 The returned value is handled as follows:
 
-- Returning `0` drops the record.
+- Returning `0` drops the record. A non-zero value with a zero offset or zero length is invalid.
 - The output must contain exactly one map: a JSON object when `event_format` is `json`, or a MessagePack map when `event_format` is `msgpack`. With JSON, only whitespace can follow the object.
 - The record keeps its original timestamp and metadata. The output replaces only the record body.
 - If the call fails, or the output is invalid, Fluent Bit logs `WASM call or output is invalid; keeping original record` and passes the original record through unchanged. With version `1`, a failed call drops the record instead.
