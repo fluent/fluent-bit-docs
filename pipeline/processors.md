@@ -18,7 +18,7 @@ Fluent Bit offers the following processors:
 - [Labels](./processors/labels.md): Add, update, or delete metric labels.
 - [Metrics selector](./processors/metrics-selector.md): Choose which metrics to keep or discard.
 - [OpenTelemetry envelope](./processors/opentelemetry-envelope.md): Transform logs into an OpenTelemetry-compatible format.
-- [Sampling](./processors/sampling.md): Apply head or tail sampling to incoming traces.
+- [Sampling](./processors/sampling.md): Apply probabilistic sampling to logs, metrics, and traces on input and output pipelines, or tail sampling to traces on input pipelines.
 - [SQL](./processors/sql.md): Use SQL queries to extract log content.
 - [Filters as processors](./processors/filters.md): Use filters as processors.
 - [TDA](./processors/tda.md): Do Topological Data Analysis (TDA) calculations.
