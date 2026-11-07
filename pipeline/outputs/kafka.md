@@ -245,6 +245,7 @@ pipeline:
       topics: test
       format: protobuf
       schema_registry_url: 'https://registry-1:8081'
+      tls: on
       schema_registry_subject: fluent-bit-logs-value
       protobuf_message: com.example.logs.LogRecord
 ```
@@ -260,6 +261,7 @@ pipeline:
   Topics                   test
   Format                   protobuf
   Schema_Registry_Url      https://registry-1:8081
+  TLS                      On
   Schema_Registry_Subject  fluent-bit-logs-value
   Protobuf_Message         com.example.logs.LogRecord
 ```
@@ -278,7 +280,13 @@ Fluent Bit resolves the schema in one of two ways:
 - If `schema_registry_subject` is set, it requests `/subjects/{subject}/versions/{version}`, where the version comes from `schema_registry_version` and defaults to `latest`.
 - Otherwise, it requests `/schemas/ids/{id}` using the value of `schema_id`.
 
-The schema is fetched once and reused for the lifetime of the plugin instance. If the registry can't be reached or returns an error, the chunk is retried.
+The schema is fetched on the first successful resolution and reused for the lifetime of the plugin instance. This includes `schema_registry_version: latest`: Fluent Bit doesn't periodically check for a newer version. Use a hot reload or restart to create a new plugin instance and fetch the schema again. If the registry can't be reached or returns an error, the chunk is retried.
+
+In Fluent Bit v5.2.0 and later, Avro records must supply every declared field, including nested record fields. Declared Avro defaults support reader-side schema evolution; they don't make fields optional when encoding. Missing, duplicate, undeclared, or incorrectly typed fields are rejected instead of receiving implicit zero or empty values. For example, a schema declaring `message` and `source` rejects `{"message":"hello"}`; provide both fields. Protobuf retains ordinary proto3 defaults for missing fields and rejects unknown fields, incompatible types, and invalid enum names.
+
+In Fluent Bit v5.2.0 and later, a record that fails schema validation or a non-retryable serialization check, such as exceeding the Avro input size limit, is permanently rejected with an error log. Processing continues with later records in the chunk. Encoder allocation failures aren't rejections; they request a retry of the chunk. When metrics are enabled, the cmetrics endpoint `/api/v2/metrics/prometheus` exposes `fluentbit_kafka_rejected_records_total`, which counts these rejections with `name` (output instance) and `format` (`avro` or `protobuf`) labels. It counts rejection attempts: retrying a chunk after a separate transient failure can count the same invalid record again.
+
+In Fluent Bit v5.2.0 and later, HTTPS registry URLs require `tls: on` (`TLS On` in classic configuration). Without it, startup fails with `HTTPS Schema Registry requires tls on` before any registry request is sent. Configure `tls.ca_file` for a private CA and retain `tls.verify: on` for certificate verification. These settings secure registry HTTP requests; Kafka broker security is configured separately through `rdkafka.*` properties.
 
 To authenticate, set either `schema_registry_http_user` and `schema_registry_http_passwd` for HTTP basic authentication, or `schema_registry_bearer_token` for bearer token authentication.
 
@@ -300,6 +308,7 @@ pipeline:
       topics: test
       format: avro
       schema_registry_url: 'https://registry-1:8081,https://registry-2:8081'
+      tls: on
       schema_registry_subject: fluent-bit-logs-value
       schema_registry_version: latest
       schema_registry_http_user: fluentbit
@@ -317,6 +326,7 @@ pipeline:
   Topics                      test
   Format                      avro
   Schema_Registry_Url         https://registry-1:8081,https://registry-2:8081
+  TLS                         On
   Schema_Registry_Subject     fluent-bit-logs-value
   Schema_Registry_Version     latest
   Schema_Registry_Http_User   fluentbit
