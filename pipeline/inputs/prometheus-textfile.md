@@ -28,7 +28,7 @@ The _Prometheus text file_ input plugin allows Fluent Bit to read metrics from P
 
 ### Basic configuration
 
-The following configuration will monitor `/var/lib/prometheus/textfile` directory for `.prom` files every 15 seconds:
+The following configuration reads the files that match `/var/lib/prometheus/textfile/*.prom` every 15 seconds:
 
 ```yaml
 pipeline:
@@ -67,6 +67,42 @@ custom_histogram_sum 125.5
 custom_histogram_count 50
 ```
 
+## Scrape behavior
+
+Every `scrape_interval`, the plugin reads each file that matches `path`. Only regular files are read. Empty files are skipped. On Linux and macOS, directories that match `path` are skipped without an error, so set `path` to a file or a glob pattern such as `/var/lib/prometheus/textfile/*.prom`, not to a directory. On Windows, each `path` entry must contain a `*` wildcard; otherwise the plugin logs `path has no wild card` and the scrape reports an error.
+
+In v5.2 or later, a pattern that matches no files is skipped and logged only at the `debug` level. On Linux and macOS, this also applies when the directory in the pattern is missing or can't be read, so a typo in `path` doesn't set the error gauge. Earlier versions logged a warning and an error.
+
+### Merged scrape payload
+
+In v5.2 or later, the plugin merges the metrics from all files into one metrics payload for each scrape. Earlier versions sent a separate payload for each file. Merging changes how metrics with the same name in more than one file are handled:
+
+- Metrics with the same name and `HELP` text are combined into one metric family.
+- If the same counter, gauge, untyped, or summary series appears in more than one file, only one value is kept. Files are read in no particular order, so which value is kept isn't defined.
+- If the same histogram series appears in more than one file, its buckets, count, and sum are added together.
+- If metrics with the same name and `HELP` text have a different number of labels, or histograms have different buckets, the merge fails.
+- Metrics with the same name but different `HELP` text or type are kept as separate families. Some outputs, such as [Prometheus exporter](../outputs/prometheus-exporter.md), reject these as conflicting.
+
+If a merge fails, the plugin logs `could not merge metrics from <file>` and discards the whole scrape, including the error gauge. The same files fail on every scrape until they change. Define each metric in only one file to avoid these cases.
+
+### Scrape error gauge
+
+In v5.2 or later, each scrape also includes the following gauge:
+
+| Metric                            | Labels  | Description                                                                    |
+|-----------------------------------|---------|--------------------------------------------------------------------------------|
+| `fluentbit_textfile_scrape_error` | `input` | `1` if an error occurred while reading files during the scrape, otherwise `0`. |
+
+The gauge is set to `1` when a glob pattern can't be read, a matched file can't be checked or read, or a file isn't valid Prometheus text format. Metrics from files that fail are left out of the scrape, and metrics from the other files are still sent. A file that can't be read is logged only at the `debug` level, so check the gauge rather than the logs.
+
+The gauge is sent even when no file contributes metrics, except when the scrape is discarded. Alert when the gauge is `1` and when it's missing. The `input` label is the internal name of the input instance, such as `prometheus_textfile.0`, even if you set an `alias`, so `alias` doesn't change this label. Because it's a new metric in v5.2, outputs and dashboards that only allow known metric names might need to allow it.
+
+### File access
+
+The plugin follows symbolic links and reads any matching file that the Fluent Bit user can read, including files outside the directory in `path`. Use a specific pattern, and keep the files in a directory that only trusted processes can write to.
+
+Write each file to a temporary name that doesn't match `path`, and then rename it. A scrape that reads a partly written file reports a parse error for that file.
+
 ## Use cases
 
 ### Custom application metrics
@@ -74,11 +110,12 @@ custom_histogram_count 50
 Applications can write custom metrics to `.prom` files, and this plugin will collect them:
 
 ```bash
-# Script writes metrics to file
-echo "# HELP app_requests_total Total HTTP requests" > /var/lib/prometheus/textfile/app.prom
-echo "# TYPE app_requests_total counter" >> /var/lib/prometheus/textfile/app.prom
-echo "app_requests_total{status=\"200\"} 1500" >> /var/lib/prometheus/textfile/app.prom
-echo "app_requests_total{status=\"404\"} 23" >> /var/lib/prometheus/textfile/app.prom
+# Script writes metrics to a temporary file, then renames it
+echo "# HELP app_requests_total Total HTTP requests" > /var/lib/prometheus/textfile/app.prom.tmp
+echo "# TYPE app_requests_total counter" >> /var/lib/prometheus/textfile/app.prom.tmp
+echo "app_requests_total{status=\"200\"} 1500" >> /var/lib/prometheus/textfile/app.prom.tmp
+echo "app_requests_total{status=\"404\"} 23" >> /var/lib/prometheus/textfile/app.prom.tmp
+mv /var/lib/prometheus/textfile/app.prom.tmp /var/lib/prometheus/textfile/app.prom
 ```
 
 ### Batch job metrics
@@ -93,7 +130,7 @@ BACKUP_START=$(date +%s)
 BACKUP_END=$(date +%s)
 DURATION=$((BACKUP_END - BACKUP_START))
 
-cat > /var/lib/prometheus/textfile/backup.prom << EOF
+cat > /var/lib/prometheus/textfile/backup.prom.tmp << EOF
 # HELP backup_duration_seconds Time taken to complete backup
 # TYPE backup_duration_seconds gauge
 backup_duration_seconds ${DURATION}
@@ -102,6 +139,7 @@ backup_duration_seconds ${DURATION}
 # TYPE backup_last_success_timestamp_seconds gauge
 backup_last_success_timestamp_seconds ${BACKUP_END}
 EOF
+mv /var/lib/prometheus/textfile/backup.prom.tmp /var/lib/prometheus/textfile/backup.prom
 ```
 
 ### System integration
@@ -118,7 +156,7 @@ pipeline:
   inputs:
     - name: prometheus_textfile
       tag: textfile_metrics
-      path: /var/lib/prometheus/textfile
+      path: /var/lib/prometheus/textfile/*.prom
     - name: node_exporter_metrics
       tag: system_metrics
       scrape_interval: 15s
