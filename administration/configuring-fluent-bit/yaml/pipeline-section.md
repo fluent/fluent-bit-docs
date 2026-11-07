@@ -229,9 +229,9 @@ The HTTP-based input plugins that support bearer token validation share the foll
 | `oauth2.jwks_url` | `JWKS` endpoint URL used to fetch public keys for token validation. Required when `oauth2.validate` is `true`. | _none_ |
 | `oauth2.allowed_audience` | Audience claim to enforce when validating tokens. | _none_ |
 | `oauth2.allowed_clients` | Authorized `client_id` or `azp` claim values. This key can be specified multiple times. | _none_ |
-| `oauth2.jwks_refresh_interval` | How often in seconds to refresh cached `JWKS` keys. | `300` |
-| `oauth2.jwks_buffer_max_size` | Maximum size of the `JWKS` HTTP response, including headers and body. Must be between `4096` bytes and `16M`. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). | `1M` |
-| `oauth2.jwks_response_timeout` | Maximum time to receive the `JWKS` HTTP response after the request is sent. Must be between `1s` and `300s`. See [`JWKS` fetch limits](#jwks-fetch-limits). | `30s` |
+| `oauth2.jwks_refresh_interval` | Seconds after a fetch before the next request that needs validation refetches `JWKS` keys. Keys aren't refreshed in the background. | `300` |
+| `oauth2.jwks_buffer_max_size` | Maximum size of the `JWKS` HTTP response, including headers and body. Must be between `4096` bytes and `16M`. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Supported in v5.2 or later. | `1M` |
+| `oauth2.jwks_response_timeout` | Maximum time to receive the `JWKS` HTTP response after the request is sent. Must be between `1s` and `300s`. Supported in v5.2 or later. See [`JWKS` fetch limits](#jwks-fetch-limits). | `30s` |
 
 When validation is enabled, requests without a valid `Authorization: Bearer <token>` header are rejected. On the `http` input, `GET /health` requests are exempt when `enable_health_endpoint` is enabled.
 
