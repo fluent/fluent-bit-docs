@@ -53,14 +53,16 @@ If Fluent Bit can't preserve the directory while reloading, it stops the reload,
 
 ## Processor validation
 
-Fluent Bit version 5.2 and greater validates the processors attached to every input and output before it replaces the running pipeline. If a processor has an invalid configuration, Fluent Bit stops the reload, keeps the previous configuration running, and logs:
+Fluent Bit version 5.2 and greater validates the processors attached to every input and output before it replaces the running pipeline. If this validation fails, Fluent Bit stops the reload, keeps the previous configuration running, and logs:
 
 ```text
 [reload] processor configuration preflight failed
 [reload] reloaded config is invalid. Reloading is halted
 ```
 
-Validation checks the properties of every processor, including [filters used as processors](../pipeline/processors/filters.md). For filters used as processors, it also runs the filter's startup checks, unless the filter sets `active: false`.
+Validation checks the property names and values of every processor, including [filters used as processors](../pipeline/processors/filters.md). Deeper checks run only for processors that support them: the `fts` processor, and the Lua and Wasm filters used as processors, unless the filter sets `active: false`.
+
+Validation doesn't catch every error. Errors that only appear when a processor starts, such as an invalid regular expression in a `content_modifier` processor, are found after Fluent Bit has stopped the previous pipeline. In that case, the reload is aborted and Fluent Bit exits instead of keeping the previous configuration. Test configuration changes in a test environment before you reload a production instance. The `--dry-run` option runs the same validation, so it doesn't catch these errors either.
 
 ## How to reload
 
