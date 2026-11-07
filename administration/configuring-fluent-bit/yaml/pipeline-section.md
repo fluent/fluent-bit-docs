@@ -195,8 +195,22 @@ The HTTP-based input plugins that support bearer token validation share the foll
 | `oauth2.allowed_audience` | Audience claim to enforce when validating tokens. | _none_ |
 | `oauth2.allowed_clients` | Authorized `client_id` or `azp` claim values. This key can be specified multiple times. | _none_ |
 | `oauth2.jwks_refresh_interval` | How often in seconds to refresh cached `JWKS` keys. | `300` |
+| `oauth2.jwks_buffer_max_size` | Maximum size of the `JWKS` HTTP response, including headers and body. Must be between `4096` bytes and `16M`. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). | `1M` |
+| `oauth2.jwks_response_timeout` | Maximum time to receive the `JWKS` HTTP response after the request is sent. Must be between `1s` and `300s`. See [`JWKS` fetch limits](#jwks-fetch-limits). | `30s` |
 
 When validation is enabled, requests without a valid `Authorization: Bearer <token>` header are rejected.
+
+#### `JWKS` fetch limits
+
+The `oauth2.jwks_buffer_max_size` and `oauth2.jwks_response_timeout` limits are checked only when `oauth2.validate` is `true`. Size values use decimal units, so `1M` is 1,000,000 bytes. Time values are whole seconds: a plain number, or a number followed by `s`, `m`, `h`, or `d`. Fractions are truncated.
+
+An out-of-range value stops Fluent Bit from starting. During a [hot reload](../../hot-reload.md), the previous pipeline has already stopped when the value is checked, so the reload is aborted and Fluent Bit exits. The `--dry-run` option doesn't detect out-of-range values.
+
+`JWKS` keys are fetched on demand, so a misconfigured or oversized `JWKS` endpoint isn't detected at startup. Fluent Bit fetches keys when a request carries an RS256 token with a `kid` header and the cache is empty or older than `oauth2.jwks_refresh_interval`. Malformed tokens, tokens without `kid`, and tokens that use another algorithm are rejected without a fetch.
+
+The fetch is synchronous. While it runs, other requests to the same input that need validation wait. The `oauth2.jwks_response_timeout` clock starts after the request is sent, so DNS resolution, connection setup, and the TLS handshake aren't included.
+
+If a fetch fails, for example because the response exceeds `oauth2.jwks_buffer_max_size` or doesn't arrive within `oauth2.jwks_response_timeout`, Fluent Bit logs an error and rejects the request, even if previously cached keys could validate the token. Each following request that needs a fetch tries again and is rejected until a fetch succeeds. The [HTTP](../../../pipeline/inputs/http.md) input responds with `401`. The [OpenTelemetry](../../../pipeline/inputs/opentelemetry.md) input responds with `401`, or with gRPC status `16` (`UNAUTHENTICATED`) for gRPC requests.
 
 ### Example input configuration
 
