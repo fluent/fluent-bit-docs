@@ -15,7 +15,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | `fallback_path` | Static directory path used together with `fallback_file` when a `fallback` action is applied. | _none_ |
 | `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions. When `enable_strftime` is `true`, `strftime` placeholders are expanded using the UTC event timestamp. | _none_ |
 | `format` | The [format](#format) of the file content. | _none_ |
-| `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. Set to `0` for unlimited. | `1024` |
+| `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. When set explicitly, also limits tag-derived filenames. Set to `0` for unlimited. See [Destination limits](#destination-limits). | `1024` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
 | `on_limit_reached` | Action to take for a record whose destination would exceed `max_dynamic_files`. Accepted values: `error`, `drop`, `fallback`. | `error` |
 | `on_missing_field` | Action to take for a record whose record accessor field is missing, or resolves to an unsafe value. Accepted values: `error`, `drop`, `fallback`. | `error` |
@@ -30,9 +30,15 @@ The _File_ output plugin lets you write the data received through the input plug
 
 This plugin uses the following formats:
 
+{% hint style="info" %}
+In v5.2 or later, the `out_file`, CSV, and LTSV formats escape or quote more characters, as described in each section. If you parse these files, update your parser before upgrading.
+{% endhint %}
+
 ### `out_file`
 
 Output `time`, `tag`, and `json` records. There are no configuration parameters for `out_file`.
+
+In v5.2 or later, spaces, control characters, and the percent (`%`) character in the tag are written as `%` followed by two uppercase hexadecimal digits, so the tag is always one field without whitespace. For example, the tag `app logs` is written as `app%20logs`.
 
 ```text
 tag: [time, {"key1":"value1", "key2":"value2", "key3":"value3"}]
@@ -53,11 +59,17 @@ Output the records in CSV format. CSV mode supports additional configuration par
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `csv_column_names` | Add column names (keys) as the first line of the output file. | `false` |
-| `delimiter` | The character to separate each field. Accepted values: `\t` (or `tab`), ` ` (`space`), or `,` (`comma`). Other values are ignored and fall back to the default. | `,` |
+| `delimiter` | The character to separate each field. Accepted values: `\t` (or `tab`), `space`, or `comma`. Other values, including a literal space, comma, or tab character, are ignored and fall back to the default. | `,` |
 
 ```text
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
 ```
+
+The time field is written as seconds and nanoseconds, for example `1564462620.000254000`. Strings and binary values are enclosed in double quotes. In binary values, control characters and bytes `0x7F` and greater are written as `\x` followed by two lowercase hexadecimal digits. Numbers, booleans, and `nil` aren't quoted, and floating-point numbers are written with six decimal places. Line breaks inside strings aren't escaped, so a quoted field can span several lines.
+
+In v5.2 or later, each double quote inside a value is written as two double quotes, as in RFC 4180, and arrays, maps, and extension values are also enclosed in double quotes. Strings nested in arrays and maps appear with doubled quotes, for example `"[""a"", 1]"`. Extension values are written as `(ext: <type>)` followed by every data byte as `\x` and two lowercase hexadecimal digits.
+
+When `csv_column_names` is `true`, Fluent Bit writes a header line starting with `timestamp`, followed by the quoted keys of the first record, when the file is empty.
 
 ### LTSV
 
@@ -65,12 +77,14 @@ Output the records in LTSV format. LTSV mode supports additional configuration p
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `delimiter` | The character to separate each pair. | `\t` |
-| `label_delimiter` | The character to separate label and the value. | `:` |
+| `delimiter` | The character to separate each pair. Accepted values: `\t` (or `tab`), `space`, or `comma`. Other values are ignored and fall back to the default. | `\t` |
+| `label_delimiter` | The character to separate label and the value. Accepted values: `\t` (or `tab`), `space`, or `comma`. Other values are ignored and fall back to the default. | `:` |
 
 ```text
-field1[label_delimiter]value1[delimiter]field2[label_delimiter]value2\n
+"time"[label_delimiter]1564462620.000254[delimiter]"field1"[label_delimiter]"value1"[delimiter]"field2"[label_delimiter]"value2"\n
 ```
+
+Each line starts with a `time` label set to the event time in seconds with six decimal places. String labels and values are enclosed in double quotes, and a double quote inside a string isn't escaped. In v5.2 or later, control characters, the percent (`%`) character, and any character used as `delimiter` or `label_delimiter` in a label or value are written as `%` followed by two uppercase hexadecimal digits. For example, with the default delimiters, the value `a:b` is written as `"a%3Ab"`. Bytes `0x80` and greater in binary values are encoded the same way.
 
 ### Template
 
@@ -225,11 +239,17 @@ Two settings control what happens to a record whose destination Fluent Bit can't
 
 | Action | Behavior |
 | --- | --- |
-| `error` | Log an error and fail the flush, so the chunk is retried. |
+| `error` | Log an error and fail the flush. The chunk isn't retried. Records from the chunk that were already written stay in their files. |
 | `drop` | Log a warning and discard the record. |
-| `fallback` | Write the record to `fallback_path` and `fallback_file` instead. |
+| `fallback` | Write the record to `fallback_path` and `fallback_file` instead. Requires `fallback_file`; otherwise Fluent Bit fails to start. |
 
-The `max_dynamic_files` limit counts distinct destinations that this output instance has written to, which bounds the number of files a high-cardinality record field can create. Records that resolve to a destination already in use aren't affected by the limit.
+### Destination limits
+
+The `max_dynamic_files` limit counts distinct destinations for this output instance, which bounds the number of files a high-cardinality record field can create. Records that resolve to a destination already counted aren't affected by the limit.
+
+The count is shared by all workers of the output instance, and in v5.2 or later it's enforced consistently when several workers write at the same time. In v5.2 or later, a destination counts as soon as Fluent Bit first tries to write to it, even if opening the file then fails. Destinations aren't removed from the count while Fluent Bit runs. The count starts again only when Fluent Bit restarts or reloads its configuration.
+
+When `file` isn't set, Fluent Bit names each file after the record tag. If `path` is dynamic, each combination of resolved path and tag-derived filename already counts toward the limit. When `path` and `file` aren't dynamic, tag-derived filenames are limited only if you set `max_dynamic_files` explicitly, in v5.2 or later. Setting it explicitly to its default value of `1024` still enables this limit. Because every record in a chunk has the same tag, `on_limit_reached` then applies to the whole chunk.
 
 ### Dynamic destination example
 
