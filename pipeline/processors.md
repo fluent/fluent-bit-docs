@@ -15,6 +15,7 @@ Only [YAML configuration files](../administration/configuring-fluent-bit/yaml.md
 Fluent Bit offers the following processors:
 
 - [Content modifier](./processors/content-modifier.md): Manipulate the content, metadata, and attributes of logs and traces.
+- [Journald OpenTelemetry](./processors/journald-otel.md): Map `systemd` journal fields to the OpenTelemetry logs data model.
 - [Labels](./processors/labels.md): Add, update, or delete metric labels.
 - [Metrics selector](./processors/metrics-selector.md): Choose which metrics to keep or discard.
 - [OpenTelemetry envelope](./processors/opentelemetry-envelope.md): Transform logs into an OpenTelemetry-compatible format.
