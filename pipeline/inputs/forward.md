@@ -43,7 +43,7 @@ When `unix_path` is set, Fluent Bit checks the path before it creates the socket
 
 In v5.2 or later, when `unix_perm` is set, Fluent Bit creates the socket in a temporary directory named `.fb-` followed by six random characters, in the same directory as `unix_path`. It sets the socket permissions to `unix_perm`, renames the socket to `unix_path`, and removes the temporary directory. The socket never appears at `unix_path` with other permissions. If Fluent Bit stops during this step, the temporary directory can remain and is safe to delete. If Fluent Bit can't create the directory or set the permissions, startup fails with a `could not create staging directory` or `cannot set permission on` error.
 
-Fluent Bit reads `unix_perm` as an octal number and ignores everything from the first character that isn't an octal digit, without logging an error. For example, `rw-r--r--` results in permissions `0000`. Use an octal value such as `0660`.
+Fluent Bit reads `unix_perm` as an octal number and ignores everything from the first character that isn't an octal digit, without logging an error. For example, `rw-r--r--` results in permissions `0000`. A leading `+` or `-` sign is also accepted and the result is masked to `07777`, so `-1` results in `07777`, which lets every local user write to the socket. Use an unsigned octal value such as `0660`.
 
 ### TLS / SSL
 

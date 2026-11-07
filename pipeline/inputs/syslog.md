@@ -32,6 +32,7 @@ The plugin supports the following configuration parameters:
 - When using `udp` or `unix_udp`, the buffer size to receive messages is configurable only through the `buffer_chunk_size` option, which defaults to 32,768 bytes.
 - In v5.1.3 or later, when using `tcp` or `unix_tcp` with `newline` framing, empty lines are ignored and don't produce records.
 - `buffer_chunk_size` and `buffer_max_size` use decimal [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes), so `32KB` is 32,000 bytes.
+- In `tcp` and `unix_tcp` modes, each connection buffer starts at `buffer_chunk_size` and grows in steps of `buffer_chunk_size` only while it stays within `buffer_max_size`. The largest message a connection accepts is therefore limited by the largest multiple of `buffer_chunk_size` that doesn't exceed `buffer_max_size`, and is never smaller than `buffer_chunk_size`, even if `buffer_max_size` is smaller. To enforce `buffer_max_size` exactly, set it to a multiple of `buffer_chunk_size`.
 - In v5.2 or later, Fluent Bit fails to start if `buffer_chunk_size` or `buffer_max_size` is invalid or outside its valid range, and logs `buffer_chunk_size must be between 2 and 2147483647 bytes` or `buffer_max_size must be between 0 and 2147483647 bytes`.
 
 ### Unix socket files
@@ -40,11 +41,13 @@ In `unix_tcp` and `unix_udp` modes, Fluent Bit checks `path` before it creates t
 
 - In v5.2 or later, if `path` is longer than the operating system allows for a Unix socket path, which is 107 bytes on Linux and 103 bytes on macOS, startup fails with `configured unix socket path is too long`. Earlier versions silently truncated the path.
 - If a Unix socket already exists at `path`, Fluent Bit removes it and creates a new one, even if another process is still listening on it. If Fluent Bit can't check or remove the existing file, startup fails with `could not remove existing unix socket <path>. Aborting`.
-- If anything else exists at `path`, startup fails with `<path> exists and it is not a unix socket. Aborting`. In v5.2 or later, this includes any symbolic link, even one that points to a socket. Earlier versions followed symbolic links, so a link to a socket was replaced with a new socket. If `path` is a symbolic link, for example `/dev/log` on many systemd-based systems, point `path` at a regular location before you upgrade.
+- If anything else exists at `path`, startup fails with `<path> exists and it is not a unix socket. Aborting`. In v5.2 or later, this includes any symbolic link, even one that points to a socket. Earlier versions followed symbolic links, so a link to a socket was replaced with a new socket. If `path` is a symbolic link, for example `/dev/log` on many systemd-based systems, point `path` at a regular location before you upgrade. Applications that write to the old path don't follow the change, so either configure them to use the new socket or forward their messages to it, for example with [`rsyslog`](#rsyslog-to-fluent-bit-unix-socket-mode-over-udp).
 
 In v5.2 or later, Fluent Bit creates the socket in a temporary directory named `.fb-` followed by six random characters, in the same directory as `path`. It sets the socket permissions to `unix_perm`, renames the socket to `path`, and removes the temporary directory. The socket never appears at `path` with other permissions. If Fluent Bit stops during this step, the temporary directory can remain and is safe to delete. If Fluent Bit can't create the directory or set the permissions, startup fails with a `could not create staging directory` or `cannot set permission on` error.
 
-Fluent Bit reads `unix_perm` as an octal number and ignores everything from the first character that isn't an octal digit, without logging an error. For example, `rw-r--r--` results in permissions `0000`. Use an octal value such as `0660`. Clients need write permission on the socket to send messages, so the default `0644` only lets processes running as the Fluent Bit user send messages.
+Fluent Bit reads `unix_perm` as an octal number and ignores everything from the first character that isn't an octal digit, without logging an error. For example, `rw-r--r--` results in permissions `0000`. A leading `+` or `-` sign is also accepted and the result is masked to `07777`, so `-1` results in `07777`, which lets every local user write to the socket. Use an unsigned octal value such as `0660`.
+
+Clients need write permission on the socket to send messages. With the default `0644`, only the user that runs Fluent Bit and privileged processes, such as an `rsyslog` daemon running as `root`, can send messages. Grant more access only when a client needs it, preferably with a shared group and `0660`. A value such as `0666` lets any local user that can reach the socket's directory send messages, including forged ones.
 
 ## Get started
 
@@ -266,4 +269,4 @@ $OMUxSockSocket /tmp/fluent-bit.sock
 *.* :omuxsock:
 ```
 
-Make sure that `rsyslog` can write to the socket file by setting the `unix_perm` key. If `rsyslog` runs as a different user than Fluent Bit, use a value such as `0666`, or `0660` with a shared group.
+Make sure that `rsyslog` can write to the socket file. An `rsyslog` daemon running as `root` can write to the default `0644` socket. If `rsyslog` runs as a different, unprivileged user, give the socket a group that `rsyslog` belongs to and set `unix_perm` to `0660`. See [Unix socket files](#unix-socket-files).
