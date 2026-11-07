@@ -26,12 +26,24 @@ The plugin supports the following configuration parameters:
 | `tag_prefix` | Prefix incoming tag with the defined value. | _none_ |
 | `threaded` | Indicates whether to run this input in its own [thread](../../administration/multithreading.md#inputs). | `false` |
 | `unix_path` | Specify the path to Unix socket to receive a Forward message. If set, `listen` and `port` are ignored. | _none_ |
-| `unix_perm` | Set the permission of the Unix socket file. If `unix_path` isn't set, this parameter is ignored. | _none_ |
+| `unix_perm` | Set the permissions of the Unix socket file as an octal value. If not set, the permissions depend on the file mode creation mask of the Fluent Bit process. If `unix_path` isn't set, this parameter is ignored. See [Unix socket files](#unix-socket-files). | _none_ |
 | `workers` | The number of listener workers that accept and process incoming connections. Not supported with `unix_path`; a value greater than `1` while `unix_path` is set causes startup to fail. | `1` |
 
 ### Payload validation
 
 In v5.1.3 or later, the plugin validates `PackedForward` and `CompressedPackedForward` payloads before it ingests them. If an entry isn't a valid log event, the plugin logs the warning `invalid PackedForward entry` and rejects the payload.
+
+### Unix socket files
+
+When `unix_path` is set, Fluent Bit checks the path before it creates the socket:
+
+- In v5.2 or later, if `unix_path` is longer than the operating system allows for a Unix socket path, which is 107 bytes on Linux and 103 bytes on macOS, startup fails with `configured unix socket path is too long`. Earlier versions silently truncated the path.
+- If a Unix socket already exists at `unix_path`, Fluent Bit removes it and creates a new one, even if another process is still listening on it. If Fluent Bit can't check or remove the existing file, startup fails with `could not remove existing unix socket <path>. Aborting`.
+- If anything else exists at `unix_path`, startup fails with `<path> exists and it is not a unix socket. Aborting`. In v5.2 or later, this includes any symbolic link, even one that points to a socket. Earlier versions followed symbolic links, so a link to a socket was replaced with a new socket. If `unix_path` is a symbolic link, point `unix_path` at a regular location before you upgrade.
+
+In v5.2 or later, when `unix_perm` is set, Fluent Bit creates the socket in a temporary directory named `.fb-` followed by six random characters, in the same directory as `unix_path`. It sets the socket permissions to `unix_perm`, renames the socket to `unix_path`, and removes the temporary directory. The socket never appears at `unix_path` with other permissions. If Fluent Bit stops during this step, the temporary directory can remain and is safe to delete. If Fluent Bit can't create the directory or set the permissions, startup fails with a `could not create staging directory` or `cannot set permission on` error.
+
+Fluent Bit reads `unix_perm` as an octal number and ignores everything from the first character that isn't an octal digit, without logging an error. For example, `rw-r--r--` results in permissions `0000`. Use an octal value such as `0660`.
 
 ### TLS / SSL
 
