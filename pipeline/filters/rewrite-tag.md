@@ -29,7 +29,7 @@ The `rewrite_tag` filter supports the following configuration parameters:
 
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| `batch_size` | Experimental maximum number of records in an input processor callback eligible for batching by destination tag. Valid values are `0` through `4096`; `0` disables batching. Only applies when `rewrite_tag` is an input processor. See [Input processor batching](#input-processor-batching). | `0` |
+| `batch_size` | Experimental maximum number of records in an input processor callback eligible for batching by destination tag. Valid values are `0` through `4096`; `0` disables batching. Only applies when `rewrite_tag` is an input processor. Requires Fluent Bit v5.2 or later; earlier versions reject this property and fail to start. See [Input processor batching](#input-processor-batching). | `0` |
 | `emitter_mem_buf_limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The pipeline pauses once the buffer exceeds this limit and remains paused until the output drains the buffer below the limit. | `10M` |
 | `emitter_name` | Optional name for the internal emitter plugin that handles records emitted under a new tag. This emitter exposes metrics like other pipeline components. | _none_ |
 | `emitter_storage.type` | Buffering mechanism for the internal emitter. Supported values are `memory` and `filesystem`. If the destination might face backpressure due to latency or a slow network, use `filesystem`. | `memory` |
@@ -176,19 +176,19 @@ pipeline:
 The original tag `test_tag` will be rewritten as `from.test_tag.new.fluent.bit.out`:
 
 ```shell
-$ fluent-bit -c example.conf
+$ fluent-bit -c fluent-bit.yaml
 
 ...
-[0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
+[0] from.test_tag.new.fluent.bit.out: [[1580436933.000050569, {}], {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
 
 ## Input processor batching
 
-You can use `rewrite_tag` as an [input processor](../processors/filters.md) in YAML configuration. Output processor placement is rejected. Processor placement doesn't use a `match` property: the rules apply to records from the input to which the processor is attached.
+You can use `rewrite_tag` as an [input processor](../processors/filters.md) in YAML configuration. In Fluent Bit v5.2 and later, output processor placement is rejected. Processor placement doesn't use a `match` property: the rules apply to records from the input to which the processor is attached.
 
 Rewritten records continue at the next processor stage of the same input with the new tag. They don't repeat earlier processor stages. They then follow the input's normal buffering and routing path. Retained originals continue with their original tag.
 
-The experimental `batch_size` option groups rewritten records by destination tag before passing them to downstream processors. This can reduce processing overhead when many records share a destination tag. Workloads with many distinct destination tags can be slower, so test with representative data before enabling batching. The default is `0`, which retains per-record processing.
+The experimental `batch_size` option, available in Fluent Bit v5.2 and later, groups rewritten records by destination tag before passing them to downstream processors. This can reduce processing overhead when many records share a destination tag. Workloads with many distinct destination tags can be slower, so test with representative data before enabling batching. The default is `0`, which retains per-record processing.
 
 Batching applies to one input callback at a time. It doesn't wait for more records, accumulate records across callbacks, or split a large callback into batches of `batch_size` records. A callback is eligible when it contains at least two records, no more than `batch_size` records, and no more than 256 KiB of serialized payload. Group context expansion must also fit within the 256 KiB scratch payload limit. Ineligible callbacks or failures while preparing a batch fall back to per-record processing.
 
@@ -247,24 +247,24 @@ The `rewrite_tag` plugin exposes an additional metric called `emit_records` that
 
 ### Understand the metrics
 
-Using the previously provided configuration, when you query the metrics exposed in the HTTP interface:
+The following example uses the filter configuration from [Configuration example](#configuration-example), not the batching example. To query its metrics, enable the HTTP server by adding `http_server: on` to its `service` section, or `HTTP_Server On` in the classic configuration. Then query the metrics exposed in the HTTP interface:
 
 ```shell
-curl  http://127.0.0.1:2020/api/v1/metrics/ | jq
+curl http://127.0.0.1:2020/api/v1/metrics | jq
 ```
 
-You will see metrics output similar to the following:
+You will see metrics output similar to the following, trimmed to the keys discussed in this section:
 
 ```text
 {
   "input": {
     "dummy.0": {
       "records": 2,
-      "bytes": 80
+      "bytes": 84
     },
-    "emitter_for_rewrite_tag.0": {
-      "records": 1,
-      "bytes": 40
+    "re_emitted": {
+      "records": 2,
+      "bytes": 84
     }
   },
   "filter": {
@@ -276,8 +276,8 @@ You will see metrics output similar to the following:
   },
   "output": {
     "stdout.0": {
-      "proc_records": 1,
-      "proc_bytes": 40,
+      "proc_records": 2,
+      "proc_bytes": 84,
       "errors": 0,
       "retries": 0,
       "retries_failed": 0
@@ -288,7 +288,7 @@ You will see metrics output similar to the following:
 
 The _dummy_ input generated two records, while the filter dropped two from the chunks and emitted two new ones under a different tag.
 
-The records generated are handled by the internal emitter, so the new records are summarized in the Emitter metrics. Take a look at the entry called `emitter_for_rewrite_tag.0`.
+The records generated are handled by the internal emitter, so the new records are summarized in the Emitter metrics. Because the example sets `emitter_name: re_emitted`, the emitter entry is called `re_emitted`. Without `emitter_name`, it's called `emitter_for_rewrite_tag.0`.
 
 ### Emitter
 
