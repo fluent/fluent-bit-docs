@@ -90,6 +90,8 @@ If a regular expression has matched the value of the defined key in the rule, yo
 
 A tag can take any string value from the matching record, the original tag itself, environment variables, or general placeholders.
 
+In v5.2 or later, if the new tag resolves to an empty string, for example because it only references a record key that's missing, Fluent Bit doesn't emit a new record. It keeps the original record under its original tag, regardless of the [`KEEP`](#keep) value. Earlier versions emitted the record under a fallback tag, such as the emitter name, and discarded the original record when `KEEP` was `false`. A tag that resolves only partly isn't empty. For example, `from.$missing` is emitted as `from.`.
+
 Consider the following incoming data on the rule:
 
 - Tag = aa.bb.cc
@@ -238,6 +240,8 @@ The _Emitter_ is an internal Fluent Bit plugin that allows other components of t
 
 Change the Emitter name in the metrics by adding the `emitter_name` configuration property described previously.
 
+In v5.2 or later, records buffered in the emitter are flushed when Fluent Bit shuts down. Earlier versions could lose them.
+
 #### Avoid emitter cycles
 
 Make sure the filter's `match` pattern can't match the new tags the filter itself produces. When it does, the emitted records return to the same filter, which rewrites and emits them again in an endless cycle.
@@ -249,3 +253,17 @@ Fluent Bit detects this case and rejects the emission rather than allowing the c
 ```
 
 The record that triggered the cycle is kept in the pipeline under its original tag, regardless of the [`KEEP`](#keep) value set on the matching rule. Only the repeated emission is dropped. To resolve the error, narrow the filter's `match` pattern or change the rule so that rewritten tags no longer match it.
+
+## Use as a processor
+
+In v5.2 or later, you can use `rewrite_tag` as a [processor](../processors/filters.md) only on inputs. Fluent Bit fails to start if `rewrite_tag` is configured as a processor on an output, and logs `rewrite_tag only supports input processors`. Earlier versions accepted this configuration, so move any `rewrite_tag` output processors to an input or to the `filters` section before you upgrade.
+
+As an input processor, `rewrite_tag` doesn't send a matching record back to the start of the pipeline. Fluent Bit appends the record with its new tag to the same input, and the record continues through the processors that come after `rewrite_tag`. Earlier processors, including `rewrite_tag` itself, don't run on it again. The emitter is used only if this append fails, so emitter metrics don't normally include these records.
+
+Fluent Bit still creates an emitter for each `rewrite_tag` processor. When `emitter_name` isn't set, the emitter is named `emitter_for_` followed by the filter instance name, for example `emitter_for_rewrite_tag.0`. Filters used as processors are numbered separately for each input, so two inputs that each use a `rewrite_tag` processor both produce `emitter_for_rewrite_tag.0`. Earlier versions failed to start in this case. In v5.2 or later, if the name already exists, the emitter is named `emitter_for_<input>_<filter>_<stage>` instead, for example `emitter_for_tail.1_rewrite_tag.0_0`:
+
+- `<input>` is the internal name of the input, such as `tail.1`, even if the input has an alias.
+- `<filter>` is the alias or instance name of the filter.
+- `<stage>` is the position of the processor in the input's processor chain, starting at `0`.
+
+If you set `emitter_name` to a name that another input already uses, Fluent Bit fails to start and logs `emitter_name '<name>' already exists`.
