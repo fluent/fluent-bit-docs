@@ -53,8 +53,10 @@ Available in Fluent Bit version 5.2 and greater.
 Use the `-G` or `--generate-config` flag to convert a pipeline defined with command line options into a [YAML configuration file](configuring-fluent-bit/yaml.md). Fluent Bit writes the generated YAML to standard output and exits without starting the pipeline:
 
 ```shell
-fluent-bit -f 1 -i cpu -t cpu.local -o stdout -m '*' --generate-config > fluent-bit.yaml
+fluent-bit -f 1 -i cpu -t cpu.local -o stdout -m '*' --generate-config > generated.yaml
 ```
+
+The shell redirection replaces `generated.yaml` if it already exists, so choose a filename that doesn't overwrite an existing configuration.
 
 The generated file contains the equivalent `service` settings and `pipeline` sections:
 
@@ -70,7 +72,7 @@ pipeline:
       "match": "*"
 ```
 
-The generated configuration can also include `customs`, `stream_processor` tasks, and external `plugins` when you set them on the command line. If the command line defines nothing to convert, the output is `{}`. To check the result, run `fluent-bit --dry-run -c fluent-bit.yaml`.
+The generated configuration can also include `customs`, `stream_processor` tasks, and external `plugins` when you set them on the command line. If the command line defines nothing to convert, the output is `{}`. To check the result, run `fluent-bit --dry-run -c generated.yaml`.
 
 Fluent Bit exits with an error, and doesn't generate a configuration, when `--generate-config` is combined with any of the following:
 
@@ -78,6 +80,8 @@ Fluent Bit exits with an error, and doesn't generate a configuration, when `--ge
 - `-w` or `--workdir`.
 - Startup trace options: `--trace`, `--trace-input`, `--trace-output`, or `--trace-output-property`.
 - More than one parsers file set with `-R` or `--parser`.
+
+Fluent Bit builds compiled with the `FLB_STATIC_CONF` option use a built-in configuration and don't process command line options. These builds ignore `-G` and `--generate-config`, don't generate YAML, and start the built-in pipeline instead. If you redirect standard output to a file, the file receives anything the built-in pipeline writes to standard output, such as records from a `stdout` output, instead of a configuration.
 
 ### Require FIPS mode with `--enable-fips`
 
