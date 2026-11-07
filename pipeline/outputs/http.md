@@ -60,6 +60,12 @@ The _HTTP_ output plugin lets you flush your records into an HTTP endpoint. It i
 
 The HTTP output plugin supports TLS/SSL. For more details about the properties available and general configuration, see [TLS/SSL](../../administration/transport-security.md).
 
+### Throttle signals
+
+In v5.2 or later, the HTTP output reports a throttle signal when the server responds with HTTP `429`, or with HTTP `503` and a valid `Retry-After` value. If [throttling](../../administration/scheduling-and-retries.md#throttling) is enabled for the output, Fluent Bit pauses the output for a cooldown and honors the `Retry-After` delay. Otherwise, Fluent Bit retries these responses like other failures. A `503` response without a valid `Retry-After` value is always handled as a normal retry.
+
+When `body_key` and `headers_key` are set, Fluent Bit sends each record in a separate request. It stops at the first throttle response, and later sends the whole chunk again, including records that the server already accepted, after the cooldown when `throttle` is enabled or as a normal retry otherwise. The chunk isn't sent again if `retry_limit` is `no_retries`, or, when `throttle` is off, after the normal retries run out. Fluent Bit then discards it, or moves it to the [Dead Letter Queue](../../administration/dead-letter-queue.md) if that's enabled.
+
 ## Get started
 
 To insert records into an HTTP server, you can run the plugin from the command line or through the configuration file.
