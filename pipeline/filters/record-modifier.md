@@ -18,6 +18,14 @@ The plugin supports the following configuration parameters:
 | `uuid_key` | If set, the plugin appends UUID to each record. The value assigned becomes the key in the map. |
 | `whitelist_key` | An alias of `allowlist_key` for backwards compatibility. |
 
+## Records left without fields
+
+If `remove_key` or `allowlist_key` removes every field from a record, and the filter doesn't add any field to that record with `record` or `uuid_key`, Fluent Bit drops the record. For example, with `allowlist_key`, a record that contains none of the listed keys is dropped. Fluent Bit counts dropped records in the filter's `fluentbit_filter_drop_records_total` metric. See [Monitoring](../../administration/monitoring.md).
+
+If records are missing from the output, check that your `allowlist_key` values match the keys in your records, and watch `fluentbit_filter_drop_records_total`.
+
+To keep records that would otherwise be left without fields, add at least one field with `record`. A `record` entry must contain exactly one key and one value. If the key or value is empty, for example because an environment variable in it resolves to an empty string, Fluent Bit fails to start. If the value contains spaces, enclose it in double quotes. For an unquoted value that contains spaces, Fluent Bit logs `invalid record parameters, expects 'KEY VALUE'` and skips the entry, so it doesn't add a field.
+
 ## Get started
 
 To start filtering records, run the filter from the command line or through a configuration file.
