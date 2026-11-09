@@ -185,7 +185,37 @@ metric payload partially succeeded (2/5 batches); skipping retry to avoid resend
 
 Fluent Bit skips the retry because a retry sends the whole payload again, which would duplicate the data points the receiver already accepted. The data points in the remaining requests are dropped. If a request fails before any request in the payload succeeds, Fluent Bit retries the payload as usual.
 
+In v5.2 or later, a [throttle signal](#retries-and-throttling) is an exception. If a later request is throttled, Fluent Bit doesn't drop the remaining data points. It sends the whole payload again, after the cooldown when `throttle` is enabled or as a normal retry otherwise, so the receiver gets the already accepted data points again. The payload isn't sent again if `retry_limit` is `no_retries`, or, when `throttle` is off, after the normal retries run out. Fluent Bit then discards it, or moves it to the [Dead Letter Queue](../../administration/dead-letter-queue.md) if that's enabled.
+
 Choose a value that your receiver accepts without needing frequent splits. A value that's too low increases the number of requests and the chance of a partial send.
+
+## Retries and throttling
+
+The OpenTelemetry output decides whether to retry a failed export request from the response status, following the [OTLP specification](https://opentelemetry.io/docs/specs/otlp/#failures).
+
+For OTLP/HTTP:
+
+- HTTP `429` is a throttle signal.
+- HTTP `503` with a valid `Retry-After` value is a throttle signal.
+- HTTP `502`, `504`, and `503` without a valid `Retry-After` value are retryable.
+- With OAuth 2.0 enabled, HTTP `401` discards the cached token and is retryable with a new token.
+- Other error statuses aren't retried.
+
+For OTLP/gRPC:
+
+- `UNAVAILABLE` or `RESOURCE_EXHAUSTED` with a valid `google.rpc.RetryInfo` delay in the `grpc-status-details-bin` trailer is a throttle signal.
+- `CANCELLED`, `DEADLINE_EXCEEDED`, `ABORTED`, `OUT_OF_RANGE`, `DATA_LOSS`, and `UNAVAILABLE` without a valid delay are retryable.
+- `RESOURCE_EXHAUSTED` without a valid delay isn't retried.
+- With OAuth 2.0 enabled, `UNAUTHENTICATED` discards the cached token and is retryable with a new token.
+- Other error statuses aren't retried.
+
+Retryable means that Fluent Bit asks the scheduler to retry the chunk, so retries depend on `retry_limit`. With `retry_limit` set to `no_retries`, or after the retries run out, Fluent Bit doesn't retry the chunk. It discards the chunk, or moves it to the [Dead Letter Queue](../../administration/dead-letter-queue.md) if that's enabled. For example, with `no_retries`, an HTTP `401` or gRPC `UNAUTHENTICATED` response still discards the cached token, but Fluent Bit doesn't retry the failed chunk. A metrics payload that `metrics_max_datapoints` split into several requests isn't retried after an earlier request succeeded, as described in [Metrics batching](#metrics-batching), except for throttle signals.
+
+If [throttling](../../administration/scheduling-and-retries.md#throttling) is enabled for the output, a throttle signal pauses the output for a cooldown, and Fluent Bit honors the delay requested by the receiver. Otherwise, throttle signals are retried like other failures.
+
+{% hint style="warning" %}
+In v5.2 or later, the gRPC statuses that are retried changed to follow the OTLP specification. Earlier versions also retried `RESOURCE_EXHAUSTED` without a delay and `INTERNAL`, which are now dropped, and didn't retry `OUT_OF_RANGE` or `DATA_LOSS`. If your receiver returns `RESOURCE_EXHAUSTED` without `google.rpc.RetryInfo` when it's overloaded, the affected data is no longer retried.
+{% endhint %}
 
 ## Get started
 
