@@ -8,6 +8,35 @@ Release notes will be prepared in advance of a Git tag for a release. An officia
 
 The tag drives the binary release process. Release binaries (containers and packages) will appear after a tag and its associated release note. This lets users to expect the new release binary to appear and allow/deny/update it as appropriate in their infrastructure.
 
+## Fluent Bit v5.2
+
+Fluent Bit `v5.2` is the upcoming release developed on `master`. Review [What's new in Fluent Bit v5.2](whats-new-in-fluent-bit-v5.md#fluent-bit-v52) before testing an upgrade from `5.1` or an earlier series.
+
+### Native log processing
+
+Version `5.2` changes internal log decoding, processor execution, and chunk allocation. Before deploying an upgrade, test representative log payloads and processor chains with your buffering and backpressure settings. Check record contents, routing, and delivery under load.
+
+### Opt in to Fluent Typed Scripting
+
+The new `fts` processor is configured through the YAML `processors` section. Existing Lua filters continue to use the `lua` filter plugin. To adopt Fluent Typed Scripting (FTS), write policies against its typed API and configure an `fts` processor for each signal you want to process. See the [FTS processor guide](https://github.com/fluent/fluent-bit/blob/master/plugins/processor_fts/README.md) for its callback contract and resource limits.
+
+### Stricter validation and security fixes
+
+Version `5.2` tightens several checks that can change the behavior of existing configurations. Review the following changes before you upgrade:
+
+- `https` URLs with an explicit port, such as `https://example.com:8443`, now always use TLS. Earlier versions connected to some of these URLs without TLS, including the [Amazon S3](../pipeline/outputs/s3.md) `authorization_endpoint_url` and the [Azure Blob](../pipeline/outputs/azure_blob.md) `configuration_endpoint_url`. If you set the [Stackdriver](../pipeline/outputs/stackdriver.md) or [Google Cloud Storage](../pipeline/outputs/gcs.md) `metadata_server` to an `https` address, it now fails with `TLS context required for URL`. Use the default `http` address instead.
+- The [NATS](../pipeline/outputs/nats.md) output rejects tags that aren't valid NATS subjects, such as tags that contain spaces, `*`, or `>`, and drops those chunks. Rename the tags, or set `invalid_subject_action` to `encode`, which publishes those tags, and tags that already start with `_flb_encoded.`, to `_flb_encoded.` subjects that subscribers and permissions must then cover.
+- The [File](../pipeline/outputs/file.md) output escapes more characters in the `out_file`, CSV, and LTSV formats. Update any tools that parse these files.
+- The [Forward](../pipeline/inputs/forward.md) and [Syslog](../pipeline/inputs/syslog.md) inputs refuse to start when the Unix socket path is a symbolic link, such as `/dev/log` on many systemd-based systems, or is too long. The Syslog input also fails to start when `buffer_chunk_size` or `buffer_max_size` is out of range.
+- The [Rewrite tag](../pipeline/filters/rewrite-tag.md) filter can no longer be used as an output processor, and Fluent Bit fails to start with that configuration.
+- HTTP-based inputs close the connection, without a response, for HTTP/1 requests whose request line, headers, and closing blank line exceed `32KiB`. If clients send larger headers, raise `http_server.http1_max_header_size`. See [Pipeline](../administration/configuring-fluent-bit/yaml/pipeline-section.md).
+- Inputs that validate `OAuth 2.0` tokens accept `JWKS` responses up to `1M`, including headers, which raises the earlier limit of 4,096 bytes, and apply a new `30s` time limit to the `JWKS` response. Adjust `oauth2.jwks_buffer_max_size` or `oauth2.jwks_response_timeout` if needed.
+- The [OpenTelemetry](../pipeline/outputs/opentelemetry.md) output, when it uses HTTP/2 or gRPC, drops chunks whose responses exceed the new `http_client.*` size and header limits. Responses that exceed `http_client.response_timeout` are retried. See [Service](../administration/configuring-fluent-bit/yaml/service-section.md).
+- `AWS_CONTAINER_CREDENTIALS_FULL_URI` now requires `http` hosts to be IP addresses in the allowed loopback and link-local ranges, or the exact ECS and EKS Pod Identity addresses, or the `Greengrass` endpoint. Host names that only started with or contained an allowed address, such as `127.example.com`, are rejected. If it's rejected, Fluent Bit can fall back to the EC2 instance role. See [AWS credentials](../administration/aws-credentials.md).
+- The [Amazon S3](../pipeline/outputs/s3.md) authorization endpoint and the [Azure Blob](../pipeline/outputs/azure_blob.md) configuration endpoint now verify TLS certificates using the output's `tls.verify` and certificate authority settings. Earlier versions didn't verify them. A configuration endpoint that fails verification stops Fluent Bit from starting.
+- Regular expression searches that exceed a fixed work limit fail. Filters, routing, and multiline parsing treat a failed search as no match, while some include and exclude lists in metrics inputs treat it as a match. See [Regular expression format](../pipeline/parsers/regular-expression.md).
+- The [Prometheus text file](../pipeline/inputs/prometheus-textfile.md) input sends one merged payload for each scrape and adds a `fluentbit_textfile_scrape_error` metric.
+
 ## Fluent Bit v5.1
 
 ### Debian and Ubuntu package upgrades restart the service

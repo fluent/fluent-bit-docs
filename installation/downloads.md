@@ -5,6 +5,8 @@
 
 Fluent Bit is compatible with most x86-based, x86_64-based, arm32v7-based, and arm64v8-based systems.
 
+This manual covers the upcoming Fluent Bit `5.2` release. Until `5.2.0` is released, the package and container download pages list published releases from earlier series. To try `5.2` before its release, [build the development source code](downloads/source.md#development).
+
 ## Build from source code
 
 You can [build and install Fluent Bit from its source code](../installation/downloads/source.md). There are also platform-specific guides for building Fluent Bit from source on [macOS](../installation/downloads/macos.md#compile-from-source) and [Windows](../installation/downloads/windows.md#compile-from-source).
