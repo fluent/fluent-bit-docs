@@ -31,7 +31,7 @@ Both input and output plugins that perform Network I/O can optionally enable TLS
 | `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | `on` |
 | `tls.verify` | Force certificate validation. | `on` |
 | `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
-| `tls.verify_hostname` | Force TLS verification of host names. | `off` |
+| `tls.verify_hostname` | Force TLS verification of host names. In v5.2 or later, this also applies to additional connections that some plugins open. See [Hostname verification](#hostname-verification). | `off` |
 | `tls.verify_client_cert` | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. In v5.1.3 or later, enabling this option also forces certificate validation for the connection, even when `tls.verify` is `off`. Fluent Bit logs a warning when you combine the two settings that way. | `off` |
 
 {% hint style="info" %}
@@ -97,6 +97,21 @@ The following input plugins can take advantage of the TLS feature:
 In addition, other plugins implement a subset of TLS support, with restricted configuration:
 
 - [Kubernetes Filter](../pipeline/filters/kubernetes.md)
+
+## Hostname verification
+
+In v5.2 or later, `tls.verify_hostname` also applies to the additional TLS connections that some plugins open alongside their main connection:
+
+- OAuth 2.0 token requests in the [Azure Data Explorer](../pipeline/outputs/azure_kusto.md), [Azure Logs Ingestion](../pipeline/outputs/azure_logs_ingestion.md), [BigQuery](../pipeline/outputs/bigquery.md), [Chronicle](../pipeline/outputs/chronicle.md), [Google Cloud Storage](../pipeline/outputs/gcs.md), [HTTP](../pipeline/outputs/http.md), [OpenTelemetry](../pipeline/outputs/opentelemetry.md), and [Stackdriver](../pipeline/outputs/stackdriver.md) outputs.
+- Requests to AWS Security Token Service (STS) to obtain credentials, in the [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md), [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md), [Amazon Kinesis Data Streams](../pipeline/outputs/kinesis.md), [Amazon S3](../pipeline/outputs/s3.md), [BigQuery](../pipeline/outputs/bigquery.md), [Elasticsearch](../pipeline/outputs/elasticsearch.md), [HTTP](../pipeline/outputs/http.md), [OpenSearch](../pipeline/outputs/opensearch.md), [OpenTelemetry](../pipeline/outputs/opentelemetry.md), and [Prometheus Remote Write](../pipeline/outputs/prometheus-remote-write.md) outputs.
+- Google Security Token Service and IAM requests in the [BigQuery](../pipeline/outputs/bigquery.md) output.
+- The pod association connection in the [Kubernetes](../pipeline/filters/kubernetes.md) filter, when `aws_use_pod_association` is enabled.
+
+Earlier versions didn't verify hostnames on these connections. The [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md), [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md), [Amazon Kinesis Data Streams](../pipeline/outputs/kinesis.md), and [Amazon S3](../pipeline/outputs/s3.md) outputs also ignored `tls.verify_hostname` on their main connection, and the [Kubernetes Events](../pipeline/inputs/kubernetes-events.md) input ignored it entirely.
+
+Hostname verification only runs when certificate validation is also on. `tls.verify_hostname` is still `off` by default. If you set it to `on`, connections that succeeded before an upgrade to v5.2 can fail if an endpoint's certificate doesn't match its hostname. Check these endpoints before you upgrade.
+
+OAuth 2.0 token requests to HTTPS endpoints always validate the server certificate against the system's trusted certificate authorities. They don't use the output's `tls.verify`, `tls.ca_file`, or `tls.ca_path` settings.
 
 ## Example: enable TLS on HTTP input
 
