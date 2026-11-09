@@ -31,6 +31,7 @@ Kubernetes exports events through the API server. This input plugin lets you ret
 | `kube_watch_timeout` | Maximum duration of a Kubernetes watch request, and the read idle timeout applied to the watch connection. Set to `0` to disable both timeouts. Available in Fluent Bit 5.1 and later. | `10m` |
 | `tls.debug` | Set TLS debug level: `0` (no debug), `1` (error), `2` (state change), `3` (info), and `4` (verbose). | `0` |
 | `tls.verify` | Enable or disable verification of TLS peer certificate. | `true` |
+| `tls.verify_hostname` | Enable or disable hostname verification of the API server certificate. Requires `tls.verify`. Versions earlier than v5.2 ignored this setting. | `false` |
 | `tls.vhost` | Set optional TLS virtual host. | _none_ |
 
 In Fluent Bit 3.1 or later, this plugin uses a Kubernetes watch stream instead of polling, and the `interval_sec` and `interval_nsec` parameters set how often the watch stream reconnects. In versions earlier than 3.1, the plugin polls the API server, and these parameters set the polling interval.

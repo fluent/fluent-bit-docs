@@ -51,7 +51,7 @@ These libraries are developed and maintained by the Fluent Bit team:
 |---------|---------|---------|
 | [`miniz`](https://github.com/richgel999/miniz) | Single-file deflate/inflate, zlib-subset implementation. Provides gzip compression. | Public Domain |
 | [`Snappy`](https://github.com/google/snappy) | Fast compression/decompression library. Prioritizes speed over compression ratio. | BSD |
-| [`zstd`](https://github.com/facebook/zstd) | Zstandard compression providing high compression ratios at fast speeds. | BSD |
+| [`zstd`](https://github.com/meta/zstd) | Zstandard compression providing high compression ratios at fast speeds. | BSD |
 
 ## Scripting and WebAssembly
 

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit documentation](README.md)
+* [Fluent Bit 5.2 documentation](README.md)
 
 ## About
 
@@ -151,6 +151,7 @@
     * [Fluent Typed Scripting (FTS) and the Lua filter](pipeline/processors/fluent-typed-scripting/lua-filter.md)
     * [Native recipe blocks](pipeline/processors/fluent-typed-scripting/native-recipes.md)
     * [Recipes](pipeline/processors/fluent-typed-scripting/recipes.md)
+  * [Journald OpenTelemetry](pipeline/processors/journald-otel.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry envelope](pipeline/processors/opentelemetry-envelope.md)

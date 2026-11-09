@@ -113,6 +113,7 @@ inotify
 Keepalive
 Istio
 jemalloc
+journald
 keepalive
 keyless
 Kinesis

@@ -143,12 +143,16 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 
 `FLB_PROTOBUF_ENCODER` is available in Fluent Bit version 5.1.3 and greater. Enabling it requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. If `libprotoc` is missing, CMake stops with `FLB_PROTOBUF_ENCODER requires libprotoc development libraries`. This option also adds a C++ source file to the Kafka output plugin and requires C++11, so the build needs a C++ compiler.
 
+The [Blob](../../../pipeline/inputs/blob.md) input, [Azure Blob](../../../pipeline/outputs/azure_blob.md) and [Amazon S3](../../../pipeline/outputs/s3.md) outputs, and the [CheckList](../../../pipeline/filters/checklist.md) filter require `FLB_SQLDB`. In Fluent Bit version 5.2 and greater, when you set `FLB_SQLDB` to `Off`, CMake disables these plugins and prints `Disabling <OPTION>: SQL database support is disabled` for each plugin it disables. Plugins that are already off, such as `FLB_OUT_S3` when you also set it to `Off`, don't produce the message.
+
 ### Development options
 
 | Option                    | Description                  | Default |
 |:--------------------------|:-----------------------------|:--------|
 | `FLB_BACKTRACE`           | Enable stack trace support   | `Yes`   |
 | `FLB_DEBUG`               | Build with debug mode (`-g`) | `No`    |
+| `FLB_SANITIZE_MEMORY`     | Enable MemorySanitizer       | `No`    |
+| `FLB_SANITIZE_THREAD`     | Enable ThreadSanitizer       | `No`    |
 | `FLB_SMALL`               | Optimize for small size      | `No`    |
 | `FLB_TESTS_INTERNAL`      | Enable internal tests        | `No`    |
 | `FLB_TESTS_INTERNAL_FUZZ` | Enable internal fuzz tests   | `No`    |
@@ -156,6 +160,8 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_TESTS_RUNTIME`       | Enable runtime tests         | `No`    |
 | `FLB_TRACE`               | Enable trace mode            | `No`    |
 | `FLB_VALGRIND`            | Enable Valgrind support      | `No`    |
+
+`FLB_SANITIZE_MEMORY` and `FLB_SANITIZE_THREAD` are available in Fluent Bit version 5.2 and greater. They're aliases for the `SANITIZE_MEMORY` and `SANITIZE_THREAD` options, which remain supported. MemorySanitizer requires a compiler with MemorySanitizer support on 64-bit Linux. ThreadSanitizer requires a compiler with ThreadSanitizer support on 64-bit Linux or macOS. If the compiler doesn't support the requested sanitizer, CMake stops with an error instead of building without the sanitizer. The two sanitizers can't be enabled together in one CMake build: CMake stops with `ThreadSanitizer is not compatible with MemorySanitizer.` To use both, configure a separate build for each sanitizer.
 
 ### Optimization options
 
@@ -233,6 +239,7 @@ The following table describes the processors available:
 |:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
 | [`FLB_PROCESSOR_CONTENT_MODIFIER`](../../../pipeline/processors/content-modifier.md)             | Enable content modifier processor           | `On`    |
 | [`FLB_PROCESSOR_FTS`](../../../pipeline/processors/fluent-typed-scripting.md)                    | Enable Fluent Typed Scripting processor     | `On`    |
+| [`FLB_PROCESSOR_JOURNALD_OTEL`](../../../pipeline/processors/journald-otel.md)                   | Enable journald OpenTelemetry processor     | `On`    |
 | [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                                 | Enable metrics label manipulation processor | `On`    |
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |

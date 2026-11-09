@@ -32,6 +32,11 @@ The `Service` section defines global properties of the service. The following ke
 | `flush.adaptive.up_steps` | Consecutive samples at a higher pressure level required before the flush interval is shortened. | `2` |
 | `flush.adaptive.down_steps` | Consecutive samples at a lower pressure level required before the flush interval is lengthened. | `3` |
 | `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
+| `http_client.max_header_count` | Maximum number of headers accepted in an HTTP response. Must be a positive integer. Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `100` |
+| `http_client.max_header_size` | Maximum size of the HTTP response status line and headers. Must be at least `32` bytes. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `65536` |
+| `http_client.max_response_size` | Maximum size of an HTTP response body. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `4194304` |
+| `http_client.max_wire_size` | Maximum total number of bytes received from the network for one HTTP response, including framing. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `67108864` |
+| `http_client.response_timeout` | Maximum time in seconds to send an HTTP request and receive the complete response. Must be a positive integer without a unit suffix. Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `30` |
 | `http_listen`     | Set listening interface for HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port`       | Set TCP Port for the HTTP Server. | `2020` |
 | `http_server`     | Enable the built-in HTTP Server. | `Off` |
@@ -159,15 +164,17 @@ To avoid complicated long configuration files is better to split specific parts 
 @INCLUDE somefile.conf
 ```
 
-The configuration reader will try to open the path `somefile.conf`. If not found, the reader assumes the file is on a relative path based on the path of the base configuration file:
+In v5.2 or later, the configuration reader looks for a relative path in the directory of the base configuration file first. If the file isn't found there, the reader tries the path relative to the working directory of the Fluent Bit process. This also applies to nested includes, which are resolved against the directory of the base configuration file, not the directory of the file that includes them:
 
 - Main configuration path: `/tmp/main.conf`
 - Included file: `somefile.conf`
-- Fluent Bit will try to open `somefile.conf`, if it fails it will try `/tmp/somefile.conf`.
+- Fluent Bit tries to open `/tmp/somefile.conf`. If that file doesn't exist, it tries `somefile.conf`.
+
+Earlier versions tried `somefile.conf` in the working directory first.
 
 The `@INCLUDE` command only works at top-left level of the configuration line, and can't be used inside sections.
 
-Wildcard character (`*`) supports including multiple files. For example:
+Wildcard character (`*`) supports including multiple files. A relative wildcard path is matched in the directory of the base configuration file, with no fallback to the working directory. On Windows, versions earlier than v5.2 matched relative wildcard paths against the working directory. For example:
 
 ```text
 @INCLUDE input_*.conf

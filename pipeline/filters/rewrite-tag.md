@@ -12,7 +12,7 @@ Tags make [routing](../../pipeline/router.md) possible. Tags are set in the conf
 
 The _Rewrite Tag_ filter lets you re-emit a record under a new tag. After a record is re-emitted, the original record can be preserved or discarded.
 
-The Rewrite Tag filter defines rules that match specific record key content against a regular expression. If a match exists, a new record with the defined tag will be emitted, entering from the beginning of the pipeline. Multiple rules can be specified and are processed in order until one of them matches.
+The Rewrite Tag filter defines rules that match specific record key content against a regular expression. If a match exists, a new record with the defined tag will be emitted. When used as a filter, the new record enters from the beginning of the pipeline. When used as an input processor, it continues at the next processor stage of the same input. Multiple rules can be specified and are processed in order until one of them matches.
 
 The new tag definition can be composed of:
 
@@ -27,12 +27,13 @@ The new tag definition can be composed of:
 
 The `rewrite_tag` filter supports the following configuration parameters:
 
-| Key | Description |
-| :--- | :--- |
-| `emitter_mem_buf_limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The default value is `10M`. The pipeline will pause once the buffer exceeds the value of this setting. For example, if the value is set to `10M` then the pipeline will pause if the buffer exceeds `10M`. The pipeline will remain paused until the output drains the buffer under the `10M` limit. |
-| `emitter_name` | Use this property to configure an optional name for the internal emitter plugin that handles filters emitting a record under the new tag. This emitter exposes metrics like any other component of the pipeline. |
-| `emitter_storage.type` | Define a buffering mechanism for the new records created. These records are part of the emitter plugin. Supported values are `memory` (default) and `filesystem`. If the destination for the new records generated might face backpressure due to latency or slow network, Fluent Bit strongly recommends enabling the `filesystem` mode. |
-| `rule` | Defines the matching criteria and the format of the tag for the matching record. The rule format has four components: `KEY REGEX NEW_TAG KEEP`. |
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| `batch_size` | Experimental maximum number of records in an input processor callback eligible for batching by destination tag. Valid values are `0` through `4096`; `0` disables batching. Only applies when `rewrite_tag` is an input processor. See [Input processor batching](#input-processor-batching). | `0` |
+| `emitter_mem_buf_limit` | Set a limit on the amount of memory the tag rewrite emitter can consume if the outputs provide backpressure. The pipeline pauses once the buffer exceeds this limit and remains paused until the output drains the buffer below the limit. | `10M` |
+| `emitter_name` | Optional name for the internal emitter plugin that handles records emitted under a new tag. This emitter exposes metrics like other pipeline components. | _none_ |
+| `emitter_storage.type` | Buffering mechanism for the internal emitter. Supported values are `memory` and `filesystem`. If the destination might face backpressure due to latency or a slow network, use `filesystem`. | `memory` |
+| `rule` | Matching criteria and destination tag format. The rule has four components: `KEY REGEX NEW_TAG KEEP`. | _none_ |
 
 ## Rules
 
@@ -114,7 +115,7 @@ This make use of placeholders, record content, and environment variables.
 
 If a rule matches, the filter will emit a copy of the record with the new defined tag. The `keep` property takes a Boolean value to determine if the original record with the old tag must be preserved and continue in the pipeline or be discarded.
 
-You can use `true` or `false` to decide the expected behavior. This field is mandatory and has no default value.
+You can use `true` or `false` to decide the expected behavior. This field is mandatory and has no default value. If the destination tag cannot be expanded or expands to an empty string, Fluent Bit keeps the original record regardless of `KEEP`.
 
 ## Configuration example
 
@@ -181,11 +182,68 @@ $ fluent-bit -c example.conf
 [0] from.test_tag.new.fluent.bit.out: [1580436933.000050569, {"tool"=>"fluent", "sub"=>{"s1"=>{"s2"=>"bit"}}}]
 ```
 
+## Input processor batching
+
+You can use `rewrite_tag` as an [input processor](../processors/filters.md) in YAML configuration. Output processor placement is rejected. Processor placement doesn't use a `match` property: the rules apply to records from the input to which the processor is attached.
+
+Rewritten records continue at the next processor stage of the same input with the new tag. They don't repeat earlier processor stages. They then follow the input's normal buffering and routing path. Retained originals continue with their original tag.
+
+The experimental `batch_size` option groups rewritten records by destination tag before passing them to downstream processors. This can reduce processing overhead when many records share a destination tag. Workloads with many distinct destination tags can be slower, so test with representative data before enabling batching. The default is `0`, which retains per-record processing.
+
+Batching applies to one input callback at a time. It doesn't wait for more records, accumulate records across callbacks, or split a large callback into batches of `batch_size` records. A callback is eligible when it contains at least two records, no more than `batch_size` records, and no more than 256 KiB of serialized payload. Group context expansion must also fit within the 256 KiB scratch payload limit. Ineligible callbacks or failures while preparing a batch fall back to per-record processing.
+
+Values below `0` or above `4096` cause configuration initialization to fail. Setting `batch_size` on a regular filter doesn't enable batching; filter placement continues to use the internal emitter path.
+
+Batching preserves record order within each destination tag and among retained originals. Interleaving between different destination tags, and between rewritten records and retained originals, can change. Consider this behavior when downstream processors maintain state across records.
+
+### Batching example
+
+This example uses `batch_size: 256` to group eligible records by `$destination`. With `KEEP` set to `false`, successfully rewritten records are removed from the original stream. The `record_modifier` processor runs after rewriting and adds a `processed` field with the string value `"true"` to each record. Both destination tags are routed to standard output.
+
+Processors require YAML configuration; there is no classic configuration equivalent for this example.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+service:
+  flush: 1
+  grace: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: source
+      samples: 1
+      dummy: >-
+        {"kind":"emit","destination":"routed.a","id":0}
+        {"kind":"emit","destination":"routed.b","id":1}
+        {"kind":"emit","destination":"routed.a","id":2}
+      processors:
+        logs:
+          - name: rewrite_tag
+            rule: $kind ^emit$ $destination false
+            batch_size: 256
+          - name: record_modifier
+            record: processed true
+
+  outputs:
+    - name: stdout
+      match: routed.*
+      format: json_lines
+```
+
+{% endtab %}
+{% endtabs %}
+
+Records `0` and `2` share the tag `routed.a` and retain that order. Record `1` uses `routed.b`; its position relative to the other tag isn't guaranteed.
+
 ## Monitoring
 
 As described in the [Monitoring](../../administration/monitoring.md) section, every component of the pipeline of Fluent Bit exposes metrics. The basic metrics exposed by this filter are `drop_records` and `add_records`, which summarize the total of dropped records from the incoming data chunk or the new records added.
 
-The `rewrite_tag` filter emits new records that go through the beginning of the pipeline, and exposes an additional metric called `emit_records` that summarize the total number of emitted records.
+The `rewrite_tag` plugin exposes an additional metric called `emit_records` that counts emitted records, including when batching is enabled. In filter placement, emitted records go through the beginning of the pipeline. Input processor placement continues at the next processor stage; successfully appended inline records aren't counted as internal emitter input records.
 
 ### Understand the metrics
 

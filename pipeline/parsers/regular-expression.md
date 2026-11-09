@@ -14,6 +14,27 @@ Setting the format to regular expressions requires a `regex` configuration key.
 
 For available configuration parameters, see [Configuring custom parsers](configuring-parser.md).
 
+## Regular expression work limit
+
+In v5.2 or later, Fluent Bit limits how much work the regular expression engine can do for each search, which the engine calls the match operation limit. The limit applies to every regular expression in Fluent Bit, not only to parsers. A search can use up to 10,000,000 engine steps. For a search that scans the text, the steps from all starting positions count toward the same limit. The limit is set when Fluent Bit is built and can't be configured.
+
+When a search reaches the limit, it fails, and Fluent Bit logs an error such as `[regex] search failed: -17`, or `[router] regex match failed: -17` for tag matching. The code `-17` means the limit was reached. Most features treat the failed search as no match, so the effect depends on where the expression is used:
+
+- The [Parser](../filters/parser.md) filter keeps the original record and tries the next parser, if any.
+- The [Syslog](../inputs/syslog.md) input logs the warning `error parsing log message with parser '<name>'` and drops the message.
+- A [Grep](../filters/grep.md) filter `regex` rule drops the record, and an `exclude` rule keeps it.
+- A [conditional routing](../router.md#conditional-routing) `regex` rule evaluates to false, and a `not_regex` rule evaluates to true.
+- A `match_regex` pattern on a filter or output doesn't match the tag, so the filter isn't applied, or the records aren't routed to the output. Filters match the tag each time records are added, and outputs each time a chunk is created, so the error can repeat many times for the same tag.
+- A [multiline](multiline-parsing.md) rule treats the line as not matching.
+- A [Tail](../inputs/tail.md) input `tag_regex` that fails for a filename prevents that file from being read.
+- Some features don't treat a failed search as no match. A failed search can count as a match in [Sampling](../processors/sampling.md) processor attribute conditions. The same applies to the include, exclude, ignore, allow, and deny lists of the [Node exporter metrics](../inputs/node-exporter-metrics.md), [Process exporter metrics](../inputs/process-exporter-metrics.md), and [Windows exporter metrics](../inputs/windows-exporter-metrics.md) inputs. It also applies to the name and type filters of the [Thermal](../inputs/thermal.md) input. Depending on the list, the item can then be included or excluded unexpectedly. If you use regular expressions in these features, check the logs for `search failed` errors.
+
+{% hint style="warning" %}
+
+A regular expression can run on data from sources you don't control, such as record fields or tags received by the [Forward](../inputs/forward.md) input. Crafted values can then reach the limit on purpose and change the outcome. For example, they can skip a filter, or keep a record that a Grep `exclude` rule should drop, because a failed `exclude` search keeps the record. For these expressions, use anchored patterns, and avoid nested quantifiers such as `(a+)+` and repeated alternatives that can match the same text, such as `(a|a)*` or `(\w|\d)+`. These alternatives can reach the limit even in an anchored pattern without nested quantifiers. Don't rely on regular expression matching alone for filtering that must always apply.
+
+{% endhint %}
+
 ## Configuration parameters
 
 The `regex` parser supports the following format-specific configuration parameter:
