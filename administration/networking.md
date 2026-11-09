@@ -86,6 +86,10 @@ The following table describes the network configuration properties available and
 | `net.tcp_keepalive_probes`      | Number of unacknowledged probes to consider a connection dead.                                                     | `-1`    |
 | `net.source_address`            | Specify network address to bind for data traffic.                                                                  | _none_  |
 
+In v5.2 or later, `net.io_timeout` also limits how long each attempt to send data can block on unencrypted TCP connections that Fluent Bit uses in blocking mode. It isn't a strict inactivity limit for the whole write. An attempt that sends part of the data before the limit expires ends normally, and the attempt that sends the rest gets a new limit. As a result, a write can block for up to about twice `net.io_timeout` after it last made progress. When it expires, the write fails with a connection error. On Linux and macOS, Fluent Bit then closes the connection instead of returning it to the keepalive pool. Earlier versions didn't limit these writes, so a write to an unresponsive destination could block indefinitely. With the default value, `0s`, writes aren't limited.
+
+Some outputs set their own default. For example, the [Azure Blob](../pipeline/outputs/azure_blob.md) output with `buffering_enabled` set to `true` and `tls` set to `off` uses its `io_timeout` value, `60s` by default, when `net.io_timeout` isn't set. In v5.2 or later, setting `net.io_timeout` explicitly overrides it, and `0s` disables the write limit.
+
 ## Example
 
 This example sends five random messages through a TCP output connection. The remote side uses the `nc` (netcat) utility to see the data.
