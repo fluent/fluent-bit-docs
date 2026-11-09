@@ -26,7 +26,7 @@ The plugin supports the following configuration parameters:
 | `event_format` | Define event format to interact with Wasm programs: `msgpack` or `json`. Default: `json`. |
 | `function_name` | Wasm function name that will be triggered to do filtering. It's assumed that the function is built inside the Wasm program specified previously. |
 | `wasm_heap_size` | Size of the heap size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
-| `wasm_path` | Path to the built Wasm program that will be used. This can be a path relative to the main configuration file. |
+| `wasm_path` | Path to the built Wasm program that will be used. In v5.2 or later, a relative path is looked up in the directory of the main configuration file first, and then in the working directory. Earlier versions look up a relative path only in the working directory, so a program next to the main configuration file isn't found when Fluent Bit runs from another directory. |
 | `wasm_stack_size` | Size of the stack size of Wasm execution. Review [unit sizes](../../administration/configuring-fluent-bit.md#unit-sizes) for allowed values. |
 
 ## Configuration example

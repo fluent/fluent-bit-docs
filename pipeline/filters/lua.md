@@ -23,7 +23,7 @@ The plugin supports the following configuration parameters:
 | `code` | Inline Lua code instead of loading from a path defined in `script`. |
 | `enable_flb_null` | If enabled, `null` will be converted to `flb_null` in Lua. This helps prevent removing key/value since `nil` is a special value to remove key/value from map in Lua. Default value: `false`. |
 | `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
-| `script` | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
+| `script` | Path to the Lua script that will be used. In v5.2 or later, Fluent Bit looks for a relative path in the directory of the main configuration file first, and then in the working directory. Earlier versions checked the working directory first. |
 | `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it's converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
 | `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |

@@ -159,15 +159,17 @@ To avoid complicated long configuration files is better to split specific parts 
 @INCLUDE somefile.conf
 ```
 
-The configuration reader will try to open the path `somefile.conf`. If not found, the reader assumes the file is on a relative path based on the path of the base configuration file:
+In v5.2 or later, the configuration reader looks for a relative path in the directory of the base configuration file first. If the file isn't found there, the reader tries the path relative to the working directory of the Fluent Bit process. This also applies to nested includes, which are resolved against the directory of the base configuration file, not the directory of the file that includes them:
 
 - Main configuration path: `/tmp/main.conf`
 - Included file: `somefile.conf`
-- Fluent Bit will try to open `somefile.conf`, if it fails it will try `/tmp/somefile.conf`.
+- Fluent Bit tries to open `/tmp/somefile.conf`. If that file doesn't exist, it tries `somefile.conf`.
+
+Earlier versions tried `somefile.conf` in the working directory first.
 
 The `@INCLUDE` command only works at top-left level of the configuration line, and can't be used inside sections.
 
-Wildcard character (`*`) supports including multiple files. For example:
+Wildcard character (`*`) supports including multiple files. A relative wildcard path is matched in the directory of the base configuration file, with no fallback to the working directory. On Windows, versions earlier than v5.2 matched relative wildcard paths against the working directory. For example:
 
 ```text
 @INCLUDE input_*.conf
