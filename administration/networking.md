@@ -12,7 +12,7 @@ Fluent Bit uses the following networking concepts:
 
 Typically, creating a new TCP connection to a remote server is straightforward and takes a few milliseconds. However, there are cases where DNS resolving, a slow network, or incomplete TLS handshakes might create long delays, or incomplete connection statuses.
 
-- `net.connect_timeout` lets you configure the maximum time to wait for a connection to be established. This value already considers the TLS handshake process.
+- `net.connect_timeout` lets you configure the maximum time to wait for a connection to be established. This value already considers the TLS handshake process. When the asynchronous resolver is in use, the same value also bounds DNS lookups over both UDP and TCP, and a value of `0` or less disables the DNS lookup deadline. The `LEGACY` resolver isn't bounded by this timeout.
 
 - `net.connect_timeout_log_error` indicates if an error should be logged in case of connect timeout. If disabled, the timeout is logged as a debug level message.
 
