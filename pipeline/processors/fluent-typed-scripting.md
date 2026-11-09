@@ -10,7 +10,7 @@ _Typed_ refers to the telemetry values exposed to the policy, including maps, ar
 
 ## Availability
 
-FTS is included in the development source for Fluent Bit 5.2.0 and hasn't shipped in a stable release yet. It isn't included in the 5.1 release series. Use a development build with FTS enabled; don't assume a container tagged `latest` includes it. These pages describe the current implementation on `master`. Check your binary with `fluent-bit --version` and run the [quickstart](fluent-typed-scripting/quickstart.md) to confirm that it contains `fts`.
+FTS is available in Fluent Bit version 5.2.0 and greater. It isn't included in the 5.1 release series. Check your binary with `fluent-bit --version` and run the [quickstart](fluent-typed-scripting/quickstart.md) to confirm that it contains `fts`.
 
 For a native source build, enable `FLB_PROCESSOR_FTS`, `FLB_LUAJIT`, and `FLB_YYJSON`. FTS defaults to interpreted execution even when built with LuaJIT. See [Build and install](../../installation/downloads/source/build-and-install.md) for general build instructions.
 
