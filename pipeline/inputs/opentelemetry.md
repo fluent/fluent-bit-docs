@@ -89,6 +89,35 @@ The `http_server.ingress_queue_event_limit` and
 
 When `raw_traces` is set to `false` (default), the traces endpoint (`/v1/traces`) processes incoming trace data using the unified JSON parser with strict validation. The endpoint accepts both `protobuf` and `JSON` encoded payloads. When `raw_traces` is set to `true`, JSON payloads sent to the traces endpoint are packed and forwarded as a log message without processing, validation, or conversion to the Fluent Bit internal trace format. `raw_traces` doesn't apply to Protocol Buffers or gRPC payloads: they still go through the checks in [Request size limits](#request-size-limits), including the decode budget, and are decoded as traces.
 
+### HTTP workers
+
+When `http_server.workers` is greater than `1`, each worker decodes incoming requests and places the data in a deferred ingress queue, which the input then consumes.
+
+#### Log processing in HTTP workers
+
+If every processor in the input's `logs` processor chain can run in a worker, the chain runs inside the HTTP worker that received the request, and the processed logs are added to the ingress queue. The following processors can run in HTTP workers:
+
+- [Content modifier](../processors/content-modifier.md)
+- [SQL](../processors/sql.md)
+
+If the chain includes any other processor, or a filter used as a processor, the whole chain runs after the logs leave the ingress queue, the same as with a single worker. You don't need to change any configuration to use either mode.
+
+#### Full ingress queue
+
+The deferred ingress queue is limited by `http_server.ingress_queue_event_limit` and an effective byte limit. The effective byte limit is `http_server.ingress_queue_byte_limit`, or `mem_buf_limit` when `mem_buf_limit` is set to a lower value.
+
+The plugin rejects a request in either of these cases:
+
+- **The queue is full**: The queue has reached one of its limits and doesn't free enough room within a short wait.
+- **An event is too large**: A single event that the plugin adds to the queue exceeds the effective byte limit. Each event holds the data from one OTLP message, so one request can add several events to the queue.
+
+In both cases, the plugin returns the following responses:
+
+- **HTTP/1.1 and HTTP/2**: Returns `503 Service Unavailable` with the message `server overloaded: deferred ingress queue is full`.
+- **gRPC**: Returns gRPC status `14 (UNAVAILABLE)` with the message `server overloaded`.
+
+Clients can't tell the two cases apart from the response. Retry rejected requests with backoff, because a full queue is temporary. If a request keeps failing after several retries, an event it produces probably exceeds the effective byte limit, and retrying won't succeed. Send smaller requests, or raise the effective byte limit by increasing `http_server.ingress_queue_byte_limit` and, if it's set, `mem_buf_limit`.
+
 ### OpenTelemetry transport protocol endpoints
 
 Fluent Bit exposes the following endpoints for data ingestion based on the OpenTelemetry protocol:
