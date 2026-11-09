@@ -10,7 +10,7 @@ The tag drives the binary release process. Release binaries (containers and pack
 
 ## Fluent Bit v5.2
 
-Fluent Bit `v5.2` is the upcoming release developed on `master`. Review [What's new in Fluent Bit v5.2](whats-new-in-fluent-bit-v5.md#fluent-bit-v52) before testing an upgrade from `5.1` or an earlier series.
+Review [What's new in Fluent Bit v5.2](whats-new-in-fluent-bit-v5.md#fluent-bit-v52) before you upgrade to Fluent Bit `v5.2` from `5.1` or an earlier series.
 
 ### Native log processing
 
