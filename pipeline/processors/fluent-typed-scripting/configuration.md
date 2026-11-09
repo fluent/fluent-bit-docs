@@ -29,7 +29,7 @@ FTS has no `workers` parameter. Its execution follows the input or output that i
 
 ## Check recipe support
 
-`recipe` and the related `context`, `packages_dir`, `packs`, `recipe_version`, `secret_refs`, `state_commit`, and `state_limit` parameters require a build that includes Fluent Bit commit `6032b237d2275cb2883ed8942d7b269a5a8169a3`, such as development revision `e090fbd054c82ae67f12ebe926600827b6cf5f48`. Revision `7ea6759f2` doesn't support them. A build that runs `script` or `code` policies, or that has FTS enabled, doesn't necessarily support `recipe`.
+`recipe` and the related `context`, `packages_dir`, `packs`, `recipe_version`, `secret_refs`, `state_commit`, and `state_limit` parameters require Fluent Bit version 5.2.0 and greater, or a development build that includes commit `6032b237d2275cb2883ed8942d7b269a5a8169a3`. A build that runs `script` or `code` policies, or that has FTS enabled, doesn't necessarily support `recipe`.
 
 To check a binary, start Fluent Bit with a minimal recipe, such as the example in [Native recipe blocks](native-recipes.md#recipe-structure). A build without recipe support fails at startup and reports an unknown configuration property `recipe`. Start the pipeline for this check instead of using `--dry-run`, because `--dry-run` on older development builds doesn't validate processor parameters.
 

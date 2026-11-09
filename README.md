@@ -2,11 +2,11 @@
 description: High Performance Telemetry Agent for Logs, Metrics and Traces
 ---
 
-# Fluent Bit 5.2 documentation
+# Fluent Bit documentation
 
 <figure><img src=".gitbook/assets/fluent_bit_logo.png" alt=""><figcaption></figcaption></figure>
 
-This manual covers the upcoming Fluent Bit `5.2` release, developed on the `master` branch. For release highlights and migration guidance, see [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md#fluent-bit-v52) and [Upgrade notes](installation/upgrade-notes.md#fluent-bit-v52).
+This manual covers Fluent Bit `5.2`. For release highlights and migration guidance, see [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md#fluent-bit-v52) and [Upgrade notes](installation/upgrade-notes.md#fluent-bit-v52).
 
 [Fluent Bit](https://fluentbit.io) is a fast and lightweight telemetry agent for logs, metrics, and traces for Linux, macOS, Windows, and BSD family operating systems. Fluent Bit has been made with a strong focus on performance to allow the collection and processing of telemetry data from different sources without complexity.![](https://static.scarf.sh/a.png?x-pxid=71f0e011-761f-4c6f-9a89-38817887faae)
 
