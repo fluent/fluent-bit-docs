@@ -137,7 +137,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_UTF8_ENCODER`       | Build with UTF8 encoding support                                                                                            | `Yes`                         |
 | `FLB_WASM`               | Build with Wasm runtime support                                                                                             | `Yes`                         |
 | `FLB_WASM_STACK_PROTECT` | Build with WASM runtime with strong stack protector flags                                                                   | `No`                          |
-| `FLB_WAMRC`              | Build with Wasm AOT compiler executable                                                                                     | `No`                          |
+| `FLB_WAMRC`              | Build with Wasm ahead-of-time compiler executable                                                                           | `No`                          |
 | `FLB_WINDOWS_DEFAULTS`   | Build with predefined Windows settings                                                                                      | `Yes`                         |
 | `FLB_ZIG`                | Enable zig integration                                                                                                      | `Yes`                         |
 
@@ -238,6 +238,7 @@ The following table describes the processors available:
 | Option                                                                                           | Description                                 | Default |
 |:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
 | [`FLB_PROCESSOR_CONTENT_MODIFIER`](../../../pipeline/processors/content-modifier.md)             | Enable content modifier processor           | `On`    |
+| [`FLB_PROCESSOR_FTS`](../../../pipeline/processors/fluent-typed-scripting.md)                    | Enable Fluent Typed Scripting processor     | `On`    |
 | [`FLB_PROCESSOR_JOURNALD_OTEL`](../../../pipeline/processors/journald-otel.md)                   | Enable journald OpenTelemetry processor     | `On`    |
 | [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                                 | Enable metrics label manipulation processor | `On`    |
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
