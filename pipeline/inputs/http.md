@@ -28,6 +28,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                             | `1`       |
 | `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                          | `8192`    |
 | `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                | `256M`    |
+| `http_server.max_decoded_body_size` | Maximum size of a request body after automatic decompression, independently of `buffer_max_size`. `0` uses the default. Introduced in v5.2. See [Request body decompression](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#request-body-decompression). | `100M`    |
 | `listen`                   | The address to listen on.                                                                                                                           | `0.0.0.0` |
 | `oauth2.allowed_audience`  | Audience claim to enforce when validating incoming `OAuth 2.0` `JWT` tokens.                                                                        | _none_    |
 | `oauth2.allowed_clients`   | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                      | _none_    |
@@ -52,11 +53,11 @@ HTTP input plugin supports TLS/SSL. For more details about the properties availa
 
 ### gzipped content
 
-The HTTP input plugin will accept and automatically handle gzipped content in version 2.2.1 or later if the header `Content-Encoding: gzip` is set on the received data.
+The HTTP input plugin will accept and automatically handle gzipped content in version 2.2.1 or later if the header `Content-Encoding: gzip` is set on the received data. It also decompresses `zstd` and `snappy` content: in v3.x only when `http2` is `true`, which is the default, and in v4.0 or later whatever the `http2` value. In v5.2 or later, requests with any other encoding except `identity`, such as `deflate`, are rejected with `400`, and decompressed bodies are limited by `http_server.max_decoded_body_size`. See [Request body decompression](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#request-body-decompression).
 
 ### `OAuth 2.0 JWT` validation
 
-When `oauth2.validate` is set to `true`, the HTTP input plugin validates the `Authorization: Bearer <token>` header on every incoming request. Requests with a missing, expired, or invalid token are rejected with a `401` response.
+When `oauth2.validate` is set to `true`, the HTTP input plugin validates the `Authorization: Bearer <token>` header on every incoming request, except `GET /health` requests when `enable_health_endpoint` is enabled. In v5.2 or later, the token is validated before the request body is decompressed. Requests with a missing, expired, or invalid token are rejected with a `401` response.
 
 `oauth2.issuer` and `oauth2.jwks_url` are both required when validation is enabled. `JWKS` keys are fetched lazily: the first request that requires validation triggers the initial retrieval from `oauth2.jwks_url`. Keys are then cached and refreshed every `oauth2.jwks_refresh_interval` seconds.
 

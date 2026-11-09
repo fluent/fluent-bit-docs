@@ -167,7 +167,8 @@ plugin-specific behavior.
 | Key | Description | Default |
 | --- | ----------- | ------- |
 | `http_server.http2` | Enable HTTP/2 support for the input listener. | `true` |
-| `http_server.buffer_max_size` | Set the maximum size of the HTTP request buffer. | `4M` |
+| `http_server.buffer_max_size` | Set the maximum size of the HTTP request buffer. In v5.2 or later, the `opentelemetry` input defaults to 64 MiB instead. | `4M` |
+| `http_server.max_decoded_body_size` | Set the maximum size of a request body after automatic decompression, independently of `http_server.buffer_max_size`. `0` selects `100M`, for every input. Introduced in v5.2. When this key isn't set, the `opentelemetry` input uses a different default; see [Request body decompression](#request-body-decompression). | `100M` |
 | `http_server.buffer_chunk_size` | Set the allocation chunk size used for the HTTP request buffer. | `512K` |
 | `http_server.http1_max_header_size` | Set the maximum size of an HTTP/1 request line and headers, including the line-ending characters. Uses binary units: `K`, `KB`, and `KiB` all mean 1,024 bytes, and `M`/`G` scale the same way. `0` selects the default. The `http_server.buffer_max_size` limit still applies. Supported in v5.2 or later. See [HTTP/1 request header limits](#http1-request-header-limits). | `32KiB` |
 | `http_server.max_connections` | Set the maximum number of concurrent active HTTP connections. `0` means unlimited. | `0` |
@@ -201,6 +202,22 @@ These checks apply to HTTP/1 requests, including HTTP/1.1 requests that ask to u
 
 Fluent Bit fails to start if `http_server.http1_max_header_size` isn't a number, is negative, or has a suffix other than `K`, `KB`, `KiB`, `M`, `MB`, `MiB`, `G`, `GB`, or `GiB`, and logs `[http_server] invalid http_server.http1_max_header_size`. The suffixes aren't case-sensitive and must follow the number without a space. Fractional values are truncated to whole bytes, and values that truncate to `0` select the default.
 
+#### Request body decompression
+
+In v5.0 or later, these inputs automatically decompress request bodies sent with the `Content-Encoding` header set to `gzip`, `zstd`, or `snappy`, whatever the `http2` setting. In earlier versions, the supported encodings depended on the input and, for some inputs, on the `http2` setting. Requests without a `Content-Encoding` header, or with `identity`, aren't decompressed. `http_server.buffer_max_size` limits the request as received, and `http_server.max_decoded_body_size` limits the body after decompression.
+
+The `opentelemetry` input applies a different default. When `http_server.max_decoded_body_size` isn't set, the decompressed body is limited to the input's request size limit, which is its `buffer_max_size` value, or 64 MiB if that isn't set. Setting `http_server.max_decoded_body_size` to `0` selects `100M`. The `opentelemetry` input also checks the decompressed body against its `buffer_max_size` value, so it rejects a larger body even when `http_server.max_decoded_body_size` is higher.
+
+In v5.2 or later, Fluent Bit rejects a request that it can't decompress, and responds with one of the following statuses:
+
+- `413`: the decompressed body is larger than `http_server.max_decoded_body_size`.
+- `503`: Fluent Bit couldn't allocate memory to decompress the body. Clients can retry the request.
+- `400`: the body is invalid, or uses an unsupported or stacked encoding, such as `deflate` or `gzip, zstd`.
+
+Earlier versions passed bodies with `deflate` or other unsupported encodings to the input without decompressing them. If your clients send `deflate`, switch them to `gzip`, `zstd`, or `snappy` before you upgrade.
+
+When `oauth2.validate` is enabled on the `http` or `opentelemetry` input, Fluent Bit v5.2 or later validates the token before it decompresses the body, so a request without a valid token is rejected with `401` before decompression. In v5.0 and v5.1, Fluent Bit decompressed the body first and validated the token afterward, so unauthenticated requests could still use decompression resources. On the `http` input with `enable_health_endpoint` enabled, `GET /health` requests don't require a token, so a compressed body sent with one is still decompressed, up to the `http_server.max_decoded_body_size` limit. Decompression within that limit still uses CPU and memory.
+
 ### Incoming `OAuth 2.0` `JWT` validation settings
 
 The HTTP-based input plugins that support bearer token validation share the following `oauth2.*` settings:
@@ -214,7 +231,7 @@ The HTTP-based input plugins that support bearer token validation share the foll
 | `oauth2.allowed_clients` | Authorized `client_id` or `azp` claim values. This key can be specified multiple times. | _none_ |
 | `oauth2.jwks_refresh_interval` | How often in seconds to refresh cached `JWKS` keys. | `300` |
 
-When validation is enabled, requests without a valid `Authorization: Bearer <token>` header are rejected.
+When validation is enabled, requests without a valid `Authorization: Bearer <token>` header are rejected. On the `http` input, `GET /health` requests are exempt when `enable_health_endpoint` is enabled.
 
 ### Example input configuration
 
