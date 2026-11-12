@@ -47,6 +47,7 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `retry_limit`                      | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely.                                                  | `1`        |
 | `role_arn`                         | ARN of an IAM role to assume for  cross account access.                                      | _none_     |
 | `sts_endpoint`                     | Specify a custom STS endpoint for the AWS STS API.                                           | _none_     |
+| `tls`                              | Enable or disable TLS for the CloudWatch Logs API. Set it to `off` for a plain HTTP `endpoint`, such as a local emulator. | `on`       |
 | `tls.windows.certstore_name`       | Sets the certificate store name on an output (Windows).                                      | _none_     |
 | `tls.windows.use_enterprise_store` | Sets whether using enterprise certificate store or not on an output (Windows).               | _none_     |
 | `workers`                          | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
@@ -117,6 +118,7 @@ pipeline:
       auto_create_group: on
       endpoint: localhost
       port: 4566
+      tls: off
 ```
 
 {% endtab %}
@@ -132,6 +134,7 @@ pipeline:
   Auto_Create_Group On
   Endpoint          localhost
   Port              4566
+  Tls               Off
 ```
 
 {% endtab %}
