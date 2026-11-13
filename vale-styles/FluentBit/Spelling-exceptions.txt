@@ -132,6 +132,7 @@ Lua
 Lucene
 macOS
 Mandiant
+Manticore
 markdownlint
 matchers
 metacharacter
