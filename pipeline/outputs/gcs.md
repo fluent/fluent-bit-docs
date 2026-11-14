@@ -55,11 +55,74 @@ This mode requires the following options. If any of them is missing, the plugin 
 - `project_number`: the number of the Google Cloud project that owns the workload identity pool.
 - `pool_id`: the workload identity pool ID.
 - `provider_id`: the workload identity pool provider ID.
-- `identity_token_file`: the path to the file holding the `OIDC` subject token.
+- `identity_token_file`: the path to the file holding the `OIDC` subject token. Required only with the default `oidc_file` credential source. See [Credential sources](#credential-sources).
 
 The plugin builds the `STS` audience from the first three of these values as `//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID`, and logs it at startup. This string must match the audience configured on the pool provider.
 
-At token time, the plugin reads `identity_token_file` and exchanges its contents at `https://sts.googleapis.com/v1/token` for a federated access token. The plugin re-reads the file on every exchange and never caches its contents, so platforms that rotate the token in place, such as a `kubelet` projected token, are handled without a restart.
+With the default `oidc_file` source, the plugin reads `identity_token_file` at token time and exchanges its contents at `https://sts.googleapis.com/v1/token` for a federated access token. The plugin re-reads the file on every exchange and never caches its contents, so platforms that rotate the token in place, such as a `kubelet` projected token, are handled without a restart.
+
+##### Credential sources
+
+{% hint style="info" %}
+
+The `x509` credential source is available in Fluent Bit version 5.2.0 and greater.
+
+{% endhint %}
+
+`identity_federation_source` selects which credential the plugin presents to the Security Token Service:
+
+- `oidc_file` (default): the `OIDC` token read from `identity_token_file`, as described previously.
+- `x509`: an X.509 client certificate, for workloads that hold a certificate issued by a certificate authority registered as a trust anchor in the workload identity pool provider. This is typical for devices in a fleet that already authenticate with mutual TLS. Set `tls.crt_file` and `tls.key_file` on the output to the certificate and private key. `identity_token_file` isn't used.
+
+With the `x509` source, the token exchange goes to `https://sts.mtls.googleapis.com/v1/token` over mutual TLS and the client certificate is presented during the handshake. The subject token is a JSON array of the chain certificates in base64 Distinguished Encoding Rules (`DER`) form, leaf first, with subject token type `urn:ietf:params:oauth:token-type:mtls`. This is the same format the Google Cloud client libraries use for [X.509 federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-x509-certificates). The `subject_token_type` option is ignored.
+
+If the certificate was issued through intermediate certificate authorities that aren't registered in the provider's trust store, set `x509_trust_chain_file` to a PEM file holding those intermediates in order, each one issued by the next. The leaf certificate can be repeated at the top of that file. Certificates bundled after the leaf in `tls.crt_file` are also sent, before the chain file. At startup, the plugin fails to initialize if the chain file is malformed or if the leaf certificate appears anywhere other than the first position. It logs a warning naming any certificate that isn't the issuer of the one before it. The Security Token Service validates the chain.
+
+The plugin validates the certificate, key, and chain at startup. It reads the certificate and chain again at each token exchange to build the subject token. The TLS client certificate presented in the handshake is reloaded separately: only when a new TLS session starts, the certificate or key files have changed, and the reload succeeds. If the reload fails, Fluent Bit logs `detected certificate file changes but reload failed` and keeps the previous credentials. A certificate rotated on disk is usually picked up at the next token refresh without a restart. However, the handshake can still present the previous certificate while the subject token contains the new one. This happens when the certificate and key are replaced at different times, or when an exchange reuses an existing TLS session. The Security Token Service then rejects the exchange. Replace the certificate and key together, for example by writing both files and then moving them into place.
+
+The `x509` source requires `tls.verify` to be enabled and always verifies the hostnames of the Security Token Service and IAM Credentials endpoints, because the device credential and the federated token must only be presented to Google. `tls.vhost` applies to the upload connection only. The upload connection to Cloud Storage keeps the configured `tls.*` settings, so set `tls.verify_hostname` to `true` on the output to apply the same check there; the plugin logs a reminder at startup when it's off.
+
+The following configuration authenticates a device with its client certificate and writes directly to the bucket as the federated principal:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: gcs
+      match: '*'
+      bucket: my-logs
+      enable_identity_federation: true
+      identity_federation_source: x509
+      project_number: '123456789012'
+      pool_id: my-pool
+      provider_id: my-x509-provider
+      tls.crt_file: /etc/device/client.crt
+      tls.key_file: /etc/device/client.key
+      tls.verify_hostname: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name                        gcs
+  Match                       *
+  Bucket                      my-logs
+  Enable_Identity_Federation  true
+  Identity_Federation_Source  x509
+  Project_Number              123456789012
+  Pool_Id                     my-pool
+  Provider_Id                 my-x509-provider
+  tls.crt_file                /etc/device/client.crt
+  tls.key_file                /etc/device/client.key
+  tls.verify_hostname         true
+```
+
+{% endtab %}
+{% endtabs %}
 
 The federated token can be used two ways:
 
@@ -68,7 +131,7 @@ The federated token can be used two ways:
 
 The plugin caches the resulting token until 5 minutes before the expiry reported by the token service, then exchanges a new one. If the token service doesn't report a usable expiry, the plugin falls back to its default refresh interval.
 
-Use `subject_token_type` only if your provider issues something other than a `JWT`. The default is `urn:ietf:params:oauth:token-type:jwt`.
+Use `subject_token_type` only if your provider issues something other than a `JWT`. The default is `urn:ietf:params:oauth:token-type:jwt`. It applies to the `oidc_file` source only.
 
 The following configuration authenticates through a Google Kubernetes Engine projected token and impersonates a service account:
 
@@ -122,7 +185,8 @@ pipeline:
 | `gcs_key_format_tag_delimiters` | Characters used to split the tag into the parts referenced by `$TAG[n]` in `gcs_key_format`. | `.` |
 | `google_service_account` | The email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud service account credentials JSON file. See [Authentication](#authentication). | _none_ |
-| `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
+| `identity_federation_source` | Credential presented to the Security Token Service when `enable_identity_federation` is `true`. Available in Fluent Bit 5.2.0 and greater; omit it on earlier versions, which support the `OIDC` token file only. Accepted values: `oidc_file` (the token in `identity_token_file`) and `x509` (the client certificate in `tls.crt_file` and `tls.key_file`, over mutual TLS). See [Credential sources](#credential-sources). | `oidc_file` |
+| `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true` and `identity_federation_source` is `oidc_file`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `metadata_server` | Address of the Compute Engine or Google Kubernetes Engine metadata server used to request an access token when no credentials file is configured. See [Authentication](#authentication). | `http://metadata.google.internal` |
 | `pool_id` | Workload identity pool ID. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `preserve_data_ordering` | When an upload request fails, the last received chunk might swap with a later chunk, resulting in data shuffling. This option prevents shuffling by using queue logic for uploads. | `false` |
@@ -133,12 +197,13 @@ pipeline:
 | `store_chunk_limit` | Maximum number of buffered chunks kept in `store_dir`. Set to `0` for unlimited. | `0` |
 | `store_dir` | Directory used to locally buffer data before uploading it. | `/tmp/fluent-bit/gcs` |
 | `store_dir_limit_size` | Limits the amount of data buffered in `store_dir` to limit disk usage. When the limit is reached, data is discarded. Set to `0` for unlimited. | `0` |
-| `subject_token_type` | `OIDC` subject token type presented to the Google Security Token Service. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | `urn:ietf:params:oauth:token-type:jwt` |
+| `subject_token_type` | `OIDC` subject token type presented to the Google Security Token Service. Only used when `enable_identity_federation` is `true` and `identity_federation_source` is `oidc_file`. See [Workload Identity Federation](#workload-identity-federation). | `urn:ietf:params:oauth:token-type:jwt` |
 | `total_file_size` | Maximum size of the file currently being buffered for a tag. When that file reaches this size, Fluent Bit uploads it as an object, even when `upload_timeout` hasn't elapsed. Files already sealed and waiting to upload don't count toward this size, so a tag can hold more than this amount on disk. The minimum accepted value is `1M`. Set to `0` to upload only when `upload_timeout` elapses. See [Buffering](#buffering). Supported in v5.1.3 or later. | `100M` |
 | `unify_tag` | Whether to buffer records from every tag into a single file instead of one file per tag. See [Unified tag buffering](#unified-tag-buffering). | `false` |
 | `unify_tag_name` | Logical tag that replaces the record tag when `unify_tag` is enabled. It's stored as the buffer chunk metadata and used for `$TAG` in `gcs_key_format`. It doesn't set the name of the local buffer file. See [Unified tag buffering](#unified-tag-buffering). | `fluent-bit-buffer-file-unify-tag.log` |
 | `upload_timeout` | When this amount of time elapses, Fluent Bit uploads the buffered data and starts a new object. Set to `60m` to upload a new object every hour. | `10m` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
+| `x509_trust_chain_file` | PEM file with the intermediate certificates sent after the leaf in the X.509 subject token, in order. Only used when `identity_federation_source` is `x509`. See [Credential sources](#credential-sources). | _none_ |
 
 ## Object key format
 
