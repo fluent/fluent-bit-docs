@@ -22,6 +22,7 @@ This plugin supports the following parameters:
 | `gelf_short_message_key` | Key to use as the short message for GELF format output. | _none_ |
 | `gelf_timestamp_key` | Key to use as the timestamp for GELF format output. | _none_ |
 | `group_id` | Consumer group ID. | _none_ |
+| `header` | Add a Kafka message header as a key/value pair. Multiple `header` entries can be set. Use `header key value` for a static value, or `header key $field_name` to use the value of a log record field as the header value. | _none_ |
 | `message_key` | Optional key to store the message. | _none_ |
 | `message_key_field` | If set, the value of `message_key_field` in the record will indicate the message key. If not set or not found in the record, `message_key` is used if set. | _none_ |
 | `otlp_logs_partition_by_resource` | When using `otlp_json` or `otlp_proto` format for logs, send each OTLP resource's logs as a separate Kafka message. | `false` |
@@ -89,6 +90,63 @@ pipeline:
   Match       *
   Brokers     192.168.1.3:9092
   Topics      test
+```
+
+{% endtab %}
+{% endtabs %}
+
+### Message headers
+
+The `header` option attaches custom headers to Kafka messages produced from log records. You can set any number of headers by repeating the `header` key. Headers aren't supported with the `otlp_json` and `otlp_proto` formats.
+
+**Static headers** use a literal value:
+
+```text
+header X-Environment production
+header X-Source      fluent-bit
+```
+
+**Dynamic headers** use a log record field as the value. Prefix the field name with `$`:
+
+```text
+header X-TraceId $trace_id
+header X-UserId  $user_id
+```
+
+Dynamic headers support string, integer, and floating-point fields. Numeric values are converted to their decimal string representation (`42`, `-5`, `0.75`). If a referenced field isn't found in the record, or its value is a boolean, array, map, or null, the header is skipped and a warning is emitted. Static and dynamic headers can be mixed freely.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: cpu
+
+  outputs:
+    - name: kafka
+      match: '*'
+      brokers: 192.168.1.3:9092
+      topics: test
+      header:
+        - 'X-Environment production'
+        - 'X-TraceId $trace_id'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name  cpu
+
+[OUTPUT]
+  Name        kafka
+  Match       *
+  Brokers     192.168.1.3:9092
+  Topics      test
+  Header      X-Environment production
+  Header      X-TraceId     $trace_id
 ```
 
 {% endtab %}
