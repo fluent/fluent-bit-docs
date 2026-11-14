@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | `interval` | `String` | Time interval, expressed in `sleep` format. For example, `3s`, `1.5m`, `0.5h`. |
 | `print_status` | `Bool` | Whether to print status messages with current rate and the limits to information logs. |
 | `rate` | `Integer` | Amount of messages for the time. |
+| `retain` | `Bool` | Whether to whether or not to drop logs if rate limit is exceeded. Default: `false`.|
 | `window` | `Integer` | Amount of intervals to calculate average over. Default: `5`. |
 
 ## Functional description
@@ -67,7 +68,15 @@ will become:
     +---------+
 ```
 
-The last pane of the window was overwritten and 1 message was dropped.
+The last pane of the window was overwritten and one message was dropped. If you can accept the cost of latency for collector messages, use the `Retain` parameter to retain all the logs.
+
+### Don't drop messages
+
+When `Retain` isn't set or is set to `false`, if the rate limit is exceeded, throttle drops the messages.
+
+In cases when Fluent Bit first runs, and there is a input with huge messages which exceeded the throttle's (`window * rate * interval`), then only the first (`window * rate * interval`) records will be collected. Other records collected before Fluent Bit runs will be dropped.
+
+If `Retain` is set to `true`, all messages will be collected without dropping. This collection has a cost of some latency for collecting all messages, which depends on the account of collected target input. 
 
 ### `interval` versus `window` size
 
@@ -156,6 +165,7 @@ pipeline:
   Rate     1000
   Window   300
   Interval 1s
+  Retain   false
 
 [OUTPUT]
   Name   stdout
