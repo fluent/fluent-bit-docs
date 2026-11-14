@@ -406,7 +406,7 @@ For example, you can pull the image with latest version by:
 docker pull public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
 ```
 
-If you see errors for image pull limits, try log into public ECR with your AWS credentials:
+If you see errors for image pull limits, try logging into public ECR with your AWS credentials:
 
 ```shell
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws

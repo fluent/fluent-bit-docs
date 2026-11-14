@@ -8,6 +8,8 @@
 
 The _Lua_ filter lets you modify incoming records (or split one record into multiple records) using custom [Lua](https://www.lua.org/) scripts.
 
+For policies that need typed telemetry values, metric or span transformations, or per-item rollback, see [Fluent Typed Scripting (FTS)](../processors/fluent-typed-scripting.md) and the [FTS and Lua filter comparison](../processors/fluent-typed-scripting/lua-filter.md).
+
 A Lua-based filter requires two steps:
 
 1. Configure the filter in the main configuration.
@@ -23,7 +25,7 @@ The plugin supports the following configuration parameters:
 | `code` | Inline Lua code instead of loading from a path defined in `script`. |
 | `enable_flb_null` | If enabled, `null` will be converted to `flb_null` in Lua. This helps prevent removing key/value since `nil` is a special value to remove key/value from map in Lua. Default value: `false`. |
 | `protected_mode` | If enabled, the Lua script will be executed in protected mode. It prevents Fluent Bit from crashing when an invalid Lua script is executed or the triggered Lua function throws exceptions. Default value: `true`. |
-| `script` | Path to the Lua script that will be used. This can be a relative path against the main configuration file. |
+| `script` | Path to the Lua script that will be used. In v5.2 or later, Fluent Bit looks for a relative path in the directory of the main configuration file first, and then in the working directory. Earlier versions checked the working directory first. |
 | `time_as_table` | By default, when the Lua script is invoked, the record timestamp is passed as a floating number, which might lead to precision loss when it's converted back. If you need timestamp precision, enabling this option will pass the timestamp as a Lua table with keys `sec` for seconds since epoch and `nsec` for nanoseconds. |
 | `type_array_key` | If these keys are matched, the fields are handled as array. If more than one key, delimit by space. The array can be empty. |
 | `type_int_key` | If these keys are matched, the fields are converted to integers. If more than one key, delimit by space. |
@@ -350,6 +352,26 @@ Lua treats numbers as a `double` type, which means an `integer` type containing 
 ### Protected mode
 
 Fluent Bit supports protected mode to prevent crashes if it executes an invalid Lua script. See [Error Handling in Application Code](https://www.lua.org/pil/24.3.1.html) in the Lua documentation for more information.
+
+When `protected_mode` is `true` and the callback raises a Lua error for a record, for example by calling `error()` or indexing a `nil` value, Fluent Bit drops that record and logs `error code <n>, dropping record: <message>`. Each failed record logs its own error line. Fluent Bit continues processing the other records in the chunk. If a group loses all of its records this way, the group is removed, and if every record in the chunk fails, the whole chunk is dropped. Dropped records are reflected in the filter's `fluentbit_filter_drop_records_total` [metric](../../administration/monitoring.md). This behavior also applies when the Lua filter runs as a processor, where drops are also reflected in `fluentbit_processor_items_drop_total`. These counters increase only by how many fewer records the filter emits than it receives. If the callback also splits records into multiple records in the same chunk, the extra records offset the dropped ones, and the drop counters can stay unchanged even though records were dropped.
+
+If the callback returns a `record` value that isn't a valid table, Fluent Bit logs `invalid table returned at <function>(), <script>`. An unexpected return code keeps the original record.
+
+To keep a record when part of your logic fails, catch the error inside the callback with `pcall` and return code `0`:
+
+```lua
+function cb_filter(tag, timestamp, record)
+  local ok, result = pcall(transform, record)
+  if not ok then
+    return 0, timestamp, record
+  end
+  return 2, timestamp, result
+end
+```
+
+In this example, `transform` is a function defined in your script that returns the modified record table. With code `0`, Fluent Bit keeps the original record even if `transform` changed the table before it failed. The example discards the error in `result`. If you report it, convert it with `tostring` inside another `pcall`, because converting an error object can raise its own error. Also avoid writing it to standard output with `print` when an output plugin, such as `stdout` with JSON format, writes to the same stream, because the non-JSON text can corrupt the JSON output. Send diagnostics to a separate destination, such as a file.
+
+When `protected_mode` is `false`, Lua errors in the callback aren't caught and can stop the Fluent Bit process.
 
 ## Code examples
 

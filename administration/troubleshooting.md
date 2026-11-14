@@ -60,6 +60,18 @@ DLQ files remain on disk until manually removed. Monitor disk usage and implemen
 
 For more details on DLQ configuration, see [Dead letter queue](./dead-letter-queue.md).
 
+## Engine channel capacity is low
+
+In v5.1.3 or later, Fluent Bit limits the number of flush requests that can be in flight at the same time. On Linux the limit is 4096. On other platforms the limit is 1024. Tasks that exceed the limit start on the next flush cycle.
+
+On Linux, when Fluent Bit starts it checks the capacity of its internal engine channel, which is a pipe. Once a user exceeds the `fs.pipe-user-pages-soft` limit, the kernel creates pipes with a single page of capacity on Linux versions before 5.14, and two pages on Linux 5.14 and later. If the channel can't hold the default number of requests, Fluent Bit lowers the limit to half of the number of events the channel can hold and logs the following warning:
+
+```text
+[warn] [engine] engine channel capacity is low, limiting flush requests in flight to 256
+```
+
+The number in the message depends on the pipe capacity of your system. To avoid the lower limit, raise the `fs.pipe-user-pages-soft` kernel setting. You can't configure the limit in Fluent Bit.
+
 ## Tap
 
 Tap can be used to generate events or records detailing what messages pass through Fluent Bit, at what time and what filters affect them.
@@ -249,7 +261,11 @@ You should start seeing output similar to the following:
 
 ### Parameters for the output in Tap
 
-When activating Tap, any plugin parameter can be given. These parameters can be used to modify the output format, the name of the time key, the format of the date, and other details.
+When activating Tap, you can pass parameters to the output. These parameters can be used to modify the output format, the name of the time key, and the format of the date.
+
+In v5.1.3 or later, the HTTP API accepts only the `stdout` and `calyptia` outputs, and only the `format`, `json_date_key`, and `json_date_format` parameters. Output names are case-sensitive and parameter names are case-insensitive. Any other output or parameter returns a `403` error with the message `output plugin or parameter not allowed`. In earlier versions, any plugin parameter can be given.
+
+In v5.1.4 or later, the HTTP API validates the request body and returns a `400` error with `"status":"error"` when it's invalid. A request body is invalid when it's missing, isn't a JSON object, or repeats a key (`prefix`, `output`, `params`, or `limit`). It's also invalid when it repeats a parameter name in `params` (parameter names are compared case-insensitively), or when `prefix`, `output`, or a parameter value isn't a string. Request bodies are also limited to 64 parameters and 64 KB across the `prefix`, `output`, and `params` strings, and those strings can't contain null characters. A `limit` must be an object with a single `seconds` or `count` key set to a positive integer. Earlier versions returned `503` for some of these errors.
 
 The following example uses the parameter `"format": "json"` to demonstrate how to show `stdout` in JSON format.
 
@@ -284,6 +300,23 @@ In the first terminal, you should see the output similar to the following:
 This parameter shows stdout in JSON format.
 
 See [output plugins](../pipeline/outputs.md) for additional information.
+
+### Limit how long Tap runs
+
+By default, Tap stays active for an input until you disable it. To stop it automatically, include a `limit` object in the request body with one of the following keys. The value must be a positive integer.
+
+| Key | Description |
+| --- | --- |
+| `count` | Stop tracing the input after this number of traces. |
+| `seconds` | Stop tracing the input after this number of seconds. |
+
+When the limit is reached, Fluent Bit disables Tap for that input. The time limit is checked when the input processes a chunk, so Tap stops with the first chunk after the time has passed. The `limit` object accepts only one key. The following example stops tracing after 10 traces:
+
+```shell
+$ curl 127.0.0.1:2020/api/v1/trace/input_dummy -d '{"output":"stdout", "limit": {"count": 10}}'
+
+{"status":"ok"}
+```
 
 ### Analyze a single Tap record
 

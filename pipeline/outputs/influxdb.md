@@ -4,7 +4,7 @@
 **Supported event types:** `logs` `metrics`
 {% endhint %}
 
-The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https://www.influxdata.com/products/influxdb-overview) time series database. The following instructions assume that you have an operational InfluxDB service running in your system.
+The _InfluxDB_ output plugin lets you flush your records into a [InfluxDB](https://www.influxdata.com/products/influxdb-overview/) time series database. The following instructions assume that you have an operational InfluxDB service running in your system.
 
 ## Configuration parameters
 

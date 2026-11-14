@@ -60,6 +60,17 @@ The plugin supports the following rules:
 - Rules are case-insensitive, but parameters aren't.
 - Any number of rules can be set in a filter instance.
 - Rules are applied in the order they appear, with each rule operating on the result of the previous rule.
+- Parameters of rules and conditions are separated by spaces. To use a key or value that contains spaces, start and end the parameter with double (`"`) or single (`'`) quotes, for example `Set message "hello world"`. Inside a quoted parameter, use a backslash to escape the enclosing quote character or a backslash. In YAML, wrap the entire rule value in YAML single quotes when it starts with a quote, for example `'"my key" value'`, so that YAML keeps the inner quotes. Also wrap the entire rule value in YAML single quotes when it contains a space followed by `#`. YAML treats ` #` as the start of a comment, even when the value starts with an unquoted key, and drops the rest of the line. The same applies to a value that starts with `#`, for example `remove: '#metadata'`. Without the quotes, YAML treats the whole value as a comment and the rule has no parameters. A plain YAML value that contains a colon followed by a space, such as `message "a: b"`, fails to parse, even if the Modify parameter is already quoted. Wrapping the entire value protects it, either in YAML single quotes, for example `'message "a: b"'`, or in YAML double quotes, where you escape inner double quotes with a backslash. Inside YAML single quotes, write a single quote as `''`.
+
+#### Rules with too many parameters
+
+Starting with v5.2, Fluent Bit rejects a rule with more parameters than its operation accepts and doesn't start. Earlier releases might accept such a rule and handle the extra parameters differently, so quote any key or value that contains spaces regardless of version. Fluent Bit logs one of these messages:
+
+- For a rule with three space-separated parameters, such as `Set message hello world`: `Invalid config for <rule>: expected one or two arguments; quote values containing spaces`.
+- For a rule with four or more parameters: `Invalid config for <rule>`.
+- For a one-parameter rule, such as `Remove`, given two parameters: `Invalid operation <rule> : <parameters> in configuration`.
+
+In these messages, `<rule>` is the rule name as Fluent Bit stores it, for example `set` in classic configuration files. `<parameters>` is the rule value after YAML parsing, so search for the value as Fluent Bit logs it and not for the original YAML text. During a [hot reload](../../administration/hot-reload.md), the previous pipeline has already stopped when the rule is checked, so the reload is aborted and Fluent Bit exits. The `--dry-run` option doesn't detect these errors. To avoid them, quote the individual key or value parameter that contains spaces, for example `Set message "hello world"`, so the rule keeps its required parameter count.
 
 ### Conditions
 

@@ -17,9 +17,6 @@ You can turn a standard processor into a conditional processor by adding a `cond
 
 These `condition` blocks use the following syntax:
 
-{% tabs %}
-{% tab title="fluent-bit.yaml" %}
-
 ```yaml
 pipeline:
   inputs:
@@ -40,9 +37,6 @@ pipeline:
             value: {comparison_value2}
         <...>
 ```
-
-{% endtab %}
-{% endtabs %}
 
 Each processor can only have a single `condition` block, but that condition can include multiple rules. These rules are stored as items in the `condition.rules` array.
 

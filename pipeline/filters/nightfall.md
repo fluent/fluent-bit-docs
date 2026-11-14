@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | `tls.ca_path` | Absolute path to root certificates, required if `tls.verify` is true. | _none_ |
 | `tls.debug` | Debug level between `0` (nothing) and `4` (every detail). | `0` |
 | `tls.verify` | When enabled, turns on certificate validation when connecting to the Nightfall API. | `true` |
+| `tls.verify_hostname` | When enabled, turns on hostname verification for the Nightfall API certificate. Requires `tls.verify`. Supported in v5.2 or later. | `false` |
 | `tls.vhost` | Set an optional TLS virtual host for the Nightfall API connection. | _none_ |
 
 ### Configuration file

@@ -121,6 +121,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_PARSER`             | Build with Parser support                                                                                                   | `Yes`                         |
 | `FLB_POSIX_TLS`          | Force POSIX thread storage                                                                                                  | `No`                          |
 | `FLB_PROFILES`           | Enable profiles support                                                                                                     | `Yes`                         |
+| `FLB_PROTOBUF_ENCODER`   | Build Kafka runtime Protobuf encoding support. Supported in v5.1.3 or later.                                                | `No`                          |
 | `FLB_PROXY_GO`           | Enable Go plugins support                                                                                                   | `Yes`                         |
 | `FLB_RECORD_ACCESSOR`    | Enable record accessor                                                                                                      | `Yes`                         |
 | `FLB_REGEX`              | Build with Regex support                                                                                                    | `Yes`                         |
@@ -136,9 +137,13 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_UTF8_ENCODER`       | Build with UTF8 encoding support                                                                                            | `Yes`                         |
 | `FLB_WASM`               | Build with Wasm runtime support                                                                                             | `Yes`                         |
 | `FLB_WASM_STACK_PROTECT` | Build with WASM runtime with strong stack protector flags                                                                   | `No`                          |
-| `FLB_WAMRC`              | Build with Wasm AOT compiler executable                                                                                     | `No`                          |
+| `FLB_WAMRC`              | Build with Wasm ahead-of-time compiler executable                                                                           | `No`                          |
 | `FLB_WINDOWS_DEFAULTS`   | Build with predefined Windows settings                                                                                      | `Yes`                         |
 | `FLB_ZIG`                | Enable zig integration                                                                                                      | `Yes`                         |
+
+`FLB_PROTOBUF_ENCODER` is available in Fluent Bit version 5.1.3 and greater. Enabling it requires Protobuf 3.12 or greater, including the `libprotoc` development libraries. If `libprotoc` is missing, CMake stops with `FLB_PROTOBUF_ENCODER requires libprotoc development libraries`. This option also adds a C++ source file to the Kafka output plugin and requires C++11, so the build needs a C++ compiler.
+
+The [Blob](../../../pipeline/inputs/blob.md) input, [Azure Blob](../../../pipeline/outputs/azure_blob.md) and [Amazon S3](../../../pipeline/outputs/s3.md) outputs, and the [CheckList](../../../pipeline/filters/checklist.md) filter require `FLB_SQLDB`. In Fluent Bit version 5.2 and greater, when you set `FLB_SQLDB` to `Off`, CMake disables these plugins and prints `Disabling <OPTION>: SQL database support is disabled` for each plugin it disables. Plugins that are already off, such as `FLB_OUT_S3` when you also set it to `Off`, don't produce the message.
 
 ### Development options
 
@@ -146,6 +151,8 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 |:--------------------------|:-----------------------------|:--------|
 | `FLB_BACKTRACE`           | Enable stack trace support   | `Yes`   |
 | `FLB_DEBUG`               | Build with debug mode (`-g`) | `No`    |
+| `FLB_SANITIZE_MEMORY`     | Enable MemorySanitizer       | `No`    |
+| `FLB_SANITIZE_THREAD`     | Enable ThreadSanitizer       | `No`    |
 | `FLB_SMALL`               | Optimize for small size      | `No`    |
 | `FLB_TESTS_INTERNAL`      | Enable internal tests        | `No`    |
 | `FLB_TESTS_INTERNAL_FUZZ` | Enable internal fuzz tests   | `No`    |
@@ -153,6 +160,8 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_TESTS_RUNTIME`       | Enable runtime tests         | `No`    |
 | `FLB_TRACE`               | Enable trace mode            | `No`    |
 | `FLB_VALGRIND`            | Enable Valgrind support      | `No`    |
+
+`FLB_SANITIZE_MEMORY` and `FLB_SANITIZE_THREAD` are available in Fluent Bit version 5.2 and greater. They're aliases for the `SANITIZE_MEMORY` and `SANITIZE_THREAD` options, which remain supported. MemorySanitizer requires a compiler with MemorySanitizer support on 64-bit Linux. ThreadSanitizer requires a compiler with ThreadSanitizer support on 64-bit Linux or macOS. If the compiler doesn't support the requested sanitizer, CMake stops with an error instead of building without the sanitizer. The two sanitizers can't be enabled together in one CMake build: CMake stops with `ThreadSanitizer is not compatible with MemorySanitizer.` To use both, configure a separate build for each sanitizer.
 
 ### Optimization options
 
@@ -215,9 +224,10 @@ The following input plugins are available:
 | [`FLB_IN_UDP`](../../../pipeline/inputs/udp.md)                                             | Enable UDP input plugin                                                   | `On`    |
 | [`FLB_IN_WINLOG`](../../../pipeline/inputs/windows-event-log.md)                            | Enable Windows Event Log input plugin (Windows Only)                      | `Off`   |
 | [`FLB_IN_WINEVTLOG`](../../../pipeline/inputs/windows-event-log-winevtlog.md)               | Enable Windows Event Log input plugin using `winevt.h` API (Windows Only) | `Off`   |
-| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `On`    |
+| [`FLB_IN_WINDOWS_EXPORTER_METRICS`](../../../pipeline/inputs/windows-exporter-metrics.md)   | Enable Windows exporter metrics input plugin                              | `Off`   |
 | [`FLB_IN_WINSTAT`](../../../pipeline/inputs/windows-system-statistics.md)                   | Enable Windows system statistics input plugin                             | `Off`   |
 
+`FLB_IN_WINDOWS_EXPORTER_METRICS` is `Off` by default. When you build on Windows with [`FLB_WINDOWS_DEFAULTS`](#general-options) enabled, it's `On`, unless you also enable `FLB_MINIMAL`, which keeps the default `Off`. You can still override it. This behavior is available in Fluent Bit version 5.1.4 and greater.
 
 ### Processor plugins
 
@@ -228,6 +238,8 @@ The following table describes the processors available:
 | Option                                                                                           | Description                                 | Default |
 |:-------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------|
 | [`FLB_PROCESSOR_CONTENT_MODIFIER`](../../../pipeline/processors/content-modifier.md)             | Enable content modifier processor           | `On`    |
+| [`FLB_PROCESSOR_FTS`](../../../pipeline/processors/fluent-typed-scripting.md)                    | Enable Fluent Typed Scripting processor     | `On`    |
+| [`FLB_PROCESSOR_JOURNALD_OTEL`](../../../pipeline/processors/journald-otel.md)                   | Enable journald OpenTelemetry processor     | `On`    |
 | [`FLB_PROCESSOR_LABELS`](../../../pipeline/processors/labels.md)                                 | Enable metrics label manipulation processor | `On`    |
 | [`FLB_PROCESSOR_METRICS_SELECTOR`](../../../pipeline/processors/metrics-selector.md)             | Enable metrics selector processor           | `On`    |
 | [`FLB_PROCESSOR_OPENTELEMETRY_ENVELOPE`](../../../pipeline/processors/opentelemetry-envelope.md) | Enable OpenTelemetry envelope processor     | `On`    |
@@ -270,10 +282,11 @@ The following table describes the filters available on this version:
 
 Output plugins let you flush the information to some external interface, service, or terminal.
 
-The following table describes the output plugins available:
+The following table describes the output plugins available. `FLB_OUT_ARVANCLOUD_CLOUDLOGS` is available in Fluent Bit version 5.1.3 and greater.
 
 | Option                                                                                   | Description                                              | Default |
 |:-----------------------------------------------------------------------------------------|:---------------------------------------------------------|:--------|
+| [`FLB_OUT_ARVANCLOUD_CLOUDLOGS`](../../../pipeline/outputs/arvancloud_cloudlogs.md)      | Enable ArvanCloud CloudLogs output plugin                | `On`    |
 | [`FLB_OUT_AZURE`](../../../pipeline/outputs/azure.md)                                    | Enable Microsoft Azure output plugin                     | `On`    |
 | [`FLB_OUT_AZURE_BLOB`](../../../pipeline/outputs/azure_blob.md)                          | Enable Microsoft Azure storage blob output plugin        | `On`    |
 | [`FLB_OUT_AZURE_KUSTO`](../../../pipeline/outputs/azure_kusto.md)                        | Enable Azure Data Explorer (Kusto) output plugin         | `On`    |

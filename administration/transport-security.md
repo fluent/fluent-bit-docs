@@ -12,26 +12,31 @@ Both NPN and ALPN are used when client and server are establishing SSL/TLS conne
 
 Both input and output plugins that perform Network I/O can optionally enable TLS and configure the behavior. The following table describes the properties available:
 
-| Property              | Description                                                                                                                             | Default |
-|:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------|:--------|
-| `tls`                 | Enable or disable TLS support.                                                                                                          | `off`   |
-| `tls.debug`           | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1`     |
-| `tls.ca_file`         | Absolute path to CA certificate file.                                                                                                   | _none_  |
-| `tls.ca_path`         | Absolute path to scan for certificate files.                                                                                            | _none_  |
-| `tls.ciphers`         | Specify TLS ciphers up to TLSv1.2.                                                                                                      | _none_  |
-| `tls.crt_file`        | Absolute path to Certificate file.                                                                                                      | _none_  |
-| `tls.key_file`        | Absolute path to private Key file.                                                                                                      | _none_  |
-| `tls.key_passwd`      | Optional password for `tls.key_file` file.                                                                                              | _none_  |
-| `tls.max_version`     | Specify the maximum version of TLS.                                                                                                     | _none_  |
-| `tls.min_version`     | Specify the minimum version of TLS.                                                                                                     | _none_  |
-| `tls.verify`              | Force certificate validation.                                                                                                           | `on`    |
-| `tls.vhost`               | Hostname to be used for TLS SNI extension.                                                                                              | _none_  |
-| `tls.verify_hostname`     | Force TLS verification of host names.                                                                                                   | `off`   |
-| `tls.verify_client_cert`  | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. | `off`   |
+| Property | Description | Default |
+| :--- | :--- | :--- |
+| `tls` | Enable or disable TLS support. | `off` |
+| `tls.debug` | Set TLS debug verbosity level. Accepted values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1` |
+| `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
+| `tls.ciphers` | Specify TLS ciphers up to TLSv1.2. | _none_ |
+| `tls.crl_file`        | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_  |
+| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
+| `tls.key_file` | Absolute path to private Key file. | _none_ |
+| `tls.key_passwd` | Optional password for `tls.key_file` file. | _none_ |
+| `tls.max_version` | Specify the maximum version of TLS. | _none_ |
+| `tls.min_version` | Specify the minimum version of TLS. | _none_ |
+| `tls.proxy.ca_file` | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`, which verifies the destination's certificate. Only applies to output plugins connecting through an HTTPS proxy. See [HTTP proxy](http-proxy.md). Supported in v5.1 or later. | _none_ |
+| `tls.proxy.ca_path` | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | _none_ |
+| `tls.proxy.verify` | Force certificate validation for the HTTPS proxy connection. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | `on` |
+| `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Only applies to output plugins connecting through an HTTPS proxy. Supported in v5.1 or later. | `on` |
+| `tls.verify` | Force certificate validation. | `on` |
+| `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
+| `tls.verify_hostname` | Force TLS verification of host names. In v5.2 or later, this also applies to additional connections that some plugins open. See [Hostname verification](#hostname-verification). | `off` |
+| `tls.verify_client_cert` | Require and verify the TLS certificate presented by a connecting client. Enables mutual TLS (mTLS) for input plugins. Only applies to input plugins. In v5.1.3 or later, enabling this option also forces certificate validation for the connection, even when `tls.verify` is `off`. Fluent Bit logs a warning when you combine the two settings that way. | `off` |
 
 {% hint style="info" %}
 
-When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't include the TLS Server Name Indication (SNI) extension, which is consistent with [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066). Certificate validation still applies against the IP address. If the server requires SNI or uses a hostname-based certificate, use a hostname as the connection target and set `tls.vhost` if needed.
+When the connection target is an IP address (IPv4 or IPv6), Fluent Bit doesn't include the TLS Server Name Indication (SNI) extension, which is consistent with [RFC 6066](https://www.rfc-editor.org/info/rfc6066/). Certificate validation still applies against the IP address. If the server requires SNI or uses a hostname-based certificate, use a hostname as the connection target and set `tls.vhost` if needed.
 
 {% endhint %}
 
@@ -92,6 +97,21 @@ The following input plugins can take advantage of the TLS feature:
 In addition, other plugins implement a subset of TLS support, with restricted configuration:
 
 - [Kubernetes Filter](../pipeline/filters/kubernetes.md)
+
+## Hostname verification
+
+In v5.2 or later, `tls.verify_hostname` also applies to the additional TLS connections that some plugins open alongside their main connection:
+
+- OAuth 2.0 token requests in the [Azure Data Explorer](../pipeline/outputs/azure_kusto.md), [Azure Logs Ingestion](../pipeline/outputs/azure_logs_ingestion.md), [BigQuery](../pipeline/outputs/bigquery.md), [Chronicle](../pipeline/outputs/chronicle.md), [Google Cloud Storage](../pipeline/outputs/gcs.md), [HTTP](../pipeline/outputs/http.md), [OpenTelemetry](../pipeline/outputs/opentelemetry.md), and [Stackdriver](../pipeline/outputs/stackdriver.md) outputs.
+- Requests to AWS Security Token Service (STS) to obtain credentials, in the [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md), [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md), [Amazon Kinesis Data Streams](../pipeline/outputs/kinesis.md), [Amazon S3](../pipeline/outputs/s3.md), [BigQuery](../pipeline/outputs/bigquery.md), [Elasticsearch](../pipeline/outputs/elasticsearch.md), [HTTP](../pipeline/outputs/http.md), [OpenSearch](../pipeline/outputs/opensearch.md), [OpenTelemetry](../pipeline/outputs/opentelemetry.md), and [Prometheus Remote Write](../pipeline/outputs/prometheus-remote-write.md) outputs.
+- Google Security Token Service and IAM requests in the [BigQuery](../pipeline/outputs/bigquery.md) output.
+- The pod association connection in the [Kubernetes](../pipeline/filters/kubernetes.md) filter, when `aws_use_pod_association` is enabled.
+
+Earlier versions didn't verify hostnames on these connections. The [Amazon CloudWatch](../pipeline/outputs/cloudwatch.md), [Amazon Kinesis Data Firehose](../pipeline/outputs/firehose.md), [Amazon Kinesis Data Streams](../pipeline/outputs/kinesis.md), and [Amazon S3](../pipeline/outputs/s3.md) outputs also ignored `tls.verify_hostname` on their main connection, and the [Kubernetes Events](../pipeline/inputs/kubernetes-events.md) input ignored it entirely.
+
+Hostname verification only runs when certificate validation is also on. `tls.verify_hostname` is still `off` by default. If you set it to `on`, connections that succeeded before an upgrade to v5.2 can fail if an endpoint's certificate doesn't match its hostname. Check these endpoints before you upgrade.
+
+OAuth 2.0 token requests to HTTPS endpoints always validate the server certificate against the system's trusted certificate authorities. They don't use the output's `tls.verify`, `tls.ca_file`, or `tls.ca_path` settings.
 
 ## Example: enable TLS on HTTP input
 
@@ -210,6 +230,22 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+## Certificate reload
+
+Automatic certificate reload is available in Fluent Bit version 5.1 and greater.
+
+Fluent Bit reloads TLS certificates from disk without a restart or a [hot reload](hot-reload.md). No configuration is required, and there's no reload interval to tune.
+
+Each time Fluent Bit creates a new TLS session, it checks the certificate directory set by `tls.ca_path`, and the individual certificate and key files set by `tls.ca_file`, `tls.crt_file`, and `tls.key_file`. If any of them changed, Fluent Bit builds a new TLS context from disk and uses it for that session and the sessions that follow. This applies to both directions: output plugins connecting to a remote server, and input plugins accepting incoming connections.
+
+For each of these paths, Fluent Bit compares whether the path exists, its size, and its modification and change timestamps. On Linux it also compares the device and `inode` numbers, and uses nanosecond timestamp precision. The `inode` comparison matters in practice. It detects a certificate replaced by renaming a new file over the old one, along with the symlink swap that Kubernetes performs when a mounted secret is updated.
+
+For `tls.ca_path`, Fluent Bit inspects the directory itself rather than each certificate inside it. This detects certificates added to, removed from, or renamed within the directory, because those operations change the directory's own timestamps. A certificate file that's modified in place inside that directory doesn't trigger a reload. To have such an update detected, replace the file by renaming a new one over it, or reference it directly with `tls.ca_file`.
+
+Sessions that are already established keep the context they were created with. A long-lived connection continues to use the previous certificate until it's reconnected.
+
+If the new files can't be loaded, for example because a certificate and key were written separately and Fluent Bit read them mid-update, it logs `detected certificate file changes but reload failed` and keeps the previous context. Connections continue to work with the certificate that was already loaded, and the next session retries the reload.
 
 ## Tips and tricks
 

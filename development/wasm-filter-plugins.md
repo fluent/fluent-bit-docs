@@ -12,7 +12,7 @@ There are no additional requirements to execute Wasm plugins.
 
 #### Build `flb-wamrc` (optional)
 
-`flb-wamrc` is a `flb`-prefixed Ahead of Time (AOT) compiler that's provided from [`wasm-micro-runtime`](https://github.com/bytecodealliance/wasm-micro-runtime).
+`flb-wamrc` is a `flb`-prefixed Ahead of Time (AOT) compiler that's provided from [`wasm-micro-runtime`](https://github.com/wasm-micro-runtime/wasm-micro-runtime).
 
 For `flb-wamrc` support, you must install the LLVM infrastructure and some additional libraries (`libmlir`, `libPolly`, `libedit`, and `libpfm`). For example:
 
@@ -98,10 +98,12 @@ For Rust:
 // #[no_mangle] attribute is needed for preventing mangles and align C ABI.
 // Also we can use an arbitrary function name for filter operations w/ Wasm.
 #[no_mangle]
-pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32)
+pub extern "C" fn rust_filter(tag: *const c_char, tag_len: u32, time_sec: u32, time_nsec: u32, record: *const c_char, record_len: u32) -> *const u8
 ```
 
 The `//export XXX` attribute on TinyGo and `#[no_mangle]` attribute on Rust are required. This is because TinyGo and Rust will mangle their function names if they aren't specified.
+
+In the Rust 2024 edition, `no_mangle` is an unsafe attribute, so write `#[unsafe(no_mangle)]` instead. This form requires Rust 1.82 or later. The examples on this page use `#[no_mangle]`, which works with earlier editions.
 
 Once built, a Wasm program will be available. Then you can execute that built program with one of the following Fluent Bit configurations:
 
@@ -228,6 +230,116 @@ This filter approach offers several advantages inherent to programming languages
 
 These examples can be applied in a demo and can serve as an ideal starting point to create more complex logic, depending on your requirements.
 
+### ABI version 2: value-length return
+
+The signatures in [Requirements of Wasm programs](#requirements-of-wasm-programs) use ABI version `1`, the default, where the function returns a pointer to a null-terminated string. Set `abi_version` to `2` in the [Wasm filter](../pipeline/filters/wasm.md) to use the value-length convention instead. With version `2`, the output doesn't need a null terminator, so the function can return binary MessagePack and JSON.
+
+The function takes the same six arguments as version `1` (tag, tag length, seconds, nanoseconds, record, record length) and returns one 64-bit integer. The low 32 bits hold the offset of the output in Wasm linear memory, and the high 32 bits hold its length in bytes. At startup, Fluent Bit verifies that the function has six 32-bit integer parameters and a 64-bit integer result, and fails to start if it doesn't.
+
+For C:
+
+```c
+#include <stdint.h>
+
+uint64_t c_filter_v2(const char *tag, uint32_t tag_length,
+                     uint32_t seconds, uint32_t nanoseconds,
+                     const char *record, uint32_t record_length)
+{
+    return ((uint64_t) record_length << 32) | (uint32_t) (uintptr_t) record;
+}
+```
+
+For Go (TinyGo):
+
+```go
+package main
+
+import "unsafe"
+
+//export filter_v2
+func filter_v2(tag *byte, tagLength uint32, seconds uint32, nanoseconds uint32,
+	record *byte, recordLength uint32) uint64 {
+	return uint64(recordLength)<<32 | uint64(uint32(uintptr(unsafe.Pointer(record))))
+}
+
+func main() {}
+```
+
+For Rust:
+
+```rust
+#[no_mangle]
+pub extern "C" fn filter_v2(
+    _tag: *const u8,
+    _tag_length: u32,
+    _seconds: u32,
+    _nanoseconds: u32,
+    record: *const u8,
+    record_length: u32,
+) -> u64 {
+    ((record_length as u64) << 32) | (record as u32 as u64)
+}
+```
+
+These examples return the incoming record unchanged.
+
+The returned value is handled as follows:
+
+- Returning `0` drops the record. A non-zero value with a zero offset or zero length is invalid.
+- The output must contain exactly one map: a JSON object when `event_format` is `json`, or a MessagePack map when `event_format` is `msgpack`. With JSON, only whitespace can follow the object.
+- The record keeps its original timestamp and metadata. The output replaces only the record body.
+- If the call fails, or the output is invalid, Fluent Bit logs `WASM call or output is invalid; keeping original record` and passes the original record through unchanged. With version `1`, a failed call drops the record instead.
+
+Fluent Bit copies the output as soon as the function returns, before it releases the input, so the function can return a slice of the input record. Output stored in module-owned memory must stay valid after the function returns, until the next call. Don't return stack-local storage or memory that's freed when the function returns, such as a dropped Rust `Vec`. To avoid leaking memory, reuse or release module-owned buffers instead of allocating new ones on every call.
+
+The following configuration uses the Rust example with ABI version `2`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: dummy
+      tag: example
+
+  filters:
+    - name: wasm
+      match: '*'
+      wasm_path: filter_v2.wasm
+      function_name: filter_v2
+      abi_version: 2
+      event_format: json
+
+  outputs:
+    - name: stdout
+      match: '*'
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+    Name dummy
+    Tag  example
+
+[FILTER]
+    Name          wasm
+    Match         *
+    WASM_Path     filter_v2.wasm
+    Function_Name filter_v2
+    Abi_Version   2
+    Event_Format  json
+
+[OUTPUT]
+    Name  stdout
+    Match *
+```
+
+{% endtab %}
+{% endtabs %}
+
 ### Optimize execution of Wasm programs
 
 To optimize Wasm program execution, there is the option of using `flb-wamrc`. This option reduces your runtime footprint and to be best performance for filtering operations.
@@ -263,5 +375,6 @@ AOT compiling should generate CPU architecture-dependent objects. If you want to
 
 - [C filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_c)
 - [Rust Filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_rust)
+- [Rust ABI version 2 filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_rust)
 - [TinyGo
   filter](https://github.com/fluent/fluent-bit/tree/master/examples/filter_wasm_go)

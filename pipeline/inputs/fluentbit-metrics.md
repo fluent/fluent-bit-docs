@@ -100,19 +100,19 @@ pipeline:
 # $ curl http://127.0.0.1:2021/metrics
 #
 [SERVICE]
-  flush           1
-  log_level       info
+  Flush           1
+  Log_Level       info
 
 [INPUT]
-  name            fluentbit_metrics
-  tag             internal_metrics
-  scrape_interval 2
+  Name            fluentbit_metrics
+  Tag             internal_metrics
+  Scrape_Interval 2
 
 [OUTPUT]
-  name            prometheus_exporter
-  match           internal_metrics
-  host            0.0.0.0
-  port            2021
+  Name            prometheus_exporter
+  Match           internal_metrics
+  Host            0.0.0.0
+  Port            2021
 ```
 
 {% endtab %}

@@ -4,9 +4,9 @@
 **Supported event types:** `logs` `metrics` `traces`
 {% endhint %}
 
-_Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://fluentd.org).
+_Forward_ is the protocol used by [Fluentd](https://www.fluentd.org) to route messages between peers. The `forward` output plugin provides interoperability between [Fluent Bit](https://fluentbit.io) and [Fluentd](https://www.fluentd.org).
 
-There are no configuration steps required besides specifying where [Fluentd](https://fluentd.org) is located, which can be a local or a remote destination.
+There are no configuration steps required besides specifying where [Fluentd](https://www.fluentd.org) is located, which can be a local or a remote destination.
 
 This plugin offers the following transports and modes:
 
@@ -29,7 +29,7 @@ The following parameters are mandatory for both Forward and Secure Forward modes
 | `require_ack_response` | Send the `chunk` option and wait for an `ack` response from the server. This enables at-least-once delivery and lets the receiving server control traffic rate. Requires Fluentd `v0.14.0` or later. | `false` |
 | `compress` | Set to `gzip` to enable gzip compression. Incompatible with `time_as_integer true` and tags set dynamically using the [Rewrite Tag](../filters/rewrite-tag.md) filter. Requires Fluentd server `v0.14.7` or later. | _none_ |
 | `fluentd_compat` | Send metrics and traces using a Fluentd-compatible format. | `false` |
-| `retain_metadata_in_forward_mode` | Retain metadata when operating in forward mode. | `true` |
+| `retain_metadata_in_forward_mode` | Retain metadata when operating in forward mode. **Changed to `true` in v5.0.4.** Set to `false` when sending to Fluentd. Fluentd doesn't support the extended metadata format and will log `[input1] skip invalid event` and drop all records. | `true` |
 | `add_option` | Add an extra Forward protocol option. This is an advanced setting and can be specified multiple times. Enabling it also enables `send_options`. | _none_ |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `2` |
 
@@ -41,13 +41,14 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 | --- | ----------- | ------- |
 | `shared_key` | A key string known by the remote Fluentd used for authorization. | _none_ |
 | `empty_shared_key` | Connect to Fluentd with a zero-length shared secret. | `false` |
-| `username` | Specify the username to present to a Fluentd server that enables `user_auth`. | _none_ |
-| `password` | Specify the password corresponding to the username. | _none_ |
+| `username` | Specify the username to present to a Fluentd server that enables `user_auth`. Requires `shared_key` or `empty_shared_key` to be set, because credentials are exchanged only during the secure forward handshake. Otherwise, Fluent Bit fails to start. | _none_ |
+| `password` | Specify the password corresponding to the username. Requires `shared_key` or `empty_shared_key`, the same as `username`. | _none_ |
 | `self_hostname` | Default value of the auto-generated certificate common name (CN). | `localhost` |
 | `tls` | Enable or disable TLS support. | `Off` |
 | `tls.verify` | Force certificate validation. | `On` |
 | `tls.debug` | Set TLS debug verbosity level. Allowed values: `0` (No debug), `1` (Error), `2` (State change), `3` (Informational), and `4` (Verbose). | `1` |
 | `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_ |
 | `tls.crt_file` | Absolute path to Certificate file. | _none_ |
 | `tls.key_file` | Absolute path to private Key file. | _none_ |
 | `tls.key_passwd` | Optional password for `tls.key_file`. | _none_ |
@@ -56,7 +57,7 @@ When using Secure Forward mode, the [TLS](../../administration/transport-securit
 
 ## Forward setup
 
-Before proceeding, ensure that [Fluentd](https://fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation) document.
+Before proceeding, ensure that [Fluentd](https://www.fluentd.org) is installed. If it's not, refer to the [Fluentd Installation](https://docs.fluentd.org/installation/) document.
 
 After installing Fluentd, create the following configuration file example which lets you to stream data into it:
 

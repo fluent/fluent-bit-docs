@@ -65,8 +65,8 @@ pipeline:
             key: "http.url"
             pattern: ^(?<http_protocol>https?):\/\/(?<http_domain>[^\/\?]+)(?<http_path>\/[^?]*)?(?:\?(?<http_query_params>.*))?
 
-    - name: sql
-      query: "SELECT http_domain FROM STREAM;"
+          - name: sql
+            query: "SELECT http_domain FROM STREAM;"
 
   outputs:
     - name : stdout

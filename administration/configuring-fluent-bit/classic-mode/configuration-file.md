@@ -19,24 +19,38 @@ The `Service` section defines global properties of the service. The following ke
 
 | Key             | Description   | Default Value |
 | --------------- | ------------- | ------------- |
-| `flush`           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when it's required to flush the records ingested by input plugins through the defined output plugins.  | `1` |
-| `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
+| `coro_stack_size` | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (`4096`) can cause coroutine threads to overrun the stack buffer. The default value of this parameter shouldn't be changed. | `24576` |
 | daemon          | Boolean. Determines whether Fluent Bit should run as a Daemon (background). Allowed values are: `yes`, `no`, `on`, and `off`. Don't enable when using a Systemd based unit, such as the one provided in Fluent Bit packages.  | `Off` |
-| `dns.mode`        | Set the primary transport layer protocol used by the asynchronous DNS resolver. Can be overridden on a per plugin basis. | `UDP` |
-| `log_file`        | Absolute path for an optional log file. By default all logs are redirected to the standard error interface (stderr). | _none_ |
-| `log_level`       | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. If `debug` is set, it will include `error`, `warning`, `info`, and `debug`. Trace mode is only available if Fluent Bit was built with the _`WITH_TRACE`_ option enabled. | `info` |
-| `parsers_file`    | Path for a `parsers` configuration file. Multiple `Parsers_File` entries can be defined within the section. | _none_ |
-| `plugins_file`    | Path for a `plugins` configuration file. A `plugins` configuration file defines paths for external plugins. [See an example](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
-| `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/overview.md). | _none_|
-| `http_server`     | Enable the built-in HTTP Server. | `Off` |
+| `dns.mode`        | Set the primary transport layer protocol used by the asynchronous DNS resolver. It can be overridden on a per-plugin basis. | `UDP` |
+| `flush`           | Set the flush time in `seconds.nanoseconds`. The engine loop uses a Flush timeout to define when it's required to flush the records ingested by input plugins through the defined output plugins.  | `1` |
+| `flush.adaptive` | If enabled, the flush interval is adjusted at runtime based on chunk backpressure. See [Adaptive flush intervals](../yaml/service-section.md#adaptive-flush-intervals). | `Off` |
+| `flush.adaptive.min_interval` | Lower bound in seconds for the adaptive flush interval. | `0.5` |
+| `flush.adaptive.max_interval` | Upper bound in seconds for the adaptive flush interval. | `2` |
+| `flush.adaptive.low_pressure` | Chunk backpressure percentage that selects the longest flush interval. | `25` |
+| `flush.adaptive.medium_pressure` | Chunk backpressure percentage that shortens the flush interval to three quarters of the `flush` value. | `50` |
+| `flush.adaptive.high_pressure` | Chunk backpressure percentage that selects the shortest flush interval. | `75` |
+| `flush.adaptive.up_steps` | Consecutive samples at a higher pressure level required before the flush interval is shortened. | `2` |
+| `flush.adaptive.down_steps` | Consecutive samples at a lower pressure level required before the flush interval is lengthened. | `3` |
+| `grace`           | Set the grace time in `seconds` as an integer value. The engine loop uses a grace timeout to define wait time on exit. | `5` |
+| `http_client.max_header_count` | Maximum number of headers accepted in an HTTP response. Must be a positive integer. Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `100` |
+| `http_client.max_header_size` | Maximum size of the HTTP response status line and headers. Must be at least `32` bytes. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `65536` |
+| `http_client.max_response_size` | Maximum size of an HTTP response body. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `4194304` |
+| `http_client.max_wire_size` | Maximum total number of bytes received from the network for one HTTP response, including framing. Uses [unit sizes](../../configuring-fluent-bit.md#unit-sizes). Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `67108864` |
+| `http_client.response_timeout` | Maximum time in seconds to send an HTTP request and receive the complete response. Must be a positive integer without a unit suffix. Applies only to the [OpenTelemetry](../../../pipeline/outputs/opentelemetry.md) output when HTTP/2 or gRPC is enabled. See [HTTP client response limits](../yaml/service-section.md#http-client-response-limits). | `30` |
 | `http_listen`     | Set listening interface for HTTP Server when it's enabled. | `0.0.0.0` |
 | `http_port`       | Set TCP Port for the HTTP Server. | `2020` |
-| `coro_stack_size` | Set the coroutines stack size in bytes. The value must be greater than the page size of the running system. Setting the value too small (`4096`) can cause coroutine threads to overrun the stack buffer. The default value of this parameter shouldn't be changed. | `24576` |
-| `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
-| `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
+| `http_server`     | Enable the built-in HTTP Server. | `Off` |
 | `json.convert_nan_to_null` | If enabled, `NaN` converts to `null` when Fluent Bit converts `msgpack` to `json`. | `false` |
 | `json.escape_unicode` | Controls how Fluent Bit serializes non‑ASCII / multi‑byte Unicode characters in JSON strings. When enabled, Unicode characters are escaped as `\uXXXX` sequences (characters outside BMP become surrogate pairs). When disabled, Fluent Bit emits raw UTF‑8 bytes. | `true` |
+| `log_file`        | Absolute path for an optional log file. By default all logs are redirected to the standard error interface (stderr). | _none_ |
+| `log_level`       | Set the logging verbosity level. Allowed values are: `off`, `error`, `warn`, `info`, `debug`, and `trace`. Values are cumulative. If `debug` is set, it will include `error`, `warning`, `info`, and `debug`. Trace mode is only available if Fluent Bit was built with the `FLB_TRACE` option enabled. You can also set this value with the `FLB_LOG_LEVEL` environment variable, which takes precedence over this key. See [Log level](../yaml/service-section.md#log-level). | `info` |
+| `parsers_file`    | Path for a `parsers` configuration file. Multiple `Parsers_File` entries can be defined within the section. | _none_ |
+| `plugins_file`    | Path for a `plugins` configuration file. A `plugins` configuration file defines paths for external plugins. [See an example](https://github.com/fluent/fluent-bit/blob/master/conf/plugins.conf). | _none_ |
+| `scheduler.base`  | Set a base of exponential backoff. Supported in v1.8.7 and greater. | `5` |
+| `scheduler.cap`   | Set a maximum retry time in seconds. Supported in v1.8.7 and greater. | `2000` |
+| `security.fips_mode` | If enabled, the OpenSSL FIPS provider is required at startup and Fluent Bit exits if it isn't available. See [FIPS mode](../yaml/service-section.md#fips-mode). | `Off` |
 | `sp.convert_from_str_to_num` | If enabled, Stream processor converts from number string to number type. | `true` |
+| `streams_file`    | Path for the Stream Processor configuration file. [Learn more about Stream Processing configuration](../../../stream-processing/overview.md). | _none_|
 | `windows.maxstdio` | If specified, the limit of stdio is adjusted. Only provided for Windows. From 512 to 2048 is allowed. | `512` |
 
 The following is an example of a `SERVICE` section:
@@ -48,7 +62,7 @@ The following is an example of a `SERVICE` section:
   Log_Level       debug
 ```
 
-For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md#Scheduling-and-Retries).
+For scheduler and retry details, see [scheduling and retries](../../scheduling-and-retries.md).
 
 ## Config input
 
@@ -150,15 +164,17 @@ To avoid complicated long configuration files is better to split specific parts 
 @INCLUDE somefile.conf
 ```
 
-The configuration reader will try to open the path `somefile.conf`. If not found, the reader assumes the file is on a relative path based on the path of the base configuration file:
+In v5.2 or later, the configuration reader looks for a relative path in the directory of the base configuration file first. If the file isn't found there, the reader tries the path relative to the working directory of the Fluent Bit process. This also applies to nested includes, which are resolved against the directory of the base configuration file, not the directory of the file that includes them:
 
 - Main configuration path: `/tmp/main.conf`
 - Included file: `somefile.conf`
-- Fluent Bit will try to open `somefile.conf`, if it fails it will try `/tmp/somefile.conf`.
+- Fluent Bit tries to open `/tmp/somefile.conf`. If that file doesn't exist, it tries `somefile.conf`.
+
+Earlier versions tried `somefile.conf` in the working directory first.
 
 The `@INCLUDE` command only works at top-left level of the configuration line, and can't be used inside sections.
 
-Wildcard character (`*`) supports including multiple files. For example:
+Wildcard character (`*`) supports including multiple files. A relative wildcard path is matched in the directory of the base configuration file, with no fallback to the working directory. On Windows, versions earlier than v5.2 matched relative wildcard paths against the working directory. For example:
 
 ```text
 @INCLUDE input_*.conf

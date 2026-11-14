@@ -62,7 +62,7 @@ For the special fields that map to `LogEntry` prototypes, add them as objects wi
 }
 ```
 
-Adding special fields to logs is best done through the [`modify` filter](../filters/modify) for basic fields, or [a Lua script using the `lua` filter](../filters/lua) for more complex fields.
+Adding special fields to logs is best done through the [`modify` filter](../filters/modify.md) for basic fields, or [a Lua script using the `lua` filter](../filters/lua.md) for more complex fields.
 
 ## Basic type special fields
 

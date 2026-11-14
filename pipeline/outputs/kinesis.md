@@ -96,7 +96,6 @@ The following AWS IAM permissions are required to use this plugin:
 
 When you enable compression using the `compression` parameter, records are compressed before upload to Kinesis Data Streams.
 
-
 {% hint style="info" %}
 
 Each log record is individually compressed by Fluent Bit before sending. Consumers must decompress each record using the same compression format.
@@ -133,7 +132,7 @@ You can use the Fluent Bit SSM Public Parameters to find the Amazon ECR image UR
 aws ssm get-parameters-by-path --path /aws/service/aws-for-fluent-bit/
 ```
 
-For more details, see the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/get-set-up-for-amazon-ecr.html).
+For more details, see the [Amazon ECR Public official doc](https://docs.aws.amazon.com/AmazonECR/latest/public/what-is-ecr.html).
 
 ### Docker Hub
 

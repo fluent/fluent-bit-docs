@@ -8,9 +8,9 @@ description: An overview of free public labs for learning how to successfully us
 
 To use these lab resources to their full extent, you'll need to [install](../installation/downloads.md) resources in your local environment to test and run Fluent Bit.
 
-## O11y workshops by Chronosphere
+## Observability (O11y) workshops
 
-Chronosphere provides several [open source observability workshops](https://o11y-workshops.gitlab.io/), including a Fluent Bit workshop:
+One of the maintainers, [Eric Schabell](https://www.schabell.org/), provides several [open source observability workshops](https://o11y-workshops.gitlab.io/), including a Fluent Bit workshop:
 
 {% embed url="https://o11y-workshops.gitlab.io/workshop-fluentbit/" %}
 Fluent Bit workshop for getting started with cloud native telemetry pipelines

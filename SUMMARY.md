@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Fluent Bit documentation](README.md)
+* [Fluent Bit 5.2 documentation](README.md)
 
 ## About
 
@@ -33,7 +33,7 @@
   * [Kubernetes](installation/downloads/kubernetes.md)
   * [macOS](installation/downloads/macos.md)
   * [Windows](installation/downloads/windows.md)
-* [What's new in Fluent Bit v5.0](installation/whats-new-in-fluent-bit-v5.0.md)
+* [What's new in Fluent Bit v5](installation/whats-new-in-fluent-bit-v5.md)
 * [Upgrade notes](installation/upgrade-notes.md)
 
 ## Administration
@@ -121,6 +121,7 @@
   * [TCP](pipeline/inputs/tcp.md)
   * [Thermal](pipeline/inputs/thermal.md)
   * [UDP](pipeline/inputs/udp.md)
+  * [Event tracing for Windows](pipeline/inputs/event-tracing-windows.md)
   * [Windows Event logs (winlog)](pipeline/inputs/windows-event-log.md)
   * [Windows Event logs (winevtlog)](pipeline/inputs/windows-event-log-winevtlog.md)
   * [Windows exporter metrics](pipeline/inputs/windows-exporter-metrics.md)
@@ -138,6 +139,19 @@
   * [Content modifier](pipeline/processors/content-modifier.md)
   * [Cumulative to delta](pipeline/processors/cumulative-to-delta.md)
   * [Filters as processors](pipeline/processors/filters.md)
+  * [Fluent Typed Scripting (FTS)](pipeline/processors/fluent-typed-scripting.md)
+    * [Quickstart](pipeline/processors/fluent-typed-scripting/quickstart.md)
+    * [Configuration](pipeline/processors/fluent-typed-scripting/configuration.md)
+    * [Typed values](pipeline/processors/fluent-typed-scripting/typed-values.md)
+    * [Logs](pipeline/processors/fluent-typed-scripting/logs.md)
+    * [Metrics](pipeline/processors/fluent-typed-scripting/metrics.md)
+    * [Traces](pipeline/processors/fluent-typed-scripting/traces.md)
+    * [Common helpers](pipeline/processors/fluent-typed-scripting/common-helpers.md)
+    * [Errors and limits](pipeline/processors/fluent-typed-scripting/errors-and-limits.md)
+    * [Fluent Typed Scripting (FTS) and the Lua filter](pipeline/processors/fluent-typed-scripting/lua-filter.md)
+    * [Native recipe blocks](pipeline/processors/fluent-typed-scripting/native-recipes.md)
+    * [Recipes](pipeline/processors/fluent-typed-scripting/recipes.md)
+  * [Journald OpenTelemetry](pipeline/processors/journald-otel.md)
   * [Labels](pipeline/processors/labels.md)
   * [Metrics selector](pipeline/processors/metrics-selector.md)
   * [OpenTelemetry envelope](pipeline/processors/opentelemetry-envelope.md)
@@ -179,6 +193,7 @@
   * [Amazon Kinesis Data Streams](pipeline/outputs/kinesis.md)
   * [Amazon S3](pipeline/outputs/s3.md)
   * [Apache SkyWalking](pipeline/outputs/skywalking.md)
+  * [ArvanCloud CloudLogs](pipeline/outputs/arvancloud_cloudlogs.md)
   * [Counter](pipeline/outputs/counter.md)
   * [Dash0](pipeline/outputs/dash0.md)
   * [Datadog](pipeline/outputs/datadog.md)
@@ -191,6 +206,7 @@
   * [Graylog Extended Log Format (GELF)](pipeline/outputs/gelf.md)
   * [Google Chronicle](pipeline/outputs/chronicle.md)
   * [Google Cloud BigQuery](pipeline/outputs/bigquery.md)
+  * [Google Cloud Storage](pipeline/outputs/gcs.md)
   * [HTTP](pipeline/outputs/http.md)
   * [InfluxDB](pipeline/outputs/influxdb.md)
   * [Kafka Producer](pipeline/outputs/kafka.md)

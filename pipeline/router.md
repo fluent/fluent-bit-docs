@@ -136,11 +136,11 @@ Routing also provides support for regular expressions with the `match_regex` pat
 ```yaml
 pipeline:
   inputs:
-    - name: temperature_sensor
-      tag: temp_sensor_A
+    - name: dummy
+      tag: temperature_sensor_A
 
-    - name: humidity_sensor
-      tag: humid_sensor_B
+    - name: dummy
+      tag: humidity_sensor_B
 
   outputs:
     - name: stdout
@@ -152,12 +152,12 @@ pipeline:
 
 ```text
 [INPUT]
-  Name temperature_sensor
-  Tag  temp_sensor_A
+  Name dummy
+  Tag  temperature_sensor_A
 
 [INPUT]
-  Name humidity_sensor
-  Tag  humid_sensor_B
+  Name dummy
+  Tag  humidity_sensor_B
 
 [OUTPUT]
   Name         stdout
@@ -168,6 +168,8 @@ pipeline:
 {% endtabs %}
 
 In this configuration, the `match_regex` rule is set to `.*_sensor_[AB]`. This regular expression matches any `Tag` that ends with `_sensor_A` or `_sensor_B`, regardless of what precedes it. This approach provides a more flexible and powerful way to handle different source tags with a single routing rule.
+
+In v5.2 or later, a `match_regex` search that exceeds the regular expression work limit doesn't route records with that tag to that output. Fluent Bit logs `[router] regex match failed: -17` each time a chunk with that tag is created. Filters that use `match_regex` are skipped the same way, and log the error each time records with that tag are added. See [Regular expression work limit](parsers/regular-expression.md#regular-expression-work-limit).
 
 ## Conditional routing
 
@@ -202,12 +204,14 @@ Conditional routing uses a `routes` block within input configurations to define 
 
 When a record arrives, Fluent Bit evaluates the conditions for each route in order. Records are sent to outputs whose conditions they match. You can also define a default route to catch records that don't match any other condition.
 
+In versions earlier than v5.1.5, Fluent Bit ignores the routes if a configuration has exactly one input and one output. It sends every record to that output, including records that don't match any route.
+
 ### Configuration syntax
 
 The `routes` block uses the following syntax:
 
 {% tabs %}
-{% tab title="fluent-bit.yaml" %}
+{% tab title="routing.yaml" %}
 
 ```yaml
 pipeline:
@@ -345,12 +349,12 @@ pipeline:
                 - default_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
 
-    - name: elasticsearch
+    - name: es
       alias: info_destination
       host: logs.example.com
       index: info-logs
@@ -405,7 +409,7 @@ pipeline:
     - name: splunk
       alias: critical_output
       host: splunk.example.com
-      token: ${SPLUNK_TOKEN}
+      splunk_token: '{SPLUNK_TOKEN}'
 
     - name: stdout
       alias: standard_output
@@ -461,7 +465,7 @@ pipeline:
       uri: /v2/enqueue
       format: json
 
-    - name: elasticsearch
+    - name: es
       alias: elasticsearch_output
       host: logs.example.com
       index: application-logs
@@ -513,7 +517,7 @@ pipeline:
       alias: security_output
       host: security-splunk.example.com
 
-    - name: elasticsearch
+    - name: es
       alias: general_output
       host: logs.example.com
 ```
@@ -583,7 +587,7 @@ pipeline:
                 - error_destination
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: error_destination
       host: errors.example.com
       index: error-logs
@@ -599,7 +603,7 @@ pipeline:
   Tag  app.logs
 
 [OUTPUT]
-  Name  elasticsearch
+  Name  es
   Alias error_destination
   Host  errors.example.com
   Index error-logs
@@ -668,12 +672,12 @@ pipeline:
                 - dev_logs_output
 
   outputs:
-    - name: elasticsearch
+    - name: es
       alias: prod_logs_output
       host: prod-logs.example.com
       index: production-logs
 
-    - name: elasticsearch
+    - name: es
       alias: dev_logs_output
       host: dev-logs.example.com
       index: development-logs

@@ -77,7 +77,7 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
-For details about how the WebSocket plugin works with TCP keepalive mode, see [networking](https://docs.fluentbit.io/manual/v/master/administration/networking#configuration-options). Because WebSocket is a stateful plugin, it will decide when to send out handshake to server side. For example, when the plugin begins to work or after connection with server has been dropped. In general, the interval to init a new WebSocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume WebSocket connections.
+For details about how the WebSocket plugin works with TCP keepalive mode, see [networking](../../administration/networking.md#configuration-options). Because WebSocket is a stateful plugin, it will decide when to send out handshake to server side. For example, when the plugin begins to work or after connection with server has been dropped. In general, the interval to init a new WebSocket handshake would be less than the keepalive interval. With that strategy, it could detect and resume WebSocket connections.
 
 ## Tests
 

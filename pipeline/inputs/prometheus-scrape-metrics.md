@@ -51,16 +51,16 @@ pipeline:
 
 ```text
 [INPUT]
-  name prometheus_scrape
-  host 0.0.0.0
-  port 8201
-  tag vault
-  metrics_path /v1/sys/metrics?format=prometheus
-  scrape_interval 10s
+  Name prometheus_scrape
+  Host 0.0.0.0
+  Port 8201
+  Tag vault
+  Metrics_Path /v1/sys/metrics?format=prometheus
+  Scrape_Interval 10s
 
 [OUTPUT]
-  name stdout
-  match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}

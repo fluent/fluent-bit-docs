@@ -4,115 +4,222 @@
 **Supported event types:** `logs` `metrics` `traces` `profiles`
 {% endhint %}
 
-The OpenTelemetry plugin lets you take logs, metrics, traces, and profiles from Fluent Bit and submit them to an OpenTelemetry HTTP endpoint.
+The OpenTelemetry output plugin lets you send logs, metrics, traces, and profiles from Fluent Bit to an OpenTelemetry Protocol (OTLP) endpoint. It supports OTLP/HTTP and OTLP/gRPC.
 
-Only HTTP endpoints are supported.
+## Transport
 
+By default, the plugin uses OTLP/HTTP with Protocol Buffers over HTTP/1.1. Set `grpc` to `on` to use OTLP/gRPC over HTTP/2 instead. Enabling gRPC automatically enables HTTP/2, including HTTP/2 without TLS (h2c), so you don't also need to set `http2`.
 
-| Key     | Description  | Default |
-|---------|--------------|---------|
-| `add_label`                               | Adds a custom label to the metrics use format: `add_label name value`.         | _none_ |
-| `alias`                                   | Sets an alias, use for multiple instances of the same output plugin.        | _none_ |
-| `aws_auth`                                | Enable AWS SigV4 authentication.                                               | `false`|
-| `aws_external_id`                         | Specify an external ID for the STS API, can be used with the `aws_role_arn` parameter.                                                                  | _none_ |
-| `aws_profile`                             | AWS Profile name. AWS Profiles can be configured with AWS CLI.                 | _none_ |
-| `aws_region`                              | AWS region of your service.                                                    | _none_ |
-| `aws_role_arn`                            | ARN of an IAM role to assume (ex. for cross account access).                   | _none_ |
-| `aws_service`                             | AWS destination service code, used by SigV4 authentication.                    | `logs` |
-| `aws_sts_endpoint`                        | Custom endpoint for the AWS STS API, used with the `aws_role_arn` option.      | _none_ |
-| `batch_size`                              | Set the maximum number of log records to be flushed at a time.                 | `1000` |
-| `compress`                                | Set payload compression mechanism. Options available are `gzip` and `zstd`.    | _none_ |
-| `grpc`                                    | Enable, disable or auto-detect gRPC usage. Accepted values: `on`, `off`, `auto`. | `off`  |
-| `grpc_logs_uri`                           | Specify an optional gRPC URI for the target OTel endpoint.                    | `/opentelemetry.proto.collector.logs.v1.LogsService/Export`                     |
-| `grpc_metrics_uri`                        | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export`               |
-| `grpc_profiles_uri`                       | Specify an optional gRPC URI for profiles OTel endpoint.                       | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
-| `grpc_traces_uri`                         | Specify an optional gRPC URI for the target OTel endpoint.                     | `/opentelemetry.proto.collector.trace.v1.TraceService/Export`                   |
-| `header`                                  | Add a HTTP header key/value pair. Multiple headers can be set.                 | _none_ |
-| `host`                                    | IP address or hostname of the target HTTP server.                              | `127.0.0.1`                                                                     |
-| `http2`                                   | Enable, disable or force HTTP/2 usage. Accepted values : `on`, `off`, or `force`.                                                                       | `off`  |
-| `http_passwd`                             | Set HTTP auth password.                                                        | _none_ |
-| `http_user`                               | Set HTTP auth user.                                                            | _none_ |
-| `log_level`                               | Specifies the log level for output plugin. If not set here, plugin uses global log level in `service` section.                                          | `info` |
-| `log_response_payload`                    | Specify if the response payload should be logged or not.                       | `true` |
-| `log_suppress_interval`                   | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression.                                    | `0`    |
-| `logs_attributes_metadata_key`            | Specify an `Attributes` key.                                                   | `$Attributes`                                                                   |
-| `logs_body_key`                           | Specify an optional HTTP URI for the target OTel endpoint.                     | _none_ |
-| `logs_body_key_attributes`                | If set and it matched a pattern, it includes the remaining fields in the record as attributes.                                                          | `false`|
-| `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key.                                         | `InstrumentationScope`                                                          |
-| `logs_max_resources`                      | Set the maximum number of OTLP log resources per export request (`0` disables the limit).                                                               | `0`    |
-| `logs_max_scopes`                         | Set the maximum number of OTLP log scopes per resource (`0` disables the limit).                                                                        | `0`    |
-| `logs_metadata_key`                       | Set the key to look up in the metadata.                                         | `otlp` |
-| `logs_observed_timestamp_metadata_key`    | Specify an `ObservedTimestamp` key.                                            | `$ObservedTimestamp`                                                            |
-| `logs_resource_metadata_key`              | Specify a `Resource` key.                                                      | `Resource`                                                                      |
-| `logs_severity_number_message_key`        | Specify a `SeverityNumber` key.                                                | `$severityNumber`                                                               |
-| `logs_severity_number_metadata_key`       | Specify a `SeverityNumber` key.                                                | `$SeverityNumber`                                                               |
-| `logs_severity_text_message_key`          | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `logs_severity_text_metadata_key`         | Specify a `SeverityText` key.                                                  | `$SeverityText`                                                                 |
-| `logs_span_id_message_key`                | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
-| `logs_span_id_metadata_key`               | Specify a `SpanId` key.                                                        | `$SpanId`                                                                       |
-| `logs_timestamp_metadata_key`             | Specify a `Timestamp` key.                                                     | `$Timestamp`                                                                    |
-| `logs_trace_flags_metadata_key`           | Specify a `TraceFlags` key.                                                    | `$TraceFlags`                                                                   |
-| `logs_trace_id_message_key`               | Specify a `TraceId` key.                                                       | `$TraceId`                                                                      |
-| `logs_trace_id_metadata_key`              | Specify a `TraceId` key.                                                       | `$TraceId`                                                                      |
-| `logs_uri`                                | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/logs`                                                                      |
-| `match`                                   | Set a tag pattern to match records that output should process. Exact matches or wildcards (for example `*`).                                            | _none_ |
-| `match_regex`                             | Set a regular expression to match tags for output routing. This allows more flexible matching compared to wildcards.                             | _none_ |
-| `metrics_uri`                             | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/metrics`                                                                   |
-| `net.connect_timeout`                     | Set maximum time allowed to establish a connection, this time includes the TLS handshake.                                                               | `10s`  |
-| `net.connect_timeout_log_error`           | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message.                                      | `true` |
-| `net.dns.mode`                            | Select the primary DNS connection type (TCP or UDP).                           | _none_ |
-| `net.dns.prefer_ipv4`                     | Select the primary DNS resolver type (LEGACY or ASYNC).                        | _none_ |
-| `net.dns.prefer_ipv6`                     | Prioritize IPv6 DNS results when trying to establish a connection.             | _none_ |
-| `net.io_timeout`                          | Set maximum time a connection can stay idle while assigned.                    | `0s`   |
-| `net.keepalive_max_recycle`               | Set maximum number of times a keepalive connection can be used before it retries.  | `2000` |
-| `net.max_worker_connections`              | Set the maximum number of active TCP connections that can be used per worker thread.                                                                    | `0`    |
-| `net.proxy_env_ignore`                    | Ignore the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` when set.                                                                   | `false`|
-| `net.source_address`                      | Specify network address to bind for data traffic.                              | _none_ |
-| `net.tcp_keepalive`                       | Enable or disable Keepalive support.                                           | `off`  |
-| `net.tcp_keepalive_interval`              | Interval between TCP keepalive probes when no response is received on a `keepidle` probe. | `-1`   |
-| `net.tcp_keepalive_probes`                | Number of unacknowledged probes to consider a connection dead.                 | `-1`   |
-| `net.tcp_keepalive_time`                  | Interval between the last data packet sent and the first TCP keepalive probe.  | `-1`   |
-| `oauth2.audience`                         | Optional `OAuth 2.0` audience parameter.                                       | _none_ |
-| `oauth2.auth_method`                      | `OAuth 2.0` client authentication method. Supported values: `basic`, `post`, `private_key_jwt`. | `basic` |
-| `oauth2.client_id`                        | `OAuth 2.0` client ID.                                                         | _none_ |
-| `oauth2.client_secret`                    | `OAuth 2.0` client secret.                                                     | _none_ |
-| `oauth2.connect_timeout`                  | Connect timeout for `OAuth 2.0` token requests.                                | `0s`   |
-| `oauth2.enable`                           | Enable `OAuth 2.0` client credentials for outgoing requests.                   | `false`|
-| `oauth2.jwt_aud`                          | Audience for `private_key_jwt` JSON Web Token (JWT) assertion. Defaults to the value of `oauth2.token_url` when not set. | _none_ |
-| `oauth2.jwt_cert_file`                    | Path to certificate file used by `private_key_jwt`.                            | _none_ |
-| `oauth2.jwt_header`                       | JWT header claim name for `private_key_jwt` thumbprint. Accepted values: `kid`, `x5t`. | `kid` |
-| `oauth2.jwt_key_file`                     | Path to PEM private key file used by `private_key_jwt`.                        | _none_ |
-| `oauth2.jwt_ttl_seconds`                  | Lifetime in seconds for `private_key_jwt` JWT client assertions.               | `300`  |
-| `oauth2.refresh_skew_seconds`             | Seconds before expiry at which to refresh the access token.                    | `60`   |
-| `oauth2.resource`                         | Optional `OAuth 2.0` resource parameter.                                       | _none_ |
-| `oauth2.scope`                            | Optional `OAuth 2.0` scope.                                                    | _none_ |
-| `oauth2.timeout`                          | Timeout for `OAuth 2.0` token requests.                                        | `0s`   |
-| `oauth2.token_url`                        | `OAuth 2.0` token endpoint URL.                                                | _none_ |
-| `port`                                    | TCP port of the target HTTP server.                                            | `80`   |
-| `profiles_uri`                            | Specify an optional HTTP URI for the profiles OTel endpoint.                   | `/v1development/profiles`                                                       |
-| `proxy`                                   | Specify an HTTP Proxy. The expected format of this value is `http://host:port`.| _none_ |
-| `retry_limit`                             | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely. | `1`    |
-| `tls`                                     | Enable or disable TLS/SSL support.                                             | `off`  |
-| `tls.ca_file`                             | Absolute path to CA certificate file.                                          | _none_ |
-| `tls.ca_path`                             | Absolute path to scan for certificate files.                                   | _none_ |
-| `tls.ciphers`                             | Specify TLS ciphers up to TLSv1.2.                                             | _none_ |
-| `tls.crt_file`                            | Absolute path to Certificate file.                                             | _none_ |
-| `tls.debug`                               | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                     | `1`    |
-| `tls.key_file`                            | Absolute path to private Key file.                                             | _none_ |
-| `tls.key_passwd`                          | Optional password for tls.key_file.                                             | _none_ |
-| `tls.max_version`                         | Specify the maximum version of TLS.                                            | _none_ |
-| `tls.min_version`                         | Specify the minimum version of TLS.                                            | _none_ |
-| `tls.verify`                              | Force certificate validation.                                                  | `on`   |
-| `tls.verify_hostname`                     | Enable or disable to verify hostname.                                          | `off`  |
-| `tls.vhost`                               | Hostname to be used for TLS SNI extension.                                     | _none_ |
-| `tls.windows.certstore_name`              | Sets the `certstore` name on an output (Windows).                                | _none_ |
-| `tls.windows.use_enterprise_store`        | Sets whether using enterprise `certstore` or not on an output (Windows).         | _none_ |
-| `traces_uri`                              | Specify an optional HTTP URI for the target OTel endpoint.                     | `/v1/traces`                                                                    |
-| `workers`                                 | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+The transport setting applies to every supported signal routed to this output. The plugin selects the corresponding URI for each signal:
+
+| Signal | OTLP/HTTP default | OTLP/gRPC default |
+| --- | --- | --- |
+| Logs | `/v1/logs` | `/opentelemetry.proto.collector.logs.v1.LogsService/Export` |
+| Metrics | `/v1/metrics` | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export` |
+| Traces | `/v1/traces` | `/opentelemetry.proto.collector.trace.v1.TraceService/Export` |
+| Profiles | `/v1development/profiles` | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
+
+Set `host` and `port` separately. For example, the standard OpenTelemetry Collector ports are `4318` for OTLP/HTTP and `4317` for OTLP/gRPC. Turn on `tls` when the endpoint requires a secure connection.
+
+{% hint style="info" %}
+`http2` controls the HTTP protocol version independently of the OTLP transport. Setting `http2` to `on` without setting `grpc` to `on` sends OTLP/HTTP over HTTP/2; it doesn't enable gRPC.
+{% endhint %}
+
+For example, this output sends every supported signal to an OpenTelemetry Collector using plain text OTLP/gRPC on its standard port:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: opentelemetry
+      match: "*"
+      host: otel-collector
+      port: 4317
+      grpc: on
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name   opentelemetry
+  Match  *
+  Host   otel-collector
+  Port   4317
+  Grpc   On
+```
+
+{% endtab %}
+{% endtabs %}
+
+## Configuration parameters
+
+| Key | Description | Default |
+| --------- | -------------- | --------- |
+| `add_label` | Adds a custom label to the metrics use format: `add_label name value`. | _none_ |
+| `alias` | Sets an alias, use for multiple instances of the same output plugin. | _none_ |
+| `aws_auth` | Enable AWS SigV4 authentication. | `false` |
+| `aws_external_id` | Specify an external ID for the STS API, can be used with the `aws_role_arn` parameter. | _none_ |
+| `aws_profile` | AWS Profile name. AWS Profiles can be configured with AWS CLI. | _none_ |
+| `aws_region` | AWS region of your service. | _none_ |
+| `aws_role_arn` | ARN of an IAM role to assume (for example, for cross-account access). | _none_ |
+| `aws_service` | AWS destination service code, used by SigV4 authentication. | `logs` |
+| `aws_sts_endpoint` | Custom endpoint for the AWS STS API, used with the `aws_role_arn` option. | _none_ |
+| `batch_size` | Set the maximum number of log records to be flushed at a time. | `1000` |
+| `compress` | Set the OTLP/HTTP payload compression mechanism. Available options are `gzip` and `zstd`. | _none_ |
+| `grpc` | Use OTLP/gRPC over HTTP/2. Accepted values are `on` and `off`. Enabling this option also enables HTTP/2. | `off` |
+| `grpc_logs_uri` | Set the gRPC method path for log exports. | `/opentelemetry.proto.collector.logs.v1.LogsService/Export` |
+| `grpc_metrics_uri` | Set the gRPC method path for metric exports. | `/opentelemetry.proto.collector.metrics.v1.MetricsService/Export` |
+| `grpc_profiles_uri` | Set the gRPC method path for profile exports. | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
+| `grpc_traces_uri` | Set the gRPC method path for trace exports. | `/opentelemetry.proto.collector.trace.v1.TraceService/Export` |
+| `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
+| `host` | IP address or hostname of the target OTLP server. | `127.0.0.1` |
+| `http2` | Control HTTP/2 independently of `grpc`. Accepted values are `on`, `off`, and `force`. With TLS, `on` negotiates the protocol and `force` requires HTTP/2. You don't need to set this when `grpc` is `on`. | `off` |
+| `http_passwd` | Set HTTP auth password. | _none_ |
+| `http_user` | Set HTTP auth user. | _none_ |
+| `log_level` | Specifies the log level for output plugin. If not set here, plugin uses global log level in `service` section. | `info` |
+| `log_response_payload` | Specify if the response payload should be logged or not. | `true` |
+| `log_suppress_interval` | Suppresses log messages from output plugin that appear similar within a specified time interval. `0` disables suppression. | `0` |
+| `logs_attributes_metadata_key` | Specify an `Attributes` key. | `$Attributes` |
+| `logs_body_key` | Set a record accessor that selects the value to use as the OTLP log body. | _none_ |
+| `logs_body_key_attributes` | If set and it matched a pattern, it includes the remaining fields in the record as attributes. | `false` |
+| `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key. | `InstrumentationScope` |
+| `logs_max_resources` | Set the maximum number of OTLP log resources per export request (`0` disables the limit). | `0` |
+| `logs_max_scopes` | Set the maximum number of OTLP log scopes per resource (`0` disables the limit). | `0` |
+| `logs_metadata_key` | Set the key to look up in the metadata. | `otlp` |
+| `logs_observed_timestamp_metadata_key` | Specify an `ObservedTimestamp` key. | `$ObservedTimestamp` |
+| `logs_resource_metadata_key` | Specify a `Resource` key. | `Resource` |
+| `logs_severity_number_message_key` | Specify a `SeverityNumber` key. | `$severityNumber` |
+| `logs_severity_number_metadata_key` | Specify a `SeverityNumber` key. | `$SeverityNumber` |
+| `logs_severity_text_message_key` | Specify a `SeverityText` key. | `$SeverityText` |
+| `logs_severity_text_metadata_key` | Specify a `SeverityText` key. | `$SeverityText` |
+| `logs_span_id_message_key` | Specify a `SpanId` key. | `$SpanId` |
+| `logs_span_id_metadata_key` | Specify a `SpanId` key. | `$SpanId` |
+| `logs_timestamp_metadata_key` | Specify a `Timestamp` key. | `$Timestamp` |
+| `logs_trace_flags_metadata_key` | Specify a `TraceFlags` key. | `$TraceFlags` |
+| `logs_trace_id_message_key` | Specify a `TraceId` key. | `$TraceId` |
+| `logs_trace_id_metadata_key` | Specify a `TraceId` key. | `$TraceId` |
+| `logs_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/logs` |
+| `match` | Set a tag pattern to match records that output should process. Exact matches or wildcards (for example `*`). | _none_ |
+| `match_regex` | Set a regular expression to match tags for output routing. This allows more flexible matching compared to wildcards. | _none_ |
+| `metrics_max_datapoints` | Set the maximum number of metric data points per OTLP export request. Fluent Bit splits a metrics payload that exceeds this value into multiple export requests. `0` disables the limit and sends each payload as a single request. Negative values are rejected at startup. See [Metrics batching](#metrics-batching). Supported in v5.1.2 or later. | `0` |
+| `metrics_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/metrics` |
+| `net.connect_timeout` | Set maximum time allowed to establish a connection, this time includes the TLS handshake. | `10s` |
+| `net.connect_timeout_log_error` | On connection timeout, specify if it should log an error. When disabled, the timeout is logged as a debug message. | `true` |
+| `net.dns.mode` | Select the primary DNS connection type (TCP or UDP). | _none_ |
+| `net.dns.prefer_ipv4` | Prioritize IPv4 DNS results when trying to establish a connection. | `false` |
+| `net.dns.prefer_ipv6` | Prioritize IPv6 DNS results when trying to establish a connection. | `false` |
+| `net.io_timeout` | Set maximum time a connection can stay idle while assigned. | `0s` |
+| `net.keepalive_max_recycle` | Set maximum number of times a keepalive connection can be used before it retries. | `2000` |
+| `net.max_worker_connections` | Set the maximum number of active TCP connections that can be used per worker thread. | `0` |
+| `net.proxy_env_ignore` | Ignore the `HTTP_PROXY`/`http_proxy` and `NO_PROXY`/`no_proxy` environment variables when set. | `false` |
+| `net.source_address` | Specify network address to bind for data traffic. | _none_ |
+| `net.tcp_keepalive` | Enable or disable Keepalive support. | `off` |
+| `net.tcp_keepalive_interval` | Interval between TCP keepalive probes when no response is received on a `keepidle` probe. | `-1` |
+| `net.tcp_keepalive_probes` | Number of unacknowledged probes to consider a connection dead. | `-1` |
+| `net.tcp_keepalive_time` | Interval between the last data packet sent and the first TCP keepalive probe. | `-1` |
+| `oauth2.audience` | Optional `OAuth 2.0` audience parameter. | _none_ |
+| `oauth2.auth_method` | `OAuth 2.0` client authentication method. Supported values: `basic`, `post`, `private_key_jwt`. | `basic` |
+| `oauth2.client_id` | Required when `oauth2.enable` is `true`. `OAuth 2.0` client ID. | _none_ |
+| `oauth2.client_secret` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `basic` or `post`. `OAuth 2.0` client secret. | _none_ |
+| `oauth2.connect_timeout` | Connect timeout for `OAuth 2.0` token requests. | `0s` |
+| `oauth2.enable` | Enable `OAuth 2.0` client credentials for outgoing requests. | `false` |
+| `oauth2.jwt_aud` | Audience for `private_key_jwt` JSON Web Token (JWT) assertion. Defaults to the value of `oauth2.token_url` when not set. | _none_ |
+| `oauth2.jwt_cert_file` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `private_key_jwt`. Path to certificate file used by `private_key_jwt`. Fluent Bit derives the `oauth2.jwt_header` thumbprint from this certificate. | _none_ |
+| `oauth2.jwt_header` | JWT header claim name for the `private_key_jwt` certificate thumbprint. Supported values are `kid` (hexadecimal SHA-1), `x5t` (base64url SHA-1), and `x5t#S256` (base64url SHA-256). Fluent Bit doesn't validate this value: an unrecognized name is sent as the claim name with a hexadecimal SHA-1 thumbprint. | `kid` |
+| `oauth2.jwt_key_file` | Required when `oauth2.enable` is `true` and `oauth2.auth_method` is `private_key_jwt`. Path to PEM private key file used by `private_key_jwt`. | _none_ |
+| `oauth2.jwt_ttl_seconds` | Lifetime in seconds for `private_key_jwt` JWT client assertions. | `300` |
+| `oauth2.refresh_skew_seconds` | Seconds before expiry at which to refresh the access token. | `60` |
+| `oauth2.resource` | Optional `OAuth 2.0` resource parameter. | _none_ |
+| `oauth2.scope` | Optional `OAuth 2.0` scope. | _none_ |
+| `oauth2.timeout` | Timeout for `OAuth 2.0` token requests. A value of `0s` applies no explicit response timeout. | `0s` |
+| `oauth2.token_url` | Required when `oauth2.enable` is `true`. `OAuth 2.0` token endpoint URL. Must use the `http` or `https` scheme. Use `https` in production: with `http`, Fluent Bit sends the client credentials without TLS. | _none_ |
+| `oauth2.user_agent` | Optional `User-Agent` header value to include in `OAuth 2.0` token requests. If omitted, no `User-Agent` header is sent. | _none_ |
+| `port` | TCP port of the target OTLP server. | `80` |
+| `profiles_uri` | Specify an optional HTTP URI for the profiles OTel endpoint. | `/v1development/profiles` |
+| `proxy` | Specify an HTTP Proxy. The expected format of this value is `http://host:port`. | _none_ |
+| `retry_limit` | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely. | `1` |
+| `tls` | Enable or disable TLS/SSL support. | `off` |
+| `tls.ca_file` | Absolute path to CA certificate file. | _none_ |
+| `tls.ca_path` | Absolute path to scan for certificate files. | _none_ |
+| `tls.ciphers` | Specify TLS ciphers up to TLSv1.2. | _none_ |
+| `tls.crl_file` | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later. | _none_ |
+| `tls.crt_file` | Absolute path to Certificate file. | _none_ |
+| `tls.debug` | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose). | `1` |
+| `tls.key_file` | Absolute path to private Key file. | _none_ |
+| `tls.key_passwd` | Optional password for tls.key_file. | _none_ |
+| `tls.max_version` | Specify the maximum version of TLS. | _none_ |
+| `tls.min_version` | Specify the minimum version of TLS. | _none_ |
+| `tls.proxy.ca_file` | Absolute path to the CA certificate file used to verify the HTTPS proxy's certificate. Independent from `tls.ca_file`. See [HTTP proxy](../../administration/http-proxy.md). Supported in v5.1 or later. | _none_ |
+| `tls.proxy.ca_path` | Absolute path to scan for CA certificate files used to verify the HTTPS proxy's certificate. Supported in v5.1 or later. | _none_ |
+| `tls.proxy.verify` | Force certificate validation for the HTTPS proxy connection. Supported in v5.1 or later. | `on` |
+| `tls.proxy.verify_hostname` | Force hostname verification for the HTTPS proxy connection. Supported in v5.1 or later. | `on` |
+| `tls.verify` | Force certificate validation. | `on` |
+| `tls.verify_hostname` | Enable or disable to verify hostname. | `off` |
+| `tls.vhost` | Hostname to be used for TLS SNI extension. | _none_ |
+| `tls.windows.certstore_name` | Sets the `certstore` name on an output (Windows). | _none_ |
+| `tls.windows.use_enterprise_store` | Sets whether using enterprise `certstore` or not on an output (Windows). | _none_ |
+| `traces_uri` | Specify an optional HTTP URI for the target OTel endpoint. | `/v1/traces` |
+| `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
+
+## Response limits
+
+When `http2` is set to `on` or `force`, or `grpc` is set to `on`, the size and time this plugin accepts for each HTTP response from the OTLP server are bounded by the `http_client.*` keys in the [`service` section](../../administration/configuring-fluent-bit/yaml/service-section.md#http-client-response-limits). These limits don't apply when both `http2` and `grpc` are off, which is the default.
+
+If a response exceeds a size or header limit, the plugin logs `HTTP response exceeded configured client limit` and drops the chunk without retrying. If `http_client.response_timeout` expires, the plugin logs a connection error and the chunk is scheduled for retry according to `retry_limit`. For split metrics payloads, a timeout after an earlier batch succeeded isn't retried, as described in [Metrics batching](#metrics-batching).
+
+## Metrics batching
+
+Some OTLP receivers reject export requests that carry too many metric data points. Set `metrics_max_datapoints` to cap the number of data points in a single request. When a metrics payload exceeds the limit, Fluent Bit splits it into several export requests and sends them in order.
+
+By default, `metrics_max_datapoints` is `0`, which disables splitting and sends each metrics payload as one request.
+
+When splitting is active and one of the requests fails after an earlier request in the same payload already succeeded, Fluent Bit logs a warning similar to the following and doesn't retry:
+
+```text
+metric payload partially succeeded (2/5 batches); skipping retry to avoid resending accepted data
+```
+
+Fluent Bit skips the retry because a retry sends the whole payload again, which would duplicate the data points the receiver already accepted. The data points in the remaining requests are dropped. If a request fails before any request in the payload succeeds, Fluent Bit retries the payload as usual.
+
+In v5.2 or later, a [throttle signal](#retries-and-throttling) is an exception. If a later request is throttled, Fluent Bit doesn't drop the remaining data points. It sends the whole payload again, after the cooldown when `throttle` is enabled or as a normal retry otherwise, so the receiver gets the already accepted data points again. The payload isn't sent again if `retry_limit` is `no_retries`, or, when `throttle` is off, after the normal retries run out. Fluent Bit then discards it, or moves it to the [Dead Letter Queue](../../administration/dead-letter-queue.md) if that's enabled.
+
+Choose a value that your receiver accepts without needing frequent splits. A value that's too low increases the number of requests and the chance of a partial send.
+
+## Retries and throttling
+
+The OpenTelemetry output decides whether to retry a failed export request from the response status, following the [OTLP specification](https://opentelemetry.io/docs/specs/otlp/#failures).
+
+For OTLP/HTTP:
+
+- HTTP `429` is a throttle signal.
+- HTTP `503` with a valid `Retry-After` value is a throttle signal.
+- HTTP `502`, `504`, and `503` without a valid `Retry-After` value are retryable.
+- With OAuth 2.0 enabled, HTTP `401` discards the cached token and is retryable with a new token.
+- Other error statuses aren't retried.
+
+For OTLP/gRPC:
+
+- `UNAVAILABLE` or `RESOURCE_EXHAUSTED` with a valid `google.rpc.RetryInfo` delay in the `grpc-status-details-bin` trailer is a throttle signal.
+- `CANCELLED`, `DEADLINE_EXCEEDED`, `ABORTED`, `OUT_OF_RANGE`, `DATA_LOSS`, and `UNAVAILABLE` without a valid delay are retryable.
+- `RESOURCE_EXHAUSTED` without a valid delay isn't retried.
+- With OAuth 2.0 enabled, `UNAUTHENTICATED` discards the cached token and is retryable with a new token.
+- Other error statuses aren't retried.
+
+Retryable means that Fluent Bit asks the scheduler to retry the chunk, so retries depend on `retry_limit`. With `retry_limit` set to `no_retries`, or after the retries run out, Fluent Bit doesn't retry the chunk. It discards the chunk, or moves it to the [Dead Letter Queue](../../administration/dead-letter-queue.md) if that's enabled. For example, with `no_retries`, an HTTP `401` or gRPC `UNAUTHENTICATED` response still discards the cached token, but Fluent Bit doesn't retry the failed chunk. A metrics payload that `metrics_max_datapoints` split into several requests isn't retried after an earlier request succeeded, as described in [Metrics batching](#metrics-batching), except for throttle signals.
+
+If [throttling](../../administration/scheduling-and-retries.md#throttling) is enabled for the output, a throttle signal pauses the output for a cooldown, and Fluent Bit honors the delay requested by the receiver. Otherwise, throttle signals are retried like other failures.
+
+{% hint style="warning" %}
+In v5.2 or later, the gRPC statuses that are retried changed to follow the OTLP specification. Earlier versions also retried `RESOURCE_EXHAUSTED` without a delay and `INTERNAL`, which are now dropped, and didn't retry `OUT_OF_RANGE` or `DATA_LOSS`. If your receiver returns `RESOURCE_EXHAUSTED` without `google.rpc.RetryInfo` when it's overloaded, the affected data is no longer retried.
+{% endhint %}
 
 ## Get started
 
-The OpenTelemetry plugin works with logs and only the metrics collected from one of the metric input plugins. In the following example, log records generated by the dummy plugin and the host metrics collected by the node exporter metrics plugin are exported by the OpenTelemetry output plugin.
+The following example exports log records generated by the dummy plugin, host metrics collected by the node exporter metrics plugin, and traces generated by the event type input. It uses OTLP/HTTP over TLS.
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

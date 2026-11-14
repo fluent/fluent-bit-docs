@@ -14,7 +14,7 @@ Fluent Bit has a compliant implementation which fully supports `OTLP/HTTP` and `
 
 ## Configuration
 
-The table below includes both:
+The following table includes both:
 
 - settings specific to the OpenTelemetry input plugin
 - shared `http_server.*` listener settings that are used by several HTTP-based inputs
@@ -26,7 +26,7 @@ For a cross-plugin explanation of the shared listener settings, see
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | `alias`                             | Sets an alias for multiple instances of the same input plugin. If no alias is specified, a default name will be assigned using the plugin name followed by a dot and a sequence number.       | _none_      |
 | `buffer_chunk_size`                 | Size of each buffer chunk allocated for HTTP requests (advanced users only).                                                                                                                  | `512K`      |
-| `buffer_max_size`                   | Maximum size of the HTTP request buffer in `KB`, `MB`, or `GB`.                                                                                                                               | `4M`        |
+| `buffer_max_size`                   | Maximum size of an OTLP request payload, as received and after decompression. Compatibility alias for `http_server.buffer_max_size`. See [Request size limits](#request-size-limits).         | 64 MiB      |
 | `encode_profiles_as_log`            | Encode profiles received as text and ingest them in the logging pipeline.                                                                                                                     | `true`      |
 | `host`                              | The hostname.                                                                                                                                                                                 | `localhost` |
 | `http2`                             | Enable HTTP/2 protocol support for the OpenTelemetry receiver.                                                                                                                                | `true`      |
@@ -34,10 +34,12 @@ For a cross-plugin explanation of the shared listener settings, see
 | `http_server.workers`               | Number of HTTP listener worker threads.                                                                                                                                                       | `1`         |
 | `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                             | `8192`      |
 | `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                   | `256M`      |
+| `http_server.max_decoded_body_size` | Maximum size of an `OTLP/HTTP` body after decompression. Defaults to `buffer_max_size`. Supported in v5.2 or later. See [Request size limits](#request-size-limits).                          | 64 MiB      |
 | `listen`                            | The network address to listen on.                                                                                                                                                             | `0.0.0.0`   |
 | `log_level`                         | Specifies the log level for this plugin. If not set here, the plugin uses the global log level specified in the `service` section of your configuration file.                                 | `info`      |
 | `log_suppress_interval`             | Suppresses log messages from this plugin that appear similar within a specified time interval. `0` no suppression.                                                                            | `0`         |
 | `logs_body_key`                     | Specify a body key.                                                                                                                                                                           | _none_      |
+| `logs_max_size`                     | Maximum size of the MessagePack data generated for the logs in a single request, including group metadata. Requests that exceed this limit are rejected. Supported in v5.1.5 or later.        | `100M`      |
 | `logs_metadata_key`                 | Key name to store OpenTelemetry logs metadata in the record.                                                                                                                                  | `otlp`      |
 | `mem_buf_limit`                     | Set a memory buffer limit for the input plugin. If the limit is reached, the plugin will pause until the buffer is drained. The value is in bytes. If set to 0, the buffer limit is disabled. | `0`         |
 | `net.accept_timeout`                | Set maximum time allowed to establish an incoming connection. This time includes the TLS handshake.                                                                                           | `10s`       |
@@ -49,12 +51,15 @@ For a cross-plugin explanation of the shared listener settings, see
 | `oauth2.allowed_audience`           | Audience claim to enforce when validating incoming `OAuth 2.0` JSON Web Token (`JWT`) tokens.                                                                                                 | _none_      |
 | `oauth2.allowed_clients`            | Authorized `client_id` or `azp` claim values. Can be specified multiple times.                                                                                                                | _none_      |
 | `oauth2.issuer`                     | Expected issuer (`iss`) claim for `OAuth 2.0` `JWT` validation.                                                                                                                               | _none_      |
-| `oauth2.jwks_refresh_interval`      | How often in seconds to refresh the cached JSON Web Key Set (`JWKS`) keys from `oauth2.jwks_url`.                                                                                             | `300`       |
+| `oauth2.jwks_buffer_max_size`       | Maximum `JWKS` response size, headers and body included, `4096` bytes to `16M`. Supported in v5.2 or later.                                                                                   | `1M`        |
+| `oauth2.jwks_refresh_interval`      | Seconds before the next validating request refetches `JWKS` keys. No background fetch. See [limits](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#jwks-fetch-limits).  | `300`       |
+| `oauth2.jwks_response_timeout`      | `JWKS` response time limit after the request is sent, `1s` to `300s`. v5.2 or later. See [limits](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#jwks-fetch-limits).    | `30s`       |
 | `oauth2.jwks_url`                   | `JWKS` endpoint URL used to fetch public keys for `OAuth 2.0` `JWT` validation.                                                                                                               | _none_      |
 | `oauth2.validate`                   | Enable `OAuth 2.0` `JWT` validation for incoming requests.                                                                                                                                    | `false`     |
 | `port`                              | The port for Fluent Bit to listen for incoming connections.                                                                                                                                   | `4318`      |
 | `profiles_support`                  | This is an experimental feature, feel free to test it but don't enable this in production environments.                                                                                       | `false`     |
-| `raw_traces`                        | Forward traces without processing. When set to `false` (default), traces are processed using the unified JSON parser with strict validation. When set to `true`, trace data is forwarded as raw log messages without validation or processing.                                                                                                                              | `false`     |
+| `protobuf_decode_max_size`          | Maximum estimated memory to decode the Protocol Buffers payloads in one request. Must be a positive size. Supported in v5.2 or later. See [Request size limits](#request-size-limits).        | 128 MiB     |
+| `raw_traces`                        | Forward JSON traces without processing. When set to `false` (default), JSON traces are processed using the unified JSON parser with strict validation. When set to `true`, JSON trace data is forwarded as raw log messages without validation or processing. Protocol Buffers and gRPC traces are always decoded as traces.                                                                                                                              | `false`     |
 | `routable`                          | If set to `true`, the data generated by the plugin will be routable, meaning that it can be forwarded to other plugins or outputs. If set to `false`, the data will be discarded.             | `true`      |
 | `storage.pause_on_chunks_overlimit` | Enable pausing on an input when they reach their chunks limit.                                                                                                                                | _none_      |
 | `storage.type`                      | Sets the storage type for this input, one of: `filesystem`, `memory` or `memrb`.                                                                                                              | `memory`    |
@@ -69,6 +74,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `tls.ca_file`                       | Absolute path to CA certificate file.                                                                                                                                                         | _none_      |
 | `tls.ca_path`                       | Absolute path to scan for certificate files.                                                                                                                                                  | _none_      |
 | `tls.ciphers`                       | Specify TLS ciphers up to TLSv1.2.                                                                                                                                                            | _none_      |
+| `tls.crl_file`                      | Absolute path to a Certificate Revocation List (CRL) file in PEM format. When set, revoked certificates are rejected during TLS verification. Supported in v5.1.3 or later.                   | _none_      |
 | `tls.crt_file`                      | Absolute path to Certificate file.                                                                                                                                                            | _none_      |
 | `tls.debug`                         | Set TLS debug level. Accepts `0` (No debug), `1`(Error), `2` (State change), `3` (Informational) and `4` (Verbose).                                                                           | `1`         |
 | `tls.key_file`                      | Absolute path to private Key file.                                                                                                                                                            | _none_      |
@@ -83,7 +89,36 @@ The `http_server.ingress_queue_event_limit` and
 `http_server.ingress_queue_byte_limit` settings matter only when
 `http_server.workers` is greater than `1`.
 
-When `raw_traces` is set to `false` (default), the traces endpoint (`/v1/traces`) processes incoming trace data using the unified JSON parser with strict validation. The endpoint accepts both `protobuf` and `JSON` encoded payloads. When `raw_traces` is set to `true`, any data forwarded to the traces endpoint will be packed and forwarded as a log message without processing, validation, or conversion to the Fluent Bit internal trace format.
+When `raw_traces` is set to `false` (default), the traces endpoint (`/v1/traces`) processes incoming trace data using the unified JSON parser with strict validation. The endpoint accepts both `protobuf` and `JSON` encoded payloads. When `raw_traces` is set to `true`, JSON payloads sent to the traces endpoint are packed and forwarded as a log message without processing, validation, or conversion to the Fluent Bit internal trace format. `raw_traces` doesn't apply to Protocol Buffers or gRPC payloads: they still go through the checks in [Request size limits](#request-size-limits), including the decode budget, and are decoded as traces.
+
+### HTTP workers
+
+When `http_server.workers` is greater than `1`, each worker decodes incoming requests and places the data in a deferred ingress queue, which the input then consumes.
+
+#### Log processing in HTTP workers
+
+If every processor in the input's `logs` processor chain can run in a worker, the chain runs inside the HTTP worker that received the request, and the processed logs are added to the ingress queue. The following processors can run in HTTP workers:
+
+- [Content modifier](../processors/content-modifier.md)
+- [SQL](../processors/sql.md)
+
+If the chain includes any other processor, or a filter used as a processor, the whole chain runs after the logs leave the ingress queue, the same as with a single worker. You don't need to change any configuration to use either mode.
+
+#### Full ingress queue
+
+The deferred ingress queue is limited by `http_server.ingress_queue_event_limit` and an effective byte limit. The effective byte limit is `http_server.ingress_queue_byte_limit`, or `mem_buf_limit` when `mem_buf_limit` is set to a lower value.
+
+The plugin rejects a request in either of these cases:
+
+- **The queue is full**: The queue has reached one of its limits and doesn't free enough room within a short wait.
+- **An event is too large**: A single event that the plugin adds to the queue exceeds the effective byte limit. Each event holds the data from one OTLP message, so one request can add several events to the queue.
+
+In both cases, the plugin returns the following responses:
+
+- **HTTP/1.1 and HTTP/2**: Returns `503 Service Unavailable` with the message `server overloaded: deferred ingress queue is full`.
+- **gRPC**: Returns gRPC status `14 (UNAVAILABLE)` with the message `server overloaded`.
+
+Clients can't tell the two cases apart from the response. Retry rejected requests with backoff, because a full queue is temporary. If a request keeps failing after several retries, an event it produces probably exceeds the effective byte limit, and retrying won't succeed. Send smaller requests, or raise the effective byte limit by increasing `http_server.ingress_queue_byte_limit` and, if it's set, `mem_buf_limit`.
 
 ### OpenTelemetry transport protocol endpoints
 
@@ -109,6 +144,25 @@ For `OTLP/GRPC`:
 - Traces
   - `/opentelemetry.proto.collector.trace.v1.TraceService/Export`
   - `/opentelemetry.proto.collector.traces.v1.TracesService/Export`
+
+### Request size limits
+
+In v5.2 or later, the plugin applies the following limits to each request:
+
+- `buffer_max_size` limits the request payload. It defaults to 64 MiB (67,108,864 bytes), the size recommended by the OTLP specification. Earlier versions used the shared `4M` default. Fluent Bit adds 64 KiB to the HTTP request buffer for headers and gRPC framing. An `OTLP/HTTP` request whose payload is larger than `buffer_max_size`, before or after decompression, is rejected with `413`. When an uncompressed payload reaches the plugin, the response includes the message `OTLP request size exceeds limit`. A request larger than the HTTP request buffer (`buffer_max_size` plus 64 KiB) is rejected by the listener before it reaches the plugin. On HTTP/1.1, the listener sends a `413` response with an empty body and closes the connection. On HTTP/2, the request fails without a `413` response. A compressed body that exceeds the limit during decompression gets a `413` response with an empty body.
+- `http_server.max_decoded_body_size` limits an `OTLP/HTTP` body while it's decompressed. If it isn't set, it equals the `buffer_max_size` value. Setting it to `0` selects `100M`. Because the decompressed payload is also checked against `buffer_max_size`, a higher value doesn't allow larger payloads.
+- `protobuf_decode_max_size` limits the estimated memory needed to decode the Protocol Buffers payload of a request, summed across all of its gRPC messages. The default is 128 MiB (134,217,728 bytes). Fluent Bit checks this budget before it ingests any data from the request. A request over the budget is rejected with `413` or gRPC status `8 (RESOURCE_EXHAUSTED)`, and a malformed payload with `400` or gRPC status `3 (INVALID_ARGUMENT)`. Both use the message `protobuf decode budget exceeded or invalid payload`. The same value also limits the memory used to convert each Protocol Buffers logs message of 8 KiB or more. A logs message that exceeds it during conversion fails with `400` or a gRPC error. JSON payloads aren't affected.
+
+Size values such as `64M` use decimal units. To set exactly 64 MiB, use `67108864`. If you raise `buffer_max_size`, you might also need to raise `protobuf_decode_max_size`, because larger payloads need more memory to decode.
+
+### gRPC message size limits
+
+In v5.1.4 or later, the plugin enforces the following limits on `OTLP/GRPC` requests:
+
+- Each gRPC message can't exceed `buffer_max_size` in v5.2 or later, or 16 MiB in earlier versions, both as received and after decompression.
+- The combined size of all messages in a request, after decompression, can't exceed `buffer_max_size`.
+
+Messages compressed with `gzip`, `zstd`, or `snappy` (set by the `grpc-encoding` header) are decompressed in bounded steps, so a highly compressed payload is rejected as soon as its expanded size reaches the limit. Requests that exceed a limit are rejected with gRPC status `8 (RESOURCE_EXHAUSTED)` and the message `gRPC message size exceeds limit` or `expanded gRPC payload size exceeds limit`. Compressed messages that use any other `grpc-encoding` value are rejected with gRPC status `12 (UNIMPLEMENTED)`. Uncompressed messages aren't affected by the `grpc-encoding` value.
 
 ## Get started
 

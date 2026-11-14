@@ -51,14 +51,14 @@ These libraries are developed and maintained by the Fluent Bit team:
 |---------|---------|---------|
 | [`miniz`](https://github.com/richgel999/miniz) | Single-file deflate/inflate, zlib-subset implementation. Provides gzip compression. | Public Domain |
 | [`Snappy`](https://github.com/google/snappy) | Fast compression/decompression library. Prioritizes speed over compression ratio. | BSD |
-| [`zstd`](https://github.com/facebook/zstd) | Zstandard compression providing high compression ratios at fast speeds. | BSD |
+| [`zstd`](https://github.com/meta/zstd) | Zstandard compression providing high compression ratios at fast speeds. | BSD |
 
 ## Scripting and WebAssembly
 
 | Library | Purpose | License |
 |---------|---------|---------|
 | [`LuaJIT`](https://luajit.org/) | `Just-in-time (JIT)` compiler for Lua. Powers the [Lua filter](../pipeline/filters/lua.md) plugin for custom record processing. | Massachusetts Institute of Technology (MIT) |
-| [`WAMR`](https://github.com/bytecodealliance/wasm-micro-runtime) | WebAssembly Micro Runtime from the Bytecode Alliance. Enables [WASM filter plugins](wasm-filter-plugins.md) and [WASM input plugins](wasm-input-plugins.md). Supports `interpreter`, `AOT`, and `JIT` execution modes. | Apache 2.0 |
+| [`WAMR`](https://github.com/wasm-micro-runtime/wasm-micro-runtime) | WebAssembly Micro Runtime from the Bytecode Alliance. Enables [WASM filter plugins](wasm-filter-plugins.md) and [WASM input plugins](wasm-input-plugins.md). Supports `interpreter`, `AOT`, and `JIT` execution modes. | Apache 2.0 |
 
 ## Integration libraries
 

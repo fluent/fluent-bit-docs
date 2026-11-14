@@ -29,6 +29,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `http_server.workers`      | Number of HTTP listener worker threads.                                                                                                                                                                                                          | `1`       |
 | `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                                                                                                                    | `8192`    |
 | `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                                                                                                              | `256M`    |
+| `http_server.max_decoded_body_size` | Maximum size of a request body after automatic decompression, independently of `buffer_max_size`. `0` uses the default. Introduced in v5.2. See [Request body decompression](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#request-body-decompression). | `100M`    |
 | `listen`                   | The address to listen on.                                                                                                                                                                                                                        | `0.0.0.0` |
 | `port`                     | The port to listen on.                                                                                                                                                                                                                           | `8080`    |
 | `successful_response_code` | Specifies the success response code. Supported values are `200`, `201`, and `204`.                                                                                                                                                               | `201`     |
@@ -65,14 +66,14 @@ pipeline:
 
 ```text
 [INPUT]
-  name prometheus_remote_write
-  listen 127.0.0.1
-  port 8080
-  uri /api/prom/push
+  Name prometheus_remote_write
+  Listen 127.0.0.1
+  Port 8080
+  Uri /api/prom/push
 
 [OUTPUT]
-  name stdout
-  match *
+  Name stdout
+  Match *
 ```
 
 {% endtab %}

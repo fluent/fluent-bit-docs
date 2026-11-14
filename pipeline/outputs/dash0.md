@@ -25,7 +25,7 @@ The OpenTelemetry output plugin supports TLS/SSL. For more details about the pro
 
 To get started with sending logs to Dash0:
 
-1. Get an [Auth Token](https://www.dash0.com/documentation/dash0/key-concepts/auth-tokens) from **Settings** > **Auth Tokens**.
+1. Get an [Auth Token](https://www.dash0.com/docs/dash0/miscellaneous/glossary/auth-tokens) from **Settings** > **Auth Tokens**.
 1. In your main Fluent Bit configuration file append the following:
 
 {% tabs %}
@@ -65,4 +65,4 @@ pipeline:
 
 ## References
 
-- [Dash0 documentation](https://www.dash0.com/documentation/dash0)
+- [Dash0 documentation](https://www.dash0.com/docs/dash0)

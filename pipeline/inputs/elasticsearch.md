@@ -28,6 +28,7 @@ For a cross-plugin explanation of the shared listener settings, see
 | `http_server.workers` | Number of HTTP listener worker threads.                                                                                                                  | `1`           |
 | `http_server.ingress_queue_event_limit` | Maximum number of deferred ingress queue entries. Applies only when `http_server.workers` is greater than `1`.                             | `8192`        |
 | `http_server.ingress_queue_byte_limit` | Maximum size of the deferred ingress queue. Applies only when `http_server.workers` is greater than `1`.                                   | `256M`        |
+| `http_server.max_decoded_body_size` | Maximum size of a request body after automatic decompression, independently of `buffer_max_size`. `0` uses the default. Introduced in v5.2. See [Request body decompression](../../administration/configuring-fluent-bit/yaml/pipeline-section.md#request-body-decompression). | `100M`        |
 | `listen`              | The address to listen on.                                                                                                                                | `0.0.0.0`     |
 | `meta_key`          | Specify a key name for meta information.                                                                                                 | `@meta`       |
 | `port`              | The port for Fluent Bit to listen on.                                                                                                    | `9200`        |
@@ -91,13 +92,13 @@ pipeline:
 
 ```text
 [INPUT]
-  name   elasticsearch
-  listen 0.0.0.0
-  port   9200
+  Name   elasticsearch
+  Listen 0.0.0.0
+  Port   9200
 
 [OUTPUT]
-  name  stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
@@ -127,15 +128,15 @@ pipeline:
 
 ```text
 [INPUT]
-  name              elasticsearch
-  listen            0.0.0.0
-  port              9200
-  buffer_max_size   20M
-  buffer_chunk_size 5M
+  Name              elasticsearch
+  Listen            0.0.0.0
+  Port              9200
+  Buffer_Max_Size   20M
+  Buffer_Chunk_Size 5M
 
 [OUTPUT]
-  name  stdout
-  match *
+  Name  stdout
+  Match *
 ```
 
 {% endtab %}
