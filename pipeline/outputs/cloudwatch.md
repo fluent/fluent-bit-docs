@@ -42,11 +42,13 @@ See [AWS credentials](https://docs.fluentbit.io/manual/administration/aws-creden
 | `match_regex`                      | Set a regular expression to match tags for output routing. This allows more flexible matching compared to wildcards.                                                                              | _none_     |
 | `metric_dimensions`                | Metric dimensions is a list of lists. If you have only one list of dimensions, put the values as a comma separated string. If you want to put list of lists, use the list as semicolon separated strings. If your value is `d1,d2;d3`, it will consider it as `[[d1, d2],[d3]]`.                                     | _none_     |
 | `metric_namespace`                 | An optional string representing the CloudWatch namespace for the metrics. See the [Metrics tutorial](#metrics-tutorial) section for a full configuration.                                                | _none_     |
+| `port`                             | TCP port for the CloudWatch Logs API. Set it when a custom `endpoint` doesn't use `443`.     | `443`      |
 | `profile`                          | Option to specify an AWS Profile for credentials.                                            | _none_     |
 | `region`                           | The AWS region to send logs to. China regions (`cn-*`), the AWS European Sovereign Cloud regions (`eusc-*`), and Amazon Dedicated Cloud regions (`us-iso-*`, `us-isob-*`, `us-isof-*`, `eu-isoe-*`) are supported; Fluent Bit automatically uses the correct endpoint suffix (`.amazonaws.com.cn`, `.amazonaws.eu`, `.c2s.ic.gov`, `.sc2s.sgov.gov`, `.csp.hci.ic.gov`, or `.cloud.adc-e.uk`) and no custom `endpoint` is required. | _none_     |
 | `retry_limit`                      | Set retry limit for output plugin when delivery fails. Integer, `no_limits`, `false`, or `off` to disable, or `no_retries` to disable retries entirely.                                                  | `1`        |
 | `role_arn`                         | ARN of an IAM role to assume for  cross account access.                                      | _none_     |
 | `sts_endpoint`                     | Specify a custom STS endpoint for the AWS STS API.                                           | _none_     |
+| `tls`                              | Enable or disable TLS for the connection to the CloudWatch Logs API. Set it to `off` for a plain HTTP `endpoint`, such as a local emulator, and set `port` to the port that endpoint listens on.         | `on`       |
 | `tls.windows.certstore_name`       | Sets the certificate store name on an output (Windows).                                      | _none_     |
 | `tls.windows.use_enterprise_store` | Sets whether using enterprise certificate store or not on an output (Windows).               | _none_     |
 | `workers`                          | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
@@ -117,6 +119,7 @@ pipeline:
       auto_create_group: on
       endpoint: localhost
       port: 4566
+      tls: off
 ```
 
 {% endtab %}
@@ -132,6 +135,7 @@ pipeline:
   Auto_Create_Group On
   Endpoint          localhost
   Port              4566
+  Tls               Off
 ```
 
 {% endtab %}
