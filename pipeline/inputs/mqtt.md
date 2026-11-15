@@ -23,6 +23,7 @@ The plugin supports the following configuration parameters:
 - Defaults for `listen` and `port` are `0.0.0.0` and `1883`, so you can omit them if you want the standard MQTT listener.
 - Payloads are expected to be JSON maps; non-JSON payloads will fail to parse.
 - In v5.1.3 or later, the plugin closes the connection when it receives a `PUBLISH` packet with an invalid QoS level (`3`), or when it can't write a reply to the client.
+- The plugin only receives published messages. It completes the QoS 2 handshake (`PUBREL` is answered with `PUBCOMP`), answers `SUBSCRIBE` with a `SUBACK` that refuses every topic filter and `UNSUBSCRIBE` with an `UNSUBACK`, and closes the connection if a client sends a second `CONNECT`. It doesn't keep session state, so `CONNACK` always reports no session present.
 {% endhint %}
 
 ### TLS / SSL
