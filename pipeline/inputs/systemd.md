@@ -20,6 +20,7 @@ The plugin supports the following configuration parameters:
 | `namespace`           | Read from a specific `journald` namespace instead of the default journal. See [Journal namespaces](#journal-namespaces). Can't be used with `path`. Setting both causes a startup error.                                                                                                                                                                      | _none_  |
 | `path`                | Optional path to the Systemd journal directory. If not set, the plugin uses default paths to read local-only logs.                                                                                                                                                                                                                                            | _none_  |
 | `read_from_tail`      | Start reading new entries. Skip entries already stored in `journald`.                                                                                                                                                                                                                                                                                         | `false` |
+| `read_since`          | Start reading entries written within this period before Fluent Bit starts, for example `30m`, `1h`, or `2d`. `0` disables this option. See [Start position](#start-position).                                                                                                                                                                                 | `0`     |
 | `strip_underscores`   | Remove the leading underscore of the `journald` field (key). For example, the `journald` field `_PID` becomes the key `PID`.                                                                                                                                                                                                                                  | `false` |
 | `systemd_filter`      | Perform a query over logs that contain specific `journald` key/value pairs. For example, `_SYSTEMD_UNIT=UNIT`. The `systemd_filter` option can be specified multiple times in the input section to apply multiple filters.                                                                                                                                    | _none_  |
 | `systemd_filter_type` | Define the filter type when `systemd_filter` is specified multiple times. Allowed values: `and`, `or`. With `and` a record is matched only when all `systemd_filter` have a match. With `or` a record is matched when any `systemd_filter` has a match.                                                                                                       | `or`    |
@@ -71,6 +72,19 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+## Start position
+
+When there's no saved cursor, the plugin starts reading from the oldest entry in the journal. On hosts with a large journal, this can mean processing a large backlog at startup. Use one of the following parameters to start somewhere else:
+
+- `read_from_tail` skips all existing entries and reads only entries written after Fluent Bit starts.
+- `read_since` reads entries written within the given period before Fluent Bit starts. Use a number followed by a single unit: `m` for minutes, `h` for hours, or `d` for days. A number without a unit is in seconds. Combined values such as `1h30m` aren't supported, so use `90m` instead.
+
+Keep the following in mind when using these parameters:
+
+- If `db` has a saved cursor, the plugin resumes from that cursor and ignores `read_from_tail` and `read_since`. They apply only on the first start, or when the saved cursor no longer exists in the journal.
+- If you set both `read_since` and `read_from_tail`, `read_since` takes precedence.
+- `read_since` relies on the timestamps stored in the journal. If the system clock changed during that period, the start position is approximate.
 
 ## Map journal fields to OpenTelemetry
 
