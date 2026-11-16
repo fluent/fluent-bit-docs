@@ -39,7 +39,7 @@ To get more details about how to set up these components, refer to the following
 
 ## Request size limit
 
-The Logs Ingestion API rejects requests larger than 1 MiB. When the payload of a chunk is larger than that, after compression if `compress` is on, the plugin splits the records of the chunk into several requests so each one stays under the limit. Records are never split. If one of the requests fails, the whole chunk is retried, so records that were already accepted can be sent again. A single record larger than 1 MiB is still sent on its own and rejected by the API.
+The Logs Ingestion API rejects requests larger than 1 MB. The plugin splits the records of a chunk whose payload is larger than 1 MiB (1,048,576 bytes) into several requests of at most that size. If `compress` is on, the size is measured after compression. Records are never split. If one of the requests fails, the remaining requests aren't sent and the whole chunk is retried, so records that were already accepted can be sent again. A single record larger than the limit is sent on its own and rejected by the API, which fails the whole chunk. Records before it are sent again on every retry, records after it aren't sent, and the chunk is discarded when its retries run out.
 
 ## Get started
 
