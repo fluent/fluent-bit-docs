@@ -76,7 +76,7 @@ pipeline:
 | `grpc_profiles_uri` | Set the gRPC method path for profile exports. | `/opentelemetry.proto.collector.profiles.v1experimental.ProfilesService/Export` |
 | `grpc_traces_uri` | Set the gRPC method path for trace exports. | `/opentelemetry.proto.collector.trace.v1.TraceService/Export` |
 | `header` | Add a HTTP header key/value pair. Multiple headers can be set. | _none_ |
-| `header_tag` | Set an HTTP header with this name whose value is the tag of the records being sent. For example, `header_tag stream-name` lets a backend that routes on a header, such as OpenObserve, send each tag to its own stream. Tags containing CR, LF, or NUL characters are skipped. | _none_ |
+| `header_tag` | Set an HTTP header with this name whose value is the tag of the records being sent. For example, `header_tag stream-name` lets a backend that routes on a header, such as OpenObserve, send each tag to its own stream. Whether two tags get separate streams depends on the backend's stream naming rules. By default, OpenObserve converts stream names to lowercase and replaces characters other than letters, digits, `_`, and `:` with `_`, so the tags `App.Orders` and `app-orders` share the stream `app_orders`. If the tag contains a control character other than tab, or if this value isn't a valid header name, the header is left out of the request and a warning is logged. | _none_ |
 | `host` | IP address or hostname of the target OTLP server. | `127.0.0.1` |
 | `http2` | Control HTTP/2 independently of `grpc`. Accepted values are `on`, `off`, and `force`. With TLS, `on` negotiates the protocol and `force` requires HTTP/2. You don't need to set this when `grpc` is `on`. | `off` |
 | `http_passwd` | Set HTTP auth password. | _none_ |
