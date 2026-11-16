@@ -59,7 +59,7 @@ Output the records in CSV format. CSV mode supports additional configuration par
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | `csv_column_names` | Add column names (keys) as the first line of the output file. | `false` |
-| `delimiter` | The character to separate each field. The keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value, such as `;`, is used as the delimiter itself. | `,` |
+| `delimiter` | The string that separates each field. The case-insensitive keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value, such as `;`, is used as the delimiter itself. Fluent Bit trims surrounding whitespace from configuration values, so use `space` or `tab` instead of a literal space or tab character. | `,` |
 
 ```text
 time[delimiter]"value1"[delimiter]"value2"[delimiter]"value3"
@@ -77,8 +77,8 @@ Output the records in LTSV format. LTSV mode supports additional configuration p
 
 | Key | Description | Default |
 | :--- | :--- | :--- |
-| `delimiter` | The character to separate each pair. The keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value is used as the delimiter itself. | `\t` |
-| `label_delimiter` | The character to separate label and the value. The keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value, such as `=`, is used as the delimiter itself. | `:` |
+| `delimiter` | The string that separates each pair. The case-insensitive keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value, such as `;`, is used as the delimiter itself. Fluent Bit trims surrounding whitespace from configuration values, so use `space` or `tab` instead of a literal space or tab character. | `\t` |
+| `label_delimiter` | The string that separates the label and the value. The case-insensitive keywords `\t` (or `tab`), `space`, and `comma` stand for those characters. Any other value, such as `=`, is used as the delimiter itself. Fluent Bit trims surrounding whitespace from configuration values, so use `space` or `tab` instead of a literal space or tab character. | `:` |
 
 ```text
 "time"[label_delimiter]1564462620.000254[delimiter]"field1"[label_delimiter]"value1"[delimiter]"field2"[label_delimiter]"value2"\n
