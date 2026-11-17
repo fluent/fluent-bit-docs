@@ -78,11 +78,11 @@ pipeline:
 When there's no saved cursor, the plugin starts reading from the oldest entry in the journal. On hosts with a large journal, this can mean processing a large backlog at startup. Use one of the following parameters to start somewhere else:
 
 - `read_from_tail` skips all existing entries and reads only entries written after Fluent Bit starts.
-- `read_since` reads entries written within the given period before Fluent Bit starts. Use a number followed by a single unit: `m` for minutes, `h` for hours, or `d` for days. A number without a unit is in seconds. Combined values such as `1h30m` aren't supported, so use `90m` instead.
+- `read_since` reads entries written within the given period before Fluent Bit starts. Use a whole number followed by a single unit: `m` for minutes, `h` for hours, or `d` for days. A number without a unit is in seconds. Combined values such as `1h30m` aren't supported, so use `90m` instead. Fluent Bit doesn't reject other formats. It reads the leading whole number and checks only the last character for a unit, so `1h30m` is read as 1 minute, `1.5h` as 1 hour, and `1hour` as 1 second. The plugin then skips entries you expected it to read.
 
 Keep the following in mind when using these parameters:
 
-- If `db` has a saved cursor, the plugin resumes from that cursor and ignores `read_from_tail` and `read_since`. They apply only on the first start, or when the saved cursor no longer exists in the journal.
+- If `db` has a saved cursor, the plugin resumes from that cursor and ignores `read_from_tail` and `read_since`. The plugin doesn't check that the cursor's entry still exists. If that entry was removed, for example by journal rotation, the seek moves to the closest remaining entry in time. The plugin treats that entry as already read and skips it, so collection starts with the entry after it. `read_from_tail` and `read_since` apply only when there's no saved cursor, or when seeking to the saved cursor returns an error.
 - If you set both `read_since` and `read_from_tail`, `read_since` takes precedence.
 - `read_since` relies on the timestamps stored in the journal. If the system clock changed during that period, the start position is approximate.
 
