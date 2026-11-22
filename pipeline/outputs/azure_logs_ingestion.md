@@ -21,6 +21,29 @@ To get more details about how to set up these components, refer to the following
 - [Azure Logs Ingestion API](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)
 - [Send data to Azure Monitor Logs with Logs ingestion API (setup DCE, DCR and Log Analytics)](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal)
 
+## Authentication methods
+
+Fluent Bit can use various authentication methods to send records to Azure Log Analytics:
+
+### Service principal authentication 
+
+Service principal authentication is the default method. To use it, you must create an Azure AD application:
+
+- [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+- [Assign the app permissions to the Data Collection Rule](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-api#assign-permissions-to-a-dcr)
+
+Configure Fluent Bit with your application's `tenant_id`, `client_id`, and `client_secret`.
+
+### Managed identity authentication
+
+When running on Azure services that support managed identities (such as Azure VMs, Azure Kubernetes Service (AKS), or App Service):
+
+1. [Assign the managed identity appropriate permissions to your Kusto database](https://learn.microsoft.com/en-us/azure/data-explorer/configure-managed-identities-cluster).
+1. Configure Fluent Bit with `auth_type` set to `managed_identity`.
+1. For system-assigned identity, set `client_id` to `system`.
+1. For user-assigned identity, set `client_id` to the managed identity's globally unique identifier (client ID).
+
 ## Configuration parameters
 
 | Key | Description | Default |
@@ -28,7 +51,7 @@ To get more details about how to set up these components, refer to the following
 | `auth_url` | Override the `OAuth 2.0` token endpoint URL. Must use HTTPS, or HTTP only with a `loopback` address (`localhost` or `127.0.0.1`). When set, `tenant_id` is optional. | _none_ |
 | `client_id` | The client ID of the AAD application. | _none_ |
 | `client_secret` | The client secret of the AAD application ([App Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret)). | _none_ |
-| `compress` | Optional. Enable HTTP payload gzip compression. | `false` |
+| `compress` | Optional. Enable HTTP payload gzip compression. | `true` |
 | `dce_url` | Data Collection Endpoint (DCE) URL. | _none_ |
 | `dcr_id` | Data Collection Rule (DCR) [immutable ID](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#collect-information-from-the-dcr). | _none_ |
 | `table_name` | The name of the custom log table (include the `_CL` suffix as well if applicable). | _none_ |
@@ -51,6 +74,8 @@ Follow [this guideline](https://learn.microsoft.com/en-us/azure/azure-monitor/lo
 ### Configuration file
 
 Use this configuration file to get started:
+
+#### Service principal authentication 
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}
@@ -123,6 +148,170 @@ pipeline:
   Client_Id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
   Client_Secret   some.secret.xxxzzz
   Tenant_Id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+  Dce_Url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+  Dcr_Id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Table_Name      ladcr_CL
+  Time_Generated  true
+  Time_Key        Time
+  Compress        true
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### User-assigned managed identity authentication
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /path/to/your/sample.log
+      tag: sample
+      key: RawData
+
+    # Or use other plugins
+    #- name: cpu
+    #  tag: sample
+
+  filters:
+    - name: modify
+      match: sample
+      # Add a json key named "Application":"fb_log"
+      add: Application fb_log
+
+  outputs:
+    # Enable this section to see your json-log format
+    #- name: stdout
+    #  match: '*'
+
+    - name: azure_logs_ingestion
+      match: sample
+      client_id: XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+      auth_type: managed_identity
+      dce_url: https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+      dcr_id: dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      table_name: ladcr_CL
+      time_generated: true
+      time_key: Time
+      compress: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name    tail
+  Path    /path/to/your/sample.log
+  Tag     sample
+  Key     RawData
+
+# Or use other plugins
+#[INPUT]
+#  Name    cpu
+#  Tag     sample
+
+[FILTER]
+  Name modify
+  Match sample
+  # Add a json key named "Application":"fb_log"
+  Add Application fb_log
+
+# Enable this section to see your json-log format
+#[OUTPUT]
+#  Name stdout
+#  Match *
+
+[OUTPUT]
+  Name            azure_logs_ingestion
+  Match           sample
+  Client_Id       XXXXXXXX-xxxx-yyyy-zzzz-xxxxyyyyzzzzxyzz
+  Auth_Type       managed_identity
+  Dce_Url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+  Dcr_Id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Table_Name      ladcr_CL
+  Time_Generated  true
+  Time_Key        Time
+  Compress        true
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### System-assigned managed identity authentication
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /path/to/your/sample.log
+      tag: sample
+      key: RawData
+
+    # Or use other plugins
+    #- name: cpu
+    #  tag: sample
+
+  filters:
+    - name: modify
+      match: sample
+      # Add a json key named "Application":"fb_log"
+      add: Application fb_log
+
+  outputs:
+    # Enable this section to see your json-log format
+    #- name: stdout
+    #  match: '*'
+
+    - name: azure_logs_ingestion
+      match: sample
+      client_id: system
+      auth_type: managed_identity
+      dce_url: https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
+      dcr_id: dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      table_name: ladcr_CL
+      time_generated: true
+      time_key: Time
+      compress: true
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name    tail
+  Path    /path/to/your/sample.log
+  Tag     sample
+  Key     RawData
+
+# Or use other plugins
+#[INPUT]
+#  Name    cpu
+#  Tag     sample
+
+[FILTER]
+  Name modify
+  Match sample
+  # Add a json key named "Application":"fb_log"
+  Add Application fb_log
+
+# Enable this section to see your json-log format
+#[OUTPUT]
+#  Name stdout
+#  Match *
+
+[OUTPUT]
+  Name            azure_logs_ingestion
+  Match           sample
+  Client_Id       system
+  Auth_Type       managed_identity
   Dce_Url         https://log-analytics-dce-XXXX.region-code.ingest.monitor.azure.com
   Dcr_Id          dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   Table_Name      ladcr_CL
