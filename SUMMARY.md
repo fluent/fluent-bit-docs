@@ -77,6 +77,7 @@
 ## Data pipeline
 
 * [Inputs](pipeline/inputs.md)
+  * [`AMQP`](pipeline/inputs/amqp.md)
   * [Blob](pipeline/inputs/blob.md)
   * [Collectd](pipeline/inputs/collectd.md)
   * [CPU metrics](pipeline/inputs/cpu-metrics.md)
