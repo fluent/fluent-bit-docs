@@ -111,6 +111,7 @@ exceptions:
   - LogEntry
   - LTSV
   - macOS
+  - Manticore Search
   - Marketplace
   - MessagePack
   - Microsoft Fabric
