@@ -17,7 +17,7 @@ The plugin supports the following configuration parameters:
 | `add` | Similar to the `add` option in the [modify filter](../filters/modify.md). You can specify it multiple times. It takes two arguments: a `KEY` name and `VALUE`. The value uses Fluent Bit [`record_accessor`](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) syntax to create a template that uses ECS Metadata values. See the list of supported metadata templating keys. This option lets you control both the key names for metadata and the format for metadata values. | _none_ |
 | `agent_endpoint_retries` | Number of retries for failed metadata requests to the ECS Agent Introspection endpoint. The most common cause of failed metadata requests is that the container the metadata request was made for isn't part of an ECS Task. | `2` |
 | `cluster_metadata_only` | When enabled, the plugin only attempts to attach cluster metadata values. Use to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks. | `false` |
-| `ecs_meta_cache_ttl` | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max `TTL` for objects in the hash table. Set this if you have frequent container or task restarts. For example, if your cluster runs short-running batch jobs that complete in less than 10 minutes, set this parameter to `10m`. | `1h` |
+| `container_id_field_name` | If set to a non-empty string, retrieves the Container Short ID from an already populated field designated by this parameter. Only the cluster metadata will be attached if the field is incorrect or holds invalid data. | empty string || `ecs_meta_cache_ttl` | The filter builds a hash table in memory mapping each unique container short ID to its metadata. This option sets a max `TTL` for objects in the hash table. Set this if you have frequent container or task restarts. For example, if your cluster runs short-running batch jobs that complete in less than 10 minutes, set this parameter to `10m`. | `1h` |
 | `ecs_meta_host` | The host name at which the ECS Agent Introspection endpoint is reachable. | `127.0.0.1` |
 | `ecs_meta_port` | The port at which the ECS Agent Introspection endpoint is reachable. | `51678` |
 | `ecs_tag_prefix` | Similar to the `kube_tag_prefix` option in the [Kubernetes filter](../filters/kubernetes.md) and performs the same function. The full log tag should be prefixed with this string and after the prefix the filter must find the next characters in the tag to be the Docker Container Short ID (the first 12 characters of the full container ID). The filter uses this to identify which container the log came from so it can find which task it's a part of. If not specified, defaults to empty string, meaning that the tag must be prefixed with the 12-character container short ID. If you want to attach cluster metadata to system or OS logs from processes that don't run as part of containers or ECS Tasks, don't set this parameter and enable `cluster_metadata_only`. | `""` |
@@ -271,6 +271,66 @@ pipeline:
   Name stdout
   Match *
   Format json_lines
+```
+
+{% endtab %}
+{% endtabs %}
+
+#### Example 4: Attach task metadata using container ID field
+
+Attaches the cluster metadata and task metadata using the populated `container_id`
+field, which includes the container ID to query the ECS introspection endpoint. In this
+configuration the tag of the incoming log record can be set to anything.
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: forward
+      listen: 0.0.0.0
+      port: 24224
+
+  filters:
+    - name: ecs
+      match: '*'
+      container_id_field_name: container_id
+      add:
+        - ecs_cluster $ClusterName
+        - ecs_task_id $TaskID
+        - ecs_container_name $ECSContainerName
+        - ecs_task_definition_family $TaskDefinitionFamily
+
+    outputs:
+    - name: stdout
+      match: '*'
+      format: json_lines
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name   forward
+  Listen 0.0.0.0
+  Port   24224
+
+[FILTER]
+  Name                           ecs
+  Match                          *
+  container_id_field_name        container_id
+  ADD ecs_cluster                $ClusterName
+  ADD ecs_task_id                $TaskID
+  ADD ecs_container_name         $ECSContainerName
+  ADD ecs_task_definition_family $TaskDefinitionFamily
+  ADD ecs_task_id                $TaskID
+
+[OUTPUT]
+    Name   stdout
+    Match  *
+    Format json_lines
 ```
 
 {% endtab %}
