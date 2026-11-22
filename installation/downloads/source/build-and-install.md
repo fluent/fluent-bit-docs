@@ -98,6 +98,10 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | Option                   | Description                                                                                                                 | Default                       |
 |:-------------------------|:----------------------------------------------------------------------------------------------------------------------------|:------------------------------|
 | `FLB_ALL`                | Enable all features available                                                                                               | `No`                          |
+| `FLB_ALL_FILTERS`        | Enable/Disable all Filter plugins as a group (`On`, `Off`, `Inherit`)                                                       | `Inherit`                     |
+| `FLB_ALL_INPUTS`         | Enable/Disable all Input plugins as a group (`On`, `Off`, `Inherit`)                                                        | `Inherit`                     |
+| `FLB_ALL_OUTPUTS`        | Enable/Disable all Output plugins as a group (`On`, `Off`, `Inherit`)                                                       | `Inherit`                     |
+| `FLB_ALL_PROCESSORS`     | Enable/Disable all Processor plugins as a group (`On`, `Off`, `Inherit`)                                                    | `Inherit`                     |
 | `FLB_ARROW`              | Build with Apache Arrow support                                                                                             | `No`                          |
 | `FLB_AVRO_ENCODER`       | Build with Avro encoding support                                                                                            | `No`                          |
 | `FLB_AWS`                | Enable AWS support                                                                                                          | `Yes`                         |
@@ -117,6 +121,7 @@ Fluent Bit provides configurable options to CMake that can be enabled or disable
 | `FLB_KAFKA`              | Enable Kafka support                                                                                                        | `Yes`                         |
 | `FLB_LUAJIT`             | Enable Lua scripting support                                                                                                | `Yes`                         |
 | `FLB_METRICS`            | Enable metrics support                                                                                                      | `Yes`                         |
+| `FLB_MINIMAL`            | Disable all plugins                                                                                                         | `No`                          |
 | `FLB_MTRACE`             | Enable `mtrace` support                                                                                                     | `No`                          |
 | `FLB_PARSER`             | Build with Parser support                                                                                                   | `Yes`                         |
 | `FLB_POSIX_TLS`          | Force POSIX thread storage                                                                                                  | `No`                          |
