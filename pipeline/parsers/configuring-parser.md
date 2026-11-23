@@ -16,7 +16,7 @@ Custom parsers support the following configuration parameters:
 | --- | ----------- | ------- |
 | `decode_field` | If the content can be decoded in a structured message, append the structured message (keys and values) to the original log message. Decoder types: `json`, `escaped`, `escaped_utf8`, `mysql_quoted`. The syntax is: `decode_field <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. | _none_ |
 | `decode_field_as` | Any decoded content (unstructured or structured) will be replaced in the same key/value, and no extra keys are added. Decoder types: `json`, `escaped`, `escaped_utf8`, `mysql_quoted`. The syntax is: `decode_field_as <decoder_type> <field_name>`. See [Decoders](decoders.md) for additional information. | _none_ |
-| `format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), or [`logfmt`](logfmt.md). | _none_ |
+| `format` | Specifies the format of the parser. Possible options: [`json`](json.md), [`regex`](regular-expression.md), [`ltsv`](ltsv.md), [`logfmt`](logfmt.md), or [`cri`](cri.md). | _none_ |
 | `logfmt_no_bare_keys` | If enabled, the `logfmt` parser rejects log entries where keys don't have associated values (bare keys). Only applies to the `logfmt` format. | `false` |
 | `name` | Sets the name of your parser. | _none_ |
 | `regex` | Required for parsers with the `regex` format. Specifies the Ruby regular expression for parsing and composing the structured message. | _none_ |
