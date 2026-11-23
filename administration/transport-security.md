@@ -231,6 +231,31 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
+## Windows certificate store
+
+This section applies to Windows builds compiled with Microsoft Visual C++, which include the official Windows packages.
+
+On Windows, when Fluent Bit connects to a server with TLS, for example from an output plugin, and neither `tls.ca_file` nor `tls.ca_path` is set, it verifies the server certificate against the Windows certificate store. Inputs that set `tls.verify_client_cert` without `tls.ca_file` or `tls.ca_path` verify client certificates against the same store. By default, Fluent Bit loads the current user's `Root` store. For outputs, `tls.windows.certstore_name` and `tls.windows.use_enterprise_store` select a different store or store location. If an output sets `tls.windows.certstore_name` together with `tls.ca_file` or `tls.ca_path`, Fluent Bit loads the named store in addition to the CA file or directory and trusts certificates from both. For that output, Fluent Bit doesn't run the [missing root certificate](#missing-root-certificates) lookup, and if a store reload fails, new connections keep using the certificates that were loaded before.
+
+Fluent Bit doesn't load certificates that are also in the Windows `Disallowed` store. If it can't check a certificate against the `Disallowed` store, it logs a warning and skips that certificate. If it can't open the `Disallowed` store, it logs `cannot open Windows Disallowed store: <code>` and loads no certificates from the Windows store. Because Fluent Bit reloads the store before each new connection, every new connection then fails, even with `tls.verify` off. If the output sets `tls.windows.certstore_name`, the output fails to start instead.
+
+Fluent Bit reloads the Windows store before each new TLS connection, so certificates added to or removed from the store apply to new connections without a restart. Each successful reload logs `reloaded TLS certificate configuration` at the `info` level. If a reload fails for any reason, Fluent Bit logs `detected certificate file changes but reload failed` and the new connection fails.
+
+### Missing root certificates
+
+When `tls.verify` is on and the peer certificate doesn't chain to a trusted certificate in the loaded store, Fluent Bit asks Windows to build the certificate chain in a background thread. Whether Windows retrieves a missing root certificate depends on its automatic root certificate update settings and network access. Fluent Bit doesn't add certificates to any store itself. Fluent Bit turns off Authority Information Access (AIA) retrieval for this lookup, so Windows doesn't download missing intermediate certificates, and the server must send them.
+
+The connection that started the lookup still fails. If Windows installs the missing root certificate in a store that Fluent Bit loads, such as the default `Root` store, Fluent Bit picks it up when it reloads the store, so a later attempt can succeed. Fluent Bit runs at most one lookup at a time for each TLS configuration, and starts at most one per minute for each configuration. It waits for a running lookup to finish before it releases the TLS configuration, for example at shutdown.
+
+Fluent Bit logs the following messages:
+
+- `scheduled Windows certificate chain lookup`, at the `debug` level, when a lookup starts.
+- `Windows resolved the peer certificate chain`, at the `info` level, when Windows built a chain it trusts. This doesn't guarantee that Fluent Bit trusts the chain, because Fluent Bit only uses the store it loads. Fluent Bit logs this message when the next connection starts after the lookup finishes.
+- `Windows certificate chain lookup returned 0x<status>`, at the `debug` level, when the lookup finished without a trusted chain.
+- `could not start Windows certificate chain lookup`, as a warning, when the lookup can't start.
+
+To turn off these lookups, set the environment variable `FLB_WINDOWS_AUTO_ROOT_UPDATE` to `off` before you start Fluent Bit. Any value other than `on`, `true`, or `yes`, in any letter case, turns them off.
+
 ## Certificate reload
 
 Automatic certificate reload is available in Fluent Bit version 5.1 and greater.
@@ -245,7 +270,9 @@ For `tls.ca_path`, Fluent Bit inspects the directory itself rather than each cer
 
 Sessions that are already established keep the context they were created with. A long-lived connection continues to use the previous certificate until it's reconnected.
 
-If the new files can't be loaded, for example because a certificate and key were written separately and Fluent Bit read them mid-update, it logs `detected certificate file changes but reload failed` and keeps the previous context. Connections continue to work with the certificate that was already loaded, and the next session retries the reload.
+On Windows and macOS, when Fluent Bit uses the system certificate store for a TLS connection that doesn't set `tls.ca_file` or `tls.ca_path`, it also reloads the store before each new TLS connection. See [Windows certificate store](#windows-certificate-store).
+
+If the new files can't be loaded, for example because a certificate and key were written separately and Fluent Bit read them mid-update, it logs `detected certificate file changes but reload failed` and keeps the previous context. Connections continue to work with the certificate that was already loaded, and the next session retries the reload. On Windows, when Fluent Bit uses the Windows certificate store, any failed reload, whatever the cause, fails the new connection instead.
 
 ## Tips and tricks
 
