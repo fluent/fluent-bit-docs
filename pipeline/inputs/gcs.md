@@ -12,7 +12,7 @@ The _Google Cloud Storage_ (`gcs`) input plugin reads log objects from a [Google
 
 This plugin is the counterpart of the [Google Cloud Storage output plugin](../outputs/gcs.md). By default, it reads the objects that the output plugin writes. To archive logs to a bucket, refer to that page.
 
-This plugin is available in Fluent Bit version 5.2 and greater. It's included in official builds. If you compile Fluent Bit from source, the `FLB_IN_GCS` build option is enabled by default, but the plugin requires a build with TLS support. When TLS support is disabled, the build system turns `FLB_IN_GCS` off.
+This plugin is available in Fluent Bit version 5.2 and greater. If you compile Fluent Bit from source, the `FLB_IN_GCS` build option is enabled by default, but the plugin requires a build with TLS support. When TLS support is disabled, the build system turns `FLB_IN_GCS` off.
 
 ## How it works
 
@@ -40,7 +40,7 @@ This input always runs in its own [thread](../../administration/multithreading.m
 | `enable_identity_federation` | Authenticate with Workload Identity Federation instead of a service account key. Mutually exclusive with `google_service_credentials`. See [Workload Identity Federation](#workload-identity-federation). | `false` |
 | `end_offset` | Only read objects whose name is lexicographically lower than this value. See [Select objects](#select-objects). | _none_ |
 | `endpoint` | Cloud Storage API endpoint. Use `http://` only for tests and emulators. See [Use an emulator](#use-an-emulator). | `https://storage.googleapis.com` |
-| `exit_on_complete` | Stop Fluent Bit after the plugin has processed all the objects. | `false` |
+| `exit_on_complete` | Stop Fluent Bit after the plugin has processed all the objects. Exits with a non-zero status if the run fails or an object failed. | `false` |
 | `google_service_account` | Email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud service account credentials JSON file. See [Authentication](#authentication). | _none_ |
 | `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
@@ -72,7 +72,7 @@ Before using the plugin, you must:
    - `storage.objects.list`, to list the objects.
    - `storage.objects.get`, to download them.
 
-   The predefined [Storage Object Viewer](https://docs.cloud.google.com/storage/docs/access-control/iam-roles) role (`roles/storage.objectViewer`) includes both permissions. The plugin never writes to the bucket, and it requests only the read-only `https://www.googleapis.com/auth/devstorage.read_only` `OAuth 2.0` scope.
+   The predefined [Storage Object Viewer](https://docs.cloud.google.com/storage/docs/access-control/iam-roles) role (`roles/storage.objectViewer`) includes both permissions. The plugin never writes to the bucket. For the scope that the plugin requests in each authentication mode, see [Authentication](#authentication).
 1. Make the credentials available to Fluent Bit. See [Authentication](#authentication).
 
 For credentials file, metadata server, and impersonated federation modes, the identity is the service account. For Workload Identity Federation with `google_service_account` unset, it's the federated principal itself, so grant that principal bucket access directly.
@@ -91,6 +91,14 @@ The plugin looks for service account credentials in the following order, and use
 1. The Compute Engine or Google Kubernetes Engine metadata server. When no credentials file is configured, the plugin requests an access token from the address set in `metadata_server`. Use this mode when Fluent Bit runs on a Compute Engine instance or a Google Kubernetes Engine node whose attached service account can read the bucket.
 
 The metadata server isn't a fallback for a failed credentials file. It's used only when no credentials file is configured through the option or either environment variable. If a credentials path is configured but the file can't be opened, read, or parsed as a service account key, the plugin logs an error such as `cannot open credentials file` or `invalid JSON credentials file` and fails to initialize. If you intend to use the metadata server, verify that the plugin logs `using GCE/GKE metadata server authentication` at startup.
+
+#### Access scopes
+
+The plugin never writes to the bucket in any authentication mode. The scope of the access token depends on the mode:
+
+- **Service account key**: the plugin requests the read-only `https://www.googleapis.com/auth/devstorage.read_only` `OAuth 2.0` scope.
+- **Workload Identity Federation**: the plugin requests the read-only scope in the `STS` token exchange when you use direct resource access, and in the `IAM` `generateAccessToken` call when you use impersonation.
+- **Metadata server**: the plugin doesn't request a scope. The token carries the access scopes of the instance or node and the permissions of its attached service account. To keep the input read-only in this mode, attach a service account that only has read access to the bucket, for example Storage Object Viewer.
 
 #### Workload Identity Federation
 
@@ -114,7 +122,7 @@ The federated token can be used two ways:
 - **Impersonation**: set `google_service_account` to the email address of a service account that can read the bucket. Grant the pool principal the `roles/iam.workloadIdentityUser` role on that service account.
 - **Direct resource access**: leave `google_service_account` unset. The plugin uses the federated token directly against Cloud Storage, so the pool principal itself must have the permissions listed in [Google Cloud configuration](#google-cloud-configuration). The bucket must also have [uniform bucket-level access](https://docs.cloud.google.com/storage/docs/uniform-bucket-level-access) enabled.
 
-For more details about this mode, refer to [Workload Identity Federation](../outputs/gcs.md#workload-identity-federation) in the Google Cloud Storage output plugin. The options and behavior are the same, except that the input requests the read-only scope.
+For more details about this mode, refer to [Workload Identity Federation](../outputs/gcs.md#workload-identity-federation) in the Google Cloud Storage output plugin. The options and behavior are the same, except that the input requests the read-only scope. See [Access scopes](#access-scopes).
 
 ## Select objects
 
@@ -144,7 +152,7 @@ The plugin splits each object on newline characters (`\n`). It removes a trailin
 - Any other line, including JSON that isn't an object or an object followed by other text, becomes a record with the line as the value of the `log` key: `{"log": "<line>"}`.
 - If you set `parser`, the plugin applies that [parser](../parsers.md) to every line instead. If the parser can't process a line, that line becomes a `{"log": "<line>"}` record.
 
-If the plugin can't encode a line, it logs an error and skips that line.
+If the plugin can't encode a line, it logs an error and retries the batch on the next cycle, up to `retry_limit` times. If it still fails, the object counts as failed, the plugin doesn't record it in the [state database](#state-database), and it continues with the next object. Records of that object that the plugin emitted in earlier batches stay in the pipeline.
 
 Use `object_key` to add the name of the source object to each record. If the record already has a key with that name, the plugin replaces its value.
 
@@ -158,7 +166,7 @@ By default, the plugin looks in each JSON record for the `date` key (`time_key`)
 
 | Value | Accepted input |
 | :--- | :--- |
-| `auto` | A string in ISO 8601 or Java SQL timestamp format, or a number. An integer greater than `100000000000` is read as milliseconds since the epoch. Any other number is read as seconds, and a floating-point number can have a fractional part. |
+| `auto` | A string in ISO 8601 or Java SQL timestamp format, or a number. A number greater than `100000000000`, integer or with a fractional part, is read as milliseconds since the epoch. Any other number is read as seconds, and a floating-point number can have a fractional part. |
 | `iso8601` | A string such as `2026-11-23T10:15:30Z`, `2026-11-23T10:15:30.123Z`, or `2026-11-23T10:15:30+02:00`. The fraction of a second and the time zone are optional. A value without a time zone is read as UTC. |
 | `java_sql_timestamp` | A string such as `2026-11-23 10:15:30` or `2026-11-23 10:15:30.123`, read as UTC. |
 | `double` | A number of seconds since the epoch. |
@@ -167,7 +175,7 @@ By default, the plugin looks in each JSON record for the `date` key (`time_key`)
 
 Strings are accepted only by `auto`, `iso8601`, and `java_sql_timestamp`. Numbers are accepted only by `auto`, `double`, `epoch`, and `epoch_ms`. Negative numbers aren't valid timestamps.
 
-Set `time_keep` to `true` to keep the time key in the record after using it. If the key is missing or its value can't be parsed, the plugin uses the time of ingestion as the timestamp and leaves the record unchanged.
+Set `time_keep` to `true` to keep the time key in the record after using it. If the key is missing or its value can't be parsed, the plugin uses the time of ingestion as the timestamp and leaves the record unchanged. A value that Fluent Bit can't represent as an event time, for example seconds beyond the 32-bit range, is treated the same way: the plugin uses the time of ingestion and leaves the field in the record.
 
 When you set `parser`, the plugin ignores `time_key` and `time_format`. It uses the timestamp that the parser extracts, and falls back to the time of ingestion when the parser doesn't extract one. Set `time_key` to `false`, `off`, or `none` to use the time of ingestion for every record.
 
@@ -201,7 +209,9 @@ Set `db` to the path of a SQLite file to make the plugin remember which objects 
 
 Because the key includes the generation, an object that someone overwrites in the bucket has a new generation and is read again.
 
-The database provides at-least-once delivery. The plugin records an object only after it emits all of its records. If Fluent Bit stops in the middle of an object, the plugin doesn't record that object, and reads and emits it again in full on the next run. Your destination might receive duplicates of the records from that one object.
+The plugin records an object only after it hands all of its records to the Fluent Bit engine. If Fluent Bit stops or restarts in the middle of an object, the plugin reads that object again in full on the next run, so your destination might receive duplicates of the records from that one object.
+
+The database doesn't protect records that the engine has buffered but not yet delivered. If the process is killed or crashes, those records can be lost, as with other inputs, and because the plugin already recorded the object, it doesn't read the object again. [Filesystem buffering](../buffering.md#filesystem-buffering-hybrid) reduces this exposure but doesn't remove it, because this input hands records to the engine from its own thread.
 
 Without `db`, the plugin doesn't keep any state, and every run reads all the selected objects again.
 
@@ -218,11 +228,12 @@ The plugin processes one object at a time, doing a bounded amount of work on eve
 | `404` (not found) while downloading | The plugin logs a warning and skips the object, for example when someone deleted it after the listing. The run continues. |
 | `429`, `5xx`, connection errors, or no access token | The plugin repeats the request, up to `retry_limit` times. If all attempts fail, the plugin skips the object when downloading, or fails the run when listing. |
 | Any other failure while downloading, including a corrupt gzip object | The plugin logs an error and skips the object. The run continues. |
+| Record encoding failure | The plugin retries the batch on the next cycle, up to `retry_limit` times. If it still fails, the object counts as failed and the plugin doesn't record it in the state database. The plugin continues with the next object. |
 | Any failure while listing | The run fails, after the retries described for `429` and `5xx`. A `404` while listing, for example when the bucket doesn't exist, also fails the run. |
 
 `retry_limit` counts retries after the first attempt. With the default value of `3`, the plugin makes up to four attempts for a request: the first one and three retries. Retries run on the next collector cycle, without an additional backoff delay. Set `retry_limit` to `0` to disable retries.
 
-When the run fails, the plugin logs the error, stops processing, and doesn't process any remaining objects. If `exit_on_complete` is `true`, Fluent Bit also exits. A skipped object isn't recorded in the [state database](#state-database), so a later run tries it again.
+When the run fails, the plugin logs the error, stops processing, and doesn't process any remaining objects. If `exit_on_complete` is `true`, Fluent Bit also exits, with a non-zero status. It also exits with a non-zero status when the run completes but at least one object failed. Objects skipped because they no longer exist (`404`) don't count as failures. A skipped object isn't recorded in the [state database](#state-database), so a later run tries it again.
 
 When the plugin finishes, successfully or not, it logs a summary with the number of objects processed, skipped, and failed, and the number of records emitted.
 
