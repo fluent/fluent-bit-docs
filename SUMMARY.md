@@ -91,6 +91,7 @@
   * [Fluent Bit logs](pipeline/inputs/fluentbit-logs.md)
   * [Fluent Bit metrics](pipeline/inputs/fluentbit-metrics.md)
   * [Forward](pipeline/inputs/forward.md)
+  * [Google Cloud Storage](pipeline/inputs/gcs.md)
   * [GPU metrics](pipeline/inputs/gpu-metrics.md)
   * [Head](pipeline/inputs/head.md)
   * [Health](pipeline/inputs/health.md)

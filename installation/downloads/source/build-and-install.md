@@ -192,6 +192,7 @@ The following input plugins are available:
 | [`FLB_IN_FLUENTBIT_METRICS`](../../../pipeline/inputs/fluentbit-metrics.md)                 | Enable Fluent Bit metrics input plugin                                    | `On`    |
 | [`FLB_IN_FLUENTBIT_LOGS`](../../../pipeline/inputs/fluentbit-logs.md)                       | Enable Fluent Bit internal logs input plugin                              | `On`    |
 | [`FLB_IN_FORWARD`](../../../pipeline/inputs/forward.md)                                     | Enable Forward input plugin                                               | `On`    |
+| [`FLB_IN_GCS`](../../../pipeline/inputs/gcs.md)                                             | Enable Google Cloud Storage input plugin                                  | `On`    |
 | [`FLB_IN_GPU_METRICS`](../../../pipeline/inputs/gpu-metrics.md)                             | Enable GPU metrics input plugin                                           | `On`    |
 | [`FLB_IN_HEAD`](../../../pipeline/inputs/head.md)                                           | Enable Head input plugin                                                  | `On`    |
 | [`FLB_IN_HEALTH`](../../../pipeline/inputs/health.md)                                       | Enable Health input plugin                                                | `On`    |

@@ -10,6 +10,8 @@ description: Send logs to Google Cloud Storage
 
 The _Google Cloud Storage_ (`gcs`) output plugin lets you upload the records received through the input plugin to a [Google Cloud Storage](https://cloud.google.com/storage) bucket. Records are buffered locally and uploaded as objects when the configured upload timeout elapses.
 
+To read the uploaded objects back into a pipeline, for example to rehydrate archived logs, use the [Google Cloud Storage input plugin](../inputs/gcs.md).
+
 This plugin is available in Fluent Bit version 5.1 and greater. It's included in official builds. If you compile Fluent Bit from source, the `FLB_OUT_GCS` build option is enabled by default.
 
 ## Google Cloud configuration

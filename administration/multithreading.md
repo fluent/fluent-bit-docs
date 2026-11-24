@@ -28,6 +28,7 @@ configure this behavior by enabling or disabling the `threaded` setting.
 All inputs are capable of running in threaded mode, but certain inputs always
 run in threaded mode regardless of configuration. These always-threaded inputs are:
 
+- [Google Cloud Storage](../pipeline/inputs/gcs.md)
 - [Kubernetes Events](../pipeline/inputs/kubernetes-events.md)
 - [Node Exporter Metrics](../pipeline/inputs/node-exporter-metrics.md)
 - [Process Exporter Metrics](../pipeline/inputs/process-exporter-metrics.md)
