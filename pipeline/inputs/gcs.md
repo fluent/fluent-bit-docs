@@ -12,7 +12,7 @@ The _Google Cloud Storage_ (`gcs`) input plugin reads log objects from a [Google
 
 This plugin is the counterpart of the [Google Cloud Storage output plugin](../outputs/gcs.md). By default, it reads the objects that the output plugin writes. To archive logs to a bucket, refer to that page.
 
-This plugin is available in Fluent Bit version 5.2 and greater. If you compile Fluent Bit from source, the `FLB_IN_GCS` build option is enabled by default, but the plugin requires a build with TLS support. When TLS support is disabled, the build system turns `FLB_IN_GCS` off.
+If you compile Fluent Bit from source, the `FLB_IN_GCS` build option is enabled by default, but the plugin requires a build with TLS support. When TLS support is disabled, the build system turns `FLB_IN_GCS` off.
 
 ## How it works
 
@@ -25,7 +25,7 @@ The plugin performs a one-shot rehydration. It doesn't poll for new objects. Whe
 
 Set `exit_on_complete` to `true` to also stop Fluent Bit when the plugin finishes. Otherwise, Fluent Bit keeps running and flushes remaining data to the outputs until you stop it.
 
-The plugin skips entries whose name ends with `/`, because Cloud Storage tools use them as folder placeholders. It holds one object in memory at a time, and applies `max_object_size` to both the downloaded and the decompressed content.
+The plugin skips empty objects whose name ends with `/`, because Cloud Storage tools use them as folder placeholders. It holds one object in memory at a time, and applies `max_object_size` to both the downloaded and the decompressed content.
 
 This input always runs in its own [thread](../../administration/multithreading.md#inputs).
 
@@ -41,14 +41,14 @@ This input always runs in its own [thread](../../administration/multithreading.m
 | `end_offset` | Only read objects whose name is lexicographically lower than this value. See [Select objects](#select-objects). | _none_ |
 | `endpoint` | Cloud Storage API endpoint. Use `http://` only for tests and emulators. See [Use an emulator](#use-an-emulator). | `https://storage.googleapis.com` |
 | `exit_on_complete` | Stop Fluent Bit after the plugin has processed all the objects. Exits with a non-zero status if the run fails or an object failed. | `false` |
-| `google_service_account` | Email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
+| `google_service_account` | The email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud service account credentials JSON file. See [Authentication](#authentication). | _none_ |
 | `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `max_object_size` | Maximum size of an object. The limit also applies to the uncompressed content. The plugin skips larger objects. See [Limits and error handling](#limits-and-error-handling). | `128M` |
 | `metadata_server` | Address of the Compute Engine or Google Kubernetes Engine metadata server, used to request an access token when no credentials file is configured. See [Authentication](#authentication). | `http://metadata.google.internal` |
 | `object_key` | When set, adds the name of the source object to every record under this key. | _none_ |
 | `page_size` | Maximum number of objects to request on every page of the listing. Must be greater than `0`. | `1000` |
-| `parser` | Name of a [parser](../parsers.md) to apply to every line. When unset, a line that is a JSON object becomes the record, and any other line becomes `{"log": line}`. See [Record format](#record-format). | _none_ |
+| `parser` | Name of a [parser](../parsers.md) to apply to every line. When unset, a line that's a JSON object becomes the record, and any other line becomes `{"log": line}`. See [Record format](#record-format). | _none_ |
 | `pool_id` | Workload identity pool ID. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `prefix` | Only read objects whose name starts with this prefix. See [Select objects](#select-objects). | _none_ |
 | `project_number` | Number of the Google Cloud project that owns the workload identity pool. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
@@ -113,7 +113,7 @@ This mode requires the following options. If any of them is missing, the plugin 
 - `provider_id`: the workload identity pool provider ID.
 - `identity_token_file`: the path to the file holding the `OIDC` subject token.
 
-The plugin builds the `STS` audience from the first three of these values as `//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID`. This string must match the audience configured on the pool provider.
+The plugin builds the `STS` audience from the first three of these values as `//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID`. This string identifies the workload identity pool provider that validates the token. The `aud` claim of the token in `identity_token_file` must be an audience that the provider accepts.
 
 The plugin re-reads `identity_token_file` on every token exchange, so platforms that rotate the token in place, such as a `kubelet` projected token, work without a restart.
 
@@ -134,7 +134,7 @@ The plugin sends `prefix`, `start_offset`, and `end_offset` to Cloud Storage as 
 
 You can combine the three options. If you set none of them, the plugin reads every object in the bucket.
 
-By default, the output plugin names objects `fluent-bit-logs/$TAG/%Y/%m/%d/%H/%M/%S`, with a random suffix such as `-object1a2b3c4d` appended. Because the tag comes before the date, objects of the same tag are contiguous and sorted by time, so you can select a time window for one tag with offsets. For example, the following options select every object that the `app.log` tag wrote on 23 November 2026:
+By default, the output plugin names objects `fluent-bit-logs/$TAG/%Y/%m/%d/%H/%M/%S`, with a random suffix such as `-object1a2b3c4d` appended. Because the tag comes before the date, objects of the same tag are contiguous and sorted by time, so you can select a time window for one tag with offsets. For example, the following options select every object that the `app.log` tag wrote on November 23, 2026:
 
 ```text
 prefix:       fluent-bit-logs/app.log/
@@ -142,7 +142,7 @@ start_offset: fluent-bit-logs/app.log/2026/11/23/
 end_offset:   fluent-bit-logs/app.log/2026/11/24/
 ```
 
-To select a time window across all tags with a single input, change `gcs_key_format` in the output plugin to put the date first, for example `fluent-bit-logs/%Y/%m/%d/%H/$TAG/$UUID`. Otherwise, add one input instance for each tag.
+To select a time window across all tags with a single input, change `gcs_key_format` in the output plugin to put the date first, for example `fluent-bit-logs/%Y/%m/%d/%H/$TAG/$UUID`. Otherwise, add one input instance for each tag. In that case, don't set `exit_on_complete`, or run each instance in its own Fluent Bit process. The first instance that finishes with `exit_on_complete` set stops Fluent Bit, including the instances that haven't read all their objects yet.
 
 ## Record format
 
@@ -160,7 +160,7 @@ Objects in formats other than line-delimited text, such as Parquet files that th
 
 ## Timestamps
 
-By default, the plugin looks in each JSON record for the `date` key (`time_key`), uses its value as the record timestamp, and removes the key from the record. This matches what the output plugin writes by default: a `date` key with an ISO 8601 timestamp, such as `2026-11-23T10:15:30.123456Z`. Rehydrated records keep their original timestamps without extra configuration.
+By default, the plugin looks in each JSON record for the `date` key (`time_key`), uses its value as the record timestamp, and removes the key from the record. This matches the default `json_date_key` and `json_date_format` settings of the [output plugin](../outputs/gcs.md#configuration-parameters), which write a `date` key with an ISO 8601 timestamp, such as `2026-11-23T10:15:30.123456Z`. Objects whose records don't have a `date` key, such as objects written by an output plugin without these options, get the time of ingestion for every record. If your objects store the timestamp under another key or in another format, set `time_key` and `time_format` to match.
 
 `time_format` controls how the plugin interprets the value:
 
@@ -175,9 +175,9 @@ By default, the plugin looks in each JSON record for the `date` key (`time_key`)
 
 Strings are accepted only by `auto`, `iso8601`, and `java_sql_timestamp`. Numbers are accepted only by `auto`, `double`, `epoch`, and `epoch_ms`. Negative numbers aren't valid timestamps.
 
-Set `time_keep` to `true` to keep the time key in the record after using it. If the key is missing or its value can't be parsed, the plugin uses the time of ingestion as the timestamp and leaves the record unchanged. A value that Fluent Bit can't represent as an event time, for example seconds beyond the 32-bit range, is treated the same way: the plugin uses the time of ingestion and leaves the field in the record.
+Set `time_keep` to `true` to keep the time key in the record after using it. If the key is missing or its value can't be parsed, the plugin uses the time of ingestion as the timestamp and leaves the record unchanged. A value that Fluent Bit can't represent as an event time, for example seconds beyond the 32-bit range, is treated the same way. The plugin uses the time of ingestion and leaves the field in the record.
 
-When you set `parser`, the plugin ignores `time_key` and `time_format`. It uses the timestamp that the parser extracts, and falls back to the time of ingestion when the parser doesn't extract one. Set `time_key` to `false`, `off`, or `none` to use the time of ingestion for every record.
+When you set `parser`, the plugin ignores `time_key` and `time_format`. It uses the timestamp that the parser extracts, and falls back to the time of ingestion when the parser doesn't extract one. Without `parser`, set `time_key` to `false`, `off`, or `none` to use the time of ingestion for every record. With `parser`, disabling `time_key` has no effect.
 
 ## Tags
 
@@ -209,9 +209,9 @@ Set `db` to the path of a SQLite file to make the plugin remember which objects 
 
 Because the key includes the generation, an object that someone overwrites in the bucket has a new generation and is read again.
 
-The plugin records an object only after it hands all of its records to the Fluent Bit engine. If Fluent Bit stops or restarts in the middle of an object, the plugin reads that object again in full on the next run, so your destination might receive duplicates of the records from that one object.
+The plugin records an object only after it hands all of its records to the Fluent Bit engine. If Fluent Bit stops or restarts in the middle of an object, the plugin reads that object again in full on the next run. Your destination might receive duplicates of the records from that one object.
 
-The database doesn't protect records that the engine has buffered but not yet delivered. If the process is killed or crashes, those records can be lost, as with other inputs, and because the plugin already recorded the object, it doesn't read the object again. [Filesystem buffering](../buffering.md#filesystem-buffering-hybrid) reduces this exposure but doesn't remove it, because this input hands records to the engine from its own thread.
+The database doesn't protect records that the engine has buffered but not yet delivered. If the process is killed or crashes, those records can be lost, as with other inputs. Because the plugin already recorded the object, it doesn't read the object again. [Filesystem buffering](../buffering.md#filesystem-buffering-hybrid) reduces this exposure but doesn't remove it, because this input hands records to the engine from its own thread.
 
 Without `db`, the plugin doesn't keep any state, and every run reads all the selected objects again.
 
@@ -221,7 +221,7 @@ The plugin processes one object at a time, doing a bounded amount of work on eve
 
 | Condition | Behavior |
 | :--- | :--- |
-| Object larger than `max_object_size` | The plugin logs an error and skips the object. It checks the size reported by the listing, the size of the downloaded content, and the size after decompression. |
+| Object larger than `max_object_size` | The plugin logs an error and skips the object. It checks the size reported by the listing, the size of the downloaded content, and the size after decompression. An object over the limit in the listing counts as skipped. An object over the limit after download or decompression counts as failed. |
 | `batch_size` | The plugin appends up to `batch_size` records to the pipeline on every cycle. Lower this value to reduce memory pressure on the pipeline, or raise it to speed up rehydration. When the input is paused because of backpressure, the plugin resumes from the same line. |
 | `401` (unauthorized) | The plugin invalidates the cached access token, requests a new one, and repeats the request once. This retry doesn't count against `retry_limit`. If the request fails with `401` again, the run fails. |
 | `403` (forbidden) | The run fails. Check the IAM permissions described in [Google Cloud configuration](#google-cloud-configuration). |
@@ -233,7 +233,7 @@ The plugin processes one object at a time, doing a bounded amount of work on eve
 
 `retry_limit` counts retries after the first attempt. With the default value of `3`, the plugin makes up to four attempts for a request: the first one and three retries. Retries run on the next collector cycle, without an additional backoff delay. Set `retry_limit` to `0` to disable retries.
 
-When the run fails, the plugin logs the error, stops processing, and doesn't process any remaining objects. If `exit_on_complete` is `true`, Fluent Bit also exits, with a non-zero status. It also exits with a non-zero status when the run completes but at least one object failed. Objects skipped because they no longer exist (`404`) don't count as failures. A skipped object isn't recorded in the [state database](#state-database), so a later run tries it again.
+When the run fails, the plugin logs the error, stops processing, and doesn't process any remaining objects. If `exit_on_complete` is `true`, Fluent Bit also exits, with a non-zero status. It also exits with a non-zero status when the run completes but at least one object failed. Skipped objects don't count as failures. The plugin skips objects that no longer exist (`404`), objects whose size in the listing is larger than `max_object_size`, and objects already recorded in the [state database](#state-database). Failed objects and objects skipped for a `404` or their size aren't recorded in the state database, so a later run tries them again.
 
 When the plugin finishes, successfully or not, it logs a summary with the number of objects processed, skipped, and failed, and the number of records emitted.
 
@@ -249,7 +249,7 @@ The following examples use the object layout that the [output plugin](../outputs
 
 ### Rehydrate a day of logs and exit
 
-The following configuration reads the objects that the `app.log` tag wrote on 23 November 2026, prints the records on the console, and exits when it finishes:
+The following configuration reads the objects that the `app.log` tag wrote on November 23, 2026, prints the records on the console, and exits when it finishes:
 
 {% tabs %}
 {% tab title="fluent-bit.yaml" %}

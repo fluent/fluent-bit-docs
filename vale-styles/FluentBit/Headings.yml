@@ -177,5 +177,6 @@ exceptions:
   - Windows
   - Windows Event
   - Windows Server
+  - Workload Identity Federation
   - YAML
   - YUM
