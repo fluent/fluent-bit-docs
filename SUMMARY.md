@@ -129,6 +129,7 @@
 * [Parsers](pipeline/parsers.md)
   * [Configuring custom parsers](pipeline/parsers/configuring-parser.md)
   * [Multiline parsing](pipeline/parsers/multiline-parsing.md)
+  * [CRI format](pipeline/parsers/cri.md)
   * [JSON format](pipeline/parsers/json.md)
   * [Logfmt format](pipeline/parsers/logfmt.md)
   * [LTSV format](pipeline/parsers/ltsv.md)
