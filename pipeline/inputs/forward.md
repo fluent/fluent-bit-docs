@@ -33,6 +33,8 @@ The plugin supports the following configuration parameters:
 
 In v5.1.3 or later, the plugin validates `PackedForward` and `CompressedPackedForward` payloads before it ingests them. If an entry isn't a valid log event, the plugin logs the warning `invalid PackedForward entry` and rejects the payload.
 
+For `CompressedPackedForward` messages, the plugin decompresses the whole payload and checks it before it ingests any entries. If decompression fails, for example because the compressed data is corrupt or truncated, or because the checksum or size in a gzip member's footer doesn't match its contents, the plugin logs the error `invalid compressed payload`. If gzip data ends before the last member is complete, the plugin logs either that error or the error `incomplete compressed payload`, depending on where the data ends. In both cases, the plugin rejects the whole message, including entries from any valid gzip members or zstd frames in the same payload. It doesn't send an acknowledgment for the message's `chunk` option, and it closes the connection. Messages that the plugin already processed on the same connection aren't affected. Messages that the sender sent after the rejected message on the same connection are discarded without an acknowledgment.
+
 ### Unix socket files
 
 When `unix_path` is set, Fluent Bit checks the path before it creates the socket:
