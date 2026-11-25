@@ -15,6 +15,7 @@ The plugin supports the following configuration parameters:
 | `alias` | Sets an alias for multiple instances of the same input plugin. This helps when you need to run multiple blob input instances with different configurations. | *none* |
 | `database_file` | Specify a database file to keep track of processed files and their state. This enables the plugin to resume processing from the last known position if Fluent Bit is restarted. | *none* |
 | `exclude_pattern` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_pattern *.tmp,*.bak` will exclude temporary and backup files from processing. | *none* |
+| `follow_symlinks` | Follow symbolic links when accessing files. Set to `false` to reject file paths that contain a symbolic link or a Windows reparse point in any component. See [Symbolic links](#symbolic-links). | `true` |
 | `log_level` | Specifies the log level for this input plugin. If not set here, the plugin uses the global log level specified in the `service` section. Valid values: `off`, `error`, `warn`, `info`, `debug`, `trace`. | `info` |
 | `log_suppress_interval` | Suppresses log messages from this input plugin that appear similar within a specified time interval. Set to `0` to disable suppression. The value must be specified in seconds. This helps reduce log noise when the same error or warning occurs repeatedly. | `0` |
 | `mem_buf_limit` | Set a memory buffer limit for the input plugin instance in bytes. If the limit is reached, the plugin will pause until the buffer is drained. If set to `0`, the buffer limit is disabled. If the plugin has enabled filesystem buffering, this limit won't apply. The value must be according to the [Unit Size](../../administration/configuring-fluent-bit.md#unit-sizes) specification. | `0` |
@@ -39,6 +40,17 @@ The plugin supports the following configuration parameters:
 The Blob input plugin periodically scans the specified directory path for binary files. When a new or modified file is detected, the plugin reads the file content and creates records that are forwarded through the Fluent Bit pipeline. The plugin can track processed files using a database file, allowing it to resume from the last known position after a restart.
 
 Binary file content is typically included in the output records, and the exact format depends on the output plugin configuration. The plugin generates one or more records per file, depending on the file size and configuration.
+
+## Symbolic links
+
+By default, the Blob input follows symbolic links. When `follow_symlinks` is `false`:
+
+- Directories that are symbolic links aren't searched. In a recursive scan (a `path` that contains `/**/`), they're skipped without a message, so files in them are never collected. In a non-recursive scan on Linux and macOS, Fluent Bit logs `cannot open <path>` for them. On Windows, directories that are reparse points are skipped without a message.
+- A file is rejected if any component of its path is a symbolic link, or on Windows a junction, mount point, or other reparse point. On Linux and macOS, a path with a `..` component is also rejected. On Windows, Fluent Bit first converts each matched path to an absolute path, which resolves `.` and `..` components, so only the components that remain are checked. Fluent Bit logs `cannot open <path>` and doesn't process the file.
+- A rejected path is checked again on every scan, so the error repeats every `scan_refresh_interval`. Exclude these paths with `exclude_pattern`, or set `log_suppress_interval` to reduce the repeated messages.
+- The `delete` and `add_suffix` actions of `upload_success_action` and `upload_failure_action` don't follow symbolic links.
+
+The [Amazon S3](../outputs/s3.md) and [Azure Blob](../outputs/azure_blob.md) outputs read the files again when they upload them, and have their own `follow_symlinks` parameter. To keep the whole pipeline from following symbolic links, set `follow_symlinks` to `false` on both the input and the output. When an output rejects a file this way, it doesn't retry the file until `upload_part_freshness_limit` expires, and the input's `upload_failure_action` isn't triggered.
 
 ## Database file
 

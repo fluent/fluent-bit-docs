@@ -28,6 +28,7 @@ The plugin supports the following configuration parameters:
 | `exclude_path` | Set one or multiple shell patterns separated by commas to exclude files matching certain criteria. For example, `exclude_path *.gz,*.zip`. | _none_ |
 | `exit_on_eof` | When reading a file, exit as soon as it reaches the end of the file. Used for bulk load and tests. | `false` |
 | `file_cache_advise` | Set the `posix_fadvise` in `POSIX_FADV_DONTNEED` mode. This reduces the usage of the kernel file cache. This option is ignored if not running on Linux. | `true` |
+| `follow_symlinks` | Follow symbolic links when accessing files. Set to `false` to reject file paths that contain a symbolic link or a Windows reparse point in any component. See [Symbolic links](#symbolic-links). | `true` |
 | `generic.encoding` | Set the non-Unicode encoding of the file data. Supported values: `ShiftJIS`, `UHC`, `GBK`, `GB18030`, `Big5`, `Win866`, `Win874`, `Win1250`, `Win1251`, `Win1252`, `Win1253`, `Win1254`, `Win1255`, and `Win1256`. | _none_ |
 | `ignore_active_older_files` | Ignore files that are older than the value set in `ignore_older` even if the file is being ingested. | `false` |
 | `ignore_older` | Ignores files older than `ignore_older`. Supports `m`, `h`, `d` (minutes, hours, days) syntax. | Read all. |
@@ -506,6 +507,17 @@ While file rotation is handled, there are risks of potential log loss when using
 - Final note: the `Path` patterns can't match the rotated files. Otherwise, the rotated file would be read again and lead to duplicate records.
 
 {% endhint %}
+
+## Symbolic links
+
+By default, the Tail input follows symbolic links. When `follow_symlinks` is `false`, Fluent Bit opens each directory in a file's path without following links, and rejects the file if any component of the path is a symbolic link. On Windows, it also rejects junctions, mount points, and other reparse points. On Linux and macOS, a path with a `..` component is also rejected. On Windows, Fluent Bit first converts each matched path to an absolute path, which resolves `.` and `..` components, so only the components that remain are checked.
+
+- On Linux and macOS, a file matched by `path` that's itself a symbolic link is skipped. The only message is `skip (invalid) entry=<path>` at the `debug` log level.
+- If a directory in the path is a symbolic link, or on Windows if the file is a symbolic link, Fluent Bit logs `cannot open <path>` and doesn't tail the file. The file is checked again on every scan, so the error repeats every `refresh_interval`. Exclude these paths with `exclude_path`, or set `log_suppress_interval` to reduce the repeated messages.
+
+The option applies to the file scan and to opening files. Rotation detection, file watching, and the database file still follow symbolic links.
+
+Some common log locations rely on symbolic links. For example, the files in `/var/log/containers` on Kubernetes nodes are symbolic links, and `/var` and `/tmp` on macOS are symbolic links. Keep the default value for paths like these. The [Kubernetes](../filters/kubernetes.md) filter reads metadata from tags based on `/var/log/containers` file names by default, so keep `follow_symlinks` set to `true` when you use it with that layout.
 
 ## Windows path encoding
 
