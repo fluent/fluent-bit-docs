@@ -72,6 +72,15 @@ On Linux, when Fluent Bit starts it checks the capacity of its internal engine c
 
 The number in the message depends on the pipe capacity of your system. To avoid the lower limit, raise the `fs.pipe-user-pages-soft` kernel setting. You can't configure the limit in Fluent Bit.
 
+## Exit codes
+
+Fluent Bit sets its exit code after all plugins have shut down. A plugin that reports a failure during shutdown can make Fluent Bit exit with a non-zero code, even after a normal stop. Some plugins also set the exit code while the pipeline runs:
+
+- The [Expect](../pipeline/filters/expect.md) filter with `action` set to `exit` makes Fluent Bit exit with code `255` when a record doesn't match a rule. Code `255` can also mean an internal error or an aborted reload.
+- The [Exec](../pipeline/inputs/exec.md) input with `exit_after_oneshot` and `propagate_exit_code` set to `true` makes Fluent Bit exit with the exit code of its command.
+
+A non-zero exit code from a pipeline that a [hot reload](hot-reload.md#exit-code-after-a-reload) replaced can also carry over to the final exit code.
+
 ## Tap
 
 Tap can be used to generate events or records detailing what messages pass through Fluent Bit, at what time and what filters affect them.

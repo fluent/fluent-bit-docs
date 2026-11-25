@@ -66,6 +66,10 @@ Validation checks the property names and values of every processor, including [f
 
 Validation doesn't catch every error. Errors that only appear when a processor starts, such as an invalid regular expression in a `content_modifier` processor, are found after Fluent Bit has stopped the previous pipeline. In that case, the reload is aborted and Fluent Bit exits instead of keeping the previous configuration. Test configuration changes in a test environment before you reload a production instance. The `--dry-run` option runs the same validation, so it doesn't catch these errors either.
 
+## Exit code after a reload
+
+When a reload replaces the running pipeline, Fluent Bit shuts down the plugins of the old pipeline. If the old pipeline ends with a non-zero exit code, for example because a plugin reports a failure while it shuts down, Fluent Bit keeps that code. When Fluent Bit later exits, it uses the kept code if the current pipeline ends with code `0`. If the current pipeline ends with its own non-zero code, Fluent Bit uses that code instead. If several replaced pipelines ended with non-zero codes, Fluent Bit keeps the most recent one. If a reload is aborted, Fluent Bit exits with a non-zero exit code and doesn't use the kept code.
+
 ## How to reload
 
 After updating the configuration, use one of the following methods to perform a hot reload:
