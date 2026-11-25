@@ -156,7 +156,7 @@ Set the following keys in each output section:
 | --- | ----------- | ------- |
 | `throttle` | Enable a destination-driven cooldown for this output instance. | `false` |
 | `throttle.base` | Set the minimum cooldown in seconds. The value must be a positive whole number without a unit suffix, such as `5`, not `5s`. | `1` |
-| `throttle.cap` | Set the maximum cooldown in seconds that Fluent Bit calculates on its own. The value must be a positive whole number without a unit suffix, and greater than or equal to `throttle.base`. A delay requested by the destination can be longer. | `60` |
+| `throttle.cap` | Set the maximum cooldown in seconds that Fluent Bit calculates on its own. The value must be a positive whole number without a unit suffix, and greater than or equal to `throttle.base`. A delay requested by the destination can be longer, except for the Amazon S3 output. | `60` |
 
 Fluent Bit fails to start if `throttle.base` or `throttle.cap` isn't a positive whole number, or if `throttle.cap` is less than `throttle.base`. This check applies even when `throttle` is off, so if you set `throttle.base` greater than `60`, also raise `throttle.cap`.
 
@@ -166,6 +166,7 @@ The following outputs report throttle signals. Other outputs don't, so these key
 | --- | --- |
 | [HTTP](../pipeline/outputs/http.md) | HTTP `429`, or HTTP `503` with a valid `Retry-After` value. |
 | [Elasticsearch](../pipeline/outputs/elasticsearch.md) and [OpenSearch](../pipeline/outputs/opensearch.md) | HTTP `429` for the whole request, or a `429` status for any document in a `_bulk` response. For OpenSearch, per-document statuses are checked for log records only. |
+| [Amazon S3](../pipeline/outputs/s3.md) | HTTP `429`, HTTP `503` with an empty body, or HTTP `503` or `200` with the error code `SlowDown` or `SlowDownWrite`. The S3 output handles these signals in its own uploader, and limits a `Retry-After` value to `throttle.cap`. The uploader pauses its own uploads instead of the output, so Fluent Bit keeps flushing chunks to the S3 buffer, and the output throttle metrics don't report this cooldown. See [Throttling](../pipeline/outputs/s3.md#throttling). |
 | [OpenTelemetry](../pipeline/outputs/opentelemetry.md) | OTLP/HTTP `429`, or `503` with a valid `Retry-After` value. OTLP/gRPC `UNAVAILABLE` or `RESOURCE_EXHAUSTED` with a valid `google.rpc.RetryInfo` delay. |
 
 When `throttle` is off, Fluent Bit handles these signals like any other retry: the scheduler waits as described in [Configure wait time for retry](#configure-wait-time-for-retry), and any delay requested by the destination is ignored.
@@ -183,7 +184,7 @@ Fluent Bit calculates the cooldown with exponential backoff and jitter. The limi
 If the destination requests a delay that's longer than the calculated cooldown, Fluent Bit waits for the requested delay instead. Fluent Bit reads the delay from an HTTP `Retry-After` header or trailer, as a number of seconds or an HTTP date, or from a gRPC `google.rpc.RetryInfo` message. Fluent Bit ignores malformed values. When a response has several valid `Retry-After` values, the HTTP, Elasticsearch, and OpenSearch outputs use the largest, and log ignored malformed values at the `debug` level.
 
 {% hint style="warning" %}
-Fluent Bit honors the delay requested by the destination in full. `throttle.cap` doesn't limit it, and there's no other upper bound, so a very large `Retry-After` value can pause the output indefinitely. Enable `throttle` only for destinations that you trust to request reasonable delays.
+Except for the Amazon S3 output, Fluent Bit honors the delay requested by the destination in full. `throttle.cap` doesn't limit it, and there's no other upper bound, so a very large `Retry-After` value can pause the output indefinitely. Enable `throttle` only for destinations that you trust to request reasonable delays.
 {% endhint %}
 
 With `Retry_Limit` set to `no_retries`, Fluent Bit doesn't hold a throttled chunk. It discards the chunk, or moves it to the [Dead Letter Queue](./dead-letter-queue.md) if that's enabled. The output still pauses for the cooldown.
