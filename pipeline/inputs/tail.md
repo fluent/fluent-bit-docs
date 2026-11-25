@@ -510,7 +510,7 @@ While file rotation is handled, there are risks of potential log loss when using
 
 ## Symbolic links
 
-By default, the Tail input follows symbolic links. When `follow_symlinks` is `false`, Fluent Bit opens each directory in a file's path without following links, and rejects the file if any component of the path is a symbolic link. On Windows, it also rejects junctions, mount points, and other reparse points. On Linux and macOS, a path with a `..` component is also rejected.
+By default, the Tail input follows symbolic links. When `follow_symlinks` is `false`, Fluent Bit opens each directory in a file's path without following links, and rejects the file if any component of the path is a symbolic link. On Windows, it also rejects junctions, mount points, and other reparse points. On Linux and macOS, a path with a `..` component is also rejected. On Windows, Fluent Bit first converts each matched path to an absolute path, which resolves `.` and `..` components, so only the components that remain are checked.
 
 - On Linux and macOS, a file matched by `path` that's itself a symbolic link is skipped. The only message is `skip (invalid) entry=<path>` at the `debug` log level.
 - If a directory in the path is a symbolic link, or on Windows if the file is a symbolic link, Fluent Bit logs `cannot open <path>` and doesn't tail the file. The file is checked again on every scan, so the error repeats every `refresh_interval`. Exclude these paths with `exclude_path`, or set `log_suppress_interval` to reduce the repeated messages.

@@ -149,7 +149,7 @@ The plugin retains up to `rotate_max_files` rotated files per output file. When 
 
 Log rotation works with all supported output [formats](#format): default (`out_file`), `plain`, `csv`, `ltsv`, `template`, and `msgpack`. File operations are thread-safe, so rotation can be used alongside multiple [workers](../../administration/multithreading.md#outputs).
 
-When `follow_symlinks` is `false`, renaming, compressing, and deleting rotated files don't follow symbolic links, except that deleting the oldest rotated files on Windows uses a normal delete.
+When `follow_symlinks` is `false`, renaming, compressing, and deleting rotated files don't follow symbolic links, except that deleting the oldest rotated files on Windows uses a normal delete. That delete follows a junction or symbolic link in the output directory or one of its parent directories.
 
 ### Log rotation example
 
@@ -203,7 +203,7 @@ By default, the File output follows symbolic links. When `follow_symlinks` is `f
 
 - If any component of the path is a symbolic link, or on Windows a junction, mount point, or other reparse point, the file isn't opened. A path with a `..` component is also rejected, and the output file must be a regular file. Fluent Bit logs `error opening: <path>`, and the records in that flush aren't retried.
 - With `mkdir` set to `true`, missing directories are created with permissions `0755`, subject to the process `umask`. On Windows, the permissions value is ignored.
-- [Log rotation](#log-rotation) follows the same rules.
+- [Log rotation](#log-rotation) follows the same rules. However, Fluent Bit follows the link when it checks the size of the output file. If rotation is due and the output file is a symbolic link, rotation renames the link itself, and Fluent Bit then creates a regular file at the original path and writes the records to it.
 
 Some common locations rely on symbolic links, such as `/var` and `/tmp` on macOS. Keep the default value if the output path goes through a symbolic link.
 

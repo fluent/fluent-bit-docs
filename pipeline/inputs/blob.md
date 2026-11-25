@@ -46,7 +46,7 @@ Binary file content is typically included in the output records, and the exact f
 By default, the Blob input follows symbolic links. When `follow_symlinks` is `false`:
 
 - Directories that are symbolic links aren't searched. In a recursive scan (a `path` that contains `/**/`), they're skipped without a message, so files in them are never collected. In a non-recursive scan on Linux and macOS, Fluent Bit logs `cannot open <path>` for them. On Windows, directories that are reparse points are skipped without a message.
-- A file is rejected if any component of its path is a symbolic link, or on Windows a junction, mount point, or other reparse point. On Linux and macOS, a path with a `..` component is also rejected. Fluent Bit logs `cannot open <path>` and doesn't process the file.
+- A file is rejected if any component of its path is a symbolic link, or on Windows a junction, mount point, or other reparse point. On Linux and macOS, a path with a `..` component is also rejected. On Windows, Fluent Bit first converts each matched path to an absolute path, which resolves `.` and `..` components, so only the components that remain are checked. Fluent Bit logs `cannot open <path>` and doesn't process the file.
 - A rejected path is checked again on every scan, so the error repeats every `scan_refresh_interval`. Exclude these paths with `exclude_pattern`, or set `log_suppress_interval` to reduce the repeated messages.
 - The `delete` and `add_suffix` actions of `upload_success_action` and `upload_failure_action` don't follow symbolic links.
 
