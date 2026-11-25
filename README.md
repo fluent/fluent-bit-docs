@@ -14,7 +14,7 @@ This manual covers the upcoming Fluent Bit `5.2` release, developed on the `mast
 
 - High performance: High throughput with low resources consumption
 - Data parsing
-  - Convert your unstructured messages using Fluent Bit parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md) and [Logfmt](pipeline/parsers/logfmt.md)
+  - Convert your unstructured messages using Fluent Bit parsers: [JSON](pipeline/parsers/json.md), [Regex](pipeline/parsers/regular-expression.md), [LTSV](pipeline/parsers/ltsv.md), [Logfmt](pipeline/parsers/logfmt.md), and [CRI](pipeline/parsers/cri.md)
 - Metrics support: Prometheus and OpenTelemetry compatible
 - Reliability and data integrity
   - [Backpressure](administration/backpressure.md) handling
