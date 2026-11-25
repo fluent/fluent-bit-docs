@@ -14,6 +14,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | `fallback_file` | Static filename used when a `fallback` action is applied. Required whenever `path` or `file` uses a record accessor or a `strftime` placeholder. See [Dynamic destinations](#dynamic-destinations). | _none_ |
 | `fallback_path` | Static directory path used together with `fallback_file` when a `fallback` action is applied. | _none_ |
 | `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions. When `enable_strftime` is `true`, `strftime` placeholders are expanded using the UTC event timestamp. | _none_ |
+| `follow_symlinks` | Follow symbolic links when accessing files. Set to `false` to reject output paths that contain a symbolic link or a Windows reparse point in any component. See [Symbolic links](#symbolic-links). | `true` |
 | `format` | The [format](#format) of the file content. | _none_ |
 | `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. Tag-derived filenames count when `path` is dynamic, or, in v5.2 or later, when `path` isn't dynamic, `file` isn't set, and this key is set explicitly. Set to `0` for unlimited. See [Destination limits](#destination-limits). | `1024` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
@@ -148,6 +149,8 @@ The plugin retains up to `rotate_max_files` rotated files per output file. When 
 
 Log rotation works with all supported output [formats](#format): default (`out_file`), `plain`, `csv`, `ltsv`, `template`, and `msgpack`. File operations are thread-safe, so rotation can be used alongside multiple [workers](../../administration/multithreading.md#outputs).
 
+When `follow_symlinks` is `false`, renaming, compressing, and deleting rotated files don't follow symbolic links, except that deleting the oldest rotated files on Windows uses a normal delete. That delete follows a junction or symbolic link in the output directory or one of its parent directories.
+
 ### Log rotation example
 
 The following configuration writes CPU metrics to file with rotation enabled. Files are rotated at 50 MB and the five most recent rotated files are retained with gzip compression:
@@ -193,6 +196,16 @@ pipeline:
 
 {% endtab %}
 {% endtabs %}
+
+## Symbolic links
+
+By default, the File output follows symbolic links. When `follow_symlinks` is `false`, Fluent Bit opens each directory in the output path without following links:
+
+- If any component of the path is a symbolic link, or on Windows a junction, mount point, or other reparse point, the file isn't opened. A path with a `..` component is also rejected, and the output file must be a regular file. Fluent Bit logs `error opening: <path>`, and the records in that flush aren't retried.
+- With `mkdir` set to `true`, missing directories are created with permissions `0755`, subject to the process `umask`. On Windows, the permissions value is ignored.
+- [Log rotation](#log-rotation) follows the same rules. However, Fluent Bit follows the link when it checks the size of the output file. If rotation is due and the output file is a symbolic link, rotation renames the link itself, and Fluent Bit then creates a regular file at the original path and writes the records to it.
+
+Some common locations rely on symbolic links, such as `/var` and `/tmp` on macOS. Keep the default value if the output path goes through a symbolic link.
 
 ## Dynamic destinations
 
