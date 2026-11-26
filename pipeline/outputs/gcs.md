@@ -10,6 +10,8 @@ description: Send logs to Google Cloud Storage
 
 The _Google Cloud Storage_ (`gcs`) output plugin lets you upload the records received through the input plugin to a [Google Cloud Storage](https://cloud.google.com/storage) bucket. Records are buffered locally and uploaded as objects when the configured upload timeout elapses.
 
+To read the uploaded objects back into a pipeline, for example to rehydrate archived logs, use the [Google Cloud Storage input plugin](../inputs/gcs.md).
+
 This plugin is available in Fluent Bit version 5.1 and greater. It's included in official builds. If you compile Fluent Bit from source, the `FLB_OUT_GCS` build option is enabled by default.
 
 ## Google Cloud configuration
@@ -123,6 +125,8 @@ pipeline:
 | `google_service_account` | The email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud service account credentials JSON file. See [Authentication](#authentication). | _none_ |
 | `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
+| `json_date_format` | Format of the timestamp written under `json_date_key`. Accepted values: `double`, `epoch`, `epoch_ms`, `iso8601`, and `java_sql_timestamp`. | `iso8601` |
+| `json_date_key` | Name of the key that holds the record timestamp in each JSON line. Set to `false`, `off`, or `no` to leave the timestamp out. The [Google Cloud Storage input plugin](../inputs/gcs.md#timestamps) reads this key by default. | `date` |
 | `metadata_server` | Address of the Compute Engine or Google Kubernetes Engine metadata server used to request an access token when no credentials file is configured. See [Authentication](#authentication). | `http://metadata.google.internal` |
 | `pool_id` | Workload identity pool ID. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `preserve_data_ordering` | When an upload request fails, the last received chunk might swap with a later chunk, resulting in data shuffling. This option prevents shuffling by using queue logic for uploads. | `false` |

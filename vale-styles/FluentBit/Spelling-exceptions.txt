@@ -191,6 +191,11 @@ Queryable
 Raspbian
 rdkafka
 Redpanda
+rehydrate
+rehydrated
+rehydrates
+rehydrating
+rehydration
 remapper
 reindexed
 rollup

@@ -82,6 +82,7 @@ The following input plugins can take advantage of the TLS feature:
 - [Docker Events](../pipeline/inputs/docker-events.md)
 - [Elasticsearch (Bulk API)](../pipeline/inputs/elasticsearch.md)
 - [Forward](../pipeline/inputs/forward.md)
+- [Google Cloud Storage](../pipeline/inputs/gcs.md)
 - [Health](../pipeline/inputs/health.md)
 - [HTTP](../pipeline/inputs/http.md)
 - [Kubernetes Events](../pipeline/inputs/kubernetes-events.md)
