@@ -37,6 +37,10 @@ To get more details about how to set up these components, refer to the following
 | `time_key` | Optional. Specify the key name where the timestamp will be stored. | `@timestamp` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `0` |
 
+## Request size limit
+
+The Logs Ingestion API rejects requests larger than 1 MB, compressed or not. The plugin splits the records of a chunk into several requests when the payload is larger than 1,000,000 bytes, either as JSON or after compression if `compress` is on. Azure doesn't say whether 1 MB means 1,000,000 or 1,048,576 bytes, so the plugin uses the smaller number. Records are never split. If one of the requests fails, the remaining requests aren't sent and the whole chunk is retried, so records that were already accepted can be sent again. A single record larger than the limit is sent on its own and rejected by the API, which fails the whole chunk. Records before it are sent again on every retry, records after it aren't sent, and the chunk is discarded when its retries run out.
+
 ## Get started
 
 To send records into an Azure Log Analytics using Logs Ingestion API the following resources needs to be created:
