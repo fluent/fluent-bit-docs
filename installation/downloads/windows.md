@@ -1,6 +1,6 @@
 # Windows
 
-Fluent Bit is distributed as the `fluent-bit` package for Windows and as a [Windows container on Docker Hub](docker.md). Fluent Bit provides two Windows installers: a `ZIP` archive and an `EXE` installer.
+Fluent Bit is distributed as the `fluent-bit` package for Windows and as a [Windows container on Docker Hub](docker.md). Fluent Bit provides a `ZIP` archive, an `EXE` installer, and an `MSI` installer, each for 32-bit (`win32`), 64-bit (`win64`), and ARM64 (`winarm64`) systems.
 
 Not all plugins are supported on Windows. The [CMake configuration](https://github.com/fluent/fluent-bit/blob/master/cmake/windows-setup.cmake) shows the default set of supported plugins.
 
@@ -113,90 +113,101 @@ For version 1.9 and later, `td-agent-bit` is a deprecated package and was remove
 
 ## Installation packages
 
-The latest stable version is 5.1.3.
+The latest stable version is 5.2.1.
 
 <!-- vale off -->
 
 | INSTALLERS | SHA256 CHECKSUMS |
 | ----------- | ---------------- |
-| [`fluent-bit-5.1.3-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win32.exe) | [58a25f831aaeeb06fcb54046f694e9c2928767c38de9b0fe21bce8d3bb0be082](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win32.exe.sha256) |
-| [`fluent-bit-5.1.3-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win32.zip) | [f2cd74424c9d2ebf63c1f476b894b4a47e81157deccb3eb2afa142c3a084271f](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win32.zip.sha256) |
-| [`fluent-bit-5.1.3-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win64.exe) | [5b293c3aa4068df8967f28cb57e14bf08461c465abb84eaa035b719f34367d3e](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win64.exe.sha256) |
-| [`fluent-bit-5.1.3-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win64.zip) | [2a06c1a3c0ecddc970f50486a94a775b54fa28bf2ebe42c57a325511d33c0bb5](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win64.zip.sha256) |
-| [`fluent-bit-5.1.3-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-winarm64.exe) | [f61f65493afc019d0c96aaeefe5b42bf6b264b25971b6a76de3ec4c0d5322123](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-winarm64.exe.sha256) |
-| [`fluent-bit-5.1.3-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-winarm64.zip) | [0c0ea7aa79093491baf2d599826922e39b0b9f8abafad47ac18027a872d7fceb](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-winarm64.zip.sha256) |
+| [`fluent-bit-5.2.1-win32.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win32.exe) | [38a0d64643c3af6367ab197f761b99512c2261e3d26dbf6eb984e57014f43159](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win32.exe.sha256) |
+| [`fluent-bit-5.2.1-win32.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win32.zip) | [46da21673191dd3d37d484d6230d784f7f1fc70ee27b394b5e5ec52cd3a1eaed](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win32.zip.sha256) |
+| [`fluent-bit-5.2.1-win64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win64.exe) | [f49f19fcf4826224a334bb2e84a71343d34a663533d0e40828e5f478fdf88e9c](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win64.exe.sha256) |
+| [`fluent-bit-5.2.1-win64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win64.zip) | [0211206273e96f14d5022baa04f6a4d10f695bfb5539393468c1d01592d6a0ca](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win64.zip.sha256) |
+| [`fluent-bit-5.2.1-winarm64.exe`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-winarm64.exe) | [f1d1355b7472564453e42b0c38e21eb0b870191b9c6f085298027720d3201efc](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-winarm64.exe.sha256) |
+| [`fluent-bit-5.2.1-winarm64.zip`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-winarm64.zip) | [15f76a05f8a4dd53e1cda511420e7be91fb58523c4888742db0165c6b38bda61](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-winarm64.zip.sha256) |
 
 <!-- vale on -->
 
-These are now using the Github Actions built versions. Legacy AppVeyor builds are still available (AMD 32/64 only) at releases.fluentbit.io but are deprecated.
+These packages are built with GitHub Actions.
 
 MSI installers are also available:
 
-- [`fluent-bit-5.1.3-win32.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win32.msi)
-- [`fluent-bit-5.1.3-win64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-win64.msi)
-- [`fluent-bit-5.1.3-winarm64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.1.3-winarm64.msi)
+- [`fluent-bit-5.2.1-win32.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win32.msi)
+- [`fluent-bit-5.2.1-win64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-win64.msi)
+- [`fluent-bit-5.2.1-winarm64.msi`](https://packages.fluentbit.io/windows/fluent-bit-5.2.1-winarm64.msi)
 
 To check the integrity, use the `Get-FileHash` cmdlet for PowerShell.
 
 ```shell
-Get-FileHash fluent-bit-5.1.3-win32.exe
+Get-FileHash fluent-bit-5.2.1-win32.exe
 ```
 
 ## Installing from a ZIP archive
 
-1. Download a ZIP archive. Choose the suitable installers for your 32-bit or 64-bit environments.
+1. Download a ZIP archive. Choose the archive for your 32-bit, 64-bit, or ARM64 environment.
 
 1. Expand the ZIP archive. You can do this by clicking **Extract All** in Explorer or `Expand-Archive` in PowerShell.
 
    ```shell
-   Expand-Archive fluent-bit-5.1.3-win64.zip
+   Expand-Archive fluent-bit-5.2.1-win64.zip -DestinationPath .
    ```
 
-   The ZIP package contains the following set of files.
+   The ZIP package contains a top-level folder named after the archive, with the following set of files.
 
    ```text
-   fluent-bit
+   fluent-bit-5.2.1-win64
    ├── bin
    │   ├── fluent-bit.dll
-   │   └── fluent-bit.exe
-   │   └── fluent-bit.pdb
+   │   ├── fluent-bit.exe
+   │   ├── fluent-bit.pdb
+   │   └── luajit.exe
    ├── conf
    │   ├── fluent-bit.conf
    │   ├── parsers.conf
    │   └── plugins.conf
-   └── include
-       │   ├── flb_api.h
-       │   ├── ...
-       │   └── flb_worker.h
-       └── fluent-bit.h
+   ├── include
+   │   ├── fluent-bit
+   │   │   ├── ...
+   │   │   ├── flb_api.h
+   │   │   ├── ...
+   │   │   └── flb_zstd.h
+   │   ├── luajit
+   │   │   └── ...
+   │   ├── monkey
+   │   │   └── ...
+   │   ├── fluent-bit.h
+   │   ├── libco.h
+   │   └── settings.h
+   └── lib
+       └── libluajit.lib
    ```
 
-1. Launch `cmd.exe` or PowerShell on your machine, and execute `fluent-bit.exe`:
+1. Launch `cmd.exe` or PowerShell on your machine, change to the `bin` folder of the expanded archive, and execute `fluent-bit.exe`:
 
    ```shell
-   fluent-bit.exe -i dummy -o stdout
+   .\fluent-bit.exe -i dummy -o stdout
    ```
 
 The following output indicates Fluent Bit is running:
 
 ```shell
-fluent-bit.exe  -i dummy -o stdout
+.\fluent-bit.exe -i dummy -o stdout
 
 ...
-[0] dummy.0: [1561684385.443823800, {"message"=>"dummy"}]
-[1] dummy.0: [1561684386.428399000, {"message"=>"dummy"}]
-[2] dummy.0: [1561684387.443641900, {"message"=>"dummy"}]
-[3] dummy.0: [1561684388.441405800, {"message"=>"dummy"}]
+[0] dummy.0: [[1561684385.443823800, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1561684386.428399000, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1561684387.443641900, {}], {"message"=>"dummy"}]
+[0] dummy.0: [[1561684388.441405800, {}], {"message"=>"dummy"}]
 ```
 
 To halt the process, press `Control+C` in the terminal.
 
 ## Installing from the executable installer
 
-1. Download an `EXE` installer for the appropriate 32-bit or 64-bit build.
+1. Download an `EXE` installer for the appropriate 32-bit, 64-bit, or ARM64 build.
 1. Double-click the `EXE` installer you've downloaded. The installation wizard starts.
 
-1. Click **Next** and finish the installation. By default, Fluent Bit is installed in `C:\Program Files\fluent-bit\`.
+1. Click **Next** and finish the installation. By default, Fluent Bit is installed in `C:\Program Files\fluent-bit\`. On 64-bit Windows, the 32-bit build is installed in `C:\Program Files (x86)\fluent-bit\` instead.
 
 ```shell
 & "C:\Program Files\fluent-bit\bin\fluent-bit.exe" -i dummy -o stdout
@@ -214,6 +225,23 @@ To silently install to `C:\fluent-bit` directory here is an example:
 
 The uninstaller also supports a silent uninstall using the same `/S` flag. This can be used for provisioning with automation like Ansible, Puppet, and so on.
 
+## Installing from the MSI installer
+
+1. Download an `MSI` installer for the appropriate 32-bit, 64-bit, or ARM64 build.
+1. Double-click the `MSI` installer, or run it with `msiexec`, for example `msiexec /i fluent-bit-5.2.1-win64.msi`. Standard `msiexec` options apply, such as `/qn` for a silent installation, which must run from an elevated prompt.
+
+The `MSI` installer installs in the same default folder as the `EXE` installer, but it also sets up a Windows service. On a new installation:
+
+- It creates a service named `fluent-bit` that runs `bin\fluent-bit.exe` with `conf\fluent-bit.conf` and uses the `conf` folder as its working directory. The service starts automatically (delayed) when Windows starts.
+- It starts the service at the end of the installation. To install without starting the service, set the `NOT_FLB_SVC_LAUNCH` environment variable to any value, such as `1`, and run `msiexec` from the same session.
+- It doesn't install over an installation from the `EXE` installer. Uninstall that installation first. Otherwise, the installer stops with `An old version of fluent-bit has been detected. Please uninstall it manually before running this installer.`
+
+If a service named `fluent-bit` already exists, for example one you created by following [Windows service support](#windows-service-support), the installer doesn't replace it, and starts that existing service instead. Uninstalling the `MSI` later deletes it. Delete any existing service with `sc.exe delete fluent-bit` before you install the `MSI`.
+
+To upgrade, run the newer `MSI` installer. The existing service definition is kept, and the installer won't install an older version over a newer one. Stop the service and back up the `conf` folder before you upgrade. Uninstalling stops and deletes the service.
+
+Because the `MSI` installer creates the service and sets it to start automatically, skip the steps on this page that create the service or set its startup type: `sc.exe create` and `sc.exe config` in [Windows service support](#windows-service-support), and `New-Service` in [FAQs](#faqs). The commands that start, stop, and query the service still apply.
+
 ## Windows service support
 
 Windows services are equivalent to daemons in Unix (long-running background processes). For v1.5.0 and later, Fluent Bit has native support for Windows services.
@@ -222,14 +250,15 @@ For example, you have the following installation layout:
 
 ```text
 C:\fluent-bit\
-├── conf
-│   ├── fluent-bit.conf
-│   └── parsers.conf
-│   └── plugins.conf
-└── bin
-    ├── fluent-bit.dll
-    └── fluent-bit.exe
-    └── fluent-bit.pdb
+├── bin
+│   ├── fluent-bit.dll
+│   ├── fluent-bit.exe
+│   ├── fluent-bit.pdb
+│   └── luajit.exe
+└── conf
+    ├── fluent-bit.conf
+    ├── parsers.conf
+    └── plugins.conf
 ```
 
 To register Fluent Bit as a Windows service, execute the following command on at a command prompt. A single space is required after `binpath=`.
