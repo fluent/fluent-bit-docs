@@ -30,6 +30,34 @@ The shared HTTP server balances accepted connections across workers. HTTP-based 
 
 Input chunks use adaptive size projections and append-sized storage hints to reduce allocation overhead as data arrives. See [Buffering](../pipeline/buffering.md) for storage configuration.
 
+### Fluent Bit v5.2.1
+
+The following highlights describe additions in `5.2.1`. For changes that can affect existing configurations, see [Upgrade notes](upgrade-notes.md#changes-in-fluent-bit-v521).
+
+#### YAML defaults, anchors, and merge keys
+
+YAML configuration files can define reusable values in a [`defaults`](../administration/configuring-fluent-bit/yaml/defaults-section.md) section and reuse them with anchors, aliases, and `<<` merge keys, including across [included files](../administration/configuring-fluent-bit/yaml/includes-section.md).
+
+#### CRI parser format
+
+The new [`cri` parser format](../pipeline/parsers/cri.md) parses log lines in the Container Runtime Interface (CRI) format, as written by containerd and CRI-O, without a regular expression.
+
+#### Symbolic link controls for file access
+
+The [Tail](../pipeline/inputs/tail.md#symbolic-links) and [Blob](../pipeline/inputs/blob.md#symbolic-links) inputs, and the [File](../pipeline/outputs/file.md#symbolic-links), [Amazon S3](../pipeline/outputs/s3.md), and [Azure Blob](../pipeline/outputs/azure_blob.md) outputs, add a `follow_symlinks` parameter. Set it to `false` to reject paths that contain symbolic links. The default keeps the existing behavior.
+
+#### Stricter Windows paths for the File output
+
+On Windows, when the [File](../pipeline/outputs/file.md#windows-absolute-paths) output's new `windows.absolute_dynamic_path` parameter is set to `true`, a dynamic `path` must start with a fixed drive-absolute directory, and record accessor values can't add directory levels.
+
+#### Amazon S3 upload throttling
+
+The [Amazon S3](../pipeline/outputs/s3.md#throttling) output now supports `throttle`. With it on, a separate uploader sends the buffered data and keeps its cooldown and retry state across restarts.
+
+#### Windows certificate store root updates
+
+On Windows, when a server certificate doesn't chain to a loaded root, Fluent Bit asks Windows to build the certificate chain in the background, which can install a missing root certificate for later connections. See [Windows certificate store](../administration/transport-security.md#windows-certificate-store).
+
 ## Fluent Bit v5.1
 
 Fluent Bit `v5.1` focuses on network ingestion throughput, adds several new inputs and outputs, and hardens TLS and FIPS compliance options.
