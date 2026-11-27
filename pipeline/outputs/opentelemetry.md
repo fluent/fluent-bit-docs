@@ -86,6 +86,7 @@ pipeline:
 | `logs_attributes_metadata_key` | Specify an `Attributes` key. | `$Attributes` |
 | `logs_body_key` | Set a record accessor that selects the value to use as the OTLP log body. | _none_ |
 | `logs_body_key_attributes` | If set and it matched a pattern, it includes the remaining fields in the record as attributes. | `false` |
+| `logs_body_key_attributes_exclude` | Comma-separated list of record keys that `logs_body_key_attributes` doesn't add as attributes, such as keys already used for the trace ID or severity text (for example, `TraceId,SeverityText`). Keys are matched by exact name against the top-level record keys. | _none_ |
 | `logs_instrumentation_scope_metadata_key` | Specify an `InstrumentationScope` key. | `InstrumentationScope` |
 | `logs_max_resources` | Set the maximum number of OTLP log resources per export request (`0` disables the limit). | `0` |
 | `logs_max_scopes` | Set the maximum number of OTLP log scopes per resource (`0` disables the limit). | `0` |
