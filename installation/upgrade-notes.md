@@ -37,6 +37,21 @@ Version `5.2` tightens several checks that can change the behavior of existing c
 - Regular expression searches that exceed a fixed work limit fail. Filters, routing, and multiline parsing treat a failed search as no match, while some include and exclude lists in metrics inputs treat it as a match. See [Regular expression format](../pipeline/parsers/regular-expression.md).
 - The [Prometheus text file](../pipeline/inputs/prometheus-textfile.md) input sends one merged payload for each scrape and adds a `fluentbit_textfile_scrape_error` metric.
 
+### Changes in Fluent Bit v5.2.1
+
+Version `5.2.1` includes the following changes that can affect existing configurations or monitoring:
+
+- YAML configuration files are combined with their included files before Fluent Bit reads them. A top-level `defaults` key is now reserved and must be a mapping, and an unquoted `<<` key is now a merge key. New limits apply to the combined files, such as 4,096 files and 65,536 YAML nodes, which large generated configurations can reach. On Linux and macOS, a relative wildcard include whose directory can't be read is now an error. See [Defaults](../administration/configuring-fluent-bit/yaml/defaults-section.md) and [Includes](../administration/configuring-fluent-bit/yaml/includes-section.md).
+- A YAML upstream file that defines more than one group still uses only the last group, but now logs a warning. If that last group defines no nodes, Fluent Bit fails to start, even if an earlier group defines nodes. See [Upstream servers](../administration/configuring-fluent-bit/yaml/upstream-servers-section.md).
+- The [Google Cloud Storage](../pipeline/outputs/gcs.md) output now adds the record timestamp to each record, including in Parquet files, in a field named `date` in ISO 8601 format by default. To keep the earlier output, set `json_date_key` to `false`.
+- The [Forward](../pipeline/inputs/forward.md) input rejects a compressed message whose data is corrupt or truncated, instead of ingesting the entries decoded before the error, and closes the connection without an acknowledgment.
+- The [Amazon S3](../pipeline/outputs/s3.md#throttling) output now supports `throttle`. If `throttle` was already on for an S3 output, a separate uploader now sends the buffered data, and `auto_retry_requests` has no effect. At shutdown, buffered data stays in `store_dir` for the next start instead of being uploaded, so put `store_dir` on persistent storage.
+- On Windows, Fluent Bit doesn't load certificates from the Windows store that are also in the `Disallowed` store. If the `Disallowed` store can't be opened, or a reload of the Windows store fails, new TLS connections that use the Windows store fail, even with `tls.verify` off. A plugin that sets `tls.windows.certstore_name` fails to start instead. See [Windows certificate store](../administration/transport-security.md#windows-certificate-store).
+- The [rate gate](../administration/configuring-fluent-bit/yaml/pipeline-section.md#rate-metrics-and-rate-limiting-for-inputs) counts routes that an output's throttle cooldown is holding as backpressure, which can lower the effective limit. A new `fluentbit_input_rate_gate_deferred_routes` metric reports them.
+- Fluent Bit sets its exit code after all plugins have shut down. A plugin that fails during shutdown can make Fluent Bit exit with a non-zero code after a normal stop, for example an Amazon S3 output with `throttle` on that can't save its upload state. A non-zero code from a pipeline that a hot reload replaced can carry over. See [Exit codes](../administration/troubleshooting.md#exit-codes).
+- The [MQTT](../pipeline/inputs/mqtt.md) input completes the QoS 2 handshake, refuses `SUBSCRIBE` requests, and closes the connection when a client sends a second `CONNECT`.
+- The [Kubernetes](../pipeline/filters/kubernetes.md#authorization-token) filter removes trailing line breaks from tokens read from `kube_token_file` or `kube_token_command`, and rejects a token that contains only line breaks.
+
 ## Fluent Bit v5.1
 
 ### Debian and Ubuntu package upgrades restart the service
