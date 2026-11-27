@@ -42,6 +42,7 @@
   * [YAML configuration files](administration/configuring-fluent-bit/yaml.md)
     * [Environment variables](administration/configuring-fluent-bit/yaml/environment-variables-section.md)
     * [Includes](administration/configuring-fluent-bit/yaml/includes-section.md)
+    * [Defaults](administration/configuring-fluent-bit/yaml/defaults-section.md)
     * [Service](administration/configuring-fluent-bit/yaml/service-section.md)
     * [Parsers](administration/configuring-fluent-bit/yaml/parsers-section.md)
     * [Multiline parsers](administration/configuring-fluent-bit/yaml/multiline-parsers-section.md)
