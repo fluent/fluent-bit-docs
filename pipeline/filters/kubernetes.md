@@ -57,9 +57,9 @@ The plugin supports the following configuration parameters:
 | `kube_meta_preload_cache_dir` | If set, Kubernetes metadata can be cached or pre-loaded from files in JSON format in this directory, named `namespace-pod.meta`. | _none_ |
 | `kube_namespace_file` | Path to the file that contains the pod's namespace. | `/var/run/secrets/kubernetes.io/serviceaccount/namespace` |
 | `kube_tag_prefix` | When the source records come from the `tail` input plugin, this option specifies the prefix used in `tail` configuration. | `kube.var.log.containers.` |
-| `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. The command must print only the token to standard output, on a single line. This option is currently Linux-only. On other platforms, setting it prevents Fluent Bit from loading any token, and Fluent Bit doesn't fall back to `kube_token_file`. See [Authorization token](#authorization-token). | `NULL` |
-| `kube_token_file` | Path to the file that contains the Kubernetes authorization token. See [Authorization token](#authorization-token). | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
-| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the next request to the Kubernetes API reloads the token from `kube_token_file` or the `kube_token_command`. See [Authorization token](#authorization-token). | `600` |
+| `kube_token_command` | Command to get Kubernetes authorization token. Defaults to `NULL` uses the token file to get the token. To manually choose a command to get it, set the command here. For example, run `aws-iam-authenticator -i your-cluster-name token --token-only` to set token. This option is currently Linux-only. | `NULL` |
+| `kube_token_file` | Token file | `/var/run/secrets/kubernetes.io/serviceaccount/token` |
+| `kube_token_ttl` | Configurable time-to-live for the Kubernetes token. After this time, the token is reloaded from `kube_token_file` or the `kube_token_command`. | `600` |
 | `kube_url` | API Server endpoint | `https://kubernetes.default.svc:443` |
 | `kubelet_host` | Kubelet host to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `127.0.0.1` |
 | `kubelet_port` | Kubelet port to use for HTTP requests. This only works when `use_kubelet` is set to `On`. | `10250` |
@@ -83,25 +83,6 @@ The plugin supports the following configuration parameters:
 | `use_kubelet` | Optional feature flag to get metadata information from Kubelet instead of calling Kube Server API to enhance the log. This could mitigate the [Kube API heavy traffic issue for large cluster](kubernetes.md#using-kubelet-to-get-metadata). If used when any [Kubernetes Namespace Meta](#kubernetes-namespace-meta) fields are enabled, Kubelet will be used to fetch pod data, but namespace meta will still be fetched using the `kube_url` settings. In v5.1.3 or later, the pod name and namespace are matched exactly against the Kubelet pod list instead of by prefix. | `Off` |
 | `use_pod_association` | Deprecated alias for `aws_use_pod_association`. Kept for backward compatibility with AWS Observability users. | `Off` |
 | `use_tag_for_meta` | When enabled, Kubernetes metadata (for example, `pod_name`, `container_name`, and `namespace_name`) will be extracted from the tag itself. Connection to Kubernetes API Server won't get established and API calls for metadata won't be made. See [Workflow of Tail and Kubernetes Filter](#workflow-of-tail-and-kubernetes-filter) and [Custom tag For enhanced filtering](#custom-tags-for-enhanced-filtering) to better understand metadata extraction from tags. | `Off` |
-
-### Authorization token
-
-The filter sends a token in the `Authorization` header of each request to the Kubernetes API server or the kubelet. It loads the token by running `kube_token_command` if it's set, or by reading `kube_token_file` if it isn't.
-
-- Fluent Bit removes line breaks (`\n` and `\r`) from the end of the token. Leading or embedded line breaks, spaces, and tabs are kept, so the file or the command output must contain only the token, on a single line.
-- Fluent Bit doesn't check the command's exit status. Anything the command prints to standard output, including an error message, is used as the token. Write errors to standard error.
-- Loading from a file fails if the file can't be read or is empty. Loading from a command fails if the command can't be started, prints nothing to standard output, or prints 1 MiB or more. Loading also fails if the token contains only line breaks.
-- Fluent Bit reloads the token on the first request after `kube_token_ttl` passes. It doesn't reload the token earlier, even if the file changes or the server rejects the token.
-
-When loading fails:
-
-- Fluent Bit doesn't send requests with a previously loaded token. It skips metadata requests, and records from pods whose metadata isn't cached pass through without Kubernetes metadata.
-- Pod and namespace annotations aren't applied to those records. Logs from pods or namespaces that request exclusion with `fluentbit.io/exclude` are forwarded, and parsers suggested with `fluentbit.io/parser` aren't used. For more information, see [Request to exclude logs](#request-to-exclude-logs).
-- Fluent Bit tries again on each metadata lookup that isn't cached, not on a fixed schedule. With `kube_token_command`, the command runs on each attempt.
-- Each failure logs a warning, such as `failed to run command <command>`, `cannot open <path>`, or `kubernetes token is empty`, followed by `failed to refresh token`. The `cannot open` warning always shows the default path, `/var/run/secrets/kubernetes.io/serviceaccount/token`, even when `kube_token_file` is set to a different path.
-- If loading fails at startup, the filter logs `failed to set http auth header`, then `Fluent Bit not running in a POD`, and skips its connectivity check.
-
-The `failed to run command` warning includes the full command line. Pass credentials to the command through environment variables or files, not command-line arguments.
 
 ### AWS pod association
 
