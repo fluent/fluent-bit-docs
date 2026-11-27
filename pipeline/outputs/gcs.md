@@ -123,6 +123,8 @@ pipeline:
 | `google_service_account` | The email address of the service account to impersonate after the token exchange. When unset, the federated token is used directly against Cloud Storage. Only used when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `google_service_credentials` | Absolute path to a Google Cloud service account credentials JSON file. See [Authentication](#authentication). | _none_ |
 | `identity_token_file` | Path to the file that holds the `OIDC` subject token used as the federation credential source. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
+| `json_date_format` | Format of the record timestamp written under `json_date_key`. Accepted values: `double`, `epoch`, `epoch_ms` (aliases: `epoch_millis`, `epoch_milliseconds`), `iso8601` (for example, `2018-05-30T09:39:52.000681Z`), and `java_sql_timestamp` (for example, `2018-05-30 09:39:52.000681`). Values aren't case-sensitive. An invalid value fails at startup. See [Record timestamp](#record-timestamp). | `iso8601` |
+| `json_date_key` | Name of the field that holds each record's timestamp in the uploaded objects. Set to `false`, `off`, or `no` to disable it. See [Record timestamp](#record-timestamp). | `date` |
 | `metadata_server` | Address of the Compute Engine or Google Kubernetes Engine metadata server used to request an access token when no credentials file is configured. See [Authentication](#authentication). | `http://metadata.google.internal` |
 | `pool_id` | Workload identity pool ID. Required when `enable_identity_federation` is `true`. See [Workload Identity Federation](#workload-identity-federation). | _none_ |
 | `preserve_data_ordering` | When an upload request fails, the last received chunk might swap with a later chunk, resulting in data shuffling. This option prevents shuffling by using queue logic for uploads. | `false` |
@@ -152,9 +154,77 @@ The `gcs_key_format` option supports the same formatters as the [Amazon S3](s3.m
 
 When `gcs_key_format` doesn't contain `$UUID` and `static_file_path` is `false`, Fluent Bit appends a random suffix to each object name so that concurrent uploads don't overwrite each other. Set `static_file_path` to `true` to keep the object name exactly as the format string produces it.
 
+## Record timestamp
+
+The plugin writes each record's timestamp into the uploaded objects as the first field of the record. The field name is set by `json_date_key` and the format by `json_date_format`. With the default values, a record looks like this:
+
+```json
+{"date":"2023-11-14T22:13:20.500000Z","message":"hello"}
+```
+
+The timestamp is the record's event time, not the time of the upload, so you can restore records with their original time when you read the objects back. With `iso8601` and `java_sql_timestamp`, timestamps keep microsecond precision.
+
+{% hint style="info" %}
+
+By default, the plugin writes the timestamp under the `date` key. Earlier versions of the plugin uploaded records without a timestamp. If downstream consumers expect the old record shape, such as tables with a fixed schema or Parquet readers, set `json_date_key` to `false`, `off`, or `no`.
+
+{% endhint %}
+
+If a record already contains a field with the same name as `json_date_key`, the record's own field is kept and the timestamp isn't written for that record. To keep both, set `json_date_key` to a name that your records don't use, such as `event_time`.
+
+Records already buffered in `store_dir` keep the shape they had when they were buffered. Records buffered before you upgrade are uploaded without the timestamp field, and records buffered before you change `json_date_key` or `json_date_format` keep the previous key and format.
+
+### Example: timestamp in milliseconds
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  inputs:
+    - name: tail
+      path: /var/log/app.log
+      tag: app
+
+  outputs:
+    - name: gcs
+      match: '*'
+      bucket: my-logs
+      google_service_credentials: /path/to/credentials.json
+      json_date_key: event_time
+      json_date_format: epoch_ms
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[INPUT]
+  Name  tail
+  Path  /var/log/app.log
+  Tag   app
+
+[OUTPUT]
+  Name                        gcs
+  Match                       *
+  Bucket                      my-logs
+  Google_Service_Credentials  /path/to/credentials.json
+  Json_Date_Key               event_time
+  Json_Date_Format            epoch_ms
+```
+
+{% endtab %}
+{% endtabs %}
+
+Each record in the uploaded object then starts with the timestamp in milliseconds:
+
+```json
+{"event_time":1700000000500,"message":"hello"}
+```
+
 ## Parquet format
 
-Setting `format` to `parquet` converts log records to Apache Parquet columnar format before uploading them. Parquet objects are directly queryable by BigQuery, Spark, and Presto without additional transformation.
+Setting `format` to `parquet` converts log records to Apache Parquet columnar format before uploading them. Parquet objects are directly queryable by BigQuery, Spark, and Presto without additional transformation. The record timestamp described in [Record timestamp](#record-timestamp) becomes a column named after `json_date_key`.
 
 The `compression` option controls the page-level `codec` applied inside the Parquet file:
 
