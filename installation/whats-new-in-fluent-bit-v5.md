@@ -6,7 +6,7 @@ For migration-impacting changes, see [Upgrade notes](upgrade-notes.md).
 
 ## Fluent Bit v5.2
 
-Fluent Bit `v5.2` is the upcoming release developed on `master`. It adds Fluent Typed Scripting (FTS) and improves log ingestion, processor execution, and buffering. The following highlights describe the development code ahead of the `5.2.0` release.
+Fluent Bit `v5.2` adds Fluent Typed Scripting (FTS) and improves log ingestion, processor execution, and buffering. The following highlights describe `5.2.0`.
 
 ### Fluent Typed Scripting
 
