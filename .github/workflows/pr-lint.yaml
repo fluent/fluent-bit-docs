@@ -73,3 +73,6 @@ jobs:
         with:
           files: all
           fail_on_error: true
+          # Report only warnings and errors, so suggestions don't push large
+          # pull requests, such as backports, past reviewdog's annotation limit.
+          min_alert_level: warning
