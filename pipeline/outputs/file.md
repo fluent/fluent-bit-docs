@@ -14,6 +14,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | `fallback_file` | Static filename used when a `fallback` action is applied. Required whenever `path` or `file` uses a record accessor or a `strftime` placeholder. See [Dynamic destinations](#dynamic-destinations). | _none_ |
 | `fallback_path` | Static directory path used together with `fallback_file` when a `fallback` action is applied. | _none_ |
 | `file` | Set filename to store the records. If not set, the filename will be the `tag` associated with the records. Supports [record accessor](../../administration/configuring-fluent-bit/classic-mode/record-accessor.md) expressions. When `enable_strftime` is `true`, `strftime` placeholders are expanded using the UTC event timestamp. | _none_ |
+| `follow_symlinks` | Follow symbolic links when accessing files. Set to `false` to reject output paths that contain a symbolic link or a Windows reparse point in any component. See [Symbolic links](#symbolic-links). | `true` |
 | `format` | The [format](#format) of the file content. | _none_ |
 | `max_dynamic_files` | Maximum number of distinct destinations that record accessor expressions and `strftime` placeholders can resolve to. Tag-derived filenames count when `path` is dynamic, or, in v5.2 or later, when `path` isn't dynamic, `file` isn't set, and this key is set explicitly. Set to `0` for unlimited. See [Destination limits](#destination-limits). | `1024` |
 | `mkdir` | Recursively create output directory if it doesn't exist. Permissions set to `0755`. | `false` |
@@ -24,6 +25,7 @@ The _File_ output plugin lets you write the data received through the input plug
 | `rotate_gzip` | Compress rotated files using gzip. Only applies when `rotate` is enabled. | `true` |
 | `rotate_max_files` | Maximum number of rotated files to retain per output file. Oldest files are deleted first. Must be `1` or greater. Only applies when `rotate` is enabled. | `7` |
 | `rotate_max_size` | Maximum size of the active output file before rotation is triggered. Supports size suffixes: `k` (kilobytes), `m` (megabytes), `g` (gigabytes). Only applies when `rotate` is enabled. | `100M` |
+| `windows.absolute_dynamic_path` | Windows only. Require a dynamic `path` to start with a fixed drive-absolute directory, such as `C:\logs\`, and keep record accessor values from adding directory levels. See [Windows absolute paths](#windows-absolute-paths). | `false` |
 | `workers` | The number of [workers](../../administration/multithreading.md#outputs) to perform flush operations for this output. | `1` |
 
 ## Format
@@ -148,6 +150,8 @@ The plugin retains up to `rotate_max_files` rotated files per output file. When 
 
 Log rotation works with all supported output [formats](#format): default (`out_file`), `plain`, `csv`, `ltsv`, `template`, and `msgpack`. File operations are thread-safe, so rotation can be used alongside multiple [workers](../../administration/multithreading.md#outputs).
 
+When `follow_symlinks` is `false`, renaming, compressing, and deleting rotated files don't follow symbolic links, except that deleting the oldest rotated files on Windows uses a normal delete. That delete follows a junction or symbolic link in the output directory or one of its parent directories.
+
 ### Log rotation example
 
 The following configuration writes CPU metrics to file with rotation enabled. Files are rotated at 50 MB and the five most recent rotated files are retained with gzip compression:
@@ -194,6 +198,16 @@ pipeline:
 {% endtab %}
 {% endtabs %}
 
+## Symbolic links
+
+By default, the File output follows symbolic links. When `follow_symlinks` is `false`, Fluent Bit opens each directory in the output path without following links:
+
+- If any component of the path is a symbolic link, or on Windows a junction, mount point, or other reparse point, the file isn't opened. A path with a `..` component is also rejected, and the output file must be a regular file. Fluent Bit logs `error opening: <path>`, and the records in that flush aren't retried.
+- With `mkdir` set to `true`, missing directories are created with permissions `0755`, subject to the process `umask`. On Windows, the permissions value is ignored.
+- [Log rotation](#log-rotation) follows the same rules. However, Fluent Bit follows the link when it checks the size of the output file. If rotation is due and the output file is a symbolic link, rotation renames the link itself, and Fluent Bit then creates a regular file at the original path and writes the records to it.
+
+Some common locations rely on symbolic links, such as `/var` and `/tmp` on macOS. Keep the default value if the output path goes through a symbolic link.
+
 ## Dynamic destinations
 
 Dynamic destinations are available in Fluent Bit version 5.1 and greater.
@@ -205,7 +219,7 @@ Two rules apply when you configure a dynamic destination:
 - A `path` that uses a record accessor must begin with a static prefix. Fluent Bit rejects a `path` that starts with a record accessor, so that generated paths always stay under a directory you chose. This check doesn't apply to `strftime` placeholders. See [`strftime` placeholders](#strftime-placeholders).
 - You must set `fallback_file`. Fluent Bit fails to start if a record accessor or a `strftime` placeholder is used without it, because there would be nowhere to write records whose destination can't be resolved.
 
-Fluent Bit rejects a resolved destination as unsafe when the filename is empty, is `.` or `..`, or contains a path separator or one of the characters `:`, `*`, `?`, `"`, `<`, `>`, or `|`. Path components of `.` and `..` are also rejected. This keeps a record value from redirecting output outside of the configured directory.
+Fluent Bit rejects a resolved destination as unsafe when the filename is empty, is `.` or `..`, or contains a path separator or one of the characters `:`, `*`, `?`, `"`, `<`, `>`, or `|`. Path components of `.` and `..` are also rejected. This keeps a record value from redirecting output outside of the configured directory. On Windows, `windows.absolute_dynamic_path` adds stricter checks. See [Windows absolute paths](#windows-absolute-paths).
 
 Generated directories are only created if you also enable `mkdir`.
 
@@ -232,6 +246,72 @@ path: /var/log/fluent-bit/%Y/%m/%d/$namespace
 Most rules described in [Dynamic destinations](#dynamic-destinations) apply to placeholders the same way they apply to record accessors. `fallback_file` is required, resolved destinations are rejected when unsafe, and each distinct destination counts toward `max_dynamic_files`. Because a new destination is created for every time period you include, choose the smallest unit your retention needs. An hourly layout such as `%Y%m%d%H` reaches the default `max_dynamic_files` limit of `1024` after about 42 days of continuous operation.
 
 The static prefix requirement is the exception. Fluent Bit enforces it for record accessors only, so a `path` can begin with a placeholder. A `path` of `%Y/%m/%d` resolves to a relative directory such as `2026/08/17`, located inside the Fluent Bit working directory. Begin the value with a static prefix, as in `/var/log/fluent-bit/%Y/%m/%d`, to keep output under a directory you chose.
+
+### Windows absolute paths
+
+On Windows, set `windows.absolute_dynamic_path` to `true` to apply stricter checks to a dynamic `path`. The parameter has no effect on other platforms, or when `path` isn't dynamic.
+
+At startup, Fluent Bit takes the fixed directory at the start of `path`: the text before the first record accessor, or before the first `%` when `enable_strftime` is `true`, up to and including its last path separator. That directory must meet these rules:
+
+- It starts with a drive letter, a colon, and a separator, such as `C:\` or `C:/`. Universal Naming Convention (UNC) paths such as `\\server\share\`, device paths such as `\\?\C:\`, drive-relative paths such as `C:logs\`, and relative paths aren't accepted.
+- It doesn't contain two separators in a row, or a component that ends with a period or a space.
+- After the drive, it doesn't contain control characters or any of the characters `:`, `*`, `?`, `"`, `<`, `>`, or `|`.
+
+If the directory doesn't meet these rules, Fluent Bit fails to start and logs `'windows.absolute_dynamic_path' requires a fixed drive-absolute directory before the first dynamic 'path' placeholder`. This check runs before the static prefix check, so a `path` that starts with a record accessor also fails with this message.
+
+For each record, Fluent Bit also rejects the resolved destination as unsafe in these cases:
+
+- The resolved path doesn't meet the same rules, or doesn't start with the fixed directory exactly as configured.
+- A record accessor value in `path` contains a path separator. Only the literal text of `path`, including text produced by `strftime` placeholders, can separate directories, so record values can't add directory levels.
+- The filename is empty, is `.` or `..`, or ends with a period or a space. Windows can remove trailing periods and spaces when it resolves a path.
+- The filename contains a path separator, a control character, a null character, or one of the characters `:`, `*`, `?`, `"`, `<`, `>`, or `|`.
+- These filename checks also apply to a static `file` value and to a name derived from the tag. When `file` isn't set, Fluent Bit first removes `/` and `\` characters at the start or end of the tag, so a tag that still contains `/` or `\` between other characters is rejected.
+
+A record accessor value that's an empty string isn't rejected by itself, because Fluent Bit checks the whole resolved path. With `path` set to `C:\logs\$namespace`, an empty value writes the record to `C:\logs\` itself. With `C:\logs\app-$namespace`, it writes the record to a directory named `app-`. If the empty value leaves the path ending with a period or a space, the destination is rejected.
+
+A rejected destination is handled by `on_missing_field`, the same as other unsafe destinations. See [Actions for unresolved destinations](#actions-for-unresolved-destinations). These rules don't apply to `fallback_path`, so set it to an absolute directory, as in the following example.
+
+A record accessor name ends at the first period, space, comma, or double quote, so literal text after an accessor must start with one of these characters, as in `C:\logs\$namespace.d`. A record accessor followed directly by `\` fails at startup with `invalid record accessor pattern set for 'path'`, and a record accessor followed directly by `/` is read as part of the field name.
+
+The following configuration writes each record to a per-namespace directory inside `C:\logs\`:
+
+{% tabs %}
+{% tab title="fluent-bit.yaml" %}
+
+```yaml
+pipeline:
+  outputs:
+    - name: file
+      match: '*'
+      path: 'C:\logs\$namespace'
+      file: app.log
+      mkdir: true
+      windows.absolute_dynamic_path: true
+      on_missing_field: fallback
+      fallback_path: 'C:\logs'
+      fallback_file: unrouted.log
+```
+
+{% endtab %}
+{% tab title="fluent-bit.conf" %}
+
+```text
+[OUTPUT]
+  Name                          file
+  Match                         *
+  Path                          C:\logs\$namespace
+  File                          app.log
+  Mkdir                         true
+  Windows.Absolute_Dynamic_Path true
+  On_Missing_Field              fallback
+  Fallback_Path                 C:\logs
+  Fallback_File                 unrouted.log
+```
+
+{% endtab %}
+{% endtabs %}
+
+With this configuration, a record with `namespace` set to `web` is written to `C:\logs\web\app.log`. A record with `namespace` set to `web\admin` or `web/admin` is written to `C:\logs\unrouted.log`, because the value adds a directory level.
 
 ### Actions for unresolved destinations
 

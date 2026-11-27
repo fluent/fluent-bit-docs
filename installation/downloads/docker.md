@@ -42,6 +42,10 @@ The following table describes the Linux container tags that are available on Doc
 
 | Tags | Manifest Architectures | Description |
 | ------------ | ------------------------- | -------------------------------------------------------------- |
+| 5.2.1-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.2.1 | amd64, arm64, arm/v7 | Release [v5.2.1](https://fluentbit.io/announcements/v5.2.1/) |
+| 5.2.0-debug | amd64, arm64, arm/v7 | Debug images |
+| 5.2.0 | amd64, arm64, arm/v7 | Release [v5.2.0](https://fluentbit.io/announcements/v5.2.0/) |
 | 5.1.5-debug | amd64, arm64, arm/v7 | Debug images |
 | 5.1.5 | amd64, arm64, arm/v7 | Release [v5.1.5](https://fluentbit.io/announcements/v5.1.5/) |
 | 5.1.4-debug | amd64, arm64, arm/v7 | Debug images |
@@ -242,8 +246,38 @@ Windows container images are provided on the same Docker Hub registry, tagged wi
 Windows Server 2025 support, and the Nano Server image, are available in Fluent Bit version 5.1 and greater. Nano Server images are smaller than their Server Core counterparts, but don't include PowerShell and can't run plugins that shell out to external commands, such as `exec`. The Nano Server image ships with a default configuration that listens on the [Forward](../../pipeline/inputs/forward.md) input and writes to `stdout`, since there's no shell available to write one if needed.
 
 ```shell
-docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.1.1
+docker pull cr.fluentbit.io/fluent/fluent-bit:windows-nano-2025-5.2.1
 ```
+
+## Security updates and rebuilds
+
+Linux images are built on a base image: Distroless for production images and Debian for `-debug` images. Packages in the base image receive security fixes on their own schedule, so a vulnerability scanner can report findings in a published image that aren't vulnerabilities in Fluent Bit.
+
+When a fix is available for a critical or high finding in the base image packages, the images for the three most recent release series are rebuilt. The rebuild uses the updated base image and doesn't require a new Fluent Bit release. The Fluent Bit binary is rebuilt from the same release tag. Windows images are rebuilt together with the Linux images, on the current Windows Server base image.
+
+- The version tag, such as `5.2.0`, moves to the newest build. So do its `-debug` and Windows tags, and the series tag, such as `5.2`, and `latest` when they point to that version. Pull the tag again to get a rebuild.
+- Each rebuild also gets a dated tag that never moves, in the form `<version>-<YYYYMMDD>`, such as `5.2.0-20261117`. A second rebuild on the same day adds a counter, such as `5.2.0-20261117.2`. Debug and Windows images have matching dated tags, such as `5.2.0-20261117-debug` and `windows-2025-5.2.0-20261117`.
+- When a release is rebuilt for the first time, its original build also gets a dated tag based on its original build date, such as `5.2.0-20261109`. A release that has never been rebuilt has only its version tag, so pin it by digest.
+
+To pin an exact build, use a dated tag or the image digest:
+
+```shell
+docker pull cr.fluentbit.io/fluent/fluent-bit:5.2.0-20261117
+docker pull cr.fluentbit.io/fluent/fluent-bit@sha256:<digest>
+```
+
+Two wiki pages are generated from the registries:
+
+- [Container images](https://github.com/fluent/fluent-bit/wiki/Container-Images): every build of every release in the maintained series, with its tags, digests, and build date.
+- [Container image security status](https://github.com/fluent/fluent-bit/wiki/Container-Image-Security-Status): known critical and high findings in the `linux/amd64` production and debug images of the newest release in each maintained series. Findings are split into those that a rebuild can fix and those that the base image distribution hasn't fixed yet. Windows images aren't scanned.
+
+When a scanner reports a finding in a Fluent Bit image:
+
+1. Find the digest you run on the container images page, under the full digests for your version. If a newer build of the same version exists, pull the version tag again. If you pin a dated tag or digest, change it to the newer build. Then recreate the container or roll out the workload, because a running container keeps the image it started with. If your version is superseded by a newer version, upgrade to that version.
+1. Check the security status page. A finding listed under **No fix yet** has no fixed package available, so a rebuild can't remove it. A later rebuild clears it after the distribution publishes a fix.
+1. If a fix is available and the current build doesn't include it, open a [GitHub issue](https://github.com/fluent/fluent-bit/issues) that asks for an image rebuild. Include the image tag, digest, and Common Vulnerabilities and Exposures (CVE) identifier. These findings are already public, so they don't need a private report.
+
+Report vulnerabilities in Fluent Bit itself privately, as described in the [security policy](https://github.com/fluent/fluent-bit/blob/master/SECURITY.md).
 
 ## Multi-architecture images
 
