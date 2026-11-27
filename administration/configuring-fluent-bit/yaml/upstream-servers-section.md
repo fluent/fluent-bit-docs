@@ -24,6 +24,12 @@ upstream_servers:
         shared_key: secret
 ```
 
-Each node in the `upstream_servers` group must specify a `name`, `host`, and `port`. Additional settings like `tls`, `tls.verify`, and `shared_key` can be configured for secure communication.
+Each node in the `upstream_servers` group must specify a `name`, `host`, and `port`. If a node is missing one of them, Fluent Bit logs an error such as `no 'host' has been set on node #1` and fails to start. Additional settings like `tls`, `tls.verify`, and `shared_key` can be configured for secure communication.
 
-Define the `upstream_servers` section in its own file, and set the output plugin's `upstream` parameter to the path of that file. Each file must define only one group. If a file defines more than one group, Fluent Bit uses only the last one. Consult the documentation for each output plugin for details about its `upstream` parameter.
+Define the `upstream_servers` section in its own file, and set the output plugin's `upstream` parameter to the path of that file. The filename must end in `.yaml` or `.yml`. Otherwise, Fluent Bit reads it as a classic configuration file. Each file must define only one group. Consult the documentation for each output plugin for details about its `upstream` parameter.
+
+If a file defines more than one group, Fluent Bit uses only the last one, and logs a warning for each extra group, such as `<file> defines more than one upstream, ignoring '<previous_group>' and using '<next_group>'`. Treat this warning as a configuration error: a group left at the end of the file, such as one used for testing, becomes the destination for your data. Fluent Bit still applies its general checks to every group, and a failed check stops Fluent Bit from starting even if the group is ignored. For example, every group needs a `name`, every node needs a `name`, `host`, and `port`, and the TLS settings of a node with `tls` on must load, so a `tls.ca_file` that can't be read is an error. The whole file must also be valid YAML. Settings specific to an output plugin are checked only in the group that Fluent Bit uses.
+
+The group that Fluent Bit uses must define at least one node, even if an earlier group in the file defines nodes. If it doesn't, or if the file defines no group, Fluent Bit fails to start and logs `no nodes defined`, followed by `cannot load Upstream file`.
+
+Fluent Bit reads the upstream file only when the output plugin starts, so `--dry-run` and the validation that runs before a [hot reload](../../hot-reload.md) don't detect these errors. If a reload loads an upstream file with one of these errors, the reload is aborted and Fluent Bit exits.
